@@ -5,7 +5,7 @@
  * Single Purpose File Law: < 350 lines
  */
 
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import {
   Send,
   Sparkles,
@@ -47,11 +47,26 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
   onSend,
   onAiDraft,
 }) => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView?.({ behavior: 'smooth' });
+  }, [selectedConv?.id, activeMessages.length]);
+
+  const QUICK_REPLIES = [
+    'Send Brochure',
+    'Schedule Viewing',
+    'Request Title Deed',
+    'DLD Valuation',
+  ];
+
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
+        minHeight: 0,
+        height: '100%',
         background: isDark ? '#0B141A' : '#EFEAE2',
       }}
     >
@@ -189,19 +204,56 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                 }}
               >
                 <span>{msg.timestamp}</span>
-                {isOutbound && (
-                  msg.status === 'read' ? (
+                {isOutbound &&
+                  (msg.status === 'read' ? (
                     <CheckCheck size={12} color="#53BDEB" />
                   ) : msg.status === 'delivered' ? (
                     <CheckCheck size={12} color="#8696A0" />
                   ) : (
                     <Check size={12} color="#8696A0" />
-                  )
-                )}
+                  ))}
               </div>
             </div>
           );
         })}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Quick-Reply Templates Bar */}
+      <div
+        style={{
+          display: 'flex',
+          gap: 6,
+          padding: '6px 16px',
+          overflowX: 'auto',
+          background: isDark ? '#182229' : '#F8FAFC',
+          borderTop: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #E2E8F0',
+        }}
+      >
+        {QUICK_REPLIES.map(label => (
+          <button
+            key={label}
+            type="button"
+            onClick={() =>
+              onInputChange(
+                `Hello ${selectedConv?.contactName || 'there'}, regarding ${selectedConv?.unit || 'your property'}: ${label}.`
+              )
+            }
+            style={{
+              padding: '3px 10px',
+              borderRadius: 999,
+              fontSize: 10,
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+              cursor: 'pointer',
+              border: isDark ? '1px solid #2A3942' : '1px solid #CBD5E1',
+              background: isDark ? '#202C33' : '#FFFFFF',
+              color: isDark ? '#E9EDEF' : '#334155',
+            }}
+          >
+            ⚡ {label}
+          </button>
+        ))}
       </div>
 
       {/* Input Dock */}

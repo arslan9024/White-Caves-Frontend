@@ -84,7 +84,20 @@ export function useSocket(): UseSocketReturn {
     });
 
     // ── Linda channel (whatsapp-web.js LocalAuth) ─────────────────────────
+    const seenLindaEvents = new Set<string>();
+    const isDuplicateLindaEvent = (key: string): boolean => {
+      if (seenLindaEvents.has(key)) return true;
+      if (seenLindaEvents.size >= 200) {
+        const firstKey = seenLindaEvents.values().next().value;
+        if (firstKey !== undefined) seenLindaEvents.delete(firstKey);
+      }
+      seenLindaEvents.add(key);
+      return false;
+    };
+
     const offLindaMsg = socketService.onLindaMessage(payload => {
+      const dedupKey = `msg:${payload.from}:${payload.timestamp ?? payload.body.slice(0, 32)}`;
+      if (isDuplicateLindaEvent(dedupKey)) return;
       log.debug('Linda WhatsApp message received', { from: payload.from });
       dispatch(
         addNotification({
@@ -97,6 +110,8 @@ export function useSocket(): UseSocketReturn {
     });
 
     const offLindaCampaign = socketService.onLindaCampaignTelemetry(payload => {
+      const dedupKey = `camp:${payload.campaignName}:${payload.totalDispatched}:${payload.skipped}`;
+      if (isDuplicateLindaEvent(dedupKey)) return;
       log.debug('Linda campaign telemetry received', { campaignName: payload.campaignName });
       dispatch(
         addNotification({
@@ -109,6 +124,8 @@ export function useSocket(): UseSocketReturn {
     });
 
     const offLindaHotLead = socketService.onLindaHotLead(payload => {
+      const dedupKey = `hot:${payload.phone}:${payload.category}:${payload.project}`;
+      if (isDuplicateLindaEvent(dedupKey)) return;
       log.debug('Linda HOT_LEAD escalation received', { phone: payload.phone });
       dispatch(
         addNotification({

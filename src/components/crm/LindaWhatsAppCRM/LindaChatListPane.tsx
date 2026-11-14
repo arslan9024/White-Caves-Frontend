@@ -276,7 +276,13 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
                     marginTop: 2,
                   }}
                 >
-                  {conv.lastMessage}
+                  {conv.lastMessage ? (
+                    conv.lastMessage
+                  ) : (
+                    <span style={{ fontStyle: 'italic', opacity: 0.7 }}>
+                      Tap to load recent messages
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
