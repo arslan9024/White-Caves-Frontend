@@ -36,7 +36,16 @@ const STATUS_CONFIGS = {
   review: { label: 'Review', color: '#EF4444', bg: 'rgba(59, 130, 246, 0.1)' },
 };
 
-const StatusBadge = ({
+interface StatusBadgeProps {
+  status?: string;
+  size?: 'sm' | 'md' | 'lg';
+  showDot?: boolean;
+  customLabel?: string;
+  customColor?: string;
+  customBg?: string;
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,
   size = 'md',
   showDot = false,
@@ -44,7 +53,8 @@ const StatusBadge = ({
   customColor,
   customBg,
 }) => {
-  const config = STATUS_CONFIGS[status?.toLowerCase()] || {
+  const key = (status?.toLowerCase() || '') as keyof typeof STATUS_CONFIGS;
+  const config = STATUS_CONFIGS[key] || {
     label: status || 'Unknown',
     color: '#6b7280',
     bg: 'rgba(107, 114, 128, 0.1)',

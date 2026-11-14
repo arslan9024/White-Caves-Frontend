@@ -11,21 +11,21 @@ import ListingPricingStep from './steps/ListingPricingStep';
 import ListingMediaStep from './steps/ListingMediaStep';
 import ListingLegalStep from './steps/ListingLegalStep';
 
-export default function AgentListingForm({ onClose }) {
+export default function AgentListingForm({ onClose }: { onClose?: () => void }) {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [formData, setFormData] = useState<Record<string, any>>(INITIAL_FORM_DATA);
 
-  const updateField = (field, value) => {
+  const updateField = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const toggleArrayField = (field, value) => {
+  const toggleArrayField = (field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
-      [field]: prev[field].includes(value)
-        ? prev[field].filter(v => v !== value)
-        : [...prev[field], value],
+      [field]: (prev[field] as any[]).includes(value)
+        ? (prev[field] as any[]).filter((v: any) => v !== value)
+        : [...(prev[field] as any[]), value],
     }));
   };
 

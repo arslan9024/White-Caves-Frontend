@@ -67,9 +67,9 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should display feature selection grid', () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      expect(screen.getByText(/Features/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /^Features$/i })).toBeInTheDocument();
       // Should show suggested features
-      expect(screen.getByText(/Swimming pool|Garden|Parking/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Swimming pool/i })).toBeInTheDocument();
     });
 
     it('should show owner relationship selector', () => {

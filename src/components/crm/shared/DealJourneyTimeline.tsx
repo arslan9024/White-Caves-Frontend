@@ -1,9 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle, Clock, AlertCircle, User, Home, FileText, 
-  Send, Shield, Building, Calendar, DollarSign, Users
+import {
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  User,
+  Home,
+  FileText,
+  Send,
+  Shield,
+  Building,
+  Calendar,
+  DollarSign,
+  Users,
 } from 'lucide-react';
 import './DealJourneyTimeline.css';
 
@@ -19,7 +29,7 @@ const TENANCY_STAGES = [
   { id: 'signed', label: 'Contract Signed', icon: CheckCircle },
   { id: 'ejari_submitted', label: 'Ejari Submitted', icon: Building },
   { id: 'ejari_registered', label: 'Ejari Registered', icon: Shield },
-  { id: 'completed', label: 'Completed', icon: CheckCircle }
+  { id: 'completed', label: 'Completed', icon: CheckCircle },
 ];
 
 const SALES_STAGES = [
@@ -35,33 +45,50 @@ const SALES_STAGES = [
   { id: 'noc_applied', label: 'NOC Applied', icon: Building },
   { id: 'noc_received', label: 'NOC Received', icon: CheckCircle },
   { id: 'dld_transfer', label: 'DLD Transfer', icon: Building },
-  { id: 'completed', label: 'Completed', icon: CheckCircle }
+  { id: 'completed', label: 'Completed', icon: CheckCircle },
 ];
 
-export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compact = false }) {
-  const [selectedStage, setSelectedStage] = useState(null);
-  
+interface DealTimelineEntry {
+  stage: string;
+  date?: string;
+  actor?: string;
+  notes?: string;
+}
+
+interface DealJourneyTimelineProps {
+  deal?: { status?: string; timeline?: DealTimelineEntry[] };
+  dealType?: 'tenancy' | 'sales';
+  compact?: boolean;
+}
+
+export default function DealJourneyTimeline({
+  deal,
+  dealType = 'tenancy',
+  compact = false,
+}: DealJourneyTimelineProps) {
+  const [selectedStage, setSelectedStage] = useState<string | null>(null);
+
   const stages = dealType === 'tenancy' ? TENANCY_STAGES : SALES_STAGES;
   const currentStageIndex = stages.findIndex(s => s.id === deal?.status);
-  
-  const getStageStatus = (index) => {
+
+  const getStageStatus = (index: number) => {
     if (index < currentStageIndex) return 'completed';
     if (index === currentStageIndex) return 'current';
     return 'pending';
   };
-  
-  const getTimelineEntry = (stageId) => {
-    return deal?.timeline?.find(t => t.stage === stageId);
+
+  const getTimelineEntry = (stageId: string) => {
+    return deal?.timeline?.find((t: DealTimelineEntry) => t.stage === stageId);
   };
-  
-  const formatDate = (dateString) => {
+
+  const formatDate = (dateString?: string) => {
     if (!dateString) return '-';
     return new Date(dateString).toLocaleDateString('en-AE', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
@@ -84,8 +111,8 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
           </span>
         </div>
         <div className="compact-progress">
-          <div 
-            className="progress-fill" 
+          <div
+            className="progress-fill"
             style={{ width: `${((currentStageIndex + 1) / stages.length) * 100}%` }}
           />
         </div>
@@ -103,7 +130,11 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
         <div className="deal-info">
           <h3>{deal.dealNumber}</h3>
           <span className={`type-badge ${dealType}`}>
-            {dealType === 'tenancy' ? 'Leasing' : deal.dealType === 'off_plan' ? 'Off-Plan' : 'Secondary'}
+            {dealType === 'tenancy'
+              ? 'Leasing'
+              : deal.dealType === 'off_plan'
+                ? 'Off-Plan'
+                : 'Secondary'}
           </span>
         </div>
         <div className="parties-info">
@@ -146,7 +177,7 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
           const status = getStageStatus(index);
           const timelineEntry = getTimelineEntry(stage.id);
           const StageIcon = stage.icon;
-          
+
           return (
             <motion.div
               key={stage.id}
@@ -159,7 +190,7 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
               <div className="stage-connector">
                 {index > 0 && <div className={`connector-line ${status}`} />}
               </div>
-              
+
               <div className={`stage-icon ${status}`}>
                 {status === 'completed' ? (
                   <CheckCircle size={20} />
@@ -169,22 +200,26 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
                   <StageIcon size={20} />
                 )}
               </div>
-              
+
               <div className="stage-content">
                 <span className="stage-label">{stage.label}</span>
                 {timelineEntry && (
                   <span className="stage-date">{formatDate(timelineEntry.timestamp)}</span>
                 )}
               </div>
-              
+
               {selectedStage === stage.id && timelineEntry && (
-                <motion.div 
+                <motion.div
                   className="stage-details"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                 >
-                  <p><strong>Actor:</strong> {timelineEntry.actor}</p>
-                  <p><strong>Notes:</strong> {timelineEntry.notes}</p>
+                  <p>
+                    <strong>Actor:</strong> {timelineEntry.actor}
+                  </p>
+                  <p>
+                    <strong>Notes:</strong> {timelineEntry.notes}
+                  </p>
                 </motion.div>
               )}
             </motion.div>
@@ -197,16 +232,20 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
           <div className="summary-item">
             <DollarSign size={16} />
             <span>
-              {dealType === 'tenancy' 
+              {dealType === 'tenancy'
                 ? `AED ${deal.offer?.monthlyRent?.toLocaleString()}/month`
-                : `AED ${(deal.offer?.agreedPrice || deal.offer?.offerPrice)?.toLocaleString()}`
-              }
+                : `AED ${(deal.offer?.agreedPrice || deal.offer?.offerPrice)?.toLocaleString()}`}
             </span>
           </div>
           {deal.kycVerification && (
             <div className="summary-item">
               <Shield size={16} />
-              <span>KYC: {deal.kycVerification.tenantVerified || deal.kycVerification.buyerVerified ? 'Verified' : 'Pending'}</span>
+              <span>
+                KYC:{' '}
+                {deal.kycVerification.tenantVerified || deal.kycVerification.buyerVerified
+                  ? 'Verified'
+                  : 'Pending'}
+              </span>
             </div>
           )}
         </div>
@@ -217,4 +256,3 @@ export default function DealJourneyTimeline({ deal, dealType = 'tenancy', compac
     </div>
   );
 }
-

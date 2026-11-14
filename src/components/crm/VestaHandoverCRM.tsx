@@ -13,7 +13,13 @@ import {
 } from 'lucide-react';
 import './AssistantDashboard.css';
 
-export const VestaHandoverCRM = ({ moduleId, role, user }) => {
+interface VestaHandoverCRMProps {
+  moduleId?: string;
+  role?: string;
+  user?: Record<string, unknown>;
+}
+
+export const VestaHandoverCRM: React.FC<VestaHandoverCRMProps> = ({ moduleId, role, user }) => {
   const [activeTab, setActiveTab] = useState('snagging');
 
   useEffect(() => {

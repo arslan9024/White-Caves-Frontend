@@ -2,7 +2,22 @@ import React from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import './StatsBar.css';
 
-const StatCard = ({ stat, onClick }) => {
+export interface StatItem {
+  id?: string | number;
+  label: string;
+  value: string | number;
+  icon?: React.ReactNode;
+  color?: string;
+  trend?: number;
+  subtext?: string;
+}
+
+interface StatCardProps {
+  stat: StatItem;
+  onClick?: () => void;
+}
+
+const StatCard: React.FC<StatCardProps> = ({ stat, onClick }) => {
   const trendClass = stat.trend > 0 ? 'positive' : stat.trend < 0 ? 'negative' : 'neutral';
 
   return (
@@ -35,9 +50,15 @@ const StatCard = ({ stat, onClick }) => {
   );
 };
 
-const StatsBar = ({ stats, columns = 4, onStatClick }) => {
+interface StatsBarProps {
+  stats: StatItem[];
+  columns?: number;
+  onStatClick?: (stat: StatItem) => void;
+}
+
+const StatsBar: React.FC<StatsBarProps> = ({ stats, columns = 4, onStatClick }) => {
   return (
-    <div className="stats-bar" style={{ '--columns': columns }}>
+    <div className="stats-bar" style={{ '--columns': columns } as React.CSSProperties}>
       {stats.map((stat, index) => (
         <StatCard
           key={stat.id || index}

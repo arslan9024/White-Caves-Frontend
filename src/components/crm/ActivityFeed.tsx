@@ -2,7 +2,27 @@ import React from 'react';
 import { Clock } from 'lucide-react';
 import './ActivityFeed.css';
 
-const getTimeAgo = timestamp => {
+export interface ActivityRecord {
+  id?: string | number;
+  type?: string;
+  color?: string;
+  icon?: React.ReactNode;
+  user?: string;
+  message: string;
+  details?: string;
+  timestamp: string | number | Date;
+  badge?: { type: string; label: string };
+}
+
+export interface ActivityFeedProps {
+  activities?: ActivityRecord[];
+  title?: string;
+  maxItems?: number;
+  showHeader?: boolean;
+  emptyMessage?: string;
+}
+
+const getTimeAgo = (timestamp: string | number | Date) => {
   const now = new Date();
   const then = new Date(timestamp);
   const diffMs = now.getTime() - then.getTime();

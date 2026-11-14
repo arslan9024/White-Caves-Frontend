@@ -1,10 +1,20 @@
 import React from 'react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Search, TrendingUp, Globe, FileText, BarChart3,
-  Target, Sparkles, CheckCircle, AlertCircle, Loader,
-  ExternalLink, Copy, RefreshCw
+import {
+  Search,
+  TrendingUp,
+  Globe,
+  FileText,
+  BarChart3,
+  Target,
+  Sparkles,
+  CheckCircle,
+  AlertCircle,
+  Loader,
+  ExternalLink,
+  Copy,
+  RefreshCw,
 } from 'lucide-react';
 import './MarketingSEOTools.css';
 
@@ -16,25 +26,55 @@ const KEYWORD_SUGGESTIONS = [
   { keyword: 'rent apartment jvc', volume: 6700, difficulty: 52, cpc: 'AED 4.50' },
   { keyword: 'damac hills villa', volume: 4500, difficulty: 48, cpc: 'AED 6.30' },
   { keyword: 'downtown dubai property', volume: 7800, difficulty: 65, cpc: 'AED 9.20' },
-  { keyword: 'emirates hills mansion', volume: 1200, difficulty: 38, cpc: 'AED 15.00' }
+  { keyword: 'emirates hills mansion', volume: 1200, difficulty: 38, cpc: 'AED 15.00' },
 ];
 
 const SEO_CHECKLIST = [
-  { id: 'title', label: 'Meta Title (50-60 chars)', status: 'pass', value: 'Luxury Villas for Sale in Dubai | White Caves Real Estate' },
-  { id: 'description', label: 'Meta Description (150-160 chars)', status: 'pass', value: 'Discover luxury properties in Dubai...' },
+  {
+    id: 'title',
+    label: 'Meta Title (50-60 chars)',
+    status: 'pass',
+    value: 'Luxury Villas for Sale in Dubai | White Caves Real Estate',
+  },
+  {
+    id: 'description',
+    label: 'Meta Description (150-160 chars)',
+    status: 'pass',
+    value: 'Discover luxury properties in Dubai...',
+  },
   { id: 'h1', label: 'H1 Heading', status: 'pass', value: 'Dubai Luxury Real Estate' },
   { id: 'images', label: 'Image Alt Tags', status: 'warning', value: '85% optimized' },
   { id: 'speed', label: 'Page Speed Score', status: 'pass', value: '92/100' },
   { id: 'mobile', label: 'Mobile Friendly', status: 'pass', value: 'Responsive' },
   { id: 'ssl', label: 'SSL Certificate', status: 'pass', value: 'Active' },
-  { id: 'sitemap', label: 'XML Sitemap', status: 'pass', value: 'Submitted' }
+  { id: 'sitemap', label: 'XML Sitemap', status: 'pass', value: 'Submitted' },
 ];
 
 const CONTENT_IDEAS = [
-  { title: 'Top 10 Off-Plan Projects in Dubai 2026', type: 'Blog Post', score: 92, keywords: ['off plan dubai', 'new projects 2026'] },
-  { title: 'Complete Guide to Buying Property in Dubai for Expats', type: 'Guide', score: 88, keywords: ['buy property dubai', 'expat guide'] },
-  { title: 'Dubai Marina vs JVC: Which is Better for Investment?', type: 'Comparison', score: 85, keywords: ['dubai marina investment', 'jvc property'] },
-  { title: 'How Ejari Registration Works in Dubai', type: 'How-To', score: 78, keywords: ['ejari registration', 'dubai rental'] }
+  {
+    title: 'Top 10 Off-Plan Projects in Dubai 2026',
+    type: 'Blog Post',
+    score: 92,
+    keywords: ['off plan dubai', 'new projects 2026'],
+  },
+  {
+    title: 'Complete Guide to Buying Property in Dubai for Expats',
+    type: 'Guide',
+    score: 88,
+    keywords: ['buy property dubai', 'expat guide'],
+  },
+  {
+    title: 'Dubai Marina vs JVC: Which is Better for Investment?',
+    type: 'Comparison',
+    score: 85,
+    keywords: ['dubai marina investment', 'jvc property'],
+  },
+  {
+    title: 'How Ejari Registration Works in Dubai',
+    type: 'How-To',
+    score: 78,
+    keywords: ['ejari registration', 'dubai rental'],
+  },
 ];
 
 export default function MarketingSEOTools({ compact = false }) {
@@ -47,18 +87,22 @@ export default function MarketingSEOTools({ compact = false }) {
     setTimeout(() => setAnalyzing(false), 2000);
   };
 
-  const getDifficultyColor = (difficulty) => {
+  const getDifficultyColor = (difficulty: number) => {
     if (difficulty < 40) return '#10b981';
     if (difficulty < 60) return '#f59e0b';
     return '#ef4444';
   };
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pass': return <CheckCircle size={16} className="status-pass" />;
-      case 'warning': return <AlertCircle size={16} className="status-warning" />;
-      case 'fail': return <AlertCircle size={16} className="status-fail" />;
-      default: return null;
+      case 'pass':
+        return <CheckCircle size={16} className="status-pass" />;
+      case 'warning':
+        return <AlertCircle size={16} className="status-warning" />;
+      case 'fail':
+        return <AlertCircle size={16} className="status-fail" />;
+      default:
+        return null;
     }
   };
 
@@ -67,12 +111,16 @@ export default function MarketingSEOTools({ compact = false }) {
       <div className="seo-tools-compact">
         <div className="compact-header">
           <Globe size={20} />
-          <span>SEO Score: <strong>92/100</strong></span>
+          <span>
+            SEO Score: <strong>92/100</strong>
+          </span>
         </div>
         <div className="compact-keywords">
           <span>Top Keywords:</span>
           {KEYWORD_SUGGESTIONS.slice(0, 3).map(kw => (
-            <span key={kw.keyword} className="keyword-tag">{kw.keyword}</span>
+            <span key={kw.keyword} className="keyword-tag">
+              {kw.keyword}
+            </span>
           ))}
         </div>
       </div>
@@ -108,7 +156,11 @@ export default function MarketingSEOTools({ compact = false }) {
             {tab === 'seo_audit' && <Target size={16} />}
             {tab === 'content' && <FileText size={16} />}
             {tab === 'analytics' && <BarChart3 size={16} />}
-            {tab.replace('_', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+            {tab
+              .replace('_', ' ')
+              .split(' ')
+              .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+              .join(' ')}
           </button>
         ))}
       </div>
@@ -118,18 +170,18 @@ export default function MarketingSEOTools({ compact = false }) {
           <div className="keywords-section">
             <div className="search-bar">
               <Search size={18} />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Enter a keyword to research..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
               />
               <button onClick={handleAnalyze} disabled={analyzing}>
                 {analyzing ? <Loader size={16} className="spin" /> : <Sparkles size={16} />}
                 Analyze
               </button>
             </div>
-            
+
             <div className="keywords-table">
               <div className="table-header">
                 <span>Keyword</span>
@@ -139,7 +191,7 @@ export default function MarketingSEOTools({ compact = false }) {
                 <span>Actions</span>
               </div>
               {KEYWORD_SUGGESTIONS.map((kw, index) => (
-                <motion.div 
+                <motion.div
                   key={kw.keyword}
                   className="table-row"
                   initial={{ opacity: 0, x: -20 }}
@@ -150,11 +202,11 @@ export default function MarketingSEOTools({ compact = false }) {
                   <span className="volume">{kw.volume.toLocaleString()}</span>
                   <span className="difficulty">
                     <div className="difficulty-bar">
-                      <div 
-                        className="difficulty-fill" 
-                        style={{ 
+                      <div
+                        className="difficulty-fill"
+                        style={{
                           width: `${kw.difficulty}%`,
-                          background: getDifficultyColor(kw.difficulty)
+                          background: getDifficultyColor(kw.difficulty),
                         }}
                       />
                     </div>
@@ -162,8 +214,12 @@ export default function MarketingSEOTools({ compact = false }) {
                   </span>
                   <span className="cpc">{kw.cpc}</span>
                   <span className="actions">
-                    <button className="icon-btn" title="Copy"><Copy size={14} /></button>
-                    <button className="icon-btn" title="Add to tracking"><Target size={14} /></button>
+                    <button className="icon-btn" title="Copy">
+                      <Copy size={14} />
+                    </button>
+                    <button className="icon-btn" title="Add to tracking">
+                      <Target size={14} />
+                    </button>
                   </span>
                 </motion.div>
               ))}
@@ -203,7 +259,7 @@ export default function MarketingSEOTools({ compact = false }) {
             </div>
             <div className="content-ideas">
               {CONTENT_IDEAS.map((idea, index) => (
-                <motion.div 
+                <motion.div
                   key={idea.title}
                   className="idea-card"
                   initial={{ opacity: 0, y: 20 }}
@@ -217,7 +273,9 @@ export default function MarketingSEOTools({ compact = false }) {
                   <h5>{idea.title}</h5>
                   <div className="idea-keywords">
                     {idea.keywords.map(kw => (
-                      <span key={kw} className="keyword-tag">{kw}</span>
+                      <span key={kw} className="keyword-tag">
+                        {kw}
+                      </span>
                     ))}
                   </div>
                   <button className="create-btn">
@@ -271,4 +329,3 @@ export default function MarketingSEOTools({ compact = false }) {
     </div>
   );
 }
-
