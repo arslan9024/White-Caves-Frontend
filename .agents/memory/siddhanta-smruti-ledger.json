@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-14T18:04:30.000Z",
+  "totalErrorsRecorded": 3,
+  "totalErrorsPrevented": 0,
+  "records": [
+    {
+      "id": "SMRTI-0001",
+      "timestamp": "2026-11-14T08:50:32.000Z",
+      "errorSignature": "TS2820",
+      "errorContext": "src/components/ZoeFeatures/WhiteCavesBook/bookKnowledgeRegistry.ts: category mismatch",
+      "category": "TYPESCRIPT",
+      "rootCause": "Used 'Sovereign Architecture' which was not in union type BookCategory ('Core Architecture' | 'Brokerage Floors' | ...)",
+      "resolutionPattern": "Inspect BookCategory union definition before assigning category strings.",
+      "verifiedFixProof": "Changed category to 'Core Architecture', tsc passed cleanly.",
+      "preventionRule": "Always verify union literals against types.ts before adding new registry entries.",
+      "tags": ["ts2820", "book-category", "union", "registry"]
+    },
+    {
+      "id": "SMRTI-0002",
+      "timestamp": "2026-11-14T08:51:07.000Z",
+      "errorSignature": "TS2322 / TS2353",
+      "errorContext": "src/components/ZoeFeatures/WhiteCavesBook/chapterSiddhanta.ts: LeafArtifactNode schema mismatch",
+      "category": "TYPESCRIPT",
+      "rootCause": "Assigned decimal level 8.5 instead of integer 9, and used unmapped artifactCode property instead of artifactNumber.",
+      "resolutionPattern": "Match exact interface: level: 9, artifactNumber: number, title: string, type: 'LAW', paragraphs: [].",
+      "verifiedFixProof": "Updated fields to level: 9 and artifactNumber: 1; tsc output 0 errors.",
+      "preventionRule": "Always check treeTypes.ts interface properties before instantiating Level 9 LeafArtifactNodes.",
+      "tags": ["ts2322", "ts2353", "leaf-artifact", "tree-types"]
+    },
+    {
+      "id": "SMRTI-0003",
+      "timestamp": "2026-11-14T18:02:56.000Z",
+      "errorSignature": "JSON_SYNTAX_ERROR",
+      "errorContext": ".agents/sidhants/siddhanta-108.json: Unexpected token /",
+      "category": "SCHEMA",
+      "rootCause": "JavaScript-style comment /** ... */ placed in standard JSON file loaded with import attributes.",
+      "resolutionPattern": "Pure JSON must never contain JS comment blocks.",
+      "verifiedFixProof": "Removed comment header; node import evaluated cleanly.",
+      "preventionRule": "Strictly author .json data without comments.",
+      "tags": ["json", "syntax", "comments", "import-json"]
+    }
+  ]
+}
