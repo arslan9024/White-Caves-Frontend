@@ -5,7 +5,7 @@
  * Single Purpose File Law: < 350 lines
  */
 
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Search } from 'lucide-react';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 
@@ -19,6 +19,8 @@ export interface LindaChatListPaneProps {
   accountOptions?: Array<{ id: string; label: string }>;
   selectedAccount?: string;
   onSelectAccount?: (accountId: string) => void;
+  chatTypeFilter?: 'all' | 'direct' | 'groups';
+  onSelectChatType?: (type: 'all' | 'direct' | 'groups') => void;
 }
 
 export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
@@ -31,7 +33,11 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   accountOptions = [],
   selectedAccount = 'ALL',
   onSelectAccount,
+  chatTypeFilter = 'all',
+  onSelectChatType,
 }) => {
+  const [visibleCount, setVisibleCount] = useState(50);
+  const visibleConversations = conversations.slice(0, visibleCount);
   return (
     <div
       style={{
@@ -164,12 +170,44 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
               </button>
             );
           })}
+          {onSelectChatType && (
+            <>
+              {(['all', 'direct', 'groups'] as const).map(t => {
+                const active = chatTypeFilter === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    data-testid={`wa-type-pill-${t}`}
+                    onClick={() => onSelectChatType(t)}
+                    style={{
+                      padding: '3px 10px',
+                      borderRadius: 999,
+                      fontSize: 10,
+                      fontWeight: 700,
+                      whiteSpace: 'nowrap',
+                      cursor: 'pointer',
+                      border: active
+                        ? '1px solid #38BDF8'
+                        : isDark
+                          ? '1px solid #2A3942'
+                          : '1px solid #CBD5E1',
+                      background: active ? 'rgba(56, 189, 248, 0.16)' : 'transparent',
+                      color: active ? '#38BDF8' : isDark ? '#8696A0' : '#475569',
+                    }}
+                  >
+                    {t === 'all' ? 'All Chats' : t === 'direct' ? 'Direct' : 'Groups'}
+                  </button>
+                );
+              })}
+            </>
+          )}
         </div>
       )}
 
       {/* Conversations Scrollable List */}
       <div style={{ flex: 1, overflowY: 'auto' }}>
-        {conversations.map(conv => {
+        {visibleConversations.map(conv => {
           const isSelected = conv.id === selectedConvId;
           return (
             <div
@@ -244,6 +282,26 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
             </div>
           );
         })}
+        {conversations.length > visibleCount && (
+          <button
+            type="button"
+            data-testid="wa-load-more-chats"
+            onClick={() => setVisibleCount(c => c + 50)}
+            style={{
+              width: '100%',
+              padding: '10px',
+              background: isDark ? '#202C33' : '#F8FAFC',
+              color: '#25D366',
+              border: 'none',
+              borderTop: isDark ? '1px solid #2A3942' : '1px solid #E2E8F0',
+              fontSize: 11,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Load 50 more ({conversations.length - visibleCount} remaining)
+          </button>
+        )}
       </div>
     </div>
   );

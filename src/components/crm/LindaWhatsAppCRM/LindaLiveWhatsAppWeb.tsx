@@ -33,6 +33,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   const { isDark } = useTheme();
   const [selectedConvId, setSelectedConvId] = useState<string>(conversations[0]?.id || 'conv-1');
   const [selectedAccount, setSelectedAccount] = useState<string>('ALL');
+  const [chatTypeFilter, setChatTypeFilter] = useState<'all' | 'direct' | 'groups'>('all');
   const [searchFilter, setSearchFilter] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>({});
@@ -72,15 +73,24 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   // Real-time Socket.IO streaming for inbound/outbound messages & read receipts
   useEffect(() => {
     const unsubMsg = socketService.onLindaMessage?.((payload) => {
-      const phoneDigits = String(payload.phone || '').replace(/\D/g, '');
-      const convId = payload.leadId || (phoneDigits ? `LINDA_${phoneDigits}` : '');
+      const p = payload as unknown as Record<string, unknown>;
+      const phoneDigits = String(p.phone || p.from || '').replace(/\D/g, '');
+      const convId = String(p.leadId || '') || (phoneDigits ? `LINDA_${phoneDigits}` : '');
       if (!convId) return;
+      const isOutbound = p.direction === 'OUTBOUND' || Boolean(p.isFromMe);
+      const rawTs = p.timestamp;
+      const tsStr =
+        typeof rawTs === 'string'
+          ? rawTs
+          : rawTs instanceof Date
+            ? rawTs.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const incoming: ChatMessage = {
-        id: payload.messageId || `sock-${Date.now()}`,
-        sender: payload.direction === 'OUTBOUND' ? 'bot' : 'client',
-        text: payload.body,
-        timestamp: payload.timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        status: payload.direction === 'OUTBOUND' ? 'sent' : undefined,
+        id: String(p.messageId || p.id || `sock-${Date.now()}`),
+        sender: isOutbound ? 'bot' : 'client',
+        text: String(p.body || ''),
+        timestamp: tsStr,
+        status: isOutbound ? 'sent' : undefined,
       };
       setChatMessages(prev => {
         const existing = prev[convId] || [];
@@ -126,8 +136,10 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   const filteredConversations = useMemo(() => {
     return conversations.filter(c => {
-      const acct = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
-      if (selectedAccount !== 'ALL' && acct && acct !== selectedAccount) return false;
+      const ext = c as LindaConversationItem & { accountPhone?: string; isGroup?: boolean };
+      if (selectedAccount !== 'ALL' && ext.accountPhone && ext.accountPhone !== selectedAccount) return false;
+      if (chatTypeFilter === 'groups' && !ext.isGroup) return false;
+      if (chatTypeFilter === 'direct' && ext.isGroup) return false;
       if (!searchFilter.trim()) return true;
       const q = searchFilter.toLowerCase();
       return (
@@ -137,7 +149,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
         c.unit.toLowerCase().includes(q)
       );
     });
-  }, [conversations, searchFilter, selectedAccount]);
+  }, [conversations, searchFilter, selectedAccount, chatTypeFilter]);
 
   const activeMessages = chatMessages[selectedConv?.id || ''] || [
     {
@@ -211,6 +223,8 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
         accountOptions={accountOptions}
         selectedAccount={selectedAccount}
         onSelectAccount={setSelectedAccount}
+        chatTypeFilter={chatTypeFilter}
+        onSelectChatType={setChatTypeFilter}
       />
 
       <LindaChatThreadPane

@@ -9,6 +9,7 @@ import React, { FC } from 'react';
 import {
   Send,
   Sparkles,
+  Check,
   CheckCheck,
   Phone,
   Video,
@@ -188,7 +189,15 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                 }}
               >
                 <span>{msg.timestamp}</span>
-                {isOutbound && <CheckCheck size={12} color="#53BDEB" />}
+                {isOutbound && (
+                  msg.status === 'read' ? (
+                    <CheckCheck size={12} color="#53BDEB" />
+                  ) : msg.status === 'delivered' ? (
+                    <CheckCheck size={12} color="#8696A0" />
+                  ) : (
+                    <Check size={12} color="#8696A0" />
+                  )
+                )}
               </div>
             </div>
           );

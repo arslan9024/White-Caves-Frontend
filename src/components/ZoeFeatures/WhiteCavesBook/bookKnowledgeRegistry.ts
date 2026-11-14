@@ -303,6 +303,40 @@ White-Caves-Mobile   -> exp://localhost:8081`,
     ],
   },
   {
+    id: 'ch-12',
+    slug: 'chapter-12-web-decoupling-sovereignty',
+    title: 'Chapter 12: The Great Web Decoupling & Multi-Repo Sovereignty',
+    subtitle: 'Separating Public Client Discovery (Next.js) from Internal Enterprise Operations (Vite CRM)',
+    category: 'Core Architecture',
+    readTime: '10 min read',
+    summary:
+      'Documents the architectural decoupling of public brochureware and marketing components into White-Caves-Web (Next.js 16 Turbopack) while streamlining White-Caves-Frontend into a pure authenticated CRM Command Center.',
+    topics: ['Web Decoupling', 'Next.js 16', 'Vite CRM', 'Multi-Repo', 'Port Isolation'],
+    sections: [
+      {
+        id: 's1',
+        title: 'Public Discovery vs. Internal Enterprise CRM',
+        content:
+          'Public brochureware (BrandLogo, TrustStrip, CurrencyUnitBar, MarketPulseLiveTicker, ToolsDashboard, AreaGuideGrid, MobileAppBanner, InterestWizard, InteractiveMap) is isolated in White-Caves-Web (Next.js 16 Turbopack), leaving White-Caves-Frontend as a zero-bloat authenticated CRM Command Center for Department Floors 1–12 and AIAMS.',
+        keyTakeaways: [
+          'Zero public marketing dead-weight in the Vite CRM bundle.',
+          'Dedicated Next.js 16 SSR/ISR surface for SEO and lead capture.',
+          'Shared domain contracts anchored in White-Caves-Server Prisma schema.',
+        ],
+      },
+      {
+        id: 's2',
+        title: 'Multi-Repo Sovereignty & Real-Time Linda Sync',
+        content:
+          'Fixed port isolation across Frontend (:3000), Web (:3001), Linda (:3002), Aegis-Sterling (:3333), Server (:5001), and Mobile (:8081) eliminates collisions. Server Linda webhook relays (/api/v1/webhooks/linda/*) stream whatsapp:linda:hot_lead and whatsapp:linda:campaign events directly to the CRM.',
+        keyTakeaways: [
+          'Deterministic port audit via npm run ports:check.',
+          'Real-time Socket.IO hot-lead escalation and campaign telemetry.',
+        ],
+      },
+    ],
+  },
+  {
     id: 'ch-progress',
     slug: 'progress-intelligence',
     title: 'Appendix: Progress Intelligence & Target Mesh',

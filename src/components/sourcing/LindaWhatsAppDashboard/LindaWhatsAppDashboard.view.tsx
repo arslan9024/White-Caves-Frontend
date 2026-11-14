@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { MessageCircle } from 'lucide-react';
+import { Flame, MessageCircle, Radio, X } from 'lucide-react';
 import { useLindaWhatsAppDashboardLogic } from './LindaWhatsAppDashboard.logic';
 import {
   ConversationsListPanel,
@@ -33,6 +33,9 @@ export const LindaWhatsAppDashboard: React.FC = () => {
     handleSendMessage,
     handleQuickAddOpportunity,
     handleConfirmAddToMary,
+    hotLeadAlert,
+    dismissHotLeadAlert,
+    campaignMetrics,
   } = useLindaWhatsAppDashboardLogic();
 
   return (
@@ -45,7 +48,36 @@ export const LindaWhatsAppDashboard: React.FC = () => {
           </div>
           <p className="linda-subtitle">WhatsApp conversation analysis & property sourcing</p>
         </div>
+        {campaignMetrics && (
+          <div className="linda-campaign-metrics" data-testid="linda-campaign-metrics">
+            <Radio size={16} />
+            <span>
+              <strong>{campaignMetrics.campaignName}</strong> ({campaignMetrics.status}) — Dispatched:{' '}
+              {campaignMetrics.totalDispatched}/{campaignMetrics.dailyTarget} | Skipped:{' '}
+              {campaignMetrics.skipped}
+            </span>
+          </div>
+        )}
       </div>
+
+      {hotLeadAlert && (
+        <div className="linda-hot-lead-toast" role="alert" data-testid="linda-hot-lead-toast">
+          <Flame size={18} />
+          <div>
+            <strong>HOT LEAD: {hotLeadAlert.name}</strong> ({hotLeadAlert.phone}) —{' '}
+            {hotLeadAlert.project}
+            {hotLeadAlert.unit ? ` • ${hotLeadAlert.unit}` : ''} ({hotLeadAlert.confidence}%
+            confidence): {hotLeadAlert.inquiry}
+          </div>
+          <button
+            type="button"
+            aria-label="Dismiss hot lead alert"
+            onClick={dismissHotLeadAlert}
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
 
       <div className="linda-container">
         <ConversationsListPanel
