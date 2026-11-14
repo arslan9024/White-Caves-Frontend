@@ -5,6 +5,10 @@
  */
 
 import { useState, useEffect } from 'react';
+import socketService, {
+  type LindaCampaignTelemetryPayload,
+  type LindaHotLeadEscalationPayload,
+} from '../../../services/socketService';
 import type {
   ConversationItem,
   ChatMessageItem,
@@ -22,6 +26,48 @@ export function useLindaWhatsAppDashboardLogic() {
   const [showOpportunity, setShowOpportunity] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<PropertyOpportunity | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hotLeadAlert, setHotLeadAlert] = useState<LindaHotLeadEscalationPayload | null>(null);
+  const [campaignMetrics, setCampaignMetrics] = useState<LindaCampaignTelemetryPayload | null>(
+    null
+  );
+
+  useEffect(() => {
+    const unsubHotLead = socketService?.onLindaHotLead?.(payload => {
+      setHotLeadAlert(payload);
+      setConversations(prev => {
+        const existingIdx = prev.findIndex(c => c.phone === payload.phone || c.id === payload.id);
+        const updatedItem: ConversationItem = {
+          id: payload.id,
+          name: payload.name,
+          phone: payload.phone,
+          lastMessage: payload.inquiry,
+          lastMessageTime: 'Just now',
+          unread: 1,
+          hasOpportunity: true,
+          opportunityConfidence: payload.confidence,
+        };
+        if (existingIdx >= 0) {
+          const next = [...prev];
+          next[existingIdx] = {
+            ...next[existingIdx],
+            ...updatedItem,
+            unread: next[existingIdx].unread + 1,
+          };
+          return next;
+        }
+        return [updatedItem, ...prev];
+      });
+    });
+
+    const unsubCampaign = socketService?.onLindaCampaignTelemetry?.(payload => {
+      setCampaignMetrics(payload);
+    });
+
+    return () => {
+      unsubHotLead?.();
+      unsubCampaign?.();
+    };
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -188,5 +234,8 @@ export function useLindaWhatsAppDashboardLogic() {
     handleSendMessage,
     handleQuickAddOpportunity,
     handleConfirmAddToMary,
+    hotLeadAlert,
+    dismissHotLeadAlert: () => setHotLeadAlert(null),
+    campaignMetrics,
   };
 }

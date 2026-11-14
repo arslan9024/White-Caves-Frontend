@@ -7,6 +7,7 @@
 
 import React, { useState, useMemo, useEffect, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
+import socketService from '../../../services/socketService';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatListPane } from './LindaChatListPane';
 import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
@@ -67,6 +68,50 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       cancelled = true;
     };
   }, [selectedConv?.id, selectedConv?.phone]);
+
+  // Real-time Socket.IO streaming for inbound/outbound messages & read receipts
+  useEffect(() => {
+    const unsubMsg = socketService.onLindaMessage?.((payload) => {
+      const phoneDigits = String(payload.phone || '').replace(/\D/g, '');
+      const convId = payload.leadId || (phoneDigits ? `LINDA_${phoneDigits}` : '');
+      if (!convId) return;
+      const incoming: ChatMessage = {
+        id: payload.messageId || `sock-${Date.now()}`,
+        sender: payload.direction === 'OUTBOUND' ? 'bot' : 'client',
+        text: payload.body,
+        timestamp: payload.timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: payload.direction === 'OUTBOUND' ? 'sent' : undefined,
+      };
+      setChatMessages(prev => {
+        const existing = prev[convId] || [];
+        if (existing.some(m => m.id === incoming.id)) return prev;
+        return { ...prev, [convId]: [...existing, incoming] };
+      });
+    });
+
+    const rawSocket = (socketService as unknown as { socket?: { on: (ev: string, cb: (p: Record<string, unknown>) => void) => void; off: (ev: string, cb: (p: Record<string, unknown>) => void) => void } }).socket;
+    const handleReceipt = (payload: Record<string, unknown>) => {
+      const msgId = String(payload.messageId || '');
+      const rawStatus = String(payload.status || '').toLowerCase();
+      const status: ChatMessage['status'] =
+        rawStatus === 'read' ? 'read' : rawStatus === 'delivered' ? 'delivered' : 'sent';
+      if (!msgId) return;
+      setChatMessages(prev => {
+        const next: Record<string, ChatMessage[]> = {};
+        for (const [cid, msgs] of Object.entries(prev)) {
+          next[cid] = msgs.map(m => (m.id === msgId ? { ...m, status } : m));
+        }
+        return next;
+      });
+    };
+
+    rawSocket?.on('linda:receipt', handleReceipt);
+
+    return () => {
+      unsubMsg?.();
+      rawSocket?.off('linda:receipt', handleReceipt);
+    };
+  }, []);
 
   const accountOptions = useMemo(() => {
     const dynamic = Array.from(
