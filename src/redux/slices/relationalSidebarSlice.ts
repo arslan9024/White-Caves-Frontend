@@ -1,67 +1,18 @@
 // @ts-nocheck
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchDepartmentDataFromApi } from '../../mocks/apiHandler';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  fetchDepartmentData,
+  fetchAssistantData,
+  fetchContextualData,
+} from './relationalSidebarThunks';
 
-// Thunk for fetching department-specific data
-export const fetchDepartmentData = createAsyncThunk(
-  'relationalSidebar/fetchDepartmentData',
-  async (departmentId, { rejectWithValue }) => {
-    try {
-      // Use mock API for now, will be replaced with real API endpoint
-      const response = await fetchDepartmentDataFromApi(departmentId);
-      if (!response.success) throw new Error(response.error);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+export {
+  fetchDepartmentData,
+  fetchAssistantData,
+  fetchContextualData,
+};
 
-// Thunk for fetching assistant data
-export const fetchAssistantData = createAsyncThunk(
-  'relationalSidebar/fetchAssistantData',
-  async (assistantId, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`/api/v1/ai/assistants/${assistantId}`);
-      if (response.ok) {
-        const json = await response.json();
-        return json.data || json;
-      }
-
-      // Fallback mock payload if endpoint is offline
-      return {
-        id: assistantId,
-        name: `Nadia Assistant ${assistantId}`,
-        status: 'active',
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-// Thunk for fetching context-specific data (e.g., inventory)
-export const fetchContextualData = createAsyncThunk(
-  'relationalSidebar/fetchContextualData',
-  async ({ assistantId, context }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`/api/v1/ai/assistants/${assistantId}/contexts/${context}`);
-      if (response.ok) {
-        const json = await response.json();
-        return json.data || json;
-      }
-
-      // Fallback mock response for offline dev mode
-      return {
-        context,
-        assistantId,
-        data: [],
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+export * from './relationalSidebarSelectors';
 
 const initialState = {
   // Left Sidebar State
@@ -111,16 +62,16 @@ const relationalSidebarSlice = createSlice({
     // Left Sidebar Actions
     setSelectedDepartment: (state, action) => {
       state.selectedDepartment = action.payload;
-      state.selectedService = null; // Reset service when dept changes
-      state.selectedSubitem = null; // Reset subitem when dept changes
-      state.activeContext = null; // Reset context
+      state.selectedService = null;
+      state.selectedSubitem = null;
+      state.activeContext = null;
       state.showFeatureSidebar = false;
     },
 
     setSelectedService: (state, action) => {
       state.selectedService = action.payload;
-      state.selectedSubitem = null; // Reset subitem when service changes
-      state.activeContext = null; // Reset context
+      state.selectedSubitem = null;
+      state.activeContext = null;
       state.showFeatureSidebar = false;
     },
 
@@ -157,7 +108,6 @@ const relationalSidebarSlice = createSlice({
     addToSelectionHistory: (state, action) => {
       const { dept, service, subitem, filters = {}, scrollPos = 0 } = action.payload;
 
-      // Create history entry
       const entry = {
         dept,
         service,
@@ -167,10 +117,8 @@ const relationalSidebarSlice = createSlice({
         timestamp: new Date().toISOString(),
       };
 
-      // Add to history
       state.selectionHistory = [entry, ...state.selectionHistory];
 
-      // Keep only last 3 entries
       if (state.selectionHistory.length > state.maxHistoryLength) {
         state.selectionHistory = state.selectionHistory.slice(0, state.maxHistoryLength);
       }
@@ -244,13 +192,12 @@ const relationalSidebarSlice = createSlice({
     },
 
     // Bulk Reset
-    resetRelationalSidebar: state => {
+    resetRelationalSidebar: () => {
       return initialState;
     },
   },
 
   extraReducers: builder => {
-    // Fetch Department Data
     builder
       .addCase(fetchDepartmentData.pending, state => {
         state.departmentLoading = true;
@@ -265,7 +212,6 @@ const relationalSidebarSlice = createSlice({
         state.departmentError = action.payload;
       });
 
-    // Fetch Assistant Data
     builder
       .addCase(fetchAssistantData.pending, state => {
         state.assistantLoading = true;
@@ -280,7 +226,6 @@ const relationalSidebarSlice = createSlice({
         state.assistantError = action.payload;
       });
 
-    // Fetch Contextual Data (e.g., Inventory)
     builder
       .addCase(fetchContextualData.pending, state => {
         state.contextLoading = true;
@@ -319,32 +264,5 @@ export const {
   setRelationshipMap,
   resetRelationalSidebar,
 } = relationalSidebarSlice.actions;
-
-// Selectors
-export const selectSelectedDepartment = state => state.relationalSidebar.selectedDepartment;
-export const selectSelectedService = state => state.relationalSidebar.selectedService;
-export const selectSelectedSubitem = state => state.relationalSidebar.selectedSubitem;
-export const selectSelectedAssistant = state => state.relationalSidebar.selectedAssistant;
-export const selectActiveContext = state => state.relationalSidebar.activeContext;
-export const selectShowFeatureSidebar = state => state.relationalSidebar.showFeatureSidebar;
-export const selectFilteredAssistants = state => state.relationalSidebar.filteredAssistants;
-export const selectFilteredServices = state => state.relationalSidebar.filteredServices;
-export const selectAssistantNotifications = state => state.relationalSidebar.assistantNotifications;
-export const selectContextData = state => state.relationalSidebar.contextData;
-export const selectSelectionHistory = state => state.relationalSidebar.selectionHistory;
-export const selectServiceStateCache = state => state.relationalSidebar.serviceStateCache;
-export const selectMainContentLoading = state => state.relationalSidebar.mainContentLoading;
-export const selectMainContentError = state => state.relationalSidebar.mainContentError;
-export const selectDepartmentData = state => state.relationalSidebar.departmentData;
-export const selectAssistantData = state => state.relationalSidebar.assistantData;
-
-// Helper selector to get cached state for current service
-export const selectCurrentServiceCache = state => {
-  const dept = state.relationalSidebar.selectedDepartment;
-  const service = state.relationalSidebar.selectedService;
-  if (!dept || !service) return null;
-  const cacheKey = `${dept}_${service}`;
-  return state.relationalSidebar.serviceStateCache[cacheKey] || null;
-};
 
 export default relationalSidebarSlice.reducer;
