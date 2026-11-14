@@ -1,7 +1,7 @@
 /**
  * HomePage — Unit Tests
- * Tests: rendering, lazy-loaded sections, Redux integration,
- * document title, public homepage rendering, property click handling
+ * Tests: rendering, lazy-loaded portal sections, Redux integration,
+ * document title, JSON-LD, and error retry handling after public homepage decoupling to White-Caves-Web.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
@@ -78,25 +78,6 @@ vi.mock('../store/slices/homepageSlice', () => ({
   ) => state,
 }));
 
-// Mock all lazy-loaded sections
-vi.mock('../components/homepage/Hero/LuxuryHeroSection', () => ({
-  LuxuryHeroSection: () => <div data-testid="hero-section">Hero</div>,
-}));
-vi.mock('../components/homepage/Features', () => ({
-  default: () => <div data-testid="features-section">Features</div>,
-}));
-vi.mock('../components/homepage/MarketStats/MarketStatsBanner', () => ({
-  default: () => <div data-testid="market-stats-banner">MarketStatsBanner</div>,
-}));
-vi.mock('../components/homepage/FeaturedProperties/FeaturedPropertiesSection', () => ({
-  default: () => <div data-testid="featured-properties-section">FeaturedProperties</div>,
-}));
-vi.mock('../components/homepage/Team', () => ({
-  default: () => <div data-testid="team-section">Team</div>,
-}));
-vi.mock('../components/homepage/Contact', () => ({
-  default: () => <div data-testid="contact-section">Contact</div>,
-}));
 vi.mock('../components/CompanyProfile', () => ({
   default: () => <div data-testid="company-profile">CompanyProfile</div>,
 }));
@@ -197,14 +178,13 @@ describe('HomePage', () => {
     MOCK_HOMEPAGE_ERROR = null;
   });
 
-  // ── Rendering ────────────────────────────────────────────────
-
   describe('Rendering', () => {
-    it('should render the home-page container', async () => {
+    it('should render the home-page container and CRM gateway banner', async () => {
       renderPage();
       await waitFor(() => {
         const el = document.querySelector('.home-page');
         expect(el).toBeTruthy();
+        expect(screen.getByTestId('crm-gateway-banner')).toBeInTheDocument();
       });
     });
 
@@ -237,23 +217,7 @@ describe('HomePage', () => {
     });
   });
 
-  // ── Lazy-Loaded Sections ─────────────────────────────────────
-
   describe('Lazy-Loaded Sections', () => {
-    it('should render Hero section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('hero-section')).toBeInTheDocument();
-      });
-    });
-
-    it('should render Features section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('features-section')).toBeInTheDocument();
-      });
-    });
-
     it('should render CompanyProfile section', async () => {
       renderPage();
       await waitFor(() => {
@@ -261,24 +225,10 @@ describe('HomePage', () => {
       });
     });
 
-    it('should render Team section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('team-section')).toBeInTheDocument();
-      });
-    });
-
     it('should render BlogSection', async () => {
       renderPage();
       await waitFor(() => {
         expect(screen.getByTestId('blog-section')).toBeInTheDocument();
-      });
-    });
-
-    it('should render ContactCTA section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('contact-section')).toBeInTheDocument();
       });
     });
 
@@ -297,8 +247,6 @@ describe('HomePage', () => {
     });
   });
 
-  // ── Redux Integration ────────────────────────────────────────
-
   describe('Redux Integration', () => {
     it('should dispatch setProperties with HOME_PROPERTIES on mount', () => {
       const store = createMockStore();
@@ -309,7 +257,6 @@ describe('HomePage', () => {
           </MemoryRouter>
         </Provider>
       );
-      // Store should have properties set
       const state = store.getState();
       expect(state.properties.properties.length).toBeGreaterThanOrEqual(2);
     });
@@ -354,17 +301,6 @@ describe('HomePage', () => {
 
       expect(mockedClearError).toHaveBeenCalledTimes(1);
       expect(mockedFetchHomepageData).toHaveBeenCalledTimes(2);
-    });
-  });
-
-  // ── Property Click ───────────────────────────────────────────
-
-  describe('Property Click', () => {
-    it('should call addToRecent with property id when handlePropertyClick is triggered', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('featured-properties-section')).toBeInTheDocument();
-      });
     });
   });
 });

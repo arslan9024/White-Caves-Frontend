@@ -28,19 +28,7 @@ import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePag
 import '../styles/luxuryDesignSystem.css';
 import './HomePage.css';
 
-// Above-the-fold: Hero is the LCP element — import directly (NOT lazy)
-import { LuxuryHeroSection as Hero } from '../components/homepage/Hero/LuxuryHeroSection';
-
-// Lazy-loaded companion sections
-const Features = lazy(() => import('../components/homepage/Features'));
-const MarketStatsBanner = lazy(
-  () => import('../components/homepage/MarketStats/MarketStatsBanner')
-);
-const FeaturedPropertiesSection = lazy(
-  () => import('../components/homepage/FeaturedProperties/FeaturedPropertiesSection')
-);
-const Team = lazy(() => import('../components/homepage/Team'));
-const ContactCTA = lazy(() => import('../components/homepage/Contact'));
+// Companion portal sections
 const NewsletterSubscription = lazy(() => import('../components/NewsletterSubscription'));
 const CompanyProfile = lazy(() => import('../components/CompanyProfile'));
 const BlogSection = lazy(() => import('../components/BlogSection'));
@@ -224,12 +212,41 @@ const HomePage: FC = () => {
           </div>
         ) : null}
 
-        {/* Phase 25: Hero is the LCP element — rendered immediately */}
-        <Hero
-          marketStats={marketStats}
-          isLoading={isHomepageLoading}
-          onSearchClick={() => navigate('/properties')}
-        />
+        {/* Decoupled CRM Gateway Banner (Public Homepage migrated to White-Caves-Web) */}
+        <section
+          data-testid="crm-gateway-banner"
+          aria-label="White Caves Enterprise Portal Gateway"
+          className="py-12 px-6 max-w-7xl mx-auto"
+        >
+          <div className="rounded-3xl p-8 bg-slate-900/90 border border-red-500/30 shadow-2xl text-center">
+            <span className="inline-block px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 text-xs font-extrabold uppercase tracking-wider mb-3">
+              Sovereign CRM &amp; Client Portal
+            </span>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              White Caves Real Estate LLC — Enterprise Hub
+            </h1>
+            <p className="text-sm text-slate-300 max-w-2xl mx-auto mt-2">
+              Access your role-based CRM workspace, DLD/Ejari compliance desk, or browse active
+              portfolio inventory.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => navigate('/properties')}
+                className="px-5 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-bold transition"
+              >
+                Browse Inventory
+              </button>
+              <button
+                type="button"
+                onClick={() => handlePropertyClick(1)}
+                className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition"
+              >
+                Featured Trophy Asset
+              </button>
+            </div>
+          </div>
+        </section>
 
         {/* Market Trust Strip */}
         <section className="home-page__trust-strip" aria-label="Market trust highlights">
@@ -255,31 +272,15 @@ const HomePage: FC = () => {
           </div>
         </section>
 
-        {/* Above-fold companions */}
-        <Suspense fallback={<SectionLoader />}>
-          <Features />
-          <MarketStatsBanner marketStats={marketStats} isLoading={isHomepageLoading} />
-        </Suspense>
-
-        {/* Featured Properties */}
-        <Suspense fallback={<SectionLoader />}>
-          <FeaturedPropertiesSection
-            featuredProperties={displayedFeatured}
-            isLoading={isHomepageLoading}
-          />
-        </Suspense>
-
-        {/* Below the fold companion sections */}
+        {/* Companion portal sections */}
         <Suspense fallback={<SectionLoader />}>
           <CompanyProfile />
-          <Team topAgents={topAgents} isLoading={isHomepageLoading} />
           <BlogSection
             marketStats={marketStats}
             featuredProperties={displayedFeatured}
             locationTrends={locationTrends}
           />
           <NewsletterSubscription />
-          <ContactCTA />
           <OnboardingGateway />
         </Suspense>
 

@@ -74,61 +74,13 @@ vi.mock('../store/slices/homepageSlice', () => ({
   ) => state,
 }));
 
-vi.mock('../components/homepage/Hero/LuxuryHeroSection', () => ({
-  LuxuryHeroSection: () => <div data-testid="hero-section">Hero</div>,
-}));
-
-vi.mock('../components/homepage/Features', () => ({
-  default: () => <div data-testid="features-section">Features</div>,
-}));
-
-vi.mock('../components/homepage/MarketStats/MarketStatsBanner', () => ({
-  default: () => <div data-testid="market-stats-banner">MarketStatsBanner</div>,
-}));
-
-vi.mock('../components/homepage/Locations', () => ({
-  default: () => <div data-testid="locations-section">Locations</div>,
-}));
-
-vi.mock('../components/homepage/FeaturedProperties/FeaturedPropertiesSection', () => ({
-  default: () => <div data-testid="featured-properties-section">FeaturedProperties</div>,
-}));
-
-vi.mock('../components/homepage/Team', () => ({
-  default: () => <div data-testid="team-section">Team</div>,
-}));
-
-vi.mock('../components/homepage/Testimonials', () => ({
-  default: () => <div data-testid="testimonials-section">Testimonials</div>,
-}));
-
-vi.mock('../components/homepage/Contact', () => ({
-  default: () => <div data-testid="contact-section">Contact</div>,
-}));
-
-vi.mock('../components/PropertyComparison', () => ({
-  default: () => <div data-testid="property-comparison">PropertyComparison</div>,
-}));
-
-vi.mock('../components/NeighborhoodAnalyzer', () => ({
-  default: () => <div data-testid="neighborhood-analyzer">NeighborhoodAnalyzer</div>,
-}));
-
-vi.mock('../components/RentVsBuyCalculator', () => ({
-  default: () => <div data-testid="rent-vs-buy">RentVsBuyCalculator</div>,
-}));
-
-vi.mock('../components/OffPlanTracker', () => ({
-  default: () => <div data-testid="off-plan-tracker">OffPlanTracker</div>,
-}));
-
-vi.mock('../components/VirtualTourGallery', () => ({
-  default: () => <div data-testid="virtual-tour-gallery">VirtualTourGallery</div>,
-}));
-
-vi.mock('../components/DubaiMap', () => ({
-  default: () => <div data-testid="dubai-map">DubaiMap</div>,
-}));
+// IntersectionObserver mock for Framer Motion viewport triggers
+class MockIntersectionObserver {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+}
+window.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver;
 
 vi.mock('../components/CompanyProfile', () => ({
   default: () => <div data-testid="company-profile">CompanyProfile</div>,

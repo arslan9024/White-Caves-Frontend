@@ -44,10 +44,14 @@ describe('Vite Build Configuration', () => {
  * ──────────────────────────────────────────────────────────────── */
 
 describe('Route Code Splitting', () => {
-  const appSource = readSource('src/App.tsx');
+  const appSource = [
+    readSource('src/App.tsx'),
+    readSource('src/components/App/App.pages.tsx'),
+    readSource('src/components/App/App.view.tsx'),
+  ].join('\n');
 
   it('uses React.lazy for route components', () => {
-    const lazyCount = (appSource.match(/\blazy\s*\(\s*\(\)/g) || []).length;
+    const lazyCount = (appSource.match(/\blazy(?:Retry)?\s*\(\s*\(\)/g) || []).length;
     expect(lazyCount).toBeGreaterThanOrEqual(10);
   });
 
@@ -56,17 +60,17 @@ describe('Route Code Splitting', () => {
   });
 
   it('lazy-loads public pages', () => {
-    expect(appSource).toMatch(/lazy.*HomePage/);
-    expect(appSource).toMatch(/lazy.*PropertiesPage/);
-    expect(appSource).toMatch(/lazy.*PropertyDetailPage/);
+    expect(appSource).toMatch(/HomePage\s*=\s*lazy/);
+    expect(appSource).toMatch(/PropertiesPage\s*=\s*lazy/);
+    expect(appSource).toMatch(/PropertyDetailPage\s*=\s*lazy/);
   });
 
   it('lazy-loads auth pages', () => {
-    expect(appSource).toMatch(/lazy.*SignInPage/);
+    expect(appSource).toMatch(/SignInPage\s*=\s*lazy/);
   });
 
   it('lazy-loads CRM dashboard', () => {
-    expect(appSource).toMatch(/lazy.*Dashboard|lazy.*CRM/i);
+    expect(appSource).toMatch(/(?:Dashboard|CRM).*=\s*lazy/i);
   });
 });
 
@@ -77,17 +81,18 @@ describe('Route Code Splitting', () => {
 describe('Homepage Code Splitting', () => {
   const homepageSource = readSource('src/pages/HomePage.tsx');
 
-  it('eagerly loads hero section for LCP optimization', () => {
-    expect(homepageSource).toMatch(/import.*Hero.*LuxuryHeroSection/);
+  it('renders decoupled CRM gateway banner after public sections moved to White-Caves-Web', () => {
+    expect(homepageSource).toContain('data-testid="crm-gateway-banner"');
   });
 
-  it('lazy-loads features section', () => {
-    expect(homepageSource).toMatch(/lazy.*Features/);
+  it('lazy-loads companion portal sections', () => {
+    expect(homepageSource).toMatch(/lazy.*CompanyProfile/);
+    expect(homepageSource).toMatch(/lazy.*OnboardingGateway/);
   });
 
-  it('lazy-loads at least 10 homepage sections', () => {
+  it('lazy-loads at least 4 portal companion sections', () => {
     const lazyCount = (homepageSource.match(/\blazy\s*\(\s*\(\)/g) || []).length;
-    expect(lazyCount).toBeGreaterThanOrEqual(10);
+    expect(lazyCount).toBeGreaterThanOrEqual(4);
   });
 });
 
