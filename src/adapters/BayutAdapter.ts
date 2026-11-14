@@ -14,6 +14,12 @@
 
 import { BasePortalAdapter } from './BasePortalAdapter';
 import crypto from 'crypto';
+import {
+  mapUpdatesToBayutFormat,
+  mapEventsToBayutFormat,
+  validateBayutWebhookSignature,
+  normalizeBayutPropertyData,
+} from './bayutAdapter.helpers';
 
 export class BayutAdapter extends BasePortalAdapter {
   constructor() {
@@ -34,16 +40,13 @@ export class BayutAdapter extends BasePortalAdapter {
     this.webhookSecret = credentials.webhookSecret || crypto.randomBytes(32).toString('hex');
 
     try {
-      // Verify credentials by making a test request
       const response = await this.makeRequest('GET', '/properties?pageNumber=1&pageSize=1');
       
       if (response && response.data) {
         this.isConnected = true;
-        
         return true;
       }
     } catch (error) {
-      
       this.isConnected = false;
       throw error;
     }
@@ -64,13 +67,6 @@ export class BayutAdapter extends BasePortalAdapter {
 
   /**
    * Search properties
-   * Filters supported:
-   * - location: string (Dubai, Abu Dhabi, etc)
-   * - priceMin/priceMax: number
-   * - beds: number
-   * - baths: number
-   * - type: string (apartment, villa, townhouse, etc)
-   * - purpose: string (buy, rent)
    */
   async searchProperties(filters = {}) {
     const params = new URLSearchParams();
@@ -181,24 +177,8 @@ export class BayutAdapter extends BasePortalAdapter {
     return true;
   }
 
-  /**
-   * Map standard updates to Bayut format
-   */
   mapUpdatesToBayutFormat(updates) {
-    const mapped = {};
-
-    if (updates.title) mapped.title = updates.title;
-    if (updates.description) mapped.description = updates.description;
-    if (updates.price) mapped.price = updates.price;
-    if (updates.specifications) {
-      if (updates.specifications.bedrooms) mapped.beds = updates.specifications.bedrooms;
-      if (updates.specifications.bathrooms) mapped.baths = updates.specifications.bathrooms;
-      if (updates.specifications.area) mapped.area = updates.specifications.area;
-    }
-    if (updates.images) mapped.images = updates.images;
-    if (updates.amenities) mapped.amenities = updates.amenities;
-
-    return mapped;
+    return mapUpdatesToBayutFormat(updates);
   }
 
   /**
@@ -217,33 +197,20 @@ export class BayutAdapter extends BasePortalAdapter {
     const response = await this.makeRequest('POST', '/webhooks', webhook);
     
     if (response.data) {
-      
       return response.data;
     }
 
     return null;
   }
 
-  /**
-   * Map event names to Bayut format
-   */
   mapEventsToBayutFormat(events) {
-    const mapping = {
-      'property.created': 'property:created',
-      'property.updated': 'property:updated',
-      'property.deleted': 'property:deleted',
-      'lead.created': 'lead:created',
-      'lead.updated': 'lead:updated'
-    };
-
-    return events.map(event => mapping[event] || event);
+    return mapEventsToBayutFormat(events);
   }
 
   /**
    * Handle webhook payload from Bayut
    */
   async handleWebhookPayload(payload) {
-
     if (!this.validateWebhookSignature(payload, payload.signature, this.webhookSecret)) {
       throw new Error('Invalid webhook signature');
     }
@@ -265,53 +232,15 @@ export class BayutAdapter extends BasePortalAdapter {
     return result;
   }
 
-  /**
-   * Validate webhook signature
-   */
   validateWebhookSignature(payload, signature, secret) {
-    if (!signature || !secret) return false;
-
-    const payload_string = JSON.stringify(payload.data);
-    const computed_signature = crypto
-      .createHmac('sha256', secret)
-      .update(payload_string)
-      .digest('hex');
-
-    return computed_signature === signature;
+    return validateBayutWebhookSignature(payload, signature, secret);
   }
 
   /**
    * Normalize Bayut property to standard format
    */
   normalizeProperty(bayutProperty) {
-    const normalized = super.normalizeProperty({
-      id: bayutProperty.id,
-      title: bayutProperty.title,
-      description: bayutProperty.description,
-      price: bayutProperty.price,
-      currency: bayutProperty.currency || 'AED',
-      bedrooms: bayutProperty.beds,
-      bathrooms: bayutProperty.baths,
-      area: bayutProperty.area,
-      areaUnit: 'sqft',
-      type: bayutProperty.propertyType,
-      purpose: bayutProperty.transactionType,
-      furnished: bayutProperty.furnish === 'furnished',
-      parking: bayutProperty.parking,
-      images: bayutProperty.photos || [],
-      amenities: bayutProperty.amenities || [],
-      location: bayutProperty.location?.name || '',
-      city: bayutProperty.location?.city,
-      latitude: bayutProperty.location?.lat,
-      longitude: bayutProperty.location?.lng,
-      agent: bayutProperty.agent,
-      createdAt: bayutProperty.createdDate,
-      updatedAt: bayutProperty.updatedDate,
-      url: bayutProperty.externalUrl || `https://www.bayut.com/property/${bayutProperty.id}`,
-      verified: bayutProperty.isVerified
-    });
-
-    return normalized;
+    return super.normalizeProperty(normalizeBayutPropertyData(bayutProperty));
   }
 
   /**
