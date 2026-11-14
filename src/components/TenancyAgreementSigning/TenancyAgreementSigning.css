@@ -1,0 +1,270 @@
+.tenancy-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.tenancy-header {
+  margin-bottom: 24px;
+}
+
+.tenancy-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.tenancy-header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.agreements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.agreement-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.agreement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.agreement-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.agreement-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-row .label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.detail-row .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 4px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.signatures-status {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.signature-item .sig-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.signature-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.sig-email,
+.sig-date,
+.sig-rejection {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.sig-rejection {
+  color: #dc2626;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.sign-button {
+  background: #ef4444;
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sign-button:hover {
+  background: #dc2626;
+}
+
+.reject-button {
+  background: #ffffff;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.fully-signed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.partially-signed {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.status-badge.pending {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.status-badge.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.sig-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sig-status.signed {
+  color: #166534;
+}
+.sig-status.pending {
+  color: #854d0e;
+}
+.sig-status.rejected {
+  color: #991b1b;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.signature-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 560px;
+  padding: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.signature-pad-container {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin: 12px 0 8px;
+  overflow: hidden;
+}
+
+.signature-pad {
+  width: 100% !important;
+  height: 200px !important;
+}
+
+.clear-btn,
+.cancel-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.submit-btn {
+  padding: 8px 20px;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-reject-btn {
+  padding: 8px 20px;
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
