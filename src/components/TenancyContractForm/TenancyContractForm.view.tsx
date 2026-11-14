@@ -64,36 +64,36 @@ export const TenancyContractForm: React.FC<TenancyContractFormProps> = props => 
         {currentStep === 1 && (
           <PropertyInfoForm
             data={formData.propertyInfo}
-            onChange={data => updateFormSection('propertyInfo', data)}
+            onChange={(data: any) => updateFormSection('propertyInfo', data)}
           />
         )}
 
         {currentStep === 2 && (
-          <LandlordForm
-            data={formData.landlordInfo}
-            onChange={data => updateFormSection('landlordInfo', data)}
-          />
+          React.createElement(LandlordForm as any, {
+            data: formData.landlordInfo,
+            onChange: (data: any) => updateFormSection('landlordInfo', data),
+          })
         )}
 
         {currentStep === 3 && (
-          <TenantForm
-            data={formData.tenantInfo}
-            onChange={data => updateFormSection('tenantInfo', data)}
-          />
+          React.createElement(TenantForm as any, {
+            data: formData.tenantInfo,
+            onChange: (data: any) => updateFormSection('tenantInfo', data),
+          })
         )}
 
         {currentStep === 4 && (
-          <ContactDetailsForm
-            data={formData.contactDetails}
-            onChange={data => updateFormSection('contactDetails', data)}
-          />
+          React.createElement(ContactDetailsForm as any, {
+            data: formData.contactDetails,
+            onChange: (data: any) => updateFormSection('contactDetails', data),
+          })
         )}
 
         {currentStep === 5 && (
-          <TenancyTermsForm
-            data={formData.tenancyTerms}
-            onChange={data => updateFormSection('tenancyTerms', data)}
-          />
+          React.createElement(TenancyTermsForm as any, {
+            data: formData.tenancyTerms,
+            onChange: (data: any) => updateFormSection('tenancyTerms', data),
+          })
         )}
 
         {currentStep === 6 && <ReviewStepPanel formData={formData} />}

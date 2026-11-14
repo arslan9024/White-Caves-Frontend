@@ -20,7 +20,7 @@ import {
   BarChart2,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import type { AppDispatch } from '../../../store';
+import type { AppDispatch } from '../../../store/store';
 import { fetchAnalysis, generateAudit, generateSRS } from '../../../store/slices/auroraSlice';
 
 export const MetricCard: React.FC<{

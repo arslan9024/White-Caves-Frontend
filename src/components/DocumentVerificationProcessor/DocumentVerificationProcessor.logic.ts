@@ -112,7 +112,8 @@ export function useDocumentVerificationProcessorLogic({
         setUploadProgress(prev => Math.min(prev + 10, 90));
       }, 200);
 
-      const response = await dispatch(verifyDocument({ formData, token }) as any).unwrap();
+      const verifyDocumentAny = verifyDocument as any;
+      const response = await dispatch(verifyDocumentAny({ formData, token })).unwrap();
 
       clearInterval(progressInterval);
       setUploadProgress(100);

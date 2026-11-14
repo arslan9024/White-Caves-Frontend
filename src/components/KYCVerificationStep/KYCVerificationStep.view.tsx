@@ -48,19 +48,19 @@ export const KYCVerificationStep: React.FC<KYCVerificationStepProps> = ({
           <div className="kyc-header">
             <div className="step-indicator">
               <div
-                className={`step ${step === 'intro' ? 'active' : step !== 'intro' ? 'completed' : ''}`}
+                className={`step ${(step as string) === 'intro' ? 'active' : (step as string) !== 'intro' ? 'completed' : ''}`}
               >
                 <span>1</span>
               </div>
               <div className="step-line" />
               <div
-                className={`step ${step === 'personal' ? 'active' : step === 'documents' || step === 'success' ? 'completed' : ''}`}
+                className={`step ${(step as string) === 'personal' ? 'active' : (step as string) === 'documents' || (step as string) === 'success' ? 'completed' : ''}`}
               >
                 <span>2</span>
               </div>
               <div className="step-line" />
               <div
-                className={`step ${step === 'documents' ? 'active' : step === 'success' ? 'completed' : ''}`}
+                className={`step ${(step as string) === 'documents' ? 'active' : (step as string) === 'success' ? 'completed' : ''}`}
               >
                 <span>3</span>
               </div>

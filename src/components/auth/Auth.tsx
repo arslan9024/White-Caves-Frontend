@@ -265,7 +265,8 @@ export default function Auth({ onLogin }: AuthProps) {
   }
 
   if (currentUser) {
-    return <Profile user={currentUser} onLogout={onLogout} />;
+    const ProfileAny = Profile as any;
+    return <ProfileAny user={currentUser} onLogout={onLogout} />;
   }
 
   return (

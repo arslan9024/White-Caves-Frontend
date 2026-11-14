@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Plus, Search, Trash2, Edit2, RefreshCw, Wand2, Merge2 } from 'lucide-react';
+import { Plus, Search, Trash2, Edit2, RefreshCw, Wand2, Merge } from 'lucide-react';
 import type { PlanItem, PlanStats } from './PlanManager.types';
 
 export const PlanStatsHeader: React.FC<{ stats: PlanStats | null }> = ({ stats }) => {
@@ -164,7 +164,7 @@ export const PlanControlsBar: React.FC<{
         cursor: 'pointer',
       }}
     >
-      <Merge2 size={16} /> Merge Plans
+      <Merge size={16} /> Merge Plans
     </button>
     <button
       onClick={onCreateNew}

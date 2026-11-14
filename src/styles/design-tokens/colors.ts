@@ -28,6 +28,7 @@ export const COLOR_TOKENS = {
     gold: '#D4AF37',          // Luxury gold accent
     blackGold: '#1A1A1A',     // Deep black for elegance
     platinum: '#E8E8E8',      // Platinum gray
+    redVeryLight: '#F8DCDC',  // Red tinted accent alias
   },
 
   // Department Colors (Maintained with Red Accent Borders)

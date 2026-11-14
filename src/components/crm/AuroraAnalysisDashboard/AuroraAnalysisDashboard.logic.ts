@@ -5,7 +5,7 @@
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch } from '../../../store';
+import type { AppDispatch } from '../../../store/store';
 import {
   fetchProviders,
   fetchAnalysisSummary,
