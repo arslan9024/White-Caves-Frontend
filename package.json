@@ -10,6 +10,8 @@
   },
   "scripts": {
     "ports:check": "npx tsx ../secrets/ports.ts --check",
+    "dev:all": "npx concurrently --kill-others --names \"SERVER,LINDA,FRONTEND\" --prefix-colors \"cyan,magenta,yellow\" \"npm --prefix ../White-Caves-Server run dev\" \"npm --prefix ../whatsapp-bot-linda run dev\" \"npm run dev\"",
+    "dev:web-aegis": "npx concurrently --kill-others --names \"WEB,AEGIS\" --prefix-colors \"green,blue\" \"npm --prefix ../White-Caves-Web run dev\" \"npm --prefix ../Aegis-Sterling run dev\"",
     "dev": "npm run dev:precheck && vite",
     "dev:monorepo": "npm run dev:precheck && concurrently --names \"CLIENT,SERVER\" --prefix-colors \"cyan,green\" \"npm run dev:client\" \"npm run dev:server\"",
     "aegis:ouroboros": "node ../.agents/orchestrator/aegis-perpetual-ouroboros.js",
