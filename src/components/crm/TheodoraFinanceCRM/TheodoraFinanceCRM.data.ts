@@ -1,5 +1,24 @@
 import { FinanceInvoice, FinanceExpense } from './TheodoraFinanceCRM.types';
 
+export const STATS = {
+  totalRevenue: 2450000,
+  pendingInvoices: 185000,
+  pendingReceivables: 185000,
+  collectedThisMonth: 620000,
+  overdueAmount: 95000,
+  collectionRate: 94.2,
+  vatPayable: 122500,
+};
+
+export const TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'invoices', label: 'Invoices' },
+  { id: 'payments', label: 'Payments' },
+  { id: 'expenses', label: 'Expenses' },
+  { id: 'aml_monitoring', label: 'AML Monitoring' },
+  { id: 'reports', label: 'Reports' },
+];
+
 export const INVOICES: FinanceInvoice[] = [
   {
     id: 'INV-2024-0156',

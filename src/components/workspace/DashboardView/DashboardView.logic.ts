@@ -10,7 +10,13 @@ import {
 import { LeaderboardTab } from './DashboardView.types';
 
 export const useDashboardView = () => {
-  const { user } = useAuthContext();
+  const { user: rawUser } = useAuthContext();
+  const user = rawUser as {
+    name?: string;
+    department_label?: string;
+    onboarding_date?: string;
+    performance?: { tier?: string; current_gwc: number; target_gwc: number };
+  } | null;
   const [lbTab, setLbTab] = useState<LeaderboardTab>('sales');
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');

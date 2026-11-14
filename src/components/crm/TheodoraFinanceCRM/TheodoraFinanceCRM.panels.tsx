@@ -11,24 +11,24 @@ import {
 } from 'lucide-react';
 import { INVOICES, EXPENSES } from './TheodoraFinanceCRM.data';
 import { Invoice } from './TheodoraFinanceCRM.types';
-import PaymentInstructionDeck from '../../finance/PaymentInstructionDeck';
-import KYCAMLDashboard from '../../compliance/KYCAMLDashboard';
-import AssistantDocsTab from '../AssistantDocsTab';
-import FinanceEngineProductionReleaseGateWidget from '../theodora/FinanceEngineProductionReleaseGateWidget';
-import FinanceEngineLedgerBenchmarkWidget from '../theodora/FinanceEngineLedgerBenchmarkWidget';
-import FinanceEngineFTAComplianceWidget from '../theodora/FinanceEngineFTAComplianceWidget';
-import FinanceEnginePlaywrightE2EWidget from '../theodora/FinanceEnginePlaywrightE2EWidget';
-import FinanceEngineVitestUnitTestsWidget from '../theodora/FinanceEngineVitestUnitTestsWidget';
-import FinanceRBACWidget from '../theodora/FinanceRBACWidget';
-import ZakatCalculatorWidget from '../theodora/ZakatCalculatorWidget';
-import IndustryBenchmarkWidget from '../theodora/IndustryBenchmarkWidget';
-import InsurancePremiumWidget from '../theodora/InsurancePremiumWidget';
-import CryptoPaymentWidget from '../theodora/CryptoPaymentWidget';
-import InteractiveChartsWidget from '../theodora/InteractiveChartsWidget';
-import FinanceAlertsWidget from '../theodora/FinanceAlertsWidget';
-import FinanceI18NWidget from '../theodora/FinanceI18NWidget';
-import ArabicRTLInvoiceWidget from '../theodora/ArabicRTLInvoiceWidget';
-import MobileFinanceWidget from '../theodora/MobileFinanceWidget';
+import PaymentInstructionDeck from '../shared/PaymentInstructionDeck';
+import KYCAMLDashboard from '../shared/KYCAMLDashboard';
+import AssistantDocsTab from '../shared/AssistantDocsTab';
+import { FinanceEngineProductionReleaseGateWidget } from '../../finance/FinanceEngineProductionReleaseGateWidget/FinanceEngineProductionReleaseGateWidget';
+import { FinanceEngineLedgerBenchmarkWidget } from '../../finance/FinanceEngineLedgerBenchmarkWidget/FinanceEngineLedgerBenchmarkWidget';
+import { FinanceEngineFTAComplianceWidget } from '../../finance/FinanceEngineFTAComplianceWidget/FinanceEngineFTAComplianceWidget';
+import { FinanceEnginePlaywrightE2EWidget } from '../../finance/FinanceEnginePlaywrightE2EWidget/FinanceEnginePlaywrightE2EWidget';
+import { FinanceEngineVitestUnitTestsWidget } from '../../finance/FinanceEngineVitestUnitTestsWidget/FinanceEngineVitestUnitTestsWidget';
+import { FinanceRBACWidget } from '../../finance/FinanceRBACWidget/FinanceRBACWidget';
+import { ZakatCalculatorWidget } from '../../finance/ZakatCalculatorWidget/ZakatCalculatorWidget';
+import { IndustryBenchmarkWidget } from '../../finance/IndustryBenchmarkWidget/IndustryBenchmarkWidget';
+import { InsurancePremiumWidget } from '../../finance/InsurancePremiumWidget/InsurancePremiumWidget';
+import { CryptoPaymentWidget } from '../../finance/CryptoPaymentWidget/CryptoPaymentWidget';
+import { InteractiveChartsWidget } from '../../finance/InteractiveChartsWidget/InteractiveChartsWidget';
+import { FinanceAlertsWidget } from '../../finance/FinanceAlertsWidget/FinanceAlertsWidget';
+import { FinanceI18NWidget } from '../../finance/FinanceI18NWidget/FinanceI18NWidget';
+import { ArabicRTLInvoiceWidget } from '../../finance/ArabicRTLInvoiceWidget/ArabicRTLInvoiceWidget';
+import { MobileFinanceWidget } from '../../finance/MobileFinanceWidget/MobileFinanceWidget';
 
 export const InvoicesViewPanel: React.FC = () => {
   return (
@@ -128,7 +128,9 @@ export const PaymentsViewPanel: React.FC<{
           reference={selectedInvoice.id}
           clientName={selectedInvoice.client}
           invoiceId={selectedInvoice.id}
-          onGenerateMessage={onGenerateMessage}
+          onGenerateMessage={(msg: string, method: string) =>
+            onGenerateMessage({ channel: method, message: msg })
+          }
           showMethodSelector={true}
         />
       )}
@@ -237,7 +239,11 @@ export const ExtendedWidgetsPanel: React.FC<{ activeTab: string }> = ({ activeTa
       return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <FinanceEngineFTAComplianceWidget />
-          <AssistantDocsTab assistantId="theodora" />
+          <AssistantDocsTab
+            assistantId="theodora"
+            assistantName="Theodora"
+            assistantColor="#10b981"
+          />
         </div>
       );
     case 'e2e':

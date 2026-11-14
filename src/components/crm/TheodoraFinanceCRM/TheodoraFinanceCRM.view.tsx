@@ -2,7 +2,7 @@ import React from 'react';
 import { DollarSign, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { TheodoraFinanceCRMProps, TabType } from './TheodoraFinanceCRM.types';
 import { STATS, TABS } from './TheodoraFinanceCRM.data';
-import { useTheodoraFinanceCRMLogic } from './TheodoraFinanceCRM.logic';
+import { useTheodoraFinanceCRM as useTheodoraFinanceCRMLogic } from './TheodoraFinanceCRM.logic';
 import {
   InvoicesViewPanel,
   PaymentsViewPanel,

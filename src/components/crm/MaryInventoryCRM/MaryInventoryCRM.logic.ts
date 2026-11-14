@@ -58,7 +58,7 @@ export const useMaryInventoryCRM = (activeFeature?: string) => {
   };
 
   const handleFilterChange = (key: string, value: any) => {
-    dispatch(setFilter({ key, value }));
+    dispatch(setFilter({ key: key as Parameters<typeof setFilter>[0]['key'], value }));
   };
 
   const handleClearFilters = () => {

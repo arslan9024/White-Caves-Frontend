@@ -121,7 +121,7 @@ export const DashboardHeaderView: React.FC<DashboardHeaderProps> = props => {
           setShowUserMenu={setShowUserMenu}
           handleProfileAction={handleProfileAction}
           language={language}
-          setLanguage={setLanguage}
+          setLanguage={lang => setLanguage(lang as 'en' | 'ar' | 'es' | 'ru')}
           t={t}
         />
       </div>

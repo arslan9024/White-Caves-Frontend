@@ -40,3 +40,11 @@ export interface FinanceExpense {
   date: string;
   status: 'approved' | 'pending' | 'processed' | string;
 }
+
+export type Invoice = FinanceInvoice;
+export type TabType = TheodoraTab;
+
+export interface TheodoraFinanceCRMProps {
+  activeTab?: TheodoraTab;
+  onTabChange?: (tab: TheodoraTab) => void;
+}

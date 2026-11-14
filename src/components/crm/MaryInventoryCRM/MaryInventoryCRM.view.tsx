@@ -93,9 +93,8 @@ export const MaryInventoryCRMView: React.FC<MaryInventoryCRMProps> = ({ activeFe
       {showFeatures && (
         <div className="mary-features-panel">
           <AssistantFeatureMatrix
-            features={MARY_FEATURES}
-            assistantName="Mary"
-            accentColor="#8b5cf6"
+            features={MARY_FEATURES as any}
+            {...({ assistantName: 'Mary', accentColor: '#8b5cf6' } as any)}
           />
         </div>
       )}
@@ -115,7 +114,7 @@ export const MaryInventoryCRMView: React.FC<MaryInventoryCRMProps> = ({ activeFe
 
       {showFilters && (
         <FilterPanel
-          filters={filters}
+          filters={filters as unknown as Record<string, string>}
           filterOptions={filterOptions}
           onFilterChange={handleFilterChange}
           onClearFilters={handleClearFilters}
@@ -177,7 +176,7 @@ export const MaryInventoryCRMView: React.FC<MaryInventoryCRMProps> = ({ activeFe
       {showOwnerDrawer && selectedOwner && (
         <OwnerDetailDrawer
           owner={selectedOwner}
-          properties={getOwnerProperties(selectedOwner.id)}
+          properties={getOwnerProperties(selectedOwner.id) as any}
           onClose={() => {
             setShowOwnerDrawer(false);
             setSelectedOwner(null);
