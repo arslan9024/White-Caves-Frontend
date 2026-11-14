@@ -55,7 +55,15 @@ const SERVICE_REQUESTS = [
   },
 ];
 
-export default function ServicesView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function ServicesView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderServiceCatalog = () => (
     <div className="service-catalog-view">
       <h2 className="view-title">Service Catalog</h2>

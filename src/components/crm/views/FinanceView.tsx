@@ -35,7 +35,15 @@ const REVENUE_BREAKDOWN = [
   { category: 'Consulting Services', amount: 'AED 380K', percentage: 15 },
 ];
 
-export default function FinanceView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function FinanceView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderTransactions = () => (
     <div className="transactions-view">
       <h2 className="view-title">Transactions</h2>

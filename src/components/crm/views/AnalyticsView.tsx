@@ -30,7 +30,15 @@ const AI_INSIGHTS = [
   { id: 3, type: 'risk', message: '3 contracts approaching renewal deadline', assistant: 'Nina' },
 ];
 
-export default function AnalyticsView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function AnalyticsView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderMarketAnalytics = () => (
     <div className="market-analytics-view">
       <h2 className="view-title">Market Analytics</h2>

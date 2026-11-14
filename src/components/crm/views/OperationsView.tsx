@@ -35,7 +35,15 @@ const TEAMS = [
   { id: 3, name: 'Rental Management', members: 6, lead: 'Sara Abdullah' },
 ];
 
-export default function OperationsView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function OperationsView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderDepartments = () => (
     <div className="departments-view">
       <h2 className="view-title">Departments</h2>

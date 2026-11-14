@@ -84,7 +84,15 @@ const OFF_PLAN_PROJECTS = [
   { id: 3, name: 'Sobha One', developer: 'Sobha', completion: 'Q1 2026', units: 280, sold: 150 },
 ];
 
-export default function PropertiesView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function PropertiesView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const [viewMode, setViewMode] = useState('grid');
 
   const renderPropertyGrid = () => (

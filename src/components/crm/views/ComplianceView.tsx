@@ -24,7 +24,15 @@ const AUDIT_ENTRIES = [
   { id: 3, action: 'KYC Approved', user: 'Compliance Leo', timestamp: '2024-01-10 10:45' },
 ];
 
-export default function ComplianceView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function ComplianceView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderKYCProfiles = () => (
     <div className="kyc-view">
       <h2 className="view-title">KYC Profiles</h2>

@@ -18,7 +18,15 @@ const SYSTEM_SETTINGS = [
   { id: 'workflows', name: 'Workflows', description: 'Automation rules' },
 ];
 
-export default function AdminView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function AdminView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderSystemSettings = () => (
     <div className="settings-view">
       <h2 className="view-title">System Settings</h2>

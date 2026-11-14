@@ -45,7 +45,15 @@ const RENEWALS = [
   },
 ];
 
-export default function LeasingView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function LeasingView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderTenancyLifecycle = () => (
     <div className="tenancy-lifecycle-view">
       <h2 className="view-title">Tenancy Lifecycle</h2>

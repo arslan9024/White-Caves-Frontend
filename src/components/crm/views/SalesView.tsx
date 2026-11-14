@@ -62,7 +62,15 @@ const DEALS = [
   },
 ];
 
-export default function SalesView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function SalesView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderLeadPipeline = () => (
     <div className="pipeline-view">
       <h2 className="view-title">Lead Pipeline</h2>

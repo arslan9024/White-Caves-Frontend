@@ -28,7 +28,15 @@ const SOCIAL_CHANNELS = [
   { id: 'youtube', name: 'YouTube', subscribers: '28K', views: '2.1M' },
 ];
 
-export default function MarketingView({ activeSubItem, subItemConfig, assistantContext }) {
+export default function MarketingView({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderCampaigns = () => (
     <div className="campaigns-view">
       <h2 className="view-title">Marketing Campaigns</h2>
