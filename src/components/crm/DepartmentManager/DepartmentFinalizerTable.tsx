@@ -6,9 +6,11 @@
  */
 
 import React, { FC, useState, useEffect } from 'react';
-import { Check, RotateCcw, ArrowUp, ArrowDown, Edit2, Trash2, Plus, Save, Sparkles } from 'lucide-react';
+import { RotateCcw, Save, Sparkles } from 'lucide-react';
 import type { DepartmentNodeItem } from './DepartmentManager.types';
 import type { DepartmentSlotDef } from './DepartmentManager.data';
+import { iconBtnStyle } from './DepartmentFinalizerTable.styles';
+import { FinalizerRow } from './DepartmentFinalizerRow';
 
 export interface DepartmentFinalizerTableProps {
   slots: DepartmentSlotDef[];
@@ -21,28 +23,6 @@ export interface DepartmentFinalizerTableProps {
   onDelete: (deptId: string) => void;
   onResetDefaults: () => void;
 }
-
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  background: 'rgba(255, 255, 255, 0.04)',
-  border: '1px solid rgba(255, 255, 255, 0.14)',
-  borderRadius: '6px',
-  padding: '6px 9px',
-  color: '#FFFFFF',
-  fontWeight: 700,
-  fontSize: '0.8rem',
-};
-
-const iconBtnStyle: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.05)',
-  border: '1px solid rgba(255,255,255,0.1)',
-  color: '#94A3B8',
-  borderRadius: '5px',
-  padding: '4px 6px',
-  cursor: 'pointer',
-  display: 'inline-flex',
-  alignItems: 'center',
-};
 
 export const DepartmentFinalizerTable: FC<DepartmentFinalizerTableProps> = ({
   slots,
@@ -220,128 +200,23 @@ export const DepartmentFinalizerTable: FC<DepartmentFinalizerTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {slots.map((slot, idx) => {
-              const dept = slot.dept;
-              const draft = dept ? drafts[dept._id] : null;
-              return (
-                <tr
-                  key={slot.fixedCode}
-                  data-testid={`finalizer-row-${slot.slotNumber}`}
-                  style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}
-                >
-                  <td style={{ padding: '10px 8px' }}>
-                    <span
-                      style={{
-                        fontFamily: 'monospace',
-                        fontWeight: 800,
-                        fontSize: '0.72rem',
-                        color: dept?.color || '#EF4444',
-                        background: 'rgba(239, 68, 68, 0.1)',
-                        padding: '2px 7px',
-                        borderRadius: '5px',
-                      }}
-                    >
-                      #{String(slot.slotNumber).padStart(2, '0')}
-                    </span>
-                  </td>
-
-                  <td style={{ padding: '10px 8px' }}>
-                    {dept ? (
-                      <input
-                        type="text"
-                        disabled={isReadOnly}
-                        value={draft?.code ?? dept.code}
-                        onChange={e => handleDraftChange(dept._id, 'code', e.target.value)}
-                        data-testid={`finalizer-code-input-${slot.slotNumber}`}
-                        style={{ ...inputStyle, width: '100px', color: '#F87171', fontFamily: 'monospace' }}
-                      />
-                    ) : (
-                      <span style={{ color: '#64748B', fontFamily: 'monospace' }}>{slot.fixedCode}</span>
-                    )}
-                  </td>
-
-                  <td style={{ padding: '10px 8px' }}>
-                    {dept ? (
-                      <div>
-                        <input
-                          type="text"
-                          disabled={isReadOnly}
-                          value={draft?.title ?? dept.title}
-                          onChange={e => handleDraftChange(dept._id, 'title', e.target.value)}
-                          onKeyDown={e => e.key === 'Enter' && handleSaveRow(dept._id)}
-                          placeholder="Enter finalized department name..."
-                          data-testid={`finalizer-title-input-${slot.slotNumber}`}
-                          style={inputStyle}
-                        />
-                        {draft?.title && getDuplicateWarning(dept._id, draft.title) && (
-                          <span style={{ fontSize: '0.68rem', color: '#F59E0B', fontWeight: 700 }}>
-                            {getDuplicateWarning(dept._id, draft.title)}
-                          </span>
-                        )}
-                      </div>
-                    ) : (
-                      <span style={{ color: '#64748B', fontStyle: 'italic' }}>
-                        Empty Department Slot #{slot.slotNumber}
-                      </span>
-                    )}
-                  </td>
-
-                  <td style={{ padding: '10px 8px' }}>
-                    {dept ? (
-                      <input
-                        type="text"
-                        disabled={isReadOnly}
-                        value={draft?.directorName ?? dept.directorOrManagerId?.fullName ?? 'Managing Director'}
-                        onChange={e => handleDraftChange(dept._id, 'directorName', e.target.value)}
-                        onKeyDown={e => e.key === 'Enter' && handleSaveRow(dept._id)}
-                        data-testid={`finalizer-director-input-${slot.slotNumber}`}
-                        style={{ ...inputStyle, fontWeight: 500, fontSize: '0.76rem' }}
-                      />
-                    ) : (
-                      <span style={{ color: '#475569' }}>Unassigned</span>
-                    )}
-                  </td>
-
-                  <td style={{ padding: '10px 8px', textAlign: 'right' }}>
-                    {dept ? (
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <button
-                          type="button"
-                          onClick={() => handleSaveRow(dept._id)}
-                          title="Save this department name"
-                          data-testid={`finalizer-save-row-${slot.slotNumber}`}
-                          style={{ ...iconBtnStyle, background: 'rgba(16, 185, 129, 0.15)', borderColor: '#10B981', color: '#10B981' }}
-                        >
-                          <Check size={13} />
-                        </button>
-                        <button type="button" disabled={idx === 0} onClick={() => onMoveDepartment(idx, idx - 1)} title="Move Slot Up" style={iconBtnStyle}>
-                          <ArrowUp size={12} />
-                        </button>
-                        <button type="button" disabled={idx === 11 || !slots[idx + 1]?.dept} onClick={() => onMoveDepartment(idx, idx + 1)} title="Move Slot Down" style={iconBtnStyle}>
-                          <ArrowDown size={12} />
-                        </button>
-                        <button type="button" onClick={() => onOpenEdit(dept)} title="Open Full Details Drawer" style={iconBtnStyle}>
-                          <Edit2 size={12} />
-                        </button>
-                        <button type="button" onClick={() => onDelete(dept._id)} title="Clear Slot / Demote to Pool" style={{ ...iconBtnStyle, color: '#EF4444' }}>
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={onOpenCreateForSlot}
-                        data-testid={`finalizer-assign-slot-${slot.slotNumber}`}
-                        style={{ ...iconBtnStyle, color: '#F87171', borderColor: '#EF4444', gap: '4px' }}
-                      >
-                        <Plus size={12} />
-                        <span>Assign Slot</span>
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
+            {slots.map((slot, idx) => (
+              <FinalizerRow
+                key={slot.fixedCode}
+                slot={slot}
+                idx={idx}
+                slots={slots}
+                draft={slot.dept ? drafts[slot.dept._id] : null}
+                isReadOnly={isReadOnly}
+                onDraftChange={handleDraftChange}
+                onSaveRow={handleSaveRow}
+                onMoveDepartment={onMoveDepartment}
+                onOpenEdit={onOpenEdit}
+                onOpenCreateForSlot={onOpenCreateForSlot}
+                onDelete={onDelete}
+                getDuplicateWarning={getDuplicateWarning}
+              />
+            ))}
           </tbody>
         </table>
       </div>
