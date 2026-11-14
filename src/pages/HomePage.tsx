@@ -26,7 +26,6 @@ import { useRecentlyViewed } from '../components/RecentlyViewed';
 import { MapContainer } from '../components/homepage/MapContainer';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
 
-import { AreaGuideGrid } from '../components/homepage/AreaGuideGrid';
 import { QuickSearchModal } from '../components/homepage/QuickSearchModal';
 import '../styles/luxuryDesignSystem.css';
 import './HomePage.css';
@@ -277,9 +276,6 @@ const HomePage: FC = () => {
           <Features />
           <MarketStatsBanner marketStats={marketStats} isLoading={isHomepageLoading} />
         </Suspense>
-
-        {/* Area Guide Grid (Life in DAMAC Hills 2, Palm Jumeirah, Downtown) */}
-        <AreaGuideGrid />
 
         {/* Real Geospatial Map Engine with Red Markers */}
         <MapContainer />

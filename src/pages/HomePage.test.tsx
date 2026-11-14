@@ -88,9 +88,6 @@ vi.mock('../components/homepage/Features', () => ({
 vi.mock('../components/homepage/MarketStats/MarketStatsBanner', () => ({
   default: () => <div data-testid="market-stats-banner">MarketStatsBanner</div>,
 }));
-vi.mock('../components/homepage/AreaGuideGrid', () => ({
-  AreaGuideGrid: () => <div data-testid="area-guide-grid">AreaGuideGrid</div>,
-}));
 vi.mock('../components/homepage/MapContainer', () => ({
   MapContainer: () => <div data-testid="map-container">MapContainer</div>,
 }));
@@ -257,13 +254,6 @@ describe('HomePage', () => {
       renderPage();
       await waitFor(() => {
         expect(screen.getByTestId('features-section')).toBeInTheDocument();
-      });
-    });
-
-    it('should render AreaGuideGrid section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('area-guide-grid')).toBeInTheDocument();
       });
     });
 
