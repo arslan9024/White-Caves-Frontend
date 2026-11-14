@@ -23,7 +23,6 @@ import PublicLayout from '../components/layout/PublicLayout';
 import PageMeta from '../components/seo/PageMeta';
 import StructuredData from '../components/seo/StructuredData';
 import { useRecentlyViewed } from '../components/RecentlyViewed';
-import { MapContainer } from '../components/homepage/MapContainer';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
 
 import { QuickSearchModal } from '../components/homepage/QuickSearchModal';
@@ -276,9 +275,6 @@ const HomePage: FC = () => {
           <Features />
           <MarketStatsBanner marketStats={marketStats} isLoading={isHomepageLoading} />
         </Suspense>
-
-        {/* Real Geospatial Map Engine with Red Markers */}
-        <MapContainer />
 
         {/* Featured Properties */}
         <Suspense fallback={<SectionLoader />}>

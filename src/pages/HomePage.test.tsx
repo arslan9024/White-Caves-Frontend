@@ -88,9 +88,6 @@ vi.mock('../components/homepage/Features', () => ({
 vi.mock('../components/homepage/MarketStats/MarketStatsBanner', () => ({
   default: () => <div data-testid="market-stats-banner">MarketStatsBanner</div>,
 }));
-vi.mock('../components/homepage/MapContainer', () => ({
-  MapContainer: () => <div data-testid="map-container">MapContainer</div>,
-}));
 vi.mock('../components/homepage/FeaturedProperties/FeaturedPropertiesSection', () => ({
   default: () => <div data-testid="featured-properties-section">FeaturedProperties</div>,
 }));
@@ -254,13 +251,6 @@ describe('HomePage', () => {
       renderPage();
       await waitFor(() => {
         expect(screen.getByTestId('features-section')).toBeInTheDocument();
-      });
-    });
-
-    it('should render MapContainer section', async () => {
-      renderPage();
-      await waitFor(() => {
-        expect(screen.getByTestId('map-container')).toBeInTheDocument();
       });
     });
 
