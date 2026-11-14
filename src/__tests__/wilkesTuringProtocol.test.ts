@@ -117,7 +117,25 @@ describe('Turing Protocol & Mary Allen Wilkes Protocol Suite', () => {
 
       expect(result.compliant).toBe(true);
       expect(result.missingCoreLayers.length).toBe(0);
+      expect(result.extensionCompliance.valid).toBe(true);
       expect(result.turingCompliance.valid).toBe(true);
+    });
+
+    it('rejects non-ts/tsx files unless explicitly permitted', () => {
+      const filesWithJs = [
+        'DealManager.view.jsx',
+        'DealManager.logic.js',
+        'DealManager.styles.ts',
+        'DealManager.data.ts',
+        'DealManager.types.ts',
+        'DealManager.test.tsx',
+        'DealManager.workflow.ts',
+      ];
+
+      const result = validateMaryAllenWilkesModule('DealManager', filesWithJs);
+      expect(result.compliant).toBe(false);
+      expect(result.extensionCompliance.valid).toBe(false);
+      expect(result.extensionCompliance.violations.length).toBe(2);
     });
 
     it('detects missing core layers and Turing violations', () => {

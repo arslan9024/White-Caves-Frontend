@@ -173,11 +173,43 @@ export const MARY_ALLEN_WILKES_SPEC: Record<WilkesCategoryKey, WilkesLayerSpec> 
   },
 };
 
+/**
+ * Mary Allen Wilkes File Extension & Structural Sovereign Rule:
+ * All decomposed module files MUST be authored strictly as `.ts` or `.tsx`.
+ * Other file extensions (e.g., .js, .jsx) are strictly prohibited unless
+ * explicitly approved by the User / Supreme Architect for runtime compatibility.
+ */
+export const ALLOWED_WILKES_EXTENSIONS = ['.ts', '.tsx'] as const;
+
+export function validateWilkesFileExtension(
+  filePath: string,
+  userApprovedExceptions: string[] = []
+): {
+  valid: boolean;
+  error?: string;
+} {
+  const isApproved = userApprovedExceptions.some(exc => filePath.endsWith(exc));
+  if (isApproved) return { valid: true };
+
+  const isTypeScript = filePath.endsWith('.ts') || filePath.endsWith('.tsx');
+  if (!isTypeScript) {
+    return {
+      valid: false,
+      error: `Violation [WILKES-EXT-001]: File "${filePath}" must be .ts or .tsx under Mary Allen Wilkes Protocol unless user approval is explicitly granted.`,
+    };
+  }
+  return { valid: true };
+}
+
 export interface WilkesModuleValidationResult {
   moduleName: string;
   compliant: boolean;
   detectedLayers: WilkesCategoryKey[];
   missingCoreLayers: WilkesCategoryKey[];
+  extensionCompliance: {
+    valid: boolean;
+    violations: string[];
+  };
   turingCompliance: {
     valid: boolean;
     violations: string[];
@@ -220,6 +252,15 @@ export function validateMaryAllenWilkesModule(
 
   const missingCoreLayers = core7.filter(cat => !detectedLayers.includes(cat));
 
+  // Validate File Extensions (.ts / .tsx only)
+  const extensionViolations: string[] = [];
+  for (const file of existingFiles) {
+    const extCheck = validateWilkesFileExtension(file);
+    if (!extCheck.valid && extCheck.error) {
+      extensionViolations.push(extCheck.error);
+    }
+  }
+
   // Validate Turing Constraints (< 350 lines per file)
   const lineCountViolations: string[] = [];
   if (fileLineCounts) {
@@ -232,13 +273,20 @@ export function validateMaryAllenWilkesModule(
   }
 
   const scorePercent = Math.round((detectedLayers.length / 12) * 100);
-  const compliant = missingCoreLayers.length === 0 && lineCountViolations.length === 0;
+  const compliant =
+    missingCoreLayers.length === 0 &&
+    lineCountViolations.length === 0 &&
+    extensionViolations.length === 0;
 
   return {
     moduleName,
     compliant,
     detectedLayers,
     missingCoreLayers,
+    extensionCompliance: {
+      valid: extensionViolations.length === 0,
+      violations: extensionViolations,
+    },
     turingCompliance: {
       valid: lineCountViolations.length === 0,
       violations: lineCountViolations,
