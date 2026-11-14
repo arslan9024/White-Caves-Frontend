@@ -1,75 +1,30 @@
 /**
  * documentExtractDataPassports.logic.ts
- *
- * Pure, dependency-free logic for extracting structured passport data from
- * raw OCR text produced by a document scanning pipeline. Supports parsing of
- * the ICAO 9303 TD3 (passport booklet) Machine Readable Zone (MRZ), which
- * consists of two 44-character lines, and produces a normalized, validated
- * result describing the passport holder and document metadata.
- *
- * This module performs NO I/O, NO network calls, and has NO external
- * dependencies. It is intended to be called by a higher-level service that
- * supplies raw OCR text (e.g. from an OCR provider) and consumes the
- * structured result.
+ * Pure, dependency-free logic for extracting structured passport data from raw OCR text.
  */
 
-/** Supported sex/gender codes as encoded in the MRZ. */
-export type PassportSex = 'M' | 'F' | 'X';
+import {
+  PassportSex,
+  PassportExtractionIssue,
+  ExtractedPassportData,
+  PassportExtractionResult,
+  MRZ_LINE_LENGTH,
+  MRZ_CHAR_PATTERN,
+  CHAR_VALUES,
+  WEIGHTS,
+} from './documentExtractDataPassports.types';
 
-/** A single field-level validation issue discovered during extraction. */
-export interface PassportExtractionIssue {
-  readonly field: string;
-  readonly message: string;
-}
+export type {
+  PassportSex,
+  PassportExtractionIssue,
+  ExtractedPassportData,
+  PassportExtractionResult,
+};
 
-/** Normalized, structured passport data extracted from a document. */
-export interface ExtractedPassportData {
-  readonly documentType: string;
-  readonly issuingCountry: string;
-  readonly surname: string;
-  readonly givenNames: string;
-  readonly passportNumber: string;
-  readonly nationality: string;
-  readonly dateOfBirth: string; // ISO 8601 date (YYYY-MM-DD)
-  readonly sex: PassportSex;
-  readonly expiryDate: string; // ISO 8601 date (YYYY-MM-DD)
-  readonly personalNumber: string | null;
-}
-
-/** Result of an extraction attempt: either success with data, or failure with issues. */
-export type PassportExtractionResult =
-  | {
-      readonly success: true;
-      readonly data: ExtractedPassportData;
-      readonly issues: readonly PassportExtractionIssue[];
-    }
-  | {
-      readonly success: false;
-      readonly data: null;
-      readonly issues: readonly PassportExtractionIssue[];
-    };
-
-const MRZ_LINE_LENGTH = 44;
-const MRZ_CHAR_PATTERN = /^[A-Z0-9<]+$/;
-
-const CHAR_VALUES: Readonly<Record<string, number>> = (() => {
-  const values: Record<string, number> = { '<': 0 };
-  for (let i = 0; i <= 9; i += 1) {
-    values[String(i)] = i;
-  }
-  for (let i = 0; i < 26; i += 1) {
-    values[String.fromCharCode(65 + i)] = i + 10;
-  }
-  return values;
-})();
-
-const WEIGHTS: readonly number[] = [7, 3, 1];
+export * from './documentExtractDataPassports.types';
 
 /**
- * Extracts the two MRZ lines from a raw OCR text blob. Lines are matched by
- * looking for consecutive lines composed only of MRZ-legal characters
- * (A-Z, 0-9, and filler '<') that are each exactly 44 characters long once
- * whitespace is stripped.
+ * Extracts the two MRZ lines from a raw OCR text blob.
  */
 export function findMrzLines(rawText: string): readonly string[] | null {
   const candidateLines = rawText
@@ -85,8 +40,6 @@ export function findMrzLines(rawText: string): readonly string[] | null {
     return null;
   }
 
-  // Use the last two matching lines, which is the common position of the MRZ
-  // block at the bottom of a passport data page.
   return mrzCandidates.slice(-2);
 }
 
@@ -129,11 +82,6 @@ function parseMrzDate(raw: string): string | null {
   if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) {
     return null;
   }
-  // Passports commonly do not distinguish century; assume 2000s for years
-  // below the current two-digit year threshold used for birth vs expiry
-  // documents is out of scope here, so we apply the standard MRZ heuristic:
-  // years 00-49 => 2000-2049, years 50-99 => 1950-1999. Callers needing more
-  // context-aware century resolution should post-process this field.
   const century = yy <= 49 ? 2000 : 1900;
   const year = century + yy;
   return `${String(year).padStart(4, '0')}-${mm}-${dd}`;
@@ -144,10 +92,7 @@ function addIssue(issues: PassportExtractionIssue[], field: string, message: str
 }
 
 /**
- * Parses two 44-character TD3 MRZ lines into structured, validated passport
- * data. All ICAO check digits (document number, date of birth, expiry date,
- * and composite) are verified; failures are reported as issues rather than
- * thrown, so callers can decide how to handle partially-trusted OCR data.
+ * Parses two 44-character TD3 MRZ lines into structured, validated passport data.
  */
 export function parseTd3Mrz(line1: string, line2: string): PassportExtractionResult {
   const issues: PassportExtractionIssue[] = [];
@@ -254,8 +199,6 @@ export function parseTd3Mrz(line1: string, line2: string): PassportExtractionRes
   const personalNumber = personalNumberStripped.length > 0 ? personalNumberStripped : null;
   if (personalNumber !== null) {
     const expectedPersonalCheck = computeCheckDigit(personalNumberRaw);
-    // Per ICAO 9303, an all-filler check digit ('<') indicates the field is
-    // not used for verification, which is common in many national passports.
     if (
       personalNumberCheckDigit !== '<' &&
       String(expectedPersonalCheck) !== personalNumberCheckDigit
@@ -322,9 +265,7 @@ export function parseTd3Mrz(line1: string, line2: string): PassportExtractionRes
 }
 
 /**
- * Top-level entry point: locates the MRZ within raw OCR text and parses it
- * into structured passport data. Returns a failure result with descriptive
- * issues when the MRZ cannot be located or fails validation.
+ * Top-level entry point: locates the MRZ within raw OCR text and parses it.
  */
 export function extractPassportDataFromOcrText(rawText: string): PassportExtractionResult {
   const mrzLines = findMrzLines(rawText);
@@ -344,8 +285,7 @@ export function extractPassportDataFromOcrText(rawText: string): PassportExtract
 }
 
 /**
- * Checks whether an already-extracted passport is expired relative to a
- * reference date (defaults to now).
+ * Checks whether an already-extracted passport is expired relative to a reference date.
  */
 export function isPassportExpired(
   data: ExtractedPassportData,
