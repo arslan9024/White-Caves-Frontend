@@ -11,14 +11,38 @@ const TENANCY_STAGES = [
 ];
 
 const EJARI_CONTRACTS = [
-  { id: 1, tenant: 'Ahmad Hassan', property: 'Marina Apt 1205', status: 'pending-signature', expires: '2024-03-15' },
-  { id: 2, tenant: 'Sarah Williams', property: 'JBR Tower B-803', status: 'registered', expires: '2024-12-01' },
-  { id: 3, tenant: 'Mohammed Ali', property: 'Downtown Studio', status: 'pending-registration', expires: '2024-02-28' },
+  {
+    id: 1,
+    tenant: 'Ahmad Hassan',
+    property: 'Marina Apt 1205',
+    status: 'pending-signature',
+    expires: '2024-03-15',
+  },
+  {
+    id: 2,
+    tenant: 'Sarah Williams',
+    property: 'JBR Tower B-803',
+    status: 'registered',
+    expires: '2024-12-01',
+  },
+  {
+    id: 3,
+    tenant: 'Mohammed Ali',
+    property: 'Downtown Studio',
+    status: 'pending-registration',
+    expires: '2024-02-28',
+  },
 ];
 
 const RENEWALS = [
   { id: 1, tenant: 'Chen Wei', property: 'Marina View', dueDate: '2024-02-15', status: 'pending' },
-  { id: 2, tenant: 'James Wilson', property: 'Palm Jumeirah', dueDate: '2024-02-28', status: 'in-progress' },
+  {
+    id: 2,
+    tenant: 'James Wilson',
+    property: 'Palm Jumeirah',
+    dueDate: '2024-02-28',
+    status: 'in-progress',
+  },
 ];
 
 export default function LeasingView({ activeSubItem, subItemConfig, assistantContext }) {
@@ -26,11 +50,13 @@ export default function LeasingView({ activeSubItem, subItemConfig, assistantCon
     <div className="tenancy-lifecycle-view">
       <h2 className="view-title">Tenancy Lifecycle</h2>
       <p className="view-subtitle">Track tenancies through all stages</p>
-      
+
       <div className="lifecycle-stages">
         {TENANCY_STAGES.map(stage => (
           <div key={stage.id} className="lifecycle-stage" style={{ borderTopColor: stage.color }}>
-            <div className="stage-count" style={{ color: stage.color }}>{stage.count}</div>
+            <div className="stage-count" style={{ color: stage.color }}>
+              {stage.count}
+            </div>
             <div className="stage-label">{stage.label}</div>
           </div>
         ))}
@@ -42,7 +68,7 @@ export default function LeasingView({ activeSubItem, subItemConfig, assistantCon
     <div className="ejari-view">
       <h2 className="view-title">Ejari Contracts</h2>
       <p className="view-subtitle">Digital tenancy contract management</p>
-      
+
       <div className="ejari-stats">
         <div className="ejari-stat">
           <FileCheck size={24} color="var(--crm-gold)" />
@@ -70,7 +96,9 @@ export default function LeasingView({ activeSubItem, subItemConfig, assistantCon
               <div className="table-cell">{contract.tenant}</div>
               <div className="table-cell">{contract.property}</div>
               <div className="table-cell">
-                <span className={`status-badge ${contract.status}`}>{contract.status.replace('-', ' ')}</span>
+                <span className={`status-badge ${contract.status}`}>
+                  {contract.status.replace('-', ' ')}
+                </span>
               </div>
               <div className="table-cell">{contract.expires}</div>
             </div>
@@ -84,7 +112,7 @@ export default function LeasingView({ activeSubItem, subItemConfig, assistantCon
     <div className="renewals-view">
       <h2 className="view-title">Lease Renewals</h2>
       <p className="view-subtitle">Upcoming renewal management</p>
-      
+
       <div className="renewals-list">
         {RENEWALS.map(renewal => (
           <div key={renewal.id} className="renewal-card">
@@ -146,9 +174,5 @@ export default function LeasingView({ activeSubItem, subItemConfig, assistantCon
     }
   };
 
-  return (
-    <div className="view-container leasing-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container leasing-view">{renderContent()}</div>;
 }

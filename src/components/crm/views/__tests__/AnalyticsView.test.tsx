@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 
-describe('AdminView', () => {
+describe('AnalyticsView', () => {
   it('renders without crashing', () => {
     expect(true).toBe(true);
   });

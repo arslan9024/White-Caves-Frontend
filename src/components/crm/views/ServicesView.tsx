@@ -14,15 +14,45 @@ const SERVICES = [
   { id: 1, name: 'Property Valuation', category: 'Sales', tier: 'Essential', aiAssistant: 'Mary' },
   { id: 2, name: 'Ejari Registration', category: 'Rental', tier: 'Basic', aiAssistant: 'Nina' },
   { id: 3, name: 'Title Deed Transfer', category: 'Legal', tier: 'Premium', aiAssistant: 'Grace' },
-  { id: 4, name: 'Mortgage Assistance', category: 'Financial', tier: 'Essential', aiAssistant: 'Max' },
+  {
+    id: 4,
+    name: 'Mortgage Assistance',
+    category: 'Financial',
+    tier: 'Essential',
+    aiAssistant: 'Max',
+  },
   { id: 5, name: 'Property Inspection', category: 'Property', tier: 'Basic', aiAssistant: 'Henry' },
-  { id: 6, name: 'Investment Advisory', category: 'Consulting', tier: 'Ultra-Premium', aiAssistant: 'Zoe' },
+  {
+    id: 6,
+    name: 'Investment Advisory',
+    category: 'Consulting',
+    tier: 'Ultra-Premium',
+    aiAssistant: 'Zoe',
+  },
 ];
 
 const SERVICE_REQUESTS = [
-  { id: 1, service: 'Property Valuation', client: 'Ahmad Hassan', status: 'in-progress', date: '2024-01-10' },
-  { id: 2, service: 'Ejari Registration', client: 'Sarah Williams', status: 'pending', date: '2024-01-11' },
-  { id: 3, service: 'Title Deed Transfer', client: 'Mohammed Ali', status: 'completed', date: '2024-01-09' },
+  {
+    id: 1,
+    service: 'Property Valuation',
+    client: 'Ahmad Hassan',
+    status: 'in-progress',
+    date: '2024-01-10',
+  },
+  {
+    id: 2,
+    service: 'Ejari Registration',
+    client: 'Sarah Williams',
+    status: 'pending',
+    date: '2024-01-11',
+  },
+  {
+    id: 3,
+    service: 'Title Deed Transfer',
+    client: 'Mohammed Ali',
+    status: 'completed',
+    date: '2024-01-09',
+  },
 ];
 
 export default function ServicesView({ activeSubItem, subItemConfig, assistantContext }) {
@@ -30,11 +60,14 @@ export default function ServicesView({ activeSubItem, subItemConfig, assistantCo
     <div className="service-catalog-view">
       <h2 className="view-title">Service Catalog</h2>
       <p className="view-subtitle">40 services across 6 categories</p>
-      
+
       <div className="categories-grid">
         {SERVICE_CATEGORIES.map(cat => (
           <div key={cat.id} className="category-card" style={{ borderLeftColor: cat.color }}>
-            <div className="category-icon" style={{ background: `${cat.color}20`, color: cat.color }}>
+            <div
+              className="category-icon"
+              style={{ background: `${cat.color}20`, color: cat.color }}
+            >
               <Briefcase size={24} />
             </div>
             <div className="category-info">
@@ -139,9 +172,5 @@ export default function ServicesView({ activeSubItem, subItemConfig, assistantCo
     }
   };
 
-  return (
-    <div className="view-container services-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container services-view">{renderContent()}</div>;
 }

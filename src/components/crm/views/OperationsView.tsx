@@ -17,7 +17,13 @@ const DEPARTMENTS = [
 
 const EMPLOYEES = [
   { id: 1, name: 'Ahmed Hassan', role: 'Senior Agent', dept: 'Sales', status: 'active' },
-  { id: 2, name: 'Fatima Al Maktoum', role: 'Marketing Manager', dept: 'Marketing', status: 'active' },
+  {
+    id: 2,
+    name: 'Fatima Al Maktoum',
+    role: 'Marketing Manager',
+    dept: 'Marketing',
+    status: 'active',
+  },
   { id: 3, name: 'Mohammed Rashid', role: 'Property Consultant', dept: 'Sales', status: 'active' },
   { id: 4, name: 'Sara Abdullah', role: 'Finance Analyst', dept: 'Finance', status: 'active' },
   { id: 5, name: 'Omar Khalid', role: 'Legal Counsel', dept: 'Legal', status: 'active' },
@@ -72,7 +78,12 @@ export default function OperationsView({ activeSubItem, subItemConfig, assistant
         {EMPLOYEES.map(emp => (
           <div key={emp.id} className="table-row">
             <div className="table-cell">
-              <div className="employee-avatar">{emp.name.split(' ').map(n => n[0]).join('')}</div>
+              <div className="employee-avatar">
+                {emp.name
+                  .split(' ')
+                  .map(n => n[0])
+                  .join('')}
+              </div>
               {emp.name}
             </div>
             <div className="table-cell">{emp.role}</div>
@@ -151,9 +162,5 @@ export default function OperationsView({ activeSubItem, subItemConfig, assistant
     }
   };
 
-  return (
-    <div className="view-container operations-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container operations-view">{renderContent()}</div>;
 }

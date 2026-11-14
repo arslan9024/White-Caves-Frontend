@@ -1,17 +1,75 @@
 import React from 'react';
-import { 
-  TrendingUp, TrendingDown, Building2, Users, DollarSign, 
-  Target, ChartPie, Activity, ArrowUpRight, ArrowDownRight,
-  Bell, Star, Calendar
+import {
+  TrendingUp,
+  TrendingDown,
+  Building2,
+  Users,
+  DollarSign,
+  Target,
+  ChartPie,
+  Activity,
+  ArrowUpRight,
+  ArrowDownRight,
+  Bell,
+  Star,
+  Calendar,
 } from 'lucide-react';
 
 const STATS = [
-  { id: 'properties', label: 'Active Listings', value: '156', change: '+12%', trend: 'up', icon: Building2, color: '#10B981' },
-  { id: 'leads', label: 'New Leads', value: '52', change: '+5%', trend: 'up', icon: Users, color: '#8B5CF6' },
-  { id: 'revenue', label: 'Monthly Revenue', value: 'AED 2,450,000', change: '+18%', trend: 'up', icon: DollarSign, color: '#059669' },
-  { id: 'deals', label: 'Active Deals', value: '89', change: '+25%', trend: 'up', icon: Target, color: '#F59E0B' },
-  { id: 'viewings', label: 'Scheduled Viewings', value: '34', change: '+15%', trend: 'up', icon: Calendar, color: '#3B82F6' },
-  { id: 'conversions', label: 'Conversion Rate', value: '24.5%', change: '+30%', trend: 'up', icon: ChartPie, color: '#EC4899' },
+  {
+    id: 'properties',
+    label: 'Active Listings',
+    value: '156',
+    change: '+12%',
+    trend: 'up',
+    icon: Building2,
+    color: '#10B981',
+  },
+  {
+    id: 'leads',
+    label: 'New Leads',
+    value: '52',
+    change: '+5%',
+    trend: 'up',
+    icon: Users,
+    color: '#8B5CF6',
+  },
+  {
+    id: 'revenue',
+    label: 'Monthly Revenue',
+    value: 'AED 2,450,000',
+    change: '+18%',
+    trend: 'up',
+    icon: DollarSign,
+    color: '#059669',
+  },
+  {
+    id: 'deals',
+    label: 'Active Deals',
+    value: '89',
+    change: '+25%',
+    trend: 'up',
+    icon: Target,
+    color: '#F59E0B',
+  },
+  {
+    id: 'viewings',
+    label: 'Scheduled Viewings',
+    value: '34',
+    change: '+15%',
+    trend: 'up',
+    icon: Calendar,
+    color: '#3B82F6',
+  },
+  {
+    id: 'conversions',
+    label: 'Conversion Rate',
+    value: '24.5%',
+    change: '+30%',
+    trend: 'up',
+    icon: ChartPie,
+    color: '#EC4899',
+  },
 ];
 
 const ANNOUNCEMENTS = [
@@ -43,7 +101,10 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
           const Icon = stat.icon;
           return (
             <div key={stat.id} className="stat-card" style={{ borderLeftColor: stat.color }}>
-              <div className="stat-icon" style={{ background: `${stat.color}20`, color: stat.color }}>
+              <div
+                className="stat-icon"
+                style={{ background: `${stat.color}20`, color: stat.color }}
+              >
                 <Icon size={24} />
               </div>
               <div className="stat-content">
@@ -109,7 +170,9 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
                 <div className="agent-avatar">{agent.avatar}</div>
                 <div className="agent-info">
                   <div className="agent-name">{agent.name}</div>
-                  <div className="agent-stats">{agent.deals} deals • {agent.revenue}</div>
+                  <div className="agent-stats">
+                    {agent.deals} deals • {agent.revenue}
+                  </div>
                 </div>
               </div>
             ))}
@@ -134,7 +197,14 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
       <h2 className="view-title">Strategic KPIs</h2>
       <p className="view-subtitle">Track key performance indicators across all departments</p>
       <div className="kpi-grid">
-        {['Sales Velocity', 'Customer Satisfaction', 'Agent Productivity', 'Revenue per Lead', 'Time to Close', 'Listing Quality Score'].map(kpi => (
+        {[
+          'Sales Velocity',
+          'Customer Satisfaction',
+          'Agent Productivity',
+          'Revenue per Lead',
+          'Time to Close',
+          'Listing Quality Score',
+        ].map(kpi => (
           <div key={kpi} className="kpi-card">
             <div className="kpi-name">{kpi}</div>
             <div className="kpi-value">{Math.floor(Math.random() * 100)}%</div>
@@ -203,9 +273,5 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
     }
   };
 
-  return (
-    <div className="view-container executive-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container executive-view">{renderContent()}</div>;
 }

@@ -8,7 +8,13 @@ const KYC_PROFILES = [
 ];
 
 const AML_ALERTS = [
-  { id: 1, type: 'High Value Transaction', client: 'Mohammed Ali', amount: 'AED 5M+', status: 'review' },
+  {
+    id: 1,
+    type: 'High Value Transaction',
+    client: 'Mohammed Ali',
+    amount: 'AED 5M+',
+    status: 'review',
+  },
   { id: 2, type: 'PEP Match', client: 'Sarah Ahmed', status: 'cleared' },
 ];
 
@@ -23,7 +29,7 @@ export default function ComplianceView({ activeSubItem, subItemConfig, assistant
     <div className="kyc-view">
       <h2 className="view-title">KYC Profiles</h2>
       <p className="view-subtitle">Know Your Customer verification</p>
-      
+
       <div className="kyc-stats">
         <div className="kyc-stat">
           <UserCheck size={24} color="#10B981" />
@@ -62,14 +68,16 @@ export default function ComplianceView({ activeSubItem, subItemConfig, assistant
     <div className="aml-view">
       <h2 className="view-title">AML Monitoring</h2>
       <p className="view-subtitle">Anti-Money Laundering checks</p>
-      
+
       <div className="aml-alerts">
         {AML_ALERTS.map(alert => (
           <div key={alert.id} className={`aml-alert ${alert.status}`}>
             <AlertTriangle size={20} color={alert.status === 'review' ? '#F59E0B' : '#10B981'} />
             <div className="alert-info">
               <h4>{alert.type}</h4>
-              <p>{alert.client} {alert.amount && `- ${alert.amount}`}</p>
+              <p>
+                {alert.client} {alert.amount && `- ${alert.amount}`}
+              </p>
             </div>
             <span className={`alert-status ${alert.status}`}>{alert.status}</span>
           </div>
@@ -145,9 +153,5 @@ export default function ComplianceView({ activeSubItem, subItemConfig, assistant
     }
   };
 
-  return (
-    <div className="view-container compliance-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container compliance-view">{renderContent()}</div>;
 }

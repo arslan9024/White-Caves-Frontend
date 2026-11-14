@@ -23,7 +23,7 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
     <div className="settings-view">
       <h2 className="view-title">System Settings</h2>
       <p className="view-subtitle">Platform configuration</p>
-      
+
       <div className="settings-grid">
         {SYSTEM_SETTINGS.map(setting => (
           <div key={setting.id} className="setting-card">
@@ -43,7 +43,7 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
     <div className="integrations-view">
       <h2 className="view-title">Integrations</h2>
       <p className="view-subtitle">Third-party service connections</p>
-      
+
       <div className="integrations-grid">
         {INTEGRATIONS.map(integration => (
           <div key={integration.id} className="integration-card">
@@ -66,7 +66,9 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
   const renderKnowledgeBase = () => (
     <div className="knowledge-base-view">
       <h2 className="view-title">Knowledge Base</h2>
-      <p className="view-subtitle">Technical documentation, company policies, and operational guides</p>
+      <p className="view-subtitle">
+        Technical documentation, company policies, and operational guides
+      </p>
       <AuroraDocumentIndex showCompanyDocs={true} />
     </div>
   );
@@ -75,7 +77,7 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
     <div className="system-health-view">
       <h2 className="view-title">System Health</h2>
       <p className="view-subtitle">Platform monitoring and status</p>
-      
+
       <div className="health-grid">
         <div className="health-card healthy">
           <Activity size={24} />
@@ -110,7 +112,7 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
           </div>
         </div>
       </div>
-      
+
       <div className="uptime-section">
         <h3>Uptime: 99.97%</h3>
         <p>Last 30 days - No major incidents</p>
@@ -133,9 +135,5 @@ export default function AdminView({ activeSubItem, subItemConfig, assistantConte
     }
   };
 
-  return (
-    <div className="view-container admin-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container admin-view">{renderContent()}</div>;
 }

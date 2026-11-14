@@ -3,17 +3,84 @@ import { Home, Grid3x3, Plus, Building, Image, Video, Eye } from 'lucide-react';
 import TransactionsView from './TransactionsView';
 
 const PROPERTIES = [
-  { id: 1, title: 'Palm Jumeirah Villa', type: 'Villa', beds: 5, baths: 6, area: 8500, price: 'AED 12,500,000', status: 'active', image: '🏠' },
-  { id: 2, title: 'Downtown Dubai Apartment', type: 'Apartment', beds: 3, baths: 3, area: 2200, price: 'AED 3,800,000', status: 'active', image: '🏢' },
-  { id: 3, title: 'Dubai Marina Penthouse', type: 'Penthouse', beds: 4, baths: 5, area: 5200, price: 'AED 8,200,000', status: 'pending', image: '🌆' },
-  { id: 4, title: 'Business Bay Office', type: 'Commercial', beds: 0, baths: 2, area: 3500, price: 'AED 4,500,000', status: 'active', image: '🏬' },
-  { id: 5, title: 'JBR Beachfront Unit', type: 'Apartment', beds: 2, baths: 2, area: 1800, price: 'AED 2,200,000', status: 'sold', image: '🏖️' },
-  { id: 6, title: 'Emirates Hills Mansion', type: 'Villa', beds: 7, baths: 8, area: 15000, price: 'AED 45,000,000', status: 'active', image: '🏰' },
+  {
+    id: 1,
+    title: 'Palm Jumeirah Villa',
+    type: 'Villa',
+    beds: 5,
+    baths: 6,
+    area: 8500,
+    price: 'AED 12,500,000',
+    status: 'active',
+    image: '🏠',
+  },
+  {
+    id: 2,
+    title: 'Downtown Dubai Apartment',
+    type: 'Apartment',
+    beds: 3,
+    baths: 3,
+    area: 2200,
+    price: 'AED 3,800,000',
+    status: 'active',
+    image: '🏢',
+  },
+  {
+    id: 3,
+    title: 'Dubai Marina Penthouse',
+    type: 'Penthouse',
+    beds: 4,
+    baths: 5,
+    area: 5200,
+    price: 'AED 8,200,000',
+    status: 'pending',
+    image: '🌆',
+  },
+  {
+    id: 4,
+    title: 'Business Bay Office',
+    type: 'Commercial',
+    beds: 0,
+    baths: 2,
+    area: 3500,
+    price: 'AED 4,500,000',
+    status: 'active',
+    image: '🏬',
+  },
+  {
+    id: 5,
+    title: 'JBR Beachfront Unit',
+    type: 'Apartment',
+    beds: 2,
+    baths: 2,
+    area: 1800,
+    price: 'AED 2,200,000',
+    status: 'sold',
+    image: '🏖️',
+  },
+  {
+    id: 6,
+    title: 'Emirates Hills Mansion',
+    type: 'Villa',
+    beds: 7,
+    baths: 8,
+    area: 15000,
+    price: 'AED 45,000,000',
+    status: 'active',
+    image: '🏰',
+  },
 ];
 
 const OFF_PLAN_PROJECTS = [
   { id: 1, name: 'Creek Views', developer: 'Emaar', completion: 'Q4 2025', units: 450, sold: 380 },
-  { id: 2, name: 'Damac Hills 2', developer: 'DAMAC', completion: 'Q2 2025', units: 320, sold: 290 },
+  {
+    id: 2,
+    name: 'Damac Hills 2',
+    developer: 'DAMAC',
+    completion: 'Q2 2025',
+    units: 320,
+    sold: 290,
+  },
   { id: 3, name: 'Sobha One', developer: 'Sobha', completion: 'Q1 2026', units: 280, sold: 150 },
 ];
 
@@ -55,7 +122,9 @@ export default function PropertiesView({ activeSubItem, subItemConfig, assistant
               <div className="property-price">{property.price}</div>
             </div>
             <div className="property-actions">
-              <button className="action-btn"><Eye size={14} /> View</button>
+              <button className="action-btn">
+                <Eye size={14} /> View
+              </button>
               <button className="action-btn">Edit</button>
             </div>
           </div>
@@ -70,12 +139,14 @@ export default function PropertiesView({ activeSubItem, subItemConfig, assistant
       <p className="view-subtitle">6-step wizard for complete property listing</p>
       <div className="listing-wizard-preview">
         <div className="wizard-steps">
-          {['Basic Info', 'Location', 'Specifications', 'Pricing', 'Media', 'Legal'].map((step, i) => (
-            <div key={step} className="wizard-step">
-              <div className="step-number">{i + 1}</div>
-              <div className="step-label">{step}</div>
-            </div>
-          ))}
+          {['Basic Info', 'Location', 'Specifications', 'Pricing', 'Media', 'Legal'].map(
+            (step, i) => (
+              <div key={step} className="wizard-step">
+                <div className="step-number">{i + 1}</div>
+                <div className="step-label">{step}</div>
+              </div>
+            )
+          )}
         </div>
         <button className="crm-btn crm-btn-primary" style={{ marginTop: '24px' }}>
           Start New Listing
@@ -96,10 +167,15 @@ export default function PropertiesView({ activeSubItem, subItemConfig, assistant
             <div className="off-plan-developer">{project.developer}</div>
             <div className="off-plan-stats">
               <div>Completion: {project.completion}</div>
-              <div>Units: {project.sold}/{project.units}</div>
+              <div>
+                Units: {project.sold}/{project.units}
+              </div>
             </div>
             <div className="off-plan-progress">
-              <div className="progress-bar" style={{ width: `${(project.sold / project.units) * 100}%` }} />
+              <div
+                className="progress-bar"
+                style={{ width: `${(project.sold / project.units) * 100}%` }}
+              />
             </div>
           </div>
         ))}
@@ -112,12 +188,14 @@ export default function PropertiesView({ activeSubItem, subItemConfig, assistant
       <h2 className="view-title">Property Workflow Tracker</h2>
       <p className="view-subtitle">Track property status through stages</p>
       <div className="workflow-stages">
-        {['Listed', 'Marketing', 'Viewing', 'Offer', 'Contract', 'Closing', 'Handover'].map((stage, i) => (
-          <div key={stage} className="workflow-stage">
-            <div className="workflow-dot" />
-            <span>{stage}</span>
-          </div>
-        ))}
+        {['Listed', 'Marketing', 'Viewing', 'Offer', 'Contract', 'Closing', 'Handover'].map(
+          (stage, i) => (
+            <div key={stage} className="workflow-stage">
+              <div className="workflow-dot" />
+              <span>{stage}</span>
+            </div>
+          )
+        )}
       </div>
     </div>
   );
@@ -174,9 +252,5 @@ export default function PropertiesView({ activeSubItem, subItemConfig, assistant
     }
   };
 
-  return (
-    <div className="view-container properties-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container properties-view">{renderContent()}</div>;
 }

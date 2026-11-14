@@ -10,16 +10,56 @@ const PIPELINE_STAGES = [
 ];
 
 const LEADS = [
-  { id: 1, name: 'Ahmad Al Rashid', source: 'Website', budget: 'AED 2.5M', stage: 'qualified', agent: 'Sarah A.' },
-  { id: 2, name: 'Chen Wei', source: 'Referral', budget: 'AED 5M', stage: 'proposal', agent: 'Mohammed A.' },
-  { id: 3, name: 'James Wilson', source: 'WhatsApp', budget: 'AED 1.8M', stage: 'new', agent: 'Unassigned' },
-  { id: 4, name: 'Fatima Hassan', source: 'Property Finder', budget: 'AED 3.2M', stage: 'negotiation', agent: 'Sarah A.' },
+  {
+    id: 1,
+    name: 'Ahmad Al Rashid',
+    source: 'Website',
+    budget: 'AED 2.5M',
+    stage: 'qualified',
+    agent: 'Sarah A.',
+  },
+  {
+    id: 2,
+    name: 'Chen Wei',
+    source: 'Referral',
+    budget: 'AED 5M',
+    stage: 'proposal',
+    agent: 'Mohammed A.',
+  },
+  {
+    id: 3,
+    name: 'James Wilson',
+    source: 'WhatsApp',
+    budget: 'AED 1.8M',
+    stage: 'new',
+    agent: 'Unassigned',
+  },
+  {
+    id: 4,
+    name: 'Fatima Hassan',
+    source: 'Property Finder',
+    budget: 'AED 3.2M',
+    stage: 'negotiation',
+    agent: 'Sarah A.',
+  },
 ];
 
 const DEALS = [
-  { id: 1, property: 'Palm Jumeirah Villa', value: 'AED 8.5M', stage: 'Negotiation', probability: 75 },
+  {
+    id: 1,
+    property: 'Palm Jumeirah Villa',
+    value: 'AED 8.5M',
+    stage: 'Negotiation',
+    probability: 75,
+  },
   { id: 2, property: 'Downtown Apartment', value: 'AED 2.1M', stage: 'Contract', probability: 90 },
-  { id: 3, property: 'Business Bay Penthouse', value: 'AED 4.2M', stage: 'Viewing', probability: 40 },
+  {
+    id: 3,
+    property: 'Business Bay Penthouse',
+    value: 'AED 4.2M',
+    stage: 'Viewing',
+    probability: 40,
+  },
 ];
 
 export default function SalesView({ activeSubItem, subItemConfig, assistantContext }) {
@@ -27,7 +67,7 @@ export default function SalesView({ activeSubItem, subItemConfig, assistantConte
     <div className="pipeline-view">
       <h2 className="view-title">Lead Pipeline</h2>
       <p className="view-subtitle">Track leads through sales stages</p>
-      
+
       <div className="pipeline-stages">
         {PIPELINE_STAGES.map(stage => (
           <div key={stage.id} className="pipeline-stage" style={{ borderTopColor: stage.color }}>
@@ -71,7 +111,16 @@ export default function SalesView({ activeSubItem, subItemConfig, assistantConte
       <h2 className="view-title">Client Journey</h2>
       <p className="view-subtitle">Track client lifecycle from lead to owner</p>
       <div className="journey-stages">
-        {['Inquiry', 'Viewing', 'Offer', 'Negotiation', 'Contract', 'Payment', 'Handover', 'Post-Sale'].map((stage, i) => (
+        {[
+          'Inquiry',
+          'Viewing',
+          'Offer',
+          'Negotiation',
+          'Contract',
+          'Payment',
+          'Handover',
+          'Post-Sale',
+        ].map((stage, i) => (
           <div key={stage} className="journey-stage">
             <div className="journey-number">{i + 1}</div>
             <div className="journey-label">{stage}</div>
@@ -190,9 +239,5 @@ export default function SalesView({ activeSubItem, subItemConfig, assistantConte
     }
   };
 
-  return (
-    <div className="view-container sales-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container sales-view">{renderContent()}</div>;
 }

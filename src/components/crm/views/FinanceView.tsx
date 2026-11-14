@@ -2,9 +2,30 @@ import React from 'react';
 import { Wallet, CreditCard, Receipt, Percent, PieChart, TrendingUp } from 'lucide-react';
 
 const TRANSACTIONS = [
-  { id: 1, type: 'Payment Received', amount: 'AED 250,000', client: 'Ahmad Hassan', date: '2024-01-10', status: 'completed' },
-  { id: 2, type: 'Commission Payout', amount: 'AED 12,500', agent: 'Sarah Ahmed', date: '2024-01-09', status: 'completed' },
-  { id: 3, type: 'Security Deposit', amount: 'AED 45,000', client: 'Chen Wei', date: '2024-01-08', status: 'pending' },
+  {
+    id: 1,
+    type: 'Payment Received',
+    amount: 'AED 250,000',
+    client: 'Ahmad Hassan',
+    date: '2024-01-10',
+    status: 'completed',
+  },
+  {
+    id: 2,
+    type: 'Commission Payout',
+    amount: 'AED 12,500',
+    agent: 'Sarah Ahmed',
+    date: '2024-01-09',
+    status: 'completed',
+  },
+  {
+    id: 3,
+    type: 'Security Deposit',
+    amount: 'AED 45,000',
+    client: 'Chen Wei',
+    date: '2024-01-08',
+    status: 'pending',
+  },
 ];
 
 const REVENUE_BREAKDOWN = [
@@ -19,7 +40,7 @@ export default function FinanceView({ activeSubItem, subItemConfig, assistantCon
     <div className="transactions-view">
       <h2 className="view-title">Transactions</h2>
       <p className="view-subtitle">Financial transactions history</p>
-      
+
       <div className="transactions-summary">
         <div className="summary-card">
           <TrendingUp size={24} color="#10B981" />
@@ -130,9 +151,5 @@ export default function FinanceView({ activeSubItem, subItemConfig, assistantCon
     }
   };
 
-  return (
-    <div className="view-container finance-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container finance-view">{renderContent()}</div>;
 }

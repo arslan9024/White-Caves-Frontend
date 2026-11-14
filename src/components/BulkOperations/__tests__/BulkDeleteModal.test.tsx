@@ -10,7 +10,9 @@ describe('BulkDeleteModal Component', () => {
   });
 
   it('renders delete modal header when isOpen is true', () => {
-    render(<BulkDeleteModal isOpen={true} propertyCount={3} />);
-    expect(screen.getByText('Delete Properties')).toBeDefined();
+    render(
+      <BulkDeleteModal isOpen={true} propertyCount={3} onConfirm={() => {}} onCancel={() => {}} />
+    );
+    expect(screen.getByRole('heading', { name: 'Delete Properties' })).toBeDefined();
   });
 });

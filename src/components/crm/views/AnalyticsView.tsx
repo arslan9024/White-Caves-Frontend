@@ -15,8 +15,18 @@ const TOP_PERFORMERS = [
 ];
 
 const AI_INSIGHTS = [
-  { id: 1, type: 'trend', message: 'Palm Jumeirah showing 15% price increase trend', assistant: 'Mary' },
-  { id: 2, type: 'opportunity', message: 'High-value lead cluster identified in Business Bay', assistant: 'Zoe' },
+  {
+    id: 1,
+    type: 'trend',
+    message: 'Palm Jumeirah showing 15% price increase trend',
+    assistant: 'Mary',
+  },
+  {
+    id: 2,
+    type: 'opportunity',
+    message: 'High-value lead cluster identified in Business Bay',
+    assistant: 'Zoe',
+  },
   { id: 3, type: 'risk', message: '3 contracts approaching renewal deadline', assistant: 'Nina' },
 ];
 
@@ -25,7 +35,7 @@ export default function AnalyticsView({ activeSubItem, subItemConfig, assistantC
     <div className="market-analytics-view">
       <h2 className="view-title">Market Analytics</h2>
       <p className="view-subtitle">Dubai real estate market trends</p>
-      
+
       <div className="market-metrics">
         {MARKET_METRICS.map(metric => (
           <div key={metric.label} className="metric-card">
@@ -49,18 +59,25 @@ export default function AnalyticsView({ activeSubItem, subItemConfig, assistantC
     <div className="performance-view">
       <h2 className="view-title">Performance Dashboard</h2>
       <p className="view-subtitle">Team and individual performance metrics</p>
-      
+
       <div className="performers-list">
-        <h3><Award size={20} color="var(--crm-gold)" /> Top Performers</h3>
+        <h3>
+          <Award size={20} color="var(--crm-gold)" /> Top Performers
+        </h3>
         {TOP_PERFORMERS.map(performer => (
           <div key={performer.name} className="performer-card">
             <div className="performer-rank">#{performer.rank}</div>
             <div className="performer-avatar">
-              {performer.name.split(' ').map(n => n[0]).join('')}
+              {performer.name
+                .split(' ')
+                .map(n => n[0])
+                .join('')}
             </div>
             <div className="performer-info">
               <h4>{performer.name}</h4>
-              <span>{performer.sales} sales • {performer.revenue}</span>
+              <span>
+                {performer.sales} sales • {performer.revenue}
+              </span>
             </div>
           </div>
         ))}
@@ -72,7 +89,7 @@ export default function AnalyticsView({ activeSubItem, subItemConfig, assistantC
     <div className="ai-insights-view">
       <h2 className="view-title">AI Insights</h2>
       <p className="view-subtitle">AI-powered analytics and recommendations</p>
-      
+
       <div className="insights-list">
         {AI_INSIGHTS.map(insight => (
           <div key={insight.id} className={`insight-card ${insight.type}`}>
@@ -95,9 +112,7 @@ export default function AnalyticsView({ activeSubItem, subItemConfig, assistantC
         <button className="crm-btn crm-btn-primary">
           <FileBarChart size={16} /> Create New Report
         </button>
-        <button className="crm-btn crm-btn-secondary">
-          View Saved Reports
-        </button>
+        <button className="crm-btn crm-btn-secondary">View Saved Reports</button>
       </div>
     </div>
   );
@@ -117,9 +132,5 @@ export default function AnalyticsView({ activeSubItem, subItemConfig, assistantC
     }
   };
 
-  return (
-    <div className="view-container analytics-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container analytics-view">{renderContent()}</div>;
 }

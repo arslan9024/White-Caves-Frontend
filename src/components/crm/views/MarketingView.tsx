@@ -2,8 +2,22 @@ import React from 'react';
 import { Megaphone, Rocket, Globe, Mail, MessageCircle, CalendarDays } from 'lucide-react';
 
 const CAMPAIGNS = [
-  { id: 1, name: 'Palm Jumeirah Launch', status: 'active', reach: '45K', leads: 120, budget: 'AED 25K' },
-  { id: 2, name: 'Q1 Luxury Properties', status: 'active', reach: '32K', leads: 85, budget: 'AED 18K' },
+  {
+    id: 1,
+    name: 'Palm Jumeirah Launch',
+    status: 'active',
+    reach: '45K',
+    leads: 120,
+    budget: 'AED 25K',
+  },
+  {
+    id: 2,
+    name: 'Q1 Luxury Properties',
+    status: 'active',
+    reach: '32K',
+    leads: 85,
+    budget: 'AED 18K',
+  },
   { id: 3, name: 'Downtown Living', status: 'scheduled', reach: '0', leads: 0, budget: 'AED 30K' },
 ];
 
@@ -19,7 +33,7 @@ export default function MarketingView({ activeSubItem, subItemConfig, assistantC
     <div className="campaigns-view">
       <h2 className="view-title">Marketing Campaigns</h2>
       <p className="view-subtitle">Active and scheduled campaigns</p>
-      
+
       <div className="campaigns-grid">
         {CAMPAIGNS.map(campaign => (
           <div key={campaign.id} className="campaign-card">
@@ -159,9 +173,5 @@ export default function MarketingView({ activeSubItem, subItemConfig, assistantC
     }
   };
 
-  return (
-    <div className="view-container marketing-view">
-      {renderContent()}
-    </div>
-  );
+  return <div className="view-container marketing-view">{renderContent()}</div>;
 }
