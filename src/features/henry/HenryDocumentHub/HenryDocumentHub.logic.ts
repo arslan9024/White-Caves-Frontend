@@ -4,18 +4,25 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import {
+  buildStatutoryGateXPReward,
+  calculateDynamicCommissionSplitPct,
+  type StatutoryClearanceMutationResult,
+} from '../../../../.agents/aegis/protocols/leaderboardXpHooks';
 import type {
   DocumentTemplate,
   ComplianceReport,
   HenryRecord,
   HenryDepartmentTag,
   HenryHubActivePanel,
+  HenryOcrDocCategory,
 } from './HenryDocumentHub.types';
 import {
   fetchHenryRecords,
   executeComplianceCheck,
   saveDocumentRecord,
   extractDocumentFields,
+  runStatutoryDocumentOcr,
   removeHenryRecord,
   markHenryRecordSigned,
 } from './HenryDocumentHub.workflow';
@@ -34,6 +41,11 @@ export function useHenryDocumentHubLogic() {
   const [selectedOwnerEmail, setSelectedOwnerEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [staffXP, setStaffXP] = useState(1500);
+  const [gatesCleared, setGatesCleared] = useState(3);
+  const [latestXpMutation, setLatestXpMutation] = useState<StatutoryClearanceMutationResult | null>(
+    null
+  );
 
   const loadRecords = useCallback(async () => {
     setIsLoading(true);
@@ -69,6 +81,21 @@ export function useHenryDocumentHubLogic() {
     if (result.success && result.data) {
       setComplianceReport(result.data);
       setActivePanel('compliance');
+      if (result.data.isCompliant) {
+        const xpAward = buildStatutoryGateXPReward({
+          staffProfileId: 'staff-lion-001',
+          taskRecordId: `HENRY-COMPLIANCE-${activeTemplate.key}-${Date.now()}`,
+          citationReference: `RERA/DLD Statutory Gate (${activeTemplate.label})`,
+          currentXP: staffXP,
+          currentGatesCleared: gatesCleared,
+        });
+        setStaffXP(xpAward.newTotalXP);
+        setGatesCleared(xpAward.newStatutoryGatesCleared);
+        setLatestXpMutation(xpAward);
+        setSuccessMessage(
+          `Statutory Gate Cleared! +${xpAward.xpDelta} XP credited (${xpAward.newTotalXP} XP · ${xpAward.resultingSplitPct}% Commission Split)`
+        );
+      }
     } else {
       setError(result.error ?? 'Compliance check failed');
     }
@@ -107,6 +134,29 @@ export function useHenryDocumentHubLogic() {
       );
     } else {
       setError(result.error ?? 'Extraction failed');
+    }
+    setIsExtracting(false);
+  };
+
+  const handleOcrDocumentScan = async (docCategory: HenryOcrDocCategory, imageBase64?: string) => {
+    setIsExtracting(true);
+    setError(null);
+    const ocrResult = await runStatutoryDocumentOcr(docCategory, imageBase64);
+    if (ocrResult.success) {
+      setFormData(prev => ({ ...prev, ...ocrResult.fields }));
+      const xpAward = buildStatutoryGateXPReward({
+        staffProfileId: 'staff-lion-001',
+        taskRecordId: `HENRY-OCR-${docCategory}-${Date.now()}`,
+        citationReference: ocrResult.citation,
+        currentXP: staffXP,
+        currentGatesCleared: gatesCleared,
+      });
+      setStaffXP(xpAward.newTotalXP);
+      setGatesCleared(xpAward.newStatutoryGatesCleared);
+      setLatestXpMutation(xpAward);
+      setSuccessMessage(
+        `${ocrResult.label} verified (${(ocrResult.confidence * 100).toFixed(1)}%) — +${xpAward.xpDelta} XP Merit Ledger Credited (${xpAward.newTotalXP} XP · ${xpAward.resultingSplitPct}% Split)`
+      );
     }
     setIsExtracting(false);
   };
@@ -154,7 +204,12 @@ export function useHenryDocumentHubLogic() {
     handleCheckCompliance,
     handleSaveRecord,
     handleExtractFields,
+    handleOcrDocumentScan,
     handleDeleteRecord,
     handleMarkSigned,
+    staffXP,
+    gatesCleared,
+    commissionSplitPct: calculateDynamicCommissionSplitPct(staffXP),
+    latestXpMutation,
   };
 }

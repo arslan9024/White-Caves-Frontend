@@ -67,6 +67,8 @@ export interface HenryRecord {
 
 export type HenryHubActivePanel = 'editor' | 'compliance' | 'archive';
 
+export type HenryOcrDocCategory = 'EMIRATES_ID' | 'PASSPORT' | 'TITLE_DEED' | 'EJARI';
+
 export interface HenryDocumentHubProps {
   role?: string;
 }

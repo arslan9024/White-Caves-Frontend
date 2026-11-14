@@ -42,8 +42,12 @@ export const HenryDocumentHubView: React.FC<HenryDocumentHubProps> = () => {
     handleCheckCompliance,
     handleSaveRecord,
     handleExtractFields,
+    handleOcrDocumentScan,
     handleDeleteRecord,
     handleMarkSigned,
+    staffXP,
+    gatesCleared,
+    commissionSplitPct,
   } = useHenryDocumentHubLogic();
 
   return (
@@ -129,6 +133,29 @@ export const HenryDocumentHubView: React.FC<HenryDocumentHubProps> = () => {
         )}
 
         {/* Alert messages */}
+        <div
+          data-testid="henry-merit-xp-hud"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '10px 14px',
+            marginBottom: 16,
+            borderRadius: 8,
+            background: 'rgba(201, 168, 76, 0.1)',
+            border: '1px solid rgba(201, 168, 76, 0.35)',
+            color: '#C9A84C',
+            fontSize: 12,
+            fontWeight: 600,
+          }}
+        >
+          <span>
+            🏆 AEG-037 Merit Leaderboard Ledger: {staffXP} XP ({gatesCleared} Statutory Gates
+            Cleared)
+          </span>
+          <span>⚡ Dynamic Commission Split: {commissionSplitPct}% (AEG-038)</span>
+        </div>
+
         {error && <div style={errorAlertStyle}>❌ {error}</div>}
         {successMessage && <div style={successAlertStyle}>✅ {successMessage}</div>}
 
@@ -141,6 +168,7 @@ export const HenryDocumentHubView: React.FC<HenryDocumentHubProps> = () => {
             onCheckCompliance={handleCheckCompliance}
             onSaveRecord={handleSaveRecord}
             onExtractFields={handleExtractFields}
+            onOcrDocumentScan={handleOcrDocumentScan}
             selectedDepartmentTag={selectedDepartmentTag}
             onDepartmentTagChange={setSelectedDepartmentTag}
             selectedOwnerEmail={selectedOwnerEmail}

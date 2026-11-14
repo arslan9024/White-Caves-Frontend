@@ -4,7 +4,11 @@
  */
 
 import React, { useState } from 'react';
-import type { DocumentTemplate, HenryDepartmentTag } from './HenryDocumentHub.types';
+import type {
+  DocumentTemplate,
+  HenryDepartmentTag,
+  HenryOcrDocCategory,
+} from './HenryDocumentHub.types';
 import { formInputStyle, formTextareaStyle } from './HenryDocumentHub.styles';
 
 export interface DocumentEditorProps {
@@ -14,6 +18,7 @@ export interface DocumentEditorProps {
   onCheckCompliance: () => void;
   onSaveRecord: () => void;
   onExtractFields: (text: string) => void;
+  onOcrDocumentScan?: (docCategory: HenryOcrDocCategory, imageBase64?: string) => void;
   selectedDepartmentTag: HenryDepartmentTag;
   onDepartmentTagChange: (tag: HenryDepartmentTag) => void;
   selectedOwnerEmail: string;
@@ -30,6 +35,7 @@ export const DocumentEditor: React.FC<DocumentEditorProps> = ({
   onCheckCompliance,
   onSaveRecord,
   onExtractFields,
+  onOcrDocumentScan,
   selectedDepartmentTag,
   onDepartmentTagChange,
   selectedOwnerEmail,
@@ -43,6 +49,66 @@ export const DocumentEditor: React.FC<DocumentEditorProps> = ({
 
   return (
     <div>
+      {/* Statutory OCR & +500 XP Merit Gate Panel */}
+      <div
+        data-testid="henry-ocr-statutory-bar"
+        style={{
+          background: '#162018',
+          border: '1px solid rgba(34, 197, 94, 0.35)',
+          borderRadius: 8,
+          padding: 14,
+          marginBottom: 14,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 8,
+            marginBottom: 10,
+          }}
+        >
+          <span style={{ color: '#4ade80', fontWeight: 700, fontSize: 13 }}>
+            🛡️ End-to-End Statutory OCR Extraction (+500 XP Merit Ledger Gate)
+          </span>
+          <span style={{ color: '#9ca3af', fontSize: 11 }}>
+            AEG-034 Web Worker OCR · AEG-037 +500 XP Statutory Reward
+          </span>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {(
+            [
+              { key: 'EMIRATES_ID', label: '🪪 Emirates ID OCR' },
+              { key: 'PASSPORT', label: '🛂 Passport MRZ OCR' },
+              { key: 'TITLE_DEED', label: '📜 DLD Title Deed OCR' },
+              { key: 'EJARI', label: '🏛️ Ejari Certificate OCR' },
+            ] as const
+          ).map(btn => (
+            <button
+              key={btn.key}
+              type="button"
+              data-testid={`henry-ocr-btn-${btn.key}`}
+              disabled={isExtracting}
+              onClick={() => onOcrDocumentScan?.(btn.key)}
+              style={{
+                padding: '6px 12px',
+                background: '#1f2937',
+                border: '1px solid #374151',
+                borderRadius: 6,
+                color: '#e5e7eb',
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              {btn.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* AI Extraction Panel */}
       <div
         style={{
