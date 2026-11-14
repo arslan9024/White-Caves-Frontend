@@ -79,74 +79,74 @@ export const FloatingPillButton = styled.button`
   }
 `;
 
-export const ModalBackdrop = styled.div`
+export const ModalBackdrop = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(8px);
-  z-index: 2001;
+  z-index: 2100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.2s ease-out;
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  padding: 24px;
+  opacity: ${props => (props.$isOpen ? 1 : 0)};
+  pointer-events: ${props => (props.$isOpen ? 'all' : 'none')};
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
-export const ModalCard = styled.div`
+export const ModalContainer = styled.div<{ $isOpen: boolean }>`
   background: #ffffff;
   width: 100%;
   max-width: 900px;
-  max-height: 85vh;
+  height: 85vh;
+  max-height: 750px;
   border-radius: 20px;
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(239, 68, 68, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: scale(0.96) translateY(12px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-  }
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  transform: ${props => (props.$isOpen ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.96)')};
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 export const ModalHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
-  background: #1e293b;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #0f172a;
   color: #ffffff;
-  border-bottom: 2px solid #ef4444;
 
-  h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+  .header-left {
     display: flex;
     align-items: center;
-    gap: 10px;
-  }
+    gap: 12px;
 
-  .badge {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-    border: 1px solid #ef4444;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 9999px;
+    .icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #ef4444;
+      border-radius: 10px;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin: 2px 0 0 0;
+    }
   }
 
   .close-btn {
@@ -243,113 +243,5 @@ export const SelectControl = styled.div`
   }
 `;
 
-export const ResultsSection = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 24px;
-`;
-
-export const ResultsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-`;
-
-export const PropertyCard = styled.div`
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #ffffff;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-direction: column;
-
-  &:hover {
-    border-color: #ef4444;
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.12);
-    transform: translateY(-2px);
-  }
-
-  .img-container {
-    position: relative;
-    height: 140px;
-    background: #f1f5f9;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .status-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #ffffff;
-
-      &.Available { background: #10b981; }
-      &.Leased { background: #EF4444; }
-      &.UnderMaintenance { background: #f59e0b; }
-      &.Sold { background: #64748b; }
-      &.Pending { background: #8b5cf6; }
-    }
-  }
-
-  .card-body {
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-
-    .price {
-      font-size: 16px;
-      font-weight: 800;
-      color: #ef4444;
-    }
-
-    .title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1e293b;
-      margin: 0;
-      line-height: 1.3;
-    }
-
-    .meta {
-      display: flex;
-      gap: 12px;
-      font-size: 12px;
-      color: #64748b;
-      font-weight: 500;
-    }
-
-    .community {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: 600;
-    }
-  }
-`;
-
-export const EmptyState = styled.div`
-  text-align: center;
-  padding: 40px 20px;
-  color: #64748b;
-
-  .icon {
-    font-size: 32px;
-    margin-bottom: 8px;
-  }
-
-  h4 {
-    margin: 0 0 4px 0;
-    color: #1e293b;
-    font-size: 16px;
-  }
-`;
+// Re-export result primitives
+export * from './CavesFloatingSearch.resultsStyle';
