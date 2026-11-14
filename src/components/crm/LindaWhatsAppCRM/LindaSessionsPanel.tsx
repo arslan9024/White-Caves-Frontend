@@ -1,10 +1,11 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import {
   RefreshCw,
   QrCode,
   KeyRound,
   CheckCircle2,
   AlertTriangle,
+  Send,
 } from 'lucide-react';
 import { useTheme } from '../../../context/ThemeContext';
 import type { LindaSessionItem } from './LindaWhatsAppCRM.data';
@@ -29,6 +30,44 @@ export const LindaSessionsPanel: React.FC<SessionsPanelProps> = memo(({
   const { isDark } = useTheme();
   const [maskPhone, setMaskPhone] = useState(false);
   const [pingStatusMap, setPingStatusMap] = useState<Record<string, string>>({});
+  const [poolTelemetry, setPoolTelemetry] = useState<{ totalCapacity?: number; sentToday?: number; stageSummary?: string } | null>(null);
+  const [dispatching, setDispatching] = useState(false);
+  const [dispatchResult, setDispatchResult] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/linda/pool/telemetry')
+      .then(r => (r.ok ? r.json() : null))
+      .then(json => {
+        if (!cancelled && json?.success && json?.data) {
+          setPoolTelemetry(json.data);
+        }
+      })
+      .catch(() => {
+        // Offline fallback
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handleDispatchBatch = async () => {
+    setDispatching(true);
+    setDispatchResult(null);
+    try {
+      const res = await fetch('/api/linda/campaign/dispatch-now', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cluster: 'ALL' }),
+      });
+      const json = await res.json();
+      setDispatchResult(json?.success ? 'Batch dispatched' : json?.error || 'Dispatch failed');
+    } catch {
+      setDispatchResult('Offline');
+    } finally {
+      setDispatching(false);
+    }
+  };
 
   const handlePing = (id: string) => {
     setPingStatusMap(prev => ({ ...prev, [id]: 'Pinging…' }));
@@ -72,6 +111,44 @@ export const LindaSessionsPanel: React.FC<SessionsPanelProps> = memo(({
           </p>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {poolTelemetry && (
+            <span
+              data-testid="linda-pool-telemetry-badge"
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                padding: '4px 10px',
+                borderRadius: 999,
+                background: isDark ? 'rgba(37, 211, 102, 0.14)' : '#DCFCE7',
+                color: '#16A34A',
+              }}
+            >
+              Pool: {poolTelemetry.sentToday ?? 0}/{poolTelemetry.totalCapacity ?? 15} today
+            </span>
+          )}
+          <button
+            type="button"
+            data-testid="linda-dispatch-batch-btn"
+            disabled={dispatching}
+            onClick={handleDispatchBatch}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              padding: '5px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: '#25D366',
+              color: '#FFFFFF',
+              fontSize: 11,
+              fontWeight: 700,
+              cursor: dispatching ? 'not-allowed' : 'pointer',
+              opacity: dispatching ? 0.7 : 1,
+            }}
+          >
+            <Send size={12} />
+            {dispatching ? 'Dispatching...' : dispatchResult || 'Dispatch Batch'}
+          </button>
           <button
             type="button"
             onClick={() => setMaskPhone(!maskPhone)}
