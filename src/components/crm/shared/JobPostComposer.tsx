@@ -1,10 +1,11 @@
 import React, { memo, useState, useCallback, useRef, useEffect } from 'react';
 import { 
-  Briefcase, MapPin, DollarSign, Clock, Send, Save, Eye,
-  Linkedin, Globe, ChevronDown, ChevronUp, Users, Star
+  Briefcase, MapPin, Send, Save, Eye,
+  Linkedin, Globe
 } from 'lucide-react';
 import { TIMING } from '../../../constants';
 import * as S from './JobComponents.styles';
+import { JobData, JobPostPreview } from './JobPostPreview';
 
 const JOB_PLATFORMS = [
   { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: '#0A66C2' },
@@ -17,21 +18,9 @@ const EMPLOYMENT_TYPES = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'In
 const EXPERIENCE_LEVELS = ['Entry Level', 'Mid Level', 'Senior Level', 'Executive', 'Director'];
 const DEPARTMENTS = ['Sales', 'Marketing', 'Operations', 'Finance', 'HR', 'Technology', 'Administration'];
 
-interface JobData {
-  title?: string;
-  department?: string;
-  location?: string;
-  employmentType?: string;
-  experienceLevel?: string;
-  salaryMin?: string;
-  salaryMax?: string;
-  description?: string;
-  requirements?: string;
-  benefits?: string;
-  [key: string]: unknown;
-}
+export type { JobData };
 
-interface JobPostComposerProps {
+export interface JobPostComposerProps {
   job?: JobData;
   onPublish?: (data: JobData, platforms: string[]) => void;
   onSaveDraft?: (data: JobData) => void;
@@ -79,7 +68,9 @@ const JobPostComposer = memo(({
   const showNotification = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
     clearTimeout(notifyTimerRef.current);
-    notifyTimerRef.current = setTimeout(() => setNotification(null), TIMING.NOTIFICATION_DISMISS);
+    notifyTimerRef.current = setTimeout(() => {
+      setNotification(null);
+    }, TIMING.TOAST_DEFAULT || 3000);
   }, []);
   
   const handleFieldChange = useCallback((field: string, value: string) => {
@@ -88,32 +79,33 @@ const JobPostComposer = memo(({
   
   const togglePlatform = useCallback((platformId: string) => {
     setSelectedPlatforms(prev => 
-      prev.includes(platformId) 
+      prev.includes(platformId)
         ? prev.filter(p => p !== platformId)
         : [...prev, platformId]
     );
+    setErrors(prev => ({ ...prev, platforms: '' }));
   }, []);
   
-  const handlePublish = useCallback(async () => {
-    if (!validateForm()) {
-      showNotification('Please fix the errors before publishing', 'error');
-      return;
-    }
+  const handlePublish = useCallback(() => {
+    if (!validateForm()) return;
     
     setPublishing(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, TIMING.COPY_FEEDBACK));
-      
-      if (onPublish) {
-        onPublish(formData, selectedPlatforms);
+    
+    setTimeout(() => {
+      try {
+        if (onPublish) {
+          onPublish(formData, selectedPlatforms);
+        }
+        showNotification(
+          `Job posted successfully to ${selectedPlatforms.length} platform${selectedPlatforms.length !== 1 ? 's' : ''}!`,
+          'success'
+        );
+      } catch {
+        showNotification('Failed to post job. Please try again.', 'error');
+      } finally {
+        setPublishing(false);
       }
-      
-      showNotification(`Job posted successfully to ${selectedPlatforms.length} platform${selectedPlatforms.length > 1 ? 's' : ''}!`, 'success');
-    } catch (error) {
-      showNotification('Failed to publish job. Please try again.', 'error');
-    } finally {
-      setPublishing(false);
-    }
+    }, TIMING.NETWORK_SIMULATION || 2000);
   }, [formData, selectedPlatforms, onPublish, validateForm, showNotification]);
   
   const handleSaveDraft = useCallback(() => {
@@ -122,7 +114,7 @@ const JobPostComposer = memo(({
     }
     showNotification('Draft saved successfully!', 'success');
   }, [formData, onSaveDraft, showNotification]);
-  
+
   return (
     <S.JobPostComposer>
       {notification && (
@@ -292,7 +284,13 @@ const JobPostComposer = memo(({
           <Save size={16} />
           Save Draft
         </S.ActionBtn>
-        <S.ActionBtn $variant="secondary" onClick={() => setShowPreview(!showPreview)}>
+        <S.ActionBtn
+          $variant="secondary"
+          onClick={() => {
+            setShowPreview(!showPreview);
+            if (!showPreview && onPreview) onPreview(formData);
+          }}
+        >
           <Eye size={16} />
           Preview
         </S.ActionBtn>
@@ -309,43 +307,7 @@ const JobPostComposer = memo(({
         </S.ActionBtn>
       </S.ComposerActions>
       
-      {showPreview && (
-        <S.JobPreview>
-          <h4>Job Preview</h4>
-          <S.PreviewCard>
-            <S.PreviewHeader>
-              <h3>{formData.title || 'Job Title'}</h3>
-              <span className="company">White Caves Real Estate</span>
-            </S.PreviewHeader>
-            <S.PreviewMeta>
-              <span><MapPin size={14} /> {formData.location || 'Location'}</span>
-              <span><Clock size={14} /> {formData.employmentType}</span>
-              <span><Users size={14} /> {formData.department || 'Department'}</span>
-              {formData.salaryMin && formData.salaryMax && (
-                <span><DollarSign size={14} /> AED {formData.salaryMin} - {formData.salaryMax}/month</span>
-              )}
-            </S.PreviewMeta>
-            {formData.description && (
-              <S.PreviewSection>
-                <h5>Description</h5>
-                <p>{formData.description}</p>
-              </S.PreviewSection>
-            )}
-            {formData.requirements && (
-              <S.PreviewSection>
-                <h5>Requirements</h5>
-                <p>{formData.requirements}</p>
-              </S.PreviewSection>
-            )}
-            {formData.benefits && (
-              <S.PreviewSection>
-                <h5>Benefits</h5>
-                <p>{formData.benefits}</p>
-              </S.PreviewSection>
-            )}
-          </S.PreviewCard>
-        </S.JobPreview>
-      )}
+      {showPreview && <JobPostPreview formData={formData} />}
     </S.JobPostComposer>
   );
 });
