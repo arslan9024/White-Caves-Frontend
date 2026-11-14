@@ -16,6 +16,9 @@ export interface LindaChatListPaneProps {
   searchFilter: string;
   onSearchChange: (val: string) => void;
   onSelectConversation: (id: string) => void;
+  accountOptions?: Array<{ id: string; label: string }>;
+  selectedAccount?: string;
+  onSelectAccount?: (accountId: string) => void;
 }
 
 export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
@@ -25,6 +28,9 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   searchFilter,
   onSearchChange,
   onSelectConversation,
+  accountOptions = [],
+  selectedAccount = 'ALL',
+  onSelectAccount,
 }) => {
   return (
     <div
@@ -67,7 +73,15 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
             <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? '#E9EDEF' : '#111B21' }}>
               WhatsApp Web Desk
             </div>
-            <div style={{ fontSize: 10, color: '#25D366', display: 'flex', alignItems: 'center', gap: 4 }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: '#25D366',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+            >
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#25D366' }} />
               Online (Background Daemon)
             </div>
@@ -109,6 +123,50 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         </div>
       </div>
 
+      {/* Account Filter Pill Bar */}
+      {accountOptions.length > 0 && onSelectAccount && (
+        <div
+          data-testid="wa-account-filter-bar"
+          style={{
+            display: 'flex',
+            gap: 6,
+            padding: '6px 12px',
+            overflowX: 'auto',
+            background: isDark ? '#111B21' : '#FFFFFF',
+            borderBottom: isDark ? '1px solid rgba(255,255,255,0.04)' : '1px solid #E2E8F0',
+          }}
+        >
+          {accountOptions.map(opt => {
+            const active = selectedAccount === opt.id;
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                data-testid={`wa-account-pill-${opt.id}`}
+                onClick={() => onSelectAccount(opt.id)}
+                style={{
+                  padding: '3px 10px',
+                  borderRadius: 999,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                  border: active
+                    ? '1px solid #25D366'
+                    : isDark
+                      ? '1px solid #2A3942'
+                      : '1px solid #CBD5E1',
+                  background: active ? 'rgba(37, 211, 102, 0.16)' : 'transparent',
+                  color: active ? '#25D366' : isDark ? '#8696A0' : '#475569',
+                }}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* Conversations Scrollable List */}
       <div style={{ flex: 1, overflowY: 'auto' }}>
         {conversations.map(conv => {
@@ -147,7 +205,13 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
                 {conv.contactName.slice(0, 2).toUpperCase()}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                  }}
+                >
                   <span
                     style={{
                       fontSize: 13,
@@ -184,4 +248,3 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
     </div>
   );
 };
-

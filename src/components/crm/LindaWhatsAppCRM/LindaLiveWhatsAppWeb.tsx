@@ -5,7 +5,7 @@
  * Single Purpose File Law: < 350 lines (Partitioned)
  */
 
-import React, { useState, useMemo, FC } from 'react';
+import React, { useState, useMemo, useEffect, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatListPane } from './LindaChatListPane';
@@ -13,54 +13,86 @@ import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
 
 export interface LindaLiveWhatsAppWebProps {
   conversations: LindaConversationItem[];
+  isLiveConnected?: boolean;
   onSendMessage?: (convId: string, text: string) => void;
   onAutoReplyWithAI?: (conv: LindaConversationItem) => void;
 }
 
-const SAMPLE_THREAD_MAP: Record<string, ChatMessage[]> = {
-  'conv-1': [
-    { id: 'm1', sender: 'client', text: 'Hi Arslan, I am considering listing my 3BR Villa in Vardon.', timestamp: '10:14 AM' },
-    { id: 'm2', sender: 'bot', text: 'Hello Tariq! Linda here from White Caves. We currently have 3 pre-qualified cash buyers looking for Vardon 3BR villas. May I know when the property is vacant?', timestamp: '10:15 AM', status: 'read' },
-    { id: 'm3', sender: 'client', text: 'Yes, the tenant vacates next month. Send me the Form A listing agreement.', timestamp: '10:18 AM' },
-  ],
-  'conv-2': [
-    { id: 'm4', sender: 'client', text: 'Can I view the penthouse at Address Downtown today at 4 PM?', timestamp: '11:02 AM' },
-    { id: 'm5', sender: 'agent', text: 'Good morning! Yes, let me coordinate with the building security for the access pass.', timestamp: '11:04 AM', status: 'read' },
-    { id: 'm6', sender: 'client', text: 'Perfect. Looking forward to it.', timestamp: '11:05 AM' },
-  ],
-  'conv-3': [
-    { id: 'm7', sender: 'client', text: 'Are there any new offplan launches in Dubai Islands with post-handover payment plans?', timestamp: '01:20 PM' },
-    { id: 'm8', sender: 'bot', text: 'Greetings Elena! Yes, Nakheel just announced Rixos Financial Bay with an 80/20 5-year post-handover plan. Sending you the master brochure and floor plans now.', timestamp: '01:21 PM', status: 'delivered' },
-  ],
-};
+const ACCOUNT_FILTERS = [
+  { id: 'ALL', label: 'All Linked Lines' },
+  { id: '+971505760056', label: 'Primary Master +971505760056' },
+];
 
 export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   conversations,
+  isLiveConnected = false,
   onSendMessage,
   onAutoReplyWithAI,
 }) => {
   const { isDark } = useTheme();
   const [selectedConvId, setSelectedConvId] = useState<string>(conversations[0]?.id || 'conv-1');
+  const [selectedAccount, setSelectedAccount] = useState<string>('ALL');
   const [searchFilter, setSearchFilter] = useState('');
   const [inputMessage, setInputMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>(SAMPLE_THREAD_MAP);
+  const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>({});
 
   const selectedConv = useMemo(
     () => conversations.find(c => c.id === selectedConvId) || conversations[0],
     [conversations, selectedConvId]
   );
 
+  // Fetch live thread history when a conversation is selected
+  useEffect(() => {
+    if (!selectedConv?.phone) return;
+    const cleanPhone = selectedConv.phone.replace(/\D/g, '');
+    if (!cleanPhone) return;
+
+    let cancelled = false;
+    fetch(`/api/linda/conversations/${encodeURIComponent(cleanPhone)}/history?limit=50`)
+      .then(res => (res.ok ? res.json() : null))
+      .then(json => {
+        if (cancelled || !json?.success || !Array.isArray(json?.data?.messages)) return;
+        if (json.data.messages.length > 0) {
+          setChatMessages(prev => ({
+            ...prev,
+            [selectedConv.id]: json.data.messages,
+          }));
+        }
+      })
+      .catch(() => {
+        // Keep current thread messages if offline
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedConv?.id, selectedConv?.phone]);
+
+  const accountOptions = useMemo(() => {
+    const dynamic = Array.from(
+      new Set(
+        conversations
+          .map(c => (c as LindaConversationItem & { accountPhone?: string }).accountPhone)
+          .filter((p): p is string => Boolean(p) && p !== '+971505760056')
+      )
+    ).map(p => ({ id: p, label: p }));
+    return [...ACCOUNT_FILTERS, ...dynamic];
+  }, [conversations]);
+
   const filteredConversations = useMemo(() => {
-    if (!searchFilter.trim()) return conversations;
-    const q = searchFilter.toLowerCase();
-    return conversations.filter(
-      c =>
+    return conversations.filter(c => {
+      const acct = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
+      if (selectedAccount !== 'ALL' && acct && acct !== selectedAccount) return false;
+      if (!searchFilter.trim()) return true;
+      const q = searchFilter.toLowerCase();
+      return (
         c.contactName.toLowerCase().includes(q) ||
         c.phone.toLowerCase().includes(q) ||
         c.cluster.toLowerCase().includes(q) ||
         c.unit.toLowerCase().includes(q)
-    );
-  }, [conversations, searchFilter]);
+      );
+    });
+  }, [conversations, searchFilter, selectedAccount]);
 
   const activeMessages = chatMessages[selectedConv?.id || ''] || [
     {
@@ -86,8 +118,21 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       [selectedConv.id]: [...(prev[selectedConv.id] || []), newMsg],
     }));
 
-    onSendMessage?.(selectedConv.id, inputMessage.trim());
+    const textToSend = inputMessage.trim();
+    onSendMessage?.(selectedConv.id, textToSend);
     setInputMessage('');
+
+    // Dispatch real WhatsApp message via backend bridge
+    fetch(`/api/linda/send/${encodeURIComponent(selectedConv.id)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: textToSend,
+        accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
+      }),
+    }).catch(() => {
+      // Optimistic message already rendered; offline fallback handled silently
+    });
   };
 
   const handleAiDraft = () => {
@@ -118,6 +163,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
         searchFilter={searchFilter}
         onSearchChange={setSearchFilter}
         onSelectConversation={setSelectedConvId}
+        accountOptions={accountOptions}
+        selectedAccount={selectedAccount}
+        onSelectAccount={setSelectedAccount}
       />
 
       <LindaChatThreadPane
