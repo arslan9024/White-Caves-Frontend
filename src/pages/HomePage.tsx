@@ -46,7 +46,6 @@ const NewsletterSubscription = lazy(() => import('../components/NewsletterSubscr
 const CompanyProfile = lazy(() => import('../components/CompanyProfile'));
 const BlogSection = lazy(() => import('../components/BlogSection'));
 const OnboardingGateway = lazy(() => import('../components/OnboardingGateway'));
-const DubaiSunsetGallery = lazy(() => import('../components/homepage/DubaiSunsetGallery'));
 
 const SectionLoader: FC = () => (
   <div className="home-page-section-loader" aria-hidden="true">
@@ -282,13 +281,6 @@ const HomePage: FC = () => {
             featuredProperties={displayedFeatured}
             isLoading={isHomepageLoading}
           />
-        </Suspense>
-
-        {/* Curated Dubai Marina & Palm Jumeirah Sunset Photography Gallery (Target T-0010) */}
-        <Suspense fallback={<SectionLoader />}>
-          <div className="max-w-7xl mx-auto px-4">
-            <DubaiSunsetGallery />
-          </div>
         </Suspense>
 
         {/* Below the fold companion sections */}
