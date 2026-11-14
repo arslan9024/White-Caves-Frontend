@@ -94,7 +94,7 @@ export const ModalBackdrop = styled.div<{ $isOpen: boolean }>`
   transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
-export const ModalContainer = styled.div<{ $isOpen: boolean }>`
+export const ModalContainer = styled.div<{ $isOpen?: boolean }>`
   background: #ffffff;
   width: 100%;
   max-width: 900px;
@@ -109,6 +109,8 @@ export const ModalContainer = styled.div<{ $isOpen: boolean }>`
   transform: ${props => (props.$isOpen ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.96)')};
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 `;
+
+export const ModalCard = ModalContainer;
 
 export const ModalHeader = styled.div`
   display: flex;
