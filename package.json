@@ -37,7 +37,7 @@
     "aegis:md:sovereign": "node ../.agents/orchestrator/aegis-engine.js cycle",
     "aegis:compile:book": "node .agents/orchestrator/sync-and-hyperlink-book.cjs",
     "aegis:check:book": "node .agents/orchestrator/check-book-links.cjs",
-    "dev:precheck": "node ../.agents/orchestrator/check-node-version.js",
+    "dev:precheck": "node -e \"const fs=require('fs');const p=fs.existsSync('.agents/orchestrator/check-node-version.js')?'.agents/orchestrator/check-node-version.js':'../.agents/orchestrator/check-node-version.js';if(fs.existsSync(p))require(require('path').resolve(p));\"",
     "check:limits": "node ../.agents/orchestrator/check-five-way-and-file-limits.js",
     "audit:architecture": "node ../.agents/orchestrator/check-five-way-and-file-limits.js",
     "dev:linda": "cross-env NODE_ENV=development tsx server/index.ts",
@@ -351,7 +351,7 @@
     "plans:validate:full": "npm run plans:validate",
     "test:ops": "npm run test:run -- server/__tests__/generate-seo-assets.script.test.ts",
     "test:runtime-stability:full": "playwright test src/e2e/dashboard.spec.ts",
-    "dev:all": "powershell -ExecutionPolicy Bypass -File ../secrets/dev-all.ps1",
+    "dev:all:ps": "powershell -ExecutionPolicy Bypass -File ../secrets/dev-all.ps1",
     "dev:all:kill": "powershell -ExecutionPolicy Bypass -File ../secrets/dev-all.ps1 -Kill",
     "org:migrate": "npx tsx src/scripts/migrateAndSeedOrganization.ts",
     "aegis:task": "node ../.agents/orchestrator/aegis-task.cjs"
