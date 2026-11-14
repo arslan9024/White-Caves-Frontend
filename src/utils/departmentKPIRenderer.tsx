@@ -6,6 +6,21 @@
 import React from 'react';
 import { KPICard } from '../components/cards/KPICard';
 import styled from 'styled-components';
+import {
+  DepartmentKPIConfig,
+  toText,
+  salesKPIConfigs,
+  financeKPIConfigs,
+  hrKPIConfigs,
+  marketingKPIConfigs,
+  operationsKPIConfigs,
+  itKPIConfigs,
+  clientServicesKPIConfigs,
+  propertyKPIConfigs,
+} from './departmentKPIConfigs';
+
+export type { DepartmentKPIConfig };
+export * from './departmentKPIConfigs';
 
 const KPIGridContainer = styled.div`
   display: grid;
@@ -13,23 +28,6 @@ const KPIGridContainer = styled.div`
   gap: 16px;
   margin-bottom: 32px;
 `;
-
-interface DepartmentKPIConfig {
-  key: string; // Data key to extract
-  label: string; // Display label
-  format?: (value: unknown) => string; // Format the value
-  icon?: string;
-  trend?: 'up' | 'down' | 'neutral';
-  showProgress?: boolean;
-  unit?: string;
-}
-
-const toNumber = (value: unknown): number => {
-  const parsed = typeof value === 'number' ? value : Number(value ?? 0);
-  return Number.isFinite(parsed) ? parsed : 0;
-};
-
-const toText = (value: unknown): string => String(value ?? '0');
 
 /**
  * Generic KPI renderer for any department
@@ -60,274 +58,37 @@ export const renderDepartmentKPIs = (
   );
 };
 
-/**
- * KPI Renderers for specific departments
- */
-
 // Sales Department KPIs
 export const SalesKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'totalLeads',
-      label: 'Total Leads',
-      icon: '👥',
-      trend: 'up',
-      format: v => toNumber(v).toLocaleString(),
-    },
-    {
-      key: 'activeDeals',
-      label: 'Active Deals',
-      icon: '🤝',
-      format: v => toText(v),
-    },
-    {
-      key: 'conversionRate',
-      label: 'Conversion Rate',
-      icon: '📈',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-    {
-      key: 'monthlyRevenue',
-      label: 'Monthly Revenue',
-      icon: '💰',
-      trend: 'up',
-      format: v => `₹${(toNumber(v) / 1000000).toFixed(1)}M`,
-    },
-  ]);
+  renderDepartmentKPIs(data, salesKPIConfigs);
 
 // Finance Department KPIs
 export const FinanceKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'totalBudget',
-      label: 'Total Budget',
-      icon: '💵',
-      format: v => `₹${(toNumber(v) / 1000000).toFixed(2)}M`,
-    },
-    {
-      key: 'spent',
-      label: 'Amount Spent',
-      icon: '💸',
-      trend: 'down',
-      format: v => `₹${(toNumber(v) / 1000000).toFixed(2)}M`,
-    },
-    {
-      key: 'remaining',
-      label: 'Remaining Budget',
-      icon: '🏦',
-      trend: 'up',
-      format: v => `₹${(toNumber(v) / 1000000).toFixed(2)}M`,
-    },
-    {
-      key: 'utilizationRate',
-      label: 'Budget Utilization',
-      icon: '📊',
-      showProgress: true,
-      format: v => `${toNumber(v).toFixed(0)}%`,
-      unit: '%',
-    },
-  ]);
+  renderDepartmentKPIs(data, financeKPIConfigs);
 
 // HR Department KPIs
 export const HRKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'totalEmployees',
-      label: 'Total Employees',
-      icon: '👔',
-      format: v => toText(v),
-    },
-    {
-      key: 'activePositions',
-      label: 'Open Positions',
-      icon: '💼',
-      format: v => toText(v),
-    },
-    {
-      key: 'attendanceRate',
-      label: 'Attendance Rate',
-      icon: '📍',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-    {
-      key: 'turnoverRate',
-      label: 'Turnover Rate',
-      icon: '📊',
-      trend: 'down',
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-  ]);
+  renderDepartmentKPIs(data, hrKPIConfigs);
 
 // Marketing Department KPIs
 export const MarketingKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'campaigns',
-      label: 'Active Campaigns',
-      icon: '📢',
-      format: v => toText(v),
-    },
-    {
-      key: 'engagement',
-      label: 'Engagement Rate',
-      icon: '💬',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(2)}%`,
-      unit: '%',
-    },
-    {
-      key: 'reach',
-      label: 'Total Reach',
-      icon: '📱',
-      format: v => `${(toNumber(v) / 1000).toFixed(1)}K`,
-    },
-    {
-      key: 'roi',
-      label: 'Campaign ROI',
-      icon: '💹',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-  ]);
+  renderDepartmentKPIs(data, marketingKPIConfigs);
 
 // Operations Department KPIs
 export const OperationsKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'processCompleted',
-      label: 'Processes Completed',
-      icon: '✅',
-      trend: 'up',
-      format: v => toText(v),
-    },
-    {
-      key: 'efficiency',
-      label: 'Efficiency Rate',
-      icon: '⚙️',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-    {
-      key: 'downtimeMinutes',
-      label: 'Downtime',
-      icon: '⏱️',
-      trend: 'down',
-      format: v => `${toText(v)} min`,
-    },
-    {
-      key: 'costPerProcess',
-      label: 'Cost Per Process',
-      icon: '₹',
-      trend: 'down',
-      format: v => `₹${toNumber(v).toFixed(2)}`,
-    },
-  ]);
+  renderDepartmentKPIs(data, operationsKPIConfigs);
 
 // IT Department KPIs
 export const ITKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'systemUptime',
-      label: 'System Uptime',
-      icon: '🖥️',
-      trend: 'up',
-      showProgress: true,
-      format: v => `${toNumber(v).toFixed(2)}%`,
-      unit: '%',
-    },
-    {
-      key: 'ticketsResolved',
-      label: 'Tickets Resolved',
-      icon: '🎫',
-      format: v => toText(v),
-    },
-    {
-      key: 'avgResolutionTime',
-      label: 'Avg Resolution Time',
-      icon: '⏰',
-      trend: 'down',
-      format: v => `${toText(v)} hrs`,
-    },
-    {
-      key: 'securityIncidents',
-      label: 'Security Incidents',
-      icon: '🔒',
-      trend: 'down',
-      format: v => toText(v),
-    },
-  ]);
+  renderDepartmentKPIs(data, itKPIConfigs);
 
 // Client Services KPIs
 export const ClientServicesKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'activeClients',
-      label: 'Active Clients',
-      icon: '🤝',
-      trend: 'up',
-      format: v => toText(v),
-    },
-    {
-      key: 'satisfactionScore',
-      label: 'Satisfaction Score',
-      icon: '⭐',
-      trend: 'up',
-      format: v => `${toNumber(v).toFixed(1)}/10`,
-    },
-    {
-      key: 'ticketsOpen',
-      label: 'Open Tickets',
-      icon: '🎫',
-      format: v => toText(v),
-    },
-    {
-      key: 'responseTime',
-      label: 'Avg Response Time',
-      icon: '⏱️',
-      trend: 'down',
-      format: v => `${toText(v)} min`,
-    },
-  ]);
+  renderDepartmentKPIs(data, clientServicesKPIConfigs);
 
 // Property Management KPIs
 export const PropertyKPIRenderer = (data: Record<string, unknown>) =>
-  renderDepartmentKPIs(data, [
-    {
-      key: 'totalProperties',
-      label: 'Total Properties',
-      icon: '🏢',
-      format: v => toText(v),
-    },
-    {
-      key: 'occupancyRate',
-      label: 'Occupancy Rate',
-      icon: '🏠',
-      trend: 'up',
-      showProgress: true,
-      format: v => `${toNumber(v).toFixed(1)}%`,
-      unit: '%',
-    },
-    {
-      key: 'maintenanceRequests',
-      label: 'Pending Maintenance',
-      icon: '🔧',
-      format: v => toText(v),
-    },
-    {
-      key: 'monthlyRevenue',
-      label: 'Monthly Revenue',
-      icon: '💰',
-      trend: 'up',
-      format: v => `₹${(toNumber(v) / 100000).toFixed(1)}L`,
-    },
-  ]);
+  renderDepartmentKPIs(data, propertyKPIConfigs);
 
 // Create a mapping of department types to their KPI renderers
 export const departmentKPIRenderers: Record<
