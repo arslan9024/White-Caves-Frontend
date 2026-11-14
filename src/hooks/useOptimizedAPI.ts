@@ -4,7 +4,7 @@
  */
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   fetchAllDepartments,
   fetchDepartmentData,
@@ -24,14 +24,17 @@ import {
   selectDepartmentSummaryError,
   clearError,
 } from '../store/slices/departmentSlice';
-import { apiIntegration } from '../services/apiIntegration';
 import { PaginationParams } from '../services/apiOptimizer';
-import { DepartmentData } from '../services/departmentService';
 import type { RootState } from '../store/store';
+
+export {
+  usePerformanceStats,
+  useCacheManagement,
+  useBatchFetchDepartments,
+} from './useOptimizedCacheHooks';
 
 /**
  * Enhanced hook to fetch and manage all departments
- * Uses optimized API integration with caching and deduplication
  */
 export const useDepartmentsOptimized = (forceRefresh = false) => {
   const dispatch = useDispatch();
@@ -40,9 +43,7 @@ export const useDepartmentsOptimized = (forceRefresh = false) => {
   const error = useSelector(selectDepartmentsFetchError);
 
   useEffect(() => {
-    // Only fetch if we don't have departments or force refresh
     if ((departments.length === 0 || forceRefresh) && !loading) {
-      console.log('[Hook] Fetching departments (optimized)...');
       dispatch(fetchAllDepartments(forceRefresh) as any);
     }
   }, [dispatch, departments.length, loading, forceRefresh]);
@@ -66,7 +67,6 @@ export const useDepartmentsOptimized = (forceRefresh = false) => {
 
 /**
  * Enhanced hook to fetch and manage department data
- * Uses optimized API integration with caching
  */
 export const useDepartmentDataOptimized = (code: string | null, forceRefresh = false) => {
   const dispatch = useDispatch();
@@ -76,9 +76,7 @@ export const useDepartmentDataOptimized = (code: string | null, forceRefresh = f
   const error = useSelector(selectDepartmentDataError);
 
   useEffect(() => {
-    // Fetch data when code changes or force refresh
     if (code && (!data || forceRefresh)) {
-      console.log(`[Hook] Fetching data for department: ${code} (optimized)...`);
       dispatch(fetchDepartmentData({ code, forceRefresh }) as any);
     }
   }, [code, dispatch, data, forceRefresh]);
@@ -118,11 +116,7 @@ export const useDepartmentKPIsOptimized = (
   const error = useSelector(selectDepartmentKPIsError);
 
   useEffect(() => {
-    // Fetch KPIs when code changes
     if (code && (!kpis.length || forceRefresh)) {
-      console.log(
-        `[Hook] Fetching KPIs for department: ${code} (optimized, pagination: ${pagination?.page || 1})...`
-      );
       dispatch(
         fetchDepartmentKPIs({
           code,
@@ -178,11 +172,7 @@ export const useDepartmentTrendsOptimized = (
   const error = useSelector(selectDepartmentTrendsError);
 
   useEffect(() => {
-    // Fetch trends when code or timeframe changes
     if (code && (!trends.length || forceRefresh)) {
-      console.log(
-        `[Hook] Fetching trends for department: ${code}, timeframe: ${timeframe} (optimized)...`
-      );
       dispatch(
         fetchDepartmentTrends({
           code,
@@ -242,9 +232,7 @@ export const useDepartmentSummaryOptimized = (code: string | null, forceRefresh 
   const error = useSelector(selectDepartmentSummaryError);
 
   useEffect(() => {
-    // Fetch summary when code changes
     if (code && (!summary || forceRefresh)) {
-      console.log(`[Hook] Fetching summary for department: ${code} (optimized)...`);
       dispatch(fetchDepartmentSummary(code) as any);
     }
   }, [code, dispatch, summary, forceRefresh]);
@@ -265,85 +253,6 @@ export const useDepartmentSummaryOptimized = (code: string | null, forceRefresh 
     error,
     clearError: clearSummaryError,
     refresh,
-  };
-};
-
-/**
- * Hook to get performance statistics
- */
-export const usePerformanceStats = () => {
-  const [stats, setStats] = useState(apiIntegration.getPerformanceStats());
-
-  useEffect(() => {
-    // Update stats every 5 seconds
-    const interval = setInterval(() => {
-      setStats(apiIntegration.getPerformanceStats());
-    }, 5000);
-
-    // Initial fetch
-    setStats(apiIntegration.getPerformanceStats());
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return stats;
-};
-
-/**
- * Hook to manage cache
- */
-export const useCacheManagement = () => {
-  const clearCache = useCallback((pattern?: string) => {
-    apiIntegration.clearCache(pattern);
-  }, []);
-
-  const getCacheInfo = useCallback(() => {
-    return apiIntegration.getCacheInfo();
-  }, []);
-
-  const getCacheStats = useCallback(() => {
-    return apiIntegration.getCacheInfo();
-  }, []);
-
-  return {
-    clearCache,
-    getCacheInfo,
-    getCacheStats,
-  };
-};
-
-/**
- * Hook to batch fetch departments
- */
-export const useBatchFetchDepartments = (codes: string[], forceRefresh = false) => {
-  const [data, setData] = useState<Map<string, DepartmentData> | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const result = await apiIntegration.batchFetchDepartments(codes, forceRefresh);
-        setData(result);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-        setData(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (codes.length > 0) {
-      fetchData();
-    }
-  }, [codes, forceRefresh]);
-
-  return {
-    data,
-    loading: isLoading,
-    error,
   };
 };
 
