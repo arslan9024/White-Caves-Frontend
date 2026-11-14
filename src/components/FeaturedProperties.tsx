@@ -1,231 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  Home,
-  MapPin,
-  Bed,
-  Bath,
-  Square,
-  Eye,
-  MessageCircle,
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  Phone,
-  FileText,
-  Bot,
-} from 'lucide-react';
-import PricePerSqftTooltip from './properties/PricePerSqftTooltip';
+import { Bot } from 'lucide-react';
+import PropertyCard, { formatPrice } from './properties/FeaturedPropertyCard';
+import PropertyModal from './properties/FeaturedPropertyModal';
 import './FeaturedProperties.css';
 
-const formatPrice = price => {
-  if (!price) return 'Price on Request';
-  if (price >= 1000000) {
-    return `AED ${(price / 1000000).toFixed(2)}M`;
-  } else if (price >= 1000) {
-    return `AED ${(price / 1000).toFixed(0)}K`;
-  }
-  return `AED ${price.toLocaleString()}`;
-};
+export { PropertyCard, PropertyModal, formatPrice };
 
-const PropertyCard = ({ property, rank, onViewDetails }) => {
-  const { title, propertyType, area, askingPrice, rooms, actualArea, images, score, purpose } =
-    property;
-  const primaryImage = images?.[0] || '/placeholder-property.jpg';
+export interface FeaturedPropertiesProps {}
 
-  return (
-    <div className="featured-property-card" onClick={() => onViewDetails(property)}>
-      {rank <= 3 && (
-        <div className={`rank-badge rank-${rank}`}>
-          <Star size={12} />#{rank}
-        </div>
-      )}
-      <div className="property-image-container">
-        <img
-          src={primaryImage}
-          alt={title}
-          className="property-image"
-          onError={e => {
-            e.target.src = '/placeholder-property.jpg';
-          }}
-        />
-        <div className="property-purpose-badge">{purpose === 'sale' ? 'For Sale' : 'For Rent'}</div>
-        {score && (
-          <div className="property-score-badge">
-            <Bot size={12} />
-            {Math.round(score)}
-          </div>
-        )}
-      </div>
-      <div className="property-content">
-        <h3 className="property-title">{title || `${propertyType} in ${area}`}</h3>
-        <div className="property-location">
-          <MapPin size={14} />
-          <span>{area}</span>
-        </div>
-        <div className="property-price-row flex items-center justify-between gap-2 my-1">
-          <div className="property-price">{formatPrice(askingPrice)}</div>
-          {actualArea > 0 && askingPrice > 0 && (
-            <PricePerSqftTooltip priceAed={askingPrice} areaSqft={actualArea} />
-          )}
-        </div>
-        <div className="property-specs">
-          {rooms && (
-            <span className="spec">
-              <Bed size={14} />
-              {rooms} {rooms === 1 ? 'Bed' : 'Beds'}
-            </span>
-          )}
-          {actualArea && (
-            <span className="spec">
-              <Square size={14} />
-              {actualArea.toLocaleString()} sqft
-            </span>
-          )}
-        </div>
-        <div className="property-type-badge">{propertyType}</div>
-      </div>
-    </div>
-  );
-};
-
-const PropertyModal = ({ property, onClose }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = property.images?.length > 0 ? property.images : ['/placeholder-property.jpg'];
-
-  const nextImage = () => {
-    setCurrentImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  return (
-    <div className="property-modal-overlay" onClick={onClose}>
-      <div className="property-modal" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
-          <X size={24} />
-        </button>
-
-        <div className="modal-gallery">
-          <div className="main-image-container">
-            <img
-              src={images[currentImageIndex]}
-              alt={property.title}
-              className="main-image"
-              onError={e => {
-                e.target.src = '/placeholder-property.jpg';
-              }}
-            />
-            {images.length > 1 && (
-              <>
-                <button className="gallery-nav prev" onClick={prevImage}>
-                  <ChevronLeft size={24} />
-                </button>
-                <button className="gallery-nav next" onClick={nextImage}>
-                  <ChevronRight size={24} />
-                </button>
-                <div className="image-counter">
-                  {currentImageIndex + 1} / {images.length}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="modal-details">
-          <div className="modal-header">
-            <h2>{property.title || `${property.propertyType} in ${property.area}`}</h2>
-            <div className="modal-price">{formatPrice(property.askingPrice)}</div>
-          </div>
-
-          <div className="modal-location">
-            <MapPin size={16} />
-            <span>
-              {property.area}
-              {property.project ? `, ${property.project}` : ''}
-            </span>
-          </div>
-
-          <div className="modal-specs">
-            <div className="spec-item">
-              <Home size={20} />
-              <span className="spec-value">{property.propertyType}</span>
-              <span className="spec-label">Type</span>
-            </div>
-            {property.rooms && (
-              <div className="spec-item">
-                <Bed size={20} />
-                <span className="spec-value">{property.rooms}</span>
-                <span className="spec-label">Bedrooms</span>
-              </div>
-            )}
-            {property.actualArea && (
-              <div className="spec-item">
-                <Square size={20} />
-                <span className="spec-value">{property.actualArea.toLocaleString()}</span>
-                <span className="spec-label">Sqft</span>
-              </div>
-            )}
-          </div>
-
-          {property.scoreBreakdown && (
-            <div className="ai-score-section">
-              <h4>
-                <Bot size={16} /> AI Score Breakdown
-              </h4>
-              <div className="score-breakdown">
-                <div className="score-item">
-                  <span>Inquiries</span>
-                  <span className="score-value">+{property.scoreBreakdown.inquiriesScore}</span>
-                </div>
-                <div className="score-item">
-                  <span>Views</span>
-                  <span className="score-value">+{property.scoreBreakdown.viewsScore}</span>
-                </div>
-                <div className="score-item">
-                  <span>Quality</span>
-                  <span className="score-value">+{property.scoreBreakdown.qualityScore}</span>
-                </div>
-                {property.scoreBreakdown.newListingBonus > 0 && (
-                  <div className="score-item highlight">
-                    <span>New Listing Bonus</span>
-                    <span className="score-value">+{property.scoreBreakdown.newListingBonus}</span>
-                  </div>
-                )}
-                <div className="score-total">
-                  <span>Total Score</span>
-                  <span className="score-value">{property.score}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="modal-actions">
-            <button className="action-btn primary">
-              <Phone size={16} /> Schedule Viewing
-            </button>
-            <button className="action-btn secondary">
-              <MessageCircle size={16} /> Inquire via WhatsApp
-            </button>
-            <button className="action-btn tertiary">
-              <FileText size={16} /> Download Brochure
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FeaturedProperties = () => {
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [viewMode, setViewMode] = useState('grid');
-  const [dateActive, setDateActive] = useState(null);
+export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = () => {
+  const [properties, setProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<any | null>(null);
+  const [viewMode] = useState<string>('grid');
+  const [dateActive, setDateActive] = useState<string | null>(null);
 
   const fetchFeaturedProperties = useCallback(async () => {
     try {
@@ -240,7 +29,7 @@ const FeaturedProperties = () => {
       } else {
         throw new Error(data.message || 'Failed to load properties');
       }
-    } catch (err) {
+    } catch {
       setError('Unable to load featured properties');
     } finally {
       setLoading(false);
@@ -251,7 +40,7 @@ const FeaturedProperties = () => {
     fetchFeaturedProperties();
   }, [fetchFeaturedProperties]);
 
-  const openModal = property => {
+  const openModal = (property: any) => {
     setSelectedProperty(property);
     document.body.style.overflow = 'hidden';
   };
