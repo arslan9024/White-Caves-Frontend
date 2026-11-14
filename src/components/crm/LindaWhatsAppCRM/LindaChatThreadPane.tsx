@@ -80,7 +80,7 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
               fontSize: 14,
             }}
           >
-            {selectedConv?.contactName.slice(0, 2).toUpperCase() || 'WA'}
+            {(selectedConv?.contactName || 'WA').slice(0, 2).toUpperCase()}
           </div>
           <div>
             <div style={{ fontSize: 14, fontWeight: 700, color: isDark ? '#E9EDEF' : '#111B21' }}>
@@ -114,7 +114,11 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
           </button>
           <Phone size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
           <Video size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
-          <MoreVertical size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
+          <MoreVertical
+            size={17}
+            color={isDark ? '#AEBAC1' : '#54656F'}
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </div>
 
@@ -146,8 +150,8 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                     ? '#005C4B'
                     : '#D9FDD3'
                   : isDark
-                  ? '#202C33'
-                  : '#FFFFFF',
+                    ? '#202C33'
+                    : '#FFFFFF',
                 color: isDark ? '#E9EDEF' : '#111B21',
                 borderRadius: 10,
                 padding: '8px 12px',
@@ -246,4 +250,3 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
     </div>
   );
 };
-

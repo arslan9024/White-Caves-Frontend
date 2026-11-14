@@ -202,7 +202,7 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
                   flexShrink: 0,
                 }}
               >
-                {conv.contactName.slice(0, 2).toUpperCase()}
+                {(conv.contactName || conv.phone || 'WA').slice(0, 2).toUpperCase()}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div

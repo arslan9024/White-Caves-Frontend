@@ -283,6 +283,29 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     };
   }, [refreshLindaStatus]);
 
+  // Fetch live Primary Master (+971505760056) & pool conversations when connected
+  useEffect(() => {
+    if (!isConnected) return;
+    let cancelled = false;
+    apiClient
+      .get<{ success?: boolean; data?: { conversations?: LindaConversationItem[] } }>(
+        '/api/linda/conversations'
+      )
+      .then(res => {
+        if (cancelled) return;
+        const liveConvs = res?.data?.conversations;
+        if (Array.isArray(liveConvs) && liveConvs.length > 0) {
+          setConversations(liveConvs);
+        }
+      })
+      .catch(() => {
+        // Keep initial conversations if backend is unreachable
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isConnected]);
+
   const handleToggleLindaRuntime = useCallback(async (): Promise<void> => {
     if (loadingAction !== null) return;
     const nextAction = isConnected ? 'stop' : 'start';
