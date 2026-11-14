@@ -11,6 +11,7 @@ import { useEmployeeManager } from './EmployeeManager.logic';
 import { EmployeeEditDrawer } from './EmployeeEditDrawer';
 import { EmployeeDetailDossier } from './EmployeeDetailDossier';
 import { EmployeeManagerFallback } from './EmployeeManager.fallback';
+import { EmployeeCardItem } from './EmployeeCardItem';
 
 export interface EmployeeManagerViewProps {
   selectedEmpId?: string;
@@ -21,7 +22,7 @@ export interface EmployeeManagerViewProps {
 export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
   selectedEmpId,
   onNavigateBack,
-  onSelectEmployee,
+  onSelectEmployee: _onSelectEmployee,
 }) => {
   const {
     filteredEmployees,
@@ -69,36 +70,6 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
     );
   }
 
-  const getRoleBadgeClass = (tier: string) => {
-    switch (tier) {
-      case 'EXECUTIVE':
-        return s.roleExecutive;
-      case 'DIRECTOR':
-        return s.roleDirector;
-      case 'MANAGER':
-        return s.roleManager;
-      case 'SUPERVISOR':
-        return s.roleSupervisor;
-      case 'BROKER':
-        return s.roleBroker;
-      default:
-        return s.roleSpecialist;
-    }
-  };
-
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case 'active':
-        return s.statusActive;
-      case 'onboarding':
-        return s.statusOnboarding;
-      case 'probation':
-        return s.statusProbation;
-      default:
-        return s.statusStandby;
-    }
-  };
-
   return (
     <div className={s.container} data-testid="employee-manager-view">
       {selectedEmpId && targetEmployee ? (
@@ -144,8 +115,8 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
               <span className={s.metricLabel}>Active Deployment</span>
             </div>
             <div className={s.metricCard}>
-              <span className={`${s.metricNumber} text-amber-400`}>{metrics.directors}</span>
-              <span className={s.metricLabel}>Pillar Directors & C-Suite</span>
+              <span className={`${s.metricNumber} text-blue-400`}>{metrics.leadership}</span>
+              <span className={s.metricLabel}>Pillar Leadership</span>
             </div>
             <div className={s.metricCard}>
               <span className={`${s.metricNumber} text-purple-400`}>{metrics.brokers}</span>
@@ -225,111 +196,17 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
                 No employee records found matching your filters.
               </div>
             ) : (
-              filteredEmployees.map(emp => {
-                const isHighlighted =
-                  highlightedEmpId === emp._id || highlightedEmpId === emp.employeeCode;
-                return (
-                  <div
-                    key={emp._id}
-                    id={`record-${emp._id || emp.employeeCode}`}
-                    className={s.card}
-                    style={
-                      isHighlighted
-                        ? {
-                            border: '2px solid #EF4444',
-                            boxShadow: '0 0 25px rgba(239, 68, 68, 0.45)',
-                            transition: 'all 0.3s ease',
-                          }
-                        : undefined
-                    }
-                    data-testid={`employee-card-${emp.employeeCode}`}
-                  >
-                    <div>
-                      <div className={s.cardTop}>
-                        <div className={s.cardIdentity}>
-                          <div className={s.avatar}>
-                            {emp.fullName
-                              .split(' ')
-                              .map(n => n[0])
-                              .join('')
-                              .slice(0, 2)}
-                          </div>
-                          <div className="overflow-hidden">
-                            <div className="flex items-center gap-1.5">
-                              <span className={s.codePill}>{emp.employeeCode}</span>
-                              <span className={`${s.roleBadge} ${getRoleBadgeClass(emp.roleTier)}`}>
-                                {emp.roleTier}
-                              </span>
-                            </div>
-                            <h3 className={s.name}>{emp.fullName}</h3>
-                            <div className={s.designation}>{emp.designation}</div>
-                          </div>
-                        </div>
-                        <span className={`${s.statusPill} ${getStatusClass(emp.status)}`}>
-                          ● {emp.status.toUpperCase()}
-                        </span>
-                      </div>
-
-                      <div className={s.metaSection}>
-                        <div className={s.metaRow}>
-                          <span className={s.metaLabel}>Pillar</span>
-                          <span className="text-slate-300 font-semibold truncate max-w-[160px]">
-                            {emp.pillarName}
-                          </span>
-                        </div>
-                        <div className={s.metaRow}>
-                          <span className={s.metaLabel}>Reports To</span>
-                          <span className={s.metaValue}>{emp.supervisorName}</span>
-                        </div>
-                        {emp.reraCardNumber && (
-                          <div className={s.metaRow}>
-                            <span className={s.metaLabel}>RERA Card</span>
-                            <span className="text-amber-400 font-mono font-bold text-[11px]">
-                              {emp.reraCardNumber}
-                            </span>
-                          </div>
-                        )}
-                        <div className={s.metaRow}>
-                          <span className={s.metaLabel}>Compensation</span>
-                          <span className="text-emerald-400 font-mono text-[11px]">
-                            AED {emp.baseSalaryAED.toLocaleString()} + {emp.commissionRatePct}%
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className={s.skillsRow}>
-                        {emp.skills.slice(0, 3).map((skill, idx) => (
-                          <span key={idx} className={s.skillTag}>
-                            {skill}
-                          </span>
-                        ))}
-                        {emp.skills.length > 3 && (
-                          <span className={s.skillTag}>+{emp.skills.length - 3}</span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className={s.cardFooter}>
-                      <button
-                        onClick={() => handleOpenEdit(emp)}
-                        className={s.editBtn}
-                        data-testid={`edit-emp-${emp.employeeCode}`}
-                      >
-                        <span>✏️</span>
-                        <span>Edit Profile</span>
-                      </button>
-                      <button
-                        onClick={() => handleDemoteEmployee(emp._id, 'Moved to Standby Reserve')}
-                        className={s.demoteBtn}
-                        title="Shift to Standby Pool"
-                        data-testid={`demote-emp-${emp.employeeCode}`}
-                      >
-                        ⬇️
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
+              filteredEmployees.map(emp => (
+                <EmployeeCardItem
+                  key={emp._id}
+                  emp={emp}
+                  isHighlighted={
+                    highlightedEmpId === emp._id || highlightedEmpId === emp.employeeCode
+                  }
+                  onOpenEdit={handleOpenEdit}
+                  onDemoteEmployee={handleDemoteEmployee}
+                />
+              ))
             )}
           </div>
         </>
@@ -351,3 +228,5 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
     </div>
   );
 };
+
+export default EmployeeManagerView;
