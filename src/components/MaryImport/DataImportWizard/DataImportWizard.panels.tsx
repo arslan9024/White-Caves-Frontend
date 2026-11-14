@@ -5,10 +5,13 @@
  */
 
 import React from 'react';
-import ColumnMappingEditor from '../ColumnMappingEditor';
-import PreviewGridWithFilters from '../PreviewGridWithFilters';
+import ColumnMappingEditorRaw from '../ColumnMappingEditor';
+import PreviewGridWithFiltersRaw from '../PreviewGridWithFilters';
 import { authFetch } from '../../../utils/authFetch';
 import type { ImportStrategy, ValidationResult, DuplicateRecord } from './DataImportWizard.types';
+
+const ColumnMappingEditor = ColumnMappingEditorRaw as React.ComponentType<any>;
+const PreviewGridWithFilters = PreviewGridWithFiltersRaw as React.ComponentType<any>;
 
 export const UploadStepPanel: React.FC<{
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;

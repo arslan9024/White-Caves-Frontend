@@ -34,4 +34,17 @@ describe('HenryDocumentHub Logic & Wilkes layers', () => {
 
     expect(result.current.formData.tenantName).toBe('Sheikh Mohammed');
   });
+
+  it('extracts statutory OCR fields (Emirates ID, Passport, Title Deed, Ejari) and credits +500 XP merit ledger', async () => {
+    const { result } = renderHook(() => useHenryDocumentHubLogic());
+    const startXP = result.current.staffXP;
+
+    await act(async () => {
+      await result.current.handleOcrDocumentScan('TITLE_DEED');
+    });
+
+    expect(result.current.formData.titleDeedNumber).toBe('DLD-TD-2026-88412');
+    expect(result.current.staffXP).toBe(startXP + 500);
+    expect(result.current.latestXpMutation?.xpDelta).toBe(500);
+  });
 });
