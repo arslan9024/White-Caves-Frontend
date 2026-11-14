@@ -11,6 +11,6 @@ describe('BulkTagModal Component', () => {
 
   it('renders tag input when isOpen is true', () => {
     render(<BulkTagModal isOpen={true} propertyCount={3} />);
-    expect(screen.getByPlaceholderText('Add a tag...')).toBeDefined();
+    expect(screen.getByPlaceholderText('Enter a tag...')).toBeDefined();
   });
 });
