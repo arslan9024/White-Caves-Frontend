@@ -6,6 +6,10 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { getAuth } from 'firebase/auth';
+import socketService, {
+  type LindaCampaignTelemetryPayload,
+  type LindaHotLeadEscalationPayload,
+} from '../../../services/socketService';
 import type { ConsoleMessage, HistoryItem } from './ZoeConsole.types';
 
 export const getAuthToken = async (): Promise<string | null> => {
@@ -31,6 +35,9 @@ export function useZoeConsoleLogic() {
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [voiceSpeechEnabled, setVoiceSpeechEnabled] = useState(true);
+  const [liveCampaignTelemetry, setLiveCampaignTelemetry] =
+    useState<LindaCampaignTelemetryPayload | null>(null);
+  const [hotLeadEscalations, setHotLeadEscalations] = useState<LindaHotLeadEscalationPayload[]>([]);
   const recognitionRef = useRef<any>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,6 +64,44 @@ export function useZoeConsoleLogic() {
         confidence: 1,
       },
     ]);
+  }, []);
+
+  // Subscribe to real-time Vardon campaign progress and HOT_LEAD escalations from Linda
+  useEffect(() => {
+    const offCampaign = socketService.onLindaCampaignTelemetry(payload => {
+      setLiveCampaignTelemetry(payload);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `campaign-${Date.now()}`,
+          text: `**📡 Live Vardon Campaign Progress (${payload.campaignName})**\n\n• **Status**: ${payload.status}\n• **Dispatched**: ${payload.totalDispatched} / ${payload.dailyTarget} daily target\n• **Skipped**: ${payload.skipped}`,
+          isUser: false,
+          timestamp: new Date(payload.timestamp || Date.now()),
+          intent: 'campaign_telemetry',
+          confidence: 1,
+        },
+      ]);
+    });
+
+    const offHotLead = socketService.onLindaHotLead(payload => {
+      setHotLeadEscalations(prev => [payload, ...prev].slice(0, 10));
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `hotlead-${payload.id || Date.now()}`,
+          text: `**🔥 HOT_LEAD Escalation [${payload.category}] — ${payload.project}**\n\n• **Owner**: ${payload.name} (${payload.phone})${payload.unit ? ` · Unit ${payload.unit}` : ''}\n• **Inbound**: "${payload.inquiry}"\n• **Action**: Immediate 15m P0 SLA contact required.`,
+          isUser: false,
+          timestamp: new Date(payload.timestamp || Date.now()),
+          intent: 'hot_lead_escalation',
+          confidence: payload.confidence ?? 0.95,
+        },
+      ]);
+    });
+
+    return () => {
+      offCampaign();
+      offHotLead();
+    };
   }, []);
 
   const speakText = (text: string) => {
@@ -275,5 +320,7 @@ export function useZoeConsoleLogic() {
     toggleListening,
     toggleHistory,
     clearConversation,
+    liveCampaignTelemetry,
+    hotLeadEscalations,
   };
 }

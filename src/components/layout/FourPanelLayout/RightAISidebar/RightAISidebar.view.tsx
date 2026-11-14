@@ -45,6 +45,8 @@ export const RightAISidebar: React.FC<RightAISidebarProps> = ({
     getDeptColor,
     getAssistantStatus,
     handleSendMessage,
+    liveCampaignTelemetry,
+    hotLeadEscalations,
   } = useRightAISidebarLogic(initialActive);
 
   const totalAssistants = allAssistants.length;
@@ -58,6 +60,34 @@ export const RightAISidebar: React.FC<RightAISidebarProps> = ({
         setSearchQuery={setSearchQuery}
         setShowSearch={setShowSearch}
       />
+
+      {(liveCampaignTelemetry || hotLeadEscalations.length > 0) && (
+        <div
+          data-testid="sidebar-linda-telemetry"
+          style={{
+            margin: '0 12px 8px',
+            padding: '8px 10px',
+            borderRadius: 8,
+            background: 'rgba(239, 68, 68, 0.08)',
+            border: '1px solid rgba(239, 68, 68, 0.28)',
+            fontSize: 11,
+            lineHeight: 1.4,
+          }}
+        >
+          {liveCampaignTelemetry && (
+            <div style={{ fontWeight: 600 }}>
+              📡 Vardon Campaign: {liveCampaignTelemetry.totalDispatched}/
+              {liveCampaignTelemetry.dailyTarget} sent ({liveCampaignTelemetry.status})
+            </div>
+          )}
+          {hotLeadEscalations.length > 0 && (
+            <div style={{ color: COLOR_TOKENS.primary.red, fontWeight: 700, marginTop: 2 }}>
+              🔥 HOT_LEAD [{hotLeadEscalations[0].category}]: {hotLeadEscalations[0].name} (
+              {hotLeadEscalations[0].project})
+            </div>
+          )}
+        </div>
+      )}
 
       {selectedObject && contextualAssistants.length > 0 && (
         <ContextualAssistantsPanel

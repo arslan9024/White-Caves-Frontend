@@ -32,6 +32,8 @@ export const ZoeConsole: React.FC<ZoeConsoleProps> = () => {
     sendMessage,
     toggleHistory,
     clearConversation,
+    liveCampaignTelemetry,
+    hotLeadEscalations,
   } = useZoeConsoleLogic();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,6 +67,39 @@ export const ZoeConsole: React.FC<ZoeConsoleProps> = () => {
 
         <div className="chat-area">
           <QuickActionsBar onSelectQuery={handleSelectQuery} isLoading={isLoading} />
+
+          {(liveCampaignTelemetry || hotLeadEscalations.length > 0) && (
+            <div
+              data-testid="zoe-live-telemetry-banner"
+              style={{
+                margin: '8px 16px 0',
+                padding: '10px 14px',
+                borderRadius: 8,
+                background: 'rgba(239, 68, 68, 0.08)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 12,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontSize: 12,
+              }}
+            >
+              {liveCampaignTelemetry && (
+                <div>
+                  <strong>📡 {liveCampaignTelemetry.campaignName}:</strong>{' '}
+                  {liveCampaignTelemetry.totalDispatched}/{liveCampaignTelemetry.dailyTarget} sent ·{' '}
+                  {liveCampaignTelemetry.skipped} skipped ({liveCampaignTelemetry.status})
+                </div>
+              )}
+              {hotLeadEscalations.length > 0 && (
+                <div style={{ color: '#EF4444', fontWeight: 700 }}>
+                  🔥 {hotLeadEscalations.length} HOT_LEAD Escalation(s) — Latest:{' '}
+                  {hotLeadEscalations[0].name} ({hotLeadEscalations[0].project})
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="messages-container">
             {messages.map(message => (

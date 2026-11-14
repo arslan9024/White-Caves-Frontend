@@ -4,10 +4,14 @@
  * Strictly < 350 lines
  */
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllAssistants, DEPARTMENTS } from '../../../../config/assistantRegistry';
 import { COLOR_TOKENS } from '../../../../styles/design-tokens/colors';
+import socketService, {
+  type LindaCampaignTelemetryPayload,
+  type LindaHotLeadEscalationPayload,
+} from '../../../../services/socketService';
 import type { ChatMessage, AssistantInfo } from './RightAISidebar.types';
 
 export function useRightAISidebarLogic(initialActive?: string) {
@@ -21,6 +25,42 @@ export function useRightAISidebarLogic(initialActive?: string) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showSearch, setShowSearch] = useState(false);
   const [sortBy, setSortBy] = useState<'department' | 'favorites'>('department');
+  const [liveCampaignTelemetry, setLiveCampaignTelemetry] =
+    useState<LindaCampaignTelemetryPayload | null>(null);
+  const [hotLeadEscalations, setHotLeadEscalations] = useState<LindaHotLeadEscalationPayload[]>([]);
+
+  useEffect(() => {
+    const offCampaign = socketService.onLindaCampaignTelemetry(payload => {
+      setLiveCampaignTelemetry(payload);
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: `campaign-${Date.now()}`,
+          role: 'assistant',
+          content: `📡 [${payload.campaignName}] Dispatched ${payload.totalDispatched}/${payload.dailyTarget} (${payload.skipped} skipped) — ${payload.status}`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
+    });
+
+    const offHotLead = socketService.onLindaHotLead(payload => {
+      setHotLeadEscalations(prev => [payload, ...prev].slice(0, 10));
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: `hotlead-${payload.id || Date.now()}`,
+          role: 'assistant',
+          content: `🔥 HOT_LEAD [${payload.category}] ${payload.name} (${payload.phone}) in ${payload.project}: "${payload.inquiry}"`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
+    });
+
+    return () => {
+      offCampaign();
+      offHotLead();
+    };
+  }, []);
 
   const allAssistants: AssistantInfo[] = getAllAssistants();
   const selectedAssistant = allAssistants.find(a => a.id === activeAssistant);
@@ -142,5 +182,7 @@ export function useRightAISidebarLogic(initialActive?: string) {
     getDeptColor,
     getAssistantStatus,
     handleSendMessage,
+    liveCampaignTelemetry,
+    hotLeadEscalations,
   };
 }

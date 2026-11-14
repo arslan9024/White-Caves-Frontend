@@ -47,6 +47,30 @@ export interface LindaMessagePayload {
   type: string;
 }
 
+export interface LindaCampaignTelemetryPayload {
+  campaignName: string;
+  status: string;
+  totalDispatched: number;
+  skipped: number;
+  dailyTarget: number;
+  poolStatus?: Record<string, unknown>;
+  recentLogs?: Array<Record<string, unknown>>;
+  timestamp: Date | string;
+}
+
+export interface LindaHotLeadEscalationPayload {
+  id: string;
+  phone: string;
+  name: string;
+  category: string;
+  project: string;
+  unit?: string;
+  inquiry: string;
+  confidence: number;
+  assignedAgent?: string;
+  timestamp: Date | string;
+}
+
 export interface CrmNotificationPayload {
   id: string;
   type: 'info' | 'success' | 'warning' | 'error';
@@ -83,6 +107,8 @@ interface ServerToClientEvents {
   'whatsapp:meta:message': (payload: MetaMessagePayload) => void;
   'whatsapp:meta:status': (payload: MetaStatusPayload) => void;
   'whatsapp:linda:message': (payload: LindaMessagePayload) => void;
+  'whatsapp:linda:campaign': (payload: LindaCampaignTelemetryPayload) => void;
+  'whatsapp:linda:hot_lead': (payload: LindaHotLeadEscalationPayload) => void;
   'notification:new': (payload: CrmNotificationPayload) => void;
   'lead:updated': (payload: LeadUpdatedPayload) => void;
   'conversation:updated': (payload: ConversationUpdatedPayload) => void;
@@ -171,6 +197,20 @@ class SocketService {
   onLindaMessage(handler: (payload: LindaMessagePayload) => void): () => void {
     this.socket?.on('whatsapp:linda:message', handler);
     return () => this.socket?.off('whatsapp:linda:message', handler);
+  }
+
+  /** Live Vardon / Linda campaign batch progress telemetry */
+  onLindaCampaignTelemetry(
+    handler: (payload: LindaCampaignTelemetryPayload) => void
+  ): () => void {
+    this.socket?.on('whatsapp:linda:campaign', handler);
+    return () => this.socket?.off('whatsapp:linda:campaign', handler);
+  }
+
+  /** Real-time HOT_LEAD escalation from Linda AI Agent */
+  onLindaHotLead(handler: (payload: LindaHotLeadEscalationPayload) => void): () => void {
+    this.socket?.on('whatsapp:linda:hot_lead', handler);
+    return () => this.socket?.off('whatsapp:linda:hot_lead', handler);
   }
 
   /** CRM notification pushed from server */

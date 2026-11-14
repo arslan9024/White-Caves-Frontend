@@ -96,6 +96,30 @@ export function useSocket(): UseSocketReturn {
       );
     });
 
+    const offLindaCampaign = socketService.onLindaCampaignTelemetry(payload => {
+      log.debug('Linda campaign telemetry received', { campaignName: payload.campaignName });
+      dispatch(
+        addNotification({
+          type: 'info',
+          title: `📡 ${payload.campaignName}`,
+          message: `Batch verified: ${payload.totalDispatched}/${payload.dailyTarget} dispatched (${payload.skipped} skipped)`,
+          duration: 6000,
+        })
+      );
+    });
+
+    const offLindaHotLead = socketService.onLindaHotLead(payload => {
+      log.debug('Linda HOT_LEAD escalation received', { phone: payload.phone });
+      dispatch(
+        addNotification({
+          type: 'warning',
+          title: `🔥 HOT LEAD [${payload.category}] — ${payload.project}`,
+          message: `${payload.name} (${payload.phone}): "${payload.inquiry.substring(0, 80)}"`,
+          duration: 10000,
+        })
+      );
+    });
+
     // ── CRM notifications ─────────────────────────────────────────────────
     const offNotification = socketService.onNotification(payload => {
       log.debug('CRM notification received', { type: payload.type, title: payload.title });
@@ -136,6 +160,8 @@ export function useSocket(): UseSocketReturn {
       offMetaMsg();
       offMetaStatus();
       offLindaMsg();
+      offLindaCampaign();
+      offLindaHotLead();
       offNotification();
       offLead();
       offConversation();
