@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkFurnishingModal = ({
+interface BulkFurnishingModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: (furnishing: string) => void;
+  onCancel: () => void;
+}
+
+const BulkFurnishingModal: React.FC<BulkFurnishingModalProps> = ({
   isOpen,
   propertyCount,
   onConfirm,
@@ -48,7 +55,7 @@ const BulkFurnishingModal = ({
           </p>
 
           <div className="status-grid">
-            {furnishingTypes.map((type) => (
+            {furnishingTypes.map(type => (
               <button
                 key={type.value}
                 className={`status-option ${selectedFurnishing === type.value ? 'selected' : ''}`}
@@ -62,7 +69,10 @@ const BulkFurnishingModal = ({
           {selectedFurnishing && (
             <div className="status-preview">
               <AlertCircle size={16} />
-              <p>Will update all {propertyCount} properties to <strong>{furnishingTypes.find(t => t.value === selectedFurnishing)?.label}</strong></p>
+              <p>
+                Will update all {propertyCount} properties to{' '}
+                <strong>{furnishingTypes.find(t => t.value === selectedFurnishing)?.label}</strong>
+              </p>
             </div>
           )}
         </div>
@@ -71,11 +81,7 @@ const BulkFurnishingModal = ({
           <button className="btn-cancel" onClick={handleCancel}>
             Cancel
           </button>
-          <button
-            className="btn-confirm"
-            onClick={handleConfirm}
-            disabled={!selectedFurnishing}
-          >
+          <button className="btn-confirm" onClick={handleConfirm} disabled={!selectedFurnishing}>
             Update Furnishing
           </button>
         </div>

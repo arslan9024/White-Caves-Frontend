@@ -2,7 +2,19 @@ import React from 'react';
 import { AlertCircle, Trash2, Mail, Tag, DollarSign, Home, Check } from 'lucide-react';
 import './BulkActionToolbar.css';
 
-const BulkActionToolbar = ({
+interface BulkActionToolbarProps {
+  selectedCount: number;
+  onStatusUpdate: () => void;
+  onPriceUpdate: () => void;
+  onFurnishingUpdate: () => void;
+  onTagsUpdate: () => void;
+  onNotification: () => void;
+  onDelete: () => void;
+  onClear: () => void;
+  isLoading?: boolean;
+}
+
+const BulkActionToolbar: React.FC<BulkActionToolbarProps> = ({
   selectedCount,
   onStatusUpdate,
   onPriceUpdate,

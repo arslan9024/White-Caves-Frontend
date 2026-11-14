@@ -2,7 +2,20 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkNotificationModal = ({
+interface NotificationTemplate {
+  label: string;
+  message: string;
+  type: string;
+}
+
+interface BulkNotificationModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: (payload: { message: string; type: string }) => void;
+  onCancel: () => void;
+}
+
+const BulkNotificationModal: React.FC<BulkNotificationModalProps> = ({
   isOpen,
   propertyCount,
   onConfirm,
@@ -14,12 +27,14 @@ const BulkNotificationModal = ({
   const templates = [
     {
       label: 'Viewings Available',
-      message: 'These properties are now available for viewings. Please schedule appointments with interested clients.',
+      message:
+        'These properties are now available for viewings. Please schedule appointments with interested clients.',
       type: 'info',
     },
     {
       label: 'Price Update',
-      message: 'The rental rates for these properties have been updated. Please inform clients accordingly.',
+      message:
+        'The rental rates for these properties have been updated. Please inform clients accordingly.',
       type: 'info',
     },
     {
@@ -29,12 +44,13 @@ const BulkNotificationModal = ({
     },
     {
       label: 'Lease Renewal',
-      message: 'Lease renewal documents are ready for the following properties. Please contact tenants.',
+      message:
+        'Lease renewal documents are ready for the following properties. Please contact tenants.',
       type: 'info',
     },
   ];
 
-  const handleUseTemplate = (template) => {
+  const handleUseTemplate = (template: NotificationTemplate) => {
     setMessage(template.message);
     setMessageType(template.type);
   };
@@ -89,16 +105,24 @@ const BulkNotificationModal = ({
             className="notification-input"
             placeholder="Enter your message here..."
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={e => setMessage(e.target.value)}
           />
 
           <div style={{ marginTop: '10px' }}>
-            <label style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)', display: 'block', marginBottom: '8px' }}>
+            <label
+              style={{
+                fontSize: '13px',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                display: 'block',
+                marginBottom: '8px',
+              }}
+            >
               Notification Type:
             </label>
             <select
               value={messageType}
-              onChange={(e) => setMessageType(e.target.value)}
+              onChange={e => setMessageType(e.target.value)}
               style={{
                 width: '100%',
                 padding: '8px 12px',
@@ -118,11 +142,7 @@ const BulkNotificationModal = ({
           <button className="btn-cancel" onClick={handleCancel}>
             Cancel
           </button>
-          <button
-            className="btn-confirm"
-            onClick={handleConfirm}
-            disabled={!message.trim()}
-          >
+          <button className="btn-confirm" onClick={handleConfirm} disabled={!message.trim()}>
             Send Notification
           </button>
         </div>

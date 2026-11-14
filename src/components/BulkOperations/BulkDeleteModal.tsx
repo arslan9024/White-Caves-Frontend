@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkDeleteModal = ({
+interface BulkDeleteModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+const BulkDeleteModal: React.FC<BulkDeleteModalProps> = ({
   isOpen,
   propertyCount,
   onConfirm,
@@ -39,10 +46,13 @@ const BulkDeleteModal = ({
           <div className="delete-warning">
             <AlertTriangle size={20} />
             <div>
-              <p style={{ margin: '0 0 5px 0', fontWeight: '600' }}>Warning: This action cannot be undone</p>
+              <p style={{ margin: '0 0 5px 0', fontWeight: '600' }}>
+                Warning: This action cannot be undone
+              </p>
               <p style={{ margin: 0, fontSize: '13px' }}>
                 You are about to permanently delete <strong>{propertyCount}</strong> properties.
-                This will remove all associated data including offers, contracts, and viewing history.
+                This will remove all associated data including offers, contracts, and viewing
+                history.
               </p>
             </div>
           </div>
@@ -56,7 +66,7 @@ const BulkDeleteModal = ({
               type="text"
               placeholder={`Type "${requiredText}" to confirm`}
               value={confirmationText}
-              onChange={(e) => setConfirmationText(e.target.value)}
+              onChange={e => setConfirmationText(e.target.value)}
             />
           </div>
 

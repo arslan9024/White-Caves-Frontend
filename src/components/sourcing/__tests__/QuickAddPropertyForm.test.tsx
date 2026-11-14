@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import React from 'react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import QuickAddPropertyForm from '../QuickAddPropertyForm';
 
@@ -12,11 +13,11 @@ describe('QuickAddPropertyForm Component', () => {
       bathrooms: 3,
       price: 5000,
       features: ['swimming pool', 'garden', 'parking'],
-      confidenceScore: 85
+      confidenceScore: 85,
     },
     opportunityId: 'opp-001',
     onSuccess: vi.fn(),
-    onCancel: vi.fn()
+    onCancel: vi.fn(),
   };
 
   beforeEach(() => {
@@ -56,7 +57,7 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should render all required form fields', () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       expect(screen.getByLabelText(/Property Type/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Location/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Bedrooms/i)).toBeInTheDocument();
@@ -133,7 +134,7 @@ describe('QuickAddPropertyForm Component', () => {
     it('should allow editing pre-filled fields', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const locationInput = screen.getByDisplayValue('Dubai Marina');
-      
+
       fireEvent.change(locationInput, { target: { value: 'Downtown Dubai' } });
       await waitFor(() => {
         expect(locationInput.value).toBe('Downtown Dubai');
@@ -149,10 +150,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should require property type', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const typeField = screen.getByLabelText(/Property Type/i);
-      
+
       fireEvent.change(typeField, { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/Property type is required/i)).toBeInTheDocument();
       });
@@ -161,10 +162,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should require location', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const locationField = screen.getByLabelText(/Location/i);
-      
+
       fireEvent.change(locationField, { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/Location is required/i)).toBeInTheDocument();
       });
@@ -173,10 +174,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should require bedroom count', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const bedroomsField = screen.getByLabelText(/Bedrooms/i);
-      
+
       fireEvent.change(bedroomsField, { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/Bedrooms is required/i)).toBeInTheDocument();
       });
@@ -185,10 +186,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should require price', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const priceField = screen.getByLabelText(/Price/i);
-      
+
       fireEvent.change(priceField, { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/Price is required/i)).toBeInTheDocument();
       });
@@ -197,9 +198,9 @@ describe('QuickAddPropertyForm Component', () => {
     it('should validate bedroom count is positive', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const bedroomsField = screen.getByLabelText(/Bedrooms/i);
-      
+
       fireEvent.change(bedroomsField, { target: { value: '-1' } });
-      
+
       await waitFor(() => {
         expect(screen.getByText(/must be positive/i)).toBeInTheDocument();
       });
@@ -208,9 +209,9 @@ describe('QuickAddPropertyForm Component', () => {
     it('should validate price is positive', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const priceField = screen.getByLabelText(/Price/i);
-      
+
       fireEvent.change(priceField, { target: { value: '-100' } });
-      
+
       await waitFor(() => {
         expect(screen.getByText(/must be positive/i)).toBeInTheDocument();
       });
@@ -218,12 +219,12 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should show all validation errors at once', async () => {
       const { container } = render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       // Clear required fields
       fireEvent.change(screen.getByLabelText(/Property Type/i), { target: { value: '' } });
       fireEvent.change(screen.getByLabelText(/Location/i), { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         const errors = container.querySelectorAll('.error-message');
         expect(errors.length).toBeGreaterThanOrEqual(2);
@@ -244,7 +245,7 @@ describe('QuickAddPropertyForm Component', () => {
     it('should allow selecting features', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const poolButton = screen.getByRole('button', { name: /Swimming pool/i });
-      
+
       fireEvent.click(poolButton);
       await waitFor(() => {
         expect(poolButton).toHaveClass('selected');
@@ -254,10 +255,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should allow deselecting features', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const poolButton = screen.getByRole('button', { name: /Swimming pool/i });
-      
+
       fireEvent.click(poolButton); // Select
       fireEvent.click(poolButton); // Deselect
-      
+
       await waitFor(() => {
         expect(poolButton).not.toHaveClass('selected');
       });
@@ -279,10 +280,10 @@ describe('QuickAddPropertyForm Component', () => {
     it('should add custom feature on enter key', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const customInput = screen.getByPlaceholderText(/Add custom feature/i);
-      
+
       fireEvent.change(customInput, { target: { value: 'Gym' } });
       fireEvent.keyPress(customInput, { key: 'Enter', code: 'Enter', charCode: 13 });
-      
+
       await waitFor(() => {
         expect(screen.getByRole('button', { name: /Gym/i })).toBeInTheDocument();
       });
@@ -296,9 +297,9 @@ describe('QuickAddPropertyForm Component', () => {
   describe('Form Submission', () => {
     it('should submit form with all data', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(mockProps.onSuccess).toHaveBeenCalled();
       });
@@ -306,9 +307,9 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should pass correct data on submission', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         const callData = mockProps.onSuccess.mock.calls[0][0];
         expect(callData.propertyType).toBe('villa');
@@ -319,10 +320,10 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should prevent submission with validation errors', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.change(screen.getByLabelText(/Property Type/i), { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(mockProps.onSuccess).not.toHaveBeenCalled();
       });
@@ -331,17 +332,17 @@ describe('QuickAddPropertyForm Component', () => {
     it('should show loading state while submitting', async () => {
       const delayedOnSuccess = vi.fn(() => new Promise(resolve => setTimeout(resolve, 1000)));
       render(<QuickAddPropertyForm {...{ ...mockProps, onSuccess: delayedOnSuccess }} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       expect(screen.getByText(/Saving/i)).toBeInTheDocument();
     });
 
     it('should show success screen after submission', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/Property added successfully/i)).toBeInTheDocument();
       });
@@ -349,9 +350,9 @@ describe('QuickAddPropertyForm Component', () => {
 
     it('should display success details', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         expect(screen.getByText(/villa/i)).toBeInTheDocument();
         expect(screen.getByText(/Dubai Marina/i)).toBeInTheDocument();
@@ -366,17 +367,17 @@ describe('QuickAddPropertyForm Component', () => {
   describe('Cancel Action', () => {
     it('should call onCancel when cancel button clicked', () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Cancel/i }));
-      
+
       expect(mockProps.onCancel).toHaveBeenCalled();
     });
 
     it('should close form on cancel', async () => {
       const { unmount } = render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.click(screen.getByRole('button', { name: /Cancel/i }));
-      
+
       unmount();
       expect(mockProps.onCancel).toHaveBeenCalled();
     });
@@ -424,17 +425,17 @@ describe('QuickAddPropertyForm Component', () => {
     it('should support keyboard navigation', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
       const typeField = screen.getByLabelText(/Property Type/i);
-      
+
       typeField.focus();
       expect(document.activeElement).toBe(typeField);
     });
 
     it('should announce form errors to screen readers', async () => {
       render(<QuickAddPropertyForm {...mockProps} />);
-      
+
       fireEvent.change(screen.getByLabelText(/Property Type/i), { target: { value: '' } });
       fireEvent.click(screen.getByRole('button', { name: /Publish/i }));
-      
+
       await waitFor(() => {
         const error = screen.getByText(/Property type is required/i);
         expect(error).toHaveAttribute('role', 'alert');

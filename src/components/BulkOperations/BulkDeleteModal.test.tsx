@@ -12,17 +12,13 @@ describe('BulkDeleteModal', () => {
   });
 
   it('renders modal when isOpen is true', () => {
-    render(
-      <BulkDeleteModal isOpen={true} count={5} onClose={vi.fn()} onConfirm={vi.fn()} />
-    );
+    render(<BulkDeleteModal isOpen={true} count={5} onClose={vi.fn()} onConfirm={vi.fn()} />);
     expect(screen.getByRole('heading', { name: 'Delete Properties' })).toBeInTheDocument();
   });
 
   it('disables confirm button until required text is typed', () => {
     const handleConfirm = vi.fn();
-    render(
-      <BulkDeleteModal isOpen={true} count={5} onClose={vi.fn()} onConfirm={handleConfirm} />
-    );
+    render(<BulkDeleteModal isOpen={true} count={5} onClose={vi.fn()} onConfirm={handleConfirm} />);
 
     const deleteBtn = screen.getByRole('button', { name: /Delete Properties/i });
     expect(deleteBtn).toBeDisabled();
