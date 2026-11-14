@@ -33,6 +33,8 @@ import {
   type CommunityCoords,
 } from './dubaiCoordinates';
 import './DubaiMap.css';
+import { MapProperty, DubaiMapProps } from './DubaiMap.types';
+import { PropertyMarkerPopup, DubaiMapLegend } from './DubaiMap.components';
 
 /* ─── Fix Leaflet default marker icon in bundler environments ───── */
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -51,41 +53,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-/* ─── Types ─────────────────────────────────────────────────────── */
-
-export interface MapProperty {
-  id: string;
-  title: string;
-  location: string;
-  type: string;
-  purpose: 'buy' | 'rent';
-  price: number;
-  beds: number;
-  baths: number;
-  sqft: number;
-  image: string;
-  featured: boolean;
-}
-
-interface DubaiMapProps {
-  properties: MapProperty[];
-  /** Currently hovered/selected property from the list side */
-  activePropertyId?: string | null;
-  /** Called when user clicks a property marker */
-  onPropertyClick?: (property: MapProperty) => void;
-  /** Called when map viewport changes */
-  onViewportChange?: (bounds: { north: number; south: number; east: number; west: number }) => void;
-  /** Default map center */
-  defaultCenter?: [number, number];
-  /** Default map zoom */
-  defaultZoom?: number;
-  /** Show community boundary overlays */
-  showCommunities?: boolean;
-  /** Height of map container */
-  height?: string;
-  /** Custom class name */
-  className?: string;
-}
+export type { MapProperty, DubaiMapProps };
 
 const resolveHeightClass = (height: string): string => {
   const value = height.trim().toLowerCase();
@@ -183,7 +151,6 @@ const DubaiMap: FC<DubaiMapProps> = ({
 
   // Build marker positions
   const markers = useMemo(() => {
-    // Group properties by location to track jitter index
     const locationIndices: Record<string, number> = {};
     return properties.map(prop => {
       const community = getCommunityCoords(prop.location);
@@ -196,13 +163,11 @@ const DubaiMap: FC<DubaiMapProps> = ({
     });
   }, [properties]);
 
-  // All marker positions for fit-bounds
   const markerPositions = useMemo<[number, number][]>(
     () => markers.map(m => [m.lat, m.lng]),
     [markers]
   );
 
-  // Community stats (count per community)
   const communityStats = useMemo(() => {
     const stats = new Map<string, { count: number; avgPrice: number }>();
     properties.forEach(p => {
@@ -228,6 +193,7 @@ const DubaiMap: FC<DubaiMapProps> = ({
     <div
       className={`dubai-map-container ${heightClass} ${className}`.trim()}
       data-testid="dubai-map"
+      style={height ? { height } : undefined}
     >
       <MapContainer
         center={defaultCenter}
@@ -237,34 +203,29 @@ const DubaiMap: FC<DubaiMapProps> = ({
         scrollWheelZoom={true}
         zoomControl={true}
       >
-        {/* OpenStreetMap tiles — free, no API key */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* Fit map to property markers */}
         <FitBounds markers={markerPositions} />
         {onViewportChange ? <ViewportReporter onViewportChange={onViewportChange} /> : null}
 
-        {/* Community boundary circles */}
         {showCommunities &&
           COMMUNITY_COORDS.map(community => {
             const stats = communityStats.get(community.name);
+            const hasProperties = Boolean(stats && stats.count > 0);
             return (
               <Circle
                 key={community.name}
                 center={[community.lat, community.lng]}
                 radius={community.radius}
                 pathOptions={{
-                  color: stats ? colors.primary : colors.secondary,
-                  fillColor: stats ? 'rgba(201, 168, 76, 0.08)' : 'rgba(16, 185, 129, 0.04)',
-                  fillOpacity: 0.4,
-                  weight: stats ? 2 : 1,
-                  dashArray: stats ? undefined : '4 6',
-                }}
-                eventHandlers={{
-                  click: () => handleCommunityClick(community),
+                  color: hasProperties ? colors.primary : '#94A3B8',
+                  fillColor: hasProperties ? colors.primary : '#94A3B8',
+                  fillOpacity: hasProperties ? 0.15 : 0.05,
+                  weight: hasProperties ? 2 : 1,
+                  dashArray: hasProperties ? undefined : '4 4',
                 }}
               >
                 <Popup className="community-popup">
@@ -291,7 +252,6 @@ const DubaiMap: FC<DubaiMapProps> = ({
             );
           })}
 
-        {/* Property markers */}
         {markers.map(marker => (
           <Marker
             key={marker.id}
@@ -301,52 +261,16 @@ const DubaiMap: FC<DubaiMapProps> = ({
               click: () => onPropertyClick?.(marker),
             }}
           >
-            <Popup className="property-map-popup">
-              <div
-                className={`property-popup-card ${activePropertyId === marker.id ? 'active' : ''}`}
-                onClick={() => onPropertyClick?.(marker)}
-                role="button"
-                tabIndex={0}
-              >
-                <img
-                  src={marker.image}
-                  alt={marker.title}
-                  className="popup-card-image"
-                  loading="lazy"
-                />
-                <div className="popup-card-info">
-                  <span className="popup-card-type">{marker.type}</span>
-                  <h4 className="popup-card-title">{marker.title}</h4>
-                  <p className="popup-card-location">{marker.location}</p>
-                  <div className="popup-card-specs">
-                    <span>{marker.beds} BD</span>
-                    <span>{marker.baths} BA</span>
-                    <span>{marker.sqft.toLocaleString()} sqft</span>
-                  </div>
-                  <span className="popup-card-price">{formatPrice(marker.price)}</span>
-                </div>
-                {marker.featured && <span className="popup-featured-badge">★ Featured</span>}
-              </div>
-            </Popup>
+            <PropertyMarkerPopup
+              marker={marker}
+              isActive={activePropertyId === marker.id}
+              onPropertyClick={onPropertyClick}
+            />
           </Marker>
         ))}
       </MapContainer>
 
-      {/* Map legend */}
-      <div className="dubai-map-legend">
-        <div className="legend-item">
-          <span className="legend-dot featured" />
-          <span>Featured</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-dot standard" />
-          <span>Standard</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-circle" />
-          <span>Community</span>
-        </div>
-      </div>
+      <DubaiMapLegend />
     </div>
   );
 };
