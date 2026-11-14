@@ -145,7 +145,7 @@ export const SageCRMView: React.FC = () => {
       {activeTab === 'banks' && <BanksTabPanel banks={BANKS} />}
 
       {activeTab === 'docs' && (
-        <AssistantDocsTab assistantId="sage" color="#0EA5E9" assistantName="Sage" />
+        <AssistantDocsTab assistantId="sage" assistantColor="#0EA5E9" assistantName="Sage" />
       )}
       {activeTab === 'lifecycle' && (
         <AssistantLifecycleTab assistantId="sage" color="#0EA5E9" assistantName="Sage" />

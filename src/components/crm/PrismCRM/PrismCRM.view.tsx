@@ -121,7 +121,7 @@ export const PrismCRMView: React.FC = () => {
       {activeTab === 'inventory' && <InventoryTabPanel />}
 
       {activeTab === 'docs' && (
-        <AssistantDocsTab assistantId="prism" color="#8B5CF6" assistantName="Prism" />
+        <AssistantDocsTab assistantId="prism" assistantColor="#8B5CF6" assistantName="Prism" />
       )}
       {activeTab === 'lifecycle' && (
         <AssistantLifecycleTab assistantId="prism" color="#8B5CF6" assistantName="Prism" />
