@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { RenewalRecord } from '../data/leasing';
+import { RenewalCardItem } from './RenewalCardItem';
 
 interface RenewalsTabProps {
   renewals: RenewalRecord[];
@@ -7,13 +8,6 @@ interface RenewalsTabProps {
   onMarkAccepted?: (id: number) => void;
   onMarkRejected?: (id: number) => void;
 }
-
-const RESPONSE_COLORS: Record<string, { bg: string; text: string }> = {
-  pending: { bg: 'rgba(245,158,11,0.15)', text: '#F59E0B' },
-  accepted: { bg: 'rgba(16,185,129,0.15)', text: '#10B981' },
-  negotiating: { bg: 'rgba(59,130,246,0.15)', text: '#60A5FA' },
-  rejected: { bg: 'rgba(239,68,68,0.15)', text: '#EF4444' },
-};
 
 const RenewalsTab: React.FC<RenewalsTabProps> = ({
   renewals,
@@ -46,12 +40,6 @@ const RenewalsTab: React.FC<RenewalsTabProps> = ({
     onMarkRejected?.(id);
   };
 
-  const getDaysColor = (days: number) => {
-    if (days < 30) return '#EF4444';
-    if (days < 60) return '#F59E0B';
-    return '#10B981';
-  };
-
   return (
     <div className="renewals-view">
       <div className="view-header">
@@ -80,10 +68,10 @@ const RenewalsTab: React.FC<RenewalsTabProps> = ({
           <span className="value" style={{ color: 'var(--accent-green, #10B981)' }}>
             {confirmed}
           </span>
-          <span className="label">Confirmed</span>
+          <span className="label">Accepted</span>
         </div>
         <div className="renewal-stat">
-          <span className="value" style={{ color: 'var(--color-60a5fa, #60A5FA)' }}>
+          <span className="value" style={{ color: 'var(--accent-blue, #60A5FA)' }}>
             {negotiating}
           </span>
           <span className="label">Negotiating</span>
@@ -96,239 +84,16 @@ const RenewalsTab: React.FC<RenewalsTabProps> = ({
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {localRenewals.map((renewal: RenewalRecord) => {
-          const rentIncrease = renewal.proposedRent - renewal.currentRent;
-          const rentIncreasePct = ((rentIncrease / renewal.currentRent) * 100).toFixed(1);
-          const daysColor = getDaysColor(renewal.daysUntilExpiry);
-          const respColor = RESPONSE_COLORS[renewal.tenantResponse] ?? RESPONSE_COLORS.pending;
-
-          return (
-            <div
-              key={renewal.id}
-              style={{
-                background: 'var(--rgba-white-05)',
-                border: '1px solid var(--rgba-white-10)',
-                borderRadius: '12px',
-                padding: '18px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                }}
-              >
-                <div>
-                  <h4 style={{ margin: 0, fontSize: '15px', color: 'var(--color-text-primary)' }}>
-                    {renewal.unit}
-                  </h4>
-                  <p
-                    style={{
-                      margin: '3px 0 0',
-                      fontSize: '13px',
-                      color: 'var(--color-text-secondary)',
-                    }}
-                  >
-                    Tenant: {renewal.tenant}
-                  </p>
-                </div>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  <span
-                    style={{
-                      padding: '3px 10px',
-                      borderRadius: '6px',
-                      fontSize: '12px',
-                      background: respColor.bg,
-                      color: respColor.text,
-                      border: `1px solid ${respColor.text}44`,
-                    }}
-                  >
-                    {renewal.tenantResponse}
-                  </span>
-                  {renewal.noticeSent ? (
-                    <span
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '6px',
-                        fontSize: '12px',
-                        background: 'rgba(16,185,129,0.15)',
-                        color: '#10B981',
-                      }}
-                    >
-                      ✓ Notice Sent
-                    </span>
-                  ) : (
-                    <span
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '6px',
-                        fontSize: '12px',
-                        background: 'rgba(245,158,11,0.15)',
-                        color: '#F59E0B',
-                      }}
-                    >
-                      Notice Pending
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-                  gap: '12px',
-                }}
-              >
-                <div
-                  style={{
-                    background: 'var(--rgba-white-05)',
-                    borderRadius: '8px',
-                    padding: '10px',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      color: 'var(--color-text-secondary)',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    Current Rent
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: 'var(--color-text-primary)',
-                    }}
-                  >
-                    AED {renewal.currentRent.toLocaleString()}
-                  </div>
-                  <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>
-                    per year
-                  </div>
-                </div>
-                <div
-                  style={{
-                    background: 'rgba(20,184,166,0.08)',
-                    borderRadius: '8px',
-                    padding: '10px',
-                    border: '1px solid rgba(20,184,166,0.2)',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      color: 'var(--color-text-secondary)',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    Proposed Rent
-                  </div>
-                  <div style={{ fontSize: '16px', fontWeight: 600, color: 'var(--accent-teal, #14B8A6)' }}>
-                    AED {renewal.proposedRent.toLocaleString()}
-                  </div>
-                  <div style={{ fontSize: '11px', color: 'var(--accent-teal, #14B8A6)' }}>
-                    +{rentIncreasePct}% increase
-                  </div>
-                </div>
-                <div
-                  style={{
-                    background: 'var(--rgba-white-05)',
-                    borderRadius: '8px',
-                    padding: '10px',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '11px',
-                      color: 'var(--color-text-secondary)',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    Renewal Date
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: 'var(--color-text-primary)',
-                    }}
-                  >
-                    {renewal.renewalDate}
-                  </div>
-                  <div style={{ fontSize: '13px', fontWeight: 700, color: daysColor }}>
-                    {renewal.daysUntilExpiry} days left
-                  </div>
-                </div>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '8px',
-                  justifyContent: 'flex-end',
-                  flexWrap: 'wrap',
-                }}
-              >
-                {!renewal.noticeSent && (
-                  <button
-                    onClick={() => handleSendNotice(renewal.id)}
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: '6px',
-                      border: '1px solid #14B8A6',
-                      background: 'rgba(20,184,166,0.1)',
-                      color: '#14B8A6',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Send Notice
-                  </button>
-                )}
-                {renewal.tenantResponse !== 'accepted' && (
-                  <button
-                    onClick={() => handleAccept(renewal.id)}
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: '6px',
-                      border: '1px solid #10B981',
-                      background: 'rgba(16,185,129,0.1)',
-                      color: '#10B981',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Mark Accepted
-                  </button>
-                )}
-                {renewal.tenantResponse !== 'rejected' && (
-                  <button
-                    onClick={() => handleReject(renewal.id)}
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: '6px',
-                      border: '1px solid #EF4444',
-                      background: 'rgba(239,68,68,0.1)',
-                      color: '#EF4444',
-                      fontSize: '12px',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Mark Rejected
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {localRenewals.map(renewal => (
+          <RenewalCardItem
+            key={renewal.id}
+            renewal={renewal}
+            onSendNotice={handleSendNotice}
+            onAccept={handleAccept}
+            onReject={handleReject}
+          />
+        ))}
       </div>
 
       <div
