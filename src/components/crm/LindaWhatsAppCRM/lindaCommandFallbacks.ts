@@ -1,4 +1,47 @@
+import { isCampaignActive, setCampaignActive } from '../../../utils/campaignControl';
+
 export function getFallbackCommandOutput(normalized: string, title: string): string {
+  if (
+    normalized === 'campaign pause' ||
+    normalized === 'linda campaign pause' ||
+    normalized === '!campaign pause' ||
+    normalized === '3.7'
+  ) {
+    setCampaignActive(false);
+    return [
+      '⏸️ *CAMPAIGN PAUSED (SAFE HOLD)*',
+      '  • Status: Halted via WhatsApp Master Command',
+      '  • DAMAC Hills 2 Outreach: 0 outbound messages will be dispatched while paused',
+      '  • Reply `linda campaign active` or `3.7` to resume live dispatch.',
+    ].join('\n');
+  }
+
+  if (
+    normalized === 'campaign active' ||
+    normalized === 'campaign resume' ||
+    normalized === 'linda campaign active' ||
+    normalized === 'linda campaign resume' ||
+    normalized === '!campaign active' ||
+    normalized === '!campaign resume'
+  ) {
+    setCampaignActive(true);
+    return [
+      '🟢 *CAMPAIGN ACTIVE (LIVE OUTREACH RESUMED)*',
+      '  • Status: Active (DAMAC Hills 2 / Vardon Owner Outreach)',
+      '  • Anti-Ban Pacing: 15s–45s Gaussian jitter + 1 fresh lead/account/day',
+      '  • Active Rotation Pool: Ready across all linked master/sub-agent lines.',
+    ].join('\n');
+  }
+
+  if (normalized === 'campaign' || normalized === 'linda campaign') {
+    const active = isCampaignActive();
+    return [
+      `📊 *LINDA CAMPAIGN POSTURE: ${active ? '🟢 ACTIVE' : '⏸️ PAUSED'}*`,
+      '  • Target Community: DAMAC Hills 2 (Vardon / Amazon / Pacifica / Camellia)',
+      '  • Remote WhatsApp Controls: Send `linda campaign active` or `linda campaign pause` from any Master Account to Primary Master (+971505760056).',
+    ].join('\n');
+  }
+
   if (normalized === 'doctor' || normalized === '8.1' || normalized === 'f11') {
     return [
       '🩺 LINDA 12-POINT DIAGNOSTIC DOCTOR (Menu 8.1 / Feature F11)',
