@@ -5,7 +5,7 @@ import './ActivityFeed.css';
 const getTimeAgo = timestamp => {
   const now = new Date();
   const then = new Date(timestamp);
-  const diffMs = now - then;
+  const diffMs = now.getTime() - then.getTime();
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMins / 60);
   const diffDays = Math.floor(diffHours / 24);
@@ -17,7 +17,7 @@ const getTimeAgo = timestamp => {
   return then.toLocaleDateString();
 };
 
-const ActivityItem = ({ activity }) => {
+const ActivityItem: React.FC<{ activity: ActivityRecord }> = ({ activity }) => {
   return (
     <div className={`activity-item ${activity.type || 'default'}`}>
       <div
@@ -43,7 +43,7 @@ const ActivityItem = ({ activity }) => {
   );
 };
 
-const ActivityFeed = ({
+const ActivityFeed: React.FC<ActivityFeedProps> = ({
   activities = [],
   title = 'Recent Activity',
   maxItems = 10,
