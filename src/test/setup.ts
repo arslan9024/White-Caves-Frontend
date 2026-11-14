@@ -42,12 +42,13 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 }));
 (global as any).IntersectionObserver = global.IntersectionObserver;
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-(global as any).ResizeObserver = global.ResizeObserver;
+class ResizeObserverMock {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+}
+global.ResizeObserver = ResizeObserverMock as any;
+(global as any).ResizeObserver = ResizeObserverMock;
 
 // Silence reselect dev-mode diagnostics in tests.
 // These checks are useful during selector authoring, but create noisy output
