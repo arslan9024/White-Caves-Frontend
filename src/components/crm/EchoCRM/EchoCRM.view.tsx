@@ -140,7 +140,7 @@ export const EchoCRMView: React.FC = () => {
       {activeTab === 'channels' && <ChannelsTabPanel channelStats={CHANNEL_STATS} />}
 
       {activeTab === 'docs' && (
-        <AssistantDocsTab assistantId="echo" color="#06B6D4" assistantName="Echo" />
+        <AssistantDocsTab assistantId="echo" assistantColor="#06B6D4" assistantName="Echo" />
       )}
       {activeTab === 'lifecycle' && (
         <AssistantLifecycleTab assistantId="echo" color="#06B6D4" assistantName="Echo" />

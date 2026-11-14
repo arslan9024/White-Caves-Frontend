@@ -136,7 +136,7 @@ export const QuillCRMView: React.FC = () => {
         <AssistantDocsTab assistantId="quill" assistantColor="#64748B" assistantName="Quill" />
       )}
       {activeTab === 'lifecycle' && (
-        <AssistantLifecycleTab assistantId="quill" assistantColor="#64748B" assistantName="Quill" />
+        <AssistantLifecycleTab assistantId="quill" color="#64748B" assistantName="Quill" />
       )}
     </div>
   );

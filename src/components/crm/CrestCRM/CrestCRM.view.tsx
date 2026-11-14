@@ -135,7 +135,7 @@ export const CrestCRMView: React.FC = () => {
       )}
 
       {activeTab === 'docs' && (
-        <AssistantDocsTab assistantId="crest" color="#E31E24" assistantName="Crest" />
+        <AssistantDocsTab assistantId="crest" assistantColor="#E31E24" assistantName="Crest" />
       )}
       {activeTab === 'lifecycle' && (
         <AssistantLifecycleTab assistantId="crest" color="#E31E24" assistantName="Crest" />
