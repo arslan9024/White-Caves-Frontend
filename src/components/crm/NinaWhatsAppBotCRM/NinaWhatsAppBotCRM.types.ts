@@ -47,7 +47,9 @@ export interface NinaLogicState {
 // ─── Nina Logic Actions ───────────────────────────────────────────────────────
 export interface NinaLogicActions {
   setCurrentStage: (stage: RUPStage) => void;
+  setIsConnected: (connected: boolean) => void;
   setSelectedFeatureTab: (tab: FeatureTabKey) => void;
+  setPhoneNumber: (phone: string) => void;
   setPairingMethod: (method: PairingMethod) => void;
   toggleAudioMute: () => void;
   handleCopyPairingCode: () => void;

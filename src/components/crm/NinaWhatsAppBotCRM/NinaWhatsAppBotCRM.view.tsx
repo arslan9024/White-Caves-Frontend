@@ -347,7 +347,7 @@ export const NinaWhatsAppBotCRMView: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
               >
-                <ConversationsTab data={logic.data} />
+                <ConversationsTab />
               </motion.div>
             )}
           </AnimatePresence>
