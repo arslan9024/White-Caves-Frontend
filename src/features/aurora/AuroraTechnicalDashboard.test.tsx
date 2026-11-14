@@ -1,25 +1,29 @@
+import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import AuroraTechnicalDashboard from '../AuroraTechnicalDashboard';
+import { configureStore } from '@reduxjs/toolkit';
+import AuroraTechnicalDashboard from './AuroraTechnicalDashboard';
 import '@testing-library/jest-dom';
 
-const mockStore = configureStore([]);
-
-describe('AuroraTechnicalDashboard', () => {
-  let store;
-
-  beforeEach(() => {
-    store = mockStore({
-      aurora: {
+const createMockStore = () =>
+  configureStore({
+    reducer: {
+      aurora: () => ({
         monitoring: {
           enabled: true,
           vercel: { buildTime: 8.27, bundleSize: 2792.34, deploymentSuccess: 100 },
           mongodb: { queryLatency: 45, connectionPool: 7, writeLatency: 38 },
-          alerts: []
-        }
-      }
-    });
+          alerts: [],
+        },
+      }),
+    },
+  });
+
+describe('AuroraTechnicalDashboard', () => {
+  let store: any;
+
+  beforeEach(() => {
+    store = createMockStore();
   });
 
   test('renders Aurora Technical Dashboard header', () => {
@@ -28,7 +32,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Aurora's Technical Monitoring Dashboard/i)).toBeInTheDocument();
   });
 
@@ -38,7 +42,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/System Health Status/i)).toBeInTheDocument();
   });
 
@@ -48,7 +52,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText('Uptime')).toBeInTheDocument();
     expect(screen.getByText('99.98%')).toBeInTheDocument();
   });
@@ -59,7 +63,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Services Healthy/i)).toBeInTheDocument();
     expect(screen.getByText('10/11')).toBeInTheDocument();
   });
@@ -70,7 +74,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Active Alerts/i)).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
   });
@@ -81,7 +85,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Avg API Latency/i)).toBeInTheDocument();
     expect(screen.getByText('460ms')).toBeInTheDocument();
   });
@@ -92,7 +96,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/API Latency Trend/i)).toBeInTheDocument();
   });
 
@@ -102,7 +106,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Error Rate Trend/i)).toBeInTheDocument();
   });
 
@@ -112,7 +116,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Concurrent Users vs Capacity/i)).toBeInTheDocument();
   });
 
@@ -122,7 +126,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Service Health Distribution/i)).toBeInTheDocument();
   });
 
@@ -132,7 +136,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByRole('button', { name: /Health Overview/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Services/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /API Endpoints/i })).toBeInTheDocument();
@@ -145,10 +149,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     expect(servicesTab).toHaveClass('active');
   });
 
@@ -158,10 +162,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     expect(screen.getByText(/Service Health Details/i)).toBeInTheDocument();
   });
 
@@ -171,10 +175,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const apisTab = screen.getByRole('button', { name: /API Endpoints/i });
     fireEvent.click(apisTab);
-    
+
     expect(apisTab).toHaveClass('active');
   });
 
@@ -184,10 +188,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const apisTab = screen.getByRole('button', { name: /API Endpoints/i });
     fireEvent.click(apisTab);
-    
+
     expect(screen.getByText(/API Endpoint Performance/i)).toBeInTheDocument();
   });
 
@@ -197,10 +201,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const alertsTab = screen.getByRole('button', { name: /Alerts/i });
     fireEvent.click(alertsTab);
-    
+
     expect(alertsTab).toHaveClass('active');
   });
 
@@ -210,7 +214,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const refreshSelect = screen.getByDisplayValue('Refresh: 10s');
     expect(refreshSelect).toBeInTheDocument();
   });
@@ -221,10 +225,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const refreshSelect = screen.getByDisplayValue('Refresh: 10s');
     fireEvent.change(refreshSelect, { target: { value: '5000' } });
-    
+
     expect(refreshSelect.value).toBe('5000');
   });
 
@@ -234,7 +238,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Last updated:/i)).toBeInTheDocument();
   });
 
@@ -244,7 +248,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     // Should display health status indicators
     const healthElements = document.querySelectorAll('[class*="health"]');
     expect(healthElements.length).toBeGreaterThan(0);
@@ -256,7 +260,7 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     expect(screen.getByText(/Aurora's Technical Authority/i)).toBeInTheDocument();
   });
 
@@ -266,10 +270,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     const statusBadges = screen.getAllByText(/✓ Healthy|⚠ Degraded/i);
     expect(statusBadges.length).toBeGreaterThan(0);
   });
@@ -280,10 +284,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     const latencyElements = screen.getAllByText(/ms/);
     expect(latencyElements.length).toBeGreaterThan(0);
   });
@@ -294,10 +298,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     const errorElements = screen.getAllByText(/%/);
     expect(errorElements.length).toBeGreaterThan(0);
   });
@@ -308,10 +312,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const apisTab = screen.getByRole('button', { name: /API Endpoints/i });
     fireEvent.click(apisTab);
-    
+
     // Throughput values like "450", "380", etc
     expect(screen.getByText('450')).toBeInTheDocument();
   });
@@ -322,10 +326,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const servicesTab = screen.getByRole('button', { name: /Services/i });
     fireEvent.click(servicesTab);
-    
+
     const detailsButtons = screen.getAllByRole('button', { name: /Details/i });
     expect(detailsButtons.length).toBeGreaterThan(0);
   });
@@ -336,10 +340,10 @@ describe('AuroraTechnicalDashboard', () => {
         <AuroraTechnicalDashboard />
       </Provider>
     );
-    
+
     const apisTab = screen.getByRole('button', { name: /API Endpoints/i });
     fireEvent.click(apisTab);
-    
+
     const performanceBadges = screen.getAllByText(/✓ Fast|⚠ Slow/i);
     expect(performanceBadges.length).toBeGreaterThan(0);
   });
