@@ -1,4 +1,4 @@
-import React, { FC, lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import React, { FC, lazy, Suspense, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -25,7 +25,6 @@ import StructuredData from '../components/seo/StructuredData';
 import { useRecentlyViewed } from '../components/RecentlyViewed';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
 
-import { QuickSearchModal } from '../components/homepage/QuickSearchModal';
 import '../styles/luxuryDesignSystem.css';
 import './HomePage.css';
 
@@ -91,19 +90,6 @@ const HomePage: FC = () => {
   const isHomepageLoading = useSelector(selectIsHomepageLoading);
   const homepageError = useSelector(selectHomepageError);
   const navigate = useNavigate();
-
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsSearchOpen(prev => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   useEffect(() => {
     ensureHomepageHeroPreload();
@@ -242,7 +228,7 @@ const HomePage: FC = () => {
         <Hero
           marketStats={marketStats}
           isLoading={isHomepageLoading}
-          onSearchClick={() => setIsSearchOpen(true)}
+          onSearchClick={() => navigate('/properties')}
         />
 
         {/* Market Trust Strip */}
@@ -296,9 +282,6 @@ const HomePage: FC = () => {
           <ContactCTA />
           <OnboardingGateway />
         </Suspense>
-
-        {/* Quick Search Launcher Modal Overlay */}
-        <QuickSearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
         <RoleSelectionModal />
       </div>
