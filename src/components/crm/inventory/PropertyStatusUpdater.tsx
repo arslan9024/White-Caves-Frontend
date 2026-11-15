@@ -1,67 +1,37 @@
 import React, { useState } from 'react';
+import { AlertCircle, Home, Building2, TrendingUp, Hammer, CheckCircle } from 'lucide-react';
 import {
-  AlertCircle,
-  Home,
-  Building2,
-  TrendingUp,
-  Hammer,
-  Clock,
-  Save,
-  X,
-  CheckCircle,
-} from 'lucide-react';
+  FURNISHING_OPTIONS,
+  OCCUPANCY_OPTIONS,
+  MARKET_OPTIONS,
+  CONSTRUCTION_OPTIONS,
+  LEGAL_OPTIONS,
+  PropertyStatusFormData,
+  getOptionLabel,
+  getOptionColor,
+} from './PropertyStatusUpdater.data';
+import { PropertyStatusForm } from './PropertyStatusForm';
 import './PropertyStatusUpdater.css';
 
-const PropertyStatusUpdater = ({ property, onUpdate }) => {
+interface PropertyStatusUpdaterProps {
+  property?: any;
+  onUpdate?: (formData: PropertyStatusFormData) => Promise<void> | void;
+}
+
+const PropertyStatusUpdater: React.FC<PropertyStatusUpdaterProps> = ({ property, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PropertyStatusFormData>({
     furnishing: property?.furnishing || 'unfurnished',
     occupancyStatus: property?.occupancyStatus || 'vacant',
     marketAvailability: property?.marketAvailability || 'available',
     constructionStage: property?.constructionStage || 'handed_over',
     legalStatus: property?.legalStatus || 'registered',
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
-  const furnishingOptions = [
-    { value: 'unfurnished', label: 'Unfurnished', color: '#8b5cf6' },
-    { value: 'furnished', label: 'Furnished', color: '#ec4899' },
-    { value: 'semi-furnished', label: 'Semi-Furnished', color: '#f59e0b' },
-  ];
-
-  const occupancyOptions = [
-    { value: 'vacant', label: 'Vacant', color: '#10b981' },
-    { value: 'occupied', label: 'Occupied by Owner', color: '#EF4444' },
-    { value: 'rented', label: 'Rented', color: '#06b6d4' },
-    { value: 'mixed', label: 'Mixed (Owner + Rental)', color: '#8b5cf6' },
-  ];
-
-  const marketOptions = [
-    { value: 'available', label: 'Available', color: '#10b981' },
-    { value: 'for-rent', label: 'For Rent', color: '#EF4444' },
-    { value: 'for-sale', label: 'For Sale', color: '#dc2626' },
-    { value: 'hold', label: 'On Hold', color: '#f59e0b' },
-    { value: 'not-available', label: 'Not Available', color: '#6b7280' },
-  ];
-
-  const constructionOptions = [
-    { value: 'under_construction', label: 'Under Construction', color: '#f59e0b' },
-    { value: 'handed_over', label: 'Handed Over', color: '#10b981' },
-    { value: 'renovation', label: 'Renovation', color: '#06b6d4' },
-    { value: 'maintenance', label: 'Maintenance', color: '#8b5cf6' },
-  ];
-
-  const legalOptions = [
-    { value: 'registered', label: 'Registered', color: '#10b981' },
-    { value: 'pending', label: 'Registration Pending', color: '#f59e0b' },
-    { value: 'disputed', label: 'Under Dispute', color: '#dc2626' },
-    { value: 'freehold', label: 'Freehold', color: '#EF4444' },
-    { value: 'leasehold', label: 'Leasehold', color: '#8b5cf6' },
-  ];
-
-  const handleStatusChange = (field, value) => {
-    setFormData((prev) => ({
+  const handleStatusChange = (field: keyof PropertyStatusFormData, value: string) => {
+    setFormData(prev => ({
       ...prev,
       [field]: value,
     }));
@@ -74,7 +44,7 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
         await onUpdate(formData);
       }
       setIsEditing(false);
-    } catch (error) {
+    } catch (error: any) {
       setErrors({ submit: error.message || 'Failed to update status' });
     } finally {
       setLoading(false);
@@ -91,14 +61,6 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
     });
     setErrors({});
     setIsEditing(false);
-  };
-
-  const getOptionLabel = (value, options) => {
-    return options.find((opt) => opt.value === value)?.label || value;
-  };
-
-  const getOptionColor = (value, options) => {
-    return options.find((opt) => opt.value === value)?.color || '#6b7280';
   };
 
   if (!property) {
@@ -131,155 +93,13 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
       )}
 
       {isEditing ? (
-        <div className="form-section">
-          {/* Furnishing */}
-          <div className="status-group">
-            <label>
-              <Home size={16} /> Furnishing
-            </label>
-            <div className="button-group">
-              {furnishingOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`status-button ${
-                    formData.furnishing === option.value ? 'selected' : ''
-                  }`}
-                  onClick={() => handleStatusChange('furnishing', option.value)}
-                  style={
-                    formData.furnishing === option.value
-                      ? { backgroundColor: option.color, color: 'white' }
-                      : {}
-                  }
-                >
-                  <span>{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Occupancy Status */}
-          <div className="status-group">
-            <label>
-              <Building2 size={16} /> Occupancy Status
-            </label>
-            <div className="button-group">
-              {occupancyOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`status-button ${
-                    formData.occupancyStatus === option.value ? 'selected' : ''
-                  }`}
-                  onClick={() => handleStatusChange('occupancyStatus', option.value)}
-                  style={
-                    formData.occupancyStatus === option.value
-                      ? { backgroundColor: option.color, color: 'white' }
-                      : {}
-                  }
-                >
-                  <span>{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Market Availability */}
-          <div className="status-group">
-            <label>
-              <TrendingUp size={16} /> Market Availability
-            </label>
-            <div className="button-group">
-              {marketOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`status-button ${
-                    formData.marketAvailability === option.value ? 'selected' : ''
-                  }`}
-                  onClick={() => handleStatusChange('marketAvailability', option.value)}
-                  style={
-                    formData.marketAvailability === option.value
-                      ? { backgroundColor: option.color, color: 'white' }
-                      : {}
-                  }
-                >
-                  <span>{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Construction Stage */}
-          <div className="status-group">
-            <label>
-              <Hammer size={16} /> Construction Stage
-            </label>
-            <div className="button-group">
-              {constructionOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`status-button ${
-                    formData.constructionStage === option.value ? 'selected' : ''
-                  }`}
-                  onClick={() => handleStatusChange('constructionStage', option.value)}
-                  style={
-                    formData.constructionStage === option.value
-                      ? { backgroundColor: option.color, color: 'white' }
-                      : {}
-                  }
-                >
-                  <span>{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Legal Status */}
-          <div className="status-group">
-            <label>
-              <CheckCircle size={16} /> Legal Status
-            </label>
-            <div className="button-group">
-              {legalOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  className={`status-button ${
-                    formData.legalStatus === option.value ? 'selected' : ''
-                  }`}
-                  onClick={() => handleStatusChange('legalStatus', option.value)}
-                  style={
-                    formData.legalStatus === option.value
-                      ? { backgroundColor: option.color, color: 'white' }
-                      : {}
-                  }
-                >
-                  <span>{option.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="form-actions">
-            <button
-              className="btn btn-primary"
-              onClick={handleSave}
-              disabled={loading}
-            >
-              {loading ? 'Updating...' : <><Save size={16} /> Update Status</>}
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={handleCancel}
-              disabled={loading}
-            >
-              <X size={16} /> Cancel
-            </button>
-          </div>
-        </div>
+        <PropertyStatusForm
+          formData={formData}
+          onChange={handleStatusChange}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          loading={loading}
+        />
       ) : (
         <div className="info-section">
           {/* Furnishing Status */}
@@ -290,10 +110,10 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
             <span
               className="status-badge"
               style={{
-                backgroundColor: getOptionColor(property.furnishing, furnishingOptions),
+                backgroundColor: getOptionColor(property.furnishing, FURNISHING_OPTIONS),
               }}
             >
-              {getOptionLabel(property.furnishing, furnishingOptions)}
+              {getOptionLabel(property.furnishing, FURNISHING_OPTIONS)}
             </span>
           </div>
 
@@ -305,10 +125,10 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
             <span
               className="status-badge"
               style={{
-                backgroundColor: getOptionColor(property.occupancyStatus, occupancyOptions),
+                backgroundColor: getOptionColor(property.occupancyStatus, OCCUPANCY_OPTIONS),
               }}
             >
-              {getOptionLabel(property.occupancyStatus, occupancyOptions)}
+              {getOptionLabel(property.occupancyStatus, OCCUPANCY_OPTIONS)}
             </span>
           </div>
 
@@ -320,13 +140,10 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
             <span
               className="status-badge"
               style={{
-                backgroundColor: getOptionColor(
-                  property.marketAvailability,
-                  marketOptions
-                ),
+                backgroundColor: getOptionColor(property.marketAvailability, MARKET_OPTIONS),
               }}
             >
-              {getOptionLabel(property.marketAvailability, marketOptions)}
+              {getOptionLabel(property.marketAvailability, MARKET_OPTIONS)}
             </span>
           </div>
 
@@ -338,13 +155,10 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
             <span
               className="status-badge"
               style={{
-                backgroundColor: getOptionColor(
-                  property.constructionStage,
-                  constructionOptions
-                ),
+                backgroundColor: getOptionColor(property.constructionStage, CONSTRUCTION_OPTIONS),
               }}
             >
-              {getOptionLabel(property.constructionStage, constructionOptions)}
+              {getOptionLabel(property.constructionStage, CONSTRUCTION_OPTIONS)}
             </span>
           </div>
 
@@ -356,10 +170,10 @@ const PropertyStatusUpdater = ({ property, onUpdate }) => {
             <span
               className="status-badge"
               style={{
-                backgroundColor: getOptionColor(property.legalStatus, legalOptions),
+                backgroundColor: getOptionColor(property.legalStatus, LEGAL_OPTIONS),
               }}
             >
-              {getOptionLabel(property.legalStatus, legalOptions)}
+              {getOptionLabel(property.legalStatus, LEGAL_OPTIONS)}
             </span>
           </div>
         </div>
