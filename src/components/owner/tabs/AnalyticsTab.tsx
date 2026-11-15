@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { authFetch } from '../../../utils/authFetch';
 import type { AnalyticsData, AnalyticsTabProps } from './types';
+import { fetchAnalyticsDashboardData } from './analyticsDataService';
 import './TabStyles.css';
 
 const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
@@ -13,153 +13,9 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
       return;
     }
 
-    interface MarketOverviewResponse {
-      success?: boolean;
-      data?: {
-        avgRentalYield?: number;
-        avgDaysOnMarket?: number;
-        totalTransactionValue30d?: number;
-        topAreas?: Array<{ area: string; count: number; avgPrice: number }>;
-      };
-    }
-
-    interface ExecutiveResponse {
-      success?: boolean;
-      data?: {
-        leads?: { byStatus?: Record<string, number> };
-        properties?: { byType?: Record<string, number> };
-      };
-    }
-
-    interface CommissionsResponse {
-      success?: boolean;
-      data?: Array<{ agentName?: string; commissionAmount?: number }>;
-    }
-
-    Promise.allSettled([
-      authFetch('/api/analytics/overview').then(
-        (r: Response) => r.json() as Promise<MarketOverviewResponse>
-      ),
-      authFetch('/api/dashboard/executive').then(
-        (r: Response) => r.json() as Promise<ExecutiveResponse>
-      ),
-      authFetch('/api/commissions?pageSize=100').then(
-        (r: Response) => r.json() as Promise<CommissionsResponse>
-      ),
-    ])
-      .then(([overviewResult, executiveResult, commissionsResult]) => {
-        const overview =
-          overviewResult.status === 'fulfilled' ? overviewResult.value.data : undefined;
-        const executive =
-          executiveResult.status === 'fulfilled' ? executiveResult.value.data : undefined;
-        const commissions =
-          commissionsResult.status === 'fulfilled' ? (commissionsResult.value.data ?? []) : [];
-
-        const totalLeads = Object.values(executive?.leads?.byStatus ?? {}).reduce(
-          (sum, count) => sum + count,
-          0
-        );
-        const wonLeads =
-          (executive?.leads?.byStatus?.won ?? 0) + (executive?.leads?.byStatus?.closed ?? 0);
-        const conversionRate = totalLeads > 0 ? ((wonLeads / totalLeads) * 100).toFixed(1) : '0.0';
-        const totalCommissionValue = commissions.reduce(
-          (sum, c) => sum + (c.commissionAmount ?? 0),
-          0
-        );
-        const averageDealSize =
-          commissions.length > 0 ? totalCommissionValue / commissions.length : 0;
-
-        const metrics: NonNullable<AnalyticsData['metrics']> = [
-          {
-            label: 'Conversion Rate',
-            value: `${conversionRate}%`,
-            change: `${wonLeads} won / ${totalLeads} leads`,
-            trend: 'up',
-          },
-          {
-            label: 'Average Deal Size',
-            value: `AED ${(averageDealSize / 1000000).toFixed(1)}M`,
-            change: `${commissions.length} deals`,
-            trend: 'up',
-          },
-          {
-            label: 'Avg Days on Market',
-            value: `${overview?.avgDaysOnMarket ?? 0} days`,
-            change: 'Last 30 days',
-            trend: 'up',
-          },
-          {
-            label: 'Average Rental Yield',
-            value: `${(overview?.avgRentalYield ?? 0).toFixed(1)}%`,
-            change: 'Market overview',
-            trend: 'up',
-          },
-          {
-            label: '30d Market Volume',
-            value: `AED ${((overview?.totalTransactionValue30d ?? 0) / 1000000000).toFixed(1)}B`,
-            change: 'Recent transactions',
-            trend: 'up',
-          },
-        ];
-
-        const areas = overview?.topAreas ?? [];
-        const totalAreaRevenue = areas.reduce((sum, area) => sum + area.avgPrice * area.count, 0);
-        const revenueByEmirate: NonNullable<AnalyticsData['revenueByEmirate']> = areas
-          .slice(0, 5)
-          .map(area => {
-            const revenue = area.avgPrice * area.count;
-            const percentage =
-              totalAreaRevenue > 0 ? Math.round((revenue / totalAreaRevenue) * 100) : 0;
-            return {
-              emirate: area.area,
-              revenue,
-              percentage,
-            };
-          });
-
-        const byType = executive?.properties?.byType ?? {};
-        const totalPropertyCount = Object.values(byType).reduce((sum, count) => sum + count, 0);
-        const propertyPerformance: NonNullable<AnalyticsData['propertyPerformance']> =
-          Object.entries(byType)
-            .map(([type, count]) => {
-              const inquiries =
-                totalPropertyCount > 0
-                  ? Math.max(1, Math.round((totalLeads * count) / totalPropertyCount))
-                  : count;
-              const deals = Math.min(
-                inquiries,
-                Math.round((parseFloat(conversionRate) / 100) * inquiries)
-              );
-              return {
-                type: type.charAt(0).toUpperCase() + type.slice(1),
-                views: count,
-                inquiries,
-                deals,
-              };
-            })
-            .sort((a, b) => b.views - a.views)
-            .slice(0, 5);
-
-        const agentMap = new Map<string, { deals: number; revenue: number }>();
-        commissions.forEach(c => {
-          const name = (c.agentName ?? 'Unknown').trim() || 'Unknown';
-          const current = agentMap.get(name) ?? { deals: 0, revenue: 0 };
-          current.deals += 1;
-          current.revenue += c.commissionAmount ?? 0;
-          agentMap.set(name, current);
-        });
-
-        const topAgents: NonNullable<AnalyticsData['topAgents']> = Array.from(agentMap.entries())
-          .map(([name, stats]) => ({ name, deals: stats.deals, revenue: stats.revenue }))
-          .sort((a, b) => b.revenue - a.revenue)
-          .slice(0, 5);
-
-        setLiveData({
-          metrics,
-          revenueByEmirate,
-          propertyPerformance,
-          topAgents,
-        });
+    fetchAnalyticsDashboardData()
+      .then(res => {
+        setLiveData(res);
       })
       .catch(() => {
         // Graceful fallback to default visuals below if live endpoints fail.
@@ -200,19 +56,21 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
     { emirate: 'RAK', revenue: 500000, percentage: 2 },
   ];
 
-  const propertyPerformance = effectiveData?.propertyPerformance ?? [
-    { type: 'Apartments', views: 12500, inquiries: 890, deals: 45 },
-    { type: 'Villas', views: 8200, inquiries: 620, deals: 28 },
-    { type: 'Townhouses', views: 4500, inquiries: 320, deals: 18 },
-    { type: 'Commercial', views: 2800, inquiries: 180, deals: 8 },
-    { type: 'Land', views: 1200, inquiries: 85, deals: 4 },
-  ];
-
   const topAgents = effectiveData?.topAgents ?? [
     { name: 'Ahmed Ali', deals: 12, revenue: 3200000 },
     { name: 'Sara Khan', deals: 22, revenue: 1800000 },
     { name: 'Mohammed Hassan', deals: 8, revenue: 2100000 },
-    { name: 'Fatima Ahmed', deals: 28, revenue: 1500000 },
+    { name: 'Fatima Al-Sayed', deals: 15, revenue: 2900000 },
+    { name: 'John Smith', deals: 5, revenue: 1100000 },
+  ];
+
+  const propertyPerformance = effectiveData?.propertyPerformance ?? [
+    { type: 'Apartments', views: 12500, inquiries: 890, deals: 45 },
+    { type: 'Villas', views: 8200, inquiries: 620, deals: 28 },
+    { type: 'Townhouses', views: 4500, inquiries: 320, deals: 18 },
+    { type: 'Penthouses', views: 2800, inquiries: 150, deals: 8 },
+    { type: 'Commercial', views: 3100, inquiries: 190, deals: 12 },
+    { type: 'Land', views: 1200, inquiries: 85, deals: 4 },
   ];
 
   return (
@@ -223,7 +81,7 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
           {['week', 'month', 'quarter', 'year'].map(range => (
             <button
               key={range}
-              className={`range-btn ${timeRange === range ? 'active' : ''}`}
+              className={`range-btn filter-btn ${timeRange === range ? 'active' : ''}`}
               onClick={() => setTimeRange(range)}
             >
               {range.charAt(0).toUpperCase() + range.slice(1)}
@@ -237,9 +95,7 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
           <div key={metric.label} className="metric-card">
             <div className="metric-header">
               <span className="metric-label">{metric.label}</span>
-              <span className={`metric-change ${metric.trend}`}>
-                {metric.trend === 'up' ? '↑' : '↓'} {metric.change}
-              </span>
+              <span className={`metric-trend ${metric.trend}`}>{metric.change}</span>
             </div>
             <div className="metric-value">{metric.value}</div>
           </div>
@@ -269,13 +125,13 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
           <h4>Top Performing Agents</h4>
           <div className="top-agents-list">
             {topAgents.map((agent, index) => (
-              <div key={agent.name || `agent-${index}`} className="agent-row">
-                <div className="agent-rank">#{index + 1}</div>
-                <div className="agent-info">
+              <div key={agent.name} className="agent-item">
+                <span className="agent-rank">{index + 1}</span>
+                <div className="agent-details">
                   <span className="agent-name">{agent.name}</span>
                   <span className="agent-deals">{agent.deals} deals</span>
                 </div>
-                <div className="agent-revenue">AED {(agent.revenue / 1000000).toFixed(1)}M</div>
+                <span className="agent-revenue">AED {(agent.revenue / 1000000).toFixed(1)}M</span>
               </div>
             ))}
           </div>
