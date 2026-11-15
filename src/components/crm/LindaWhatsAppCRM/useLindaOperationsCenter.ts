@@ -17,6 +17,7 @@ import {
   INITIAL_LINDA_PLAYBOOKS,
 } from './LindaWhatsAppCRM.data';
 import { createLindaActionHandlers } from './lindaActionHandlers';
+import { useLindaSocketSync } from './lindaSocketSync';
 
 /**
  * useLindaOperationsCenter — Master hook for Linda WhatsApp Bot visual operations
@@ -256,6 +257,12 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
       cancelled = true;
     };
   }, [isConnected]);
+
+  useLindaSocketSync({
+    setConversations,
+    setCampaigns,
+    setToastNotification,
+  });
 
   const handleToggleLindaRuntime = useCallback(async (): Promise<void> => {
     if (loadingAction !== null) return;
