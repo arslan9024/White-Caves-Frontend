@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import './CreateTenancyAgreement.css';
 
 export default function CreateTenancyAgreement() {
-  const currentUser = useSelector(state => state.user.currentUser);
-  const [properties, setProperties] = useState([]);
-  const [tenants, setTenants] = useState([]);
+  const currentUser = useSelector((state: any) => state.user.currentUser);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [tenants, setTenants] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     propertyId: '',
@@ -20,7 +20,7 @@ export default function CreateTenancyAgreement() {
     propertyAddress: '',
     terms: '',
   });
-  const [statusMsg, setStatusMsg] = useState(null);
+  const [statusMsg, setStatusMsg] = useState<{ type: string; text: string } | null>(null);
 
   useEffect(() => {
     if (
@@ -37,7 +37,7 @@ export default function CreateTenancyAgreement() {
       const response = await fetch('/api/properties');
       const data = await response.json();
       const managedProperties = data.filter(
-        p =>
+        (p: any) =>
           p.propertyManagerId === currentUser._id ||
           (p.propertyManagerId && p.propertyManagerId._id === currentUser._id)
       );
@@ -49,12 +49,12 @@ export default function CreateTenancyAgreement() {
     try {
       const response = await fetch('/api/users');
       const data = await response.json();
-      const tenantUsers = data.filter(u => u.roles.includes('TENANT'));
+      const tenantUsers = data.filter((u: any) => u.roles.includes('TENANT'));
       setTenants(tenantUsers);
     } catch (error) {}
   };
 
-  const handlePropertyChange = e => {
+  const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const propertyId = e.target.value;
     const selectedProperty = properties.find(p => p._id === propertyId);
 
@@ -71,7 +71,7 @@ export default function CreateTenancyAgreement() {
     }
   };
 
-  const handleTenantChange = e => {
+  const handleTenantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const tenantId = e.target.value;
     const selectedTenant = tenants.find(t => t._id === tenantId);
 
@@ -86,12 +86,12 @@ export default function CreateTenancyAgreement() {
     }
   };
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
