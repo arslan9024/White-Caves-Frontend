@@ -1,0 +1,65 @@
+import type { CSSProperties } from 'react';
+
+export const workspaceSwitcherStyles: Record<string, CSSProperties> = {
+  container: {
+    position: 'relative',
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+  trigger: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.45rem 0.85rem',
+    borderRadius: '0.5rem',
+    border: '1px solid rgba(239, 68, 68, 0.45)',
+    backgroundColor: '#0F172A',
+    color: '#FFFFFF',
+    fontSize: '0.85rem',
+    fontWeight: 600,
+    cursor: 'pointer',
+  },
+  badge: {
+    width: '0.5rem',
+    height: '0.5rem',
+    borderRadius: '9999px',
+    backgroundColor: '#EF4444',
+  },
+  menu: {
+    position: 'absolute',
+    top: 'calc(100% + 0.4rem)',
+    insetInlineEnd: 0,
+    minWidth: '240px',
+    borderRadius: '0.75rem',
+    border: '1px solid rgba(148, 163, 184, 0.25)',
+    backgroundColor: '#1E293B',
+    boxShadow: '0 12px 28px rgba(0, 0, 0, 0.35)',
+    padding: '0.4rem',
+    zIndex: 60,
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    textAlign: 'start',
+    padding: '0.55rem 0.75rem',
+    borderRadius: '0.5rem',
+    border: 'none',
+    backgroundColor: 'transparent',
+    color: '#FFFFFF',
+    cursor: 'pointer',
+  },
+  itemActive: {
+    backgroundColor: 'rgba(239, 68, 68, 0.16)',
+    borderLeft: '3px solid #EF4444',
+  },
+  itemTitle: {
+    fontSize: '0.85rem',
+    fontWeight: 600,
+    color: '#FFFFFF',
+  },
+  itemSubdomain: {
+    fontSize: '0.72rem',
+    color: '#94A3B8',
+  },
+};

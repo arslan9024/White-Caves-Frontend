@@ -11,6 +11,8 @@ import socketService from '../../../services/socketService';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatListPane } from './LindaChatListPane';
 import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
+import { LindaQuickReplyBar } from './LindaQuickReplyBar';
+import { LindaLeadContextPane } from './LindaLeadContextPane';
 
 export interface LindaLiveWhatsAppWebProps {
   conversations: LindaConversationItem[];
@@ -50,14 +52,24 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     if (!cleanPhone) return;
 
     let cancelled = false;
-    fetch(`/api/linda/conversations/${encodeURIComponent(cleanPhone)}/history?limit=50`)
+    const jid = selectedConv.id.includes('@') ? selectedConv.id : `${cleanPhone}@s.whatsapp.net`;
+    fetch(`/api/whatsapp/chats/${encodeURIComponent(jid)}/messages`)
       .then(res => (res.ok ? res.json() : null))
       .then(json => {
         if (cancelled || !json?.success || !Array.isArray(json?.data?.messages)) return;
         if (json.data.messages.length > 0) {
+          const mapped: ChatMessage[] = json.data.messages.map((m: Record<string, unknown>) => ({
+            id: String(m.id || `msg-${Date.now()}`),
+            sender: m.fromMe ? 'bot' : 'client',
+            text: String(m.body || ''),
+            timestamp: String(m.timestamp || 'Just now'),
+            status: m.fromMe
+              ? (String(m.status || 'sent').toLowerCase() as ChatMessage['status'])
+              : undefined,
+          }));
           setChatMessages(prev => ({
             ...prev,
-            [selectedConv.id]: json.data.messages,
+            [selectedConv.id]: mapped,
           }));
         }
       })
@@ -72,7 +84,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   // Real-time Socket.IO streaming for inbound/outbound messages & read receipts
   useEffect(() => {
-    const unsubMsg = socketService.onLindaMessage?.((payload) => {
+    const unsubMsg = socketService.onLindaMessage?.(payload => {
       const p = payload as unknown as Record<string, unknown>;
       const phoneDigits = String(p.phone || p.from || '').replace(/\D/g, '');
       const convId = String(p.leadId || '') || (phoneDigits ? `LINDA_${phoneDigits}` : '');
@@ -99,7 +111,14 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       });
     });
 
-    const rawSocket = (socketService as unknown as { socket?: { on: (ev: string, cb: (p: Record<string, unknown>) => void) => void; off: (ev: string, cb: (p: Record<string, unknown>) => void) => void } }).socket;
+    const rawSocket = (
+      socketService as unknown as {
+        socket?: {
+          on: (ev: string, cb: (p: Record<string, unknown>) => void) => void;
+          off: (ev: string, cb: (p: Record<string, unknown>) => void) => void;
+        };
+      }
+    ).socket;
     const handleReceipt = (payload: Record<string, unknown>) => {
       const msgId = String(payload.messageId || '');
       const rawStatus = String(payload.status || '').toLowerCase();
@@ -116,10 +135,12 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     };
 
     rawSocket?.on('linda:receipt', handleReceipt);
+    rawSocket?.on('messages.update', handleReceipt);
 
     return () => {
       unsubMsg?.();
       rawSocket?.off('linda:receipt', handleReceipt);
+      rawSocket?.off('messages.update', handleReceipt);
     };
   }, []);
 
@@ -137,7 +158,8 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   const filteredConversations = useMemo(() => {
     return conversations.filter(c => {
       const ext = c as LindaConversationItem & { accountPhone?: string; isGroup?: boolean };
-      if (selectedAccount !== 'ALL' && ext.accountPhone && ext.accountPhone !== selectedAccount) return false;
+      if (selectedAccount !== 'ALL' && ext.accountPhone && ext.accountPhone !== selectedAccount)
+        return false;
       if (chatTypeFilter === 'groups' && !ext.isGroup) return false;
       if (chatTypeFilter === 'direct' && ext.isGroup) return false;
       if (!searchFilter.trim()) return true;
@@ -204,7 +226,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       data-testid="linda-live-whatsapp-web"
       style={{
         display: 'grid',
-        gridTemplateColumns: '360px 1fr',
+        gridTemplateColumns: '340px 1fr 260px',
         height: '620px',
         borderRadius: 14,
         overflow: 'hidden',
@@ -227,15 +249,20 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
         onSelectChatType={setChatTypeFilter}
       />
 
-      <LindaChatThreadPane
-        isDark={isDark}
-        selectedConv={selectedConv}
-        activeMessages={activeMessages}
-        inputMessage={inputMessage}
-        onInputChange={setInputMessage}
-        onSend={handleSend}
-        onAiDraft={handleAiDraft}
-      />
+      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%' }}>
+        <LindaQuickReplyBar onSelectTemplate={setInputMessage} />
+        <LindaChatThreadPane
+          isDark={isDark}
+          selectedConv={selectedConv}
+          activeMessages={activeMessages}
+          inputMessage={inputMessage}
+          onInputChange={setInputMessage}
+          onSend={handleSend}
+          onAiDraft={handleAiDraft}
+        />
+      </div>
+
+      <LindaLeadContextPane conversation={selectedConv} />
     </div>
   );
 };

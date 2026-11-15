@@ -12,6 +12,12 @@ const OffPlanView = lazy(() => import('./views/OffPlanView'));
 const DocumentsView = lazy(() => import('./views/DocumentsView'));
 const SettingsView = lazy(() => import('./views/SettingsView'));
 const FeatureStatusView = lazy(() => import('./views/FeatureStatusView'));
+const MdPortalView = lazy(() => import('./portals/md'));
+const EmployeePortalView = lazy(() => import('./portals/employee'));
+const LandlordPortalView = lazy(() => import('./portals/landlord'));
+const TenantPortalView = lazy(() => import('./portals/tenant'));
+const BuyerPortalView = lazy(() => import('./portals/buyer'));
+const SellerPortalView = lazy(() => import('./portals/seller'));
 
 export const AppRouter: FC = () => {
   return (
@@ -71,6 +77,54 @@ export const AppRouter: FC = () => {
             element={
               <Suspense fallback={<PageLoader />}>
                 <FeatureStatusView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="md/command-center"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <MdPortalView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="employee/workspace"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <EmployeePortalView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="landlord/portfolio"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <LandlordPortalView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="tenant/lease"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <TenantPortalView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="buyer/acquisitions"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <BuyerPortalView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="seller/listings"
+            element={
+              <Suspense fallback={<PageLoader />}>
+                <SellerPortalView />
               </Suspense>
             }
           />

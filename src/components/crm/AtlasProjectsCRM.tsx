@@ -27,7 +27,13 @@ import AssistantDocsTab from './shared/AssistantDocsTab';
 import { EscrowMilestoneTracker } from './EscrowMilestoneTracker';
 import './AssistantDashboard.css';
 
-export const AtlasProjectsCRM = ({ moduleId, role, user }) => {
+interface AtlasProjectsCRMProps {
+  moduleId?: string;
+  role?: string;
+  user?: Record<string, unknown>;
+}
+
+export const AtlasProjectsCRM: React.FC<AtlasProjectsCRMProps> = ({ moduleId, role, user }) => {
   const [activeTab, setActiveTab] = useState('tracker');
 
   useEffect(() => {
