@@ -6,9 +6,16 @@
  */
 
 import React, { FC, useEffect, useRef, useState, DragEvent } from 'react';
-import styled from 'styled-components';
-import { UploadCloud, CheckCircle2, AlertCircle, FileText, Sparkles, Trash2, Save, Eye } from 'lucide-react';
+import { UploadCloud, CheckCircle2, Sparkles, Trash2, Save } from 'lucide-react';
 import { HenryPerspectiveEditor } from './HenryPerspectiveEditor';
+import {
+  UploaderContainer,
+  HeaderSection,
+  DropzoneBox,
+  ExtractedSummaryBox,
+  ActionToolbar,
+  ActionBtn,
+} from './HenrySharedDocumentUploader.styles';
 
 export type SupportedDocType = 'auto' | 'emirates_id' | 'passport' | 'title_deed' | 'contract';
 
@@ -33,159 +40,6 @@ export interface HenrySharedDocumentUploaderProps {
   accentColor?: string;
 }
 
-const UploaderContainer = styled.div<{ $accentColor: string }>`
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 1.25rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const HeaderSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5rem;
-
-  .title-group {
-    h4 {
-      margin: 0 0 2px 0;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #0F172A;
-    }
-    p {
-      margin: 0;
-      font-size: 0.78rem;
-      color: #64748B;
-    }
-  }
-`;
-
-const DropzoneBox = styled.div<{ $isDragOver: boolean; $accentColor: string }>`
-  border: 2px dashed ${props => (props.$isDragOver ? props.$accentColor : '#CBD5E1')};
-  background: ${props => (props.$isDragOver ? 'rgba(239, 68, 68, 0.05)' : '#F8FAFC')};
-  border-radius: 10px;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-color: ${props => props.$accentColor};
-    background: #F1F5F9;
-  }
-
-  .dropzone-icon {
-    margin-bottom: 0.5rem;
-  }
-  .dropzone-text {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #1E293B;
-    margin-bottom: 2px;
-  }
-  .dropzone-sub {
-    font-size: 0.75rem;
-    color: #94A3B8;
-  }
-`;
-
-const ExtractedSummaryBox = styled.div<{ $accentColor: string }>`
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  padding: 1rem;
-
-  .summary-header {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: ${props => props.$accentColor};
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .fields-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .field-item {
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 6px;
-    padding: 6px 10px;
-
-    .field-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #64748B;
-      text-transform: uppercase;
-    }
-    .field-value {
-      font-size: 0.85rem;
-      font-weight: 800;
-      color: #0F172A;
-      margin-top: 1px;
-      word-break: break-word;
-    }
-  }
-`;
-
-const ActionToolbar = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #F1F5F9;
-`;
-
-const ActionBtn = styled.button<{ $variant?: 'primary' | 'secondary' | 'danger'; $accentColor?: string }>`
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  ${props => {
-    if (props.$variant === 'primary') {
-      return `
-        background: ${props.$accentColor || '#EF4444'};
-        color: #FFFFFF;
-        border: none;
-        box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
-        &:hover { opacity: 0.9; }
-      `;
-    }
-    if (props.$variant === 'danger') {
-      return `
-        background: #FEE2E2;
-        color: #DC2626;
-        border: 1px solid #FCA5A5;
-        &:hover { background: #FECACA; }
-      `;
-    }
-    return `
-      background: #FFFFFF;
-      color: #475569;
-      border: 1px solid #CBD5E1;
-      &:hover { background: #F8FAFC; border-color: #94A3B8; }
-    `;
-  }}
-`;
-
 export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> = ({
   docType = 'auto',
   title,
@@ -209,16 +63,23 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
   const [uploadError, setUploadError] = useState('');
   const [manualCorrection, setManualCorrection] = useState(false);
   const correctionGeneration = useRef(0);
-  const [pendingCorrection, setPendingCorrection] = useState<{ file: File; generation: number } | null>(null);
+  const [pendingCorrection, setPendingCorrection] = useState<{
+    file: File;
+    generation: number;
+  } | null>(null);
+
   const clearCorrection = () => {
     correctionGeneration.current++;
     setPendingCorrection(null);
   };
+
   useEffect(() => {
     correctionGeneration.current++;
     setPendingCorrection(null);
     setUploadError('');
-    return () => { correctionGeneration.current++; };
+    return () => {
+      correctionGeneration.current++;
+    };
   }, [resetSignal]);
 
   const uploadFile = async (file: File, original?: File) => {
@@ -227,15 +88,23 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
     setUploadError('');
     clearCorrection();
     const generation = correctionGeneration.current;
-    if (!['application/pdf', 'image/png', 'image/jpeg'].includes(file.type) || !file.size || file.size > maxFileSizeMb * 1024 * 1024) {
-      setUploadError(`Use a PNG, JPEG or PDF under ${maxFileSizeMb} MB. Rescan with all edges visible.`);
+    if (
+      !['application/pdf', 'image/png', 'image/jpeg'].includes(file.type) ||
+      !file.size ||
+      file.size > maxFileSizeMb * 1024 * 1024
+    ) {
+      setUploadError(
+        `Use a PNG, JPEG or PDF under ${maxFileSizeMb} MB. Rescan with all edges visible.`
+      );
       return;
     }
     if (manualCorrection && !original && file.type !== 'application/pdf') {
       setPendingCorrection({ file, generation });
       return;
     }
-    try { await onFileUpload(file, original); } catch {
+    try {
+      await onFileUpload(file, original);
+    } catch {
       if (generation === correctionGeneration.current)
         setUploadError('Upload failed. Please rescan or retry.');
     }
@@ -278,26 +147,54 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
         style={{ display: 'none' }}
         aria-label="Upload document"
       />
-      <input type="file" ref={cameraInputRef} accept="image/png,image/jpeg" capture="environment"
-        onChange={handleFileInputChange} style={{ display: 'none' }} aria-label="Camera document capture" />
-      <ActionBtn type="button" disabled={isProcessing} onClick={() => cameraInputRef.current?.click()}>
+      <input
+        type="file"
+        ref={cameraInputRef}
+        accept="image/png,image/jpeg"
+        capture="environment"
+        onChange={handleFileInputChange}
+        style={{ display: 'none' }}
+        aria-label="Camera document capture"
+      />
+      <ActionBtn
+        type="button"
+        disabled={isProcessing}
+        onClick={() => cameraInputRef.current?.click()}
+      >
         Capture with camera
       </ActionBtn>
       {uploadError && <p role="alert">{uploadError}</p>}
-      {(docType === 'emirates_id' || docType === 'title_deed') && <>
-        <label><input type="checkbox" checked={manualCorrection} disabled={isProcessing}
-          onChange={event => { setManualCorrection(event.target.checked); clearCorrection(); }} />
-          Manual four-corner correction before scanning</label>
-        <p>PDF corner correction is unsupported; PDFs scan without correction.</p>
-        {pendingCorrection && <HenryPerspectiveEditor key={pendingCorrection.generation}
-          file={pendingCorrection.file} onConfirm={(corrected, original) => {
-            if (pendingCorrection.generation === correctionGeneration.current)
-              void uploadFile(corrected, original);
-          }}
-          onCancel={() => {
-            if (pendingCorrection.generation === correctionGeneration.current) clearCorrection();
-          }} />}
-      </>}
+      {(docType === 'emirates_id' || docType === 'title_deed') && (
+        <>
+          <label>
+            <input
+              type="checkbox"
+              checked={manualCorrection}
+              disabled={isProcessing}
+              onChange={event => {
+                setManualCorrection(event.target.checked);
+                clearCorrection();
+              }}
+            />
+            Manual four-corner correction before scanning
+          </label>
+          <p>PDF corner correction is unsupported; PDFs scan without correction.</p>
+          {pendingCorrection && (
+            <HenryPerspectiveEditor
+              key={pendingCorrection.generation}
+              file={pendingCorrection.file}
+              onConfirm={(corrected, original) => {
+                if (pendingCorrection.generation === correctionGeneration.current)
+                  void uploadFile(corrected, original);
+              }}
+              onCancel={() => {
+                if (pendingCorrection.generation === correctionGeneration.current)
+                  clearCorrection();
+              }}
+            />
+          )}
+        </>
+      )}
 
       <HeaderSection>
         <div className="title-group">
@@ -306,7 +203,15 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
         </div>
 
         {onSampleLoad && (
-          <ActionBtn type="button" onClick={() => { clearCorrection(); onSampleLoad(); }} $variant="secondary" disabled={isProcessing}>
+          <ActionBtn
+            type="button"
+            onClick={() => {
+              clearCorrection();
+              onSampleLoad();
+            }}
+            $variant="secondary"
+            disabled={isProcessing}
+          >
             <Sparkles size={13} color={accentColor} /> Load Demo Benchmark
           </ActionBtn>
         )}
@@ -322,7 +227,9 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
         role="button"
         tabIndex={0}
         aria-label="Browse document"
-        onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') fileInputRef.current?.click(); }}
+        onKeyDown={event => {
+          if (event.key === 'Enter' || event.key === ' ') fileInputRef.current?.click();
+        }}
       >
         <div className="dropzone-icon">
           <UploadCloud size={32} color={accentColor} style={{ margin: '0 auto' }} />
@@ -345,7 +252,12 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
             {extractedSummary.fields.map((field, idx) => (
               <div key={idx} className="field-item">
                 <div className="field-label">{field.label}</div>
-                <div className="field-value" style={{ color: field.isHighlight ? accentColor : 'var(--color-0f172a, #0F172A)' }}>
+                <div
+                  className="field-value"
+                  style={{
+                    color: field.isHighlight ? accentColor : 'var(--color-0f172a, #0F172A)',
+                  }}
+                >
                   {field.value !== undefined && field.value !== '' ? field.value : '—'}
                 </div>
               </div>
@@ -358,12 +270,25 @@ export const HenrySharedDocumentUploader: FC<HenrySharedDocumentUploaderProps> =
       {(onSave || onDiscard) && (
         <ActionToolbar>
           {onDiscard && (
-            <ActionBtn type="button" onClick={() => { clearCorrection(); onDiscard(); }} $variant="danger">
+            <ActionBtn
+              type="button"
+              onClick={() => {
+                clearCorrection();
+                onDiscard();
+              }}
+              $variant="danger"
+            >
               <Trash2 size={13} /> Discard
             </ActionBtn>
           )}
           {onSave && (
-            <ActionBtn type="button" onClick={onSave} disabled={saveDisabled || isProcessing} $variant="primary" $accentColor={accentColor}>
+            <ActionBtn
+              type="button"
+              onClick={onSave}
+              disabled={saveDisabled || isProcessing}
+              $variant="primary"
+              $accentColor={accentColor}
+            >
               <Save size={13} /> Save to Vault
             </ActionBtn>
           )}
