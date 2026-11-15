@@ -1,49 +1,21 @@
 import React, { useState, useCallback } from 'react';
-import {
-  Play,
-  Pause,
-  SkipForward,
-  RotateCcw,
-  ChevronDown,
-  ChevronRight,
-  Clock,
-  CheckCircle,
-  Users,
-  Zap,
-  FileText,
-  Bot,
-  ArrowRight,
-} from 'lucide-react';
-import {
-  COMPANY_SERVICES,
-  getAllServices,
-  getServicesByCategory,
-} from '../../data/services/companyServices';
-import FlowchartViewer from './FlowchartViewer';
+import { ChevronDown, ChevronRight, Zap, FileText } from 'lucide-react';
+import { COMPANY_SERVICES, getServicesByCategory } from '../../data/services/companyServices';
+import { SERVICE_CATEGORIES, DemoLogEntry } from './ServiceDemoMode.types';
+import { ServiceMainPanel } from './ServiceMainPanel';
 import './ServiceDemoMode.css';
-
-const SERVICE_CATEGORIES = [
-  { id: 'sales', label: 'Property Sales', icon: '🏠', color: '#8B5CF6' },
-  { id: 'leasing', label: 'Leasing', icon: '🔑', color: '#14B8A6' },
-  { id: 'financial', label: 'Financial', icon: '💰', color: '#F59E0B' },
-  { id: 'legal', label: 'Legal & Compliance', icon: '⚖️', color: '#6366F1' },
-  { id: 'operations', label: 'Operations', icon: '⚙️', color: '#10B981' },
-  { id: 'marketing', label: 'Marketing', icon: '📣', color: '#EC4899' },
-  { id: 'technology', label: 'Technology', icon: '💻', color: '#06B6D4' },
-];
 
 const ServiceDemoMode = () => {
   const [selectedCategory, setSelectedCategory] = useState('sales');
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState<any>(null);
   const [currentStageIndex, setCurrentStageIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [demoLog, setDemoLog] = useState([]);
+  const [demoLog, setDemoLog] = useState<DemoLogEntry[]>([]);
   const [expandedCategories, setExpandedCategories] = useState(['sales']);
 
-  const services = getServicesByCategory(selectedCategory) || [];
   const currentStage = selectedService?.stages?.[currentStageIndex] || null;
 
-  const addLogEntry = useCallback((message, type = 'info') => {
+  const addLogEntry = useCallback((message: string, type: any = 'info') => {
     setDemoLog(prev =>
       [
         ...prev,
@@ -57,7 +29,7 @@ const ServiceDemoMode = () => {
     );
   }, []);
 
-  const handleSelectService = service => {
+  const handleSelectService = (service: any) => {
     setSelectedService(service);
     setCurrentStageIndex(-1);
     setIsPlaying(false);
@@ -65,7 +37,7 @@ const ServiceDemoMode = () => {
     addLogEntry(`Selected service: ${service.name}`, 'system');
     addLogEntry(`This workflow has ${service.stages?.length || 0} stages`, 'info');
     addLogEntry(
-      `Assigned AI assistants: ${service.assistants?.map(a => a.charAt(0).toUpperCase() + a.slice(1)).join(', ')}`,
+      `Assigned AI assistants: ${service.assistants?.map((a: string) => a.charAt(0).toUpperCase() + a.slice(1)).join(', ')}`,
       'info'
     );
   };
@@ -80,7 +52,7 @@ const ServiceDemoMode = () => {
       addLogEntry(`Stage ${nextIndex + 1}: ${nextStage.name}`, 'stage');
 
       if (nextStage.actions) {
-        nextStage.actions.forEach((action, idx) => {
+        nextStage.actions.forEach((action: string, idx: number) => {
           setTimeout(
             () => {
               addLogEntry(`  • ${action}`, 'action');
@@ -115,12 +87,12 @@ const ServiceDemoMode = () => {
     }
   };
 
-  const handleStageClick = (stage, index) => {
+  const handleStageClick = (stage: any, index: number) => {
     setCurrentStageIndex(index);
     addLogEntry(`Jumped to stage: ${stage.name}`, 'system');
   };
 
-  const toggleCategory = categoryId => {
+  const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev =>
       prev.includes(categoryId) ? prev.filter(c => c !== categoryId) : [...prev, categoryId]
     );
@@ -128,7 +100,7 @@ const ServiceDemoMode = () => {
   };
 
   React.useEffect(() => {
-    let interval;
+    let interval: any;
     if (isPlaying && selectedService && currentStageIndex < selectedService.stages.length - 1) {
       interval = setInterval(() => {
         handleNextStage();
@@ -155,7 +127,7 @@ const ServiceDemoMode = () => {
           <h3>Select Service</h3>
           <div className="category-list">
             {SERVICE_CATEGORIES.map(category => {
-              const categoryServices = COMPANY_SERVICES[category.id] || [];
+              const categoryServices = (COMPANY_SERVICES as any)[category.id] || [];
               const isExpanded = expandedCategories.includes(category.id);
 
               return (
@@ -163,7 +135,7 @@ const ServiceDemoMode = () => {
                   <button
                     className={`category-header ${selectedCategory === category.id ? 'active' : ''}`}
                     onClick={() => toggleCategory(category.id)}
-                    style={{ '--category-color': category.color }}
+                    style={{ '--category-color': category.color } as any}
                   >
                     <span className="category-icon">{category.icon}</span>
                     <span className="category-name">{category.label}</span>
@@ -173,7 +145,7 @@ const ServiceDemoMode = () => {
 
                   {isExpanded && (
                     <div className="service-list">
-                      {categoryServices.map(service => (
+                      {categoryServices.map((service: any) => (
                         <button
                           key={service.id}
                           className={`service-item ${selectedService?.id === service.id ? 'selected' : ''}`}
@@ -197,150 +169,16 @@ const ServiceDemoMode = () => {
         </aside>
 
         <main className="demo-main">
-          {selectedService ? (
-            <>
-              <div className="service-header">
-                <div className="service-identity">
-                  <span className="service-icon-large">{selectedService.icon}</span>
-                  <div>
-                    <h3>{selectedService.name}</h3>
-                    <p>{selectedService.description}</p>
-                  </div>
-                </div>
-                <div className="service-stats">
-                  <div className="stat">
-                    <Clock size={16} />
-                    <span>{selectedService.avgDuration}</span>
-                  </div>
-                  <div className="stat">
-                    <FileText size={16} />
-                    <span>{selectedService.stages?.length || 0} stages</span>
-                  </div>
-                  <div className="stat">
-                    <Bot size={16} />
-                    <span>{selectedService.assistants?.length || 0} AI assistants</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="demo-controls">
-                <button
-                  className={`control-btn play ${isPlaying ? 'playing' : ''}`}
-                  onClick={handlePlayPause}
-                  disabled={
-                    currentStageIndex >= (selectedService.stages?.length || 0) - 1 && !isPlaying
-                  }
-                >
-                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                  {isPlaying ? 'Pause' : currentStageIndex === -1 ? 'Start Demo' : 'Resume'}
-                </button>
-                <button
-                  className="control-btn"
-                  onClick={handleNextStage}
-                  disabled={currentStageIndex >= (selectedService.stages?.length || 0) - 1}
-                >
-                  <SkipForward size={18} />
-                  Next Stage
-                </button>
-                <button className="control-btn" onClick={handleReset}>
-                  <RotateCcw size={18} />
-                  Reset
-                </button>
-
-                <div className="progress-indicator">
-                  <span>
-                    Progress: {currentStageIndex + 1 > 0 ? currentStageIndex + 1 : 0} /{' '}
-                    {selectedService.stages?.length || 0}
-                  </span>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{
-                        width: `${((currentStageIndex + 1) / (selectedService.stages?.length || 1)) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="workflow-visualization">
-                <h4>Workflow Stages</h4>
-                <FlowchartViewer
-                  stages={selectedService.stages || []}
-                  currentStage={currentStage?.id}
-                  onStageClick={handleStageClick}
-                  interactive={true}
-                  showActions={true}
-                  orientation="horizontal"
-                />
-              </div>
-
-              {currentStage && (
-                <div className="current-stage-detail">
-                  <h4>
-                    <span className="stage-icon">{currentStage.icon}</span>
-                    Current Stage: {currentStage.name}
-                  </h4>
-                  <div className="stage-details-grid">
-                    <div className="detail-card">
-                      <label>Duration</label>
-                      <span>{currentStage.duration}</span>
-                    </div>
-                    <div className="detail-card actions">
-                      <label>Actions</label>
-                      <ul>
-                        {currentStage.actions?.map((action, idx) => (
-                          <li key={idx}>
-                            <CheckCircle size={14} />
-                            {action}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="assigned-assistants">
-                <h4>
-                  <Users size={16} /> Assigned AI Assistants
-                </h4>
-                <div className="assistant-chips">
-                  {selectedService.assistants?.map(assistant => (
-                    <span key={assistant} className="assistant-chip">
-                      <Bot size={14} />
-                      {assistant.charAt(0).toUpperCase() + assistant.slice(1)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="demo-placeholder">
-              <div className="placeholder-icon">
-                <Zap size={64} strokeWidth={1} />
-              </div>
-              <h3>Select a Service to Begin</h3>
-              <p>
-                Choose a service from the sidebar to view its complete workflow and run an
-                interactive demonstration.
-              </p>
-              <div className="service-quick-stats">
-                <div className="quick-stat">
-                  <span className="stat-value">35</span>
-                  <span className="stat-label">Services</span>
-                </div>
-                <div className="quick-stat">
-                  <span className="stat-value">7</span>
-                  <span className="stat-label">Categories</span>
-                </div>
-                <div className="quick-stat">
-                  <span className="stat-value">150+</span>
-                  <span className="stat-label">Workflow Stages</span>
-                </div>
-              </div>
-            </div>
-          )}
+          <ServiceMainPanel
+            selectedService={selectedService}
+            currentStageIndex={currentStageIndex}
+            currentStage={currentStage}
+            isPlaying={isPlaying}
+            onPlayPause={handlePlayPause}
+            onNextStage={handleNextStage}
+            onReset={handleReset}
+            onStageClick={handleStageClick}
+          />
         </main>
 
         <aside className="demo-log">
