@@ -26,8 +26,6 @@ import { WhatsAppChatbotPage } from './App.pages';
 import { WhatsAppAnalyticsPage } from './App.pages';
 import { WhatsAppSettingsPage } from './App.pages';
 import { GovernanceDashboard } from './App.pages';
-import { PropertiesPage } from './App.pages';
-import { PropertyDetailPage } from './App.pages';
 import { AIIntelligencePage } from './App.pages';
 import { UAEPassSuccessPage } from './App.pages';
 import { SignContractPage } from './App.pages';
@@ -205,8 +203,6 @@ export const ownerUtilityRoutes: Array<{
 ];
 export const publicRoutes: Array<{ path: string; section: string; page: ReactNode }> = [
   { path: '/', section: 'Home', page: <HomePage /> },
-  { path: '/properties', section: 'Properties', page: <PropertiesPage /> },
-  { path: '/property/:id', section: 'PropertyDetail', page: <PropertyDetailPage /> },
   { path: '/goals', section: 'Goals Gallery', page: <GoalsGalleryPage /> },
   {
     path: '/ai-intelligence',

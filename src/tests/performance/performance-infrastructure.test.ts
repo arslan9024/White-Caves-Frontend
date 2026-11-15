@@ -59,10 +59,10 @@ describe('Route Code Splitting', () => {
     expect(appSource).toContain('Suspense');
   });
 
-  it('lazy-loads public pages', () => {
+  it('lazy-loads public and intelligence pages', () => {
     expect(appSource).toMatch(/HomePage\s*=\s*lazy/);
-    expect(appSource).toMatch(/PropertiesPage\s*=\s*lazy/);
-    expect(appSource).toMatch(/PropertyDetailPage\s*=\s*lazy/);
+    expect(appSource).toMatch(/MarketIntelligencePage\s*=\s*lazy/);
+    expect(appSource).toMatch(/ValuationPage\s*=\s*lazy/);
   });
 
   it('lazy-loads auth pages', () => {
@@ -131,14 +131,6 @@ describe('Font Loading (index.html)', () => {
  * ──────────────────────────────────────────────────────────────── */
 
 describe('Image CLS Prevention', () => {
-  it('PropertyDetailPage similar cards have width/height', () => {
-    const source = readSource('src/pages/PropertyDetailPage.tsx');
-    // Find all <img tags and check at least one has width
-    const imgTags = source.match(/<img[\s\S]*?\/>/g) || [];
-    const withDimensions = imgTags.filter(t => t.includes('width=') && t.includes('height='));
-    expect(withDimensions.length).toBeGreaterThanOrEqual(1);
-  });
-
   it('PerformanceTab avatars have width/height', () => {
     const source = readSource('src/components/crm/NancyHRCRM_NEW/tabs/PerformanceTab.tsx');
     const imgTags = source.match(/<img[\s\S]*?\/>/g) || [];

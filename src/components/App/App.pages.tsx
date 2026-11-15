@@ -54,8 +54,6 @@ export const WhatsAppSettingsPage = lazy(() => import('../../pages/owner/WhatsAp
 export const GovernanceDashboard = lazy(
   () => import('../../pages/crm/GovernanceDashboard/GovernanceDashboard')
 );
-export const PropertiesPage = lazy(() => import('../../pages/PropertiesPage'));
-export const PropertyDetailPage = lazy(() => import('../../pages/PropertyDetailPage'));
 export const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 export const AIIntelligencePage = lazy(() => import('../../pages/AIIntelligencePage'));
 export const PWAInstallPrompt = lazy(() =>

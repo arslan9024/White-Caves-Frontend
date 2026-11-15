@@ -79,10 +79,6 @@ vi.mock('./pages/HomePage.tsx', () => ({
   default: () => <div data-testid="home-page">Home Page</div>,
 }));
 
-vi.mock('./pages/PropertiesPage', () => ({
-  default: () => <div data-testid="properties-page">Properties Page</div>,
-}));
-
 vi.mock('./pages/NotFoundPage', () => ({
   default: () => <div data-testid="not-found-page">404 Not Found</div>,
 }));
@@ -363,15 +359,6 @@ describe('App', () => {
     });
     await waitFor(() => {
       expect(screen.getByTestId('home-page')).toBeInTheDocument();
-    });
-  });
-
-  it('renders PropertiesPage at /properties', async () => {
-    await act(async () => {
-      renderAtRoute('/properties');
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('properties-page')).toBeInTheDocument();
     });
   });
 
