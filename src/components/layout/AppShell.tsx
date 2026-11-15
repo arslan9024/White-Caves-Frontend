@@ -12,7 +12,11 @@ import {
 import { selectActiveRole } from '../../store/slices/accessControlSlice';
 import './AppShell.css';
 
-const AppShell = ({ children }) => {
+interface AppShellProps {
+  children?: React.ReactNode;
+}
+
+const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const dispatch = useDispatch();
   const sidebar = useSelector(selectSidebar);
   const layout = useSelector(selectLayout);
