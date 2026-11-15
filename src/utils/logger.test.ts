@@ -50,7 +50,9 @@ describe('logger utility', () => {
       const { createLogger } = await import('./logger');
       const log = createLogger('WarnTest');
       log.warn('something happened', { detail: 1 });
-      expect(consoleSpy.warn).toHaveBeenCalledWith('[WarnTest]', 'something happened', { detail: 1 });
+      expect(consoleSpy.warn).toHaveBeenCalledWith('[WarnTest]', 'something happened', {
+        detail: 1,
+      });
     });
   });
 
@@ -103,6 +105,40 @@ describe('logger utility', () => {
       const log = createLogger('Multi');
       log.error('err', 1, 'two', { three: 3 });
       expect(consoleSpy.error).toHaveBeenCalledWith('[Multi]', 'err', 1, 'two', { three: 3 });
+    });
+  });
+
+  describe('child(), time(), group()', () => {
+    it('child() scopes context with parent:child', async () => {
+      const { createLogger } = await import('./logger');
+      const child = createLogger('Parent').child('Child');
+      child.warn('nested');
+      expect(consoleSpy.warn).toHaveBeenCalledWith('[Parent:Child]', 'nested');
+    });
+
+    it('time() returns duration in ms and logs debug', async () => {
+      const { createLogger } = await import('./logger');
+      const log = createLogger('Perf');
+      const end = log.time('op');
+      const ms = end();
+      expect(typeof ms).toBe('number');
+      expect(ms).toBeGreaterThanOrEqual(0);
+      expect(consoleSpy.debug).toHaveBeenCalledWith(
+        '[Perf]',
+        expect.stringMatching(/^op \(\d+(\.\d+)?ms\)$/)
+      );
+    });
+
+    it('group() executes callback inside console.groupCollapsed/groupEnd', async () => {
+      const groupCollapsed = vi.spyOn(console, 'groupCollapsed').mockImplementation(() => {});
+      const groupEnd = vi.spyOn(console, 'groupEnd').mockImplementation(() => {});
+      const { createLogger } = await import('./logger');
+      const log = createLogger('Grp');
+      const fn = vi.fn();
+      log.group('Batch', fn);
+      expect(groupCollapsed).toHaveBeenCalledWith('[Grp] Batch');
+      expect(fn).toHaveBeenCalledTimes(1);
+      expect(groupEnd).toHaveBeenCalledTimes(1);
     });
   });
 });
