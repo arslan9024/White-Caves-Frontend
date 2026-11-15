@@ -24,6 +24,10 @@ vi.mock('../utils/logger', () => ({
   createLogger: () => ({ error: vi.fn(), info: vi.fn(), warn: vi.fn(), debug: vi.fn() }),
 }));
 
+vi.mock('../utils/authFetch', () => ({
+  authFetch: (...args: any[]) => (globalThis.fetch as any)(...args),
+}));
+
 // Import after mocks
 import {
   isWebAuthnSupported,
@@ -278,7 +282,7 @@ describe('webAuthnService', () => {
       );
 
       await expect(registerBiometric('user1', 'user@test.com', 'Test User')).rejects.toThrow(
-        'Server error (500) — please try again later'
+        /Registration options request failed/
       );
 
       vi.unstubAllGlobals();
@@ -370,7 +374,7 @@ describe('webAuthnService', () => {
       );
 
       await expect(authenticateWithBiometric('user1')).rejects.toThrow(
-        'Access denied — insufficient permissions'
+        /Authentication options request failed/
       );
 
       vi.unstubAllGlobals();
