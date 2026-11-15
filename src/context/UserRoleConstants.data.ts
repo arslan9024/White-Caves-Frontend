@@ -85,6 +85,41 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   guest: 'Unverified Guest Visitor (Tier 3)',
 };
 
+export const ROLE_DESCRIPTIONS: Record<UserRole, string> = {
+  managing_director:
+    'Full sovereign governance across all corporate departments, financial ledgers, and executive decisions.',
+  director:
+    'Strategic governance of corporate departments, P&L allocations, and departmental approvals.',
+  manager:
+    'Division tactical management, deal verification, commission authorization, and operational workflows.',
+  supervisor: 'Supervises operational squads, lead distribution SLAs, and squad execution metrics.',
+  team_leader:
+    'Direct squad leadership, day-to-day task dispatch, and mentoring frontline employees.',
+  employee:
+    'Frontline operations, client consultations, listing creation, and daily task execution.',
+
+  landlord:
+    'Property asset owner portal. Net rental yields, tenancy agreements, and maintenance approvals.',
+  tenant:
+    'Active tenant portal. Ejari documents, rental payment schedule, and maintenance requests.',
+  buyer: 'Verified buyer portal. Luxury catalog viewing, Form B agreements, and private viewings.',
+  seller:
+    'Mandated seller portal. Listing traction, marketing campaign stats, and Form A digital agreements.',
+  external_agent:
+    'External RERA co-broker portal. Co-brokerage deal submissions, Form I agreements, and commission claims.',
+  external_company:
+    'Corporate alliance portal. Master developer allocations, escrow bank updates, and legal conveyancing.',
+
+  admin: 'Platform infrastructure administration, access provisioning, and system configuration.',
+  agent: 'Frontline real estate broker operations.',
+  intern: 'Sales and leasing internship program.',
+  offplan_buyer: 'Off-plan project investment allocations and milestone tracking.',
+  developer: 'Developer inventory submission, launch allocations, and master floor plans.',
+  conveyancer: 'Title deed conveyancing, DLD trustee coordination, and NOC processing.',
+  contractor: 'Snagging, maintenance, and technical handover works.',
+  guest: 'Public exploration portal without internal authorization.',
+};
+
 export const ROLE_BADGE_COLORS: Record<UserRole, string> = {
   // Track A: Internal Staff
   managing_director: 'bg-red-500/20 text-red-400 border-red-500/40 shadow-red-950/40',
@@ -180,9 +215,18 @@ export const ROLE_DEFAULT_PERMISSIONS: Record<UserRole, string[]> = {
   buyer: ['can_view_properties', 'can_schedule_viewings', 'can_sign_form_b', 'can_use_calculators'],
   seller: ['can_view_marketing_metrics', 'can_sign_form_a', 'can_view_offers'],
   external_agent: ['can_view_co_broker_listings', 'can_submit_offers', 'can_sign_form_i'],
-  external_company: ['can_manage_bulk_allocations', 'can_issue_developer_noc', 'can_view_escrow_records'],
+  external_company: [
+    'can_manage_bulk_allocations',
+    'can_issue_developer_noc',
+    'can_view_escrow_records',
+  ],
 
-  agent: ['can_read_assigned_leads', 'can_create_contracts', 'can_view_properties', 'can_use_calculators'],
+  agent: [
+    'can_read_assigned_leads',
+    'can_create_contracts',
+    'can_view_properties',
+    'can_use_calculators',
+  ],
   intern: ['can_read_assigned_leads', 'can_view_properties', 'can_use_calculators'],
   offplan_buyer: ['can_track_construction', 'can_view_payment_schedule', 'can_view_properties'],
   developer: ['can_manage_inventory', 'can_issue_developer_noc', 'can_view_rebate_claims'],
