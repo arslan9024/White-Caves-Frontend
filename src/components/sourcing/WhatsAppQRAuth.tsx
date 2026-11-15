@@ -1,19 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { QrCode, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import './WhatsAppQRAuth.css';
+import { WhatsAppManualModal } from './WhatsAppManualModal';
+
+export interface WhatsAppQRAuthProps {
+  onSuccess?: (data: { authenticated: boolean; clientId: string; timestamp: Date }) => void;
+  onClose?: () => void;
+  isModal?: boolean;
+}
+
+interface ClientInfo {
+  id: string;
+  phone: string;
+  status: string;
+  linkedAt: string;
+}
 
 /**
  * WhatsApp QR Code Authentication Component
  * Allows users to link their WhatsApp account by scanning QR code
  * Part of Linda WhatsApp sourcing system
  */
-export default function WhatsAppQRAuth({ onSuccess, onClose, isModal = false }) {
-  const [qrCode, setQrCode] = useState(null);
-  const [status, setStatus] = useState('initializing'); // initializing, waiting, scanning, authenticated, error
-  const [statusMessage, setStatusMessage] = useState('Initializing WhatsApp connection...');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [connectionAttempts, setConnectionAttempts] = useState(0);
-  const [clientInfo, setClientInfo] = useState(null);
+export default function WhatsAppQRAuth({
+  onSuccess,
+  onClose,
+  isModal = false,
+}: WhatsAppQRAuthProps) {
+  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>('initializing'); // initializing, waiting, scanning, authenticated, error
+  const [statusMessage, setStatusMessage] = useState<string>('Initializing WhatsApp connection...');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [connectionAttempts, setConnectionAttempts] = useState<number>(0);
+  const [clientInfo, setClientInfo] = useState<ClientInfo | null>(null);
+  const [showManualModal, setShowManualModal] = useState<boolean>(false);
+  const [manualCodeInput, setManualCodeInput] = useState<string>('');
 
   useEffect(() => {
     initializeWhatsAppConnection();
@@ -23,25 +43,20 @@ export default function WhatsAppQRAuth({ onSuccess, onClose, isModal = false }) 
     try {
       setStatus('initializing');
       setStatusMessage('Initializing WhatsApp Web connection...');
-
-      // In a real implementation, this would call the WhatsAppWebIntegration service
-      // For now, showing the flow structure
       await simulateQRGeneration();
-    } catch (error) {
+    } catch (error: any) {
       setStatus('error');
-      setErrorMessage(error.message);
+      setErrorMessage(error?.message || 'Failed to initialize connection');
       setStatusMessage('Failed to initialize connection');
     }
   };
 
   const simulateQRGeneration = () => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       setStatus('waiting');
       setStatusMessage('Waiting for QR code generation...');
 
-      // Simulate QR code generation delay
       setTimeout(() => {
-        // In production, this would be a real QR code from whatsapp-web.js
         const mockQRCode = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=WhatsAppSession_${Date.now()}`;
         setQrCode(mockQRCode);
         setStatus('scanning');
@@ -58,9 +73,6 @@ export default function WhatsAppQRAuth({ onSuccess, onClose, isModal = false }) 
     initializeWhatsAppConnection();
   };
 
-  const [showManualModal, setShowManualModal] = useState(false);
-  const [manualCodeInput, setManualCodeInput] = useState('');
-
   const handleManualEntry = () => {
     setShowManualModal(true);
   };
@@ -73,7 +85,7 @@ export default function WhatsAppQRAuth({ onSuccess, onClose, isModal = false }) 
     }
   };
 
-  const simulateAuthentication = code => {
+  const simulateAuthentication = (code: string) => {
     setStatus('authenticated');
     setStatusMessage('Device authenticated successfully!');
     setClientInfo({
@@ -264,107 +276,12 @@ export default function WhatsAppQRAuth({ onSuccess, onClose, isModal = false }) 
 
         {/* In-app Manual Session Entry Modal */}
         {showManualModal && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="manual-session-modal-title"
-            style={{
-              position: 'fixed',
-              inset: 0,
-              backgroundColor: 'rgba(15, 23, 42, 0.75)',
-              backdropFilter: 'blur(4px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 99999,
-              padding: '1rem',
-            }}
-          >
-            <div
-              style={{
-                width: '100%',
-                maxWidth: 420,
-                backgroundColor: '#0F172A',
-                borderRadius: 16,
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-              }}
-            >
-              <h3
-                id="manual-session-modal-title"
-                style={{ margin: 0, color: '#FFFFFF', fontSize: '1.125rem' }}
-              >
-                Enter WhatsApp Session Code
-              </h3>
-              <p style={{ margin: 0, color: '#94A3B8', fontSize: '0.85rem' }}>
-                Paste the verification code generated from your paired WhatsApp Web device.
-              </p>
-              <input
-                type="text"
-                data-testid="manual-session-code-input"
-                placeholder="e.g. WA-SESSION-97150..."
-                value={manualCodeInput}
-                onChange={e => setManualCodeInput(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '10px 12px',
-                  background: '#1E293B',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: 8,
-                  color: '#FFFFFF',
-                  fontSize: '0.9rem',
-                  boxSizing: 'border-box',
-                }}
-              />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  gap: '0.75rem',
-                  marginTop: '0.5rem',
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => setShowManualModal(false)}
-                  style={{
-                    padding: '8px 14px',
-                    borderRadius: 8,
-                    background: 'transparent',
-                    border: '1px solid #475569',
-                    color: '#94A3B8',
-                    cursor: 'pointer',
-                    fontSize: '0.85rem',
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  data-testid="confirm-manual-code-btn"
-                  onClick={handleConfirmManualCode}
-                  disabled={!manualCodeInput.trim()}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: 8,
-                    background: '#EF4444',
-                    border: 'none',
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    cursor: manualCodeInput.trim() ? 'pointer' : 'not-allowed',
-                    opacity: manualCodeInput.trim() ? 1 : 0.6,
-                    fontSize: '0.85rem',
-                  }}
-                >
-                  Verify Code
-                </button>
-              </div>
-            </div>
-          </div>
+          <WhatsAppManualModal
+            manualCodeInput={manualCodeInput}
+            setManualCodeInput={setManualCodeInput}
+            onClose={() => setShowManualModal(false)}
+            onConfirm={handleConfirmManualCode}
+          />
         )}
       </div>
     </div>
