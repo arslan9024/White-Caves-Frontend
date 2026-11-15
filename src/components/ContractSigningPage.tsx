@@ -11,10 +11,10 @@ import './ContractSigningPage.css';
  */
 const ContractSigningPage = () => {
   const { contractId, token } = useParams();
-  const [contract, setContract] = useState(null);
-  const [tokenData, setTokenData] = useState(null);
+  const [contract, setContract] = useState<any>(null);
+  const [tokenData, setTokenData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [signatureComplete, setSignatureComplete] = useState(false);
 
   // Verify token on component mount
@@ -34,7 +34,7 @@ const ContractSigningPage = () => {
         setContract(data.data.contract);
         setError(null);
       } catch (err) {
-        setError(err.message || 'An error occurred');
+        setError(err instanceof Error ? err.message : 'An error occurred');
         setTokenData(null);
       } finally {
         setIsLoading(false);

@@ -6,7 +6,19 @@ import './ContractPreview.css';
  * Displays contract details before signing
  * Shows contract content, terms, and signature requirements
  */
-const ContractPreview = ({
+interface ContractPreviewProps {
+  contract: any;
+  onSign: () => void;
+  onEdit: () => void;
+  onCancel: () => void;
+  onDownload: () => void;
+  loading?: boolean;
+  error?: string | null;
+}
+
+type ContractSectionKey = 'terms' | 'property' | 'parties' | 'schedule';
+
+const ContractPreview: React.FC<ContractPreviewProps> = ({
   contract,
   onSign,
   onEdit,
@@ -15,14 +27,14 @@ const ContractPreview = ({
   loading = false,
   error = null,
 }) => {
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<Record<ContractSectionKey, boolean>>({
     terms: false,
     property: true,
     parties: true,
     schedule: false,
   });
 
-  const toggleSection = section => {
+  const toggleSection = (section: ContractSectionKey) => {
     setExpandedSections(prev => ({
       ...prev,
       [section]: !prev[section],
