@@ -5,39 +5,14 @@ import {
   ChevronDown, ChevronUp, HelpCircle
 } from 'lucide-react';
 import './WebDataHarvester.css';
+import { HarvestResult, HarvestError, HarvestConfig, HarvestStatus } from './WebDataHarvester.types';
+import { HarvestConfigPanel } from './HarvestConfigPanel';
 
-interface HarvestResult {
-  url: string;
-  data: {
-    name: string;
-    phone: string;
-    email: string;
-    unit: string;
-  };
-}
-
-interface HarvestError {
-  url: string;
-  error: string;
-}
-
-interface HarvestConfig {
-  startPage: number;
-  endPage: number;
-  delay: number;
-  selectors: {
-    name: string;
-    phone: string;
-    email: string;
-    unit: string;
-  };
-}
+export * from './WebDataHarvester.types';
 
 interface WebDataHarvesterProps {
   onDataHarvested?: (data: HarvestResult[]) => void;
 }
-
-type HarvestStatus = 'idle' | 'fetching' | 'paused' | 'completed' | 'stopped' | 'error';
 
 const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) => {
   const [baseUrl, setBaseUrl] = useState('');
@@ -78,70 +53,82 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
     await new Promise(resolve => setTimeout(resolve, delay));
     
     const success = Math.random() > 0.2;
-    if (success) {
-      return {
-        url,
-        data: {
-          name: `Owner ${Math.floor(Math.random() * 1000)}`,
-          phone: `+971 5${Math.floor(Math.random() * 10)} ${Math.floor(Math.random() * 900) + 100} ${Math.floor(Math.random() * 9000) + 1000}`,
-          email: `owner${Math.floor(Math.random() * 1000)}@email.com`,
-          unit: `Villa #${Math.floor(Math.random() * 500)}`
-        }
-      };
+    if (!success) {
+      throw new Error(`Failed to fetch ${url}: Connection timeout`);
     }
-    throw new Error(`Failed to fetch ${url}`);
-  };
 
-  const updateStatus = (newStatus: HarvestStatus) => {
-    setStatus(newStatus);
-    statusRef.current = newStatus;
-  };
+    const mockNames = ['Mohammed Al-Rashid', 'Fatima Al-Sayed', 'Ahmed Khan', 'Sarah Johnson'];
+    const mockPhones = ['+971 50 123 4567', '+971 55 987 6543', '+971 52 456 7890'];
+    const mockUnits = ['Unit 401', 'Villa 12', 'Penthouse A', 'Suite 205'];
 
-  const handleStart = async () => {
-    if (!baseUrl.trim()) return;
-    
-    updateStatus('fetching');
-    setResults([]);
-    setErrors([]);
-    
-    const urls = parseUrlTemplate(baseUrl);
-    setProgress({ current: 0, total: urls.length });
-    
-    for (let i = 0; i < urls.length; i++) {
-      while (statusRef.current === 'paused') {
-        await new Promise(resolve => setTimeout(resolve, 100));
+    return {
+      url,
+      data: {
+        name: mockNames[Math.floor(Math.random() * mockNames.length)],
+        phone: mockPhones[Math.floor(Math.random() * mockPhones.length)],
+        email: `contact_${Date.now()}@example.com`,
+        unit: mockUnits[Math.floor(Math.random() * mockUnits.length)]
       }
-      
+    };
+  };
+
+  const harvestData = useCallback(async (urls: string[]) => {
+    setStatus('fetching');
+    statusRef.current = 'fetching';
+    setProgress({ current: 0, total: urls.length });
+
+    for (let i = 0; i < urls.length; i++) {
       if (statusRef.current === 'stopped') break;
-      
+      while (statusRef.current === 'paused') {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+      setProgress({ current: i + 1, total: urls.length });
+
       try {
         const result = await simulateFetch(urls[i], config.delay);
         setResults(prev => [...prev, result]);
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : String(err || 'Unknown error');
-        setErrors(prev => [...prev, { url: urls[i], error: errorMsg }]);
+      } catch (err: unknown) {
+        setErrors(prev => [...prev, {
+          url: urls[i],
+          error: err instanceof Error ? err.message : 'Unknown error'
+        }]);
       }
-      
-      setProgress({ current: i + 1, total: urls.length });
     }
-    
-    updateStatus('completed');
+
+    if (statusRef.current !== 'stopped') {
+      setStatus('completed');
+      statusRef.current = 'completed';
+    }
+  }, [config.delay]);
+
+  const handleStart = () => {
+    const urls = parseUrlTemplate(baseUrl);
+    setResults([]);
+    setErrors([]);
+    harvestData(urls);
   };
 
   const handlePause = () => {
-    const newStatus = statusRef.current === 'paused' ? 'fetching' : 'paused';
-    updateStatus(newStatus);
+    if (status === 'fetching') {
+      setStatus('paused');
+      statusRef.current = 'paused';
+    } else if (status === 'paused') {
+      setStatus('fetching');
+      statusRef.current = 'fetching';
+    }
   };
 
   const handleStop = () => {
-    updateStatus('stopped');
+    setStatus('stopped');
+    statusRef.current = 'stopped';
   };
 
   const handleClear = () => {
     setResults([]);
     setErrors([]);
-    setProgress({ current: 0, total: 0 });
-    updateStatus('idle');
+    setStatus('idle');
+    statusRef.current = 'idle';
   };
 
   const exportResults = () => {
@@ -209,38 +196,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
         </button>
       </div>
 
-      {showConfig && (
-        <div className="config-panel">
-          <div className="config-row">
-            <label>Delay between requests (ms)</label>
-            <input
-              type="number"
-              value={config.delay}
-              onChange={(e) => setConfig(prev => ({ ...prev, delay: parseInt(e.target.value) || 1000 }))}
-              min={500}
-              max={5000}
-            />
-          </div>
-          <div className="config-selectors">
-            <h5>CSS Selectors</h5>
-            <div className="selector-grid">
-              {Object.entries(config.selectors).map(([key, value]) => (
-                <div key={key} className="selector-input">
-                  <label>{key}</label>
-                  <input
-                    value={value}
-                    onChange={(e) => setConfig(prev => ({
-                      ...prev,
-                      selectors: { ...prev.selectors, [key]: e.target.value }
-                    }))}
-                    placeholder={`.${key}-class`}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {showConfig && <HarvestConfigPanel config={config} onChange={setConfig} />}
 
       <div className="harvester-controls">
         {status === 'idle' || status === 'completed' || status === 'stopped' ? (
