@@ -49,6 +49,26 @@
       "category": "TypeScript & Compliance",
       "summary": "Eliminated all tsc --noEmit errors across White-Caves-Frontend, migrated 5 BulkOperations .jsx/.test.jsx to .tsx, added govApiGuard (1500ms timeout, Idempotency-Key, door masking, UAE 5% VAT / 9% Corp Tax), and added O(1) inventoryIndex.",
       "commits": ["14a4d5d70", "ca6180951", "8968eb3de", "3965d06a6"]
+    },
+    {
+      "id": "SMRUTI-2026-11-15-WAVES6-16",
+      "timestamp": "2026-11-15T15:53:30+04:00",
+      "wave": "Wave 6-16",
+      "category": "TS Migration & Workers",
+      "summary": "Completed 100% .jsx -> .tsx migration in src/ (0 .jsx remaining), fixed Auth.tsx Windows case-insensitive circular import, typed AppShell/AppointmentScheduler/Checkout/ContactAgentModal/crm/views/crm/mixed, and added csvParser.worker.ts + navBreadcrumb.test.ts.",
+      "commits": [
+        "765f6afce",
+        "60747f5c2",
+        "ddad9c05f",
+        "de0834e92",
+        "a4d8c4727",
+        "0469ff37b",
+        "14c0e10b2",
+        "de9b57ff0",
+        "fc0777f3f",
+        "1a48cb5a3",
+        "ef16bfd90"
+      ]
     }
   ]
 }
