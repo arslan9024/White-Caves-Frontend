@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import SignaturePad from './SignaturePad';
 import ContractPreview from './ContractPreview';
+import { ESignatureAcknowledgeStep } from './ESignatureAcknowledgeStep';
 import './ESignatureFlow.css';
+
+export interface ESignatureFlowProps {
+  contract: any;
+  signerInfo?: {
+    name?: string;
+    email?: string;
+    role?: string;
+  };
+  onComplete?: (data: any) => Promise<void> | void;
+  onCancel?: () => void;
+  loading?: boolean;
+  error?: string | null;
+}
 
 /**
  * ESignatureFlow Component
  * Manages the complete e-signature workflow
  * Steps: Preview -> Acknowledge -> Sign -> Confirm
  */
-const ESignatureFlow = ({
+const ESignatureFlow: React.FC<ESignatureFlowProps> = ({
   contract,
   signerInfo = {},
   onComplete,
@@ -16,18 +30,18 @@ const ESignatureFlow = ({
   loading = false,
   error = null,
 }) => {
-  const [step, setStep] = useState('preview'); // preview, acknowledge, sign, confirm
-  const [signature, setSignature] = useState(null);
-  const [agreementConfirmed, setAgreementConfirmed] = useState(false);
-  const [errors, setErrors] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [step, setStep] = useState<string>('preview'); // preview, acknowledge, sign, confirm
+  const [signature, setSignature] = useState<string | null>(null);
+  const [agreementConfirmed, setAgreementConfirmed] = useState<boolean>(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [successMessage, setSuccessMessage] = useState<string>('');
 
-  const handleSignatureChange = signatureData => {
+  const handleSignatureChange = (signatureData: string | null) => {
     setSignature(signatureData);
     setErrors(prev => prev.filter(e => e !== 'signature'));
   };
 
-  const validateStep = stepName => {
+  const validateStep = (stepName: string) => {
     const newErrors = [];
 
     switch (stepName) {
@@ -74,11 +88,10 @@ const ESignatureFlow = ({
       return;
     }
 
-    // Call the completion handler
     if (onComplete) {
       try {
         await onComplete({
-          contractId: contract._id,
+          contractId: contract?._id,
           signature,
           signerName: signerInfo.name || 'Signer',
           signerEmail: signerInfo.email,
@@ -89,7 +102,7 @@ const ESignatureFlow = ({
         });
         setSuccessMessage('Contract signed successfully!');
         setStep('confirm');
-      } catch (err) {
+      } catch {
         setErrors(['failed-to-sign']);
       }
     }
@@ -100,7 +113,7 @@ const ESignatureFlow = ({
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
       return data.ip;
-    } catch (err) {
+    } catch {
       return 'unknown';
     }
   };
@@ -187,92 +200,19 @@ const ESignatureFlow = ({
 
         {/* Step 2: Acknowledge */}
         {step === 'acknowledge' && (
-          <div className="step-container">
-            <div className="acknowledge-section">
-              <h2>Acknowledge & Agree</h2>
-              <p className="section-subtitle">Please read and acknowledge the contract terms</p>
-
-              <div className="terms-review">
-                <h3>Contract Terms Summary</h3>
-                <div className="terms-box">
-                  <div className="term-item">
-                    <span className="term-icon">📄</span>
-                    <div>
-                      <strong>Document Type:</strong>
-                      <p>{contract.templateType} Contract</p>
-                    </div>
-                  </div>
-
-                  <div className="term-item">
-                    <span className="term-icon">🏠</span>
-                    <div>
-                      <strong>Property:</strong>
-                      <p>
-                        {contract.propertyTitle} - {contract.propertyLocation}
-                      </p>
-                    </div>
-                  </div>
-
-                  {contract.totalPrice && (
-                    <div className="term-item">
-                      <span className="term-icon">💰</span>
-                      <div>
-                        <strong>Amount:</strong>
-                        <p>
-                          {new Intl.NumberFormat('en-US', {
-                            style: 'currency',
-                            currency: 'AED',
-                          }).format(contract.totalPrice)}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {contract.startDate && (
-                    <div className="term-item">
-                      <span className="term-icon">📅</span>
-                      <div>
-                        <strong>Effective Date:</strong>
-                        <p>{new Date(contract.startDate).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="acknowledgment-box">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={agreementConfirmed}
-                    onChange={e => {
-                      setAgreementConfirmed(e.target.checked);
-                      if (e.target.checked) {
-                        setErrors(prev => prev.filter(e => e !== 'agreement'));
-                      }
-                    }}
-                  />
-                  <span>
-                    I have read and understood the contract terms and conditions. I agree to enter
-                    into this contract.
-                  </span>
-                </label>
-              </div>
-
-              <div className="flow-actions">
-                <button onClick={handleBackToPreview} className="btn-secondary" disabled={loading}>
-                  Back to Review
-                </button>
-                <button
-                  onClick={handleProceedToSign}
-                  className="btn-primary"
-                  disabled={!agreementConfirmed || loading}
-                >
-                  Continue to Sign
-                </button>
-              </div>
-            </div>
-          </div>
+          <ESignatureAcknowledgeStep
+            contract={contract}
+            agreementConfirmed={agreementConfirmed}
+            onAgreementChange={val => {
+              setAgreementConfirmed(val);
+              if (val) {
+                setErrors(prev => prev.filter(e => e !== 'agreement'));
+              }
+            }}
+            onBack={handleBackToPreview}
+            onProceed={handleProceedToSign}
+            loading={loading}
+          />
         )}
 
         {/* Step 3: Sign */}
