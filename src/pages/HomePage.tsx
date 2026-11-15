@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, Bot, Layers, MessageCircle, ShieldCheck } from 'lucide-react';
+import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
 import './HomePage.css';
 
 const DEPARTMENT_FLOORS = [
@@ -20,6 +21,13 @@ const DEPARTMENT_FLOORS = [
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    ensureHomepageHeroPreload();
+    return () => {
+      cleanupHomepageHeroPreload();
+    };
+  }, []);
 
   return (
     <main className="crm-command-center" data-testid="crm-command-center">

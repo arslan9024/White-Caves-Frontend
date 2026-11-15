@@ -1,7 +1,7 @@
 .home-page {
   min-height: 100vh;
-  background: var(--bg-primary, #FFFFFF);
-  color: var(--text-primary, #0F172A);
+  background: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #0f172a);
 }
 
 .home-page__status {
@@ -14,7 +14,7 @@
   border-radius: 12px;
   border: 1px solid rgba(245, 158, 11, 0.4);
   background: rgba(245, 158, 11, 0.12);
-  color: var(--text-primary, #0F172A);
+  color: var(--text-primary, #0f172a);
   padding: 0.9rem 1.25rem;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -47,7 +47,10 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -59,19 +62,21 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #D4AF37 0%, #EF4444 100%);
+  background: linear-gradient(90deg, #d4af37 0%, #ef4444 100%);
   opacity: 0.9;
 }
 
 .home-page__trust-card:hover {
   transform: translateY(-4px);
   border-color: rgba(212, 175, 55, 0.6);
-  box-shadow: 0 16px 40px rgba(239, 68, 68, 0.2), 0 0 20px rgba(212, 175, 55, 0.15);
+  box-shadow:
+    0 16px 40px rgba(239, 68, 68, 0.2),
+    0 0 20px rgba(212, 175, 55, 0.15);
 }
 
 .home-page__trust-label {
   display: block;
-  color: #94A3B8;
+  color: #94a3b8;
   font-size: 0.78rem;
   margin-bottom: 0.35rem;
   text-transform: uppercase;
@@ -81,11 +86,11 @@
 
 .home-page__trust-value {
   display: block;
-  color: #F8FAFC;
+  color: #f8fafc;
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  background: linear-gradient(90deg, #FFFFFF 0%, #E2E8F0 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #e2e8f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -132,7 +137,7 @@ html {
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 12px;
   background: rgba(254, 242, 242, 0.95);
-  color: #991B1B;
+  color: #991b1b;
   display: flex;
   gap: 0.75rem;
   justify-content: space-between;
@@ -142,9 +147,9 @@ html {
 }
 
 .homepage-live-data-alert__retry {
-  border: 1px solid #B91C1C;
-  background: #FFFFFF;
-  color: #B91C1C;
+  border: 1px solid #b91c1c;
+  background: #ffffff;
+  color: #b91c1c;
   border-radius: 8px;
   padding: 0.45rem 0.85rem;
   font-weight: 600;
@@ -153,12 +158,12 @@ html {
 }
 
 .homepage-live-data-alert__retry:hover {
-  background: #FEE2E2;
+  background: #fee2e2;
   transform: translateY(-1px);
 }
 
 .home-page-tools-insights {
-  background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
 }
 
 .home-page-tools-insights__inner {
@@ -169,7 +174,7 @@ html {
 }
 
 .home-page-tools-insights__eyebrow {
-  color: #EF4444;
+  color: #ef4444;
   font-weight: 600;
   font-size: 0.875rem;
   letter-spacing: 0.12em;
@@ -178,7 +183,7 @@ html {
 }
 
 .home-page-tools-insights__title {
-  color: #0F172A;
+  color: #0f172a;
   font-size: clamp(1.6rem, 3vw, 2.25rem);
   font-weight: 700;
   margin: 0 0 0.75rem;
@@ -186,7 +191,7 @@ html {
 }
 
 .home-page-tools-insights__description {
-  color: #64748B;
+  color: #64748b;
   max-width: 560px;
   margin: 0 auto 0.5rem;
   line-height: 1.65;
@@ -204,7 +209,7 @@ html {
   width: 36px;
   height: 36px;
   border: 3px solid rgba(239, 68, 68, 0.15);
-  border-top-color: #EF4444;
+  border-top-color: #ef4444;
   border-radius: 50%;
   animation: home-page-spin 0.8s linear infinite;
 }
@@ -213,4 +218,146 @@ html {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* ============================================================================
+ * White Caves CRM Command Center (HomePage.tsx)
+ * ============================================================================ */
+.crm-command-center {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0b1120 0%, #111827 50%, #0f172a 100%);
+  color: #f8fafc;
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+.crm-command-center__header {
+  max-width: 1280px;
+  margin: 0 auto 2.5rem;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.crm-command-center__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ef4444;
+}
+
+.crm-command-center__brand h1 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: -0.02em;
+}
+
+.crm-command-center__brand p {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.crm-command-center__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.crm-command-center__actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.14);
+  color: #f8fafc;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.crm-command-center__actions button:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+.crm-command-center__floors {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.crm-command-center__floors h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.crm-command-center__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.crm-floor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+  padding: 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(30, 41, 59, 0.6);
+  color: #f8fafc;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.crm-floor-card:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  transform: translateY(-2px);
+}
+
+.crm-floor-card__number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #ef4444;
+}
+
+.crm-floor-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f8fafc;
 }

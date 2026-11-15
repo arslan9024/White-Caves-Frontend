@@ -81,18 +81,19 @@ describe('Route Code Splitting', () => {
 describe('Homepage Code Splitting', () => {
   const homepageSource = readSource('src/pages/HomePage.tsx');
 
-  it('renders decoupled CRM gateway banner after public sections moved to White-Caves-Web', () => {
-    expect(homepageSource).toContain('data-testid="crm-gateway-banner"');
+  it('renders decoupled CRM Command Center after public sections moved to White-Caves-Web', () => {
+    expect(homepageSource).toContain('data-testid="crm-command-center"');
   });
 
-  it('lazy-loads companion portal sections', () => {
-    expect(homepageSource).toMatch(/lazy.*CompanyProfile/);
-    expect(homepageSource).toMatch(/lazy.*OnboardingGateway/);
+  it('exposes all 12 corporate department floor routes', () => {
+    expect(homepageSource).toContain('DEPARTMENT_FLOORS');
+    expect(homepageSource).toContain('/crm/floor/1');
+    expect(homepageSource).toContain('/crm/floor/12');
   });
 
-  it('lazy-loads at least 4 portal companion sections', () => {
-    const lazyCount = (homepageSource.match(/\blazy\s*\(\s*\(\)/g) || []).length;
-    expect(lazyCount).toBeGreaterThanOrEqual(4);
+  it('maintains route-scoped hero preload lifecycle hooks', () => {
+    expect(homepageSource).toContain('ensureHomepageHeroPreload()');
+    expect(homepageSource).toContain('cleanupHomepageHeroPreload()');
   });
 });
 
