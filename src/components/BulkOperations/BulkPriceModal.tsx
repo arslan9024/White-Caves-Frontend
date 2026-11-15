@@ -2,7 +2,19 @@ import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkPriceModal = ({ isOpen, propertyCount, onConfirm, onCancel }) => {
+interface BulkPriceModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: (payload: { value: number; type: string }) => void;
+  onCancel: () => void;
+}
+
+const BulkPriceModal: React.FC<BulkPriceModalProps> = ({
+  isOpen,
+  propertyCount,
+  onConfirm,
+  onCancel,
+}) => {
   const [priceValue, setPriceValue] = useState('');
   const [operationType, setOperationType] = useState('set');
   const [preview, setPreview] = useState(null);

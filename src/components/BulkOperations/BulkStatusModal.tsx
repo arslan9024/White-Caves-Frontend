@@ -2,7 +2,19 @@ import React, { useState } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkStatusModal = ({ isOpen, propertyCount, onConfirm, onCancel }) => {
+interface BulkStatusModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: (status: string) => void;
+  onCancel: () => void;
+}
+
+const BulkStatusModal: React.FC<BulkStatusModalProps> = ({
+  isOpen,
+  propertyCount,
+  onConfirm,
+  onCancel,
+}) => {
   const [selectedStatus, setSelectedStatus] = useState('');
 
   const statuses = [

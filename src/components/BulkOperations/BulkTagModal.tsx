@@ -2,9 +2,21 @@ import React, { useState } from 'react';
 import { X, Plus, Trash2 } from 'lucide-react';
 import './BulkStatusModal.css';
 
-const BulkTagModal = ({ isOpen, propertyCount, onConfirm, onCancel }) => {
+interface BulkTagModalProps {
+  isOpen: boolean;
+  propertyCount: number;
+  onConfirm: (tags: string[]) => void;
+  onCancel: () => void;
+}
+
+const BulkTagModal: React.FC<BulkTagModalProps> = ({
+  isOpen,
+  propertyCount,
+  onConfirm,
+  onCancel,
+}) => {
   const [tagInput, setTagInput] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleAddTag = () => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {
@@ -13,7 +25,7 @@ const BulkTagModal = ({ isOpen, propertyCount, onConfirm, onCancel }) => {
     }
   };
 
-  const handleRemoveTag = index => {
+  const handleRemoveTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
 
@@ -31,7 +43,7 @@ const BulkTagModal = ({ isOpen, propertyCount, onConfirm, onCancel }) => {
     onCancel();
   };
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       handleAddTag();
