@@ -13,6 +13,7 @@ import FilterPanel from '../../inventory/FilterPanel';
 import PropertyDetailsCard from '../../inventory/PropertyDetailsCard';
 import ClusterBrowser from '../../inventory/ClusterBrowser';
 import DataQualityIndicators from '../../inventory/DataQualityIndicators';
+import { PropertyLocationDetailSection } from './PropertyLocationDetailSection';
 import {
   loadInventoryData,
   selectFilteredProperties,
@@ -283,47 +284,7 @@ const MaryInventoryTab = () => {
             {
               label: 'Location',
               icon: MapPin,
-              content: (
-                <div className="detail-location">
-                  <div className="detail-section">
-                    <h3>Location Details</h3>
-                    <div className="detail-grid">
-                      <div className="detail-item">
-                        <span className="label">Area</span>
-                        <span className="value">{selectedProperty.area || '-'}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Project</span>
-                        <span className="value">{selectedProperty.project || '-'}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Cluster</span>
-                        <span className="value">{selectedProperty.cluster || '-'}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Master Project</span>
-                        <span className="value">{selectedProperty.masterProject || '-'}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Building</span>
-                        <span className="value">{String(selectedProperty.building || '-')}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Unit Number</span>
-                        <span className="value">{String(selectedProperty.unitNumber || '-')}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Floor</span>
-                        <span className="value">{selectedProperty.floor || '-'}</span>
-                      </div>
-                      <div className="detail-item">
-                        <span className="label">Municipality No</span>
-                        <span className="value">{String(selectedProperty.municipalityNo || '-')}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
+              content: <PropertyLocationDetailSection property={selectedProperty} />
             },
             {
               label: 'Owners',
