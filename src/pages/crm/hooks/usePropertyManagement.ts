@@ -23,81 +23,13 @@ import {
   addActivity,
 } from '../../../store/crmDataSlice';
 
-// ─── Types ──────────────────────────────────────────────────────────────
-
-export interface Property {
-  id: string | number;
-  title: string;
-  type: string;
-  status: string;
-  location: string;
-  area?: string;
-  price: number;
-  bedrooms?: number;
-  bathrooms?: number;
-  sqft?: number;
-  description?: string;
-  amenities?: string[];
-  images?: string[];
-  agent_id?: string;
-  agent_name?: string;
-  featured?: boolean;
-  created_at?: string;
-  updated_at?: string;
-}
-
-export interface PropertyFormData {
-  title: string;
-  type: string;
-  status: string;
-  location: string;
-  price: string;
-  bedrooms: string;
-  bathrooms: string;
-  sqft: string;
-  description: string;
-  agent_name: string;
-  featured: boolean;
-}
-
-export type BadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-
-// ─── Constants ──────────────────────────────────────────────────────────
-
-export const STATUS_MAP: Record<string, { label: string; variant: BadgeVariant; color: string }> = {
-  available: { label: 'Available', variant: 'success', color: '#10B981' },
-  reserved: { label: 'Reserved', variant: 'warning', color: '#F59E0B' },
-  sold: { label: 'Sold', variant: 'error', color: '#EF4444' },
-  rented: { label: 'Rented', variant: 'info', color: '#3B82F6' },
-  off_market: { label: 'Off Market', variant: 'secondary', color: '#6B7280' },
-};
-
-export const TYPE_MAP: Record<string, { label: string; icon: string }> = {
-  villa: { label: 'Villa', icon: '🏡' },
-  apartment: { label: 'Apartment', icon: '🏢' },
-  penthouse: { label: 'Penthouse', icon: '🏙️' },
-  commercial: { label: 'Commercial', icon: '🏗️' },
-  land: { label: 'Land', icon: '🌍' },
-  townhouse: { label: 'Townhouse', icon: '🏘️' },
-};
-
-// Mock data removed — all property data is fetched from the API via Redux
-
-const ITEMS_PER_PAGE = 9;
-
-const EMPTY_FORM: PropertyFormData = {
-  title: '',
-  type: 'apartment',
-  status: 'available',
-  location: '',
-  price: '',
-  bedrooms: '',
-  bathrooms: '',
-  sqft: '',
-  description: '',
-  agent_name: '',
-  featured: false,
-};
+export * from './usePropertyManagement.types';
+import {
+  Property,
+  PropertyFormData,
+  EMPTY_FORM,
+  ITEMS_PER_PAGE,
+} from './usePropertyManagement.types';
 
 // ─── Hook ───────────────────────────────────────────────────────────────
 
@@ -111,7 +43,9 @@ export function usePropertyManagement() {
   // Fetch on mount
   useEffect(() => {
     const promise = dispatch(fetchPropertiesFromAPI({}));
-    return () => { promise.abort?.(); };
+    return () => {
+      promise.abort?.();
+    };
   }, [dispatch]);
 
   // Use API data exclusively — no hardcoded fallback
@@ -151,9 +85,11 @@ export function usePropertyManagement() {
 
   const filteredProperties = useMemo(() => {
     return properties.filter(p => {
-      const matchesSearch = !search || [
-        p.title, p.location, p.area, p.agent_name, p.description,
-      ].some(f => f?.toLowerCase().includes(search.toLowerCase()));
+      const matchesSearch =
+        !search ||
+        [p.title, p.location, p.area, p.agent_name, p.description].some(f =>
+          f?.toLowerCase().includes(search.toLowerCase())
+        );
       const matchesStatus = statusFilter === 'all' || p.status === statusFilter;
       const matchesType = typeFilter === 'all' || p.type === typeFilter;
       return matchesSearch && matchesStatus && matchesType;
@@ -164,7 +100,7 @@ export function usePropertyManagement() {
 
   const paginatedProperties = filteredProperties.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
   );
 
   // ─── Actions ────────────────────────────────────────────────────
@@ -201,7 +137,15 @@ export function usePropertyManagement() {
     const bedrooms = Number(formData.bedrooms) || 0;
     const bathrooms = Number(formData.bathrooms) || 0;
     const sqft = Number(formData.sqft) || 0;
-    if (bedrooms < 0 || bedrooms > MAX_BEDROOMS || bathrooms < 0 || bathrooms > MAX_BATHROOMS || sqft < 0 || sqft > MAX_SQFT) return;
+    if (
+      bedrooms < 0 ||
+      bedrooms > MAX_BEDROOMS ||
+      bathrooms < 0 ||
+      bathrooms > MAX_BATHROOMS ||
+      sqft < 0 ||
+      sqft > MAX_SQFT
+    )
+      return;
 
     const propertyData = {
       title: formData.title.trim(),
@@ -218,24 +162,31 @@ export function usePropertyManagement() {
       created_at: new Date().toISOString(),
     };
 
-    dispatch(createPropertyAPI(propertyData)).then((result) => {
-      if (createPropertyAPI.fulfilled.match(result)) {
-        dispatch(addActivity({
-          id: Date.now(),
-          type: 'property',
-          description: `New property listed: ${formData.title}`,
-          timestamp: new Date().toISOString(),
-        }));
-        setShowCreateModal(false);
-        resetForm();
-      } else if (createPropertyAPI.rejected.match(result)) {
-        const msg = (result.payload as string) || 'Failed to create property. Please try again.';
-        setErrorMessage(msg);
-      }
-    }).catch((error: unknown) => {
-      log.error('Failed to create property:', error instanceof Error ? error.message : String(error));
-      setErrorMessage('An unexpected error occurred. Please try again.');
-    });
+    dispatch(createPropertyAPI(propertyData))
+      .then(result => {
+        if (createPropertyAPI.fulfilled.match(result)) {
+          dispatch(
+            addActivity({
+              id: Date.now(),
+              type: 'property',
+              description: `New property listed: ${formData.title}`,
+              timestamp: new Date().toISOString(),
+            })
+          );
+          setShowCreateModal(false);
+          resetForm();
+        } else if (createPropertyAPI.rejected.match(result)) {
+          const msg = (result.payload as string) || 'Failed to create property. Please try again.';
+          setErrorMessage(msg);
+        }
+      })
+      .catch((error: unknown) => {
+        log.error(
+          'Failed to create property:',
+          error instanceof Error ? error.message : String(error)
+        );
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      });
   }, [dispatch, formData, resetForm]);
 
   const handleEdit = useCallback((property: Property) => {
@@ -263,56 +214,74 @@ export function usePropertyManagement() {
     }
     if (selectedProperty) {
       const titleSnapshot = formData.title;
-      dispatch(updatePropertyAPI({
-        id: selectedProperty.id,
-        ...formData,
-        price: Number(formData.price) || 0,
-        bedrooms: Number(formData.bedrooms) || 0,
-        bathrooms: Number(formData.bathrooms) || 0,
-        sqft: Number(formData.sqft) || 0,
-        updated_at: new Date().toISOString(),
-      })).then((result) => {
-        if (updatePropertyAPI.fulfilled.match(result)) {
-          dispatch(addActivity({
-            id: Date.now(),
-            type: 'property',
-            description: `Property updated: ${titleSnapshot}`,
-            timestamp: new Date().toISOString(),
-          }));
-          setShowEditModal(false);
-          setSelectedProperty(null);
-          resetForm();
-        } else if (updatePropertyAPI.rejected.match(result)) {
-          const msg = (result.payload as string) || 'Failed to update property. Please try again.';
-          setErrorMessage(msg);
-        }
-      }).catch((error: unknown) => {
-        log.error('Failed to update property:', error instanceof Error ? error.message : String(error));
-        setErrorMessage('An unexpected error occurred. Please try again.');
-      });
+      dispatch(
+        updatePropertyAPI({
+          id: selectedProperty.id,
+          ...formData,
+          price: Number(formData.price) || 0,
+          bedrooms: Number(formData.bedrooms) || 0,
+          bathrooms: Number(formData.bathrooms) || 0,
+          sqft: Number(formData.sqft) || 0,
+          updated_at: new Date().toISOString(),
+        })
+      )
+        .then(result => {
+          if (updatePropertyAPI.fulfilled.match(result)) {
+            dispatch(
+              addActivity({
+                id: Date.now(),
+                type: 'property',
+                description: `Property updated: ${titleSnapshot}`,
+                timestamp: new Date().toISOString(),
+              })
+            );
+            setShowEditModal(false);
+            setSelectedProperty(null);
+            resetForm();
+          } else if (updatePropertyAPI.rejected.match(result)) {
+            const msg =
+              (result.payload as string) || 'Failed to update property. Please try again.';
+            setErrorMessage(msg);
+          }
+        })
+        .catch((error: unknown) => {
+          log.error(
+            'Failed to update property:',
+            error instanceof Error ? error.message : String(error)
+          );
+          setErrorMessage('An unexpected error occurred. Please try again.');
+        });
     }
   }, [dispatch, selectedProperty, formData, resetForm]);
 
   const handleDelete = useCallback(() => {
     if (selectedProperty) {
-      dispatch(deletePropertyAPI(selectedProperty.id)).then((result) => {
-        if (deletePropertyAPI.fulfilled.match(result)) {
-          dispatch(addActivity({
-            id: Date.now(),
-            type: 'property',
-            description: `Property removed: ${selectedProperty.title}`,
-            timestamp: new Date().toISOString(),
-          }));
-          setShowDeleteConfirm(false);
-          setSelectedProperty(null);
-        } else if (deletePropertyAPI.rejected.match(result)) {
-          const msg = (result.payload as string) || 'Failed to delete property. Please try again.';
-          setErrorMessage(msg);
-        }
-      }).catch((error: unknown) => {
-        log.error('Failed to delete property:', error instanceof Error ? error.message : String(error));
-        setErrorMessage('An unexpected error occurred. Please try again.');
-      });
+      dispatch(deletePropertyAPI(selectedProperty.id))
+        .then(result => {
+          if (deletePropertyAPI.fulfilled.match(result)) {
+            dispatch(
+              addActivity({
+                id: Date.now(),
+                type: 'property',
+                description: `Property removed: ${selectedProperty.title}`,
+                timestamp: new Date().toISOString(),
+              })
+            );
+            setShowDeleteConfirm(false);
+            setSelectedProperty(null);
+          } else if (deletePropertyAPI.rejected.match(result)) {
+            const msg =
+              (result.payload as string) || 'Failed to delete property. Please try again.';
+            setErrorMessage(msg);
+          }
+        })
+        .catch((error: unknown) => {
+          log.error(
+            'Failed to delete property:',
+            error instanceof Error ? error.message : String(error)
+          );
+          setErrorMessage('An unexpected error occurred. Please try again.');
+        });
     }
   }, [dispatch, selectedProperty]);
 
@@ -348,20 +317,46 @@ export function usePropertyManagement() {
 
   return {
     // Data
-    properties, filteredProperties, paginatedProperties, stats, totalPages,
-    loading, error,
+    properties,
+    filteredProperties,
+    paginatedProperties,
+    stats,
+    totalPages,
+    loading,
+    error,
     // State
-    search, statusFilter, typeFilter, viewMode, currentPage,
-    showCreateModal, showEditModal, showDeleteConfirm, selectedProperty,
-    formData, setFormData, setViewMode,
-    errorMessage, setErrorMessage,
+    search,
+    statusFilter,
+    typeFilter,
+    viewMode,
+    currentPage,
+    showCreateModal,
+    showEditModal,
+    showDeleteConfirm,
+    selectedProperty,
+    formData,
+    setFormData,
+    setViewMode,
+    errorMessage,
+    setErrorMessage,
     // Page constants
     ITEMS_PER_PAGE,
     // Actions
-    openCreateModal, closeCreateModal, closeEditModal, closeDeleteModal,
-    handleCreate, handleEdit, handleSaveEdit, handleDelete, confirmDelete,
-    handleSearchChange, handleStatusFilterChange, handleTypeFilterChange,
-    setCurrentPage, retryFetch, goBack,
+    openCreateModal,
+    closeCreateModal,
+    closeEditModal,
+    closeDeleteModal,
+    handleCreate,
+    handleEdit,
+    handleSaveEdit,
+    handleDelete,
+    confirmDelete,
+    handleSearchChange,
+    handleStatusFilterChange,
+    handleTypeFilterChange,
+    setCurrentPage,
+    retryFetch,
+    goBack,
     // Formatters
     formatCurrency,
   };
