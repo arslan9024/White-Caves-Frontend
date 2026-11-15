@@ -3,7 +3,12 @@ import React from 'react';
 import { MapPin } from 'lucide-react';
 import { DUBAI_COMMUNITIES } from '../AgentListingForm.data';
 
-export default function ListingLocationStep({ formData, updateField }) {
+interface StepProps {
+  formData: Record<string, any>;
+  updateField: (field: string, value: any) => void;
+  toggleArrayField?: (field: string, value: string) => void;
+}
+export default function ({ formData, updateField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Property Location</h3>

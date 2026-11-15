@@ -154,6 +154,23 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
             : 'radial-gradient(ellipse at center, rgba(240,242,245,0.7) 0%, rgba(239,234,226,1) 100%)',
         }}
       >
+        {activeMessages.length > 0 && (
+          <div
+            data-testid="linda-date-separator"
+            style={{
+              alignSelf: 'center',
+              padding: '3px 12px',
+              borderRadius: 12,
+              background: isDark ? '#182229' : '#E1F3FB',
+              color: isDark ? '#8696A0' : '#54656F',
+              fontSize: 11,
+              fontWeight: 600,
+              marginBottom: 4,
+            }}
+          >
+            Today
+          </div>
+        )}
         {activeMessages.map(msg => {
           const isOutbound = msg.sender === 'agent' || msg.sender === 'bot';
           return (
@@ -190,6 +207,24 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                   }}
                 >
                   <Bot size={11} /> AI Auto-Assisted (Linda)
+                </div>
+              )}
+              {msg.mediaType && (
+                <div
+                  data-testid="linda-media-card"
+                  style={{
+                    marginBottom: 6,
+                    padding: '6px 10px',
+                    borderRadius: 8,
+                    background: isDark ? 'rgba(15, 23, 42, 0.55)' : 'rgba(15, 23, 42, 0.06)',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 6,
+                  }}
+                >
+                  <span>📎 {msg.mediaType.toUpperCase()} Attachment</span>
                 </div>
               )}
               <div>{msg.text}</div>

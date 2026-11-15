@@ -232,6 +232,29 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     [conversations]
   );
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+      ) {
+        return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        const idx = filteredConversations.findIndex(c => c.id === selectedConvId);
+        if (idx === -1) return;
+        const nextIdx =
+          e.key === 'ArrowDown'
+            ? Math.min(filteredConversations.length - 1, idx + 1)
+            : Math.max(0, idx - 1);
+        setSelectedConvId(filteredConversations[nextIdx].id);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [filteredConversations, selectedConvId]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div

@@ -3,7 +3,12 @@ import React from 'react';
 import { Bed, Bath, Ruler, LandPlot, Car } from 'lucide-react';
 import { VIEWS, AMENITIES } from '../AgentListingForm.data';
 
-export default function ListingSpecsStep({ formData, updateField, toggleArrayField }) {
+interface StepProps {
+  formData: Record<string, any>;
+  updateField: (field: string, value: any) => void;
+  toggleArrayField?: (field: string, value: string) => void;
+}
+export default function ({ formData, updateField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Property Specifications</h3>

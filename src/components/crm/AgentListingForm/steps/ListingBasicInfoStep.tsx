@@ -2,7 +2,12 @@
 import React from 'react';
 import { PROPERTY_TYPES, COMPLETION_STATUS, FURNISH_TYPES } from '../AgentListingForm.data';
 
-export default function ListingBasicInfoStep({ formData, updateField }) {
+interface StepProps {
+  formData: Record<string, any>;
+  updateField: (field: string, value: any) => void;
+  toggleArrayField?: (field: string, value: string) => void;
+}
+export default function ({ formData, updateField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Property Basic Information</h3>

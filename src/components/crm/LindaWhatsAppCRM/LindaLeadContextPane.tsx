@@ -15,9 +15,17 @@ export const LindaLeadContextPane: FC<LindaLeadContextPaneProps> = ({ conversati
   const [matchedUnits, setMatchedUnits] = useState<
     Array<{ id: string; title: string; source: string }>
   >([]);
+  const [copiedPhone, setCopiedPhone] = useState(false);
+  const [brokerNote, setBrokerNote] = useState('');
   const { scanFile, isProcessing: ocrProcessing } = useClientOcr();
 
   if (!conversation) return null;
+
+  const handleCopyPhone = () => {
+    void navigator.clipboard?.writeText(conversation.phone);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 1500);
+  };
 
   const jid = encodeURIComponent(
     conversation.id.includes('@')
@@ -138,7 +146,60 @@ export const LindaLeadContextPane: FC<LindaLeadContextPaneProps> = ({ conversati
         <div style={{ fontSize: '1rem', fontWeight: 700, marginTop: '0.2rem' }}>
           {conversation.contactName || conversation.phone}
         </div>
-        <div style={{ fontSize: '0.78rem', color: '#94A3B8' }}>{conversation.phone}</div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            fontSize: '0.78rem',
+            color: '#94A3B8',
+          }}
+        >
+          <span>{conversation.phone}</span>
+          <button
+            type="button"
+            data-testid="linda-copy-phone-btn"
+            onClick={handleCopyPhone}
+            style={{
+              padding: '1px 6px',
+              borderRadius: 4,
+              border: '1px solid rgba(148, 163, 184, 0.3)',
+              background: 'transparent',
+              color: copiedPhone ? '#4ADE80' : '#CBD5E1',
+              fontSize: '0.68rem',
+              cursor: 'pointer',
+            }}
+          >
+            {copiedPhone ? 'Copied' : 'Copy'}
+          </button>
+        </div>
+        <div
+          data-testid="linda-deal-stage-stepper"
+          style={{
+            display: 'flex',
+            gap: 4,
+            marginTop: '0.5rem',
+            fontSize: '0.65rem',
+            color: '#94A3B8',
+          }}
+        >
+          {['Inquiry', 'Qualified', 'Viewing', 'DLD'].map((stage, idx) => (
+            <span
+              key={stage}
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                padding: '2px 0',
+                borderRadius: 4,
+                backgroundColor: idx === 0 ? 'rgba(239, 68, 68, 0.25)' : 'rgba(30, 41, 59, 0.8)',
+                color: idx === 0 ? '#FCA5A5' : '#94A3B8',
+                fontWeight: idx === 0 ? 700 : 500,
+              }}
+            >
+              {stage}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div

@@ -325,10 +325,10 @@ const ApexCRM = () => {
       )}
 
       {activeTab === 'docs' && (
-        <AssistantDocsTab assistantId="apex" color="#F97316" assistantName="Apex" />
+        <AssistantDocsTab assistantId="apex" assistantColor="#F97316" assistantName="Apex" />
       )}
       {activeTab === 'lifecycle' && (
-        <AssistantLifecycleTab assistantId="apex" color="#F97316" assistantName="Apex" />
+        <AssistantLifecycleTab assistantId="apex" assistantColor="#F97316" assistantName="Apex" />
       )}
     </div>
   );

@@ -40,7 +40,7 @@ const ICON_MAP = {
 export default function AuroraDocumentIndex({ showCompanyDocs = true }) {
   const dispatch = useDispatch();
 
-  const handleOpenDocument = docId => {
+  const handleOpenDocument = (docId: string) => {
     const doc = getDocumentById(docId);
     if (doc) {
       dispatch(openDocument(doc));
@@ -62,7 +62,8 @@ export default function AuroraDocumentIndex({ showCompanyDocs = true }) {
 
         <div className="doc-grid">
           {AURORA_DOCUMENT_INDEX.map(doc => {
-            const IconComponent = ICON_MAP[doc.icon] || FileText;
+            const IconComponent =
+              (ICON_MAP as Record<string, typeof FileText>)[doc.icon] || FileText;
             return (
               <button key={doc.id} className="doc-card" onClick={() => handleOpenDocument(doc.id)}>
                 <div className="doc-card-icon">
@@ -93,7 +94,8 @@ export default function AuroraDocumentIndex({ showCompanyDocs = true }) {
 
           <div className="doc-grid">
             {COMPANY_DOCUMENT_INDEX.map(doc => {
-              const IconComponent = ICON_MAP[doc.icon] || FileText;
+              const IconComponent =
+                (ICON_MAP as Record<string, typeof FileText>)[doc.icon] || FileText;
               return (
                 <button
                   key={doc.id}

@@ -1,7 +1,12 @@
 // FILE: src/components/crm/AgentListingForm/steps/ListingPricingStep.jsx
 import React from 'react';
 
-export default function ListingPricingStep({ formData, updateField }) {
+interface StepProps {
+  formData: Record<string, any>;
+  updateField: (field: string, value: any) => void;
+  toggleArrayField?: (field: string, value: string) => void;
+}
+export default function ({ formData, updateField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Pricing Details</h3>

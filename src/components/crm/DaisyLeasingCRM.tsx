@@ -182,7 +182,9 @@ const DaisyLeasingCRM = () => {
           </div>
         )}
 
-        {activeTab === 'docs' && <AssistantDocsTab assistantId="daisy" />}
+        {activeTab === 'docs' && (
+          <AssistantDocsTab assistantId="daisy" assistantName="Daisy" assistantColor="#10B981" />
+        )}
       </div>
     </div>
   );

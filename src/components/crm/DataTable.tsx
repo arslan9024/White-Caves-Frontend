@@ -2,7 +2,25 @@ import React, { useState, useMemo } from 'react';
 import { ChevronUp, ChevronDown, Search, Filter, MoreVertical } from 'lucide-react';
 import './DataTable.css';
 
-const DataTable = ({
+interface DataTableProps {
+  data?: Record<string, any>[];
+  columns?: {
+    key: string;
+    label: string;
+    sortable?: boolean;
+    render?: (val: any, row: any) => React.ReactNode;
+  }[];
+  searchable?: boolean;
+  filterable?: boolean;
+  pagination?: boolean;
+  pageSize?: number;
+  onRowClick?: (row: Record<string, any>) => void;
+  onAction?: (action: string, row: Record<string, any>) => void;
+  emptyMessage?: string;
+  loading?: boolean;
+}
+
+const DataTable: React.FC<DataTableProps> = ({
   data = [],
   columns = [],
   searchable = true,

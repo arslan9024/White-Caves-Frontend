@@ -3,7 +3,12 @@ import React from 'react';
 import { Check } from 'lucide-react';
 import { MARKETING_PACKAGES } from '../AgentListingForm.data';
 
-export default function ListingLegalStep({ formData, updateField }) {
+interface StepProps {
+  formData: Record<string, any>;
+  updateField: (field: string, value: any) => void;
+  toggleArrayField?: (field: string, value: string) => void;
+}
+export default function ({ formData, updateField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Legal & Marketing Details</h3>
