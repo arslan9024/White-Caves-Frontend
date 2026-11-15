@@ -1,42 +1,14 @@
 import React, { useState } from 'react';
 import { PDCCheque, PDCStatus } from '../data/leasing';
+import { STATUS_FILTERS } from './PDCPaymentsTab.helpers';
+import { PDCChequeRow } from './PDCChequeRow';
 
-interface PDCPaymentsTabProps {
+export interface PDCPaymentsTabProps {
   pdcCheques: PDCCheque[];
   onUpdateStatus: (id: number, status: PDCStatus) => void;
 }
 
-const STATUS_FILTERS: Array<PDCStatus | 'all'> = [
-  'all',
-  'pending',
-  'presented',
-  'cleared',
-  'bounced',
-];
-
-const STATUS_COLORS: Record<PDCStatus, { bg: string; text: string }> = {
-  pending: { bg: 'rgba(245,158,11,0.15)', text: '#F59E0B' },
-  presented: { bg: 'rgba(59,130,246,0.15)', text: '#60A5FA' },
-  cleared: { bg: 'rgba(16,185,129,0.15)', text: '#10B981' },
-  bounced: { bg: 'rgba(239,68,68,0.15)', text: '#EF4444' },
-};
-
-const isOverdue = (dueDate: string, status: PDCStatus): boolean => {
-  if (status !== 'pending') return false;
-  return new Date(dueDate) < new Date();
-};
-
-const isDueSoon = (dueDate: string, status: PDCStatus): boolean => {
-  if (status !== 'pending') return false;
-  const due = new Date(dueDate);
-  const now = new Date();
-  if (due < now) return false;
-  const diffMs = due.getTime() - now.getTime();
-  const diffDays = diffMs / (1000 * 60 * 60 * 24);
-  return diffDays <= 7;
-};
-
-const PDCPaymentsTab: React.FC<PDCPaymentsTabProps> = ({ pdcCheques, onUpdateStatus }) => {
+export const PDCPaymentsTab: React.FC<PDCPaymentsTabProps> = ({ pdcCheques, onUpdateStatus }) => {
   const [filterStatus, setFilterStatus] = useState<PDCStatus | 'all'>('all');
   const [localCheques, setLocalCheques] = useState<PDCCheque[]>(pdcCheques);
 
@@ -165,177 +137,9 @@ const PDCPaymentsTab: React.FC<PDCPaymentsTabProps> = ({ pdcCheques, onUpdateSta
             <span>Actions</span>
           </div>
 
-          {filtered.map((cheque: PDCCheque) => {
-            const sCol = STATUS_COLORS[cheque.status];
-            const overdue = isOverdue(cheque.dueDate, cheque.status);
-            const dueSoon = isDueSoon(cheque.dueDate, cheque.status);
-
-            let rowBg = 'transparent';
-            if (cheque.status === 'bounced') rowBg = 'rgba(239,68,68,0.07)';
-            else if (overdue) rowBg = 'rgba(239,68,68,0.05)';
-            else if (dueSoon) rowBg = 'rgba(245,158,11,0.06)';
-
-            return (
-              <div
-                key={cheque.id}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1.4fr 1fr 1.2fr 0.8fr 1fr 1fr 1fr 1.2fr',
-                  padding: '12px 14px',
-                  borderBottom: '1px solid var(--rgba-white-10)',
-                  fontSize: '13px',
-                  alignItems: 'center',
-                  background: rowBg,
-                  transition: 'background 0.15s',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'monospace',
-                    fontSize: '12px',
-                    color: 'var(--color-text-primary)',
-                  }}
-                >
-                  {cheque.chequeNumber}
-                </span>
-                <span style={{ color: 'var(--color-text-secondary)', fontSize: '12px' }}>
-                  {cheque.bankName}
-                </span>
-                <span style={{ color: 'var(--color-text-primary)' }}>{cheque.tenantName}</span>
-                <span style={{ color: 'var(--color-text-secondary)', fontSize: '12px' }}>
-                  {cheque.unit}
-                </span>
-                <span style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>
-                  {cheque.amount.toLocaleString()}
-                </span>
-                <span
-                  style={{
-                    color: overdue
-                      ? '#EF4444'
-                      : dueSoon
-                        ? '#F59E0B'
-                        : 'var(--color-text-secondary)',
-                    fontSize: '12px',
-                  }}
-                >
-                  {cheque.dueDate}
-                  {overdue && (
-                    <span style={{ marginLeft: '4px', fontSize: '10px' }}>🔴 Overdue</span>
-                  )}
-                  {dueSoon && !overdue && (
-                    <span style={{ marginLeft: '4px', fontSize: '10px' }}>⚠️ Soon</span>
-                  )}
-                </span>
-                <span>
-                  {cheque.status === 'bounced' ? (
-                    <span
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '12px',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        background: sCol.bg,
-                        color: sCol.text,
-                      }}
-                    >
-                      ⚠️ Bounced
-                    </span>
-                  ) : (
-                    <span
-                      style={{
-                        fontSize: '12px',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        background: sCol.bg,
-                        color: sCol.text,
-                      }}
-                    >
-                      {cheque.status}
-                    </span>
-                  )}
-                </span>
-                <span style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                  {cheque.status === 'pending' && (
-                    <button
-                      onClick={() => handleUpdate(cheque.id, 'presented')}
-                      style={{
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        border: '1px solid #60A5FA',
-                        background: 'rgba(59,130,246,0.1)',
-                        color: '#60A5FA',
-                        fontSize: '11px',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      Mark Presented
-                    </button>
-                  )}
-                  {cheque.status === 'presented' && (
-                    <>
-                      <button
-                        onClick={() => handleUpdate(cheque.id, 'cleared')}
-                        style={{
-                          padding: '4px 8px',
-                          borderRadius: '4px',
-                          border: '1px solid #10B981',
-                          background: 'rgba(16,185,129,0.1)',
-                          color: '#10B981',
-                          fontSize: '11px',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        Mark Cleared
-                      </button>
-                      <button
-                        onClick={() => handleUpdate(cheque.id, 'bounced')}
-                        style={{
-                          padding: '4px 8px',
-                          borderRadius: '4px',
-                          border: '1px solid #EF4444',
-                          background: 'rgba(239,68,68,0.1)',
-                          color: '#EF4444',
-                          fontSize: '11px',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        Mark Bounced
-                      </button>
-                    </>
-                  )}
-                  {cheque.status === 'bounced' && (
-                    <button
-                      style={{
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        border: '1px solid #F59E0B',
-                        background: 'rgba(245,158,11,0.1)',
-                        color: '#F59E0B',
-                        fontSize: '11px',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      Request Replacement
-                    </button>
-                  )}
-                  {cheque.notes && (
-                    <span
-                      title={cheque.notes}
-                      style={{ fontSize: '11px', color: 'var(--text-secondary, #64748B)', cursor: 'help' }}
-                    >
-                      📝
-                    </span>
-                  )}
-                </span>
-              </div>
-            );
-          })}
+          {filtered.map((cheque: PDCCheque) => (
+            <PDCChequeRow key={cheque.id} cheque={cheque} onUpdate={handleUpdate} />
+          ))}
 
           {filtered.length === 0 && (
             <div
