@@ -18,10 +18,11 @@ import {
 } from './LindaWhatsAppCRM.data';
 import { createLindaActionHandlers } from './lindaActionHandlers';
 import { useLindaSocketSync } from './lindaSocketSync';
+import { useLindaStatusPolling } from './useLindaStatusPolling';
 
 /**
  * useLindaOperationsCenter — Master hook for Linda WhatsApp Bot visual operations
- * Refactored to delegate actions to lindaActionHandlers under AEGIS APOCALYPSE-AEG-042 (< 350 lines).
+ * Refactored to delegate status polling & action handling under APOCALYPSE-AEG-042 (< 350 lines).
  */
 export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
   const [isConnected, setIsConnected] = useState<boolean>(true);
@@ -203,90 +204,13 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     }
   }, [appendLog]);
 
-  useEffect(() => {
-    void refreshLindaStatus();
-
-    let eventSource: EventSource | null = null;
-    let fallbackIntervalId: number | null = null;
-
-    const isBrowser = typeof window !== 'undefined';
-    if (isBrowser && 'EventSource' in window) {
-      try {
-        const streamUrl = '/api/linda/metrics/stream';
-        eventSource = new EventSource(streamUrl);
-
-        eventSource.onmessage = event => {
-          try {
-            const data = JSON.parse(event.data);
-            if (data) {
-              setMetrics(prev => ({
-                ...prev,
-                uptime: data.uptime || prev.uptime,
-                activeSessions: `${data.activeSessions || 4} / 5 Online`,
-                rateLimit: data.rateLimit || prev.rateLimit,
-                memory: data.memory || prev.memory,
-              }));
-              setHeartbeatLatency(22);
-            }
-          } catch {
-            // ignore parse error
-          }
-        };
-
-        eventSource.onerror = () => {
-          if (eventSource) {
-            eventSource.close();
-            eventSource = null;
-          }
-          if (!fallbackIntervalId && isBrowser) {
-            fallbackIntervalId = window.setInterval(() => {
-              void refreshLindaStatus();
-            }, 15000);
-          }
-        };
-      } catch {
-        if (isBrowser) {
-          fallbackIntervalId = window.setInterval(() => {
-            void refreshLindaStatus();
-          }, 15000);
-        }
-      }
-    } else if (isBrowser) {
-      fallbackIntervalId = window.setInterval(() => {
-        void refreshLindaStatus();
-      }, 15000);
-    }
-
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-      }
-      if (fallbackIntervalId) {
-        window.clearInterval(fallbackIntervalId);
-      }
-    };
-  }, [refreshLindaStatus]);
-
-  // Fetch live Primary Master (+971505760056) & pool conversations on mount and when connected
-  useEffect(() => {
-    let cancelled = false;
-    apiClient
-      .get('/api/linda/conversations')
-      .then(res => {
-        if (cancelled) return;
-        const liveConvs = (res as { data?: { conversations?: LindaConversationItem[] } })?.data
-          ?.conversations;
-        if (Array.isArray(liveConvs) && liveConvs.length > 0) {
-          setConversations(liveConvs);
-        }
-      })
-      .catch(() => {
-        // Keep initial conversations if backend is unreachable
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [isConnected]);
+  useLindaStatusPolling({
+    refreshLindaStatus,
+    setMetrics,
+    setHeartbeatLatency,
+    setConversations,
+    isConnected,
+  });
 
   useLindaSocketSync({
     setConversations,
