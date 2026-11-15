@@ -7,7 +7,6 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency as formatCurrencyUtil } from '../../../utils';
-import { MAX_PRICE, MAX_BEDROOMS, MAX_BATHROOMS, MAX_SQFT } from '../../../utils/validation';
 import { createLogger } from '../../../utils/logger';
 
 const log = createLogger('usePropertyManagement');
@@ -30,6 +29,11 @@ import {
   EMPTY_FORM,
   ITEMS_PER_PAGE,
 } from './usePropertyManagement.types';
+import {
+  validatePropertyFormData,
+  buildPropertyPayload,
+  populateEditForm,
+} from './usePropertyManagement.validation';
 
 // ─── Hook ───────────────────────────────────────────────────────────────
 
@@ -131,36 +135,10 @@ export function usePropertyManagement() {
   }, []);
 
   const handleCreate = useCallback(() => {
-    if (!formData.title.trim() || !formData.location.trim()) return;
-    const price = Number(formData.price);
-    if (!price || price <= 0 || price > MAX_PRICE) return;
-    const bedrooms = Number(formData.bedrooms) || 0;
-    const bathrooms = Number(formData.bathrooms) || 0;
-    const sqft = Number(formData.sqft) || 0;
-    if (
-      bedrooms < 0 ||
-      bedrooms > MAX_BEDROOMS ||
-      bathrooms < 0 ||
-      bathrooms > MAX_BATHROOMS ||
-      sqft < 0 ||
-      sqft > MAX_SQFT
-    )
-      return;
+    const { error, parsed } = validatePropertyFormData(formData);
+    if (error) return;
 
-    const propertyData = {
-      title: formData.title.trim(),
-      type: formData.type,
-      status: formData.status,
-      location: formData.location.trim(),
-      price,
-      bedrooms,
-      bathrooms,
-      sqft,
-      description: formData.description.trim(),
-      agent_name: formData.agent_name.trim(),
-      featured: formData.featured,
-      created_at: new Date().toISOString(),
-    };
+    const propertyData = buildPropertyPayload(formData, parsed);
 
     dispatch(createPropertyAPI(propertyData))
       .then(result => {
@@ -191,19 +169,7 @@ export function usePropertyManagement() {
 
   const handleEdit = useCallback((property: Property) => {
     setSelectedProperty(property);
-    setFormData({
-      title: property.title,
-      type: property.type,
-      status: property.status,
-      location: property.location,
-      price: property.price?.toString() || '',
-      bedrooms: property.bedrooms?.toString() || '',
-      bathrooms: property.bathrooms?.toString() || '',
-      sqft: property.sqft?.toString() || '',
-      description: property.description || '',
-      agent_name: property.agent_name || '',
-      featured: property.featured || false,
-    });
+    setFormData(populateEditForm(property));
     setShowEditModal(true);
   }, []);
 
