@@ -41,7 +41,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ property, amount, onSuccess
       });
 
       if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(error.message ?? 'Payment failed');
         setIsProcessing(false);
       } else {
         if (onSuccess) {
@@ -84,7 +84,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ property, amount, onSuccess
   );
 };
 
-export default function Checkout({ property, amount, onSuccess, onCancel }) {
+export default function Checkout({ property, amount, onSuccess, onCancel }: CheckoutFormProps) {
   const [clientSecret, setClientSecret] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');

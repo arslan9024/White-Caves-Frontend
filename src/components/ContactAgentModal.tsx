@@ -3,7 +3,29 @@ import { X, Phone, MessageCircle, Calendar, Star, MapPin, Award } from 'lucide-r
 import { authFetch } from '../utils/authFetch';
 import './ContactAgentModal.css';
 
-const ContactAgentModal = ({
+interface AgentSummary {
+  _id: string;
+  name: string;
+  profilePicture?: string;
+  isOnline?: boolean;
+  specialization?: string;
+  rating?: number;
+  activeListings?: number;
+  responseTime?: string;
+  yearsExperience?: number;
+  coverageAreas?: string[];
+}
+
+interface ContactAgentModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  propertyId?: string | number;
+  property?: any;
+  availableAgents?: AgentSummary[];
+  onScheduleViewing?: () => void;
+}
+
+const ContactAgentModal: React.FC<ContactAgentModalProps> = ({
   isOpen,
   onClose,
   propertyId,
@@ -11,7 +33,7 @@ const ContactAgentModal = ({
   availableAgents = [],
   onScheduleViewing: _onScheduleViewing,
 }) => {
-  const [selectedAgent, setSelectedAgent] = useState(null);
+  const [selectedAgent, setSelectedAgent] = useState<AgentSummary | null>(null);
   const [contactMethod, setContactMethod] = useState('whatsapp');
   const [message, setMessage] = useState('');
   const [preferredDate, setPreferredDate] = useState('');
@@ -25,7 +47,7 @@ const ContactAgentModal = ({
     }
   }, [availableAgents]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -35,7 +57,7 @@ const ContactAgentModal = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          agentId: selectedAgent._id,
+          agentId: selectedAgent?._id,
           propertyId,
           contactMethod,
           message,
