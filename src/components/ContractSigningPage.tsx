@@ -49,7 +49,7 @@ const ContractSigningPage = () => {
   /**
    * Handle signature completion
    */
-  const handleSignatureComplete = result => {
+  const handleSignatureComplete = (_result: unknown) => {
     setSignatureComplete(true);
 
     // Redirect after a delay

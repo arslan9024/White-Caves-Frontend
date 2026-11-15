@@ -64,7 +64,7 @@ const ContractPreview: React.FC<ContractPreviewProps> = ({
     );
   }
 
-  const formatDate = date => {
+  const formatDate = (date?: string | Date | null) => {
     if (!date) return 'Not specified';
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',

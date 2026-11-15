@@ -77,7 +77,7 @@ export default function ContactForm() {
           placeholder="Your Message"
           value={formData.message}
           onChange={handleChange}
-          rows="5"
+          rows={5}
         ></textarea>
         {errors.message && <span className="error">{errors.message}</span>}
       </div>
