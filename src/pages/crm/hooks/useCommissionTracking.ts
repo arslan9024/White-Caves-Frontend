@@ -1,7 +1,6 @@
 /**
  * useCommissionTracking — Custom hook for Commission CRUD operations
  * Extracts all business logic, state, and Redux interactions from CommissionTrackingPage.
- * Makes the page component a pure rendering layer and this hook independently testable.
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,70 +17,19 @@ import {
   updateCommissionAPI,
   addActivity,
 } from '../../../store/crmDataSlice';
+import {
+  Commission,
+  CommissionFormData,
+  STATUS_CONFIG,
+  TYPE_LABELS,
+  ITEMS_PER_PAGE,
+  EMPTY_FORM,
+} from './commissionTracking.types';
+
+export type { Commission, CommissionFormData };
+export { STATUS_CONFIG, TYPE_LABELS, ITEMS_PER_PAGE, EMPTY_FORM };
 
 const log = createLogger('useCommissionTracking');
-// ─── Types ──────────────────────────────────────────────────────────────
-
-export interface Commission {
-  id: string | number;
-  agent_name?: string;
-  agent_id?: string | number;
-  amount?: number;
-  percentage?: number;
-  type?: string;
-  status?: string;
-  property_id?: string | number;
-  property_title?: string;
-  transaction_id?: string | number;
-  notes?: string;
-  created_at?: string;
-  updated_at?: string;
-  [key: string]: unknown;
-}
-
-export interface CommissionFormData {
-  agent_name: string;
-  amount: string;
-  percentage: string;
-  type: string;
-  status: string;
-  property_title: string;
-  notes: string;
-}
-
-type CommissionBadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-
-// ─── Constants ──────────────────────────────────────────────────────────
-
-export const STATUS_CONFIG: Record<
-  string,
-  { label: string; color: string; badgeVariant: CommissionBadgeVariant }
-> = {
-  pending: { label: 'Pending', color: '#F59E0B', badgeVariant: 'warning' },
-  approved: { label: 'Approved', color: '#3B82F6', badgeVariant: 'info' },
-  paid: { label: 'Paid', color: '#10B981', badgeVariant: 'success' },
-  cancelled: { label: 'Cancelled', color: '#6B7280', badgeVariant: 'secondary' },
-};
-
-export const TYPE_LABELS: Record<string, string> = {
-  sale: '🏠 Sale',
-  rental: '🔑 Rental',
-  referral: '🤝 Referral',
-};
-
-const ITEMS_PER_PAGE = 10;
-
-const EMPTY_FORM: CommissionFormData = {
-  agent_name: '',
-  amount: '',
-  percentage: '',
-  type: 'sale',
-  status: 'pending',
-  property_title: '',
-  notes: '',
-};
-
-// ─── Hook ───────────────────────────────────────────────────────────────
 
 export function useCommissionTracking() {
   const dispatch = useDispatch<AppDispatch>();
@@ -90,19 +38,15 @@ export function useCommissionTracking() {
   const loading = useSelector(selectCommissionsLoading);
   const error = useSelector(selectCommissionsError);
 
-  // Fetch on mount
   useEffect(() => {
     dispatch(fetchCommissionsFromAPI({}));
   }, [dispatch]);
-
-  // ─── Local state ────────────────────────────────────────────────
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, statusFilter, typeFilter]);
@@ -112,8 +56,6 @@ export function useCommissionTracking() {
   const [selectedCommission, setSelectedCommission] = useState<Commission | null>(null);
   const [formData, setFormData] = useState<CommissionFormData>({ ...EMPTY_FORM });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  // ─── Derived data ───────────────────────────────────────────────
 
   const filteredCommissions = useMemo(() => {
     return allCommissions.filter((c: Commission) => {
@@ -147,8 +89,6 @@ export function useCommissionTracking() {
       .reduce((sum, c) => sum + (c.amount || 0), 0);
     return { pending, approved, paid };
   }, [allCommissions]);
-
-  // ─── Actions ────────────────────────────────────────────────────
 
   const resetForm = useCallback(() => {
     setFormData({ ...EMPTY_FORM });
@@ -315,7 +255,6 @@ export function useCommissionTracking() {
   }, [navigate]);
 
   return {
-    // Data
     allCommissions,
     filteredCommissions,
     paginatedCommissions,
@@ -323,7 +262,6 @@ export function useCommissionTracking() {
     totalPages,
     loading,
     error,
-    // State
     search,
     statusFilter,
     typeFilter,
@@ -335,9 +273,7 @@ export function useCommissionTracking() {
     setFormData,
     errorMessage,
     setErrorMessage,
-    // Page constants
     ITEMS_PER_PAGE,
-    // Actions
     openCreateModal,
     closeCreateModal,
     closeEditModal,
@@ -350,7 +286,6 @@ export function useCommissionTracking() {
     setCurrentPage,
     retryFetch,
     goBack,
-    // Formatters
     getStatusBadgeVariant,
     formatCurrency,
     formatDate,
