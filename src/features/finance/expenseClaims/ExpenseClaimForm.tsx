@@ -1,170 +1,28 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import {
+  EXPENSE_CATEGORIES,
+  MAX_LINE_ITEMS,
+  MAX_NOTES_LENGTH,
+  type ExpenseCategory,
+  type ExpenseClaimFormErrors,
+  type ExpenseClaimFormProps,
+  type ExpenseClaimFormValues,
+  type ExpenseClaimLineItem,
+} from './ExpenseClaimForm.types';
+import {
+  buildInitialValues,
+  calculateExpenseClaimTotal,
+  createEmptyLineItem,
+  hasExpenseClaimErrors,
+  validateExpenseClaim,
+} from './ExpenseClaimForm.validation';
 
-/**
- * Supported expense categories for a claim line item.
- */
-export type ExpenseCategory =
-  | 'travel'
-  | 'accommodation'
-  | 'meals'
-  | 'supplies'
-  | 'software'
-  | 'other';
-
-export const EXPENSE_CATEGORIES: readonly ExpenseCategory[] = [
-  'travel',
-  'accommodation',
-  'meals',
-  'supplies',
-  'software',
-  'other',
-];
-
-/**
- * A single line item within an expense claim.
- */
-export interface ExpenseClaimLineItem {
-  id: string;
-  description: string;
-  category: ExpenseCategory;
-  amount: number;
-  incurredOn: string; // ISO date string (YYYY-MM-DD)
-}
-
-/**
- * The full payload submitted when a user creates/updates an expense claim.
- */
-export interface ExpenseClaimFormValues {
-  claimantName: string;
-  department: string;
-  notes: string;
-  lineItems: ExpenseClaimLineItem[];
-}
-
-export interface ExpenseClaimFormErrors {
-  claimantName?: string;
-  department?: string;
-  lineItems?: string;
-  lineItemErrors: Record<string, Partial<Record<keyof ExpenseClaimLineItem, string>>>;
-}
-
-export interface ExpenseClaimFormProps {
-  /** Initial values used to prefill the form (e.g. when editing a draft claim). */
-  initialValues?: Partial<ExpenseClaimFormValues>;
-  /** Called with the validated, normalized form values on successful submit. */
-  onSubmit: (values: ExpenseClaimFormValues) => void;
-  /** Called when the user cancels editing. */
-  onCancel?: () => void;
-  /** Disables all inputs and hides submit/cancel actions while true. */
-  isSubmitting?: boolean;
-}
-
-const MAX_NOTES_LENGTH = 1000;
-const MAX_LINE_ITEMS = 50;
-
-let idCounter = 0;
-
-function createLineItemId(): string {
-  idCounter += 1;
-  return `line-item-${Date.now()}-${idCounter}`;
-}
-
-function createEmptyLineItem(): ExpenseClaimLineItem {
-  return {
-    id: createLineItemId(),
-    description: '',
-    category: 'other',
-    amount: 0,
-    incurredOn: '',
-  };
-}
-
-function isValidIsoDate(value: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return false;
-  }
-  const parsed = new Date(value);
-  return !Number.isNaN(parsed.getTime());
-}
-
-/**
- * Validates the given expense claim form values.
- * Returns an errors object; a claim is valid when every field is `undefined`
- * and `lineItemErrors` is empty.
- */
-export function validateExpenseClaim(values: ExpenseClaimFormValues): ExpenseClaimFormErrors {
-  const errors: ExpenseClaimFormErrors = { lineItemErrors: {} };
-
-  if (!values.claimantName.trim()) {
-    errors.claimantName = 'Claimant name is required.';
-  }
-
-  if (!values.department.trim()) {
-    errors.department = 'Department is required.';
-  }
-
-  if (values.lineItems.length === 0) {
-    errors.lineItems = 'At least one expense line item is required.';
-  } else if (values.lineItems.length > MAX_LINE_ITEMS) {
-    errors.lineItems = `A claim cannot contain more than ${MAX_LINE_ITEMS} line items.`;
-  }
-
-  for (const item of values.lineItems) {
-    const itemErrors: Partial<Record<keyof ExpenseClaimLineItem, string>> = {};
-
-    if (!item.description.trim()) {
-      itemErrors.description = 'Description is required.';
-    }
-
-    if (!EXPENSE_CATEGORIES.includes(item.category)) {
-      itemErrors.category = 'Select a valid category.';
-    }
-
-    if (!Number.isFinite(item.amount) || item.amount <= 0) {
-      itemErrors.amount = 'Amount must be a positive number.';
-    }
-
-    if (!item.incurredOn || !isValidIsoDate(item.incurredOn)) {
-      itemErrors.incurredOn = 'Enter a valid date (YYYY-MM-DD).';
-    }
-
-    if (Object.keys(itemErrors).length > 0) {
-      errors.lineItemErrors[item.id] = itemErrors;
-    }
-  }
-
-  return errors;
-}
-
-export function hasExpenseClaimErrors(errors: ExpenseClaimFormErrors): boolean {
-  return Boolean(
-    errors.claimantName ||
-      errors.department ||
-      errors.lineItems ||
-      Object.keys(errors.lineItemErrors).length > 0
-  );
-}
-
-export function calculateExpenseClaimTotal(lineItems: readonly ExpenseClaimLineItem[]): number {
-  return lineItems.reduce((sum, item) => {
-    const amount = Number.isFinite(item.amount) ? item.amount : 0;
-    return sum + amount;
-  }, 0);
-}
-
-function buildInitialValues(
-  initialValues?: Partial<ExpenseClaimFormValues>
-): ExpenseClaimFormValues {
-  return {
-    claimantName: initialValues?.claimantName ?? '',
-    department: initialValues?.department ?? '',
-    notes: initialValues?.notes ?? '',
-    lineItems:
-      initialValues?.lineItems && initialValues.lineItems.length > 0
-        ? initialValues.lineItems
-        : [createEmptyLineItem()],
-  };
-}
+export * from './ExpenseClaimForm.types';
+export {
+  calculateExpenseClaimTotal,
+  hasExpenseClaimErrors,
+  validateExpenseClaim,
+} from './ExpenseClaimForm.validation';
 
 export const ExpenseClaimForm: React.FC<ExpenseClaimFormProps> = ({
   initialValues,
