@@ -42,6 +42,7 @@ import {
 } from '../../../store/slices/sidebarSlice';
 import { selectHotLeads, selectAllProperties } from '../../../store/crmDataSlice';
 import { selectQueuedCount } from '../../../store/slices/nadiaSlice';
+import { MobileDrawerDepartmentList } from './MobileDrawerDepartmentList';
 import {
   DrawerOverlay,
   DrawerPanel,
@@ -266,59 +267,14 @@ const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = React.memo(function Mo
 
           {/* Departments */}
           <DrawerSectionLabel>Departments</DrawerSectionLabel>
-          {Object.entries(DEPARTMENTS).map(([deptId, dept]) => {
-            const Icon = dept.icon;
-            const isActive = selectedDepartment === deptId;
-            // eslint-disable-next-line security/detect-object-injection
-            const isExpanded = !!expanded[deptId];
-            const badge = dept.badgeKey ? badgeCounts[dept.badgeKey] : 0;
-
-            return (
-              <React.Fragment key={deptId}>
-                <DrawerNavItem
-                  $active={isActive}
-                  $color={dept.color}
-                  onClick={() => handleDeptClick(deptId)}
-                  aria-expanded={isExpanded}
-                  aria-label={dept.label}
-                >
-                  <DrawerNavIcon $color={dept.color}>
-                    <Icon size={18} />
-                  </DrawerNavIcon>
-                  {dept.label}
-                  {badge > 0 && (
-                    <DrawerNavBadge aria-label={`${badge} items`}>
-                      {badge > 99 ? '99+' : badge}
-                    </DrawerNavBadge>
-                  )}
-                  <ChevronDown
-                    size={14}
-                    style={{
-                      marginLeft: badge > 0 ? '4px' : 'auto',
-                      transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
-                      transition: 'transform 0.2s ease',
-                      color: '#9CA3AF',
-                    }}
-                  />
-                </DrawerNavItem>
-                <DrawerSubItems $expanded={isExpanded}>
-                  {dept.services.map(service => {
-                    const isActiveSvc = selectedDepartment === deptId && selectedSvc === service;
-                    return (
-                      <DrawerSubItem
-                        key={service}
-                        $active={isActiveSvc}
-                        onClick={() => handleServiceClick(deptId, service)}
-                      >
-                        <DrawerSubDot $color={dept.color} />
-                        {service}
-                      </DrawerSubItem>
-                    );
-                  })}
-                </DrawerSubItems>
-              </React.Fragment>
-            );
-          })}
+          <MobileDrawerDepartmentList
+            selectedDepartment={selectedDepartment}
+            selectedSvc={selectedSvc}
+            expanded={expanded}
+            badgeCounts={badgeCounts}
+            onDeptClick={handleDeptClick}
+            onServiceClick={handleServiceClick}
+          />
 
           {/* AI Command Center */}
           <DrawerSectionLabel>AI Center</DrawerSectionLabel>
