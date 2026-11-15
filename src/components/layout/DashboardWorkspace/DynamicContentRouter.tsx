@@ -1,8 +1,20 @@
 // src/components/layout/DashboardWorkspace/DynamicContentRouter.tsx
 import React, { Suspense, useMemo } from 'react';
-import styled from 'styled-components';
-import { MEDIA_QUERIES, theme } from '../../../styles/theme';
 import { featureRegistry, Feature } from './FeatureRegistry';
+import {
+  CloseButton,
+  ContentActions,
+  ContentContainer,
+  ContentHeader,
+  ContentTitle,
+  ContentWrapper,
+  EmptyStateContainer,
+  ErrorContainer,
+  ErrorMessage,
+  ErrorTitle,
+  LoadingContainer,
+  Spinner,
+} from './DynamicContentRouter.styles';
 
 interface DynamicContentRouterProps {
   activeFeatureId: string | null;
@@ -12,183 +24,6 @@ interface DynamicContentRouterProps {
   fallback?: React.ReactNode;
   errorFallback?: (error: Error) => React.ReactNode;
 }
-
-// ============================================================================
-// STYLED COMPONENTS
-// ============================================================================
-
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  background: ${theme.colors.background.primary};
-  border-radius: ${theme.borderRadius.lg};
-  overflow: hidden;
-
-  @media ${MEDIA_QUERIES.tablet} {
-    border-radius: ${theme.borderRadius.md};
-  }
-`;
-
-const ContentWrapper = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-
-  /* Custom scrollbar */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: ${theme.colors.background.secondary};
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${theme.colors.border};
-    border-radius: 4px;
-
-    &:hover {
-      background: ${theme.colors.borderDark};
-    }
-  }
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: ${theme.colors.background.primary};
-`;
-
-const ErrorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  padding: 2rem;
-  background: ${theme.colors.background.primary};
-  color: ${theme.colors.text.secondary};
-`;
-
-const ErrorTitle = styled.h2`
-  color: ${theme.colors.danger};
-  margin-bottom: 1rem;
-`;
-
-const ErrorMessage = styled.p`
-  text-align: center;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-`;
-
-const EmptyStateContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  padding: 2rem;
-  background: ${theme.colors.background.primary};
-  color: ${theme.colors.text.tertiary};
-  text-align: center;
-
-  svg {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-  }
-
-  p {
-    margin: 0;
-    font-size: 1.1rem;
-  }
-`;
-
-const ContentHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: 1px solid ${theme.colors.border};
-  background: ${theme.colors.background.secondary};
-  flex-shrink: 0;
-
-  @media ${MEDIA_QUERIES.tablet} {
-    padding: 1rem;
-  }
-`;
-
-const ContentTitle = styled.h1`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: ${theme.colors.text.primary};
-
-  svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  @media ${MEDIA_QUERIES.tablet} {
-    font-size: 1.25rem;
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
-`;
-
-const ContentActions = styled.div`
-  display: flex;
-  gap: 0.75rem;
-`;
-
-const CloseButton = styled.button`
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  background: ${theme.colors.background.primary};
-  border: 1px solid ${theme.colors.border};
-  border-radius: ${theme.borderRadius.md};
-  cursor: pointer;
-  color: ${theme.colors.text.secondary};
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: ${theme.colors.background.tertiary};
-    color: ${theme.colors.text.primary};
-  }
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  @media ${MEDIA_QUERIES.tablet} {
-    display: flex;
-  }
-`;
-
-// ============================================================================
-// ERROR BOUNDARY
-// ============================================================================
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -241,34 +76,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 }
 
-// ============================================================================
-// LOADING SPINNER
-// ============================================================================
-
-const Spinner = styled.div`
-  width: 40px;
-  height: 40px;
-  border: 4px solid ${theme.colors.border};
-  border-top-color: ${theme.colors.primary};
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-`;
-
 const DefaultLoadingFallback = () => (
   <LoadingContainer>
     <Spinner />
   </LoadingContainer>
 );
-
-// ============================================================================
-// DYNAMIC CONTENT ROUTER COMPONENT
-// ============================================================================
 
 export const DynamicContentRouter: React.FC<DynamicContentRouterProps> = ({
   activeFeatureId,
@@ -281,18 +93,16 @@ export const DynamicContentRouter: React.FC<DynamicContentRouterProps> = ({
   const [feature, setFeature] = React.useState<Feature | undefined>(undefined);
   const [renderKey, setRenderKey] = React.useState(0);
 
-  // Get feature when activeFeatureId changes
   React.useEffect(() => {
     if (activeFeatureId) {
       const f = featureRegistry.getFeature(activeFeatureId);
       setFeature(f);
-      setRenderKey(prev => prev + 1); // Force re-render of component
+      setRenderKey(prev => prev + 1);
     } else {
       setFeature(undefined);
     }
   }, [activeFeatureId]);
 
-  // Render logic
   const renderContent = useMemo(() => {
     if (isLoading) {
       return fallback || <DefaultLoadingFallback />;
