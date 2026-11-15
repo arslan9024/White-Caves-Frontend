@@ -8,18 +8,25 @@
 <body>
   <article>
     <h1>Chapter 12: The Great Web Decoupling &amp; Multi-Repo Sovereignty</h1>
-    <p><em>Architectural separation of public client discovery (Next.js 16 Turbopack) from internal enterprise operations (Vite CRM).</em></p>
+    <p><em>Complete 28-Step Architectural Separation of Public Client Discovery (Next.js 16.4.6 Turbopack) from Internal Enterprise Operations (Vite CRM Command Center).</em></p>
     <section>
-      <h2>1. Public Discovery vs. Internal Operations</h2>
+      <h2>1. Phase A — All 19 Public Homepage Component Groups Migrated</h2>
       <ul>
-        <li><strong>White-Caves-Web (Next.js 16 Turbopack, Port 3001):</strong> Owns public brochureware, SEO, BrandLogo, TrustStrip, CurrencyUnitBar, MarketPulseLiveTicker, ToolsDashboard, AreaGuideGrid, MobileAppBanner, InterestWizard, and InteractiveMap.</li>
-        <li><strong>White-Caves-Frontend (React 19 + Vite, Port 3000):</strong> Pure authenticated CRM Command Center serving Department Floors 1–12 and AIAMS with zero public marketing dead-weight.</li>
+        <li><strong>White-Caves-Web (Next.js 16 Turbopack, Port 3001):</strong> Hosts all 19 public homepage sections with separated pure data/types layers, Next.js <code>&lt;Image /&gt;</code> and <code>&lt;Link /&gt;</code> optimization, and pure Tailwind CSS (zero <code>styled-components</code> or <code>framer-motion</code> runtime overhead): <code>BrandLogo</code>, <code>RegulatoryTrustStrip</code>, <code>DldTrakheesiModal</code>, <code>CurrencyUnitBar</code>, <code>WhatsAppConciergePill</code>, <code>TestimonialPodium</code>, <code>MarketPulseLiveTicker</code>, <code>StatsBanner</code>, <code>PropertyGrid</code>, <code>TruCheckBadge</code>, <code>ToolsDashboard</code>, <code>AreaGuideGrid</code>, <code>InteractiveMap</code>, <code>DubaiSunsetGallery</code>, <code>QuickSearchModal</code> (<code>Cmd+K</code>), <code>FeaturesSection</code> (with 5 statutory Dubai Real Estate FAQs), <code>TeamGrid</code>, <code>ContactCTA</code>, <code>HeroSection</code> (with <code>DamacHills2ClusterBadge</code>), and <code>Footer</code>.</li>
+        <li><strong>White-Caves-Frontend (React 19 + Vite, Port 3000):</strong> The entire legacy <code>src/components/homepage/</code> directory (76 files) has been decommissioned, leaving a pure authenticated CRM Command Center serving Department Floors 1–12 and AIAMS.</li>
       </ul>
     </section>
     <section>
-      <h2>2. Multi-Repo Sovereignty &amp; Port Isolation</h2>
+      <h2>2. Phase B — All 12 Standalone Next.js 16 App Router Public Routes</h2>
       <ul>
-        <li>Fixed port allocation: Frontend (:3000), Web (:3001), Linda Bot (:3002), Aegis-Sterling (:3333), Linda UI (:4000), Server (:5001), Mobile (:8081).</li>
+        <li><strong>Static &amp; Partial Prerendered (PPR) Routes in <code>White-Caves-Web/src/app/</code>:</strong> <code>/</code>, <code>/properties</code>, <code>/properties/[id]</code> (with <code>RealEstateListing</code> JSON-LD, OpenGraph, multi-currency conversion, and UAE 20% down / 4% DLD breakdown), <code>/off-plan</code>, <code>/services</code>, <code>/tools</code>, <code>/pricing</code> (with 8 broker commission tiers and Digital RERA ORN <code>#12345</code> Services Agreement Signer), <code>/about</code>, <code>/careers</code>, <code>/contact</code>, <code>/privacy-policy</code>, and <code>/terms</code>.</li>
+        <li><strong>Legacy Public Marketing Pages Purged from CRM:</strong> All 11 duplicate public marketing page routes (<code>AboutPage</code>, <code>ServicesPage</code>, <code>CareersPage</code>, <code>ContactPage</code>, <code>ToolsPage</code>, <code>OffPlanPortalPage</code>, <code>PrivacyPolicyPage</code>, <code>TermsPage</code>, <code>PricingPage</code>, <code>PropertiesPage</code>, and <code>PropertyDetailPage</code>) have been decommissioned from <code>White-Caves-Frontend</code> (~12,750+ lines removed).</li>
+      </ul>
+    </section>
+    <section>
+      <h2>3. Multi-Repo Sovereignty &amp; Port Isolation</h2>
+      <ul>
+        <li>Fixed port allocation: Frontend (<code>:3000</code>), Web (<code>:3001</code>), Linda Bot (<code>:3002</code>), Aegis-Sterling (<code>:3333</code>), Linda UI (<code>:4000</code>), Server (<code>:5001</code>), Mobile (<code>:8081</code>).</li>
         <li>Real-time Socket.IO bridge connects Server Linda webhook relays (<code>/api/v1/webhooks/linda/*</code>) directly to CRM sourcing dashboards.</li>
       </ul>
     </section>

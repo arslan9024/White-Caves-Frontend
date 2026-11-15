@@ -306,7 +306,8 @@ White-Caves-Mobile   -> exp://localhost:8081`,
     id: 'ch-12',
     slug: 'chapter-12-web-decoupling-sovereignty',
     title: 'Chapter 12: The Great Web Decoupling & Multi-Repo Sovereignty',
-    subtitle: 'Separating Public Client Discovery (Next.js) from Internal Enterprise Operations (Vite CRM)',
+    subtitle:
+      'Separating Public Client Discovery (Next.js) from Internal Enterprise Operations (Vite CRM)',
     category: 'Core Architecture',
     readTime: '10 min read',
     summary:
@@ -315,12 +316,12 @@ White-Caves-Mobile   -> exp://localhost:8081`,
     sections: [
       {
         id: 's1',
-        title: 'Public Discovery vs. Internal Enterprise CRM',
+        title: 'Phase A & B: 28-Step Public Discovery vs. Internal Enterprise CRM Decoupling',
         content:
-          'Public brochureware (BrandLogo, TrustStrip, CurrencyUnitBar, MarketPulseLiveTicker, ToolsDashboard, AreaGuideGrid, MobileAppBanner, InterestWizard, InteractiveMap) is isolated in White-Caves-Web (Next.js 16 Turbopack), leaving White-Caves-Frontend as a zero-bloat authenticated CRM Command Center for Department Floors 1–12 and AIAMS.',
+          'All 19 homepage component groups (BrandLogo, RegulatoryTrustStrip, DldTrakheesiModal, CurrencyUnitBar, WhatsAppConciergePill, TestimonialPodium, MarketPulseLiveTicker, StatsBanner, PropertyGrid, TruCheckBadge, ToolsDashboard, AreaGuideGrid, InteractiveMap, DubaiSunsetGallery, QuickSearchModal, FeaturesSection, TeamGrid, ContactCTA, HeroSection, Footer) and all 12 public routes (/, /properties, /properties/[id], /off-plan, /services, /tools, /pricing, /about, /careers, /contact, /privacy-policy, /terms) live in White-Caves-Web (Next.js 16.4.6 Turbopack). All 76 homepage files and 11 duplicate public marketing pages have been decommissioned from White-Caves-Frontend (~23,000+ lines removed), leaving a pure authenticated CRM Command Center for Department Floors 1–12 and AIAMS.',
         keyTakeaways: [
-          'Zero public marketing dead-weight in the Vite CRM bundle.',
-          'Dedicated Next.js 16 SSR/ISR surface for SEO and lead capture.',
+          'Zero public marketing dead-weight in the Vite CRM bundle (~23,000+ lines purged).',
+          'Dedicated Next.js 16 Static & PPR routes with RealEstateListing JSON-LD, OpenGraph, and RERA Agreement Signer.',
           'Shared domain contracts anchored in White-Caves-Server Prisma schema.',
         ],
       },
