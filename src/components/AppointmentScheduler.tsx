@@ -3,11 +3,16 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './AppointmentScheduler.css';
 
-export default function AppointmentScheduler({ propertyId, agentId }) {
-  const [selectedDate, setSelectedDate] = useState(null);
+interface AppointmentSchedulerProps {
+  propertyId: string | number;
+  agentId: string | number;
+}
+
+export default function AppointmentScheduler({ propertyId, agentId }: AppointmentSchedulerProps) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isRescheduling, setIsRescheduling] = useState(false);
-  const [existingAppointment, setExistingAppointment] = useState(null);
-  const [statusMsg, setStatusMsg] = useState(null);
+  const [existingAppointment, setExistingAppointment] = useState<{ id: string } | null>(null);
+  const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
   const handleSchedule = async () => {
     try {
@@ -42,7 +47,7 @@ export default function AppointmentScheduler({ propertyId, agentId }) {
       <h3>{isRescheduling ? 'Reschedule Viewing' : 'Schedule Viewing'}</h3>
       <DatePicker
         selected={selectedDate}
-        onChange={date => setSelectedDate(date)}
+        onChange={(date: Date | null) => setSelectedDate(date)}
         showTimeSelect
         timeFormat="HH:mm"
         timeIntervals={60}

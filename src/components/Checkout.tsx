@@ -3,19 +3,25 @@ import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-
 import { loadStripe } from '@stripe/stripe-js';
 import './Checkout.css';
 
-let stripePromise;
+let stripePromise: ReturnType<typeof loadStripe> | null = null;
 if (import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
   stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
-} else {
 }
 
-const CheckoutForm = ({ property, amount, onSuccess, onCancel }) => {
+interface CheckoutFormProps {
+  property?: any;
+  amount?: number;
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}
+
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ property, amount, onSuccess, onCancel }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
