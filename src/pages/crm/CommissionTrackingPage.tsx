@@ -7,7 +7,6 @@
  */
 
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Badge, Pagination } from '../../components/ui';
 import { Modal } from '../../shared/components/ui/Modal';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
@@ -26,12 +25,6 @@ import {
   Td,
   Tr,
   EmptyState,
-  FormGroup,
-  FormLabel,
-  FormInput,
-  FormTextarea,
-  FormSelect,
-  FormRow,
   PaginationWrapper,
   LoadingBanner,
   ErrorBanner,
@@ -39,39 +32,7 @@ import {
 } from './styles/CrmPageStyles';
 import { useCommissionTracking, STATUS_CONFIG, TYPE_LABELS } from './hooks/useCommissionTracking';
 import type { Commission } from './hooks/useCommissionTracking';
-
-// ─── Commission-Specific Styled Components ──────────────────────────────
-
-const StatsRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-`;
-
-const StatCard = styled.div<{ $color: string }>`
-  background: #0f0f0f;
-  border: 1px solid #c9a84c;
-  border-radius: 12px;
-  padding: 1.25rem;
-  border-left: 4px solid ${props => props.$color};
-`;
-
-const StatValue = styled.div`
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #ffffff;
-`;
-
-const StatLabel = styled.div`
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 0.25rem;
-`;
-
-// ─── Component ──────────────────────────────────────────────────────────
+import { StatsRow, StatCard, StatValue, StatLabel, CommissionModalForm } from './CommissionModalForm';
 
 const CommissionTrackingPage: FC = () => {
   useDocumentTitle('Commission Tracking');
@@ -79,115 +40,34 @@ const CommissionTrackingPage: FC = () => {
     filteredCommissions,
     paginatedCommissions,
     summaryStats,
-    loading,
-    error,
+    currentPage,
     search,
     statusFilter,
     typeFilter,
-    currentPage,
     showCreateModal,
     showEditModal,
     selectedCommission,
     formData,
-    setFormData,
+    loading,
+    error,
     ITEMS_PER_PAGE,
-    openCreateModal,
-    closeCreateModal,
-    closeEditModal,
-    handleCreate,
-    handleEdit,
-    handleSaveEdit,
+    setFormData,
+    setCurrentPage,
     handleSearchChange,
     handleStatusFilterChange,
     handleTypeFilterChange,
-    setCurrentPage,
+    openCreateModal,
+    closeCreateModal,
+    handleCreate,
+    handleEdit,
+    closeEditModal,
+    handleSaveEdit,
     retryFetch,
     goBack,
-    getStatusBadgeVariant,
     formatCurrency,
     formatDate,
+    getStatusBadgeVariant,
   } = useCommissionTracking();
-
-  const renderForm = () => (
-    <>
-      <FormRow>
-        <FormGroup>
-          <FormLabel>Agent Name *</FormLabel>
-          <FormInput
-            type="text"
-            value={formData.agent_name}
-            onChange={e => setFormData({ ...formData, agent_name: e.target.value })}
-            placeholder="e.g. Ahmed Al Rashid"
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Property</FormLabel>
-          <FormInput
-            type="text"
-            value={formData.property_title}
-            onChange={e => setFormData({ ...formData, property_title: e.target.value })}
-            placeholder="e.g. Palm Jumeirah Villa"
-          />
-        </FormGroup>
-      </FormRow>
-      <FormRow>
-        <FormGroup>
-          <FormLabel>Amount (AED) *</FormLabel>
-          <FormInput
-            type="number"
-            value={formData.amount}
-            onChange={e => setFormData({ ...formData, amount: e.target.value })}
-            placeholder="e.g. 50000"
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Percentage (%)</FormLabel>
-          <FormInput
-            type="number"
-            value={formData.percentage}
-            onChange={e => setFormData({ ...formData, percentage: e.target.value })}
-            placeholder="e.g. 2.5"
-          />
-        </FormGroup>
-      </FormRow>
-      <FormRow>
-        <FormGroup>
-          <FormLabel>Type</FormLabel>
-          <FormSelect
-            value={formData.type}
-            onChange={e => setFormData({ ...formData, type: e.target.value })}
-          >
-            {Object.entries(TYPE_LABELS).map(([key, label]) => (
-              <option key={key} value={key}>
-                {label}
-              </option>
-            ))}
-          </FormSelect>
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Status</FormLabel>
-          <FormSelect
-            value={formData.status}
-            onChange={e => setFormData({ ...formData, status: e.target.value })}
-          >
-            {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
-              <option key={key} value={key}>
-                {cfg.label}
-              </option>
-            ))}
-          </FormSelect>
-        </FormGroup>
-      </FormRow>
-      <FormGroup>
-        <FormLabel>Notes</FormLabel>
-        <FormTextarea
-          value={formData.notes}
-          onChange={e => setFormData({ ...formData, notes: e.target.value })}
-          placeholder="Additional notes about this commission..."
-        />
-      </FormGroup>
-    </>
-  );
 
   return (
     <PageContainer>
@@ -324,7 +204,7 @@ const CommissionTrackingPage: FC = () => {
           onClose={closeCreateModal}
           size="large"
         >
-          {renderForm()}
+          <CommissionModalForm formData={formData} setFormData={setFormData} />
           <ModalFooter>
             <SecondaryButton onClick={closeCreateModal}>Cancel</SecondaryButton>
             <PrimaryButton
@@ -345,7 +225,7 @@ const CommissionTrackingPage: FC = () => {
           onClose={closeEditModal}
           size="large"
         >
-          {renderForm()}
+          <CommissionModalForm formData={formData} setFormData={setFormData} />
           <ModalFooter>
             <SecondaryButton onClick={closeEditModal}>Cancel</SecondaryButton>
             <PrimaryButton
