@@ -12,7 +12,6 @@ export const PendingApprovalPage = lazyRetry(() => import('../../pages/auth/Pend
 export const SignInPage = lazyRetry(() => import('../../pages/auth/SignInPage'));
 export const HomePage = lazyRetry(() => import('../../pages/HomePage'));
 export const ServerStatusPage = lazyRetry(() => import('../../pages/ServerStatusPage'));
-export const PricingPage = lazyRetry(() => import('../../pages/PricingPage'));
 export const GoalsGalleryPage = lazyRetry(() => import('../../pages/goals/GoalsGalleryPage'));
 export const MortgageCalculatorPage = lazy(
   () => import('../../pages/buyer/MortgageCalculatorPage')

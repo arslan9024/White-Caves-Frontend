@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 import React from 'react';
 import { HomePage } from './App.pages';
-import { PricingPage } from './App.pages';
 import { GoalsGalleryPage } from './App.pages';
 import { MortgageCalculatorPage } from './App.pages';
 import { DLDFeesPage } from './App.pages';
@@ -208,7 +207,6 @@ export const publicRoutes: Array<{ path: string; section: string; page: ReactNod
   { path: '/', section: 'Home', page: <HomePage /> },
   { path: '/properties', section: 'Properties', page: <PropertiesPage /> },
   { path: '/property/:id', section: 'PropertyDetail', page: <PropertyDetailPage /> },
-  { path: '/pricing', section: 'Pricing', page: <PricingPage /> },
   { path: '/goals', section: 'Goals Gallery', page: <GoalsGalleryPage /> },
   {
     path: '/ai-intelligence',
