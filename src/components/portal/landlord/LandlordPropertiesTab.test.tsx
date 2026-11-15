@@ -3,6 +3,7 @@
  * Tests for Phase 2.2: My Properties Tab
  */
 
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
