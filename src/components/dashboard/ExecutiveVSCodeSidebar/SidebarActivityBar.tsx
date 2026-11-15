@@ -7,30 +7,18 @@
  */
 
 import React, { FC } from 'react';
-import {
-  FileText,
-  ShieldCheck,
-  ShieldAlert,
-  Building2,
-  Users,
-  Bot,
-  CheckSquare,
-  Trophy,
-  Home,
-  Handshake,
-  Network,
-  Contact,
-  Coins,
-  BarChart3,
-  Eye,
-  Activity,
-  UserCircle,
-  Settings,
-  ChevronRight,
-} from 'lucide-react';
+import { Building2, UserCircle, Settings, ChevronRight } from 'lucide-react';
 import { ActivityBar, ActivityGroup, ActivityIconBtn } from './ExecutiveVSCodeSidebar.styles';
 import type { ActivityTab } from './ExecutiveVSCodeSidebar.logic';
 import type { UserRole } from '../../../context/UserRoleContext';
+import {
+  type ActivityItemConfig,
+  AGENT_ITEMS,
+  DIRECTORATE_ITEMS,
+  GUEST_ITEMS,
+  LANDLORD_ITEMS,
+  TENANT_ITEMS,
+} from './SidebarActivityBar.config';
 
 export interface SidebarActivityBarProps {
   activeTab: ActivityTab;
@@ -40,6 +28,14 @@ export interface SidebarActivityBarProps {
   isDirectorate: boolean;
 }
 
+const getRoleItems = (role: UserRole, isDirectorate: boolean): ActivityItemConfig[] => {
+  if (isDirectorate) return DIRECTORATE_ITEMS;
+  if (role === 'landlord') return LANDLORD_ITEMS;
+  if (role === 'tenant') return TENANT_ITEMS;
+  if (role === 'agent') return AGENT_ITEMS;
+  return GUEST_ITEMS;
+};
+
 export const SidebarActivityBar: FC<SidebarActivityBarProps> = ({
   activeTab,
   onSelectTab,
@@ -47,314 +43,66 @@ export const SidebarActivityBar: FC<SidebarActivityBarProps> = ({
   role,
   isDirectorate,
 }) => {
+  const items = getRoleItems(role, isDirectorate);
+
   return (
     <ActivityBar>
       <ActivityGroup>
-        {isDirectorate ? (
-          <>
-            <div style={{ position: 'relative', width: '36px', height: '36px' }}>
-              <ActivityIconBtn
-                $isActive={activeTab === 'departments'}
-                onClick={() => onSelectTab('departments')}
-                title="DMS: Corporate Department Management System (/dashboard/dms)"
-                data-testid="activity-btn-departments"
-                style={{ width: '100%', height: '100%' }}
-              >
-                <Building2 size={18} />
-              </ActivityIconBtn>
-              {onToggleDrawerForTab && (
-                <button
-                  type="button"
-                  onClick={e => {
-                    e.stopPropagation();
-                    onToggleDrawerForTab('departments');
-                  }}
-                  title="Toggle Departments Drawer"
-                  data-testid="activity-caret-departments"
-                  style={{
-                    position: 'absolute',
-                    right: '-4px',
-                    bottom: '-2px',
-                    width: '14px',
-                    height: '14px',
-                    background: '#1E293B',
-                    border: '1px solid rgba(239, 68, 68, 0.4)',
-                    borderRadius: '50%',
-                    color: '#EF4444',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    padding: 0,
-                    zIndex: 2,
-                  }}
-                >
-                  <ChevronRight size={10} />
-                </button>
-              )}
-            </div>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'employees'}
-              onClick={() => onSelectTab('employees')}
-              title="Employees Directory & Personnel Management"
-              data-testid="activity-btn-employees"
-            >
-              <Users size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'aiams' || activeTab === 'ai-command'}
-              onClick={() => onSelectTab('aiams')}
-              title="AI Assistants Management System (AIAMS — 121+ Agents CRUD)"
-              data-testid="activity-btn-aiams"
-            >
-              <Bot size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'tasks'}
-              onClick={() => onSelectTab('tasks')}
-              title="200+ Core Operational & Statutory Tasks Catalog"
-              data-testid="activity-btn-tasks"
-            >
-              <CheckSquare size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'REproperties'}
-              onClick={() => onSelectTab('REproperties')}
-              title="Real Estate Inventory & Portfolio (REproperties)"
-              data-testid="activity-btn-reproperties"
-            >
-              <Home size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'deals'}
-              onClick={() => onSelectTab('deals')}
-              title="Deals & Revenue Pipeline (deals)"
-              data-testid="activity-btn-deals"
-            >
-              <Handshake size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'customers'}
-              onClick={() => onSelectTab('customers')}
-              title="Customers & CRM Nervous Hub (customers)"
-              data-testid="activity-btn-customers"
-            >
-              <Contact size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'documents'}
-              onClick={() => onSelectTab('documents')}
-              title="Sovereign Document Vault (documents)"
-              data-testid="activity-btn-documents"
-            >
-              <FileText size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'leaderboard'}
-              onClick={() => onSelectTab('leaderboard')}
-              title="Corporate Merit Leaderboard & Tier Progression (L0–L5)"
-              data-testid="activity-btn-leaderboard"
-            >
-              <Trophy size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'relationships' || activeTab === 'erms'}
-              onClick={() => onSelectTab('relationships')}
-              title="ERMS: Entities & Relational Matrix Hub"
-              data-testid="activity-btn-relationships"
-            >
-              <Network size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'roles'}
-              onClick={() => onSelectTab('roles')}
-              title="User Role Management System & RBAC (roles)"
-              data-testid="activity-btn-roles"
-            >
-              <ShieldAlert size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'audit'}
-              onClick={() => onSelectTab('audit')}
-              title="RERA Compliance & Master Audit"
-              data-testid="activity-btn-audit"
-            >
-              <ShieldCheck size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'commissions'}
-              onClick={() => onSelectTab('commissions')}
-              title="Commission Ledger & Tracking"
-              data-testid="activity-btn-commissions"
-            >
-              <Coins size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'performance'}
-              onClick={() => onSelectTab('performance')}
-              title="Agent Performance & KPI Tracking"
-              data-testid="activity-btn-performance"
-            >
-              <Activity size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'viewings'}
-              onClick={() => onSelectTab('viewings')}
-              title="Property Viewing Appointments"
-              data-testid="activity-btn-viewings"
-            >
-              <Eye size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'analytics'}
-              onClick={() => onSelectTab('analytics')}
-              title="Unified Market Analytics Dashboard"
-              data-testid="activity-btn-analytics"
-            >
-              <BarChart3 size={18} />
-            </ActivityIconBtn>
-          </>
-        ) : role === 'landlord' ? (
-          <>
-            <ActivityIconBtn
-              $isActive={activeTab === 'departments' || activeTab === 'landlord'}
-              onClick={() => onSelectTab('landlord')}
-              title="Sovereign Landlord Asset Hub"
-              data-testid="activity-btn-landlord"
-            >
-              <Building2 size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'documents'}
-              onClick={() => onSelectTab('documents')}
-              title="Lease Contracts & Vault"
-              data-testid="activity-btn-documents"
-            >
-              <FileText size={18} />
-            </ActivityIconBtn>
-          </>
-        ) : role === 'tenant' ? (
-          <>
-            <ActivityIconBtn
-              $isActive={activeTab === 'departments' || activeTab === 'tenant'}
-              onClick={() => onSelectTab('tenant')}
-              title="Sovereign Tenant Portal"
-              data-testid="activity-btn-tenant"
-            >
-              <Home size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'documents'}
-              onClick={() => onSelectTab('documents')}
-              title="My Leases & Ejari"
-              data-testid="activity-btn-documents"
-            >
-              <FileText size={18} />
-            </ActivityIconBtn>
-          </>
-        ) : role === 'agent' ? (
-          <>
-            <ActivityIconBtn
-              $isActive={activeTab === 'departments' || activeTab === 'broker'}
-              onClick={() => onSelectTab('broker')}
-              title="Sovereign Licensed Broker Hub"
-              data-testid="activity-btn-broker"
-            >
-              <Building2 size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'REproperties'}
-              onClick={() => onSelectTab('REproperties')}
-              title="Real Estate Inventory"
-              data-testid="activity-btn-reproperties"
-            >
-              <Home size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'deals'}
-              onClick={() => onSelectTab('deals')}
-              title="Deals Pipeline"
-              data-testid="activity-btn-deals"
-            >
-              <Handshake size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'customers'}
-              onClick={() => onSelectTab('customers')}
-              title="CRM Leads"
-              data-testid="activity-btn-customers"
-            >
-              <Contact size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'documents'}
-              onClick={() => onSelectTab('documents')}
-              title="Document Vault"
-              data-testid="activity-btn-documents"
-            >
-              <FileText size={18} />
-            </ActivityIconBtn>
-          </>
-        ) : (
-          <>
+        {isDirectorate && (
+          <div style={{ position: 'relative', width: '36px', height: '36px' }}>
             <ActivityIconBtn
               $isActive={activeTab === 'departments'}
               onClick={() => onSelectTab('departments')}
-              title="Sovereign Identity Gateway"
+              title="DMS: Corporate Department Management System (/dashboard/dms)"
               data-testid="activity-btn-departments"
-            >
-              <ShieldCheck size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'landlord'}
-              onClick={() => onSelectTab('landlord')}
-              title="Landlord Asset Hub"
-              data-testid="activity-btn-landlord"
+              style={{ width: '100%', height: '100%' }}
             >
               <Building2 size={18} />
             </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'tenant'}
-              onClick={() => onSelectTab('tenant')}
-              title="Tenant Self-Service"
-              data-testid="activity-btn-tenant"
-            >
-              <Home size={18} />
-            </ActivityIconBtn>
-
-            <ActivityIconBtn
-              $isActive={activeTab === 'broker'}
-              onClick={() => onSelectTab('broker')}
-              title="Licensed Broker Hub"
-              data-testid="activity-btn-broker"
-            >
-              <Handshake size={18} />
-            </ActivityIconBtn>
-          </>
+            {onToggleDrawerForTab && (
+              <button
+                type="button"
+                onClick={e => {
+                  e.stopPropagation();
+                  onToggleDrawerForTab('departments');
+                }}
+                title="Toggle Departments Drawer"
+                data-testid="activity-caret-departments"
+                style={{
+                  position: 'absolute',
+                  right: '-4px',
+                  bottom: '-2px',
+                  width: '14px',
+                  height: '14px',
+                  background: '#1E293B',
+                  border: '1px solid rgba(239, 68, 68, 0.4)',
+                  borderRadius: '50%',
+                  color: '#EF4444',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  padding: 0,
+                  zIndex: 2,
+                }}
+              >
+                <ChevronRight size={10} />
+              </button>
+            )}
+          </div>
         )}
+
+        {items.map(({ tab, activeTabs, title, testId, Icon }) => (
+          <ActivityIconBtn
+            key={tab}
+            $isActive={activeTabs ? activeTabs.includes(activeTab) : activeTab === tab}
+            onClick={() => onSelectTab(tab)}
+            title={title}
+            data-testid={testId}
+          >
+            <Icon size={18} />
+          </ActivityIconBtn>
+        ))}
       </ActivityGroup>
 
       <ActivityGroup>
