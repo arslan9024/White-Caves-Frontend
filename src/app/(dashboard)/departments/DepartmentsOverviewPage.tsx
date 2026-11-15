@@ -25,7 +25,9 @@ interface DepartmentsOverviewPageProps {
   onSubItemClick?: (id: string) => void;
 }
 
-export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = ({ onSubItemClick }) => {
+export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = ({
+  onSubItemClick,
+}) => {
   const [departments, setDepartments] = useState<DepartmentCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -92,7 +94,7 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ orderedIds: reordered.map((d) => d._id) }),
+        body: JSON.stringify({ orderedIds: reordered.map(d => d._id) }),
       });
     } catch (err) {
       log.error('DepartmentsOverviewPage operation failed', err);
@@ -101,7 +103,7 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
   };
 
   const filtered = departments.filter(
-    (d) =>
+    d =>
       d.title.toLowerCase().includes(search.toLowerCase()) ||
       d.code.toLowerCase().includes(search.toLowerCase())
   );
@@ -111,7 +113,9 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
       <div className="depts-topbar">
         <div>
           <h2>Corporate Departments Hierarchy</h2>
-          <p className="depts-subtitle">12 Standard Enterprise Operating Units with Sub-Desks and Dynamic Squads</p>
+          <p className="depts-subtitle">
+            12 Standard Enterprise Operating Units with Sub-Desks and Dynamic Squads
+          </p>
         </div>
         <div className="depts-top-actions">
           <input
@@ -119,7 +123,7 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
             className="dept-search"
             placeholder="Search departments..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={e => setSearch(e.target.value)}
           />
           <button className="standby-trigger-btn" onClick={() => setIsDrawerOpen(true)}>
             Standby Roster Pool
@@ -147,10 +151,14 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
                       type="text"
                       className="dept-rename-input"
                       value={editTitle}
-                      onChange={(e) => setEditTitle(e.target.value)}
+                      onChange={e => setEditTitle(e.target.value)}
                     />
-                    <button className="btn-save-rename" onClick={() => handleRename(dept._id)}>✓</button>
-                    <button className="btn-cancel-rename" onClick={() => setEditingId(null)}>✕</button>
+                    <button className="btn-save-rename" onClick={() => handleRename(dept._id)}>
+                      ✓
+                    </button>
+                    <button className="btn-cancel-rename" onClick={() => setEditingId(null)}>
+                      ✕
+                    </button>
                   </div>
                 ) : (
                   <h3 className="dept-title">{dept.title}</h3>
@@ -158,7 +166,8 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
               </div>
 
               <div className="dept-director">
-                Director / Lead: <strong>{dept.directorOrManagerId?.fullName || 'Managing Director'}</strong>
+                Director / Lead:{' '}
+                <strong>{dept.directorOrManagerId?.fullName || 'Managing Director'}</strong>
               </div>
 
               <div className="dept-counters">
@@ -224,4 +233,3 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
 };
 
 export default DepartmentsOverviewPage;
-

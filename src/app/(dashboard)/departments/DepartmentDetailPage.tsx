@@ -130,9 +130,13 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
   return (
     <div className="depts-page">
       <div className="dept-detail-header">
-        <button className="btn-back" onClick={onBack}>← Back to Overview</button>
+        <button className="btn-back" onClick={onBack}>
+          ← Back to Overview
+        </button>
         <div className="dept-detail-title-row">
-          <h2>{department.title} ({department.code})</h2>
+          <h2>
+            {department.title} ({department.code})
+          </h2>
           <div className="dept-detail-actions">
             <button className="btn-primary" onClick={() => setShowSubModal(true)}>
               + Add Sub-Department Desk
@@ -212,21 +216,25 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
             <input
               placeholder="Desk Title (e.g. VIP Desk)"
               value={newSubTitle}
-              onChange={(e) => setNewSubTitle(e.target.value)}
+              onChange={e => setNewSubTitle(e.target.value)}
             />
             <input
               placeholder="Desk Code (e.g. SUB-02-04)"
               value={newSubCode}
-              onChange={(e) => setNewSubCode(e.target.value)}
+              onChange={e => setNewSubCode(e.target.value)}
             />
             <input
               placeholder="Slug (e.g. vip-desk)"
               value={newSubSlug}
-              onChange={(e) => setNewSubSlug(e.target.value)}
+              onChange={e => setNewSubSlug(e.target.value)}
             />
             <div className="modal-actions">
-              <button className="btn-primary" onClick={handleCreateSubDept}>Create Desk</button>
-              <button className="btn-cancel" onClick={() => setShowSubModal(false)}>Cancel</button>
+              <button className="btn-primary" onClick={handleCreateSubDept}>
+                Create Desk
+              </button>
+              <button className="btn-cancel" onClick={() => setShowSubModal(false)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -239,16 +247,20 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
             <input
               placeholder="Squad Name (e.g. Alpha Luxury Squad)"
               value={squadName}
-              onChange={(e) => setSquadName(e.target.value)}
+              onChange={e => setSquadName(e.target.value)}
             />
             <input
               placeholder="Supervisor Personnel ID"
               value={supervisorId}
-              onChange={(e) => setSupervisorId(e.target.value)}
+              onChange={e => setSupervisorId(e.target.value)}
             />
             <div className="modal-actions">
-              <button className="btn-primary" onClick={handleCreateSquad}>Create Squad</button>
-              <button className="btn-cancel" onClick={() => setShowSquadModal(false)}>Cancel</button>
+              <button className="btn-primary" onClick={handleCreateSquad}>
+                Create Squad
+              </button>
+              <button className="btn-cancel" onClick={() => setShowSquadModal(false)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -264,4 +276,3 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
 };
 
 export default DepartmentDetailPage;
-
