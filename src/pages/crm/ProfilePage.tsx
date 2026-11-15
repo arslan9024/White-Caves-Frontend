@@ -1,7 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import PublicLayout from '../../components/layout/PublicLayout';
 import { useUserProfile } from '../../hooks/useUserProfile';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { spacing, borderRadius } from '../../design-tokens';
@@ -50,23 +49,23 @@ const SidebarHeader = styled.div`
   margin-bottom: ${spacing[4]};
   border-bottom: 1px solid var(--border-color, rgba(239, 68, 68, 0.2));
 
-    img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid #ef4444;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
-      object-fit: cover;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    
-    img:hover {
-      opacity: 0.8;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
-      transform: scale(1.05);
-    }
-  `;
+  img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    object-fit: cover;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  img:hover {
+    opacity: 0.8;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    transform: scale(1.05);
+  }
+`;
 
 const SidebarUserInfo = styled.div`
   overflow: hidden;
@@ -203,31 +202,31 @@ const FormGroup = styled.div`
     letter-spacing: 0.02em;
   }
 
-    input,
-    select {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--border-input, rgba(255, 255, 255, 0.15));
-      border-radius: ${borderRadius.lg};
-      background: var(--bg-input, rgba(15, 23, 42, 0.8));
-      color: var(--text-primary, #f8fafc);
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-  
-      &:focus {
-        outline: none;
-        border-color: #ef4444;
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
-      }
-      
-      &:disabled {
-        background: rgba(15, 23, 42, 0.4);
-        color: rgba(248, 250, 252, 0.6);
-        cursor: not-allowed;
-        border-color: rgba(255, 255, 255, 0.05);
-      }
+  input,
+  select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-input, rgba(255, 255, 255, 0.15));
+    border-radius: ${borderRadius.lg};
+    background: var(--bg-input, rgba(15, 23, 42, 0.8));
+    color: var(--text-primary, #f8fafc);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
     }
-  `;
+
+    &:disabled {
+      background: rgba(15, 23, 42, 0.4);
+      color: rgba(248, 250, 252, 0.6);
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+`;
 
 const PreferencesGrid = styled.div`
   display: grid;
@@ -259,7 +258,8 @@ const OptionBtn = styled.button<{ $selected: boolean }>`
   gap: 4px;
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1.5px solid ${p => (p.$selected ? '#EF4444' : 'var(--border-color, rgba(255, 255, 255, 0.15))')};
+  border: 1.5px solid
+    ${p => (p.$selected ? '#EF4444' : 'var(--border-color, rgba(255, 255, 255, 0.15))')};
   background: ${p => (p.$selected ? 'rgba(239, 68, 68, 0.15)' : 'var(--bg-input, transparent)')};
   color: ${p => (p.$selected ? '#EF4444' : 'var(--text-secondary, #94A3B8)')};
   font-size: 0.8rem;
@@ -361,12 +361,7 @@ export const ProfilePage: FC = () => {
   const { themeMode, setThemeMode } = useTheme();
   const { language, setLanguage, supportedLanguages } = useLanguage();
   const { currency, setCurrency, currencies } = useGlobalCurrency();
-  const {
-    role: currentRole,
-    accessLevel,
-    isFounder,
-    loginAsRole,
-  } = useUserRole();
+  const { role: currentRole, accessLevel, isFounder, loginAsRole } = useUserRole();
 
   // Additional user preferences
   const [measurementUnit, setMeasurementUnit] = useState<'sqft' | 'sqm'>(() => {
@@ -397,492 +392,823 @@ export const ProfilePage: FC = () => {
       '&background=EF4444&color=fff';
 
   return (
-    <PublicLayout>
-      <ProfileWrapper>
-        <WorkspaceLayout>
-          {/* Left Sidebar Navigation */}
-          <SidebarContainer>
-            <SidebarHeader>
-              <img src={avatarSrc} alt="Executive Avatar" />
-              <SidebarUserInfo>
-                <h3>{profileName || user?.name || 'Executive User'}</h3>
-                <p>{user?.email}</p>
-                <RoleBadgeTag $level={accessLevel}>
-                  {isFounder ? '👑 Founder (L5)' : `L${accessLevel} · ${ROLE_LABELS[currentRole] || currentRole}`}
-                </RoleBadgeTag>
-              </SidebarUserInfo>
-            </SidebarHeader>
+    <ProfileWrapper data-testid="crm-profile-page">
+      <WorkspaceLayout>
+        {/* Left Sidebar Navigation */}
+        <SidebarContainer>
+          <SidebarHeader>
+            <img src={avatarSrc} alt="Executive Avatar" />
+            <SidebarUserInfo>
+              <h3>{profileName || user?.name || 'Executive User'}</h3>
+              <p>{user?.email}</p>
+              <RoleBadgeTag $level={accessLevel}>
+                {isFounder
+                  ? '👑 Founder (L5)'
+                  : `L${accessLevel} · ${ROLE_LABELS[currentRole] || currentRole}`}
+              </RoleBadgeTag>
+            </SidebarUserInfo>
+          </SidebarHeader>
 
-            <SidebarNav>
-              <SidebarItem
-                $active={activeTab === 'profile'}
-                onClick={() => setActiveTab('profile')}
-              >
-                <span>👤</span> Profile Info
-              </SidebarItem>
-              <SidebarItem
-                $active={activeTab === 'preferences'}
-                onClick={() => setActiveTab('preferences')}
-              >
-                <span>⚙️</span> System Preferences
-              </SidebarItem>
-              <SidebarItem $active={activeTab === 'rera'} onClick={() => setActiveTab('rera')}>
-                <span>📜</span> RERA Accreditation
-              </SidebarItem>
-              <SidebarItem $active={activeTab === 'goals'} onClick={() => setActiveTab('goals')}>
-                <span>🎯</span> Executive Goals
-              </SidebarItem>
-              <SidebarItem $active={false} onClick={() => navigate('/dashboard')}>
-                <span>📊</span> Executive Dashboard
-              </SidebarItem>
-              <SidebarItem
-                $active={activeTab === 'security'}
-                onClick={() => setActiveTab('security')}
-              >
-                <span>🔐</span> Biometric Security
-              </SidebarItem>
-              <SidebarItem
-                $active={activeTab === 'sessions'}
-                onClick={() => setActiveTab('sessions')}
-              >
-                <span>💻</span> Active Sessions
-              </SidebarItem>
-            </SidebarNav>
-          </SidebarContainer>
+          <SidebarNav>
+            <SidebarItem $active={activeTab === 'profile'} onClick={() => setActiveTab('profile')}>
+              <span>👤</span> Profile Info
+            </SidebarItem>
+            <SidebarItem
+              $active={activeTab === 'preferences'}
+              onClick={() => setActiveTab('preferences')}
+            >
+              <span>⚙️</span> System Preferences
+            </SidebarItem>
+            <SidebarItem $active={activeTab === 'rera'} onClick={() => setActiveTab('rera')}>
+              <span>📜</span> RERA Accreditation
+            </SidebarItem>
+            <SidebarItem $active={activeTab === 'goals'} onClick={() => setActiveTab('goals')}>
+              <span>🎯</span> Executive Goals
+            </SidebarItem>
+            <SidebarItem $active={false} onClick={() => navigate('/dashboard')}>
+              <span>📊</span> Executive Dashboard
+            </SidebarItem>
+            <SidebarItem
+              $active={activeTab === 'security'}
+              onClick={() => setActiveTab('security')}
+            >
+              <span>🔐</span> Biometric Security
+            </SidebarItem>
+            <SidebarItem
+              $active={activeTab === 'sessions'}
+              onClick={() => setActiveTab('sessions')}
+            >
+              <span>💻</span> Active Sessions
+            </SidebarItem>
+          </SidebarNav>
+        </SidebarContainer>
 
-          {/* Dynamic Content Views */}
-          <MainContentArea>
-            {/* Tab 1: Profile Info */}
-            {activeTab === 'profile' && (
-              <Card>
-                <h2>
-                  <span>👤</span> Personal Profile Information
-                </h2>
-                <FormGroup>
-                  <label>Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter full name"
-                    value={profileName}
-                    onChange={e => setProfileName(e.target.value)}
-                  />
-                </FormGroup>
-                <FormGroup style={{ position: 'relative' }}>
-                  <label>Direct Contact Line</label>
-                  <input
-                    type="text"
-                    placeholder="+971 50 XXX XXXX"
-                    value={profilePhone}
-                    onChange={e => setProfilePhone(e.target.value)}
-                    style={{ borderColor: profilePhone && !/^\+971\s?\d{2}\s?\d{3}\s?\d{4}$/.test(profilePhone) ? '#EF4444' : '' }}
-                  />
-                  {profilePhone && /^\+971\s?\d{2}\s?\d{3}\s?\d{4}$/.test(profilePhone) && (
-                    <span style={{ position: 'absolute', right: '16px', top: '38px', color: '#10B981' }}>✓</span>
-                  )}
-                </FormGroup>
-                <FormGroup>
-                  <label>Profile Avatar Image URL</label>
-                  <input
-                    type="url"
-                    placeholder="https://example.com/avatar.jpg"
-                    value={profilePhotoUrl}
-                    onChange={e => setProfilePhotoUrl(e.target.value)}
-                  />
-                </FormGroup>
-                <SaveButton onClick={handleSavePreferences} disabled={isSaving}>
-                  {isSaving ? (
-                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                      <div style={{ width: '16px', height: '16px', border: '2px solid white', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-                      Synchronizing Profile...
-                    </span>
-                  ) : saveSuccess ? (
-                    '✓ Saved Successfully'
-                  ) : (
-                    'Save Profile Changes'
-                  )}
-                </SaveButton>
-              </Card>
-            )}
+        {/* Dynamic Content Views */}
+        <MainContentArea>
+          {/* Tab 1: Profile Info */}
+          {activeTab === 'profile' && (
+            <Card>
+              <h2>
+                <span>👤</span> Personal Profile Information
+              </h2>
+              <FormGroup>
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter full name"
+                  value={profileName}
+                  onChange={e => setProfileName(e.target.value)}
+                />
+              </FormGroup>
+              <FormGroup style={{ position: 'relative' }}>
+                <label>Direct Contact Line</label>
+                <input
+                  type="text"
+                  placeholder="+971 50 XXX XXXX"
+                  value={profilePhone}
+                  onChange={e => setProfilePhone(e.target.value)}
+                  style={{
+                    borderColor:
+                      profilePhone && !/^\+971\s?\d{2}\s?\d{3}\s?\d{4}$/.test(profilePhone)
+                        ? '#EF4444'
+                        : '',
+                  }}
+                />
+                {profilePhone && /^\+971\s?\d{2}\s?\d{3}\s?\d{4}$/.test(profilePhone) && (
+                  <span
+                    style={{ position: 'absolute', right: '16px', top: '38px', color: '#10B981' }}
+                  >
+                    ✓
+                  </span>
+                )}
+              </FormGroup>
+              <FormGroup>
+                <label>Profile Avatar Image URL</label>
+                <input
+                  type="url"
+                  placeholder="https://example.com/avatar.jpg"
+                  value={profilePhotoUrl}
+                  onChange={e => setProfilePhotoUrl(e.target.value)}
+                />
+              </FormGroup>
+              {saveSuccess && (
+                <div
+                  role="status"
+                  data-testid="profile-status-banner"
+                  style={{
+                    padding: '10px 14px',
+                    marginBottom: '12px',
+                    borderRadius: '8px',
+                    background: 'rgba(16, 185, 129, 0.15)',
+                    border: '1px solid rgba(16, 185, 129, 0.35)',
+                    color: '#10B981',
+                    fontSize: '0.84rem',
+                    fontWeight: 700,
+                  }}
+                >
+                  Profile updated successfully!
+                </div>
+              )}
+              <SaveButton onClick={handleSavePreferences} disabled={isSaving}>
+                {isSaving ? (
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        border: '2px solid white',
+                        borderTopColor: 'transparent',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite',
+                      }}
+                    />
+                    Synchronizing Profile...
+                  </span>
+                ) : saveSuccess ? (
+                  '✓ Saved Successfully'
+                ) : (
+                  'Save Profile Changes'
+                )}
+              </SaveButton>
+            </Card>
+          )}
 
-            {/* Tab 2: System Preferences */}
-            {activeTab === 'preferences' && (
-              <Card>
-                <h2>
-                  <span>⚙️</span> Universal Preferences & Customization
-                </h2>
-                <PreferencesGrid>
-                  {/* Theme Mode */}
-                  <PreferenceBox>
-                    <label
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '0.88rem',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      🎨 Theme Mode
-                    </label>
-                    <p
-                      style={{
-                        fontSize: '0.78rem',
-                        color: 'var(--text-muted)',
-                        margin: '2px 0 8px',
-                      }}
-                    >
-                      Select appearance mode
-                    </p>
-                    <OptionButtonGroup>
-                      <OptionBtn
-                        $selected={themeMode === 'light'}
-                        onClick={() => setThemeMode('light')}
-                      >
-                        ☀️ Light
-                      </OptionBtn>
-                      <OptionBtn
-                        $selected={themeMode === 'dark'}
-                        onClick={() => setThemeMode('dark')}
-                      >
-                        🌙 Dark
-                      </OptionBtn>
-                      <OptionBtn
-                        $selected={themeMode === 'system'}
-                        onClick={() => setThemeMode('system')}
-                      >
-                        💻 System
-                      </OptionBtn>
-                    </OptionButtonGroup>
-                  </PreferenceBox>
-
-                  {/* Language */}
-                  <PreferenceBox>
-                    <label
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '0.88rem',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      🌐 Language
-                    </label>
-                    <p
-                      style={{
-                        fontSize: '0.78rem',
-                        color: 'var(--text-muted)',
-                        margin: '2px 0 8px',
-                      }}
-                    >
-                      Universal 4-language support
-                    </p>
-                    <OptionButtonGroup>
-                      {Object.values(supportedLanguages).map(l => (
-                        <OptionBtn
-                          key={l.code}
-                          $selected={language === l.code}
-                          onClick={() => setLanguage(l.code as LanguageType)}
-                        >
-                          <span>{l.flag}</span> {l.code.toUpperCase()}
-                        </OptionBtn>
-                      ))}
-                    </OptionButtonGroup>
-                  </PreferenceBox>
-
-                  {/* Base Currency */}
-                  <PreferenceBox>
-                    <label
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '0.88rem',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      💵 Base Currency
-                    </label>
-                    <p
-                      style={{
-                        fontSize: '0.78rem',
-                        color: 'var(--text-muted)',
-                        margin: '2px 0 8px',
-                      }}
-                    >
-                      Display property values in
-                    </p>
-                    <OptionButtonGroup>
-                      {Object.values(currencies).map(c => (
-                        <OptionBtn
-                          key={c.code}
-                          $selected={currency === c.code}
-                          onClick={() => setCurrency(c.code as CurrencyCode)}
-                        >
-                          <span>{c.flag}</span> {c.code}
-                        </OptionBtn>
-                      ))}
-                    </OptionButtonGroup>
-                  </PreferenceBox>
-
-                  {/* Area Measurement Units */}
-                  <PreferenceBox>
-                    <label
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '0.88rem',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      📐 Area Measurement
-                    </label>
-                    <p
-                      style={{
-                        fontSize: '0.78rem',
-                        color: 'var(--text-muted)',
-                        margin: '2px 0 8px',
-                      }}
-                    >
-                      Floor plan surface metric
-                    </p>
-                    <OptionButtonGroup>
-                      <OptionBtn
-                        $selected={measurementUnit === 'sqft'}
-                        onClick={() => setMeasurementUnit('sqft')}
-                      >
-                        Sq.Ft (Feet²)
-                      </OptionBtn>
-                      <OptionBtn
-                        $selected={measurementUnit === 'sqm'}
-                        onClick={() => setMeasurementUnit('sqm')}
-                      >
-                        Sq.M (Meters²)
-                      </OptionBtn>
-                    </OptionButtonGroup>
-                  </PreferenceBox>
-
-                  {/* 14-Role Sovereign Authority Simulator */}
-                  <PreferenceBox style={{ gridColumn: '1 / -1' }}>
-                    <label
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '0.88rem',
-                        color: 'var(--text-primary)',
-                      }}
-                    >
-                      🏛️ Operational Role & Access Level
-                    </label>
-                    <p
-                      style={{
-                        fontSize: '0.78rem',
-                        color: 'var(--text-muted)',
-                        margin: '2px 0 8px',
-                      }}
-                    >
-                      Active Identity: {ROLE_LABELS[currentRole] || currentRole} (Level {accessLevel})
-                    </p>
-                    <RoleSelectInput
-                      value={currentRole}
-                      onChange={e => loginAsRole(e.target.value as UserRole)}
-                    >
-                      <optgroup label="Tier 1: Internal Corporate Machinery">
-                        <option value="managing_director">👑 Managing Director (L5 Sovereign)</option>
-                        <option value="manager">📊 Department Manager (L4)</option>
-                        <option value="supervisor">⚡ Team Supervisor (L3)</option>
-                        <option value="agent">💼 Licensed Broker (L2)</option>
-                        <option value="intern">🎓 Corporate Intern (L1)</option>
-                      </optgroup>
-                      <optgroup label="Tier 2: Paired Client Portals">
-                        <option value="tenant">🔑 Leasing Tenant (Client L1)</option>
-                        <option value="landlord">🏢 Property Landlord (Asset Owner L2)</option>
-                        <option value="buyer">🏡 Secondary Buyer (Client L1)</option>
-                        <option value="seller">📜 Property Seller (Mandate L1)</option>
-                        <option value="offplan_buyer">🏗️ Off-Plan Purchaser (HNWI L1)</option>
-                        <option value="developer">🏙️ Primary Developer Partner (L2)</option>
-                      </optgroup>
-                      <optgroup label="Tier 3: Strategic Partners & Public">
-                        <option value="conveyancer">⚖️ DLD Conveyancer / Trustee (L2)</option>
-                        <option value="contractor">🛠️ Maintenance Contractor (L2)</option>
-                        <option value="guest">🌐 Executive Guest (Public L1)</option>
-                      </optgroup>
-                    </RoleSelectInput>
-                  </PreferenceBox>
-                </PreferencesGrid>
-
-                <div style={{ marginTop: spacing[6] }}>
+          {/* Tab 2: System Preferences */}
+          {activeTab === 'preferences' && (
+            <Card>
+              <h2>
+                <span>⚙️</span> Universal Preferences & Customization
+              </h2>
+              <PreferencesGrid>
+                {/* Theme Mode */}
+                <PreferenceBox>
                   <label
                     style={{
                       fontWeight: 800,
-                      fontSize: '0.92rem',
+                      fontSize: '0.88rem',
                       color: 'var(--text-primary)',
-                      display: 'block',
+                    }}
+                  >
+                    🎨 Theme Mode
+                  </label>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '2px 0 8px',
+                    }}
+                  >
+                    Select appearance mode
+                  </p>
+                  <OptionButtonGroup>
+                    <OptionBtn
+                      $selected={themeMode === 'light'}
+                      onClick={() => setThemeMode('light')}
+                    >
+                      ☀️ Light
+                    </OptionBtn>
+                    <OptionBtn
+                      $selected={themeMode === 'dark'}
+                      onClick={() => setThemeMode('dark')}
+                    >
+                      🌙 Dark
+                    </OptionBtn>
+                    <OptionBtn
+                      $selected={themeMode === 'system'}
+                      onClick={() => setThemeMode('system')}
+                    >
+                      💻 System
+                    </OptionBtn>
+                  </OptionButtonGroup>
+                </PreferenceBox>
+
+                {/* Language */}
+                <PreferenceBox>
+                  <label
+                    style={{
+                      fontWeight: 800,
+                      fontSize: '0.88rem',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    🌐 Language
+                  </label>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '2px 0 8px',
+                    }}
+                  >
+                    Universal 4-language support
+                  </p>
+                  <OptionButtonGroup>
+                    {Object.values(supportedLanguages).map(l => (
+                      <OptionBtn
+                        key={l.code}
+                        $selected={language === l.code}
+                        onClick={() => setLanguage(l.code as LanguageType)}
+                      >
+                        <span>{l.flag}</span> {l.code.toUpperCase()}
+                      </OptionBtn>
+                    ))}
+                  </OptionButtonGroup>
+                </PreferenceBox>
+
+                {/* Base Currency */}
+                <PreferenceBox>
+                  <label
+                    style={{
+                      fontWeight: 800,
+                      fontSize: '0.88rem',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    💵 Base Currency
+                  </label>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '2px 0 8px',
+                    }}
+                  >
+                    Display property values in
+                  </p>
+                  <OptionButtonGroup>
+                    {Object.values(currencies).map(c => (
+                      <OptionBtn
+                        key={c.code}
+                        $selected={currency === c.code}
+                        onClick={() => setCurrency(c.code as CurrencyCode)}
+                      >
+                        <span>{c.flag}</span> {c.code}
+                      </OptionBtn>
+                    ))}
+                  </OptionButtonGroup>
+                </PreferenceBox>
+
+                {/* Area Measurement Units */}
+                <PreferenceBox>
+                  <label
+                    style={{
+                      fontWeight: 800,
+                      fontSize: '0.88rem',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    📐 Area Measurement
+                  </label>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '2px 0 8px',
+                    }}
+                  >
+                    Floor plan surface metric
+                  </p>
+                  <OptionButtonGroup>
+                    <OptionBtn
+                      $selected={measurementUnit === 'sqft'}
+                      onClick={() => setMeasurementUnit('sqft')}
+                    >
+                      Sq.Ft (Feet²)
+                    </OptionBtn>
+                    <OptionBtn
+                      $selected={measurementUnit === 'sqm'}
+                      onClick={() => setMeasurementUnit('sqm')}
+                    >
+                      Sq.M (Meters²)
+                    </OptionBtn>
+                  </OptionButtonGroup>
+                </PreferenceBox>
+
+                {/* 14-Role Sovereign Authority Simulator */}
+                <PreferenceBox style={{ gridColumn: '1 / -1' }}>
+                  <label
+                    style={{
+                      fontWeight: 800,
+                      fontSize: '0.88rem',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    🏛️ Operational Role & Access Level
+                  </label>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '2px 0 8px',
+                    }}
+                  >
+                    Active Identity: {ROLE_LABELS[currentRole] || currentRole} (Level {accessLevel})
+                  </p>
+                  <RoleSelectInput
+                    value={currentRole}
+                    onChange={e => loginAsRole(e.target.value as UserRole)}
+                  >
+                    <optgroup label="Tier 1: Internal Corporate Machinery">
+                      <option value="managing_director">👑 Managing Director (L5 Sovereign)</option>
+                      <option value="manager">📊 Department Manager (L4)</option>
+                      <option value="supervisor">⚡ Team Supervisor (L3)</option>
+                      <option value="agent">💼 Licensed Broker (L2)</option>
+                      <option value="intern">🎓 Corporate Intern (L1)</option>
+                    </optgroup>
+                    <optgroup label="Tier 2: Paired Client Portals">
+                      <option value="tenant">🔑 Leasing Tenant (Client L1)</option>
+                      <option value="landlord">🏢 Property Landlord (Asset Owner L2)</option>
+                      <option value="buyer">🏡 Secondary Buyer (Client L1)</option>
+                      <option value="seller">📜 Property Seller (Mandate L1)</option>
+                      <option value="offplan_buyer">🏗️ Off-Plan Purchaser (HNWI L1)</option>
+                      <option value="developer">🏙️ Primary Developer Partner (L2)</option>
+                    </optgroup>
+                    <optgroup label="Tier 3: Strategic Partners & Public">
+                      <option value="conveyancer">⚖️ DLD Conveyancer / Trustee (L2)</option>
+                      <option value="contractor">🛠️ Maintenance Contractor (L2)</option>
+                      <option value="guest">🌐 Executive Guest (Public L1)</option>
+                    </optgroup>
+                  </RoleSelectInput>
+                </PreferenceBox>
+              </PreferencesGrid>
+
+              <div style={{ marginTop: spacing[6] }}>
+                <label
+                  style={{
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    color: 'var(--text-primary)',
+                    display: 'block',
+                    marginBottom: '8px',
+                  }}
+                >
+                  🔔 Notification Channels
+                </label>
+                <ToggleRow>
+                  <span>📱 Priority WhatsApp Deal & Lead Alerts</span>
+                  <input
+                    type="checkbox"
+                    checked={notifyWhatsApp}
+                    onChange={e => setNotifyWhatsApp(e.target.checked)}
+                  />
+                </ToggleRow>
+                <ToggleRow>
+                  <span>📧 Weekly Market Intelligence & Executive Digest</span>
+                  <input
+                    type="checkbox"
+                    checked={notifyEmail}
+                    onChange={e => setNotifyEmail(e.target.checked)}
+                  />
+                </ToggleRow>
+                <ToggleRow>
+                  <span>💬 SMS Instant Viewing Schedule Alerts</span>
+                  <input
+                    type="checkbox"
+                    checked={notifySms}
+                    onChange={e => setNotifySms(e.target.checked)}
+                  />
+                </ToggleRow>
+              </div>
+
+              <div style={{ marginTop: spacing[6] }}>
+                <SaveButton onClick={handleSavePreferences} disabled={isSaving}>
+                  {isSaving ? 'Saving Preferences...' : 'Save & Synchronize All Preferences'}
+                </SaveButton>
+              </div>
+            </Card>
+          )}
+
+          {/* Tab 3: RERA & Government Accreditation */}
+          {activeTab === 'rera' && (
+            <Card>
+              <h2>
+                <span>📜</span> Dubai Land Department & RERA Government Licenses
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: spacing[5] }}>
+                Official corporate accreditations and active license expiry monitors for White Caves
+                Real Estate LLC.
+              </p>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                  gap: '16px',
+                  marginBottom: spacing[6],
+                }}
+              >
+                {/* DET License */}
+                <div
+                  style={{
+                    padding: '16px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                       marginBottom: '8px',
                     }}
                   >
-                    🔔 Notification Channels
-                  </label>
-                  <ToggleRow>
-                    <span>📱 Priority WhatsApp Deal & Lead Alerts</span>
-                    <input
-                      type="checkbox"
-                      checked={notifyWhatsApp}
-                      onChange={e => setNotifyWhatsApp(e.target.checked)}
+                    <span
+                      style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        color: 'var(--accent-red, #EF4444)',
+                      }}
+                    >
+                      DET COMMERCIAL LICENSE
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: 'var(--accent-green, #10B981)',
+                        color: 'var(--white, #FFF)',
+                        fontWeight: 800,
+                      }}
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+                    No. 1388443
+                  </strong>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '4px 0 10px',
+                    }}
+                  >
+                    Office Classification: General Brokerage
+                  </p>
+                  <div
+                    style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}
+                  >
+                    ⏳ Expiry:{' '}
+                    <span style={{ color: 'var(--accent-red, #EF4444)' }}>31-Jul-2026</span> (Audit
+                    Valid)
+                  </div>
+                </div>
+
+                {/* RERA ORN */}
+                <div
+                  style={{
+                    padding: '16px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        color: 'var(--accent-red, #EF4444)',
+                      }}
+                    >
+                      RERA REGISTRATION (ORN)
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: 'var(--accent-green, #10B981)',
+                        color: 'var(--white, #FFF)',
+                        fontWeight: 800,
+                      }}
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+                    ORN: 44483
+                  </strong>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '4px 0 10px',
+                    }}
+                  >
+                    Real Estate Regulatory Agency Dubai
+                  </p>
+                  <div
+                    style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}
+                  >
+                    ⏳ Expiry:{' '}
+                    <span style={{ color: 'var(--accent-red, #EF4444)' }}>15-Aug-2026</span>{' '}
+                    (Verified)
+                  </div>
+                </div>
+
+                {/* Office HQ Ejari */}
+                <div
+                  style={{
+                    padding: '16px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        color: 'var(--accent-red, #EF4444)',
+                      }}
+                    >
+                      HQ EJARI CERTIFICATE
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: 'var(--accent-green, #10B981)',
+                        color: 'var(--white, #FFF)',
+                        fontWeight: 800,
+                      }}
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+                    0120250814005322
+                  </strong>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '4px 0 10px',
+                    }}
+                  >
+                    Office D-72, El Shaye - 4 Building
+                  </p>
+                  <div
+                    style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}
+                  >
+                    ⏳ Expiry:{' '}
+                    <span style={{ color: 'var(--accent-red, #EF4444)' }}>01-Oct-2026</span>{' '}
+                    (Registered)
+                  </div>
+                </div>
+
+                {/* ICP Card */}
+                <div
+                  style={{
+                    padding: '16px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 800,
+                        color: 'var(--accent-red, #EF4444)',
+                      }}
+                    >
+                      ICP ESTABLISHMENT CARD
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: 'var(--accent-green, #10B981)',
+                        color: 'var(--white, #FFF)',
+                        fontWeight: 800,
+                      }}
+                    >
+                      ACTIVE
+                    </span>
+                  </div>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>
+                    MOL: 2/1/1192499
+                  </strong>
+                  <p
+                    style={{
+                      fontSize: '0.78rem',
+                      color: 'var(--text-muted)',
+                      margin: '4px 0 10px',
+                    }}
+                  >
+                    Ministry of Human Resources & Emiratisation
+                  </p>
+                  <div
+                    style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}
+                  >
+                    ⏳ Expiry:{' '}
+                    <span style={{ color: 'var(--accent-red, #EF4444)' }}>20-Nov-2026</span>{' '}
+                    (Compliant)
+                  </div>
+                </div>
+              </div>
+
+              <TrainingTrackerWidget />
+            </Card>
+          )}
+
+          {/* Tab 4: Goals */}
+          {activeTab === 'goals' && (
+            <Card>
+              <h2>
+                <span>🎯</span> Executive Goals & Sovereign Milestones
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: spacing[5] }}>
+                Track AED volume goals, closed transactions, and investment portfolios for Q3/Q4.
+              </p>
+
+              {/* Interactive Milestone Timeline */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div
+                  style={{
+                    padding: '14px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, #F8FAFC)',
+                    borderLeft: '4px solid var(--accent-red, #EF4444)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginBottom: '4px',
+                    }}
+                  >
+                    <strong style={{ color: 'var(--text-primary)' }}>
+                      Q3 Target: AED 250M Gross Transaction Volume
+                    </strong>
+                    <span style={{ color: 'var(--accent-red, #EF4444)', fontWeight: 800 }}>
+                      88% Achieved
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '8px',
+                      borderRadius: '4px',
+                      background: 'var(--text-secondary, #E2E8F0)',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '88%',
+                        height: '100%',
+                        background:
+                          'linear-gradient(90deg, var(--accent-red, #EF4444), var(--color-f97316, #F97316))',
+                      }}
                     />
-                  </ToggleRow>
-                  <ToggleRow>
-                    <span>📧 Weekly Market Intelligence & Executive Digest</span>
-                    <input
-                      type="checkbox"
-                      checked={notifyEmail}
-                      onChange={e => setNotifyEmail(e.target.checked)}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: '14px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, #F8FAFC)',
+                    borderLeft: '4px solid var(--accent-green, #10B981)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginBottom: '4px',
+                    }}
+                  >
+                    <strong style={{ color: 'var(--text-primary)' }}>
+                      DAMAC Hills 2 Cluster Portfolio: 9,378 Units Onboarded
+                    </strong>
+                    <span style={{ color: 'var(--accent-green, #10B981)', fontWeight: 800 }}>
+                      100% Synced
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '8px',
+                      borderRadius: '4px',
+                      background: 'var(--text-secondary, #E2E8F0)',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'var(--accent-green, #10B981)',
+                      }}
                     />
-                  </ToggleRow>
-                  <ToggleRow>
-                    <span>💬 SMS Instant Viewing Schedule Alerts</span>
-                    <input
-                      type="checkbox"
-                      checked={notifySms}
-                      onChange={e => setNotifySms(e.target.checked)}
-                    />
-                  </ToggleRow>
-                </div>
-
-                <div style={{ marginTop: spacing[6] }}>
-                  <SaveButton onClick={handleSavePreferences} disabled={isSaving}>
-                    {isSaving ? 'Saving Preferences...' : 'Save & Synchronize All Preferences'}
-                  </SaveButton>
-                </div>
-              </Card>
-            )}
-
-            {/* Tab 3: RERA & Government Accreditation */}
-            {activeTab === 'rera' && (
-              <Card>
-                <h2>
-                  <span>📜</span> Dubai Land Department & RERA Government Licenses
-                </h2>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: spacing[5] }}>
-                  Official corporate accreditations and active license expiry monitors for White Caves Real Estate LLC.
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px', marginBottom: spacing[6] }}>
-                  {/* DET License */}
-                  <div style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-red, #EF4444)' }}>DET COMMERCIAL LICENSE</span>
-                      <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '999px', background: 'var(--accent-green, #10B981)', color: 'var(--white, #FFF)', fontWeight: 800 }}>ACTIVE</span>
-                    </div>
-                    <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>No. 1388443</strong>
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: '4px 0 10px' }}>Office Classification: General Brokerage</p>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      ⏳ Expiry: <span style={{ color: 'var(--accent-red, #EF4444)' }}>31-Jul-2026</span> (Audit Valid)
-                    </div>
-                  </div>
-
-                  {/* RERA ORN */}
-                  <div style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-red, #EF4444)' }}>RERA REGISTRATION (ORN)</span>
-                      <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '999px', background: 'var(--accent-green, #10B981)', color: 'var(--white, #FFF)', fontWeight: 800 }}>ACTIVE</span>
-                    </div>
-                    <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>ORN: 44483</strong>
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: '4px 0 10px' }}>Real Estate Regulatory Agency Dubai</p>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      ⏳ Expiry: <span style={{ color: 'var(--accent-red, #EF4444)' }}>15-Aug-2026</span> (Verified)
-                    </div>
-                  </div>
-
-                  {/* Office HQ Ejari */}
-                  <div style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-red, #EF4444)' }}>HQ EJARI CERTIFICATE</span>
-                      <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '999px', background: 'var(--accent-green, #10B981)', color: 'var(--white, #FFF)', fontWeight: 800 }}>ACTIVE</span>
-                    </div>
-                    <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>0120250814005322</strong>
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: '4px 0 10px' }}>Office D-72, El Shaye - 4 Building</p>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      ⏳ Expiry: <span style={{ color: 'var(--accent-red, #EF4444)' }}>01-Oct-2026</span> (Registered)
-                    </div>
-                  </div>
-
-                  {/* ICP Card */}
-                  <div style={{ padding: '16px', borderRadius: '12px', background: 'var(--bg-secondary, rgba(239, 68, 68, 0.05))', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--accent-red, #EF4444)' }}>ICP ESTABLISHMENT CARD</span>
-                      <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: '999px', background: 'var(--accent-green, #10B981)', color: 'var(--white, #FFF)', fontWeight: 800 }}>ACTIVE</span>
-                    </div>
-                    <strong style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>MOL: 2/1/1192499</strong>
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', margin: '4px 0 10px' }}>Ministry of Human Resources & Emiratisation</p>
-                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
-                      ⏳ Expiry: <span style={{ color: 'var(--accent-red, #EF4444)' }}>20-Nov-2026</span> (Compliant)
-                    </div>
                   </div>
                 </div>
-                
-                <TrainingTrackerWidget />
-              </Card>
-            )}
+              </div>
+            </Card>
+          )}
 
-            {/* Tab 4: Goals */}
-            {activeTab === 'goals' && (
-              <Card>
-                <h2>
-                  <span>🎯</span> Executive Goals & Sovereign Milestones
-                </h2>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: spacing[5] }}>
-                  Track AED volume goals, closed transactions, and investment portfolios for Q3/Q4.
-                </p>
+          {/* Tab 5: Biometric Security */}
+          {activeTab === 'security' && (
+            <Card>
+              <h2>
+                <span>🔐</span> Biometric Security & Credentials
+              </h2>
+              <BiometricSetup />
+            </Card>
+          )}
 
-                {/* Interactive Milestone Timeline */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div style={{ padding: '14px', borderRadius: '12px', background: 'var(--bg-secondary, #F8FAFC)', borderLeft: '4px solid var(--accent-red, #EF4444)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>Q3 Target: AED 250M Gross Transaction Volume</strong>
-                      <span style={{ color: 'var(--accent-red, #EF4444)', fontWeight: 800 }}>88% Achieved</span>
-                    </div>
-                    <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'var(--text-secondary, #E2E8F0)', overflow: 'hidden' }}>
-                      <div style={{ width: '88%', height: '100%', background: 'linear-gradient(90deg, var(--accent-red, #EF4444), var(--color-f97316, #F97316))' }} />
-                    </div>
+          {/* Tab 6: Active Sessions */}
+          {activeTab === 'sessions' && (
+            <Card>
+              <h2>
+                <span>💻</span> Active Sessions & Live IP Tickers
+              </h2>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  marginTop: spacing[4],
+                }}
+              >
+                <div
+                  style={{
+                    padding: '14px',
+                    borderRadius: '12px',
+                    background: 'var(--bg-secondary, #F8FAFC)',
+                    border: '1px solid var(--border-color)',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div>
+                    <strong style={{ display: 'block', color: 'var(--text-primary)' }}>
+                      Web App Dashboard Session (Current)
+                    </strong>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                      IP: 185.192.68.10 · Dubai, UAE · SSL Encrypted · TLS 1.3
+                    </span>
                   </div>
-
-                  <div style={{ padding: '14px', borderRadius: '12px', background: 'var(--bg-secondary, #F8FAFC)', borderLeft: '4px solid var(--accent-green, #10B981)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>DAMAC Hills 2 Cluster Portfolio: 9,378 Units Onboarded</strong>
-                      <span style={{ color: 'var(--accent-green, #10B981)', fontWeight: 800 }}>100% Synced</span>
-                    </div>
-                    <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: 'var(--text-secondary, #E2E8F0)', overflow: 'hidden' }}>
-                      <div style={{ width: '100%', height: '100%', background: 'var(--accent-green, #10B981)' }} />
-                    </div>
-                  </div>
+                  <span
+                    style={{
+                      padding: '4px 10px',
+                      borderRadius: '999px',
+                      background: 'rgba(16, 185, 129, 0.15)',
+                      color: 'var(--accent-green, #10B981)',
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                    }}
+                  >
+                    ACTIVE NOW
+                  </span>
                 </div>
-              </Card>
-            )}
-
-            {/* Tab 5: Biometric Security */}
-            {activeTab === 'security' && (
-              <Card>
-                <h2>
-                  <span>🔐</span> Biometric Security & Credentials
-                </h2>
-                <BiometricSetup />
-              </Card>
-            )}
-
-            {/* Tab 6: Active Sessions */}
-            {activeTab === 'sessions' && (
-              <Card>
-                <h2>
-                  <span>💻</span> Active Sessions & Live IP Tickers
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: spacing[4] }}>
-                  <div style={{ padding: '14px', borderRadius: '12px', background: 'var(--bg-secondary, #F8FAFC)', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <strong style={{ display: 'block', color: 'var(--text-primary)' }}>Web App Dashboard Session (Current)</strong>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>IP: 185.192.68.10 · Dubai, UAE · SSL Encrypted · TLS 1.3</span>
-                    </div>
-                    <span style={{ padding: '4px 10px', borderRadius: '999px', background: 'rgba(16, 185, 129, 0.15)', color: 'var(--accent-green, #10B981)', fontSize: '0.75rem', fontWeight: 800 }}>ACTIVE NOW</span>
-                  </div>
-                </div>
-              </Card>
-            )}
-          </MainContentArea>
-        </WorkspaceLayout>
-      </ProfileWrapper>
-    </PublicLayout>
+              </div>
+            </Card>
+          )}
+        </MainContentArea>
+      </WorkspaceLayout>
+    </ProfileWrapper>
   );
 };
 
