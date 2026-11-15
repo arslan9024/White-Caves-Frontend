@@ -83,22 +83,6 @@ vi.mock('./pages/PropertiesPage', () => ({
   default: () => <div data-testid="properties-page">Properties Page</div>,
 }));
 
-vi.mock('./pages/AboutPage', () => ({
-  default: () => <div data-testid="about-page">About Page</div>,
-}));
-
-vi.mock('./pages/ServicesPage', () => ({
-  default: () => <div data-testid="services-page">Services Page</div>,
-}));
-
-vi.mock('./pages/CareersPage', () => ({
-  default: () => <div data-testid="careers-page">Careers Page</div>,
-}));
-
-vi.mock('./pages/ContactPage', () => ({
-  default: () => <div data-testid="contact-page">Contact Page</div>,
-}));
-
 vi.mock('./pages/NotFoundPage', () => ({
   default: () => <div data-testid="not-found-page">404 Not Found</div>,
 }));
@@ -388,42 +372,6 @@ describe('App', () => {
     });
     await waitFor(() => {
       expect(screen.getByTestId('properties-page')).toBeInTheDocument();
-    });
-  });
-
-  it('renders AboutPage at /about', async () => {
-    await act(async () => {
-      renderAtRoute('/about');
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('about-page')).toBeInTheDocument();
-    });
-  });
-
-  it('renders ServicesPage at /services', async () => {
-    await act(async () => {
-      renderAtRoute('/services');
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('services-page')).toBeInTheDocument();
-    });
-  });
-
-  it('renders CareersPage at /careers', async () => {
-    await act(async () => {
-      renderAtRoute('/careers');
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('careers-page')).toBeInTheDocument();
-    });
-  });
-
-  it('renders ContactPage at /contact', async () => {
-    await act(async () => {
-      renderAtRoute('/contact');
-    });
-    await waitFor(() => {
-      expect(screen.getByTestId('contact-page')).toBeInTheDocument();
     });
   });
 

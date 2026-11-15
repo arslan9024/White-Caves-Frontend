@@ -1,12 +1,12 @@
 # AEGIS Web & CRM Decoupling Migration Ledger
 
 > **Policy:** `TURING-SEPARATION-010` & `TURING-BOOK-011`  
-> **Status:** **100% COMPLETED**  
+> **Status:** **100% COMPLETED (Phase A: 19 Homepage Sections + Phase B: 9 Public Routes)**  
 > **Target:** Decouple public customer-facing website (`White-Caves-Web` / Next.js 16 Turbopack) from internal enterprise CRM (`White-Caves-Frontend` / Vite SPA).
 
 ---
 
-## Migration Tracker
+## Phase A — Public Homepage Sections (`src/components/homepage/` Purged)
 
 | Step   | Component / Section                    | Source (`White-Caves-Frontend`)                                       | Target (`White-Caves-Web`)                   | Performance & UX Improvements                                                                                                                                                                                   | Status        |
 | :----- | :------------------------------------- | :-------------------------------------------------------------------- | :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
@@ -32,8 +32,22 @@
 
 ---
 
-## Architectural Rules Enforced Across All 19 Steps
+## Phase B — Standalone Next.js 16 Public Routes (`White-Caves-Web/src/app/`)
+
+| Step   | Public Route                     | Source (`White-Caves-Frontend`)                     | Target (`White-Caves-Web`)                                   | Performance & Architectural Improvements                                                                                                | Status        |
+| :----- | :------------------------------- | :-------------------------------------------------- | :----------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- | :------------ |
+| **20** | **`/about`**                     | `src/pages/AboutPage.tsx` & `.css`                  | `src/app/about/page.tsx`                                     | Statically generated (`corporate.data.ts`), RERA ORN `#12345` credentials, 2009–2026 timeline, and `TeamGrid` integration               | **COMPLETED** |
+| **21** | **`/services`**                  | `src/pages/ServicesPage.tsx` & `.css`               | `src/app/services/page.tsx`                                  | Statically generated 6 brokerage divisions, 4-stage DLD conveyancing protocol, and community rental yield matrix (`corporate.data.ts`)  | **COMPLETED** |
+| **22** | **`/careers`**                   | `src/pages/CareersPage.tsx` & `.css`                | `src/app/careers/page.tsx`                                   | Statically generated `60%–70%` dynamic commission tiers, `+500 XP` merit ledger overview, and open RERA advisor roles                   | **COMPLETED** |
+| **23** | **`/contact`**                   | `src/pages/ContactPage.tsx` & `.css`                | `src/app/contact/page.tsx`                                   | Statically generated Business Bay HQ desk directory, RERA/DLD registration table, and embedded 15-minute SLA `ContactCTA`               | **COMPLETED** |
+| **24** | **`/tools`**                     | `src/pages/ToolsPage.tsx`                           | `src/app/tools/page.tsx`                                     | Dedicated financial calculators route hosting `ToolsDashboard` + UAE statutory fee reference schedule (4% DLD, 0.25% Mortgage, Trustee) | **COMPLETED** |
+| **25** | **`/off-plan`**                  | `src/pages/OffPlanPortalPage.tsx`                   | `src/app/off-plan/page.tsx`                                  | Direct developer allocation portal with DLD escrow account verification (`offPlan.data.ts`, `OffPlanCard.tsx`)                          | **COMPLETED** |
+| **26** | **`/privacy-policy` & `/terms`** | `src/pages/PrivacyPolicyPage.tsx` & `TermsPage.tsx` | `src/app/privacy-policy/page.tsx` & `src/app/terms/page.tsx` | Extracted UAE Federal Decree-Law No. 45/2021 (PDPL), CBUAE AML/KYC, and RERA Form A/B/F terms into `src/data/legal.data.ts`             | **COMPLETED** |
+
+---
+
+## Architectural Rules Enforced Across All 26 Steps
 
 1. **Next.js Native Image Pipeline:** All brand and property assets use `next/image` with explicit dimensions or `fill` + `sizes` to guarantee zero cumulative layout shift (`CLS = 0`).
 2. **Unified Color Palette:** The signature White Caves Red `#EF4444` and Deep Onyx `#070B14` remain invariant across `White-Caves-Web` and `White-Caves-Frontend`.
-3. **Complete Decoupling (`src/components/homepage/` Purged):** All 19 public homepage component groups have been migrated to `White-Caves-Web` and decommissioned from `White-Caves-Frontend`.
+3. **Complete Decoupling (`src/components/homepage/` & Legacy Public Marketing Pages Purged):** All 19 public homepage component groups and all 8 legacy public marketing pages (`AboutPage`, `ServicesPage`, `CareersPage`, `ContactPage`, `ToolsPage`, `OffPlanPortalPage`, `PrivacyPolicyPage`, `TermsPage`) have been migrated to `White-Caves-Web` and decommissioned from `White-Caves-Frontend`.

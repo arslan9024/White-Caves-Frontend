@@ -57,16 +57,8 @@ export const GovernanceDashboard = lazy(
 );
 export const PropertiesPage = lazy(() => import('../../pages/PropertiesPage'));
 export const PropertyDetailPage = lazy(() => import('../../pages/PropertyDetailPage'));
-export const AboutPage = lazy(() => import('../../pages/AboutPage'));
-export const ServicesPage = lazy(() => import('../../pages/ServicesPage'));
-export const CareersPage = lazy(() => import('../../pages/CareersPage'));
-export const ContactPage = lazy(() => import('../../pages/ContactPage'));
 export const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
-export const PrivacyPolicyPage = lazy(() => import('../../pages/PrivacyPolicyPage'));
-export const TermsPage = lazy(() => import('../../pages/TermsPage'));
-export const ToolsPage = lazy(() => import('../../pages/ToolsPage'));
 export const AIIntelligencePage = lazy(() => import('../../pages/AIIntelligencePage'));
-export const OffPlanPortalPage = lazy(() => import('../../pages/OffPlanPortalPage'));
 export const PWAInstallPrompt = lazy(() =>
   import('../../components/pwa/PWAInstallPrompt').then(m => ({ default: m.PWAInstallPrompt }))
 );

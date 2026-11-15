@@ -29,15 +29,7 @@ import { WhatsAppSettingsPage } from './App.pages';
 import { GovernanceDashboard } from './App.pages';
 import { PropertiesPage } from './App.pages';
 import { PropertyDetailPage } from './App.pages';
-import { AboutPage } from './App.pages';
-import { ServicesPage } from './App.pages';
-import { CareersPage } from './App.pages';
-import { ContactPage } from './App.pages';
-import { PrivacyPolicyPage } from './App.pages';
-import { TermsPage } from './App.pages';
-import { ToolsPage } from './App.pages';
 import { AIIntelligencePage } from './App.pages';
-import { OffPlanPortalPage } from './App.pages';
 import { UAEPassSuccessPage } from './App.pages';
 import { SignContractPage } from './App.pages';
 import { ValuationPage } from './App.pages';
@@ -216,28 +208,12 @@ export const publicRoutes: Array<{ path: string; section: string; page: ReactNod
   { path: '/', section: 'Home', page: <HomePage /> },
   { path: '/properties', section: 'Properties', page: <PropertiesPage /> },
   { path: '/property/:id', section: 'PropertyDetail', page: <PropertyDetailPage /> },
-  { path: '/about', section: 'About', page: <AboutPage /> },
-  { path: '/services', section: 'Services', page: <ServicesPage /> },
   { path: '/pricing', section: 'Pricing', page: <PricingPage /> },
-  { path: '/careers', section: 'Careers', page: <CareersPage /> },
-  { path: '/contact', section: 'Contact', page: <ContactPage /> },
-  {
-    path: '/privacy-policy',
-    section: 'Privacy Policy',
-    page: <PrivacyPolicyPage />,
-  },
-  { path: '/terms', section: 'Terms', page: <TermsPage /> },
-  { path: '/tools', section: 'Tools', page: <ToolsPage /> },
   { path: '/goals', section: 'Goals Gallery', page: <GoalsGalleryPage /> },
   {
     path: '/ai-intelligence',
     section: 'AI Intelligence',
     page: <AIIntelligencePage />,
-  },
-  {
-    path: '/off-plan',
-    section: 'Off-Plan Portal',
-    page: <OffPlanPortalPage />,
   },
   {
     path: '/valuation',
