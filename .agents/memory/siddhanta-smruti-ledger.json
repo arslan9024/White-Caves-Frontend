@@ -69,6 +69,13 @@
         "1a48cb5a3",
         "ef16bfd90"
       ]
+    },
+    {
+      "id": "SMRUTI-2026-11-15-WAVES19-21",
+      "timestamp": "2026-11-15T15:56:00+04:00",
+      "wave": "Wave 19-21",
+      "category": "RTL & LCP Guards",
+      "summary": "Added rtlGuard (AEG-004) and lcpGuard (AEG-040) with Vitest coverage."
     }
   ]
 }
