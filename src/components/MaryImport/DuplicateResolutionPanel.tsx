@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './DuplicateResolutionPanel.css';
+import { DuplicateFieldComparison } from './DuplicateFieldComparison';
 
 /**
  * DuplicateResolutionPanel Component
@@ -72,70 +73,6 @@ const DuplicateResolutionPanel = ({
     });
     setResolutions(newResolutions);
     onResolveAll?.(newResolutions, deduplicationStrategy);
-  };
-
-  // Get comparison data
-  const getDuplicateDetails = duplicate => {
-    return {
-      new: duplicate.newData,
-      existing: duplicate.existingData,
-      matched: duplicate.matchedFields || [],
-      confidence: duplicate.confidence || 0,
-    };
-  };
-
-  // Render field comparison
-  const renderFieldComparison = duplicate => {
-    const details = getDuplicateDetails(duplicate);
-    const allKeys = new Set([
-      ...Object.keys(details.new || {}),
-      ...Object.keys(details.existing || {}),
-    ]);
-
-    return (
-      <div className="field-comparison">
-        <table className="comparison-table">
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th className="matched">Matched</th>
-              <th>Existing Value</th>
-              <th>New Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from(allKeys)
-              .sort()
-              .map(field => {
-                const isMatched = details.matched.includes(field);
-                const existingValue = details.existing[field];
-                const newValue = details.new[field];
-
-                return (
-                  <tr key={field} className={isMatched ? 'matched-field' : ''}>
-                    <td className="field-name">
-                      <strong>{field}</strong>
-                    </td>
-                    <td className="matched-badge">
-                      {isMatched ? (
-                        <span className="badge-matched">✓ Match</span>
-                      ) : (
-                        <span className="badge-different">─ Different</span>
-                      )}
-                    </td>
-                    <td className="field-value existing">
-                      <code>{existingValue ? String(existingValue).substring(0, 40) : '-'}</code>
-                    </td>
-                    <td className="field-value new">
-                      <code>{newValue ? String(newValue).substring(0, 40) : '-'}</code>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-      </div>
-    );
   };
 
   if (duplicates.length === 0) {
@@ -255,7 +192,7 @@ const DuplicateResolutionPanel = ({
               </div>
             </div>
 
-            {renderFieldComparison(currentDuplicate)}
+            <DuplicateFieldComparison duplicate={currentDuplicate} />
 
             {/* Resolution Options */}
             <div className="resolution-options">
