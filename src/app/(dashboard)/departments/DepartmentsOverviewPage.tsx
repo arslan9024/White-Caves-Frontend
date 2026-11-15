@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import StandbyRosterDrawer from '../../../components/organization/StandbyRosterDrawer';
+import { createLogger } from '../../../utils/logger';
 import './Departments.css';
+
+const log = createLogger('DepartmentsOverviewPage');
 
 interface DepartmentCardData {
   _id: string;
@@ -70,7 +73,7 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
         fetchDepartments();
       }
     } catch (err) {
-      console.error(err);
+      log.error('DepartmentsOverviewPage operation failed', err);
     }
   };
 
@@ -92,7 +95,7 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
         body: JSON.stringify({ orderedIds: reordered.map((d) => d._id) }),
       });
     } catch (err) {
-      console.error(err);
+      log.error('DepartmentsOverviewPage operation failed', err);
       fetchDepartments();
     }
   };

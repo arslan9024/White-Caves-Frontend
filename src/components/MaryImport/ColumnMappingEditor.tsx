@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ColumnMappingEditor.css';
+import {
+  DEFAULT_PROPERTY_FIELDS,
+  DEFAULT_OWNER_FIELDS,
+  autoDetectMapping,
+} from './ColumnMappingConstants';
+
+export * from './ColumnMappingConstants';
 
 /**
  * ColumnMappingEditor Component
@@ -15,58 +22,18 @@ const ColumnMappingEditor = ({
   sampleData = [],
 }) => {
   const [mapping, setMapping] = useState(existingMapping);
-  const [showSuggestions, setShowSuggestions] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
   const [selectedTab, setSelectedTab] = useState('properties'); // properties, owners, both
-
-  // Default available fields
-  const defaultPropertyFields = [
-    'referenceNo',
-    'projectName',
-    'area',
-    'plotNo',
-    'building',
-    'unit',
-    'bedrooms',
-    'bathrooms',
-    'area',
-    'type',
-    'status',
-    'price',
-    'rentPriceAnnual',
-    'furnishing',
-    'amenities',
-    'description',
-    'legalStatus',
-    'occupancyStatus',
-    'marketStatus',
-  ];
-
-  const defaultOwnerFields = [
-    'name',
-    'email',
-    'phone',
-    'nationality',
-    'emiratesID',
-    'passportNo',
-    'address',
-    'city',
-    'country',
-    'companyName',
-    'companyRegistration',
-    'companyTRN',
-    'contactPerson',
-  ];
 
   const propertyFields =
     availableFields.length > 0
       ? availableFields.filter(f => f.category === 'property')
-      : defaultPropertyFields.map(f => ({ name: f, category: 'property' }));
+      : DEFAULT_PROPERTY_FIELDS.map(f => ({ name: f, category: 'property' }));
 
   const ownerFields =
     availableFields.length > 0
       ? availableFields.filter(f => f.category === 'owner')
-      : defaultOwnerFields.map(f => ({ name: f, category: 'owner' }));
+      : DEFAULT_OWNER_FIELDS.map(f => ({ name: f, category: 'owner' }));
 
   // Auto-detect column mappings
   const handleAutoDetect = async () => {
@@ -75,47 +42,10 @@ const ColumnMappingEditor = ({
       setMapping(detected);
       onMappingChange?.(detected);
     } else {
-      // Fallback auto-detection logic
       const detected = autoDetectMapping(columns);
       setMapping(detected);
       onMappingChange?.(detected);
     }
-  };
-
-  // Simple auto-detection logic
-  const autoDetectMapping = cols => {
-    const detected = {};
-    const commonPatterns = {
-      ref: ['reference', 'ref', 'id', 'referenceno'],
-      project: ['project', 'projectname', 'project name'],
-      area: ['area', 'area name', 'location'],
-      plotNo: ['plot', 'plott no', 'plot number'],
-      building: ['building', 'bldg', 'building name'],
-      unit: ['unit', 'unit no', 'apartment'],
-      bedrooms: ['bedroom', 'bed', 'br', 'bedrooms', 'bed rooms'],
-      bathrooms: ['bathroom', 'bath', 'bathrooms', 'bath rooms'],
-      type: ['type', 'property type', 'propertytype'],
-      price: ['price', 'salePrice', 'sale price'],
-      rent: ['rent', 'rental', 'annual rent'],
-      furnishing: ['furnish', 'furnished', 'furnishing'],
-      name: ['name', 'owner name', 'ownername', 'client name'],
-      email: ['email', 'email address'],
-      phone: ['phone', 'mobile', 'contact', 'phone number'],
-      emiratesID: ['emirates id', 'eid', 'id number', 'emiratesid'],
-      passportNo: ['passport', 'passport no', 'passportno'],
-    };
-
-    cols.forEach(col => {
-      const lowerCol = col.toLowerCase().trim();
-      for (const [fieldKey, patterns] of Object.entries(commonPatterns)) {
-        if (patterns.some(p => lowerCol.includes(p))) {
-          detected[col] = fieldKey;
-          break;
-        }
-      }
-    });
-
-    return detected;
   };
 
   // Handle manual mapping change
@@ -129,7 +59,7 @@ const ColumnMappingEditor = ({
   // Validate mapping
   const validateMapping = currentMapping => {
     const errors = {};
-    const requiredFields = ['name', 'referenceNo']; // Minimum required fields
+    const requiredFields = ['name', 'referenceNo'];
 
     requiredFields.forEach(field => {
       const isMapped = Object.values(currentMapping).includes(field);
@@ -193,7 +123,7 @@ const ColumnMappingEditor = ({
             </tr>
           </thead>
           <tbody>
-            {columns.map((column, idx) => {
+            {columns.map(column => {
               const field = mapping[column];
               const category = getColumnCategory(column);
               const suggestions = getSuggestions(column);

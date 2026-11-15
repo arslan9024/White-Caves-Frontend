@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, MessageCircle, Trash2 } from 'lucide-react';
 import { useRealTimeKPIs } from '../hooks/useRealTimeKPIs';
+import { createLogger } from '../utils/logger';
+
+const log = createLogger('EntityComments');
 
 interface Comment {
   id: string;
@@ -206,7 +209,7 @@ export const EntityComments: React.FC<EntityCommentsProps> = ({
           setComments(data.comments || []);
         }
       } catch (error) {
-        console.error('Failed to load comments', error);
+        log.error('Failed to load comments', error);
       }
     };
 
@@ -278,7 +281,7 @@ export const EntityComments: React.FC<EntityCommentsProps> = ({
           setNewComment('');
         }
       } catch (error) {
-        console.error('Failed to post comment', error);
+        log.error('Failed to post comment', error);
       } finally {
         setIsLoading(false);
       }
@@ -297,7 +300,7 @@ export const EntityComments: React.FC<EntityCommentsProps> = ({
           setComments(prev => prev.filter(c => c.id !== commentId));
         }
       } catch (error) {
-        console.error('Failed to delete comment', error);
+        log.error('Failed to delete comment', error);
       }
     },
     [entityId, entityType]

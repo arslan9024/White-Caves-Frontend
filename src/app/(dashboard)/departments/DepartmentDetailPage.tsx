@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import StandbyRosterDrawer from '../../../components/organization/StandbyRosterDrawer';
+import { createLogger } from '../../../utils/logger';
 import './Departments.css';
+
+const log = createLogger('DepartmentDetailPage');
 
 interface DepartmentDetailPageProps {
   deptSlug?: string;
@@ -71,7 +74,7 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
         fetchDetails();
       }
     } catch (err) {
-      console.error(err);
+      log.error('DepartmentDetailPage operation failed', err);
     }
   };
 
@@ -98,7 +101,7 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
         fetchDetails();
       }
     } catch (err) {
-      console.error(err);
+      log.error('DepartmentDetailPage operation failed', err);
     }
   };
 
@@ -115,7 +118,7 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
       });
       fetchDetails();
     } catch (err) {
-      console.error(err);
+      log.error('DepartmentDetailPage operation failed', err);
     }
   };
 
