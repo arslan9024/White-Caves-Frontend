@@ -4,30 +4,20 @@
  * Single Purpose File Law: < 350 lines
  */
 
-import React, { FC, useState, useEffect, useMemo, CSSProperties } from 'react';
+import React, { FC, useState, useEffect, useMemo } from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { CustomerItem, CustomerType, LeadSource } from './CustomerManager.types';
 import { useDirtyStateGuard } from '../../../hooks/useDirtyStateGuard';
 import { UnsavedChangesModal, TaskActionBar } from '../../common/UnsavedChangesModal';
+import {
+  overlayStyle,
+  drawerContainerStyle,
+  drawerHeaderStyle,
+  drawerFormStyle,
+} from './CustomerRegistrationDrawer.styles';
+import { CustomerRegistrationFields } from './CustomerRegistrationFields';
 
-const lbl: CSSProperties = {
-  fontSize: '0.72rem',
-  fontWeight: 800,
-  color: '#94A3B8',
-  textTransform: 'uppercase',
-};
-const inp: CSSProperties = {
-  width: '100%',
-  marginTop: '6px',
-  padding: '10px 14px',
-  background: '#0F172A',
-  border: '1px solid rgba(255, 255, 255, 0.15)',
-  borderRadius: '8px',
-  color: '#FFFFFF',
-  fontSize: '0.85rem',
-};
-
-interface CustomerRegistrationDrawerProps {
+export interface CustomerRegistrationDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (customer: Partial<CustomerItem>) => void;
@@ -145,43 +135,9 @@ export const CustomerRegistrationDrawer: FC<CustomerRegistrationDrawerProps> = (
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        backdropFilter: 'blur(6px)',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        zIndex: 1000,
-      }}
-      data-testid="customer-registration-drawer"
-    >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '480px',
-          height: '100%',
-          backgroundColor: '#070D18',
-          borderLeft: '1px solid rgba(255, 255, 255, 0.12)',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '-10px 0 30px rgba(0, 0, 0, 0.5)',
-          overflowY: 'auto',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '20px 24px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-          }}
-        >
+    <div style={overlayStyle} data-testid="customer-registration-drawer">
+      <div style={drawerContainerStyle}>
+        <div style={drawerHeaderStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <UserPlus size={18} color="#34D399" />
             <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
@@ -204,129 +160,27 @@ export const CustomerRegistrationDrawer: FC<CustomerRegistrationDrawerProps> = (
           </button>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            flex: 1,
-          }}
-        >
-          <div>
-            <label style={lbl}>Full Legal Name *</label>
-            <input
-              type="text"
-              required
-              data-testid="customer-name-input"
-              value={fullName}
-              onChange={e => setFullName(e.target.value)}
-              placeholder="e.g. Fatima Al-Mansoor"
-              style={inp}
-            />
-          </div>
-
-          <div>
-            <label style={lbl}>Client ID Code</label>
-            <input
-              type="text"
-              data-testid="customer-code-input"
-              value={customerCode}
-              onChange={e => setCustomerCode(e.target.value)}
-              placeholder="Leave blank for auto-code"
-              style={inp}
-            />
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div>
-              <label style={lbl}>Email *</label>
-              <input
-                type="email"
-                required
-                data-testid="customer-email-input"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="client@whitecaves.ae"
-                style={inp}
-              />
-            </div>
-            <div>
-              <label style={lbl}>Phone Number</label>
-              <input
-                type="text"
-                data-testid="customer-phone-input"
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
-                placeholder="+971 50 123 4567"
-                style={inp}
-              />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div>
-              <label style={lbl}>Customer Type</label>
-              <select
-                value={customerType}
-                onChange={e => setCustomerType(e.target.value as CustomerType)}
-                style={inp}
-              >
-                <option value="LEAD">LEAD</option>
-                <option value="BUYER">BUYER</option>
-                <option value="TENANT">TENANT</option>
-                <option value="LANDLORD">LANDLORD</option>
-                <option value="INVESTOR">INVESTOR</option>
-              </select>
-            </div>
-            <div>
-              <label style={lbl}>Lead Source</label>
-              <select
-                value={source}
-                onChange={e => setSource(e.target.value as LeadSource)}
-                style={inp}
-              >
-                <option value="PROPERTY_FINDER">Property Finder</option>
-                <option value="BAYUT">Bayut</option>
-                <option value="DUBIZZLE">Dubizzle</option>
-                <option value="REFERRAL">Referral</option>
-                <option value="WHATSAPP">WhatsApp</option>
-                <option value="DIRECT">Direct</option>
-              </select>
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div>
-              <label style={lbl}>Preferred Community</label>
-              <input
-                type="text"
-                value={preferredCommunity}
-                onChange={e => setPreferredCommunity(e.target.value)}
-                style={inp}
-              />
-            </div>
-            <div>
-              <label style={lbl}>Budget (AED)</label>
-              <input
-                type="number"
-                value={budgetAED}
-                onChange={e => setBudgetAED(Number(e.target.value))}
-                style={inp}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label style={lbl}>Assigned Consultant</label>
-            <input
-              type="text"
-              value={assignedAgentName}
-              onChange={e => setAssignedAgentName(e.target.value)}
-              style={inp}
-            />
-          </div>
+        <form onSubmit={handleSubmit} style={drawerFormStyle}>
+          <CustomerRegistrationFields
+            fullName={fullName}
+            setFullName={setFullName}
+            customerCode={customerCode}
+            setCustomerCode={setCustomerCode}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+            customerType={customerType}
+            setCustomerType={setCustomerType}
+            preferredCommunity={preferredCommunity}
+            setPreferredCommunity={setPreferredCommunity}
+            budgetAED={budgetAED}
+            setBudgetAED={setBudgetAED}
+            assignedAgentName={assignedAgentName}
+            setAssignedAgentName={setAssignedAgentName}
+            source={source}
+            setSource={setSource}
+          />
 
           <div
             style={{
@@ -356,3 +210,4 @@ export const CustomerRegistrationDrawer: FC<CustomerRegistrationDrawerProps> = (
     </div>
   );
 };
+export default CustomerRegistrationDrawer;
