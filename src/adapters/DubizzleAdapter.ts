@@ -14,6 +14,12 @@
 
 import { BasePortalAdapter } from './BasePortalAdapter';
 import crypto from 'crypto';
+import {
+  mapEventsToDubizzleFormat,
+  mapUpdatesToDubizzleFormat,
+  validateDubizzleWebhookSignature,
+  formatDubizzleListingPayload
+} from './DubizzleAdapter.helpers';
 
 export class DubizzleAdapter extends BasePortalAdapter {
   constructor() {
@@ -22,7 +28,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
 
   /**
    * Connect to Dubizzle API
-   * Requires: apiKey, clientId, clientSecret
    */
   async connect(credentials) {
     if (!credentials.apiKey || !credentials.clientId || !credentials.clientSecret) {
@@ -35,16 +40,12 @@ export class DubizzleAdapter extends BasePortalAdapter {
     this.webhookSecret = credentials.webhookSecret || crypto.randomBytes(32).toString('hex');
 
     try {
-      // Verify credentials
       const response = await this.makeRequest('GET', '/listings?category=real-estate&limit=1');
-      
       if (response) {
         this.isConnected = true;
-        
         return true;
       }
     } catch (error) {
-      
       this.isConnected = false;
       throw error;
     }
@@ -55,12 +56,7 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async getProperty(propertyId) {
     const response = await this.makeRequest('GET', `/listings/${propertyId}`);
-    
-    if (response.data) {
-      return this.normalizeProperty(response.data);
-    }
-    
-    return null;
+    return response.data ? this.normalizeProperty(response.data) : null;
   }
 
   /**
@@ -68,7 +64,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async searchProperties(filters = {}) {
     const params = new URLSearchParams();
-
     params.append('category', 'real-estate');
     
     if (filters.location) params.append('location', filters.location);
@@ -83,12 +78,7 @@ export class DubizzleAdapter extends BasePortalAdapter {
     params.append('offset', ((filters.page || 1) - 1) * (filters.pageSize || 50));
 
     const response = await this.makeRequest('GET', `/listings/search?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data.map(prop => this.normalizeProperty(prop));
-    }
-
-    return [];
+    return (response.data && Array.isArray(response.data)) ? response.data.map(prop => this.normalizeProperty(prop)) : [];
   }
 
   /**
@@ -96,16 +86,8 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async getAllProperties(page = 1, pageSize = 50) {
     const offset = (page - 1) * pageSize;
-    const response = await this.makeRequest(
-      'GET',
-      `/listings?category=real-estate&limit=${pageSize}&offset=${offset}`
-    );
-
-    if (response.data && Array.isArray(response.data)) {
-      return response.data.map(prop => this.normalizeProperty(prop));
-    }
-
-    return [];
+    const response = await this.makeRequest('GET', `/listings?category=real-estate&limit=${pageSize}&offset=${offset}`);
+    return (response.data && Array.isArray(response.data)) ? response.data.map(prop => this.normalizeProperty(prop)) : [];
   }
 
   /**
@@ -122,12 +104,7 @@ export class DubizzleAdapter extends BasePortalAdapter {
     };
 
     const response = await this.makeRequest('POST', '/inquiries', dubizzleLead);
-    
-    if (response.data) {
-      return this.normalizeLead(response.data);
-    }
-
-    return null;
+    return response.data ? this.normalizeLead(response.data) : null;
   }
 
   /**
@@ -135,7 +112,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async getLeads(filters = {}) {
     const params = new URLSearchParams();
-    
     if (filters.listingId) params.append('listingId', filters.listingId);
     if (filters.status) params.append('status', filters.status);
 
@@ -143,42 +119,16 @@ export class DubizzleAdapter extends BasePortalAdapter {
     params.append('offset', ((filters.page || 1) - 1) * (filters.pageSize || 50));
 
     const response = await this.makeRequest('GET', `/inquiries?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data.map(lead => this.normalizeLead(lead));
-    }
-
-    return [];
+    return (response.data && Array.isArray(response.data)) ? response.data.map(lead => this.normalizeLead(lead)) : [];
   }
 
   /**
    * Create a listing
    */
   async createListing(listingData) {
-    const dubizzleListing = {
-      category: 'real-estate',
-      subcategory: listingData.type,
-      title: listingData.title,
-      description: listingData.description,
-      price: listingData.price,
-      offerType: listingData.purpose === 'rent' ? 'rent' : 'sale',
-      rooms: listingData.specifications?.bedrooms,
-      location: listingData.location?.address,
-      images: listingData.images || [],
-      contact: {
-        name: listingData.name,
-        email: listingData.email,
-        phone: listingData.phone
-      }
-    };
-
+    const dubizzleListing = formatDubizzleListingPayload(listingData);
     const response = await this.makeRequest('POST', '/listings', dubizzleListing);
-    
-    if (response.data) {
-      return this.normalizeProperty(response.data);
-    }
-
-    return null;
+    return response.data ? this.normalizeProperty(response.data) : null;
   }
 
   /**
@@ -186,14 +136,8 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async updateProperty(propertyId, updates) {
     const dubizzleUpdates = this.mapUpdatesToDubizzleFormat(updates);
-    
     const response = await this.makeRequest('PUT', `/listings/${propertyId}`, dubizzleUpdates);
-    
-    if (response.data) {
-      return this.normalizeProperty(response.data);
-    }
-
-    return null;
+    return response.data ? this.normalizeProperty(response.data) : null;
   }
 
   /**
@@ -208,17 +152,7 @@ export class DubizzleAdapter extends BasePortalAdapter {
    * Map updates to Dubizzle format
    */
   mapUpdatesToDubizzleFormat(updates) {
-    const mapped = {};
-
-    if (updates.title) mapped.title = updates.title;
-    if (updates.description) mapped.description = updates.description;
-    if (updates.price) mapped.price = updates.price;
-    if (updates.specifications) {
-      if (updates.specifications.bedrooms) mapped.rooms = updates.specifications.bedrooms;
-    }
-    if (updates.images) mapped.images = updates.images;
-
-    return mapped;
+    return mapUpdatesToDubizzleFormat(updates);
   }
 
   /**
@@ -226,7 +160,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async setupWebhook(webhookUrl, events = ['listing.created', 'listing.updated', 'inquiry.created']) {
     this.webhookUrl = webhookUrl;
-    
     const webhook = {
       url: webhookUrl,
       events: this.mapEventsToDubizzleFormat(events),
@@ -235,35 +168,20 @@ export class DubizzleAdapter extends BasePortalAdapter {
     };
 
     const response = await this.makeRequest('POST', '/webhooks', webhook);
-    
-    if (response.data) {
-      
-      return response.data;
-    }
-
-    return null;
+    return response.data || null;
   }
 
   /**
    * Map events to Dubizzle format
    */
   mapEventsToDubizzleFormat(events) {
-    const mapping = {
-      'property.created': 'listing.created',
-      'property.updated': 'listing.updated',
-      'property.deleted': 'listing.deleted',
-      'lead.created': 'inquiry.created',
-      'lead.updated': 'inquiry.updated'
-    };
-
-    return events.map(event => mapping[event] || event);
+    return mapEventsToDubizzleFormat(events);
   }
 
   /**
    * Handle webhook payload
    */
   async handleWebhookPayload(payload) {
-
     if (!this.validateWebhookSignature(payload, payload.signature, this.webhookSecret)) {
       throw new Error('Invalid webhook signature');
     }
@@ -274,10 +192,10 @@ export class DubizzleAdapter extends BasePortalAdapter {
       type: null
     };
 
-    if (payload.event.includes('listing')) {
+    if (payload.event?.includes('listing')) {
       result.type = 'property';
       result.data = this.normalizeProperty(payload.data);
-    } else if (payload.event.includes('inquiry')) {
+    } else if (payload.event?.includes('inquiry')) {
       result.type = 'lead';
       result.data = this.normalizeLead(payload.data);
     }
@@ -289,22 +207,14 @@ export class DubizzleAdapter extends BasePortalAdapter {
    * Validate webhook signature
    */
   validateWebhookSignature(payload, signature, secret) {
-    if (!signature || !secret) return false;
-
-    const payload_string = JSON.stringify(payload.data);
-    const computed_signature = crypto
-      .createHmac('sha256', secret)
-      .update(payload_string)
-      .digest('hex');
-
-    return computed_signature === signature;
+    return validateDubizzleWebhookSignature(payload, signature, secret);
   }
 
   /**
    * Normalize Dubizzle listing
    */
   normalizeProperty(dubizzleProperty) {
-    const normalized = super.normalizeProperty({
+    return super.normalizeProperty({
       id: dubizzleProperty.id,
       title: dubizzleProperty.title,
       description: dubizzleProperty.description,
@@ -324,8 +234,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
       url: dubizzleProperty.externalUrl || `https://www.dubizzle.com/listing/${dubizzleProperty.id}`,
       postedBy: dubizzleProperty.postedBy
     });
-
-    return normalized;
   }
 
   /**
@@ -342,7 +250,6 @@ export class DubizzleAdapter extends BasePortalAdapter {
   async getListingsCount(filters = {}) {
     const params = new URLSearchParams();
     params.append('category', 'real-estate');
-
     if (filters.location) params.append('location', filters.location);
 
     const response = await this.makeRequest('GET', `/listings/count?${params.toString()}`);
@@ -354,11 +261,9 @@ export class DubizzleAdapter extends BasePortalAdapter {
    */
   async getTrendingListings(limit = 10) {
     const response = await this.makeRequest('GET', `/listings/trending?category=real-estate&limit=${limit}`);
-    
     if (response.data && Array.isArray(response.data)) {
       return response.data.map(prop => this.normalizeProperty(prop));
     }
-
     return [];
   }
 }
