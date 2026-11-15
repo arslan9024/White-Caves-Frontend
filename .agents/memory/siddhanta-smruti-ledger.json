@@ -76,6 +76,13 @@
       "wave": "Wave 19-21",
       "category": "RTL & LCP Guards",
       "summary": "Added rtlGuard (AEG-004) and lcpGuard (AEG-040) with Vitest coverage."
+    },
+    {
+      "id": "SMRUTI-2026-11-15-WAVES22-24",
+      "timestamp": "2026-11-15T15:58:10+04:00",
+      "wave": "Wave 22-24",
+      "category": "RBAC & Sequential Receipts",
+      "summary": "Added rbacGuard (AEG-003) and receiptGenerator (AEG-029) with Vitest coverage."
     }
   ]
 }
