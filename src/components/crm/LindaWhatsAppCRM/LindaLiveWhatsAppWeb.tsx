@@ -17,6 +17,7 @@ import { LindaLeadContextPane } from './LindaLeadContextPane';
 export interface LindaLiveWhatsAppWebProps {
   conversations: LindaConversationItem[];
   isLiveConnected?: boolean;
+  heartbeatLatency?: number;
   onSendMessage?: (convId: string, text: string) => void;
   onAutoReplyWithAI?: (conv: LindaConversationItem) => void;
 }
@@ -24,11 +25,14 @@ export interface LindaLiveWhatsAppWebProps {
 const ACCOUNT_FILTERS = [
   { id: 'ALL', label: 'All Linked Lines' },
   { id: '+971505760056', label: 'Primary Master +971505760056' },
+  { id: 'goraha', label: 'Goraha Secondary Line' },
+  { id: 'outreach', label: 'Outreach Campaign Line' },
 ];
 
 export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   conversations,
   isLiveConnected = false,
+  heartbeatLatency = 28,
   onSendMessage,
   onAutoReplyWithAI,
 }) => {
@@ -36,6 +40,8 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   const [selectedConvId, setSelectedConvId] = useState<string>(conversations[0]?.id || 'conv-1');
   const [selectedAccount, setSelectedAccount] = useState<string>('ALL');
   const [chatTypeFilter, setChatTypeFilter] = useState<'all' | 'direct' | 'groups'>('all');
+  const [unreadOnly, setUnreadOnly] = useState<boolean>(false);
+  const [showContextPane, setShowContextPane] = useState<boolean>(true);
   const [searchFilter, setSearchFilter] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>({});
@@ -221,48 +227,161 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     onAutoReplyWithAI?.(selectedConv);
   };
 
-  return (
-    <div
-      data-testid="linda-live-whatsapp-web"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '340px 1fr 260px',
-        height: '620px',
-        borderRadius: 14,
-        overflow: 'hidden',
-        border: isDark ? '1px solid rgba(37, 211, 102, 0.35)' : '1px solid #CBD5E1',
-        background: isDark ? '#0B141A' : '#FFFFFF',
-        boxShadow: isDark ? '0 8px 30px rgba(0,0,0,0.45)' : '0 4px 20px rgba(0,0,0,0.06)',
-      }}
-    >
-      <LindaChatListPane
-        isDark={isDark}
-        conversations={filteredConversations}
-        selectedConvId={selectedConvId}
-        searchFilter={searchFilter}
-        onSearchChange={setSearchFilter}
-        onSelectConversation={setSelectedConvId}
-        accountOptions={accountOptions}
-        selectedAccount={selectedAccount}
-        onSelectAccount={setSelectedAccount}
-        chatTypeFilter={chatTypeFilter}
-        onSelectChatType={setChatTypeFilter}
-      />
+  const unreadTotal = useMemo(
+    () => conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0),
+    [conversations]
+  );
 
-      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%' }}>
-        <LindaQuickReplyBar onSelectTemplate={setInputMessage} />
-        <LindaChatThreadPane
-          isDark={isDark}
-          selectedConv={selectedConv}
-          activeMessages={activeMessages}
-          inputMessage={inputMessage}
-          onInputChange={setInputMessage}
-          onSend={handleSend}
-          onAiDraft={handleAiDraft}
-        />
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div
+        data-testid="linda-master-status-bar"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '6px 14px',
+          borderRadius: 10,
+          background: isDark ? 'rgba(15, 23, 42, 0.9)' : '#F8FAFC',
+          border: isDark ? '1px solid rgba(37, 211, 102, 0.25)' : '1px solid #CBD5E1',
+          fontSize: 12,
+          color: isDark ? '#E2E8F0' : '#0F172A',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: isLiveConnected ? '#22C55E' : '#EF4444',
+              display: 'inline-block',
+            }}
+          />
+          <strong>Primary Master +971505760056</strong>
+          <span style={{ color: isLiveConnected ? '#22C55E' : '#EF4444', fontWeight: 600 }}>
+            {isLiveConnected ? 'Connected' : 'Reconnecting...'}
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span>Latency: {heartbeatLatency}ms</span>
+          <button
+            type="button"
+            data-testid="linda-unread-filter-btn"
+            onClick={() => setUnreadOnly(prev => !prev)}
+            style={{
+              padding: '2px 8px',
+              borderRadius: 6,
+              border: '1px solid rgba(148, 163, 184, 0.35)',
+              background: unreadOnly ? '#EF4444' : 'transparent',
+              color: unreadOnly ? '#FFFFFF' : 'inherit',
+              fontSize: 11,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Unread ({unreadTotal})
+          </button>
+          <button
+            type="button"
+            data-testid="linda-context-pane-toggle"
+            onClick={() => setShowContextPane(prev => !prev)}
+            style={{
+              padding: '2px 8px',
+              borderRadius: 6,
+              border: '1px solid rgba(148, 163, 184, 0.35)',
+              background: showContextPane ? 'rgba(37, 211, 102, 0.15)' : 'transparent',
+              color: 'inherit',
+              fontSize: 11,
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            {showContextPane ? 'Hide Context' : 'Show Context'}
+          </button>
+        </div>
       </div>
 
-      <LindaLeadContextPane conversation={selectedConv} />
+      {!isLiveConnected && (
+        <div
+          data-testid="linda-reconnect-banner"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '6px 14px',
+            borderRadius: 8,
+            background: 'rgba(239, 68, 68, 0.12)',
+            border: '1px solid rgba(239, 68, 68, 0.35)',
+            color: isDark ? '#FCA5A5' : '#991B1B',
+            fontSize: 12,
+          }}
+        >
+          <span>
+            Primary Master (+971505760056) socket disconnected. Showing cached conversations.
+          </span>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '2px 10px',
+              borderRadius: 6,
+              border: 'none',
+              background: '#EF4444',
+              color: '#FFFFFF',
+              fontSize: 11,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Reconnect
+          </button>
+        </div>
+      )}
+
+      <div
+        data-testid="linda-live-whatsapp-web"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: showContextPane ? '340px 1fr 260px' : '340px 1fr',
+          height: 'calc(100vh - 180px)',
+          minHeight: 560,
+          borderRadius: 14,
+          overflow: 'hidden',
+          border: isDark ? '1px solid rgba(37, 211, 102, 0.35)' : '1px solid #CBD5E1',
+          background: isDark ? '#0B141A' : '#FFFFFF',
+          boxShadow: isDark ? '0 8px 30px rgba(0,0,0,0.45)' : '0 4px 20px rgba(0,0,0,0.06)',
+        }}
+      >
+        <LindaChatListPane
+          isDark={isDark}
+          conversations={filteredConversations}
+          selectedConvId={selectedConvId}
+          searchFilter={searchFilter}
+          onSearchChange={setSearchFilter}
+          onSelectConversation={setSelectedConvId}
+          accountOptions={accountOptions}
+          selectedAccount={selectedAccount}
+          onSelectAccount={setSelectedAccount}
+          chatTypeFilter={chatTypeFilter}
+          onSelectChatType={setChatTypeFilter}
+        />
+
+        <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%' }}>
+          <LindaQuickReplyBar onSelectTemplate={setInputMessage} />
+          <LindaChatThreadPane
+            isDark={isDark}
+            selectedConv={selectedConv}
+            activeMessages={activeMessages}
+            inputMessage={inputMessage}
+            onInputChange={setInputMessage}
+            onSend={handleSend}
+            onAiDraft={handleAiDraft}
+          />
+        </div>
+
+        {showContextPane && <LindaLeadContextPane conversation={selectedConv} />}
+      </div>
     </div>
   );
 };

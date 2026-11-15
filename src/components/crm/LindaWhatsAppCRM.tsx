@@ -33,7 +33,8 @@ import { useLindaOperationsCenter } from './LindaWhatsAppCRM/useLindaOperationsC
  */
 const LindaWhatsAppCRM = memo(() => {
   const { isDark } = useTheme();
-  const [activeViewTab, setActiveViewTab] = useState<LindaViewTab>('all');
+  const [activeViewTab, setActiveViewTab] = useState<LindaViewTab>('whatsapp_web');
+  const [opsDrawerOpen, setOpsDrawerOpen] = useState<boolean>(false);
   const [activeNodeId, setActiveNodeId] = useState<LindaTreeNodeId>('inbox');
   const [leafLabel, setLeafLabel] = useState<string | null>(null);
   const [mdApproved, setMdApproved] = useState<boolean>(true);
@@ -147,7 +148,47 @@ const LindaWhatsAppCRM = memo(() => {
         onToggleRuntime={() => void handleToggleLindaRuntime()}
       />
 
-      <LindaTelemetryGrid isDark={isDark} metrics={metrics} />
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button
+          type="button"
+          data-testid="linda-ops-drawer-toggle"
+          onClick={() => setOpsDrawerOpen(prev => !prev)}
+          style={{
+            padding: '6px 14px',
+            borderRadius: 8,
+            border: '1px solid rgba(239, 68, 68, 0.45)',
+            background: opsDrawerOpen ? '#EF4444' : isDark ? '#0F172A' : '#FFFFFF',
+            color: opsDrawerOpen ? '#FFFFFF' : isDark ? '#F8FAFC' : '#0F172A',
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
+        >
+          {opsDrawerOpen ? 'Hide Ops & Diagnostics' : 'Ops & Diagnostics'}
+        </button>
+      </div>
+
+      {opsDrawerOpen && (
+        <div data-testid="linda-ops-diagnostics-drawer" style={{ display: 'grid', gap: 16 }}>
+          <LindaTelemetryGrid isDark={isDark} metrics={metrics} />
+          <LindaQuickActionsAndTerminal
+            features={features}
+            playbooks={playbooks}
+            terminalLines={terminalLines}
+            onExecuteCommand={(cmd, label) => void handleExecuteCommand(cmd, label)}
+            onClearTerminal={() =>
+              setTerminalLines(['$ Terminal cleared. Ready for next command.'])
+            }
+            activeModalOutput={activeModalOutput}
+            onCloseModal={() => {
+              setActiveModalOutput(null);
+              setQrCodeDataUrl(null);
+            }}
+            qrCodeDataUrl={qrCodeDataUrl}
+            isQrLoading={isQrLoading}
+          />
+        </div>
+      )}
 
       <LindaBreadcrumbBar
         isDark={isDark}
@@ -184,6 +225,8 @@ const LindaWhatsAppCRM = memo(() => {
           {(activeViewTab === 'all' || activeViewTab === 'whatsapp_web') && (
             <LindaLiveWhatsAppWeb
               conversations={conversations}
+              isLiveConnected={isConnected}
+              heartbeatLatency={heartbeatLatency}
               onSendMessage={(convId, text) => {
                 const match = conversations.find(c => c.id === convId);
                 if (match) {

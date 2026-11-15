@@ -26,6 +26,7 @@ export interface ChatMessage {
   text: string;
   timestamp: string;
   status?: 'sent' | 'delivered' | 'read';
+  mediaType?: string | null;
 }
 
 export interface LindaChatThreadPaneProps {
