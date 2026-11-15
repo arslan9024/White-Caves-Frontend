@@ -5,10 +5,18 @@
  */
 
 import React, { FC, useState, useEffect, useMemo } from 'react';
-import { X, UploadCloud, Save } from 'lucide-react';
+import { X, UploadCloud } from 'lucide-react';
 import { DocumentItem, DocumentType } from './DocumentManager.types';
 import { useDirtyStateGuard } from '../../../hooks/useDirtyStateGuard';
 import { UnsavedChangesModal, TaskActionBar } from '../../common/UnsavedChangesModal';
+import {
+  DRAWER_BODY_STYLE,
+  DRAWER_HEADER_STYLE,
+  DRAWER_OVERLAY_STYLE,
+  DRAWER_PANEL_STYLE,
+  FIELD_INPUT_STYLE,
+  FIELD_LABEL_STYLE,
+} from './DocumentUploadDrawer.styles';
 
 interface DocumentUploadDrawerProps {
   isOpen: boolean;
@@ -94,43 +102,9 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        backdropFilter: 'blur(4px)',
-        zIndex: 1100,
-        display: 'flex',
-        justifyContent: 'flex-end',
-      }}
-      data-testid="document-upload-drawer"
-    >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '460px',
-          height: '100%',
-          backgroundColor: '#070D18',
-          borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '-10px 0 30px rgba(0,0,0,0.5)',
-        }}
-      >
-        {/* Drawer Header */}
-        <div
-          style={{
-            padding: '20px 24px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+    <div style={DRAWER_OVERLAY_STYLE} data-testid="document-upload-drawer">
+      <div style={DRAWER_PANEL_STYLE}>
+        <div style={DRAWER_HEADER_STYLE}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <UploadCloud size={18} color="#38BDF8" />
             <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
@@ -151,30 +125,9 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
           </button>
         </div>
 
-        {/* Form Body */}
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}
-        >
+        <form onSubmit={handleSubmit} style={DRAWER_BODY_STYLE}>
           <div>
-            <label
-              style={{
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#94A3B8',
-                display: 'block',
-                marginBottom: '6px',
-              }}
-            >
-              Document Title
-            </label>
+            <label style={FIELD_LABEL_STYLE}>Document Title</label>
             <input
               type="text"
               value={title}
@@ -182,44 +135,18 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
               placeholder="e.g. Ejari Tenancy Agreement 2026"
               data-testid="doc-title-input"
               required
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                background: '#0F172A',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '6px',
-                color: '#FFFFFF',
-                fontSize: '0.85rem',
-              }}
+              style={FIELD_INPUT_STYLE}
             />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div>
-              <label
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  color: '#94A3B8',
-                  display: 'block',
-                  marginBottom: '6px',
-                }}
-              >
-                Statutory Doc Type
-              </label>
+              <label style={FIELD_LABEL_STYLE}>Statutory Doc Type</label>
               <select
                 value={docType}
                 onChange={e => setDocType(e.target.value as DocumentType)}
                 data-testid="doc-type-select"
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  background: '#0F172A',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '6px',
-                  color: '#FFFFFF',
-                  fontSize: '0.85rem',
-                }}
+                style={FIELD_INPUT_STYLE}
               >
                 <option value="TITLE_DEED">Title Deed</option>
                 <option value="EMIRATES_ID">Emirates ID</option>
@@ -233,47 +160,19 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
             </div>
 
             <div>
-              <label
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  color: '#94A3B8',
-                  display: 'block',
-                  marginBottom: '6px',
-                }}
-              >
-                Document Reference Code
-              </label>
+              <label style={FIELD_LABEL_STYLE}>Document Reference Code</label>
               <input
                 type="text"
                 value={docCode}
                 onChange={e => setDocCode(e.target.value)}
                 placeholder="e.g. TD-908124"
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  background: '#0F172A',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '6px',
-                  color: '#FFFFFF',
-                  fontSize: '0.85rem',
-                }}
+                style={FIELD_INPUT_STYLE}
               />
             </div>
           </div>
 
           <div>
-            <label
-              style={{
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#94A3B8',
-                display: 'block',
-                marginBottom: '6px',
-              }}
-            >
-              Counterparty Entity / Holder Name
-            </label>
+            <label style={FIELD_LABEL_STYLE}>Counterparty Entity / Holder Name</label>
             <input
               type="text"
               value={entityName}
@@ -281,75 +180,31 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
               placeholder="e.g. Hassan Al-Nuaimi"
               data-testid="doc-entity-input"
               required
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                background: '#0F172A',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '6px',
-                color: '#FFFFFF',
-                fontSize: '0.85rem',
-              }}
+              style={FIELD_INPUT_STYLE}
             />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
             <div>
-              <label
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  color: '#94A3B8',
-                  display: 'block',
-                  marginBottom: '6px',
-                }}
-              >
-                Associated Deal ID
-              </label>
+              <label style={FIELD_LABEL_STYLE}>Associated Deal ID</label>
               <input
                 type="text"
                 value={dealId}
                 onChange={e => setDealId(e.target.value)}
                 placeholder="DEAL-001"
                 data-testid="doc-deal-input"
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  background: '#0F172A',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '6px',
-                  color: '#FFFFFF',
-                  fontSize: '0.85rem',
-                }}
+                style={FIELD_INPUT_STYLE}
               />
             </div>
 
             <div>
-              <label
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  color: '#94A3B8',
-                  display: 'block',
-                  marginBottom: '6px',
-                }}
-              >
-                Target Property Unit
-              </label>
+              <label style={FIELD_LABEL_STYLE}>Target Property Unit</label>
               <input
                 type="text"
                 value={propertyId}
                 onChange={e => setPropertyId(e.target.value)}
                 placeholder="REP-001"
-                style={{
-                  width: '100%',
-                  padding: '8px 12px',
-                  background: '#0F172A',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '6px',
-                  color: '#FFFFFF',
-                  fontSize: '0.85rem',
-                }}
+                style={FIELD_INPUT_STYLE}
               />
             </div>
           </div>
@@ -368,11 +223,7 @@ export const DocumentUploadDrawer: FC<DocumentUploadDrawerProps> = ({
         </form>
       </div>
 
-      <UnsavedChangesModal
-        isOpen={showPrompt}
-        onProceed={proceed}
-        onCancel={cancel}
-      />
+      <UnsavedChangesModal isOpen={showPrompt} onProceed={proceed} onCancel={cancel} />
     </div>
   );
 };
