@@ -36,12 +36,30 @@ const buttonVariants = {
   tap: { scale: 0.95 },
 };
 
+export interface AIQuickActionItem {
+  id?: string | number;
+  label?: string;
+  icon?: string;
+  variant?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  tooltip?: string;
+  badge?: string | number;
+}
+
+export interface AIQuickActionsProps {
+  actions?: AIQuickActionItem[];
+  assistantName?: string;
+  onAction?: (action: AIQuickActionItem) => void;
+  layout?: string;
+}
+
 export default function AIQuickActions({
   actions = [],
   assistantName,
   onAction,
   layout = 'horizontal',
-}) {
+}: AIQuickActionsProps) {
   return (
     <div className={`ai-quick-actions ${layout}`}>
       {assistantName && (
@@ -53,7 +71,9 @@ export default function AIQuickActions({
 
       <div className="actions-list">
         {actions.map((action, index) => {
-          const IconComponent = ICON_MAP[action.icon] || Zap;
+          const IconComponent =
+            (action.icon ? (ICON_MAP as Record<string, typeof Zap>)[action.icon] : undefined) ||
+            Zap;
 
           return (
             <motion.button
@@ -139,7 +159,9 @@ export function AIActionPanel({
           <h4 className="section-label">Quick Actions</h4>
           <div className="actions-grid">
             {actions.map((action, index) => {
-              const IconComponent = ICON_MAP[action.icon] || Zap;
+              const IconComponent =
+                (action.icon ? (ICON_MAP as Record<string, typeof Zap>)[action.icon] : undefined) ||
+                Zap;
               return (
                 <motion.button
                   key={action.id || index}

@@ -99,12 +99,20 @@ const SYSTEM_STATUS = [
   { name: 'AI Services', status: 'degraded', uptime: '98.5%', icon: Cpu },
 ];
 
-export default function AdminMixedDashboard({ subItem = 'settings', selectedAssistant }) {
+export interface AdminMixedDashboardProps {
+  subItem?: string;
+  selectedAssistant?: string;
+}
+
+export default function AdminMixedDashboard({
+  subItem = 'settings',
+  selectedAssistant,
+}: AdminMixedDashboardProps) {
   const [currentStage, setCurrentStage] = useState(2);
   const deptConfig = DEPT_ASSISTANT_MAP.admin;
 
-  const handleStageClick = (stage, index) => setCurrentStage(index);
-  const handleAction = action => {};
+  const handleStageClick = (_stage: unknown, index: number) => setCurrentStage(index);
+  const handleAction = (_action: unknown) => {};
 
   return (
     <MixedDashboard
