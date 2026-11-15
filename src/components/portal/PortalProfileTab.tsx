@@ -20,6 +20,7 @@ import { auth } from '../../config/firebase';
 import { updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 import { authFetch } from '../../utils/authFetch';
 import { createLogger } from '../../utils/logger';
+import { PortalProfilePasswordSection } from './PortalProfilePasswordSection';
 import '../../pages/RolePages.css';
 
 const log = createLogger('PortalProfileTab');
@@ -309,70 +310,18 @@ const PortalProfileTab: FC = () => {
       </div>
 
       {/* ── Change Password ── */}
-      <div className="profile-section" data-testid="profile-section-password">
-        <h4>Change Password</h4>
-
-        <div className="profile-field">
-          <label htmlFor="profile-current-password">Current password</label>
-          <input
-            id="profile-current-password"
-            type="password"
-            value={currentPassword}
-            onChange={e => setCurrentPassword(e.target.value)}
-            placeholder="Enter your current password"
-            autoComplete="current-password"
-            data-testid="profile-current-password-input"
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="profile-new-password">New password</label>
-          <input
-            id="profile-new-password"
-            type="password"
-            value={newPassword}
-            onChange={e => setNewPassword(e.target.value)}
-            placeholder="At least 8 characters"
-            autoComplete="new-password"
-            data-testid="profile-new-password-input"
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="profile-confirm-password">Confirm new password</label>
-          <input
-            id="profile-confirm-password"
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            placeholder="Repeat new password"
-            autoComplete="new-password"
-            data-testid="profile-confirm-password-input"
-          />
-        </div>
-
-        {passwordError && (
-          <p className="profile-error-msg" role="alert" data-testid="password-error">
-            {passwordError}
-          </p>
-        )}
-        {passwordSuccess && (
-          <p className="profile-success-msg" role="status" data-testid="password-success">
-            {passwordSuccess}
-          </p>
-        )}
-
-        <button
-          type="button"
-          className="profile-save-btn"
-          onClick={() => void handleChangePassword()}
-          disabled={isChangingPassword}
-          aria-disabled={isChangingPassword}
-          data-testid="profile-change-password-btn"
-        >
-          {isChangingPassword ? 'Updating…' : 'Change Password'}
-        </button>
-      </div>
+      <PortalProfilePasswordSection
+        currentPassword={currentPassword}
+        newPassword={newPassword}
+        confirmPassword={confirmPassword}
+        isChangingPassword={isChangingPassword}
+        passwordError={passwordError}
+        passwordSuccess={passwordSuccess}
+        onCurrentPasswordChange={setCurrentPassword}
+        onNewPasswordChange={setNewPassword}
+        onConfirmPasswordChange={setConfirmPassword}
+        onChangePassword={() => void handleChangePassword()}
+      />
     </div>
   );
 };
