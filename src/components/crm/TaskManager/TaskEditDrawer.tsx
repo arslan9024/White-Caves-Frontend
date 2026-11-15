@@ -9,6 +9,7 @@ import type { TaskNode, TaskPriority, TaskStatus } from './TaskManager.types';
 import { TASK_PILLARS, TASK_CATEGORIES } from './TaskManager.data';
 import { useDirtyStateGuard } from '../../../hooks/useDirtyStateGuard';
 import { UnsavedChangesModal, TaskActionBar } from '../../common/UnsavedChangesModal';
+import { TaskTriadAndChainFields } from './TaskTriadAndChainFields';
 
 interface TaskEditDrawerProps {
   isOpen: boolean;
@@ -79,71 +80,69 @@ export const TaskEditDrawer: React.FC<TaskEditDrawerProps> = ({
     }
   };
 
-  const handleChange = (field: keyof TaskNode, val: any) => {
-    if (field === 'pillarId') {
-      const p = TASK_PILLARS.find(item => item.id === val);
-      setFormData(prev => ({ ...prev, pillarId: val, pillarName: p ? p.name : prev.pillarName }));
-      return;
-    }
-    setFormData(prev => ({ ...prev, [field]: val }));
+  const handleChange = (field: keyof TaskNode, value: any) => {
+    setFormData(prev => {
+      const updated = { ...prev, [field]: value };
+      if (field === 'pillarId') {
+        const found = TASK_PILLARS.find(p => p.id === value);
+        if (found) {
+          updated.pillarName = found.name;
+        }
+      }
+      return updated;
+    });
   };
 
-  const handleChainChange = (chainField: string, val: string) => {
+  const handleChainChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       reportingChain: {
-        ...(prev.reportingChain || {
-          supervisorName: '',
-          supervisorCode: 'SUP-01',
-          managerName: '',
-          managerCode: 'MGR-01',
-          directorName: '',
-          directorCode: 'DIR-01',
-          executiveReviewer: 'Sophia Al-Hashemi (MD)',
-        }),
-        [chainField]: val,
+        ...(prev.reportingChain || {}),
+        [field]: value,
       },
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(formData);
-  };
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="w-full max-w-lg h-full bg-slate-900 border-l border-slate-800 p-6 flex flex-col justify-between shadow-2xl overflow-y-auto">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                {task ? `Configure: ${task.taskCode}` : 'New Operational Task'}
-              </span>
-              <h2 className="text-lg font-bold text-white mt-1">
-                {task ? task.title : 'Register New Dubai Statutory Task'}
-              </h2>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition-all text-xs"
-            >
-              ✕
-            </button>
+    <div
+      className="fixed inset-0 z-50 overflow-hidden bg-slate-950/70 backdrop-blur-sm flex justify-end"
+      data-testid="task-edit-drawer-overlay"
+    >
+      <div
+        className="w-full max-w-xl bg-slate-900 border-l border-slate-800 h-full flex flex-col p-6 shadow-2xl relative animate-in slide-in-from-right duration-200"
+        data-testid="task-edit-drawer"
+      >
+        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+          <div>
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              {task ? `Configure: ${task.taskCode}` : 'New Operational Task'}
+            </span>
+            <h2 className="text-lg font-bold text-white mt-1">
+              {task ? task.title : 'Register New Dubai Statutory Task'}
+            </h2>
           </div>
+          <button
+            onClick={() => confirmExit(onClose)}
+            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+            data-testid="close-drawer-btn"
+          >
+            ✕
+          </button>
+        </div>
 
-          <form id="task-edit-form" onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex-1 overflow-y-auto py-4 space-y-4 pr-1">
+          <form className="space-y-4" onSubmit={e => e.preventDefault()}>
             <div>
               <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                Task Title
+                Task Title / Statutory Reference
               </label>
               <input
                 type="text"
                 value={formData.title || ''}
                 onChange={e => handleChange('title', e.target.value)}
-                placeholder="e.g. Verify RERA Broker Card Active Status"
+                placeholder="e.g. Title Deed Verification & Seller Clearances"
                 className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                required
+                data-testid="task-title-input"
               />
             </div>
 
@@ -242,99 +241,11 @@ export const TaskEditDrawer: React.FC<TaskEditDrawerProps> = ({
               </div>
             </div>
 
-            {/* Execution Triad (Actor, Action, Results) */}
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 mt-1 flex flex-col gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-sky-400 font-bold">
-                Task Execution Triad (Actor • Action • Results)
-              </span>
-              <div>
-                <label className="block text-[10px] text-slate-400">Designated Actor</label>
-                <input
-                  type="text"
-                  value={formData.actor || ''}
-                  onChange={e => handleChange('actor', e.target.value)}
-                  placeholder="e.g. Supervisor Amira (Compliance Officer)"
-                  className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-sky-500"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] text-slate-400">Operational Action</label>
-                <input
-                  type="text"
-                  value={formData.action || ''}
-                  onChange={e => handleChange('action', e.target.value)}
-                  placeholder="e.g. Execute statutory verification"
-                  className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-amber-500"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] text-slate-400">
-                  Expected Result / Artifact
-                </label>
-                <input
-                  type="text"
-                  value={formData.results || ''}
-                  onChange={e => handleChange('results', e.target.value)}
-                  placeholder="e.g. Verified compliance certificate issued"
-                  className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-            </div>
-
-            {/* Reporting Chain Escalation Fields */}
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 mt-1 flex flex-col gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
-                Hierarchy Reporting Chain (L3 → L2 → L1 → L0)
-              </span>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block text-[10px] text-slate-400">
-                    Supervisor (L3 Execution)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.reportingChain?.supervisorName || ''}
-                    onChange={e => handleChainChange('supervisorName', e.target.value)}
-                    className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] text-slate-400">
-                    Division Manager (L2 Review)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.reportingChain?.managerName || ''}
-                    onChange={e => handleChainChange('managerName', e.target.value)}
-                    className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block text-[10px] text-slate-400">
-                    Pillar Director (L1 Sign-off)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.reportingChain?.directorName || ''}
-                    onChange={e => handleChainChange('directorName', e.target.value)}
-                    className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] text-slate-400">
-                    Executive Reviewer (L0 Sovereign)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.reportingChain?.executiveReviewer || 'Sophia Al-Hashemi (MD)'}
-                    onChange={e => handleChainChange('executiveReviewer', e.target.value)}
-                    className="w-full px-2 py-1.5 bg-slate-900 border border-slate-700/80 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-              </div>
-            </div>
+            <TaskTriadAndChainFields
+              formData={formData}
+              onChange={handleChange}
+              onChainChange={handleChainChange}
+            />
           </form>
         </div>
 
