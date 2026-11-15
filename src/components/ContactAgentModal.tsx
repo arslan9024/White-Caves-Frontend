@@ -14,6 +14,7 @@ interface AgentSummary {
   responseTime?: string;
   yearsExperience?: number;
   coverageAreas?: string[];
+  bio?: string;
 }
 
 interface ContactAgentModalProps {
