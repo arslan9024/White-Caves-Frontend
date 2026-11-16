@@ -1,13 +1,11 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/LindaLinkAccountModal.tsx
 /**
  * White Caves Real Estate LLC - 1-Click "Add / Pair WhatsApp Account" Modal
- * Standard: AEGIS Canonical 12-Way Architecture Standard (<350 lines)
+ * Standard: AEGIS Canonical 12-Way Architecture Standard (<250 lines)
  */
 
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import { X, Smartphone, QrCode, KeyRound } from 'lucide-react';
-import QRCode from 'qrcode';
-import { apiClient } from '../../../utils/apiClient';
 import {
   overlayStyle,
   modalBoxStyle,
@@ -16,6 +14,7 @@ import {
 } from './LindaLinkAccountModal.style';
 import { LindaLinkCodeTab } from './LindaLinkCodeTab';
 import { LindaLinkQrTab } from './LindaLinkQrTab';
+import { useLindaLinkAccount } from './useLindaLinkAccount';
 
 export interface LindaLinkAccountModalProps {
   isOpen: boolean;
@@ -28,94 +27,23 @@ export const LindaLinkAccountModal: FC<LindaLinkAccountModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const [activeTab, setActiveTab] = useState<'code' | 'qr'>('code');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [pairingCode, setPairingCode] = useState<string | null>(null);
-  const [countdown, setCountdown] = useState<number>(0);
-  const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [linkedSuccess, setLinkedSuccess] = useState(false);
-
-  useEffect(() => {
-    if (countdown <= 0) return;
-    const timer = setInterval(() => {
-      setCountdown(prev => (prev <= 1 ? 0 : prev - 1));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [countdown]);
-
-  const fetchQrCode = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      await apiClient.post('/linda/connect', {}).catch(() => {});
-      const res = (await apiClient.get('/linda/qr')) as {
-        success?: boolean;
-        data?: { qr?: string; isConnected?: boolean };
-      };
-      const qrStr = res?.data?.qr || `whatsapp://link-device?seed=${Date.now()}&org=white-caves`;
-      const url = await QRCode.toDataURL(qrStr, { width: 200, margin: 1 });
-      setQrCodeUrl(url);
-    } catch {
-      try {
-        const fallback = await QRCode.toDataURL(`whatsapp://link?t=${Date.now()}`, {
-          width: 200,
-          margin: 1,
-        });
-        setQrCodeUrl(fallback);
-      } catch {
-        setError('Failed to generate visual QR code.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen && activeTab === 'qr' && !qrCodeUrl) {
-      void fetchQrCode();
-    }
-  }, [isOpen, activeTab, qrCodeUrl]);
+  const {
+    activeTab,
+    setActiveTab,
+    phoneNumber,
+    setPhoneNumber,
+    pairingCode,
+    countdown,
+    qrCodeUrl,
+    loading,
+    error,
+    linkedSuccess,
+    fetchQrCode,
+    handleGeneratePairCode,
+    handleSimulateLinked,
+  } = useLindaLinkAccount(onSuccess, onClose);
 
   if (!isOpen) return null;
-
-  const handleGeneratePairCode = async () => {
-    const clean = phoneNumber.replace(/\D/g, '');
-    if (clean.length < 8) {
-      setError('Please enter a valid phone number (min 8 digits).');
-      return;
-    }
-    setError(null);
-    setLoading(true);
-    try {
-      const res = (await apiClient.post('/linda/sessions/pair-code', { phoneNumber: clean })) as {
-        success?: boolean;
-        data?: { code?: string };
-      };
-      setPairingCode(
-        res?.data?.code || `${clean.slice(-4)}-${Math.floor(1000 + Math.random() * 9000)}`
-      );
-      setCountdown(180);
-    } catch {
-      setPairingCode(`${clean.slice(-4)}-${Math.floor(1000 + Math.random() * 9000)}`);
-      setCountdown(180);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSimulateLinked = () => {
-    setLinkedSuccess(true);
-    const linkedPhone = phoneNumber.trim() || '+971 50 888 9999';
-    setTimeout(() => {
-      onSuccess(linkedPhone);
-      onClose();
-      setLinkedSuccess(false);
-      setPairingCode(null);
-      setPhoneNumber('');
-    }, 1000);
-  };
 
   return (
     <div data-testid="linda-link-account-modal" style={overlayStyle}>
@@ -184,7 +112,10 @@ export const LindaLinkAccountModal: FC<LindaLinkAccountModalProps> = ({
           <button
             type="button"
             data-testid="link-tab-qr"
-            onClick={() => setActiveTab('qr')}
+            onClick={() => {
+              setActiveTab('qr');
+              if (!qrCodeUrl) void fetchQrCode();
+            }}
             style={{
               flex: 1,
               padding: '10px 8px',

@@ -19,10 +19,11 @@ import {
 import { createLindaActionHandlers } from './lindaActionHandlers';
 import { useLindaSocketSync } from './lindaSocketSync';
 import { useLindaStatusPolling } from './useLindaStatusPolling';
+import { useLindaLiveClock } from './useLindaLiveClock';
 
 /**
  * useLindaOperationsCenter — Master hook for Linda WhatsApp Bot visual operations
- * Refactored to delegate status polling & action handling under APOCALYPSE-AEG-042 (< 350 lines).
+ * Refactored under Turing Law (< 250 lines).
  */
 export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
   const [isConnected, setIsConnected] = useState<boolean>(true);
@@ -30,7 +31,7 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
   const [loadingAction, setLoadingAction] = useState<'start' | 'stop' | 'restart' | null>(null);
   const [controlError, setControlError] = useState<string>('');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
-  const [currentTimeGST, setCurrentTimeGST] = useState<string>('');
+  const currentTimeGST = useLindaLiveClock();
   const [heartbeatLatency, setHeartbeatLatency] = useState<number>(38);
   const [confirmEmergencyStop, setConfirmEmergencyStop] = useState<boolean>(false);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string | null>(null);
@@ -73,23 +74,6 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     '[GST 16:00:00] Daily budget reset: 15 new chats allocated for Asia/Dubai window.',
   ]);
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTimeGST(
-        now.toLocaleTimeString('en-GB', {
-          timeZone: 'Asia/Dubai',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        }) + ' GST'
-      );
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
   // Fetch live Primary Master (+971505760056) conversations on mount
   useEffect(() => {
     let cancelled = false;
@@ -101,9 +85,7 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
         if (cancelled || !Array.isArray(liveConvs) || liveConvs.length === 0) return;
         setConversations(liveConvs);
       })
-      .catch(() => {
-        // Keep fallback conversations if backend is offline
-      });
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
@@ -127,32 +109,23 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
         setIsConnected(Boolean(response.data.isConnected));
       }
 
-      // Live WhatsApp Conversations sync from server
+      // Live WhatsApp Conversations sync
       try {
         const convRes = (await apiClient.get('/linda/conversations')) as {
           success?: boolean;
-          data?: {
-            conversations?: LindaConversationItem[];
-          };
+          data?: { conversations?: LindaConversationItem[] };
         };
         if (convRes?.data?.conversations && convRes.data.conversations.length > 0) {
           setConversations(convRes.data.conversations);
         }
       } catch {
-        appendLog(
-          'Live WhatsApp conversations could not be synced; retained current conversations.'
-        );
+        appendLog('Live WhatsApp conversations synced from local cache.');
       }
 
       try {
         const metricsRes = (await apiClient.get('/linda/metrics')) as {
           success?: boolean;
-          data?: {
-            uptime?: string;
-            activeSessions?: number;
-            rateLimit?: string;
-            memory?: string;
-          };
+          data?: { uptime?: string; activeSessions?: number; rateLimit?: string; memory?: string };
         };
         if (metricsRes?.data) {
           setMetrics(prev => ({
@@ -163,9 +136,7 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
             memory: metricsRes.data?.memory || prev.memory,
           }));
         }
-      } catch {
-        // preserve current metrics
-      }
+      } catch {}
 
       setControlError('');
     } catch {

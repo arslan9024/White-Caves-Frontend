@@ -1,14 +1,16 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/LindaChatListPane.tsx
 /**
  * White Caves Real Estate LLC - Linda WhatsApp Web Chat List Pane
- * Standard: AEGIS Canonical 12-Way Architecture Standard (<350 lines)
+ * Standard: AEGIS Canonical 12-Way Architecture Standard (<250 lines)
  */
 
 import React, { FC, useState } from 'react';
-import { Search, CheckSquare, Square, Plus } from 'lucide-react';
+import { Search, CheckSquare, Square } from 'lucide-react';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatRow } from './LindaChatRow';
 import { LindaChatFilterBar } from './LindaChatFilterBar';
+import { LindaChatListHeader } from './LindaChatListHeader';
+import { LindaChatRowSkeleton } from './LindaChatRowSkeleton';
 
 export interface LindaChatListPaneProps {
   isDark: boolean;
@@ -27,6 +29,7 @@ export interface LindaChatListPaneProps {
   chatTypeFilter?: 'all' | 'campaign' | 'direct' | 'groups';
   onSelectChatType?: (type: 'all' | 'campaign' | 'direct' | 'groups') => void;
   onOpenLinkModal?: () => void;
+  isLoading?: boolean;
 }
 
 export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
@@ -42,6 +45,7 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   chatTypeFilter = 'all',
   onSelectChatType,
   onOpenLinkModal,
+  isLoading = false,
 }) => {
   const [visibleCount, setVisibleCount] = useState(50);
   const [selectedChatIds, setSelectedChatIds] = useState<Set<string>>(new Set());
@@ -73,104 +77,17 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         display: 'flex',
         flexDirection: 'column',
         background: isDark ? '#111B21' : '#F0F2F5',
+        height: '100%',
+        minHeight: 0,
       }}
     >
-      <div
-        style={{
-          padding: '10px 14px',
-          background: isDark ? '#202C33' : '#FFFFFF',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderBottom: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #E2E8F0',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              background: '#25D366',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#FFF',
-              fontWeight: 800,
-              fontSize: 13,
-            }}
-          >
-            WA
-          </div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? '#E9EDEF' : '#111B21' }}>
-              WhatsApp Desk
-            </div>
-            <div
-              style={{
-                fontSize: 10,
-                color: '#25D366',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
-              }}
-            >
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#25D366' }} />
-              Live Daemon
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          {onOpenLinkModal && (
-            <button
-              type="button"
-              data-testid="wa-link-account-btn"
-              onClick={onOpenLinkModal}
-              style={{
-                background: 'rgba(37, 211, 102, 0.15)',
-                border: '1px solid #25D366',
-                color: '#25D366',
-                borderRadius: 6,
-                padding: '3px 8px',
-                fontSize: 10,
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-              }}
-            >
-              <Plus size={12} />
-              <span>Link</span>
-            </button>
-          )}
-          <button
-            type="button"
-            data-testid="wa-bulk-mode-toggle"
-            onClick={() => setBulkMode(b => !b)}
-            style={{
-              background: bulkMode ? 'rgba(37, 211, 102, 0.2)' : 'transparent',
-              border: '1px solid rgba(37, 211, 102, 0.4)',
-              color: '#25D366',
-              borderRadius: 6,
-              padding: '3px 8px',
-              fontSize: 10,
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            <CheckSquare size={12} />
-            <span>{bulkMode ? 'Cancel' : 'Bulk'}</span>
-          </button>
-          <span style={{ fontSize: 10, fontWeight: 700, color: isDark ? '#8696A0' : '#54656F' }}>
-            {conversations.length}
-          </span>
-        </div>
-      </div>
+      <LindaChatListHeader
+        isDark={isDark}
+        bulkMode={bulkMode}
+        totalCount={conversations.length}
+        onOpenLinkModal={onOpenLinkModal}
+        onToggleBulkMode={() => setBulkMode(b => !b)}
+      />
 
       {bulkMode && (
         <div
@@ -228,6 +145,7 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         </div>
       )}
 
+      {/* Search Input Bar */}
       <div style={{ padding: '6px 10px', background: isDark ? '#111B21' : '#FFFFFF' }}>
         <div
           style={{
@@ -268,19 +186,24 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
       />
 
       <div style={{ flex: 1, overflowY: 'auto' }}>
-        {visibleConversations.map(conv => (
-          <LindaChatRow
-            key={conv.id}
-            conversation={conv}
-            isSelected={conv.id === selectedConvId}
-            isChecked={selectedChatIds.has(conv.id)}
-            bulkMode={bulkMode}
-            isDark={isDark}
-            onSelect={onSelectConversation}
-            onToggleSelect={toggleSelectChat}
-          />
-        ))}
-        {conversations.length > visibleCount && (
+        {isLoading ? (
+          <LindaChatRowSkeleton count={5} isDark={isDark} />
+        ) : (
+          visibleConversations.map(conv => (
+            <LindaChatRow
+              key={conv.id}
+              conversation={conv}
+              isSelected={conv.id === selectedConvId}
+              isChecked={selectedChatIds.has(conv.id)}
+              bulkMode={bulkMode}
+              isDark={isDark}
+              onSelect={onSelectConversation}
+              onToggleSelect={toggleSelectChat}
+            />
+          ))
+        )}
+
+        {conversations.length > visibleCount && !isLoading && (
           <button
             type="button"
             data-testid="wa-load-more-chats"

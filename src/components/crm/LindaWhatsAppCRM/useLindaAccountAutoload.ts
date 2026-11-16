@@ -1,10 +1,10 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/useLindaAccountAutoload.ts
 /**
  * White Caves Real Estate LLC - Linda Multi-Account Autoload Engine Hook
- * Standard: AEGIS Canonical 12-Way Architecture Standard (<350 lines)
+ * Standard: AEGIS Canonical 12-Way Architecture Standard (<250 lines)
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useTransition } from 'react';
 import { apiClient } from '../../../utils/apiClient';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 
@@ -29,7 +29,10 @@ export function useLindaAccountAutoload(
   selectedConvId: string,
   setSelectedConvId: (id: string) => void
 ) {
-  const [selectedAccount, setSelectedAccount] = useState<string>('ALL');
+  const [selectedAccount, setSelectedAccountState] = useState<string>('ALL');
+  const [isLoadingAccount, setIsLoadingAccount] = useState<boolean>(false);
+  const [, startTransition] = useTransition();
+
   const [accountConversations, setAccountConversations] = useState<
     Record<string, LindaConversationItem[]>
   >({});
@@ -39,6 +42,12 @@ export function useLindaAccountAutoload(
     goraha: 'connected',
     outreach: 'needs_auth',
   });
+
+  const setSelectedAccount = useCallback((newAcc: string) => {
+    startTransition(() => {
+      setSelectedAccountState(newAcc);
+    });
+  }, []);
 
   // Poll / synchronize status badges
   const refreshStatuses = useCallback(async () => {
@@ -79,7 +88,7 @@ export function useLindaAccountAutoload(
         });
       }
     } catch {
-      // Fallback kept
+      // Offline fallback: Maintain resilient active states
     }
   }, []);
 
@@ -91,10 +100,32 @@ export function useLindaAccountAutoload(
 
   // Query /api/linda/conversations?accountPhone=<phone> on account switch
   useEffect(() => {
-    if (selectedAccount === 'ALL') return;
+    if (selectedAccount === 'ALL') {
+      setIsLoadingAccount(false);
+      return;
+    }
 
     let cancelled = false;
+    setIsLoadingAccount(true);
     const cleanPhone = selectedAccount.replace(/\D/g, '') || selectedAccount;
+
+    // Filter local fallback immediately so user sees zero delay
+    const localMatches = conversations.filter(c => {
+      const cAcc = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
+      return cAcc === selectedAccount || (selectedAccount.includes('505760056') && !cAcc);
+    });
+
+    if (localMatches.length > 0) {
+      setAccountConversations(prev => {
+        if (!prev[selectedAccount]) {
+          return { ...prev, [selectedAccount]: localMatches };
+        }
+        return prev;
+      });
+      if (!localMatches.some(m => m.id === selectedConvId)) {
+        setSelectedConvId(localMatches[0].id);
+      }
+    }
 
     apiClient
       .get(`/linda/conversations?accountPhone=${encodeURIComponent(cleanPhone)}`)
@@ -114,13 +145,11 @@ export function useLindaAccountAutoload(
         }
       })
       .catch(() => {
-        // Fallback: filter local conversations by account
-        const localMatches = conversations.filter(c => {
-          const cAcc = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
-          return cAcc === selectedAccount || (selectedAccount.includes('505760056') && !cAcc);
-        });
-        if (localMatches.length > 0 && !localMatches.some(m => m.id === selectedConvId)) {
-          setSelectedConvId(localMatches[0].id);
+        // Fallback already assigned smoothly above
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsLoadingAccount(false);
         }
       });
 
@@ -143,5 +172,6 @@ export function useLindaAccountAutoload(
     accountStatuses,
     accountConversations,
     refreshStatuses,
+    isLoadingAccount,
   };
 }
