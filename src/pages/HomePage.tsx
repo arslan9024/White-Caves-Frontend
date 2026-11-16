@@ -1,10 +1,43 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Building2, ShieldCheck, UserPlus, KeyRound, ArrowRight, Sparkles } from 'lucide-react';
+import {
+  Building2,
+  ShieldCheck,
+  UserPlus,
+  KeyRound,
+  ArrowRight,
+  Sparkles,
+  MapPin,
+  ExternalLink,
+} from 'lucide-react';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
-import { FastPropertySearchHero } from './components/FastPropertySearchHero';
 import { LandingAuthModal } from './components/LandingAuthModal';
 import './HomePage.css';
+
+/** Public website URL — property browsing, lead capture, SEO pages */
+const WC_PUBLIC_SITE = 'https://whitecaves.ae';
+
+/** Minimal teaser properties — just enough to entice, not a full inventory grid */
+const PROPERTY_TEASERS = [
+  {
+    title: 'Signature Palm Villa',
+    location: 'Palm Jumeirah',
+    type: 'Luxury Villa',
+    priceLabel: 'AED 38.5M',
+  },
+  {
+    title: 'Downtown Sky Penthouse',
+    location: 'Downtown Dubai',
+    type: 'Penthouse',
+    priceLabel: 'AED 24.9M',
+  },
+  {
+    title: 'Elysian Mansions Estate',
+    location: 'Tilal Al Ghaf',
+    type: 'Off-Plan Mansion',
+    priceLabel: 'AED 42M',
+  },
+] as const;
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
@@ -33,12 +66,13 @@ const HomePage: FC = () => {
 
   return (
     <main className="crm-command-center wc-landing-portal" data-testid="crm-command-center">
+      {/* ─── Top Header Bar ─── */}
       <header className="crm-command-center__header wc-landing-header">
         <div className="crm-command-center__brand">
           <Building2 size={32} className="wc-brand-icon" />
           <div>
             <h1>White Caves Real Estate</h1>
-            <p>Dubai Sovereign Prop-Tech Portal • Enterprise Portal &amp; Client Gateway</p>
+            <p>Dubai Sovereign Prop-Tech Portal &bull; Enterprise Portal &amp; Client Gateway</p>
           </div>
         </div>
         <div className="crm-command-center__actions">
@@ -63,6 +97,7 @@ const HomePage: FC = () => {
         </div>
       </header>
 
+      {/* ─── Welcome Hero & Auth Gateway ─── */}
       <section className="wc-welcome-hero" aria-label="Welcome and Authentication Gateway">
         <div className="wc-welcome-card">
           <div className="wc-welcome-badge">
@@ -72,8 +107,7 @@ const HomePage: FC = () => {
           <h2 className="wc-welcome-title">Welcome to White Caves</h2>
           <p className="wc-welcome-subtitle">
             Access your personal portal, institutional property intelligence, and secure transaction
-            hub. Sign in to access your properties, manage investments, or search the verified Dubai
-            luxury portfolio below.
+            hub. Sign in to manage your properties, investments, and enterprise operations.
           </p>
 
           <div className="wc-gateway-actions">
@@ -118,24 +152,57 @@ const HomePage: FC = () => {
         </div>
       </section>
 
-      {/* Fast Luxury Property Search Section */}
-      <section className="wc-fast-search-section" aria-label="Fast Luxury Property Search">
-        <div className="wc-search-section-header">
-          <span className="wc-search-section-badge">Live Inventory Feed</span>
-          <h3 className="wc-search-section-title">Explore Verified Dubai Properties</h3>
-          <p className="wc-search-section-sub">
-            Direct access to luxury villas, penthouses, and off-plan investments across Dubai’s
-            prime communities.
+      {/* ─── Property Teaser — Redirects to whitecaves.ae ─── */}
+      <section
+        className="wc-property-teaser-section"
+        aria-label="Explore Properties on whitecaves.ae"
+        data-testid="wc-property-teaser-section"
+      >
+        <div className="wc-teaser-header">
+          <span className="wc-search-section-badge">Live Inventory</span>
+          <h3 className="wc-teaser-title">Explore Dubai Prime Residences</h3>
+          <p className="wc-teaser-sub">
+            Browse verified luxury villas, penthouses, and off-plan investments on our public
+            portal.
           </p>
         </div>
 
-        <FastPropertySearchHero
-          onOpenAuthModal={openAuthModal}
-          onSelectProperty={id => navigate(`/dashboard/pms/properties/${id}`)}
-        />
+        <div className="wc-teaser-cards" data-testid="wc-teaser-cards">
+          {PROPERTY_TEASERS.map(prop => (
+            <a
+              key={prop.title}
+              href={`${WC_PUBLIC_SITE}/properties`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="wc-teaser-card"
+              data-testid="wc-teaser-card"
+            >
+              <div className="wc-teaser-card__type">{prop.type}</div>
+              <h4 className="wc-teaser-card__title">{prop.title}</h4>
+              <div className="wc-teaser-card__location">
+                <MapPin size={13} />
+                <span>{prop.location}</span>
+              </div>
+              <div className="wc-teaser-card__price">{prop.priceLabel}</div>
+            </a>
+          ))}
+        </div>
+
+        <div className="wc-teaser-browse-cta">
+          <a
+            href={`${WC_PUBLIC_SITE}/properties`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="wc-browse-all-btn"
+            data-testid="wc-browse-all-btn"
+          >
+            <span>Browse All Properties on whitecaves.ae</span>
+            <ExternalLink size={15} />
+          </a>
+        </div>
       </section>
 
-      {/* Direct / Modal Login & Registration Dialog */}
+      {/* ─── Auth Modal ─── */}
       <LandingAuthModal
         isOpen={authModalState.isOpen}
         initialMode={authModalState.mode}

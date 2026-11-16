@@ -4,8 +4,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from './HomePage';
 
-describe('HomePage Landing & Fast Property Search Gateway', () => {
-  it('renders the welcome hero and fast property search without departments', () => {
+describe('HomePage — Clean Auth Gateway with Property Teaser', () => {
+  it('renders the welcome hero with auth gateway cards (no full property search)', () => {
     render(
       <MemoryRouter>
         <HomePage />
@@ -18,18 +18,56 @@ describe('HomePage Landing & Fast Property Search Gateway', () => {
     expect(screen.getByText('Operator & Client Access')).toBeTruthy();
     expect(screen.getByText('New Registration')).toBeTruthy();
 
-    // Fast Search and Luxury Cards
-    expect(screen.getByTestId('wc-fast-search-container')).toBeTruthy();
-    expect(screen.getByTestId('wc-fast-search-input')).toBeTruthy();
-    expect(screen.getByTestId('wc-fast-results-grid')).toBeTruthy();
-    expect(screen.getByText('Explore Verified Dubai Properties')).toBeTruthy();
+    // Property teaser section (not full search grid)
+    expect(screen.getByTestId('wc-property-teaser-section')).toBeTruthy();
+    expect(screen.getByTestId('wc-teaser-cards')).toBeTruthy();
+    expect(screen.getByText('Explore Dubai Prime Residences')).toBeTruthy();
 
-    // Departments should NOT be present on the landing page
+    // Full search grid should NOT be present
+    expect(screen.queryByTestId('wc-fast-search-container')).toBeNull();
+    expect(screen.queryByTestId('wc-fast-search-input')).toBeNull();
+
+    // Departments should NOT be present
     expect(screen.queryByText('Floor 1')).toBeNull();
     expect(screen.queryByText('Department Floors (1–12)')).toBeNull();
   });
 
-  it('opens and closes the landing modal when clicking sign in / sign up buttons', () => {
+  it('shows 3 teaser property cards linking to whitecaves.ae', () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
+
+    const teaserCards = screen.getAllByTestId('wc-teaser-card');
+    expect(teaserCards.length).toBe(3);
+
+    // Verify teaser data
+    expect(screen.getByText('Signature Palm Villa')).toBeTruthy();
+    expect(screen.getByText('Downtown Sky Penthouse')).toBeTruthy();
+    expect(screen.getByText('Elysian Mansions Estate')).toBeTruthy();
+
+    // All cards link to whitecaves.ae
+    teaserCards.forEach(card => {
+      expect((card as HTMLAnchorElement).href).toContain('whitecaves.ae/properties');
+      expect((card as HTMLAnchorElement).target).toBe('_blank');
+    });
+  });
+
+  it('has a "Browse All" CTA linking to whitecaves.ae', () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    );
+
+    const browseBtn = screen.getByTestId('wc-browse-all-btn');
+    expect(browseBtn).toBeTruthy();
+    expect((browseBtn as HTMLAnchorElement).href).toContain('whitecaves.ae/properties');
+    expect(browseBtn.textContent).toContain('Browse All Properties');
+  });
+
+  it('opens and closes the auth modal when clicking Sign In / Sign Up', () => {
     render(
       <MemoryRouter>
         <HomePage />
@@ -46,44 +84,5 @@ describe('HomePage Landing & Fast Property Search Gateway', () => {
     fireEvent.click(closeBtn);
 
     expect(screen.queryByTestId('wc-landing-auth-modal')).toBeNull();
-  });
-
-  it('filters properties live based on user query', () => {
-    render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    );
-
-    const searchInput = screen.getByTestId('wc-fast-search-input');
-    fireEvent.change(searchInput, { target: { value: 'Downtown' } });
-
-    expect(screen.getByTestId('wc-fast-results-grid')).toBeTruthy();
-  });
-
-  it('filters properties with fast property category filters (Villas, Penthouses, Off-Plan)', () => {
-    render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByTestId('wc-property-category-bar')).toBeTruthy();
-    const villaFilter = screen.getByTestId('wc-cat-filter-villas');
-    const penthouseFilter = screen.getByTestId('wc-cat-filter-penthouses');
-    const offplanFilter = screen.getByTestId('wc-cat-filter-off-plan');
-
-    expect(villaFilter).toBeTruthy();
-    expect(penthouseFilter).toBeTruthy();
-    expect(offplanFilter).toBeTruthy();
-
-    fireEvent.click(villaFilter);
-    expect(screen.getByTestId('wc-fast-results-grid')).toBeTruthy();
-
-    fireEvent.click(penthouseFilter);
-    expect(screen.getByTestId('wc-fast-results-grid')).toBeTruthy();
-
-    fireEvent.click(offplanFilter);
-    expect(screen.getByTestId('wc-fast-results-grid')).toBeTruthy();
   });
 });
