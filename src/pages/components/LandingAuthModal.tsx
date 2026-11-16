@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { X, ShieldCheck, Mail, Lock, Phone } from 'lucide-react';
+import { X, ShieldCheck, Mail, Lock, Phone, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  finalizeAuthenticatedSession,
+  navigateToPostLoginDestination,
+} from '../../utils/authSession';
 
 export interface LandingAuthModalProps {
   isOpen: boolean;
@@ -14,11 +19,13 @@ export const LandingAuthModal: React.FC<LandingAuthModalProps> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [mode, setMode] = useState<'signin' | 'signup'>(initialMode);
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [devLoginNotice, setDevLoginNotice] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
@@ -29,6 +36,31 @@ export const LandingAuthModal: React.FC<LandingAuthModalProps> = ({
     } else {
       navigate('/signup');
     }
+  };
+
+  const handleInstantFounderLogin = () => {
+    setDevLoginNotice('Authenticating as Managing Director (Arslan Malik)...');
+    const localFounderUser = {
+      id: 'dev-founder-arslan',
+      email: 'arslanmalikgoraha@gmail.com',
+      name: 'Arslan Malik Bashir Ahmad',
+      role: 'managing_director',
+      status: 'active',
+      department: 'executive',
+      profileCompleted: true,
+    };
+    const destination = finalizeAuthenticatedSession({
+      dispatch,
+      user: localFounderUser as never,
+      token: `dev-founder-local-token-${Date.now()}`,
+      provider: 'google' as never,
+      rememberMe: true,
+      returnTo: '/dashboard',
+    });
+    setTimeout(() => {
+      onClose();
+      navigateToPostLoginDestination(navigate, destination);
+    }, 400);
   };
 
   return (
@@ -61,6 +93,48 @@ export const LandingAuthModal: React.FC<LandingAuthModalProps> = ({
               ? 'Institutional access to luxury portfolio & transactions'
               : 'Join Dubai’s premier luxury real estate ecosystem'}
           </p>
+        </div>
+
+        {/* 1-Click Instant Managing Director / Dev Access */}
+        <div style={{ marginBottom: '1.25rem' }}>
+          <button
+            type="button"
+            data-testid="wc-instant-md-login-btn"
+            onClick={handleInstantFounderLogin}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              padding: '10px 14px',
+              borderRadius: '10px',
+              background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(234, 179, 8, 0.2))',
+              border: '1px solid rgba(239, 68, 68, 0.45)',
+              color: '#FCA5A5',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <Sparkles size={16} color="#FBBF24" />
+            <span>Instant Managing Director Access (Dev)</span>
+            <ArrowRight size={14} />
+          </button>
+          {devLoginNotice && (
+            <div
+              style={{
+                marginTop: '6px',
+                fontSize: '0.75rem',
+                color: '#86EFAC',
+                textAlign: 'center',
+                fontWeight: 600,
+              }}
+            >
+              {devLoginNotice}
+            </div>
+          )}
         </div>
 
         {/* Mode Switch Tabs */}
