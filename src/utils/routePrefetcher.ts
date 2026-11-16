@@ -48,3 +48,4 @@ export function resetPrefetchRegistry(): void {
   routeRegistry.clear();
   prefetchedRoutes.clear();
 }
+

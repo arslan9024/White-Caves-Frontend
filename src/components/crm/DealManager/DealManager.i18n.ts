@@ -134,3 +134,4 @@ export function getDealI18n(lang: SupportedLanguage = 'en'): DealTranslations {
 }
 
 export default DEAL_TRANSLATIONS;
+

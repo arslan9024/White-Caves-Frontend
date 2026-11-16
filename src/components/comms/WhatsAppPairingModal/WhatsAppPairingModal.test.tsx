@@ -12,3 +12,4 @@ describe('WhatsAppPairingModal Component', () => {
     expect(screen.getByText('8K29-WF94')).toBeDefined();
   });
 });
+

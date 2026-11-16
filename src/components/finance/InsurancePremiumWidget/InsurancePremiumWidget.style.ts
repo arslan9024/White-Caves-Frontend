@@ -17,3 +17,4 @@ export const StatusBadge = styled.span<{ $status: string }>`
   background: ${p => p.$status === 'Expiring Soon' || p.$status === 'قريب الانتهاء' ? '#FEF3C7' : '#DCFCE7'};
   color: ${p => p.$status === 'Expiring Soon' || p.$status === 'قريب الانتهاء' ? '#92400E' : '#166534'};
 `;
+

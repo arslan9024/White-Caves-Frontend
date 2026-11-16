@@ -201,3 +201,4 @@ describe('DataQualityIndicators', () => {
     expect(screen.getByTestId('icon-alert')).toBeInTheDocument();
   });
 });
+

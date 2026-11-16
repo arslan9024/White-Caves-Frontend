@@ -121,3 +121,4 @@ export const RAW_TASKS_PART6: Array< [string, string, string, string, TaskNode['
   ['TSK-599', 'Master Community: Homeowner Association (HOA) Service Charge Clearance', 'pillar-7', 'Pillar VII: Operations & PMS', 'OPERATIONS', 'HOA Liaison Unit', '24 Hours', 'CRITICAL', 'Supervisor Rania', 'Manager Dina', 'Director Fatima Al-Falasi',],
   ['TSK-600', 'Executive Sovereign Registry: Final Transaction Archive & MD Sign-off', 'pillar-1', 'Pillar I: Legal & Regulatory', 'REGULATORY', 'Managing Director Office', 'Same Day', 'CRITICAL', 'Supervisor Sophia', 'Manager Farooq', 'Sophia Al-Hashemi (MD-01)',],
 ];
+

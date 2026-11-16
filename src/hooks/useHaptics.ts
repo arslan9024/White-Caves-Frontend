@@ -26,3 +26,4 @@ export const useHaptics = () => {
 };
 
 export default useHaptics;
+

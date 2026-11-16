@@ -18,3 +18,4 @@ describe('HenryTitleDeedScannerView', () => {
     expect(screen.getByRole('button', { name: /Save to Property Vault/i })).toBeDisabled();
   });
 });
+

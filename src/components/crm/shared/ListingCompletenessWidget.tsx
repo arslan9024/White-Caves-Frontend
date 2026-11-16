@@ -213,3 +213,4 @@ export const ListingCompletenessWidget: React.FC<ListingCompletenessWidgetProps>
 };
 
 export default ListingCompletenessWidget;
+

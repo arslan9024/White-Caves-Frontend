@@ -28,3 +28,4 @@ export const IndustryBenchmarkWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

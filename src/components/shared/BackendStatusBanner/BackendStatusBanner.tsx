@@ -22,3 +22,4 @@ export const BackendStatusBanner = ({ pollIntervalMs }: BackendStatusBannerProps
     </BannerWrapper>
   );
 };
+

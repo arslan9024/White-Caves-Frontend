@@ -58,3 +58,4 @@ export const PRICE_RANGES = [
   { label: '25M – 50M', min: 25_000_000, max: 50_000_000 },
   { label: '50M+', min: 50_000_000, max: 100_000_000 },
 ] as const;
+

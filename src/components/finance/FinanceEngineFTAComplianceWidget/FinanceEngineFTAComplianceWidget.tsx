@@ -79,3 +79,4 @@ export const FinanceEngineFTAComplianceWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

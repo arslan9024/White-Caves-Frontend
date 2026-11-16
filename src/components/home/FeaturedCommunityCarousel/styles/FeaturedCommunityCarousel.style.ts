@@ -101,3 +101,4 @@ export const StatRow = styled.div`
   justify-content: space-between;
   font-size: 0.72rem;
 `;
+

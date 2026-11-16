@@ -336,3 +336,4 @@ export function getRecommendedFeatures(businessType: string = 'startup'): ClaraF
 }
 
 export default CLARA_FEATURES;
+

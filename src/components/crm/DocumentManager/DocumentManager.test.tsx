@@ -217,3 +217,4 @@ describe('DocumentManager Suite (12-Way Blueprint)', () => {
     expect(result.meritBonusXp).toBe(500); // Law 10: Gamified Merit XP
   });
 });
+

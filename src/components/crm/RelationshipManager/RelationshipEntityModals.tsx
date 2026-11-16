@@ -145,3 +145,4 @@ export const EntityInspectModal: FC<EntityInspectModalProps> = ({ node, onClose 
     </div>
   );
 };
+

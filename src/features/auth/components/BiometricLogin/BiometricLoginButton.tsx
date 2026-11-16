@@ -94,3 +94,4 @@ const BiometricLoginButton = ({ onSuccess, onError, disabled }: BiometricLoginBu
 };
 
 export default BiometricLoginButton;
+

@@ -19,3 +19,4 @@ describe('PropertyCardHoverContainer', () => {
     expect(onClick).toHaveBeenCalled();
   });
 });
+

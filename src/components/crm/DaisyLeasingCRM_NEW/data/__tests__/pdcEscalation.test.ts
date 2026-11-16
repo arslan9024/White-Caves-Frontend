@@ -152,3 +152,4 @@ describe('scanBouncedCheques', () => {
     expect(scanBouncedCheques(cheques)).toHaveLength(0);
   });
 });
+

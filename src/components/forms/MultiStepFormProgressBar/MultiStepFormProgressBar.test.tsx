@@ -14,3 +14,4 @@ describe('MultiStepFormProgressBar Component', () => {
     expect(screen.getByText('✓')).toBeDefined();
   });
 });
+

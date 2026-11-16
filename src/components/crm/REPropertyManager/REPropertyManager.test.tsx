@@ -147,3 +147,4 @@ describe('Real Estate Property Management (REproperties) Suite', () => {
     expect(trakResult.qrVerificationUrl).toContain('dubailand.gov.ae');
   });
 });
+

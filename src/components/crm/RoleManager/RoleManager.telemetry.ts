@@ -51,3 +51,4 @@ class RoleTelemetryService {
 }
 
 export const RoleTelemetry = new RoleTelemetryService();
+

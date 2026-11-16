@@ -85,3 +85,4 @@ describe('GuestDashboardGatewayView Suite', () => {
     expect(handleOpenRoleModal).toHaveBeenCalledTimes(1);
   });
 });
+

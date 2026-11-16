@@ -20,3 +20,4 @@ describe('DocumentShareLinkGenerator.logic', () => {
     expect(result.current.pin.length).toBe(4);
   });
 });
+

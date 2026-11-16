@@ -53,3 +53,4 @@ export const ERATO_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as erato_supervisorExport;
+

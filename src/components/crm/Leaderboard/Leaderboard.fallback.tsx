@@ -84,3 +84,4 @@ export const LeaderboardFallback: FC<LeaderboardFallbackProps> = ({
 };
 
 export default LeaderboardFallback;
+

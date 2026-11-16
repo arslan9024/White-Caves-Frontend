@@ -132,3 +132,4 @@ const AssistantSidebar = memo(({
 
 AssistantSidebar.displayName = 'AssistantSidebar';
 export default AssistantSidebar;
+

@@ -189,3 +189,4 @@ export const KYCAMLDashboardView: React.FC<KYCAMLDashboardProps> = ({
 };
 
 export default KYCAMLDashboardView;
+

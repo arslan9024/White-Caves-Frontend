@@ -96,3 +96,4 @@ export function useMobilePropertyQuickActionsLogic(): UseMobilePropertyQuickActi
 
   return { actions: QUICK_ACTIONS, isOpen, activeAction, handleOpen, handleClose, handleAction };
 }
+

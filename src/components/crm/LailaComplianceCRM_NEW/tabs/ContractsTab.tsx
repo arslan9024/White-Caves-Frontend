@@ -91,3 +91,4 @@ const ContractsTab: React.FC<ContractsTabProps> = ({ contracts, onApprove }) => 
 };
 
 export default ContractsTab;
+

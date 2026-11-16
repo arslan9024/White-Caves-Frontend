@@ -111,3 +111,4 @@ export const Avatar: React.FC<AvatarProps> = memo(function Avatar({
 Avatar.displayName = 'Avatar';
 
 export default Avatar;
+

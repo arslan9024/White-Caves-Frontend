@@ -17,3 +17,4 @@ describe('socket origin resolution', () => {
     expect(resolveSocketUrl()).toBe(window.location.origin);
   });
 });
+

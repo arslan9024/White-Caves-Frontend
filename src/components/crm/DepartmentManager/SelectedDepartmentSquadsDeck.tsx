@@ -248,3 +248,4 @@ export const SelectedDepartmentSquadsDeck: FC<SelectedDepartmentSquadsDeckProps>
     </div>
   );
 };
+

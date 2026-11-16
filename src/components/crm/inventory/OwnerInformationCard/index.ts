@@ -8,3 +8,4 @@ export * from './OwnerInformationCard.logic';
 export * from './OwnerInformationCard.panels';
 export * from './OwnerInformationCard.view';
 export { OwnerInformationCard as default } from './OwnerInformationCard.view';
+

@@ -14,3 +14,4 @@ describe('WhatsAppTelemetrySocket Component', () => {
     expect(screen.getByText(/Viewing Gate Pass Dispatched/i)).toBeDefined();
   });
 });
+

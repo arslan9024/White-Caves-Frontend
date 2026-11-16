@@ -94,3 +94,4 @@ export const DETLicenseMonitorWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

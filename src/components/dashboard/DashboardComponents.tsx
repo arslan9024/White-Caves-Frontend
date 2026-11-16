@@ -288,3 +288,4 @@ export const GridLayout: FC<GridLayoutProps> = ({ children, columns = 5, gap = '
 export const Divider: FC<{ variant?: 'default' | 'subtle' }> = ({ variant = 'default' }) => (
   <hr className={`divider divider--${variant}`} />
 );
+

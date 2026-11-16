@@ -9,3 +9,4 @@ describe('ContactForm Component', () => {
     expect(screen.getByPlaceholderText(/your name/i) || screen.getByRole('button')).toBeDefined();
   });
 });
+

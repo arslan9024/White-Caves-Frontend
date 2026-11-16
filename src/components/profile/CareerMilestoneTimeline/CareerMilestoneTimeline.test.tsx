@@ -14,3 +14,4 @@ describe('CareerMilestoneTimeline Component', () => {
     expect(screen.getByText(/White Caves Real Estate LLC Inception/i)).toBeDefined();
   });
 });
+

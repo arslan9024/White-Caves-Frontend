@@ -26,3 +26,4 @@ describe('Henry preparation preview claims', () => {
     expect(html).not.toMatch(/STATUS: PAID \/ CLEARED|FTA UAE COMPLIANT/);
   });
 });
+

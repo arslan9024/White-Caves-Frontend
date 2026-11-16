@@ -53,3 +53,4 @@ export const YASMINA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as yasmina_supervisorExport;
+

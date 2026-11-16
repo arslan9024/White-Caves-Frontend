@@ -23,3 +23,4 @@ export default function HenryDriveCallback() {
   return <main><h1>Henry Drive connection</h1><p role="status">{message}</p>
     <p>No access tokens are placed in this URL. No files are indexed until folders are explicitly approved.</p></main>;
 }
+

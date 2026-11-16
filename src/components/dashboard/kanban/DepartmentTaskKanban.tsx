@@ -503,3 +503,4 @@ export const DepartmentTaskKanban: FC = () => {
 };
 
 export default DepartmentTaskKanban;
+

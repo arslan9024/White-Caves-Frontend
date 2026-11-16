@@ -15,3 +15,4 @@ describe('OffPlanSalesLeaderboard Component', () => {
     expect(screen.getByText(/Sarah Connor/i)).toBeDefined();
   });
 });
+

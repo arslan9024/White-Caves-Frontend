@@ -288,3 +288,4 @@ export const StatusIndicator = styled.div`
   background: ${props => (props.theme as any)?.colors.backgroundAlt};
   border-radius: 8px;
 `;
+

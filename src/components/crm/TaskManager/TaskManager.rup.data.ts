@@ -140,3 +140,4 @@ export const RUP_OPERATIONAL_TASKS: Array<Omit<TaskNode, 'actor' | 'action' | 'r
     completionRate: 85,
   },
 ];
+

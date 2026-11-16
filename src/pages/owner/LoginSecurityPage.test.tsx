@@ -463,3 +463,4 @@ describe('LoginSecurityPage', () => {
     confirmSpy.mockRestore();
   });
 });
+

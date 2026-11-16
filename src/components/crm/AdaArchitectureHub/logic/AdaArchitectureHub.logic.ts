@@ -55,3 +55,4 @@ export function useAdaArchitectureHubLogic() {
     handlePrint,
   };
 }
+

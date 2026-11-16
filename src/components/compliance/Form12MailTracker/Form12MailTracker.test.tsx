@@ -12,3 +12,4 @@ describe('Form12MailTracker Component', () => {
     expect(screen.getByText(/Villa 44, Springs 11, Emirates Living/i)).toBeDefined();
   });
 });
+

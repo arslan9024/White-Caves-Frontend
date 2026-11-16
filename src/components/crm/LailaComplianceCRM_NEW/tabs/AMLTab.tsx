@@ -85,3 +85,4 @@ const AMLTab: React.FC<AMLTabProps> = ({ alerts, onResolve }) => {
 };
 
 export default AMLTab;
+

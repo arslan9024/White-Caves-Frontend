@@ -13,3 +13,4 @@ export function computeVirtualWindow(
   const end = Math.min(totalItems - 1, start + visibleCount + overscan * 2);
   return { startIndex: start, endIndex: Math.max(start, end) };
 }
+

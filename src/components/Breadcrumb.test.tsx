@@ -82,3 +82,4 @@ describe('Breadcrumb', () => {
     expect(screen.getByText('Some Custom Path')).toBeTruthy();
   });
 });
+

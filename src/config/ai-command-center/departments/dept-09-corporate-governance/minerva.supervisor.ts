@@ -53,3 +53,4 @@ export const MINERVA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as minerva_supervisorExport;
+

@@ -111,3 +111,4 @@ describe('ContractBuilder', () => {
     expect(onContractCreated).toHaveBeenCalled();
   });
 });
+

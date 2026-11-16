@@ -22,3 +22,4 @@ describe('FormErrorSummaryBanner Component', () => {
     expect(screen.getByText('Security deposit must be greater than zero')).toBeDefined();
   });
 });
+

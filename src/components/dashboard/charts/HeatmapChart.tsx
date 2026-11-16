@@ -98,3 +98,4 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
 };
 
 export default HeatmapChart;
+

@@ -282,3 +282,4 @@ export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
     handleHistoryForward,
   };
 }
+

@@ -1,124 +1,15 @@
-import { test, expect, type Page } from '@playwright/test';
-
-const SESSION_EVENTS_KEY = '__wc_homepage_events__';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-async function enableHomepageEventCapture(page: Page): Promise<void> {
-  await page.addInitScript(
-    ({ storageKey }: { storageKey: string }) => {
-      sessionStorage.setItem(storageKey, JSON.stringify([]));
-      window.addEventListener('wc-homepage-event', evt => {
-        const event = evt as CustomEvent<{ event?: string }>;
-        const previous = JSON.parse(sessionStorage.getItem(storageKey) || '[]') as string[];
-        const eventName = event?.detail?.event;
-        if (typeof eventName === 'string') {
-          previous.push(eventName);
-          sessionStorage.setItem(storageKey, JSON.stringify(previous));
-        }
-      });
-    },
-    { storageKey: SESSION_EVENTS_KEY }
-  );
-}
-
-async function getCapturedEvents(page: Page): Promise<string[]> {
-  return page.evaluate(
-    ({ storageKey }: { storageKey: string }) => {
-      try {
-        return JSON.parse(sessionStorage.getItem(storageKey) || '[]') as string[];
-      } catch {
-        return [];
-      }
-    },
-    { storageKey: SESSION_EVENTS_KEY }
-  );
-}
-
 /**
- * Mock all backend API calls so tests run reliably without a live Express server.
- * Each endpoint returns the minimum shape the frontend expects.
+ * Phase 33 — Leasing Continuity Hardening Tests
  */
-async function mockBackendAPIs(page: Page): Promise<void> {
-  // Homepage data feed
-  await page.route('**/api/homepage/data', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ properties: [], stats: {}, featuredProperties: [] }),
-    })
-  );
-  // Contact form
-  await page.route('**/api/contact', route =>
-    route.fulfill({
-      status: 201,
-      contentType: 'application/json',
-      body: JSON.stringify({ success: true, data: { id: 'phase33_contact_001' } }),
-    })
-  );
-  // Search / lead capture
-  await page.route('**/api/leads**', route =>
-    route.fulfill({
-      status: 201,
-      contentType: 'application/json',
-      body: JSON.stringify({ success: true, data: { id: 'lead-phase33' } }),
-    })
-  );
-  // Properties
-  await page.route('**/api/properties**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ data: [], total: 0, page: 1 }),
-    })
-  );
-  // Viewings
-  await page.route('**/api/viewings**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ data: [] }),
-    })
-  );
-  // Leases
-  await page.route('**/api/leases**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ data: [] }),
-    })
-  );
-  // Maintenance
-  await page.route('**/api/maintenance**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ data: [] }),
-    })
-  );
-  // Compliance / Ejari export (auth-gated — 401 is correct, 404 would be broken)
-  await page.route('**/api/compliance/**', route =>
-    route.fulfill({
-      status: 401,
-      contentType: 'application/json',
-      body: JSON.stringify({ message: 'Unauthorized' }),
-    })
-  );
-  // Catch-all for any remaining API calls
-  await page.route('**/api/**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({}),
-    })
-  );
-}
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
+import { test, expect } from '@playwright/test';
+import {
+  enableHomepageEventCapture,
+  getCapturedEvents,
+  mockBackendAPIs,
+} from './phase33-leasing-continuity.helpers';
+
+export * from './phase33-leasing-continuity.helpers';
 
 test.describe('Phase 33 — Leasing Continuity Hardening', () => {
   test.beforeEach(async ({ page }) => {
@@ -207,7 +98,6 @@ test.describe('Phase 33 — Leasing Continuity Hardening', () => {
     expect(events).toContain('homepage_leasing_search_submit');
 
     // Navigation to /properties is the expected outcome; check if we arrived there
-    // (Chromium is authoritative; Firefox may handle async dispatch differently)
     if (browserName === 'chromium' || browserName === 'webkit') {
       await page.waitForURL('**/properties**', { timeout: 10_000 });
     }
@@ -279,8 +169,6 @@ test.describe('Phase 33 — Leasing Continuity Hardening', () => {
     await page.locator('#contact-email').fill('phase33.qa@whitecaves.ae');
     await page.getByPlaceholder('Your Message...').fill('Testing leasing continuity flow.');
 
-    // Use native DOM click on submit button — triggers actual form submit event
-    // (Playwright force:true only dispatches synthetic events, missing browser form submit)
     await page.evaluate(() => {
       const btn = document.querySelector(
         'form.contact-form button[type="submit"]'
@@ -309,8 +197,6 @@ test.describe('Phase 33 — Leasing Continuity Hardening', () => {
   });
 
   test('leasing lifecycle API route surfaces respond (not 404)', async ({ page }) => {
-    // Test that API routes exist and return expected shapes (mocked backend).
-    // A 404 would indicate a broken route — 200/401 are both acceptable.
     await page.goto('/', { waitUntil: 'commit' });
 
     const lifecycleEndpoints = [
@@ -349,3 +235,4 @@ test.describe('Phase 33 — Leasing Continuity Hardening', () => {
     }
   });
 });
+

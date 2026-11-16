@@ -53,3 +53,4 @@ export const LUBNA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as lubna_supervisorExport;
+

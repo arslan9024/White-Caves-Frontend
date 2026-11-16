@@ -57,3 +57,4 @@ describe('AccessDeniedView Suite', () => {
     expect(handleHome).toHaveBeenCalledTimes(1);
   });
 });
+

@@ -76,3 +76,4 @@ export const totalNpsResponses = NPS_DATA.reduce((s, d) => s + d.count, 0);
 export const npsScore = Math.round(
   ((NPS_DATA[0].count - NPS_DATA[2].count) / totalNpsResponses) * 100
 );
+

@@ -24,3 +24,4 @@ describe('Edge Auth Middleware', () => {
     expect(res.status).toBe(200);
   });
 });
+

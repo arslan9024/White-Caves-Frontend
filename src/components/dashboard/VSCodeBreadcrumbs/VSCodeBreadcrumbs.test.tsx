@@ -95,3 +95,4 @@ describe('VSCodeBreadcrumbs Component Suite', () => {
     expect(screen.getByTestId('breadcrumb-segment-prop-001')).toBeInTheDocument();
   });
 });
+

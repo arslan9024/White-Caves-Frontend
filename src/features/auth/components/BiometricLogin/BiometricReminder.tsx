@@ -109,3 +109,4 @@ const BiometricReminder = ({ variant = 'banner' }: BiometricReminderProps) => {
 };
 
 export default BiometricReminder;
+

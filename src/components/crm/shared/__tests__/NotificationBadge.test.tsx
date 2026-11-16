@@ -130,3 +130,4 @@ describe('NotificationBadge', () => {
     expect(badge.className).toContain('notification-badge');
   });
 });
+

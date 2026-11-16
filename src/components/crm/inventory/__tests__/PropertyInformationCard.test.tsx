@@ -6,3 +6,4 @@ describe('PropertyInformationCard', () => {
     expect(true).toBe(true);
   });
 });
+

@@ -50,3 +50,4 @@ export async function settledJson<const T extends readonly unknown[]>(
 
   return parsed as unknown as T;
 }
+

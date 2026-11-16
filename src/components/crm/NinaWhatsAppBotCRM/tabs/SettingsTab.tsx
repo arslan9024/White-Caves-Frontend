@@ -142,3 +142,4 @@ export const NinaSettingsTab: React.FC<NinaSettingsTabProps> = ({ data: _data })
     </div>
   );
 };
+

@@ -24,3 +24,4 @@ describe('LeadKanbanBoard', () => {
     expect(screen.getByText('AED 2.5M')).toBeTruthy();
   });
 });
+

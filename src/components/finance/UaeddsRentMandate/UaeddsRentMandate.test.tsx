@@ -18,3 +18,4 @@ describe('UaeddsRentMandate Component', () => {
     expect(screen.getByText(/Mandate UMRN:/i)).toBeDefined();
   });
 });
+

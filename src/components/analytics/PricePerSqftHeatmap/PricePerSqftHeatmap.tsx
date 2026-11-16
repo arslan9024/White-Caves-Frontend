@@ -61,3 +61,4 @@ export const PricePerSqftHeatmap: FC = () => {
   );
 };
 export default PricePerSqftHeatmap;
+

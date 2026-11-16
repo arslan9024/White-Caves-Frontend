@@ -200,3 +200,4 @@ export const StatutoryWizardModal: FC<StatutoryWizardModalProps> = ({
 };
 
 export default StatutoryWizardModal;
+

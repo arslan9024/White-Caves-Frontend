@@ -129,3 +129,4 @@ export const getAssistantEndpointCoverage = (
       totalEndpoints === 0 ? 100 : Number(((mappedEndpoints / totalEndpoints) * 100).toFixed(2)),
   };
 };
+

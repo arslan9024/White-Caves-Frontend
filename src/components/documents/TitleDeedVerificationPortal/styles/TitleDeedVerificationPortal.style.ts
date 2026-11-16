@@ -30,3 +30,4 @@ export const StatusBanner = styled.div<{ $status: string }>`
   font-size: 0.875rem; font-weight: 700; text-align: center; padding: 0.5rem;
   color: ${({ $status }) => $status === 'verified' ? '#15803d' : $status === 'encumbered' ? '#c2410c' : '#dc2626'};
 `;
+

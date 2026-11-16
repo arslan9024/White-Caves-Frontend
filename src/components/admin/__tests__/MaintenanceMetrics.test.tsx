@@ -11,3 +11,4 @@ describe('MaintenanceMetrics Component', () => {
     expect(screen.getByText('34')).toBeDefined();
   });
 });
+

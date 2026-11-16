@@ -73,3 +73,4 @@ export function computeCmaValuation(community: string, builtUpArea: number): Cma
     confidenceScore: 94,
   };
 }
+

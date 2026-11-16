@@ -9,3 +9,4 @@ const logger = pino({
 
 export const backendLogger = logger;
 export default logger;
+

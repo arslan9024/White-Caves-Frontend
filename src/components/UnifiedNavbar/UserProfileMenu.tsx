@@ -189,3 +189,4 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 UserProfileMenu.displayName = 'UserProfileMenu';
 
 export default UserProfileMenu;
+

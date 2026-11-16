@@ -27,3 +27,4 @@ export interface RunwayData {
 }
 
 export type LeaderboardTab = 'sales' | 'leasing';
+

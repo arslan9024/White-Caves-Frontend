@@ -56,3 +56,4 @@ const DualCategoryTabStrip = memo(({
 
 DualCategoryTabStrip.displayName = 'DualCategoryTabStrip';
 export default DualCategoryTabStrip;
+

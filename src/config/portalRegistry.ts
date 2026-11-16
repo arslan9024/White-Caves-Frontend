@@ -155,3 +155,4 @@ export function getPortalUrl(portalId: PortalId): string {
   }
   return `https://${config.subdomain}${config.defaultRoute}`;
 }
+

@@ -4,3 +4,4 @@ export * from './PrismCRM.logic';
 export * from './PrismCRM.panels';
 export * from './PrismCRM.view';
 export { PrismCRMView as default } from './PrismCRM.view';
+

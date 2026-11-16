@@ -117,3 +117,4 @@ export const NeighborhoodAmenityVisualizer: FC = () => {
 };
 
 export default NeighborhoodAmenityVisualizer;
+

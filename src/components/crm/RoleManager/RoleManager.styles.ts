@@ -284,3 +284,4 @@ export const RoleCard = styled.div<{ $isSimulated: boolean; $levelColor: string 
     }
   }
 `;
+

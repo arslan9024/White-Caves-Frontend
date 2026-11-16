@@ -79,3 +79,4 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(dialog).toBeInTheDocument();
   });
 });
+

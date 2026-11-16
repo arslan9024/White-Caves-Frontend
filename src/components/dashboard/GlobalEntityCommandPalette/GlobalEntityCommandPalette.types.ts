@@ -33,3 +33,4 @@ export interface GlobalEntityCommandPaletteProps {
   onClose: () => void;
   onSelectEntity: (entity: CommandPaletteEntityItem) => void;
 }
+

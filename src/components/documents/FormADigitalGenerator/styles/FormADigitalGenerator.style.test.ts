@@ -9,3 +9,4 @@ describe('FormADigitalGenerator.style', () => {
     expect(styles.Preview).toBeDefined();
   });
 });
+

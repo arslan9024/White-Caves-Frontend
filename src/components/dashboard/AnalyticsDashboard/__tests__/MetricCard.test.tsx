@@ -6,3 +6,4 @@ describe('MetricCard', () => {
     expect(true).toBe(true);
   });
 });
+

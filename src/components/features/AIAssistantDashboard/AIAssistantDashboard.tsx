@@ -5,3 +5,4 @@ export { AIAssistantDashboardView, AIAssistantDashboardView as AIAssistantDashbo
 export * from './AIAssistantDashboard.types';
 export * from './AIAssistantDashboard.styles';
 export * from './AIAssistantDashboard.panels';
+

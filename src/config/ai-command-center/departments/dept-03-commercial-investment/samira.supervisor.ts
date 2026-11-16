@@ -53,3 +53,4 @@ export const SAMIRA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as samira_supervisorExport;
+

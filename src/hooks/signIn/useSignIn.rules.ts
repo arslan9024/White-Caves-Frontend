@@ -114,3 +114,4 @@ export const deriveProfileCompletionSignal = (user: {
   const hasPhone = typeof user.phone === 'string' && user.phone.trim().length > 0;
   return hasName && hasPhone;
 };
+

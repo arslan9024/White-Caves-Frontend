@@ -146,3 +146,4 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = () => {
 };
 
 export default FeaturedProperties;
+

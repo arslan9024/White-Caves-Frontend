@@ -32,3 +32,4 @@ export function areSnapshotsEqual(a: TreeNavigationSnapshot, b: TreeNavigationSn
     a.lineId === b.lineId
   );
 }
+

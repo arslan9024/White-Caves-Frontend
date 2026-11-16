@@ -33,3 +33,4 @@ export default defineConfig({
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
   },
 });
+

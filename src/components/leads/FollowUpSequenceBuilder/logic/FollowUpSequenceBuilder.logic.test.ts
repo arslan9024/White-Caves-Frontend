@@ -28,3 +28,4 @@ describe('FollowUpSequenceBuilder.logic', () => {
     expect(result.current.steps.some((s) => s.id === stepIdToRemove)).toBe(false);
   });
 });
+

@@ -14,3 +14,4 @@ export * from './AiAssistantDetailDossier';
 export * from './AiAssistantCardsGrid';
 export * from './AiAssistantManagerView';
 export { AiAssistantManagerView as default } from './AiAssistantManagerView';
+

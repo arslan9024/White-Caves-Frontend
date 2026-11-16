@@ -10,3 +10,4 @@ describe('DocumentComplianceChecklist', () => {
     expect(screen.getByText(/RERA Compliance Checklist/i)).toBeTruthy();
   });
 });
+

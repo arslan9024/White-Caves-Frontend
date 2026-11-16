@@ -54,3 +54,4 @@ export const PairingBanner: React.FC<PairingBannerProps> = ({ pairingCode }) => 
     </div>
   );
 };
+

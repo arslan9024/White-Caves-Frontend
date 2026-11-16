@@ -17,3 +17,4 @@ describe('CurrencyFormattedInput Component', () => {
     expect(onChange).toHaveBeenCalledWith(25000000);
   });
 });
+

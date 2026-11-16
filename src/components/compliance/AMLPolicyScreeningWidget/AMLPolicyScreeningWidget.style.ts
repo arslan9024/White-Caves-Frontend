@@ -228,3 +228,4 @@ export const ResultCard = styled.div<{ $status: 'clear' | 'flagged' }>`
     to { opacity: 1; transform: scale(1); }
   }
 `;
+

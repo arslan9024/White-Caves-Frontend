@@ -142,3 +142,4 @@ describe('RoleManager Suite (12-Way Co-Location Blueprint)', () => {
     expect(ru.workspaceTitle).toContain('Матрица');
   });
 });
+

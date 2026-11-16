@@ -130,3 +130,4 @@ describe('HenryTenancyContractTemplateService — Official DLD Tenancy Contract 
     expect(data.additionalTerms[0]).toContain('<img');
   });
 });
+

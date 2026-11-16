@@ -17,3 +17,4 @@ describe('WebXRHeadsetViewer Component', () => {
     expect(screen.getByText(/Immersive WebXR — Head tracking active/i)).toBeDefined();
   });
 });
+

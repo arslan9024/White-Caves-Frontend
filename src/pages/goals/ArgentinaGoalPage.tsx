@@ -682,3 +682,4 @@ const ArgentinaGoalPage: React.FC = () => {
 };
 
 export default ArgentinaGoalPage;
+

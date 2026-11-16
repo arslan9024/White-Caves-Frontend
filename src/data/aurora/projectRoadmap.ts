@@ -134,3 +134,4 @@ export const getCompletedPhases = () => PROJECT_ROADMAP.phases.filter(p => p.sta
 export const getPendingMilestones = () => PROJECT_ROADMAP.phases.flatMap(p => p.milestones.filter(m => m.status !== 'completed'));
 
 export default { PROJECT_ROADMAP, getPhaseById, getCurrentPhase, getCompletedPhases, getPendingMilestones };
+

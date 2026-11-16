@@ -286,3 +286,4 @@ export const CANONICAL_DEALS: DealItem[] = [
     meritXPAwarded: 600,
   },
 ];
+

@@ -15,3 +15,4 @@ describe('ProfileThemeCustomizer Component', () => {
     expect(onAccentChange).toHaveBeenCalledWith('#10B981');
   });
 });
+

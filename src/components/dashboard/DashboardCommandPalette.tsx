@@ -147,3 +147,4 @@ const DashboardCommandPalette: FC<DashboardCommandPaletteProps> = ({
 };
 
 export default DashboardCommandPalette;
+

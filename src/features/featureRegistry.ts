@@ -147,3 +147,4 @@ export function getDefaultModule(role: string): DashboardModule | null {
 export function getModuleById(moduleId: string): DashboardModule | null {
   return DASHBOARD_MODULES.find(m => m.id === moduleId) || null;
 }
+

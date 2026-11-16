@@ -7,3 +7,4 @@ export const EmployeePortalView: FC = () => {
   return <PortalShell {...data} onRefresh={handleRefresh} />;
 };
 export default EmployeePortalView;
+

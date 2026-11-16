@@ -6,3 +6,4 @@ describe('SalesView', () => {
     expect(true).toBe(true);
   });
 });
+

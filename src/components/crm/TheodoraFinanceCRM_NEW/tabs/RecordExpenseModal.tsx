@@ -149,3 +149,4 @@ export const RecordExpenseModal: React.FC<RecordExpenseModalProps> = ({
     </div>
   );
 };
+

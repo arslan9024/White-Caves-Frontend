@@ -67,3 +67,4 @@ export const LuxuryTooltip: FC<{ text: string; position?: 'top' | 'bottom'; chil
 };
 
 export default LuxuryTooltip;
+

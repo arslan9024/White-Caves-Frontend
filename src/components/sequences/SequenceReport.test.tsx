@@ -17,3 +17,4 @@ describe('SequenceReport Component', () => {
     }
   });
 });
+

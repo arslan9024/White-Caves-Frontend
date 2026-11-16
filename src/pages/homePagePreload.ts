@@ -19,3 +19,4 @@ export const ensureHomepageHeroPreload = (): HTMLLinkElement => {
 export const cleanupHomepageHeroPreload = (): void => {
   document.querySelector<HTMLLinkElement>(`link#${HOMEPAGE_HERO_PRELOAD_ID}`)?.remove();
 };
+

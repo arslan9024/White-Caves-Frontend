@@ -139,3 +139,4 @@ export function generatePrintableHtml(data: VipPitchBookData): string {
 </html>
   `;
 }
+

@@ -7,3 +7,4 @@ export const useInsurancePremiumLogic = () => {
   const t = isRtl ? ar : en;
   return { t, isRtl };
 };
+

@@ -65,3 +65,4 @@ export default {
   ASSISTANT_IDS,
   DEPARTMENT_IDS,
 };
+

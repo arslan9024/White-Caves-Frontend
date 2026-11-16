@@ -63,3 +63,4 @@ export function getIndexedGroup<T>(
   if (groupKey === undefined || groupKey === null || groupKey === '') return [];
   return index.byGroup.get(String(groupKey)) ?? [];
 }
+

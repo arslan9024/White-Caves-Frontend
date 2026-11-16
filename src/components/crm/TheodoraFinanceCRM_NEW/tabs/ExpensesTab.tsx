@@ -224,3 +224,4 @@ export const ExpensesTab: React.FC<ExpensesTabProps> = ({ expenses: _expenses, o
 };
 
 export default ExpensesTab;
+

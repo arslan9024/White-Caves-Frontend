@@ -22,3 +22,4 @@ export const HeroHeatMapWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

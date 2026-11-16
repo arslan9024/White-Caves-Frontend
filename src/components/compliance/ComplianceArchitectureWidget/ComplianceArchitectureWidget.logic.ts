@@ -29,3 +29,4 @@ export const useComplianceArchitectureLogic = () => {
     handleRunRules
   };
 };
+

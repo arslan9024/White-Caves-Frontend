@@ -274,3 +274,4 @@ export function useAiAssistantManager(initialTierFilter = 'all') {
     handleCloseDrawer,
   };
 }
+

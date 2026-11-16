@@ -58,3 +58,4 @@ export interface DealItem {
   meritXPAwarded?: number;
   updatedAt?: string;
 }
+

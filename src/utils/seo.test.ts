@@ -58,3 +58,4 @@ describe('applySEO', () => {
     existing.remove();
   });
 });
+

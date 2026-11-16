@@ -96,3 +96,4 @@ export function evaluateHenryBenchmark(samples: readonly LabeledScan[], schema: 
     calibrationReason: 'Local labels are not an independently validated representative dataset or confidence calibration protocol.',
   } as const;
 }
+

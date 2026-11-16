@@ -34,3 +34,4 @@ export interface ViewingBooking {
   status: 'SCHEDULED' | 'CONFIRMED';
   calendarSyncLink: string;
 }
+

@@ -101,3 +101,4 @@ export const EXPENSES: FinanceExpense[] = [
     status: 'processed',
   },
 ];
+

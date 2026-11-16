@@ -194,3 +194,4 @@ export const calculateDailyPremiumCap = ({
   }
   return Math.max(0, Math.floor(weeklyRemaining / businessDaysRemaining));
 };
+

@@ -86,3 +86,4 @@ export const DocumentKycChecklist: FC = () => {
   );
 };
 export default DocumentKycChecklist;
+

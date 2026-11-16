@@ -201,3 +201,4 @@ export const PWAInstallPrompt: React.FC = () => {
     </Banner>
   );
 };
+

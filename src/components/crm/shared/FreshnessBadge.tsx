@@ -73,3 +73,4 @@ export const FreshnessBadge: React.FC<FreshnessBadgeProps> = ({
 };
 
 export default FreshnessBadge;
+

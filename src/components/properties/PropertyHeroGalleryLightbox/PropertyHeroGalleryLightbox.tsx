@@ -96,3 +96,4 @@ export const PropertyHeroGalleryLightbox: FC = () => {
 };
 
 export default PropertyHeroGalleryLightbox;
+

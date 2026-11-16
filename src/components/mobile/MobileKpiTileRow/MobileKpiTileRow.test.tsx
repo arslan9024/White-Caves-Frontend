@@ -25,3 +25,4 @@ describe('MobileKpiTileRow', () => {
     expect(screen.getByText('+8%')).toBeDefined();
   });
 });
+

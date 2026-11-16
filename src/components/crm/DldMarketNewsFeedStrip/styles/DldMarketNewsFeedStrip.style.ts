@@ -130,3 +130,4 @@ export const NewsFeedStatus = styled.p`
   border-radius: var(--border-radius-md);
   font-size: ${lightTheme.typography.bodySmall.size};
 `;
+

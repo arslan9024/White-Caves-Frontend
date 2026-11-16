@@ -14,3 +14,4 @@ describe('LeadDetailSlideOver.style', () => {
     expect(styles.TimelineItem).toBeDefined();
   });
 });
+

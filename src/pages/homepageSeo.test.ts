@@ -96,3 +96,4 @@ describe('buildHomepageJsonLd', () => {
     expect(((pageSchema?.mainEntity as { itemListElement: unknown[] }).itemListElement)).toEqual([]);
   });
 });
+

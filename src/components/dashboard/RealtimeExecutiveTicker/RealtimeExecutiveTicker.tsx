@@ -75,3 +75,4 @@ export const RealtimeExecutiveTicker: FC = () => {
 };
 
 export default RealtimeExecutiveTicker;
+

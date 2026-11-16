@@ -12,3 +12,4 @@ describe('FinancialPandLDashboard Component', () => {
     expect(screen.getByText(/Commission Income/i)).toBeDefined();
   });
 });
+

@@ -11,3 +11,4 @@ export { default as TimelineChart } from './TimelineChart';
 export type { TimelinePoint } from './TimelineChart';
 
 export { default as GaugeChart } from './GaugeChart';
+

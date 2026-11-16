@@ -21,3 +21,4 @@ describe('UhnwPrivateVault Component', () => {
     expect(screen.getByText(/Private Island Villa, World Islands/i)).toBeDefined();
   });
 });
+

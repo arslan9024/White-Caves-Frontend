@@ -6,3 +6,4 @@ describe('PropertiesMixedDashboard', () => {
     expect(true).toBe(true);
   });
 });
+

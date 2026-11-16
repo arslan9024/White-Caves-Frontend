@@ -300,3 +300,4 @@ describe('DubaiMap', () => {
     expect(mockNavigate).not.toHaveBeenCalledWith('/property/1');
   });
 });
+

@@ -43,3 +43,4 @@ export interface SubDepartmentFormData {
   code: string;
   slug: string;
 }
+

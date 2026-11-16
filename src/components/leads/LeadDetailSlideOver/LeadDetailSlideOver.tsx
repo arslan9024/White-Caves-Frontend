@@ -67,3 +67,4 @@ export const LeadDetailSlideOver: FC<Props> = ({ open, onClose }) => {
 };
 
 export default LeadDetailSlideOver;
+

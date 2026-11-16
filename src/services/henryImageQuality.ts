@@ -45,3 +45,4 @@ export function imageQualityWarnings(
     warnings.push('Heuristic advisory: dark content touches the frame; check all document edges for cropping. This may also be a border/background.');
   return warnings;
 }
+

@@ -53,3 +53,4 @@ export const SAMAR_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as samar_supervisorExport;
+

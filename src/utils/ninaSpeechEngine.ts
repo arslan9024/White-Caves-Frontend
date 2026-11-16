@@ -39,3 +39,4 @@ export function ninaTekkenAnnouncerSpeak(
 
 export const ninaSpeak = ninaTekkenAnnouncerSpeak;
 export default ninaTekkenAnnouncerSpeak;
+

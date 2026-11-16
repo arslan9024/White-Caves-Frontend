@@ -210,3 +210,4 @@ const Badge: FC<BadgeProps> = memo(function Badge({
 });
 
 export default Badge;
+

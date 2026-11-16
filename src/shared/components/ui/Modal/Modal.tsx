@@ -167,3 +167,4 @@ const Modal = Object.assign(ModalBase, {
 
 export default Modal;
 export { ModalFooter };
+

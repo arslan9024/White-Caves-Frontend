@@ -279,3 +279,4 @@ export async function fetchPropertyStats(): Promise<SingleResponse<PropertyStats
   }
   return response.json();
 }
+

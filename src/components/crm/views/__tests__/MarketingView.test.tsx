@@ -6,3 +6,4 @@ describe('MarketingView', () => {
     expect(true).toBe(true);
   });
 });
+

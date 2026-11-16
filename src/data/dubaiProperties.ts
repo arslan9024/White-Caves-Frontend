@@ -111,3 +111,4 @@ const AREA_TYPE_COLORS: Record<string, string> = {
 export const getMarkerColor = (type: string): string => {
   return AREA_TYPE_COLORS[type] || AREA_TYPE_COLORS.default;
 };
+

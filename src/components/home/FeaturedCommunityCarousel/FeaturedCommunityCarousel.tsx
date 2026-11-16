@@ -67,3 +67,4 @@ export const FeaturedCommunityCarousel: FC = () => {
 };
 
 export default FeaturedCommunityCarousel;
+

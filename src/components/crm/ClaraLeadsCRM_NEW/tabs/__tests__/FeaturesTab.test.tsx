@@ -9,3 +9,4 @@ describe('FeaturesTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

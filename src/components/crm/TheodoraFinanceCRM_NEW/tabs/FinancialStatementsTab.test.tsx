@@ -12,3 +12,4 @@ describe('FinancialStatementsTab', () => {
     expect(screen.getByText(/Cash Flow & Bank Recon/i)).toBeInTheDocument();
   });
 });
+

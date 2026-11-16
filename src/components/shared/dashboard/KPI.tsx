@@ -66,3 +66,4 @@ const KPI: React.FC<KPIProps> = ({ label, value, change, icon, trend = 'neutral'
 };
 
 export default KPI;
+

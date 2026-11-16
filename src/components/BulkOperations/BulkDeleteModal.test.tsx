@@ -31,3 +31,4 @@ describe('BulkDeleteModal', () => {
     expect(handleConfirm).toHaveBeenCalledTimes(1);
   });
 });
+

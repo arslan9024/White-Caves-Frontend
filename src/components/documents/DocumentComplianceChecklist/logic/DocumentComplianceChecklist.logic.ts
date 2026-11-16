@@ -32,3 +32,4 @@ export function useDocumentComplianceChecklistLogic() {
 
   return { items, toggle, passCount, failCount, pct };
 }
+

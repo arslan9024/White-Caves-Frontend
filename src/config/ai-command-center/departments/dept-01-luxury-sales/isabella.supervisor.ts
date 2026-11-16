@@ -53,3 +53,4 @@ export const ISABELLA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as isabella_supervisorExport;
+

@@ -9,3 +9,4 @@ describe('MortgageStressTestSimulator Component', () => {
     expect(screen.getByTestId('mortgage-stress-test-simulator')).toBeInTheDocument();
   });
 });
+

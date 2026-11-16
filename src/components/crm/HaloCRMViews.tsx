@@ -190,3 +190,4 @@ export const HaloAlertsTab: React.FC = () => {
     </div>
   );
 };
+

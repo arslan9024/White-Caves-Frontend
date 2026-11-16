@@ -19,3 +19,4 @@ declare module 'styled-components' {
     fonts?: Record<string, string>;
   }
 }
+

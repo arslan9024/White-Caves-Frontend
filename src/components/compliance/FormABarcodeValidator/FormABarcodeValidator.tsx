@@ -103,3 +103,4 @@ export const FormABarcodeValidator: FC = () => {
   );
 };
 export default FormABarcodeValidator;
+

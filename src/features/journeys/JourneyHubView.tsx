@@ -390,3 +390,4 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
 };
 
 export default JourneyHubView;
+

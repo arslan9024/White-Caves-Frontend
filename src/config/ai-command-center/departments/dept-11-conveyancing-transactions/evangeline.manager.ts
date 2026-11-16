@@ -47,3 +47,4 @@ export const EVANGELINE_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as evangeline_managerExport;
+

@@ -13,3 +13,4 @@ export const AlertCard = styled.div<{ $severity: string }>`
   .type { font-weight: 700; font-size: 0.9rem; color: var(--color-1e293b, #1E293B); }
   .message { font-size: 0.85rem; color: var(--color-64748b, #64748B); margin-top: 4px; }
 `;
+

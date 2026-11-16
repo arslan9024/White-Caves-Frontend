@@ -9,3 +9,4 @@ describe('MultiPartySigningTracker.style', () => {
     expect(styles.StatusChip).toBeDefined();
   });
 });
+

@@ -196,3 +196,4 @@ export const GlobalSearchModal: FC = () => {
 };
 
 export default GlobalSearchModal;
+

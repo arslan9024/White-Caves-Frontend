@@ -24,3 +24,4 @@ export const WhatsAppButton = styled(motion.button)`
     transform: translateY(-2px) scale(1.05);
   }
 `;
+

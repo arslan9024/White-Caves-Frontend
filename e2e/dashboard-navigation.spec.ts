@@ -280,3 +280,4 @@ test.describe('Responsive Design', () => {
     await expect(page).toHaveTitle(/Dashboard|Home/i);
   });
 });
+

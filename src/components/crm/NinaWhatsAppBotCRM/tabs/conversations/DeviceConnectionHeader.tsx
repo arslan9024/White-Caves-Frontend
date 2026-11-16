@@ -142,3 +142,4 @@ export const DeviceConnectionHeader: React.FC<DeviceConnectionHeaderProps> = ({
     </div>
   );
 };
+

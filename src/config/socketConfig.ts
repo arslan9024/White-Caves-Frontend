@@ -37,3 +37,4 @@ export function resolveSocketUrl(): string {
 
   return LOCAL_API_ORIGIN;
 }
+

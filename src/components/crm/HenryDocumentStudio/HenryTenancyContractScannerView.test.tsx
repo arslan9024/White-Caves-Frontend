@@ -75,3 +75,4 @@ describe('HenryTenancyContractScannerView', () => {
       expect(scanner.getCachedContract()).toBeNull();
     });
 });
+

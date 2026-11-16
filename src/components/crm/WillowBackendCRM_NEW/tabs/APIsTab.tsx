@@ -62,3 +62,4 @@ const APIsTab: React.FC<APIsTabProps> = ({ endpoints, apiStats }) => {
 };
 
 export default APIsTab;
+

@@ -49,3 +49,4 @@ export function useCipherMarketLogic(moduleId?: string) {
     dldCluster,
   };
 }
+

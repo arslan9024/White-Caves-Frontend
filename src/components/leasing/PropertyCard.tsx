@@ -85,3 +85,4 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, onClick })
     </Card>
   );
 };
+

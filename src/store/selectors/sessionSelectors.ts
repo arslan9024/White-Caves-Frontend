@@ -34,3 +34,4 @@ export const selectSessionToken = (state: RootState): string | null => {
  */
 export const selectIsSessionAuthenticated = (state: RootState): boolean =>
   Boolean(selectSessionUser(state));
+

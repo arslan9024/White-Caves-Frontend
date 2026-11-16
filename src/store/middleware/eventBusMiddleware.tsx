@@ -209,3 +209,4 @@ export const getAuditLogForAssistant = (assistantId: string): AuditEntry[] =>
 export { EVENT_TYPES, EVENT_ROUTING };
 
 export default eventBusMiddleware;
+

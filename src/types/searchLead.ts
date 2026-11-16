@@ -52,3 +52,4 @@ export interface SearchLeadsState {
   /** Error message if the last submission failed */
   error: string | null;
 }
+

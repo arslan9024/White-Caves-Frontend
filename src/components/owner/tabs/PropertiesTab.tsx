@@ -831,3 +831,4 @@ const PropertiesTab: React.FC<PropertiesTabProps> = ({ data, loading, error, onA
 };
 
 export default React.memo(PropertiesTab);
+

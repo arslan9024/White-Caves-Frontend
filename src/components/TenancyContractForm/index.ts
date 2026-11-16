@@ -8,3 +8,4 @@ export * from './TenancyContractForm.logic';
 export * from './TenancyContractForm.panels';
 export * from './TenancyContractForm.view';
 export { TenancyContractForm as default } from './TenancyContractForm.view';
+

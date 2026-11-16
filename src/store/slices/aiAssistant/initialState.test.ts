@@ -431,3 +431,4 @@ describe('getInitialState — complianceEngine', () => {
     expect(cm.riskScore).toBe(0.15);
   });
 });
+

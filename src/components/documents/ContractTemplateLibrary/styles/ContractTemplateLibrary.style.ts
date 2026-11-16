@@ -25,3 +25,4 @@ export const UseBtn = styled.button`
   font-size: 0.8125rem; font-weight: 700; cursor: pointer;
   &:hover { background: #dc2626; }
 `;
+

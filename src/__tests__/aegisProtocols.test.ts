@@ -5,12 +5,12 @@ import { describe, expect, it } from 'vitest';
 import {
   AEGIS_PROTOCOL_FILES,
   turingOrchestrator,
-} from '../../.agents/aegis/core-loop/turingOrchestrator';
+} from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingOrchestrator';
 import {
   buildFloorRoleAssignmentRecord,
   buildStatutoryGateXPReward,
   calculateDynamicCommissionSplitPct,
-} from '../../.agents/aegis/protocols/leaderboardXpHooks';
+} from '../../../Aegis-Sterling/.agents/aegis/protocols/leaderboardXpHooks';
 
 describe('AEGIS V5.0 5-File Protocol Matrices & Leaderboard XP Hooks (.agents/aegis)', () => {
   it('verifies all 5 protocol CSV files exist in .agents/aegis/protocols with standardized line-1 file headers and AEG-001..AEG-042 rules', () => {
@@ -107,3 +107,4 @@ describe('AEGIS V5.0 5-File Protocol Matrices & Leaderboard XP Hooks (.agents/ae
     expect(record.taskSignatureHash).toContain('SIG-WC-OPS-F13-L5-user-123');
   });
 });
+

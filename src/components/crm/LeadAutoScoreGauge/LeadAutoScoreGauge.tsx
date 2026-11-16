@@ -95,3 +95,4 @@ export const LeadAutoScoreGauge: FC = () => {
   );
 };
 export default LeadAutoScoreGauge;
+

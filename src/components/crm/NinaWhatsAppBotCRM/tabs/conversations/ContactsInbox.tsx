@@ -96,3 +96,4 @@ export const ContactsInbox: React.FC<ContactsInboxProps> = ({
     </div>
   );
 };
+

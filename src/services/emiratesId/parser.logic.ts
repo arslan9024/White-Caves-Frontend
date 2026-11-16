@@ -316,3 +316,4 @@ export function parseOcrText(rawText: string, fileName: string): Partial<Emirate
   refreshCoverage(diagnostics);
   return result;
 }
+

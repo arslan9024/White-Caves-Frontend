@@ -71,3 +71,4 @@ export const autoDetectMapping = (cols: string[]): Record<string, string> => {
 
   return detected;
 };
+

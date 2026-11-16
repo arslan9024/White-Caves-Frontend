@@ -51,3 +51,4 @@ export const createMockConversation = (overrides = {}) => ({
   unreadCount: 0,
   ...overrides,
 });
+

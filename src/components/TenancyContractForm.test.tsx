@@ -50,3 +50,4 @@ describe('TenancyContractForm — alert elimination', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

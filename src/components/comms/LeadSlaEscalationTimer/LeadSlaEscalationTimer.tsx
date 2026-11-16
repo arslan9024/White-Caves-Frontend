@@ -94,3 +94,4 @@ export const LeadSlaEscalationTimer: FC = () => {
   );
 };
 export default LeadSlaEscalationTimer;
+

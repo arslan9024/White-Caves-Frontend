@@ -73,3 +73,4 @@ export const DEMO_ROLE_PROFILES: Record<UserRole, UserProfile> = {
   contractor: createDemoRoleProfile('contractor', 'VND-001', 'Emirates Facilities Management', 'dispatch@efm-uae.ae', '+971504448888', false),
   guest: DEFAULT_GUEST_USER,
 };
+

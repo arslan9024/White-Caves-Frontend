@@ -94,3 +94,4 @@ const DatabaseTab: React.FC<DatabaseTabProps> = ({ metrics, dbHealth }) => {
 };
 
 export default DatabaseTab;
+

@@ -16,3 +16,4 @@ export const TabLoadingFallback: FC = () => (
 );
 
 export default TabLoadingFallback;
+

@@ -73,3 +73,4 @@ const InvoicesTab: React.FC<InvoicesTabProps> = ({ invoices, onSelectInvoice }) 
 };
 
 export default InvoicesTab;
+

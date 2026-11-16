@@ -225,3 +225,4 @@ export const DepartmentFinalizerTable: FC<DepartmentFinalizerTableProps> = ({
 };
 
 export default DepartmentFinalizerTable;
+

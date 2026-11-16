@@ -12,3 +12,4 @@ export const PROPERTY_CARD_TEXT = {
   favoriteAriaAdd: 'Add to favorites',
   favoriteAriaRemove: 'Remove from favorites',
 };
+

@@ -1,220 +1,28 @@
-import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import { logout } from './authSlice';
-import { authFetch } from '../utils/authFetch';
-import { getErrorMessage } from '../constants';
-import * as favoritesApi from '../services/favoritesApi';
-import {
-  Property,
-  Lead,
-  RegulatoryContract,
-  mockProperties,
-  mockLeads,
-  mockRegulatoryContracts,
-} from '../mocks/dubaiRealEstateMocks';
-
-export interface FavoriteItem {
-  id: string;
-  title: string;
-  location: string;
-  price: string;
-  image?: string;
-}
-
-export interface RecentlyViewedItem {
-  id: string;
-  title: string;
-  location: string;
-  price: string;
-  image?: string;
-  viewedAt: string;
-}
-
-interface Notification {
-  id: string;
-  message: string;
-  read: boolean;
-  type?: string;
-  timestamp?: string;
-  title?: string;
-}
-
-interface NotificationState {
-  unreadCount: number;
-  items: Notification[];
-}
-
-interface LoadingState {
-  metrics: boolean;
-  properties: boolean;
-  leads: boolean;
-  [key: string]: boolean;
-}
-
-interface Metrics {
-  buyer: Record<string, unknown> | null;
-  seller: Record<string, unknown> | null;
-  landlord: Record<string, unknown> | null;
-  tenant: Record<string, unknown> | null;
-  leasingAgent: Record<string, unknown> | null;
-  salesAgent: Record<string, unknown> | null;
-  owner: Record<string, unknown> | null;
-  [key: string]: Record<string, unknown> | null | undefined;
-}
-
-interface DashboardState {
-  activeTabs: { [key: string]: string };
-  filters: { [key: string]: unknown };
-  metrics: Metrics;
-  loading: LoadingState;
-  error: string | null;
-  favorites: FavoriteItem[];
-  favoriteIds: string[];
-  favoritesLoading: boolean;
-  recentlyViewed: RecentlyViewedItem[];
-  notifications: NotificationState;
-  pipelineStages: {
-    leasing: string[];
-    sales: string[];
-  };
-  properties: Property[];
-  leads: Lead[];
-  contracts: RegulatoryContract[];
-  isOfflineMode: boolean;
-}
-
-const initialState: DashboardState = {
-  activeTabs: {},
-  filters: {},
-  metrics: {
-    buyer: null,
-    seller: null,
-    landlord: null,
-    tenant: null,
-    leasingAgent: null,
-    salesAgent: null,
-    owner: null,
-  },
-  loading: {
-    metrics: false,
-    properties: false,
-    leads: false,
-  },
-  error: null,
-  favorites: [],
-  favoriteIds: [],
-  favoritesLoading: false,
-  recentlyViewed: [],
-  notifications: {
-    unreadCount: 0,
-    items: [],
-  },
-  pipelineStages: {
-    leasing: ['Lead', 'Qualified', 'Viewing', 'Negotiation', 'Documentation', 'Closing'],
-    sales: [
-      'Lead',
-      'Qualified',
-      'Viewing',
-      'Negotiation',
-      'Due Diligence',
-      'Documentation',
-      'Closing',
-    ],
-  },
-  properties: mockProperties,
-  leads: mockLeads,
-  contracts: mockRegulatoryContracts,
-  isOfflineMode: true,
-};
-
-interface FetchMetricsPayload {
-  role: string;
-  data: Record<string, unknown>;
-}
-
-export const fetchDashboardMetrics = createAsyncThunk<
-  FetchMetricsPayload,
-  string,
-  { state: { dashboard: DashboardState }; rejectValue: string }
->('dashboard/fetchMetrics', async (role, { getState, rejectWithValue }) => {
-  const isOfflineMode = getState().dashboard.isOfflineMode;
-  if (isOfflineMode) {
-    return { role, data: { offlineSimulated: true, generatedAt: new Date().toISOString() } };
-  }
-  try {
-    const response = await authFetch(`/api/dashboard/${role}/metrics`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch metrics');
-    }
-    return { role, data: await response.json() };
-  } catch (error: unknown) {
-    const message = getErrorMessage(error, 'Failed to fetch metrics');
-    return rejectWithValue(message);
-  }
-});
-
-// ─── Favorites Async Thunks (API-backed) ─────────────────────────────────────
-
-/** Fetch all favorite IDs (lightweight — for heart toggle state) */
-export const fetchFavoriteIdsThunk = createAsyncThunk<string[], void, { state: { dashboard: DashboardState }; rejectValue: string }>(
-  'dashboard/fetchFavoriteIds',
-  async (_, { getState, rejectWithValue }) => {
-    if (getState().dashboard.isOfflineMode) return [];
-    try {
-      return await favoritesApi.fetchFavoriteIds();
-    } catch (error: unknown) {
-      const message = getErrorMessage(error, 'Failed to fetch favorites');
-      return rejectWithValue(message);
-    }
-  }
-);
-
-/** Fetch full favorites with property data (for FavoriteListings page) */
-export const fetchFavoritesThunk = createAsyncThunk<
-  favoritesApi.PaginatedFavorites,
-  { page?: number; pageSize?: number } | void,
-  { state: { dashboard: DashboardState }; rejectValue: string }
->('dashboard/fetchFavorites', async (params, { getState, rejectWithValue }) => {
-  if (getState().dashboard.isOfflineMode) return { data: [], pagination: { page: 1, pageSize: 20, total: 0, totalPages: 0 } };
-  try {
-    const page = params && 'page' in params ? params.page : 1;
-    const pageSize = params && 'pageSize' in params ? params.pageSize : 20;
-    return await favoritesApi.fetchFavorites(page, pageSize);
-  } catch (error: unknown) {
-    const message = getErrorMessage(error, 'Failed to fetch favorites');
-    return rejectWithValue(message);
-  }
-});
-
-/** Add a property to favorites via API */
-export const addFavoriteThunk = createAsyncThunk<
-  { propertyId: string; item: FavoriteItem },
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { logout } from "./authSlice";
+import type {
   FavoriteItem,
-  { state: { dashboard: DashboardState }; rejectValue: string }
->('dashboard/addFavorite', async (item, { getState, rejectWithValue }) => {
-  if (getState().dashboard.isOfflineMode) return { propertyId: item.id, item };
-  try {
-    await favoritesApi.addFavorite(item.id);
-    return { propertyId: item.id, item };
-  } catch (error: unknown) {
-    const message = getErrorMessage(error, 'Failed to add favorite');
-    return rejectWithValue(message);
-  }
-});
+  RecentlyViewedItem,
+  Notification,
+  NotificationState,
+  LoadingState,
+  Metrics,
+  DashboardState,
+} from "./dashboard/types";
+import { initialState } from "./dashboard/types";
+import {
+  fetchDashboardMetrics,
+  fetchFavoriteIdsThunk,
+  fetchFavoritesThunk,
+  addFavoriteThunk,
+  removeFavoriteThunk,
+} from "./dashboard/thunks";
 
-/** Remove a property from favorites via API */
-export const removeFavoriteThunk = createAsyncThunk<string, string, { state: { dashboard: DashboardState }; rejectValue: string }>(
-  'dashboard/removeFavorite',
-  async (propertyId, { getState, rejectWithValue }) => {
-    if (getState().dashboard.isOfflineMode) return propertyId;
-    try {
-      await favoritesApi.removeFavorite(propertyId);
-      return propertyId;
-    } catch (error: unknown) {
-      const message = getErrorMessage(error, 'Failed to remove favorite');
-      return rejectWithValue(message);
-    }
-  }
-);
+// ── Re-exports ──
+export type * from "./dashboard/types";
+export * from "./dashboard/thunks";
+export * from "./dashboard/selectors";
+
 
 const dashboardSlice = createSlice({
   name: 'dashboard',
@@ -386,30 +194,5 @@ export const {
   filterLeadsByStatus,
 } = dashboardSlice.actions;
 
-export const selectFavorites = createSelector(
-  (state: { dashboard?: DashboardState }) => state.dashboard?.favorites,
-  (favorites): FavoriteItem[] => favorites || [],
-  {
-    devModeChecks: {
-      identityFunctionCheck: 'never',
-    },
-  }
-);
-export const selectFavoriteIds = createSelector(
-  (state: { dashboard?: DashboardState }) => state.dashboard?.favoriteIds,
-  (ids): string[] => ids || [],
-  {
-    devModeChecks: {
-      identityFunctionCheck: 'never',
-    },
-  }
-);
-export const selectFavoritesLoading = (state: { dashboard?: DashboardState }) =>
-  state.dashboard?.favoritesLoading ?? false;
-export const selectNotifications = (state: { dashboard?: DashboardState }) =>
-  state.dashboard?.notifications;
-
-// NOTE: Unused selectors removed in Round 124 dead-code cleanup.
-// Re-add if needed: selectActiveTab, selectFilter, selectMetrics, selectRecentlyViewed, selectIsLoading
-
 export default dashboardSlice.reducer;
+

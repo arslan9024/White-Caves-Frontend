@@ -23,3 +23,4 @@ export const CAROUSEL_TEXT = {
   activeListingsLabel: 'Active Listings',
   avgPriceLabel: 'Avg Price/SqFt',
 };
+

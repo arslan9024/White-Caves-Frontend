@@ -180,3 +180,4 @@ export const PortfolioAssetTable: React.FC<{ assets: PortfolioAssetItem[] }> = (
     </table>
   </div>
 );
+

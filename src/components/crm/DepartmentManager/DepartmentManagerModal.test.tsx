@@ -16,3 +16,4 @@ describe('DepartmentManagerModal Component (7-Category Co-Location Spec)', () =>
     expect(container.firstChild).toBeNull();
   });
 });
+

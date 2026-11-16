@@ -72,3 +72,4 @@ export const AppointmentWhatsAppNotifier: FC = () => {
   );
 };
 export default AppointmentWhatsAppNotifier;
+

@@ -23,3 +23,4 @@ export const CopyBtn = styled.button<{ $copied: boolean }>`
 `;
 export const PinBox = styled.div`background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 0.75rem; margin-top: 0.5rem; text-align: center;`;
 export const PinCode = styled.div`font-size: 1.5rem; font-weight: 800; letter-spacing: 0.25em; color: #ef4444;`;
+

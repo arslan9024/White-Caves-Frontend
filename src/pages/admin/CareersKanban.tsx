@@ -113,3 +113,4 @@ export function CareersKanban() {
     </div>
   );
 }
+

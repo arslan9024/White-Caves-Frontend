@@ -34,3 +34,4 @@ describe('CavesFloatingWhatsApp.style exports', () => {
     expect(FloatingBtn).not.toBe(SvgIcon);
   });
 });
+

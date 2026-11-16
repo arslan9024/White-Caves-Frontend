@@ -71,3 +71,4 @@ export const TENANT_DICTIONARY = {
     downloadPdf: 'Скачать PDF Ejari',
   },
 } as const;
+

@@ -104,3 +104,4 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, rank, onVi
 };
 
 export default PropertyCard;
+

@@ -20,3 +20,4 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Card content/children */
   children: React.ReactNode;
 }
+

@@ -150,3 +150,4 @@ export const CoverageCard = styled.div`
     color: var(--color-166534, #166534);
   }
 `;
+

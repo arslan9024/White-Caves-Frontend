@@ -6,3 +6,4 @@ describe('PropertyDistributionChart', () => {
     expect(true).toBe(true);
   });
 });
+

@@ -17,3 +17,4 @@ describe('AuditReportViewer Component', () => {
     }
   });
 });
+

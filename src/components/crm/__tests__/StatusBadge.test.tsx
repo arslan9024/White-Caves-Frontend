@@ -6,3 +6,4 @@ describe('StatusBadge', () => {
     expect(true).toBe(true);
   });
 });
+

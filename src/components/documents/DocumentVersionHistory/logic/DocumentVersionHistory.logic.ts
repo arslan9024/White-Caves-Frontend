@@ -12,3 +12,4 @@ export function useDocumentVersionHistoryLogic() {
   const selected = VERSIONS.find((v) => v.id === selectedVersion) ?? VERSIONS[0];
   return { VERSIONS, selectedVersion, setSelectedVersion, selected };
 }
+

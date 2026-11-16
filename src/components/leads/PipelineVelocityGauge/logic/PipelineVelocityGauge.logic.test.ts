@@ -17,3 +17,4 @@ describe('PipelineVelocityGauge.logic', () => {
     expect(isOnTarget(1.5, 1)).toBe(false);
   });
 });
+

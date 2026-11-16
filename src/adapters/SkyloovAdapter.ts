@@ -103,11 +103,7 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Generate API signature
    */
   generateSignature(method, endpoint, timestamp, data = null) {
-    const message = `${method}${endpoint}${timestamp}${data ? JSON.stringify(data) : ''}`;
-    return crypto
-      .createHmac('sha256', this.apiSecret)
-      .update(message)
-      .digest('hex');
+    return generateSkyloovSignature(method, endpoint, timestamp, data, this.apiSecret);
   }
 
   /**
@@ -127,24 +123,9 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Search properties
    */
   async searchProperties(filters = {}) {
-    const params = new URLSearchParams();
-
-    if (filters.location) params.append('location', filters.location);
-    if (filters.priceMin) params.append('priceMin', filters.priceMin);
-    if (filters.priceMax) params.append('priceMax', filters.priceMax);
-    if (filters.type) params.append('type', filters.type);
-    if (filters.status) params.append('status', filters.status);
-
-    params.append('limit', filters.pageSize || 50);
-    params.append('offset', ((filters.page || 1) - 1) * (filters.pageSize || 50));
-
-    const response = await this.makeRequest('GET', `/properties/search?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data.map(prop => this.normalizeProperty(prop));
-    }
-
-    return [];
+    const qs = buildFilterParams(filters, ["location", "priceMin", "priceMax", "type", "status"]);
+    const response = await this.makeRequest("GET", `/properties${qs ? "?" + qs : ""}`);
+    return (response.data && Array.isArray(response.data)) ? response.data.map(p => this.normalizeProperty(p)) : [];
   }
 
   /**
@@ -190,21 +171,9 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Get inquiries/leads
    */
   async getLeads(filters = {}) {
-    const params = new URLSearchParams();
-    
-    if (filters.propertyId) params.append('propertyId', filters.propertyId);
-    if (filters.status) params.append('status', filters.status);
-
-    params.append('limit', filters.pageSize || 50);
-    params.append('offset', ((filters.page || 1) - 1) * (filters.pageSize || 50));
-
-    const response = await this.makeRequest('GET', `/inquiries?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data.map(lead => this.normalizeLead(lead));
-    }
-
-    return [];
+    const qs = buildFilterParams(filters, ["propertyId", "status"]);
+    const response = await this.makeRequest("GET", `/inquiries${qs ? "?" + qs : ""}`);
+    return (response.data && Array.isArray(response.data)) ? response.data.map(l => this.normalizeLead(l)) : [];
   }
 
   /**
@@ -234,33 +203,16 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Map updates to Skyloov format
    */
   mapUpdatesTOSkyloovFormat(updates) {
-    const mapped = {};
-
-    if (updates.title) mapped.title = updates.title;
-    if (updates.description) mapped.description = updates.description;
-    if (updates.price) mapped.rentalPrice = updates.price;
-    if (updates.images) mapped.images = updates.images;
-
-    return mapped;
+    return mapUpdatesToSkyloovFormat(updates);
   }
 
   /**
    * Get tenants for a property
    */
   async getTenants(propertyId, filters = {}) {
-    const params = new URLSearchParams();
-    
-    if (filters.status) params.append('status', filters.status);
-
-    params.append('limit', filters.pageSize || 50);
-
-    const response = await this.makeRequest('GET', `/properties/${propertyId}/tenants?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data;
-    }
-
-    return [];
+    const qs = buildFilterParams(filters, ['status']);
+    const response = await this.makeRequest('GET', `/properties/${propertyId}/tenants${qs ? '?' + qs : ''}`);
+    return (response.data && Array.isArray(response.data)) ? response.data : [];
   }
 
   /**
@@ -275,15 +227,7 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Create maintenance request
    */
   async createMaintenanceRequest(propertyId, requestData) {
-    const request = {
-      propertyId,
-      title: requestData.title,
-      description: requestData.description,
-      category: requestData.category,
-      priority: requestData.priority || 'normal',
-      assignedTo: requestData.assignedTo
-    };
-
+    const request = buildMaintenanceRequest(requestData);
     const response = await this.makeRequest('POST', `/properties/${propertyId}/maintenance-requests`, request);
     return response.data || null;
   }
@@ -292,37 +236,18 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Get maintenance requests
    */
   async getMaintenanceRequests(propertyId, filters = {}) {
-    const params = new URLSearchParams();
-    
-    if (filters.status) params.append('status', filters.status);
-    if (filters.priority) params.append('priority', filters.priority);
-
-    const response = await this.makeRequest('GET', `/properties/${propertyId}/maintenance-requests?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data;
-    }
-
-    return [];
+    const qs = buildFilterParams(filters, ['status', 'priority']);
+    const response = await this.makeRequest('GET', `/properties/${propertyId}/maintenance-requests${qs ? '?' + qs : ''}`);
+    return (response.data && Array.isArray(response.data)) ? response.data : [];
   }
 
   /**
    * Get payments
    */
   async getPayments(propertyId, filters = {}) {
-    const params = new URLSearchParams();
-    
-    if (filters.status) params.append('status', filters.status);
-    if (filters.dateFrom) params.append('dateFrom', filters.dateFrom);
-    if (filters.dateTo) params.append('dateTo', filters.dateTo);
-
-    const response = await this.makeRequest('GET', `/properties/${propertyId}/payments?${params.toString()}`);
-    
-    if (response.data && Array.isArray(response.data)) {
-      return response.data;
-    }
-
-    return [];
+    const qs = buildFilterParams(filters, ['status', 'dateFrom', 'dateTo']);
+    const response = await this.makeRequest('GET', `/properties/${propertyId}/payments${qs ? '?' + qs : ''}`);
+    return (response.data && Array.isArray(response.data)) ? response.data : [];
   }
 
   /**
@@ -352,91 +277,29 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Map events to Skyloov format
    */
   mapEventsToSkyloovFormat(events) {
-    const mapping = {
-      'property.created': 'property.created',
-      'property.updated': 'property.updated',
-      'property.deleted': 'property.deleted',
-      'lead.created': 'inquiry.created',
-      'lead.updated': 'inquiry.updated',
-      'payment.received': 'payment.received',
-      'tenant.created': 'tenant.added',
-      'maintenance.created': 'maintenance.requested'
-    };
-
-    return events.map(event => mapping[event] || event);
+    return mapEventsToSkyloovFormat(events);
   }
 
   /**
    * Handle webhook payload
    */
   async handleWebhookPayload(payload) {
-
-    if (!this.validateWebhookSignature(payload, payload.signature, this.webhookSecret)) {
-      throw new Error('Invalid webhook signature');
-    }
-
-    const result = {
-      event: payload.event,
-      data: payload.data,
-      type: null
-    };
-
-    if (payload.event.includes('property')) {
-      result.type = 'property';
-      result.data = this.normalizeProperty(payload.data);
-    } else if (payload.event.includes('inquiry')) {
-      result.type = 'lead';
-      result.data = this.normalizeLead(payload.data);
-    } else if (payload.event.includes('payment')) {
-      result.type = 'payment';
-    } else if (payload.event.includes('maintenance')) {
-      result.type = 'maintenance';
-    }
-
-    return result;
+    const isValid = this.validateWebhookSignature(payload, payload.signature, this.webhookSecret);
+    return handleSkyloovWebhook(payload, isValid, p => this.normalizeProperty(p), l => this.normalizeLead(l));
   }
 
   /**
    * Validate webhook signature
    */
   validateWebhookSignature(payload, signature, secret) {
-    if (!signature || !secret) return false;
-
-    const timestamp = payload.timestamp;
-    const message = `${payload.event}${JSON.stringify(payload.data)}${timestamp}`;
-    const computed_signature = crypto
-      .createHmac('sha256', secret)
-      .update(message)
-      .digest('hex');
-
-    return computed_signature === signature;
+    return validateSkyloovWebhookSignature(payload, signature, secret);
   }
 
   /**
    * Normalize Skyloov property
    */
   normalizeProperty(skyloovProperty) {
-    const normalized = super.normalizeProperty({
-      id: skyloovProperty.id,
-      title: skyloovProperty.title,
-      description: skyloovProperty.description,
-      price: skyloovProperty.rentalPrice,
-      currency: skyloovProperty.currency || 'AED',
-      type: skyloovProperty.type,
-      images: skyloovProperty.images || [],
-      location: skyloovProperty.address,
-      city: skyloovProperty.city,
-      latitude: skyloovProperty.latitude,
-      longitude: skyloovProperty.longitude,
-      tenants: skyloovProperty.tenants || [],
-      maintenanceRequests: skyloovProperty.maintenanceRequests || [],
-      createdAt: skyloovProperty.createdDate,
-      updatedAt: skyloovProperty.updatedDate,
-      url: `https://www.skyloov.com/property/${skyloovProperty.id}`,
-      status: skyloovProperty.status
-    });
-
-    return normalized;
+    return super.normalizeProperty(formatSkyloovPropertyData(skyloovProperty));
   }
 
   /**
@@ -451,14 +314,11 @@ export class SkyloovAdapter extends BasePortalAdapter {
    * Get revenue analytics
    */
   async getRevenueAnalytics(filters = {}) {
-    const params = new URLSearchParams();
-    
-    if (filters.dateFrom) params.append('dateFrom', filters.dateFrom);
-    if (filters.dateTo) params.append('dateTo', filters.dateTo);
-
-    const response = await this.makeRequest('GET', `/analytics/revenue?${params.toString()}`);
+    const qs = buildFilterParams(filters, ["dateFrom", "dateTo"]);
+    const response = await this.makeRequest("GET", `/portfolio/revenue${qs ? "?" + qs : ""}`);
     return response.data || null;
   }
 }
 
 export default SkyloovAdapter;
+

@@ -10,3 +10,4 @@ describe('MultiPartySigningTracker', () => {
     expect(screen.getByText('Seller')).toBeTruthy();
   });
 });
+

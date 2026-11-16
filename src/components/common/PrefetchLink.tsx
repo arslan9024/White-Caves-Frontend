@@ -53,3 +53,4 @@ export const PrefetchLink: FC<PrefetchLinkProps> = ({
 };
 
 export default PrefetchLink;
+

@@ -19,3 +19,4 @@ export * from './TenantLeaseWidget';
 export * from './TenantInspectionWidget';
 export { TenantManagerView } from './TenantManagerView';
 export { default } from './TenantManagerView';
+

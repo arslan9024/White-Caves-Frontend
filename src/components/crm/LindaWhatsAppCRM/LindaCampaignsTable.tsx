@@ -132,3 +132,4 @@ export const LindaCampaignsTable: React.FC<LindaCampaignsTableProps> = memo(({
     </div>
   );
 });
+

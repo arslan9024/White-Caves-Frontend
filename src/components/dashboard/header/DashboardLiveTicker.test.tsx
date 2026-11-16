@@ -12,3 +12,4 @@ describe('DashboardLiveTicker', () => {
     expect(screen.getByText(/DLD Daily Volume:/i)).toBeInTheDocument();
   });
 });
+

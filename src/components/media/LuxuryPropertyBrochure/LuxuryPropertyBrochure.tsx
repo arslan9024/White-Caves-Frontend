@@ -47,3 +47,4 @@ export const LuxuryPropertyBrochure: FC = () => {
   );
 };
 export default LuxuryPropertyBrochure;
+

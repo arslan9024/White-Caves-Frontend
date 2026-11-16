@@ -52,3 +52,4 @@ class EmployeeTelemetryService {
 }
 
 export const EmployeeTelemetry = new EmployeeTelemetryService();
+

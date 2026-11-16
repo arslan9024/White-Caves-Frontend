@@ -16,3 +16,4 @@ export function applyDocumentDirection(locale: string): 'rtl' | 'ltr' {
   }
   return dir;
 }
+

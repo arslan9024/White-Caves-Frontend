@@ -14,3 +14,4 @@ describe('LeadAgingHeatmap.style', () => {
     expect(styles.LegendItem).toBeDefined();
   });
 });
+

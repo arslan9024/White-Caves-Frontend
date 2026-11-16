@@ -115,3 +115,4 @@ const BulkTagModal: React.FC<BulkTagModalProps> = ({
 };
 
 export default BulkTagModal;
+

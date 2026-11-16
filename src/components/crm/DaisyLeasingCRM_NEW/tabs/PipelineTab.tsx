@@ -258,3 +258,4 @@ const PipelineTab: React.FC<PipelineTabProps> = ({ inquiries }) => {
 };
 
 export default PipelineTab;
+

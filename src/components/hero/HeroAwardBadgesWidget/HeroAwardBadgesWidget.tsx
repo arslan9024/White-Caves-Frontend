@@ -22,3 +22,4 @@ export const HeroAwardBadgesWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

@@ -109,3 +109,4 @@ export function generateRealEstateListingJsonLd(input: PropertyListingStructured
     ]
   };
 }
+

@@ -110,3 +110,4 @@ export function useRoleManager(selectedRoleIdProp?: string) {
     handleSimulateRole,
   };
 }
+

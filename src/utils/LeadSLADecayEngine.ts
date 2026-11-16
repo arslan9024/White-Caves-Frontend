@@ -59,3 +59,4 @@ export function calculateLeadSLADecay(ingestionTimestamp: string | Date, current
     };
   }
 }
+

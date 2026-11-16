@@ -229,3 +229,4 @@ export const FounderActionPodium: FC<FounderActionPodiumProps> = ({
 
 export default FounderActionPodium;
 
+

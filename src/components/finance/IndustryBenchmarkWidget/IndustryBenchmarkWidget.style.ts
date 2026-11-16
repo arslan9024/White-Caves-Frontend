@@ -18,3 +18,4 @@ export const StatusBadge = styled.span<{ $status: string }>`
   background: ${p => p.$status === 'above' ? '#FEE2E2' : p.$status === 'below' ? '#DCFCE7' : '#FEF3C7'};
   color: ${p => p.$status === 'above' ? '#991B1B' : p.$status === 'below' ? '#166534' : '#92400E'};
 `;
+

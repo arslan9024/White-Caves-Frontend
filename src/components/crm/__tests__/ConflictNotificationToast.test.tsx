@@ -51,3 +51,4 @@ describe('ConflictNotificationToast Component', () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
+

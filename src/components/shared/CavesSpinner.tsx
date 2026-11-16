@@ -33,3 +33,4 @@ export const CavesSpinner: React.FC<CavesSpinnerProps> = ({
 };
 
 export default CavesSpinner;
+

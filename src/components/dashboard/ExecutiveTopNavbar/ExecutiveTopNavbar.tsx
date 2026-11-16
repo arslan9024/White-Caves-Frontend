@@ -8,3 +8,4 @@ export const ExecutiveTopNavbar: FC<ExecutiveTopNavbarProps> = props => {
 };
 
 export default ExecutiveTopNavbar;
+

@@ -18,3 +18,4 @@ describe('AuditTrailExporter Component', () => {
     expect(screen.getByRole('button', { name: /CSV Downloaded/i })).toBeDefined();
   });
 });
+

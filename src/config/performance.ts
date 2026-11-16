@@ -276,3 +276,4 @@ export const performanceTestingChecklist = [
   { test: 'Load testing', tool: 'K6 or Apache JMeter' },
   { test: 'Synthetic monitoring', tool: 'Datadog or New Relic' },
 ];
+

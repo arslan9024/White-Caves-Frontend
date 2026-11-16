@@ -53,3 +53,4 @@ export const DUMMY_APPLICANTS: Applicant[] = [
     score: 92
   }
 ];
+

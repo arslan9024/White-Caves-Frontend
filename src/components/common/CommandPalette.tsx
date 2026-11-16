@@ -487,3 +487,4 @@ const CommandPalette: React.FC = React.memo(function CommandPalette() {
 });
 
 export default CommandPalette;
+

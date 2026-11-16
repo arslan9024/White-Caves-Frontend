@@ -62,3 +62,4 @@ export const PersonalDetailsInlineEditor: FC = () => {
 };
 
 export default PersonalDetailsInlineEditor;
+

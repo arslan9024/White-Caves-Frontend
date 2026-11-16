@@ -73,3 +73,4 @@ describe('FreshnessBadge', () => {
     expect(screen.getByTestId('freshness-badge').querySelector('svg')).toBeInTheDocument();
   });
 });
+

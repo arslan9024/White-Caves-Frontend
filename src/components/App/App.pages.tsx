@@ -76,3 +76,4 @@ export const BiometricPrompt = lazy(() =>
     })
 );
 export const WebVitalsTracker = lazy(() => import('../../components/analytics/WebVitalsTracker'));
+

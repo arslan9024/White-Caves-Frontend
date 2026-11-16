@@ -19,3 +19,4 @@ describe('FloatingLabelInput Component', () => {
     expect(input.value).toBe('N8492019');
   });
 });
+

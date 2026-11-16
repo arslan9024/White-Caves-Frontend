@@ -239,3 +239,4 @@ const DepartmentDashboard: React.FC<DepartmentDashboardProps> = ({ departmentId 
 };
 
 export default DepartmentDashboard;
+

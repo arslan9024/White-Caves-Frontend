@@ -17,3 +17,4 @@ describe('TrusteeOfficeBooker Component', () => {
     expect(screen.getByText(/Appointment Confirmed at DNRD Trustee Office!/i)).toBeDefined();
   });
 });
+

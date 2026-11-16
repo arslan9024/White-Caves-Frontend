@@ -17,3 +17,4 @@ describe('FeatureRegistry Component', () => {
     }
   });
 });
+

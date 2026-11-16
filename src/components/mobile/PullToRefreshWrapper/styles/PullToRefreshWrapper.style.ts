@@ -43,3 +43,4 @@ export const ContentShift = styled.div<{ $offset: number }>`
   transform: translateY(${({ $offset }) => $offset}px);
   transition: ${({ $offset }) => ($offset === 0 ? 'transform 0.3s ease' : 'none')};
 `;
+

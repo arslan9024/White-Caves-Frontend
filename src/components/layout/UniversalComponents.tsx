@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setOnlineStatus } from '../../store/navigationSlice';
 
@@ -23,3 +23,4 @@ export default function UniversalComponents(): React.ReactElement | null {
   // Zero floating widgets rendered globally to keep dashboard 100% clean
   return null;
 }
+

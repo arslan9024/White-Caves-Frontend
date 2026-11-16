@@ -31,3 +31,4 @@ export const SoundToggle = styled.button<{ $on: boolean }>`
   color: ${({ $on }) => ($on ? '#22c55e' : '#64748b')}; border-radius: 6px;
   padding: 0.25rem 0.6rem; font-size: 0.75rem; cursor: pointer; margin-left: auto;
 `;
+

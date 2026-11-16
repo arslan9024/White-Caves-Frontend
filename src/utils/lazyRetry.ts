@@ -24,3 +24,4 @@ export const lazyRetry = <T extends ComponentType<any>>(
 ) => {
   return lazy(() => retryPromise(componentImport, retriesLeft, interval));
 };
+

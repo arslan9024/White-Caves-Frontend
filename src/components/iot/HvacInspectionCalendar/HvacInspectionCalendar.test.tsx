@@ -18,3 +18,4 @@ describe('HvacInspectionCalendar Component', () => {
     expect(screen.getAllByText(/✓ COMPLETED/i).length).toBeGreaterThan(1);
   });
 });
+

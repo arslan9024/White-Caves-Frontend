@@ -56,3 +56,4 @@ export const PORTFOLIO_ASSETS: PortfolioAssetItem[] = [
     image: '📊',
   },
 ];
+

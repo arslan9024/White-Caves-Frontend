@@ -168,3 +168,4 @@ export const PropertyDetailMortgageEmi: FC<PropertyDetailMortgageEmiProps> = ({ 
 };
 
 export default PropertyDetailMortgageEmi;
+

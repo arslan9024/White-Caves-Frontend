@@ -129,3 +129,4 @@ export const Customer18StepPipelineSection: FC<Customer18StepPipelineSectionProp
     </div>
   );
 };
+

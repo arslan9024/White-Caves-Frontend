@@ -17,7 +17,7 @@ export interface CanonicalDivisionDef {
   desksCount: number; // 12 Desks per Division
 }
 
-import { CANONICAL_108_DIVISIONS_MATRIX } from '../../.agents/protocols/CANONICAL_108_DIVISIONS_MATRIX';
+import { CANONICAL_108_DIVISIONS_MATRIX } from '../../../Aegis-Sterling/.agents/protocols/CANONICAL_108_DIVISIONS_MATRIX';
 
 export const CANONICAL_108_DIVISIONS: CanonicalDivisionDef[] =
   CANONICAL_108_DIVISIONS_MATRIX.departments.flatMap((dept: any) =>
@@ -38,3 +38,4 @@ export const CANONICAL_108_DIVISIONS: CanonicalDivisionDef[] =
 export function getDivisionsForDepartment(deptCode: string): CanonicalDivisionDef[] {
   return CANONICAL_108_DIVISIONS.filter(d => d.deptCode === deptCode);
 }
+

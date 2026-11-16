@@ -11,3 +11,4 @@ describe('LeadKanbanBoard.style', () => {
     expect(styles.CardList).toBeDefined();
   });
 });
+

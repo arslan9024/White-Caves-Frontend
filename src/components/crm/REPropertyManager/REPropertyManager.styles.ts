@@ -73,3 +73,4 @@ export const propStyles = {
     'flex items-center gap-2 pt-2 border-t border-slate-800/80 text-[11px] text-slate-300 font-medium [data-theme=light]_&:border-slate-200 [data-theme=light]_&:text-slate-600',
   chip: 'px-2 py-1 rounded-md bg-slate-950 border border-slate-800 flex items-center gap-1 [data-theme=light]_&:bg-slate-100 [data-theme=light]_&:border-slate-200 [data-theme=light]_&:text-slate-700',
 };
+

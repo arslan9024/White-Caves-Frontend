@@ -204,3 +204,4 @@ export const ActivityList = styled.div`
     }
   }
 `;
+

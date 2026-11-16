@@ -92,3 +92,4 @@ describe('useCavesFloatingWhatsAppLogic', () => {
     expect(calledUrl).toContain(encodeURIComponent(WHATSAPP_WIDGET_TEXT.defaultMessage));
   });
 });
+

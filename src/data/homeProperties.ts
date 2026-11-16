@@ -134,3 +134,4 @@ export const HOME_PROPERTIES: HomeProperty[] = [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
   },
 ];
+

@@ -17,3 +17,4 @@ describe('ActiveLoginSessionsList Component', () => {
     expect(screen.queryByText(/Safari \(iPhone 15 Pro\)/i)).toBeNull();
   });
 });
+

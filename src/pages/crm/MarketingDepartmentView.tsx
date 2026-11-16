@@ -306,3 +306,4 @@ export const MarketingDepartmentView: FC = () => {
 };
 
 export default MarketingDepartmentView;
+

@@ -157,3 +157,4 @@ export const JourneyShell: React.FC<JourneyShellProps> = ({
     </div>
   );
 };
+

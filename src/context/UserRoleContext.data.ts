@@ -119,3 +119,4 @@ export function syncUserToSafeStorage(user: UserProfile | null): void {
     safeStorage.remove('userRole');
   }
 }
+

@@ -114,3 +114,4 @@ export const RAW_TASKS_PART2: Array< [string, string, string, string, TaskNode['
   ['TSK-199', 'Executive Fleet & Chauffeur Vehicle Maintenance Audit', 'pillar-7', 'Pillar VII: Operations & PMS', 'OPERATIONS', 'Logistics', 'Monthly', 'STANDARD', 'Supervisor Bilal', 'Manager Salim', 'Rashid Al-Falasi',],
   ['TSK-200', 'Sovereign Annual Operations Review & Continuous Upgrade', 'executive', 'Executive & Governance', 'OPERATIONS', 'MD Office', 'Annual', 'CRITICAL', 'Supervisor Bilal', 'Manager Salim', 'Sophia Al-Hashemi',],
 ];
+

@@ -138,3 +138,4 @@ export const BadgeIcon = styled.span`
 export const BadgeContent = styled.span`
   line-height: 1;
 `;
+

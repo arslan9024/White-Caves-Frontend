@@ -184,3 +184,4 @@ export default function LeasingView({
 
   return <div className="view-container leasing-view">{renderContent()}</div>;
 }
+

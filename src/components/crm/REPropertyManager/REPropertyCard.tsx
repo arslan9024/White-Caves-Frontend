@@ -112,3 +112,4 @@ export const REPropertyCard: FC<REPropertyCardProps> = ({
     </div>
   );
 };
+

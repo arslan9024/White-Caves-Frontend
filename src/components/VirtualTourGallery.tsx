@@ -396,3 +396,4 @@ const VirtualTourGallery = ({ featuredProperties = [] }: VirtualTourGalleryProps
 };
 
 export default VirtualTourGallery;
+

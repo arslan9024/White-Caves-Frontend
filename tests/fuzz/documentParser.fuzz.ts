@@ -25,3 +25,4 @@ describe('Fuzz Testing on Contract Parser & OCR Ingestion', () => {
     );
   });
 });
+

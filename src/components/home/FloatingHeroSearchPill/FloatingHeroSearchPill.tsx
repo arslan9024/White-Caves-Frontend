@@ -110,3 +110,4 @@ export const FloatingHeroSearchPill: FC = () => {
 };
 
 export default FloatingHeroSearchPill;
+

@@ -9,3 +9,4 @@ export * from './TransactionManager.styles';
 export * from './TransactionManager.logic';
 export { TransactionManagerView as default } from './TransactionManager.view';
 export { TransactionManagerView as TransactionManager } from './TransactionManager.view';
+

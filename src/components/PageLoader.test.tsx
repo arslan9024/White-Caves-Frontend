@@ -24,3 +24,4 @@ describe('PageLoader', () => {
     expect(img.getAttribute('src')).toBe('/company-logo.jpg');
   });
 });
+

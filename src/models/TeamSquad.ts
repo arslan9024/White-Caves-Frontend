@@ -35,3 +35,4 @@ const TeamSquad: Model<ITeamSquad> =
 export { TeamSquad };
 export default TeamSquad;
 
+

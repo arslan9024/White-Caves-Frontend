@@ -292,3 +292,4 @@ export const DealDetailModal: FC<DealDetailModalProps> = ({
     </div>
   );
 };
+

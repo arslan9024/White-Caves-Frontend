@@ -56,3 +56,4 @@ describe('Henry labeled aggregate evaluation — synthetic evidence only', () =>
     expect(() => evaluateHenryBenchmark([])).not.toThrow();
   });
 });
+

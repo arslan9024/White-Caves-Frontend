@@ -20,3 +20,4 @@ export const media = {
   xl: `@media (min-width: ${breakpoints.xl}px)`,
   '2xl': `@media (min-width: ${breakpoints['2xl']}px)`,
 };
+

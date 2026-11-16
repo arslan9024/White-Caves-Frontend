@@ -41,3 +41,4 @@ export const TitleDeedVerificationPortal: FC = () => {
   );
 };
 export default TitleDeedVerificationPortal;
+

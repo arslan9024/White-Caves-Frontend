@@ -53,3 +53,4 @@ export const THALIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as thalia_supervisorExport;
+

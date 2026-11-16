@@ -17,3 +17,4 @@ describe('PdplCompliancePanel Component', () => {
     expect(screen.getByText(/5\/6 policies active/i)).toBeDefined();
   });
 });
+

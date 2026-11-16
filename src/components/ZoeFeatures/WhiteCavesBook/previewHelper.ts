@@ -146,3 +146,4 @@ export function getNodePreviewData(corpus: MasterCorpusRoot, targetId: string): 
     levelText: 'Hyperlink',
   };
 }
+

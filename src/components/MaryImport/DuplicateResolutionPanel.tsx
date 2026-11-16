@@ -297,3 +297,4 @@ const DuplicateResolutionPanel = ({
 };
 
 export default DuplicateResolutionPanel;
+

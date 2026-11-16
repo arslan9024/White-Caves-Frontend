@@ -61,3 +61,4 @@ export const primaryBtnStyle: CSSProperties = {
   fontWeight: 800,
   cursor: 'pointer',
 };
+

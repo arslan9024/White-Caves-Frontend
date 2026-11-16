@@ -22,3 +22,4 @@ export const HeroScrollRevealWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

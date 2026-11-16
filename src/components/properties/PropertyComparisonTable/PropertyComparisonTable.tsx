@@ -72,3 +72,4 @@ export const PropertyComparisonTable: FC = () => (
   </Wrap>
 );
 export default PropertyComparisonTable;
+

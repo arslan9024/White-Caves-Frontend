@@ -51,3 +51,4 @@ export const CryptoPaymentWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

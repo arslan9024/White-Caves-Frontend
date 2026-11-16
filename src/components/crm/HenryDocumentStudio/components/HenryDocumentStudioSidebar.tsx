@@ -87,3 +87,4 @@ export const HenryDocumentStudioSidebar: FC<HenryDocumentStudioSidebarProps> = (
     </SidebarControlPanel>
   );
 };
+

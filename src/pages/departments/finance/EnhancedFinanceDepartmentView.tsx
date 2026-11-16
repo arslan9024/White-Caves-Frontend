@@ -189,3 +189,4 @@ export const FinanceDepartmentView: React.FC<FinanceDepartmentViewProps> = ({
 };
 
 export default FinanceDepartmentView;
+

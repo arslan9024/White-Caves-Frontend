@@ -34,3 +34,4 @@ describe('UaeVatForm201TaxWidget (DOM-08 / Targets T-0702 & T-0703)', () => {
     expect(screen.getByText('SBR Relieved (0%)')).toBeInTheDocument();
   });
 });
+

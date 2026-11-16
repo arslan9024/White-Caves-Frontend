@@ -163,3 +163,4 @@ export default function ComplianceView({
 
   return <div className="view-container compliance-view">{renderContent()}</div>;
 }
+

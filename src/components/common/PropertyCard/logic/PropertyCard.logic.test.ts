@@ -48,3 +48,4 @@ describe('PropertyCard.logic', () => {
     expect(mockEvent.preventDefault).toHaveBeenCalled();
   });
 });
+

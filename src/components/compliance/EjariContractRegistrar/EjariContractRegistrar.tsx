@@ -85,3 +85,4 @@ export const EjariContractRegistrar: FC = () => {
   );
 };
 export default EjariContractRegistrar;
+

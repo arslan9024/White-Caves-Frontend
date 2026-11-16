@@ -110,3 +110,4 @@ export function CavesTable<T extends { id?: string | number }>({
 }
 
 export default CavesTable;
+

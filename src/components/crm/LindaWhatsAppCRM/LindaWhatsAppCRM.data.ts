@@ -288,3 +288,4 @@ export const LINDA_10_PILLARS: LindaPillarItem[] = [
   { id: 'Pillar IX', name: 'CRM, Webhook & Omnichannel Integrations', upgrades: '30/30', status: 'ACTIVE', highlight: 'Nina -> Linda -> Clara -> Henry event bus + Goraha verification' },
   { id: 'Pillar X', name: 'Developer Experience, Testing & DevOps', upgrades: '30/30', status: 'ACTIVE', highlight: '300/300 Upgrades verified, zero-downtime hot reload' },
 ];
+

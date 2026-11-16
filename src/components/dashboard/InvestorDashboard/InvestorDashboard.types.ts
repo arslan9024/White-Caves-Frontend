@@ -32,3 +32,4 @@ export interface PortfolioAssetItem {
 export interface InvestorDashboardProps {
   user?: unknown;
 }
+

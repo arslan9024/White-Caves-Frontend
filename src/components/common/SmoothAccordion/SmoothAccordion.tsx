@@ -104,3 +104,4 @@ export const SmoothAccordion: FC<{ entries?: AccordionEntry[] }> = ({
 };
 
 export default SmoothAccordion;
+

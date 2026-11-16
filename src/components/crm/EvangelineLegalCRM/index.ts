@@ -12,3 +12,4 @@ export {
   EvangelineLegalCRMView,
   EvangelineLegalCRMView as EvangelineLegalCRM,
 } from './EvangelineLegalCRM.view';
+

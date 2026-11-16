@@ -253,3 +253,4 @@ describe('EmployeeManager 12-Way Suite', () => {
     expect(result.meritBonusXpAwarded).toBe(500);
   });
 });
+

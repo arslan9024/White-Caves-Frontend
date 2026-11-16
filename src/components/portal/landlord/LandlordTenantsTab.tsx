@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LandlordTenantsTab — Phase 29: Live API integration
  *
  * Tenant list derived from active leases.
@@ -553,3 +553,4 @@ const LandlordTenantsTab: FC = () => {
 };
 
 export default LandlordTenantsTab;
+

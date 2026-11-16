@@ -41,3 +41,4 @@ describe('Compliance: Sanctions, PEP & goAML Screening Engine', () => {
     expect(report.matches[0].sourceList).toBe('UN_SECURITY_COUNCIL');
   });
 });
+

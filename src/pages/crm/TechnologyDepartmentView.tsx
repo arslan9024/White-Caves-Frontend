@@ -312,3 +312,4 @@ export const TechnologyDepartmentView: FC = () => {
 };
 
 export default TechnologyDepartmentView;
+

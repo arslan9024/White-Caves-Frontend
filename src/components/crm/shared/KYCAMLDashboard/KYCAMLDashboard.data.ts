@@ -145,3 +145,4 @@ export const MOCK_AUDIT_LOGS: KycAuditLogItem[] = [
     details: 'Zero matches on UN/OFAC/UAE local terrorist lists for Fatima Al Mansoori',
   },
 ];
+

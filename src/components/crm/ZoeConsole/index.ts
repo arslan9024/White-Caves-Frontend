@@ -8,3 +8,4 @@ export * from './ZoeConsole.logic';
 export * from './ZoeConsole.panels';
 export * from './ZoeConsole.view';
 export { ZoeConsole as default } from './ZoeConsole.view';
+

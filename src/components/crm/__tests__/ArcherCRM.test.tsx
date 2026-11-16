@@ -43,3 +43,4 @@ describe('ArcherCRM', () => {
     expect(screen.getByText(/Agent Work Queue \(Priority Order\)/i)).toBeInTheDocument();
   });
 });
+

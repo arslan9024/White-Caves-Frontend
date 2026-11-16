@@ -21,3 +21,4 @@ describe('CavesFloatingWhatsApp Component', () => {
     openSpy.mockRestore();
   });
 });
+

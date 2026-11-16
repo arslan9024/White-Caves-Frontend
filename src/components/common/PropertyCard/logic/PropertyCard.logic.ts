@@ -66,3 +66,4 @@ export function usePropertyCardLogic(props: UsePropertyCardProps) {
     handleFavoriteClick,
   };
 }
+

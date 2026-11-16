@@ -13,3 +13,4 @@ describe('CapRateNoiModeler Component', () => {
     expect(screen.getByText(/AED 25.0M/i)).toBeDefined();
   });
 });
+

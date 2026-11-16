@@ -23,3 +23,4 @@ describe('AtlasProjectsCRM Component', () => {
     expect(screen.getByTestId('escrow-stepper-track')).toBeInTheDocument();
   });
 });
+

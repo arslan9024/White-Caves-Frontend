@@ -98,3 +98,4 @@ export function getRoleBadgeColor(role: string | null): string {
   if (resolved === 'property_owner') return '#f97316'; // orange
   return '#6b7280'; // gray — default
 }
+

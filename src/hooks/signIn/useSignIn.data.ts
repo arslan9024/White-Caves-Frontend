@@ -32,3 +32,4 @@ export const STAFF_ROLES: UserRole[] = [
   },
   { id: 'team-leader', label: 'Team Leader', icon: '👥', desc: 'Managing agent teams' },
 ];
+

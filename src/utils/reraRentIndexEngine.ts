@@ -95,3 +95,4 @@ export function calculateReraPermissibleIncrease(params: RentIncreaseParams): Re
     legalBasis: 'Dubai Decree No. 43 of 2013 (Rental Increase Regulation)',
   };
 }
+

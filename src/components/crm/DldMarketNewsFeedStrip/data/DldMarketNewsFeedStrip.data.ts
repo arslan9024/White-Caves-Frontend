@@ -27,3 +27,4 @@ export const DLD_MARKET_NEWS_SOURCES: readonly MarketNewsSource[] = [
     sourceUrl: 'https://u.ae/en/information-and-services/housing',
   },
 ];
+

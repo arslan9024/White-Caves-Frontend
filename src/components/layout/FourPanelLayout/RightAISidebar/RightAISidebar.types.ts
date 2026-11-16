@@ -23,3 +23,4 @@ export interface AssistantInfo {
 export interface RightAISidebarProps {
   activeAssistant?: string;
 }
+

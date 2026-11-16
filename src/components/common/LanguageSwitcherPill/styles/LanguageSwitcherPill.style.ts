@@ -41,3 +41,4 @@ export const LangBtn = styled.button<{ $active: boolean }>`
     line-height: 1;
   }
 `;
+

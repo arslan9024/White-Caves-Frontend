@@ -37,3 +37,4 @@ export const CropPreviewArea = styled.div`
   justify-content: center;
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
 `;
+

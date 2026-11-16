@@ -7,3 +7,4 @@ describe('OfflineSyncStatusIndicator.style', () => {
     expect(styles.SpinIcon).toBeDefined();
   });
 });
+

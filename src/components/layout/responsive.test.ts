@@ -160,3 +160,4 @@ describe('typography.responsive', () => {
     expect(typography.responsive.hero).toContain('48px');
   });
 });
+

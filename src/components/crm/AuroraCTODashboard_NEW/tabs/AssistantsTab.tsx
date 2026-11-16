@@ -95,3 +95,4 @@ const AssistantsTab: React.FC<AssistantsTabProps> = ({ assistants, departments, 
 };
 
 export default AssistantsTab;
+

@@ -13,3 +13,4 @@ describe('ChatSentimentAnalyzer Component', () => {
     expect(screen.getByText(/Sergei Volkov/i)).toBeDefined();
   });
 });
+

@@ -336,3 +336,4 @@ export const CustomerDetailModal: FC<CustomerDetailModalProps> = ({
     </div>
   );
 };
+

@@ -35,3 +35,4 @@ export function useGamifiedAnalyticsPodiumLogic() {
     formattedSlaTime: formatTime(secondsRemaining),
   };
 }
+

@@ -19,3 +19,4 @@ export function useAvatarUploadCropModalLogic() {
     handleFileSelect,
   };
 }
+

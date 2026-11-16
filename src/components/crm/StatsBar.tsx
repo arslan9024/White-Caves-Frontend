@@ -71,3 +71,4 @@ const StatsBar: React.FC<StatsBarProps> = ({ stats, columns = 4, onStatClick }) 
 };
 
 export default StatsBar;
+

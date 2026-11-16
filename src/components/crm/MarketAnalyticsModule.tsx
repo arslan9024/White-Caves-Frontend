@@ -336,3 +336,4 @@ export default function MarketAnalyticsModule({ role, user, data }: CRMModulePro
     </div>
   );
 }
+

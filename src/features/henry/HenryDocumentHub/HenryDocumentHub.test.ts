@@ -48,3 +48,4 @@ describe('HenryDocumentHub Logic & Wilkes layers', () => {
     expect(result.current.latestXpMutation?.xpDelta).toBe(500);
   });
 });
+

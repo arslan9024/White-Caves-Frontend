@@ -55,3 +55,4 @@ export const DubaiMapLegend: FC = () => (
     </div>
   </div>
 );
+

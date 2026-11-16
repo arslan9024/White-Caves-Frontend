@@ -54,3 +54,4 @@ describe('useSwipeableViewingCardLogic', () => {
     expect(result.current.showRescheduleModal).toBe(true);
   });
 });
+

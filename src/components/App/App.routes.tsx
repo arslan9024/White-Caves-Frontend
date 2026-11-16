@@ -230,3 +230,4 @@ export const publicRoutes: Array<{ path: string; section: string; page: ReactNod
     page: <SignContractPage />,
   },
 ];
+

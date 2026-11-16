@@ -21,3 +21,4 @@ describe('RbacPermissionMatrixEditor', () => {
     expect(screen.getByText(/Save Manager Permissions/i)).toBeDefined();
   });
 });
+

@@ -41,3 +41,4 @@ describe('ModuleViewport', () => {
     expect(screen.getByRole('alert')).toHaveTextContent(/Module access denied/i);
   });
 });
+

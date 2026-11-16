@@ -213,3 +213,4 @@ export async function preProcessImageOnCanvas(
     img.src = objectUrl;
   });
 }
+

@@ -6,3 +6,4 @@ export function useSellerPortalLogic() {
   const handleRefresh = useCallback(() => setLastSynced(new Date().toISOString()), []);
   return { data: SELLER_PORTAL_DATA, lastSynced, handleRefresh };
 }
+

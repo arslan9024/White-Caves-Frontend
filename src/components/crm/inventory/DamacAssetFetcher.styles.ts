@@ -471,3 +471,4 @@ export const NotFoundItem = styled.span`
     color: #fca5a5;
   }
 `;
+

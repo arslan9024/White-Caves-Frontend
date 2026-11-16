@@ -14,3 +14,4 @@ describe('FamilyOfficeAssetAllocationChart', () => {
     expect(screen.getByText('Off-Plan')).toBeDefined();
   });
 });
+

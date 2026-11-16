@@ -453,3 +453,4 @@ const CadenceRuleAdminPage: FC = () => {
 };
 
 export default CadenceRuleAdminPage;
+

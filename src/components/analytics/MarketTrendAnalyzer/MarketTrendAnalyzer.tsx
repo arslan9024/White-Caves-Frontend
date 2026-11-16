@@ -36,3 +36,4 @@ export const MarketTrendAnalyzer: FC = () => {
   );
 };
 export default MarketTrendAnalyzer;
+

@@ -14,3 +14,4 @@ describe('BulkTagModal Component', () => {
     expect(screen.getByPlaceholderText('Enter a tag...')).toBeDefined();
   });
 });
+

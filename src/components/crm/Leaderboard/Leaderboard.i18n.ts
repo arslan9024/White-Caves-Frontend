@@ -79,3 +79,4 @@ export function getLeaderboardI18n(lang: SupportedLanguage = 'en'): LeaderboardT
 }
 
 export default LEADERBOARD_TRANSLATIONS;
+

@@ -273,3 +273,4 @@ export const PairingPortal: React.FC<PairingPortalProps> = ({
     </div>
   );
 };
+

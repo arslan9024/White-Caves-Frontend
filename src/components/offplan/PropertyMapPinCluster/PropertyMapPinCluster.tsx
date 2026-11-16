@@ -77,3 +77,4 @@ export const PropertyMapPinCluster: FC = () => {
   );
 };
 export default PropertyMapPinCluster;
+

@@ -22,3 +22,4 @@ export const HeroWhatsAppWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

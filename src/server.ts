@@ -112,3 +112,4 @@ async function shutdown(signal: string) {
 ['SIGINT', 'SIGTERM'].forEach(sig => process.on(sig, () => shutdown(sig)));
 
 export default app;
+

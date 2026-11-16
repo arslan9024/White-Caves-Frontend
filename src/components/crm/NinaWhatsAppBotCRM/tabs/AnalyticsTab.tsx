@@ -119,3 +119,4 @@ export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data }) => {
     </div>
   );
 };
+

@@ -222,19 +222,7 @@ export class PropertyFinderAdapter extends BasePortalAdapter {
    * Map updates to PropertyFinder format
    */
   mapUpdatesToPFFormat(updates) {
-    const mapped = {};
-
-    if (updates.title) mapped.title = updates.title;
-    if (updates.description) mapped.description = updates.description;
-    if (updates.price) mapped.price = updates.price;
-    if (updates.specifications) {
-      if (updates.specifications.bedrooms) mapped.bedrooms = updates.specifications.bedrooms;
-      if (updates.specifications.bathrooms) mapped.bathrooms = updates.specifications.bathrooms;
-      if (updates.specifications.area) mapped.area = updates.specifications.area;
-    }
-    if (updates.images) mapped.images = updates.images;
-
-    return mapped;
+    return mapUpdatesToPFFormat(updates);
   }
 
   /**
@@ -264,15 +252,7 @@ export class PropertyFinderAdapter extends BasePortalAdapter {
    * Map events to PropertyFinder format
    */
   mapEventsToPFFormat(events) {
-    const mapping = {
-      'property.created': 'property.created',
-      'property.updated': 'property.updated',
-      'property.deleted': 'property.deleted',
-      'lead.created': 'lead.created',
-      'lead.updated': 'lead.updated'
-    };
-
-    return events.map(event => mapping[event] || event);
+    return mapEventsToPFFormat(events);
   }
 
   /**
@@ -305,47 +285,14 @@ export class PropertyFinderAdapter extends BasePortalAdapter {
    * Validate webhook signature
    */
   validateWebhookSignature(payload, signature, secret) {
-    if (!signature || !secret) return false;
-
-    const payload_string = JSON.stringify(payload.data);
-    const computed_signature = crypto
-      .createHmac('sha256', secret)
-      .update(payload_string)
-      .digest('hex');
-
-    return computed_signature === signature;
+    return validatePFWebhookSignature(payload, signature, secret);
   }
 
   /**
    * Normalize PropertyFinder property
    */
   normalizeProperty(pfProperty) {
-    const normalized = super.normalizeProperty({
-      id: pfProperty.id,
-      title: pfProperty.title,
-      description: pfProperty.description,
-      price: pfProperty.price,
-      currency: pfProperty.currency || 'AED',
-      bedrooms: pfProperty.bedrooms,
-      bathrooms: pfProperty.bathrooms,
-      area: pfProperty.area,
-      areaUnit: 'sqft',
-      type: pfProperty.type,
-      purpose: pfProperty.purpose,
-      furnished: pfProperty.furnished || false,
-      images: pfProperty.images || [],
-      location: pfProperty.location?.name || '',
-      city: pfProperty.location?.city,
-      latitude: pfProperty.location?.lat,
-      longitude: pfProperty.location?.lng,
-      agent: pfProperty.agent,
-      createdAt: pfProperty.createdDate,
-      updatedAt: pfProperty.updatedDate,
-      url: pfProperty.externalUrl || `https://www.propertyfinder.ae/property/${pfProperty.id}`,
-      verified: pfProperty.verified
-    });
-
-    return normalized;
+    return super.normalizeProperty(formatPFPropertyData(pfProperty));
   }
 
   /**
@@ -379,3 +326,4 @@ export class PropertyFinderAdapter extends BasePortalAdapter {
 }
 
 export default PropertyFinderAdapter;
+

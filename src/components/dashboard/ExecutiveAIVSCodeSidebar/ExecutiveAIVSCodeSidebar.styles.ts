@@ -276,3 +276,4 @@ export const LeftResizeHandle = styled.div`
     background: #ef4444;
   }
 `;
+

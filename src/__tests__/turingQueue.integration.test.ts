@@ -4,9 +4,9 @@
  */
 
 import { expect, test, beforeAll, afterAll, vi } from 'vitest';
-import { TuringQueue } from '../../.agents/aegis/core-loop/turingQueue';
-import { processPlans } from '../../.agents/aegis/core-loop/turingCore';
-import { turingOrchestrator } from '../../.agents/aegis/core-loop/turingOrchestrator';
+import { TuringQueue } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingQueue';
+import { processPlans } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingCore';
+import { turingOrchestrator } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingOrchestrator';
 
 const mockPlan = {
   id: 'test-plan',
@@ -14,7 +14,7 @@ const mockPlan = {
   hash: 'dummyhash',
 };
 
-vi.mock('../../.agents/aegis/core-loop/readPlans', () => ({
+vi.mock('../../../Aegis-Sterling/.agents/aegis/core-loop/readPlans', () => ({
   readPlans: vi.fn().mockResolvedValue(
     Object.fromEntries(
       Array.from({ length: 20 }, (_, i) => [`plan-${i}.md`, `${mockPlan.content} (#${i})`])
@@ -42,3 +42,4 @@ test('processPlans respects concurrency limit of 5 across 20 plans', async () =>
   expect(queue.peakConcurrentCount).toBeLessThanOrEqual(5);
   expect(queue.activeCount).toBe(0);
 });
+

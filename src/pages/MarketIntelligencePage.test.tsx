@@ -214,3 +214,4 @@ describe('MarketIntelligencePage', () => {
     expect(screen.getByText('+4.12%')).toBeInTheDocument();
   });
 });
+

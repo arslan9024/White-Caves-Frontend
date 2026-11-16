@@ -148,3 +148,4 @@ export const WizardFooter = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   background: #070d18;
 `;
+

@@ -52,3 +52,4 @@ describe('SuggestionsTab', () => {
     expect(onStatusChange).toHaveBeenCalledWith('sug-1', 'reviewed');
   });
 });
+

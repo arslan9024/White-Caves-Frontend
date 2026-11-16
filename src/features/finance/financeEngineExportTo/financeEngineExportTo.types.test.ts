@@ -222,3 +222,4 @@ describe('exportTo — CSV format', () => {
     expect(withoutMetaLines[1]).not.toContain('stripe');
   });
 });
+

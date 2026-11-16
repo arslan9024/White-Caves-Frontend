@@ -125,3 +125,4 @@ export const NANCY_FEATURES: AssistantFeatureItem[] = [
     icon: <Settings size={18} />,
   },
 ];
+

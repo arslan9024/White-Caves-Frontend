@@ -12,3 +12,4 @@ export const AI_ASSISTANTS: Record<AssistantId, Assistant> = {
   ...marketAssistants,
   ...advancedAssistants,
 } as Record<AssistantId, Assistant>;
+

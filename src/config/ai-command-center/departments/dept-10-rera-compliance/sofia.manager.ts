@@ -47,3 +47,4 @@ export const SOFIA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as sofia_managerExport;
+

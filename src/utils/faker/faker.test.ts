@@ -500,3 +500,4 @@ describe('faker integration', () => {
     expect(elapsed).toBeLessThan(500);
   });
 });
+

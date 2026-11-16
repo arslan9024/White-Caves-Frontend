@@ -299,3 +299,4 @@ const PropertyMatrix: React.FC<PropertyMatrixProps> = ({ onPropertySelect, onOwn
 };
 
 export default PropertyMatrix;
+

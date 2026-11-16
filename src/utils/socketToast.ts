@@ -5,3 +5,4 @@ export function formatSocketToast(event: 'inbound_lead' | 'linda_ping', sender: 
   const title = event === 'inbound_lead' ? 'New Inbound Lead' : 'Linda WhatsApp Ping';
   return { title, message: `${sender} requires attention`, severity: 'info' as const };
 }
+

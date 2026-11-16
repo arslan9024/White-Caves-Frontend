@@ -13,3 +13,4 @@ describe('NdaDigitalSigningModal', () => {
     expect(screen.getByText(/Passport \/ Emirates ID/i)).toBeDefined();
   });
 });
+

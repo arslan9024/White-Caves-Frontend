@@ -83,3 +83,4 @@ export const TransactionConfettiTrigger: FC<{ dealTitle?: string; dealAmount?: s
 };
 
 export default TransactionConfettiTrigger;
+

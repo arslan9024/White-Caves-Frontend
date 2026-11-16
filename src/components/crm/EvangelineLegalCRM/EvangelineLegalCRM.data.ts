@@ -57,3 +57,4 @@ DUBAI LAND DEPARTMENT (DLD) OFFICIAL STANDARD CONTRACT (${params.selectedForm.to
    • Governing Law: Dubai Law No. 7 of 2006 concerning Real Property Registration in the Emirate of Dubai.
 ══════════════════════════════════════════════════════════════════════════════════`;
 }
+

@@ -14,3 +14,4 @@ describe('SystemHealthDashboard', () => {
     expect(screen.getByText(/Redis Cache/i)).toBeDefined();
   });
 });
+

@@ -81,3 +81,4 @@ describe('Spinner', () => {
     expect(Spinner.displayName).toBe('Spinner');
   });
 });
+

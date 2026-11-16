@@ -8,3 +8,4 @@ export * from './LindaWhatsAppDashboard.logic';
 export * from './LindaWhatsAppDashboard.panels';
 export * from './LindaWhatsAppDashboard.view';
 export { LindaWhatsAppDashboard as default } from './LindaWhatsAppDashboard.view';
+

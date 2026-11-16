@@ -127,3 +127,4 @@ export const useGlobalCurrency = (): CurrencyContextType => {
 };
 
 export default CurrencyContext;
+

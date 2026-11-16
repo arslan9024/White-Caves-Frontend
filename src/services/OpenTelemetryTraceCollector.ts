@@ -72,3 +72,4 @@ export class OpenTelemetryTraceCollector {
 }
 
 export default OpenTelemetryTraceCollector;
+

@@ -42,3 +42,4 @@ export const LiquidityIndexBadge: FC = () => (
   </Wrapper>
 );
 export default LiquidityIndexBadge;
+

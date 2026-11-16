@@ -35,3 +35,4 @@ describe('ReraRentalCalculatorModal Component', () => {
     expect(screen.getByText(/100,000 AED/)).toBeInTheDocument();
   });
 });
+

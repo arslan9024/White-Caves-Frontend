@@ -33,3 +33,4 @@ export const DealOfTheMonthHighlight: FC = () => {
   );
 };
 export default DealOfTheMonthHighlight;
+

@@ -49,3 +49,4 @@ describe('DashboardProfileCompletion', () => {
     expect(screen.getByText('Complete your profile')).toBeInTheDocument();
   });
 });
+

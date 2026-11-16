@@ -18,3 +18,4 @@ export const THEME_ITEMS = [
   { id: 'dark', label: 'Dark', icon: '🌙' },
   { id: 'system', label: 'Auto', icon: '💻' },
 ] as const;
+

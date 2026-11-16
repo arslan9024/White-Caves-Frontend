@@ -18,3 +18,4 @@ describe('MultiCurrencyEscrowVault Component', () => {
     expect(screen.getAllByText(/USD 1,497,650/i).length).toBeGreaterThan(0);
   });
 });
+

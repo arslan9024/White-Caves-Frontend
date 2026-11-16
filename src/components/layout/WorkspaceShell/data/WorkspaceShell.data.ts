@@ -19,3 +19,4 @@ export const SKELETON_CARD_PRESETS = [
   { id: 'chart_card_1', height: '340px', type: 'chart' },
   { id: 'table_card_1', height: '420px', type: 'table' },
 ];
+

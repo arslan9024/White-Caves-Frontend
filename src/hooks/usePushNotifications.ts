@@ -200,3 +200,4 @@ export function usePushNotifications(): UsePushNotificationsReturn {
     unsubscribe,
   };
 }
+

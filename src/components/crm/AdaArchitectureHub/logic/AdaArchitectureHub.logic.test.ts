@@ -54,3 +54,4 @@ describe('AdaArchitectureHub.logic', () => {
     printSpy.mockRestore();
   });
 });
+

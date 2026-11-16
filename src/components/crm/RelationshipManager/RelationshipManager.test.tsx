@@ -136,3 +136,4 @@ describe('RelationshipManager Suite (7-Category Architecture Standard)', () => {
     expect(screen.getByTestId('relationship-matrix-flow')).toBeInTheDocument();
   });
 });
+

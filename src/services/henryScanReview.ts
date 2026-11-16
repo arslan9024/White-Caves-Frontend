@@ -388,3 +388,4 @@ export async function saveReviewedScan(
     return { success: false, error: 'Vault unavailable. Nothing was saved.' };
   }
 }
+

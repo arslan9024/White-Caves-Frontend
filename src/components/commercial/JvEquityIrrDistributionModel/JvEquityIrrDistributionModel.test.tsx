@@ -13,3 +13,4 @@ describe('JvEquityIrrDistributionModel Component', () => {
     expect(screen.getByText(/General Partner \(GP Sponsor \/ Developer\)/i)).toBeDefined();
   });
 });
+

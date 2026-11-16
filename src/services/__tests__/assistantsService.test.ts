@@ -183,3 +183,4 @@ describe('assistantsService.deletePlan()', () => {
     await expect(assistantsService.deletePlan('mary')).rejects.toThrow('Not Found');
   });
 });
+

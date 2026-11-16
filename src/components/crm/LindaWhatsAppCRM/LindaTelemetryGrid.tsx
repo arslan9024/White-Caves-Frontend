@@ -89,3 +89,4 @@ export const LindaTelemetryGrid: React.FC<LindaTelemetryGridProps> = ({ isDark, 
     </div>
   );
 };
+

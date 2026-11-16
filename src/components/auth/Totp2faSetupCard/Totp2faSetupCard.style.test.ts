@@ -53,3 +53,4 @@ describe('Totp2faSetupCard.style exports', () => {
     expect(SecretKeyDisplay).not.toBe(TokenInputGroup);
   });
 });
+

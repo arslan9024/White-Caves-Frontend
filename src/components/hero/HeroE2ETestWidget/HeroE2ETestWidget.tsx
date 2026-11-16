@@ -22,3 +22,4 @@ export const HeroE2ETestWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

@@ -70,3 +70,4 @@ describe('useSwipeableLeadCardLogic', () => {
     expect(result.current.showSnoozeModal).toBe(true);
   });
 });
+

@@ -107,3 +107,4 @@ export const THEODORA_REPORT_CATEGORIES: ReportCategoryMeta[] = [
     badgeColor: '#F43F5E',
   },
 ];
+

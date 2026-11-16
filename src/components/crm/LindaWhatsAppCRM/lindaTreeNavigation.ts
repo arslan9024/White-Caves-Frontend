@@ -79,3 +79,4 @@ export function buildLindaBreadcrumbs(state: LindaBreadcrumbState): string[] {
   }
   return trail;
 }
+

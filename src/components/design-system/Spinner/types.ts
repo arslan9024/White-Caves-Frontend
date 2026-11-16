@@ -15,3 +15,4 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Spinner label for accessibility */
   label?: string;
 }
+

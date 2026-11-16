@@ -7,14 +7,32 @@ interface LindaSocketSyncOptions {
   setConversations: React.Dispatch<React.SetStateAction<LindaConversationItem[]>>;
   setCampaigns: React.Dispatch<React.SetStateAction<LindaCampaignItem[]>>;
   setToastNotification: React.Dispatch<React.SetStateAction<string | null>>;
+  setIsConnected?: React.Dispatch<React.SetStateAction<boolean>>;
+  setLindaStatus?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function useLindaSocketSync({
   setConversations,
   setCampaigns,
   setToastNotification,
+  setIsConnected,
+  setLindaStatus,
 }: LindaSocketSyncOptions): void {
   useEffect(() => {
+    const offConn = (socketService as any)?.onLindaConnectionState?.(
+      (payload: { isConnected: boolean; status: string; account: string }) => {
+        if (typeof setIsConnected === 'function') {
+          setIsConnected(payload.isConnected);
+        }
+        if (typeof setLindaStatus === 'function') {
+          setLindaStatus(payload.status);
+        }
+        if (payload.isConnected) {
+          setToastNotification(`Primary WhatsApp line (${payload.account}) connected`);
+        }
+      }
+    );
+
     const offMessage = socketService?.onLindaMessage?.((payload) => {
       const phone = payload?.from || payload?.phone || 'Unknown';
       const body = payload?.body || payload?.message || 'New WhatsApp message';
@@ -41,9 +59,11 @@ export function useLindaSocketSync({
     });
 
     return () => {
+      offConn?.();
       offMessage?.();
       offHotLead?.();
       offCampaign?.();
     };
   }, [setConversations, setCampaigns, setToastNotification]);
 }
+

@@ -315,3 +315,4 @@ const SignatureCollection = ({
 };
 
 export default SignatureCollection;
+

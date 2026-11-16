@@ -53,3 +53,4 @@ export const TALIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as talia_supervisorExport;
+

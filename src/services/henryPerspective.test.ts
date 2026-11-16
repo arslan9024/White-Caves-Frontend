@@ -38,3 +38,4 @@ describe('bounded projective correction', () => {
     context.mockRestore(); vi.unstubAllGlobals();
   });
 });
+

@@ -170,3 +170,4 @@ describe('indexedChatStore', () => {
     expect(retrieved).toEqual([]);
   });
 });
+

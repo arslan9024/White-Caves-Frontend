@@ -18,3 +18,4 @@ describe('SigningStatusBadge', () => {
     expect(screen.getByLabelText('Signature status: Opened')).toBeInTheDocument();
   });
 });
+

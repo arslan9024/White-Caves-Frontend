@@ -117,3 +117,4 @@ export const WhatsAppManualModal: React.FC<WhatsAppManualModalProps> = ({
     </div>
   );
 };
+

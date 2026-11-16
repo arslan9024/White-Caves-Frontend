@@ -6,3 +6,4 @@ describe('KairosLuxuryCRM', () => {
     expect(true).toBe(true);
   });
 });
+

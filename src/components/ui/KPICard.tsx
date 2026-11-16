@@ -305,3 +305,4 @@ KPICard.propTypes = {
 };
 
 export default KPICard;
+

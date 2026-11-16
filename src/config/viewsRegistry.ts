@@ -139,3 +139,4 @@ export function getViewByCode(code: string): ViewDefinition | undefined {
 export function getViewsByCategory(category: string): ViewDefinition[] {
   return VIEWS_REGISTRY.filter(v => v.category.toLowerCase() === category.toLowerCase());
 }
+

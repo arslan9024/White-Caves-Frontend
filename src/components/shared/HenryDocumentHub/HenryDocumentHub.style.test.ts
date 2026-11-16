@@ -9,3 +9,4 @@ describe('HenryDocumentHub.style', () => {
     expect(styles.StepProgressBar).toBeDefined();
   });
 });
+

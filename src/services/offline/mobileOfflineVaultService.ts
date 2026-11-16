@@ -145,3 +145,4 @@ export class MobileOfflineVaultService {
     this.lockVault();
   }
 }
+

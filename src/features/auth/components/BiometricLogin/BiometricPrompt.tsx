@@ -162,3 +162,4 @@ const BiometricPrompt = ({ onClose }: BiometricPromptProps) => {
 };
 
 export default BiometricPrompt;
+

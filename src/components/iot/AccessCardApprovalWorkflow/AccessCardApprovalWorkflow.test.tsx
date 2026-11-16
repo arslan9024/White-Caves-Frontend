@@ -18,3 +18,4 @@ describe('AccessCardApprovalWorkflow Component', () => {
     expect(screen.getAllByText(/✓ ISSUED & ACTIVE/i).length).toBe(2);
   });
 });
+

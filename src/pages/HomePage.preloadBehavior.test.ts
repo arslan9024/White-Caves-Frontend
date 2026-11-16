@@ -27,3 +27,4 @@ describe('HomePage hero preload behavior', () => {
     expect(link).toBeNull();
   });
 });
+

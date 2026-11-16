@@ -48,3 +48,4 @@ export const AuthMethodTabs = memo(function AuthMethodTabs({
 });
 
 export default AuthMethodTabs;
+

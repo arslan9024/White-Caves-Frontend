@@ -90,3 +90,4 @@ export const SYSTEM_COMPONENTS: SystemComponent[] = [
     metrics: { cpu: 12, memory: 34, responseTime: 5, uptime: 99.99 },
   },
 ];
+

@@ -112,3 +112,4 @@ export function calculateRunway(onboardingDate?: string): RunwayData | null {
     startDate: onboardingDate,
   };
 }
+

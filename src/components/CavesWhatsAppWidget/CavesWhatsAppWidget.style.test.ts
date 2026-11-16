@@ -25,3 +25,4 @@ describe('CavesWhatsAppWidget.style exports', () => {
     expect(typeof WhatsAppButton).toBe('object');
   });
 });
+

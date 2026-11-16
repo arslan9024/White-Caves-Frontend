@@ -58,3 +58,4 @@ export interface CorporateDepartmentsContextType {
   handleOpenSubItemsModal: (dept: DepartmentNodeItem) => void;
   handleCloseSubItemsModal: () => void;
 }
+

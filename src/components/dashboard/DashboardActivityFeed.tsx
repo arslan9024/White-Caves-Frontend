@@ -41,3 +41,4 @@ const DashboardActivityFeed: FC<DashboardActivityFeedProps> = ({ seedItems = [],
 };
 
 export default DashboardActivityFeed;
+

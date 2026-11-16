@@ -274,3 +274,4 @@ export const AlertsAndMeetingsPanel: React.FC = () => (
     </div>
   </div>
 );
+

@@ -275,3 +275,4 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
 
   return <div className="view-container executive-view">{renderContent()}</div>;
 }
+

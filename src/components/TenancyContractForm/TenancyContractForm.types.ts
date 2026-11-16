@@ -111,3 +111,4 @@ export interface TenancyContractFormProps {
   onSuccess?: (result: { contractId: string; agreement: unknown }) => void;
   initialContractId?: string;
 }
+

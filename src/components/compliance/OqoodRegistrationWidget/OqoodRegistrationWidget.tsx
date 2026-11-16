@@ -127,3 +127,4 @@ export const OqoodRegistrationWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

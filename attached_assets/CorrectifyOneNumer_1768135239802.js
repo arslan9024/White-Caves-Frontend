@@ -7,3 +7,4 @@ let res = Number.replace(/[^\d]/g, '').replace(/^0+|(?<=971)0+/g, "")
 
 return res
 }
+

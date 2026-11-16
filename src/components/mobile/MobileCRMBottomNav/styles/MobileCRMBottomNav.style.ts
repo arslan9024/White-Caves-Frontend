@@ -51,3 +51,4 @@ export const ActiveDot = styled.div`
   position: absolute;
   top: 6px;
 `;
+

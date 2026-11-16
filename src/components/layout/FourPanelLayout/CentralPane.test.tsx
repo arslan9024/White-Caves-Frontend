@@ -17,3 +17,4 @@ describe('CentralPane Component', () => {
     }
   });
 });
+

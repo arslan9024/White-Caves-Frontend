@@ -28,3 +28,4 @@ describe('FloatingHeroSearchPill Component', () => {
     expect(searchBtn).toBeDefined();
   });
 });
+

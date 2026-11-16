@@ -17,3 +17,4 @@ describe('FitOutCostEstimator Component', () => {
     expect(screen.getByText(/Luxury Bespoke/i)).toBeDefined();
   });
 });
+

@@ -43,7 +43,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: 🎯 DELIVERY SUMMARY',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/00-phase-0-2-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/00-phase-0-2-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -113,7 +113,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/00-phase-4-tier-2-completion-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/00-phase-4-tier-2-completion-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -183,7 +183,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/00-start-here-phase-4-6.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/00-start-here-phase-4-6.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -253,7 +253,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/dashboard-refactor-phase-1-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/dashboard-refactor-phase-1-summary.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -323,7 +323,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: White Caves Real Estate Platform - Current State Analysis',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/deep-audit-report-phase-0.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/deep-audit-report-phase-0.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -393,7 +393,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/executive-summary-phase-4-and-5.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/executive-summary-phase-4-and-5.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -463,7 +463,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/final-handover-phase-4-3-ready-to-execute.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/final-handover-phase-4-3-ready-to-execute.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -533,7 +533,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/next-phase-plan-turn-0001.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/next-phase-plan-turn-0001.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -603,7 +603,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/next-phase-plan-turn-0004.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/next-phase-plan-turn-0004.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -673,7 +673,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/next-phase-plan-turn-0005.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/next-phase-plan-turn-0005.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -743,7 +743,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/next-phase-plan-turn-0006.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/next-phase-plan-turn-0006.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -813,7 +813,7 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/next-phase-plan-turn-0007.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/next-phase-plan-turn-0007.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -854,3 +854,4 @@ export const CHAPTER_PHASE_HISTORY: ChapterNode = {
     },
   ],
 };
+

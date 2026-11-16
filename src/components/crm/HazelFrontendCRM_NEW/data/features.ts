@@ -16,3 +16,4 @@ export const FRONTEND_FEATURES: string[] = [
   'UI pattern documentation',
   'Design system governance'
 ];
+

@@ -431,3 +431,4 @@ export const PublicNavbar = (): React.JSX.Element => {
 };
 
 export default PublicNavbar;
+

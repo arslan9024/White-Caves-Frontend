@@ -59,3 +59,4 @@ describe('AuthModal', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

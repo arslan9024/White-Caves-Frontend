@@ -19,3 +19,4 @@ describe('FluidMegaMenu Component', () => {
     expect(screen.getByText(/EMAAR Launches/i)).toBeDefined();
   });
 });
+

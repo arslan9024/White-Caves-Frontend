@@ -84,3 +84,4 @@ const ComplianceView: React.FC<ComplianceViewProps> = ({
 };
 
 export default ComplianceView;
+

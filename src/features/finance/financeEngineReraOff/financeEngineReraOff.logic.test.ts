@@ -215,3 +215,4 @@ describe('computeFinanceEngineReraOffSummary', () => {
     expect(summary.installments[0].dueDate.getUTCFullYear()).toBe(2027);
   });
 });
+

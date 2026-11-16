@@ -89,3 +89,4 @@ export const LINDA_FEATURES: AssistantFeatureItem[] = [
     icon: <Globe size={18} />,
   },
 ];
+

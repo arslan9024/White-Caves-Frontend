@@ -101,3 +101,4 @@ export const ESignatureAcknowledgeStep: React.FC<TermsSummaryProps> = ({
     </div>
   );
 };
+

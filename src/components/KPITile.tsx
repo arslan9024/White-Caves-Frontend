@@ -248,3 +248,4 @@ export const KPITile: React.FC<KPITileProps> = ({
 };
 
 export default KPITile;
+

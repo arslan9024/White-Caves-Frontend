@@ -234,3 +234,4 @@ export function generateAgents(count = 20, seed = 99): GeneratedAgent[] {
 
   return agents;
 }
+

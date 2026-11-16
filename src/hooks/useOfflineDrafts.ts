@@ -143,3 +143,4 @@ export const useOfflineDrafts = <T = unknown>(storeKey: DraftStoreKey) => {
 
   return { saveDraft, getDraft, deleteDraft, listDrafts, markSynced };
 };
+

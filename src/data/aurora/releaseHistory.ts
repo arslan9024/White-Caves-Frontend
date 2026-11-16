@@ -214,3 +214,4 @@ export const getReleaseStats = () => ({
 });
 
 export default { RELEASE_HISTORY, getCurrentVersion, getMajorReleases, getRecentReleases, getReleaseStats };
+

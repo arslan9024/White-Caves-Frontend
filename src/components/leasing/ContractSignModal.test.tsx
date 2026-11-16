@@ -177,3 +177,4 @@ describe('ContractSignModal', () => {
     expect(banner).toBeInTheDocument();
   });
 });
+

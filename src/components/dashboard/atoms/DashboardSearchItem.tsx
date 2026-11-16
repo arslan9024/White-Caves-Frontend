@@ -82,3 +82,4 @@ export const DashboardSearchItem: FC<DashboardSearchItemProps> = ({ item, onSele
 );
 
 export default DashboardSearchItem;
+

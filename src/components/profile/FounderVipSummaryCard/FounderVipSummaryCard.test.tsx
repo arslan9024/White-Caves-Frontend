@@ -13,3 +13,4 @@ describe('FounderVipSummaryCard Component', () => {
     expect(screen.getByText(/DED #1388443 · RERA ORN #44483/i)).toBeDefined();
   });
 });
+

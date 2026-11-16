@@ -144,3 +144,4 @@ export const HazelFrontendCRMView: React.FC = () => {
     </div>
   );
 };
+

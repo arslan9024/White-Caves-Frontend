@@ -175,3 +175,4 @@ const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }) => {
 };
 
 export default ContactDetailsForm;
+

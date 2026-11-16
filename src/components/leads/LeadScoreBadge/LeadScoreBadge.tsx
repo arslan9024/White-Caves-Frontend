@@ -17,3 +17,4 @@ export const LeadScoreBadge: FC<Props> = ({ score }) => {
   );
 };
 export default LeadScoreBadge;
+

@@ -27,3 +27,4 @@ describe('VirtualTourViewer Component', () => {
     expect(launchBtn).toBeInTheDocument();
   });
 });
+

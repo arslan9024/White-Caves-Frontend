@@ -18,3 +18,4 @@ describe('TwoFactorAuthSetupCard Component', () => {
     expect(screen.getByText(/✓ Verified/i)).toBeDefined();
   });
 });
+

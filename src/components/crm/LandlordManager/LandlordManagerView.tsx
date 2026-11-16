@@ -292,3 +292,4 @@ export const LandlordManagerView: FC = () => {
 };
 
 export default LandlordManagerView;
+

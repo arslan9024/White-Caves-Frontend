@@ -11,3 +11,4 @@ import TransactionManager from '../TransactionManager';
 export default function TransactionsView() {
   return <TransactionManager />;
 }
+

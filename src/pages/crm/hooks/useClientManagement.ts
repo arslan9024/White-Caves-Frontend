@@ -414,3 +414,4 @@ export function useClientManagement() {
     formatDate,
   };
 }
+

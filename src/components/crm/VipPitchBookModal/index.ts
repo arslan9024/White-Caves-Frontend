@@ -3,3 +3,4 @@ export * from './VipPitchBookModal.types';
 export * from './VipPitchBookModal.logic';
 export * from './VipPitchBookModalView';
 export { VipPitchBookModalView as default } from './VipPitchBookModalView';
+

@@ -31,3 +31,4 @@ const MobileLeadFAB: React.FC = () => {
 };
 
 export default MobileLeadFAB;
+

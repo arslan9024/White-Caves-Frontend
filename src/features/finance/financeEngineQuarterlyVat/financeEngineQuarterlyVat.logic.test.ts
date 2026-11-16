@@ -237,3 +237,4 @@ describe('getQuarterlyVatSummary', () => {
     expect(summary).toBeUndefined();
   });
 });
+

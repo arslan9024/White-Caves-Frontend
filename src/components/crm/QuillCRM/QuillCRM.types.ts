@@ -16,3 +16,4 @@ export interface RecentDocument {
   status: 'signed' | 'pending' | 'sent' | 'draft' | string;
   created: string;
 }
+

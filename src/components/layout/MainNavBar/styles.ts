@@ -736,3 +736,4 @@ export const SidebarToggleButton = styled(NavIconButton)`
     height: 36px;
   }
 `;
+

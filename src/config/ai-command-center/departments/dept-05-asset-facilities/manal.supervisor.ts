@@ -53,3 +53,4 @@ export const MANAL_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as manal_supervisorExport;
+

@@ -101,3 +101,4 @@ export const selectSelectedFeature = (state: RootState): Feature | null => {
 export const { selectFeature, selectCategory, setSearchQuery, setViewMode, clearSelection } = featuresSlice.actions;
 
 export default featuresSlice.reducer;
+

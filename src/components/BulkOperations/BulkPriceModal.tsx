@@ -99,3 +99,4 @@ const BulkPriceModal: React.FC<BulkPriceModalProps> = ({
 };
 
 export default BulkPriceModal;
+

@@ -16,3 +16,4 @@ describe('DocumentComplianceChecklist.logic', () => {
     expect(result.current.passCount).toBe(initialPass + 1);
   });
 });
+

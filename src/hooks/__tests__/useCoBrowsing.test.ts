@@ -66,3 +66,4 @@ describe('useCoBrowsing Hook', () => {
     expect(result.current.participants[0].cursor).toEqual({ x: 250, y: 400 });
   });
 });
+

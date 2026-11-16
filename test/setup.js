@@ -44,3 +44,4 @@ global.localStorage = {
   removeItem: vi.fn(),
   clear: vi.fn(),
 };
+

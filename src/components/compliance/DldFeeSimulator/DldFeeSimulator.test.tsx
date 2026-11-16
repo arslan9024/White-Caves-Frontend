@@ -19,3 +19,4 @@ describe('DldFeeSimulator Component', () => {
     expect(screen.getByText(/TOTAL TRANSFER COSTS/i)).toBeDefined();
   });
 });
+

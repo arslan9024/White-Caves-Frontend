@@ -88,3 +88,4 @@ export const AMLRiskAssessmentReport: FC = () => {
     </WidgetContainer>
   );
 };
+

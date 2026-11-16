@@ -86,3 +86,4 @@ export const DepartmentWorkspaceActionBar: FC<DepartmentWorkspaceActionBarProps>
     </ActionBar>
   );
 };
+

@@ -901,3 +901,4 @@ export const TWELVE_CORPORATE_DEPARTMENTS: BuildingTier[] = [
     ],
   },
 ];
+

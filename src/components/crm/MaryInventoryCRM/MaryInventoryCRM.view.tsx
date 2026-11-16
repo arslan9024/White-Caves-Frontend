@@ -196,3 +196,4 @@ export const MaryInventoryCRMView: React.FC<MaryInventoryCRMProps> = ({ activeFe
     </div>
   );
 };
+

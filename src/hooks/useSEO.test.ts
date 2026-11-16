@@ -52,3 +52,4 @@ describe('getCanonicalUrl', () => {
     expect(getCanonicalUrl('/properties')).toContain('/properties');
   });
 });
+

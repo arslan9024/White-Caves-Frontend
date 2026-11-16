@@ -195,3 +195,4 @@ export const FluxAlertsPanel: React.FC = () => (
     ))}
   </div>
 );
+

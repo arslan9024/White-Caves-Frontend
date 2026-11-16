@@ -9,3 +9,4 @@ describe('UserPreferencesDropdown.style', () => {
     expect(styles.UserDetails).toBeDefined();
   });
 });
+

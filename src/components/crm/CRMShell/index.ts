@@ -8,3 +8,4 @@ export * from './CRMShell.logic';
 export * from './CRMShell.panels';
 export * from './CRMShell.view';
 export { CRMShell as default } from './CRMShell.view';
+

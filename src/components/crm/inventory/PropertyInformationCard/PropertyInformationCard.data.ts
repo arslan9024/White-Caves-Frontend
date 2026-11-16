@@ -15,3 +15,4 @@ export const FEATURES_LIST = [
   'Study',
   'Home Office',
 ];
+

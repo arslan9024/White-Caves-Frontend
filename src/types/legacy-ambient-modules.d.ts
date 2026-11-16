@@ -9,3 +9,4 @@ declare module '../../../types/phase6.types';
 
 declare module '../components/features/DataImportWizard/DataImportWizard';
 declare module '../components/features/ImportHistory/ImportHistory';
+

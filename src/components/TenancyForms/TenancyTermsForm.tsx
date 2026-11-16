@@ -248,3 +248,4 @@ const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
 };
 
 export default TenancyTermsForm;
+

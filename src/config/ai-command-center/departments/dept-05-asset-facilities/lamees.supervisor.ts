@@ -53,3 +53,4 @@ export const LAMEES_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as lamees_supervisorExport;
+

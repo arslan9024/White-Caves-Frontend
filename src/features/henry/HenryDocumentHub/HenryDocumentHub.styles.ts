@@ -88,3 +88,4 @@ export const severityIconMap = {
   warning: '⚠️',
   info: 'ℹ️',
 } as const;
+

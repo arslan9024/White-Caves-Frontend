@@ -144,3 +144,4 @@ export const LevelBadge = styled.span<{ $color: string }>`
   border: 1px solid ${({ $color }) => $color};
   text-transform: uppercase;
 `;
+

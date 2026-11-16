@@ -6,3 +6,4 @@ describe('MaryInventoryCRM', () => {
     expect(true).toBe(true);
   });
 });
+

@@ -237,3 +237,4 @@ export const FinancialStatementsTab: React.FC = () => {
 };
 
 export default FinancialStatementsTab;
+

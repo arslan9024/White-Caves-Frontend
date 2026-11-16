@@ -1,4 +1,4 @@
-﻿// Shared Components for AI Command Center
+// Shared Components for AI Command Center
 export { default as StatCard } from './StatCard';
 export { default as TabPanel, TabContent } from './TabPanel';
 export { default as ActivityTimeline } from './ActivityTimeline';
@@ -30,3 +30,4 @@ export { default as AssistantDocsTab } from './AssistantDocsTab';
 export { default as DealJourneyTimeline } from './DealJourneyTimeline';
 export { default as DemoDataPanel } from './DemoDataPanel';
 export { default as MarketingSEOTools } from './MarketingSEOTools';
+

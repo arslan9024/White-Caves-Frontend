@@ -47,3 +47,4 @@ export function useMultiCurrencyConverterLogic(initialAmountAED = 18500000) {
     handleSelectActiveCurrency,
   };
 }
+

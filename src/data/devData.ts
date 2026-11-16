@@ -303,3 +303,4 @@ export const DEV_CLIENTS = DEV_DATA.leads
     avatar_color:
       DEV_DATA.agents[(l.agent_id - 1) % DEV_DATA.agents.length]?.avatar_color || '#E31E24',
   }));
+

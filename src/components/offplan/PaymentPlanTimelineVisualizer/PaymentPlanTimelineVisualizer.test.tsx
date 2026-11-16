@@ -18,3 +18,4 @@ describe('PaymentPlanTimelineVisualizer Component', () => {
     expect(screen.getByText(/Construction Milestone 1/i)).toBeDefined();
   });
 });
+

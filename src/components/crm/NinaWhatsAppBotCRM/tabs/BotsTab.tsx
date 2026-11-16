@@ -123,3 +123,4 @@ export const BotsTab: React.FC<BotsTabProps> = ({ data }) => {
     </div>
   );
 };
+

@@ -53,3 +53,4 @@ export const YASMINE_OFFPLAN_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as yasmine_offplan_supervisorExport;
+

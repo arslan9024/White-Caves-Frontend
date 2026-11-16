@@ -169,3 +169,4 @@ describe.skipIf(process.platform !== 'win32')('safe PowerShell launcher', () => 
     }
   });
 });
+

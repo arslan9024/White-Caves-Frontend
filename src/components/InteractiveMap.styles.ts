@@ -286,3 +286,4 @@ export const DetailBadge = styled.span`
   align-items: center;
   gap: 0.25rem;
 `;
+

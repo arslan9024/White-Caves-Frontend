@@ -44,3 +44,4 @@ export const BrokerLicenseBadge: FC = () => {
 };
 
 export default BrokerLicenseBadge;
+

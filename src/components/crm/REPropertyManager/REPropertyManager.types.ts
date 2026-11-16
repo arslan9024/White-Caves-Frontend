@@ -61,3 +61,4 @@ export interface REPropertyMetrics {
   leasedCount: number;
   soldCount: number;
 }
+

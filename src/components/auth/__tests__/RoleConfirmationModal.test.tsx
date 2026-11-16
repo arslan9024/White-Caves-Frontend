@@ -189,3 +189,4 @@ describe('RoleConfirmationModal Suite', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

@@ -146,3 +146,4 @@ export const JourneyCatalogModal: React.FC<JourneyCatalogModalProps> = ({
     </div>
   );
 };
+

@@ -332,3 +332,4 @@ const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
 };
 
 export default OwnerFollowUpList;
+

@@ -113,3 +113,4 @@ describe('ExecutiveAIVSCodeSidebar Component (7-Category Co-Location Spec)', () 
     expect(onSelectItem).toHaveBeenCalledWith('route-/dashboard/tasks', '/dashboard/tasks');
   });
 });
+

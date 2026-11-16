@@ -141,3 +141,4 @@ export const RentalYieldVisualizer: FC<RentalYieldVisualizerProps> = ({
 };
 
 export default RentalYieldVisualizer;
+

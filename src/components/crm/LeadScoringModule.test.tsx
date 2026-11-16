@@ -272,3 +272,4 @@ describe('LeadScoringModule', () => {
     // No assertion needed — verifies no act() warnings for state updates after unmount
   });
 });
+

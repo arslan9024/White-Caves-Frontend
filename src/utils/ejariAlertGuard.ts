@@ -11,3 +11,4 @@ export function getEjariAlertTier(daysRemaining: number): EjariAlertTier {
   if (daysRemaining <= 90) return '90d';
   return 'ok';
 }
+

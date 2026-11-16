@@ -87,3 +87,4 @@ export const MIRA_TABS = [
   { id: 'docs', label: '📚 Docs' },
   { id: 'lifecycle', label: '🔄 Lifecycle' },
 ];
+

@@ -55,3 +55,4 @@ export const getOptionLabel = (value: string, options: PropertyStatusOption[]): 
 export const getOptionColor = (value: string, options: PropertyStatusOption[]): string => {
   return options.find(opt => opt.value === value)?.color || '#6b7280';
 };
+

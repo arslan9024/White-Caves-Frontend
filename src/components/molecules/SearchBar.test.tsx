@@ -18,3 +18,4 @@ describe('SearchBar component', () => {
     expect(handleSearch).toHaveBeenCalledWith('Villa');
   });
 });
+

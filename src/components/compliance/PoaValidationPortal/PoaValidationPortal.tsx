@@ -76,3 +76,4 @@ export const PoaValidationPortal: FC = () => {
   );
 };
 export default PoaValidationPortal;
+

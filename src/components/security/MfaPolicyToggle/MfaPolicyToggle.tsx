@@ -146,3 +146,4 @@ export const MfaPolicyToggle: FC = () => {
 };
 
 export default MfaPolicyToggle;
+

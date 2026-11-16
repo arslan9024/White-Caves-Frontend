@@ -14,3 +14,4 @@ describe('BulkPriceModal Component', () => {
     expect(screen.getByText('Set Price')).toBeDefined();
   });
 });
+

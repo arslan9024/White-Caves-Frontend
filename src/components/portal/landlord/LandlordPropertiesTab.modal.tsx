@@ -188,3 +188,4 @@ export const PropertyDetailModal: FC<DetailModalProps> = ({ property, onClose })
     </div>
   );
 };
+

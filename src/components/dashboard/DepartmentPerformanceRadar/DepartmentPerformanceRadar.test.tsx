@@ -13,3 +13,4 @@ describe('DepartmentPerformanceRadar Component', () => {
     expect(screen.getByText(/VIP & Family Office Desk/i)).toBeDefined();
   });
 });
+

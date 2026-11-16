@@ -27,3 +27,4 @@ export const LeadNotificationToast: FC = () => {
   );
 };
 export default LeadNotificationToast;
+

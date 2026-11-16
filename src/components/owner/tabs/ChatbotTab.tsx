@@ -166,3 +166,4 @@ const ChatbotTab: React.FC<ChatbotTabProps> = ({ data, loading, onAction }) => {
 };
 
 export default React.memo(ChatbotTab);
+

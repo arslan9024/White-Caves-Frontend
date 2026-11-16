@@ -18,3 +18,4 @@ export function useFeaturedCommunityCarouselLogic() {
     communities: FEATURED_COMMUNITIES,
   };
 }
+

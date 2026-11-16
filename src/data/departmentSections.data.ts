@@ -77,3 +77,4 @@ export function getSectionForSlotNumber(slotNumber: number): DepartmentSectionDe
   if (slotNumber >= 5 && slotNumber <= 8) return BHAKTI_BUILDING_SECTIONS.SECTION_B;
   return BHAKTI_BUILDING_SECTIONS.SECTION_C;
 }
+

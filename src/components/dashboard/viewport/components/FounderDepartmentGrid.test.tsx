@@ -25,3 +25,4 @@ describe('FounderDepartmentGrid (DOM-02 / Target T-0104)', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });
+

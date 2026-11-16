@@ -190,3 +190,4 @@ const EjariTracker: React.FC<EjariTrackerProps> = ({ leases: initialLeases }) =>
 };
 
 export default EjariTracker;
+

@@ -188,3 +188,4 @@ export const KPICard: React.FC<KPICardProps> = ({
 };
 
 export default KPICard;
+

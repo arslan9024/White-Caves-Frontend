@@ -16,3 +16,4 @@ export function getScoreColor(level: ScoreLevel): string {
 export function getScoreLabel(level: ScoreLevel): string {
   return { S: 'Super Hot', A: 'High Intent', B: 'Warm', C: 'Lukewarm', D: 'Cold' }[level];
 }
+

@@ -70,3 +70,4 @@ export const LandlordTenanciesWidget: FC<LandlordTenanciesWidgetProps> = ({ prop
     </SectionCard>
   );
 };
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LandlordDocumentsTab — Phase 29: Live API integration
  *
  * Documents derived from leases API.
@@ -333,3 +333,4 @@ const LandlordDocumentsTab: FC = () => {
 };
 
 export default LandlordDocumentsTab;
+

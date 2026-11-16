@@ -19,3 +19,4 @@ export interface VSCodeBreadcrumbsProps {
   onNavigate?: (route: string) => void;
   className?: string;
 }
+

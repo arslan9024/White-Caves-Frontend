@@ -93,3 +93,4 @@ export class SQAErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
+

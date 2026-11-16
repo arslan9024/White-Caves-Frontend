@@ -79,3 +79,4 @@ export const useTrainingTrackerLogic = () => {
     handleRegister
   };
 };
+

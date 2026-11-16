@@ -22,3 +22,4 @@ describe('AvatarUploadCropModal Component', () => {
     expect(onClose).toHaveBeenCalled();
   });
 });
+

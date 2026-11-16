@@ -99,3 +99,4 @@ describe('isPassportExtractionSuccess / isPassportExtractionFailure', () => {
     expect(unreadable.documentNumber.confidenceLevel).toBe('LOW');
   });
 });
+

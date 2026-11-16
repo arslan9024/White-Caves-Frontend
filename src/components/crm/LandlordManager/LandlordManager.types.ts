@@ -74,3 +74,4 @@ export interface LandlordMetrics {
   activeMaintenanceTickets: number;
   netRentalYieldPercent: number;
 }
+

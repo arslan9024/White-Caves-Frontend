@@ -53,3 +53,4 @@ export const PRUDENTIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as prudentia_supervisorExport;
+

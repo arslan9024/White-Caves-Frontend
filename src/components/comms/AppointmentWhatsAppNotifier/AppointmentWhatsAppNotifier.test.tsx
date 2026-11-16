@@ -12,3 +12,4 @@ describe('AppointmentWhatsAppNotifier Component', () => {
     expect(screen.getByDisplayValue('Sir Jonathan Hayes')).toBeDefined();
   });
 });
+

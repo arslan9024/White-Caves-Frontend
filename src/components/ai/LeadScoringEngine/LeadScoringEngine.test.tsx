@@ -10,3 +10,4 @@ describe('LeadScoringEngine Component', () => {
     expect(screen.getByTestId('lead-scoring-engine')).toBeDefined();
   });
 });
+

@@ -81,3 +81,4 @@ export const aiamsStyles = {
   deleteBtn:
     'p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 hover:text-rose-200 border border-rose-500/30 transition-all text-xs cursor-pointer [data-theme=light]_&:bg-rose-50 [data-theme=light]_&:text-rose-700 [data-theme=light]_&:border-rose-200',
 };
+

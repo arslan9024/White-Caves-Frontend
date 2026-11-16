@@ -8,3 +8,4 @@ export * from './RightAISidebar.logic';
 export * from './RightAISidebar.panels';
 export * from './RightAISidebar.view';
 export { RightAISidebar as default } from './RightAISidebar.view';
+

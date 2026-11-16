@@ -95,3 +95,4 @@ export const SkeletonTable: React.FC<{ columns?: number; rows?: number }> = ({
 );
 
 export default SkeletonCard;
+

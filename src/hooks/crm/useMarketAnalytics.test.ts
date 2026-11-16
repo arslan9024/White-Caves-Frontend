@@ -6,3 +6,4 @@ describe('useMarketAnalytics (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

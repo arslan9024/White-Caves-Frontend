@@ -85,3 +85,4 @@ export const MultiCurrencyEngine = {
   rates: FX_RATES_TO_AED,
   aggregatePortfolioTotals,
 };
+

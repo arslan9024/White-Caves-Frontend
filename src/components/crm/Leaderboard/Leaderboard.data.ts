@@ -215,3 +215,4 @@ export const INITIAL_LEADERBOARD_DATA: LeaderboardMember[] = [
 ];
 
 export const CANONICAL_LEADERBOARD_MEMBERS = INITIAL_LEADERBOARD_DATA;
+

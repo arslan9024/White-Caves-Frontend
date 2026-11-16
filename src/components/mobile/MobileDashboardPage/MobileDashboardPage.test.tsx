@@ -65,3 +65,4 @@ describe('MobileDashboardPage', () => {
     expect(screen.getByTestId('mock-ptr')).toBeDefined();
   });
 });
+

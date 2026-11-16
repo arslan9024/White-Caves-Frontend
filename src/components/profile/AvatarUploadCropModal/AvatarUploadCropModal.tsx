@@ -82,3 +82,4 @@ export const AvatarUploadCropModal: FC<{ isOpen: boolean; onClose: () => void }>
 };
 
 export default AvatarUploadCropModal;
+

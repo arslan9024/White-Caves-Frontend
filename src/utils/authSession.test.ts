@@ -244,3 +244,4 @@ describe('authSession utilities', () => {
     });
   });
 });
+

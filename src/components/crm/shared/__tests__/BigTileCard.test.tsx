@@ -277,3 +277,4 @@ describe('BigTileCard', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });
+

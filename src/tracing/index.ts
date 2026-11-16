@@ -16,3 +16,4 @@ registerInstrumentations({
 
 // Export a tracer for use elsewhere if needed.
 export const tracer = provider.getTracer('whitecaves-server');
+

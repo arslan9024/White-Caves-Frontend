@@ -65,3 +65,4 @@ export const DocumentOCRScanner: FC = () => {
   );
 };
 export default DocumentOCRScanner;
+

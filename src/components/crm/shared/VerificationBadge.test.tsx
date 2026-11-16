@@ -80,3 +80,4 @@ describe('VerificationBadge', () => {
     expect(screen.getByTestId('verification-badge').dataset.verified).toBe('false');
   });
 });
+

@@ -45,3 +45,4 @@ describe('PropertySearchPanel — production quality tests', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

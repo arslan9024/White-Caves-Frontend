@@ -80,3 +80,4 @@ export const saveCredentialLocally = (credential: CredentialForServer, userId: s
   });
   safeStorage.setJSON(CREDENTIAL_STORAGE_KEY, credentials);
 };
+

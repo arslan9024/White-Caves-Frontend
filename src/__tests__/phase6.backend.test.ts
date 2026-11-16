@@ -583,3 +583,4 @@ describe('PresenceAndSyncService', () => {
     expect(health.syncStatesTracked).toBeGreaterThan(0);
   });
 });
+

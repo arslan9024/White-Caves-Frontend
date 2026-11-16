@@ -229,3 +229,4 @@ export const RoiDualSliderAppraiser: FC = () => {
   );
 };
 export default RoiDualSliderAppraiser;
+

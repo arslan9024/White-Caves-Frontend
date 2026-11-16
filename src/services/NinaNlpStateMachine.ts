@@ -209,3 +209,4 @@ export function createNinaState(conversationId?: string): NinaState {
 }
 
 export default { processNinaMessage, createNinaState };
+

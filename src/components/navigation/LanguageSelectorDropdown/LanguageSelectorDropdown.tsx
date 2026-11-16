@@ -92,3 +92,4 @@ export const LanguageSelectorDropdown: FC<{ onLanguageChange?: (lang: 'en' | 'ar
 };
 
 export default LanguageSelectorDropdown;
+

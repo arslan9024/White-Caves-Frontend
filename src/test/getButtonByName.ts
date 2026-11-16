@@ -18,3 +18,4 @@ export function getButtonByVisibleTextInActionGroup(name: string | RegExp): HTML
   }
   return button;
 }
+

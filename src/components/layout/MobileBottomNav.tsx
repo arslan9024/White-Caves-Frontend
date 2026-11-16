@@ -127,3 +127,4 @@ export const MobileBottomNav: React.FC = () => {
     </BottomNavContainer>
   );
 };
+

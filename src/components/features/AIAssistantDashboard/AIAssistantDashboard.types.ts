@@ -3,3 +3,4 @@ export interface AIAssistantDashboardProps {
   context?: Record<string, unknown>;
   featureId?: string;
 }
+

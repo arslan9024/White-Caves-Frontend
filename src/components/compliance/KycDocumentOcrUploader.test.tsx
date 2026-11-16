@@ -47,3 +47,4 @@ describe('KycDocumentOcrUploader Component (AEG-034 / AEG-017)', () => {
     );
   });
 });
+

@@ -22,3 +22,4 @@ export const HeroSchemaWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

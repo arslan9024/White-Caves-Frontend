@@ -24,3 +24,4 @@ export const AI_ASSISTANTS_REGISTRY: AIAssistant[] = [
   { id: 'hazel', name: 'Hazel', title: 'Elite Frontend Engineer', department: 'Technology', status: 'active', features: ['Component Library (47+)', 'Design System Management', 'Accessibility Audits (AAA)', 'UI Performance Optimization', 'Theme System', 'Responsive Design'], connections: ['Aurora', 'Willow'] },
   { id: 'willow', name: 'Willow', title: 'Elite Backend Engineer', department: 'Technology', status: 'active', features: ['API Development (45+ endpoints)', 'Database Optimization', 'Caching Strategies', 'WebSocket Real-time', 'Security Hardening', 'Load Balancing'], connections: ['Aurora', 'Hazel'] }
 ];
+

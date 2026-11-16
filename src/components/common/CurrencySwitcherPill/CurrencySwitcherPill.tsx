@@ -50,3 +50,4 @@ export const CurrencySwitcherPill: FC<{ onCurrencyChange?: (currency: string) =>
 };
 
 export default CurrencySwitcherPill;
+

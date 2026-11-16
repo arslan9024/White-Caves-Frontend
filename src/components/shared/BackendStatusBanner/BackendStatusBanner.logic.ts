@@ -13,3 +13,4 @@ export function useBackendStatusBanner(pollIntervalMs?: number) {
     dismiss: () => setDismissedStatus(status),
   };
 }
+

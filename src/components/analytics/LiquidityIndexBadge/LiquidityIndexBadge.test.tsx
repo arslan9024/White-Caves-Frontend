@@ -9,3 +9,4 @@ describe('LiquidityIndexBadge Component', () => {
     expect(screen.getByTestId('liquidity-index-badge')).toBeInTheDocument();
   });
 });
+

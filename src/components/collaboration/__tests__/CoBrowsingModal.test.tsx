@@ -14,3 +14,4 @@ describe('CoBrowsingModal Component', () => {
     expect(screen.getByText('DAMAC Hills 2 Villa - Master Suite Floorplan')).toBeDefined();
   });
 });
+

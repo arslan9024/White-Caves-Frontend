@@ -218,3 +218,4 @@ export function setupAllMocks() {
     fetch: global.fetch,
   };
 }
+

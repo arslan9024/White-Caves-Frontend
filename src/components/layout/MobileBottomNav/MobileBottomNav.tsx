@@ -125,3 +125,4 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = React.memo(function Mobi
 });
 
 export default MobileBottomNav;
+

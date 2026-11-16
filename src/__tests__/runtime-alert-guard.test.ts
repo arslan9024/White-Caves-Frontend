@@ -51,3 +51,4 @@ describe('Runtime alert guard', () => {
     expect(violations).toEqual([]);
   });
 });
+

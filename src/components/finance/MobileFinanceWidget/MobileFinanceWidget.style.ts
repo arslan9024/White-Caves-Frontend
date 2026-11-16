@@ -21,3 +21,4 @@ export const Badge = styled.span`
   background: var(--accent-red, #EF4444); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 700;
   position: absolute; top: -4px; right: -4px;
 `;
+

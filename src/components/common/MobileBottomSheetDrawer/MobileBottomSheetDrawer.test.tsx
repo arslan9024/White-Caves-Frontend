@@ -28,3 +28,4 @@ describe('MobileBottomSheetDrawer Component', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
+

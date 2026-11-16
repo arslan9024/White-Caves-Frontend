@@ -143,3 +143,4 @@ describe('PropertyFilterPanel', () => {
     expect(screen.getByRole('complementary', { name: /property filters/i })).toBeInTheDocument();
   });
 });
+

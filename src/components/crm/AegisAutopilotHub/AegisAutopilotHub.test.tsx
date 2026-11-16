@@ -34,3 +34,4 @@ describe('AegisAutopilotHub Component', () => {
     expect(screen.getByText(/0 Issues/i)).toBeDefined();
   });
 });
+

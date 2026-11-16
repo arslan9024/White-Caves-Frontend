@@ -8,3 +8,4 @@ describe('Platform Modules Data', () => {
     expect(PLATFORM_MODULES[0].category).toBe('Core Business');
   });
 });
+

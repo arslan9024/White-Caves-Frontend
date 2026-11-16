@@ -26,3 +26,4 @@ export const CurrencyViewer: FC<CurrencyViewerProps> = ({
 
   return <span className="currency-viewer">{formattedValue}</span>;
 };
+

@@ -59,3 +59,4 @@ export const OWNER_PROPERTIES: OwnerPropertyItem[] = [
     image: '🏙️',
   },
 ];
+

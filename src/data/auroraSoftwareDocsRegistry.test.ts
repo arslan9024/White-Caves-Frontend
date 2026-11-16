@@ -21,3 +21,4 @@ describe('auroraSoftwareDocsRegistry', () => {
     expect(doc03?.htmlContent).toContain('data/Component.data.ts');
   });
 });
+

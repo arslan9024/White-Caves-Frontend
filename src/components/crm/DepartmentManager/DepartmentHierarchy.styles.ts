@@ -117,3 +117,4 @@ export const hierarchyStyles = {
   poolItemName: 'text-xs font-bold text-slate-200 line-clamp-1',
   poolItemTitle: 'text-[10px] text-slate-400 line-clamp-1',
 };
+

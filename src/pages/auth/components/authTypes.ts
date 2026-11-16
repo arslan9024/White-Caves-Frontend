@@ -39,3 +39,4 @@ export const CATEGORIES: CategoryOption[] = [
   { id: 'client', label: 'Client', description: 'Browse and purchase properties' },
   { id: 'staff', label: 'Staff Member', description: 'Internal team member' },
 ];
+

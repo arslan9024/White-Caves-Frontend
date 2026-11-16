@@ -72,3 +72,4 @@ export const PropertyVectorBadges: FC<PropertySpecs> = ({
 };
 
 export default PropertyVectorBadges;
+

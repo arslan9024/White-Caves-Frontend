@@ -114,3 +114,4 @@ export const SovereignFooter: FC = () => {
 };
 
 export default SovereignFooter;
+

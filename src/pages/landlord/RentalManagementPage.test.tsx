@@ -327,3 +327,4 @@ describe('RentalManagementPage', () => {
     expect(screen.getAllByText('1').length).toBeGreaterThanOrEqual(2);
   });
 });
+

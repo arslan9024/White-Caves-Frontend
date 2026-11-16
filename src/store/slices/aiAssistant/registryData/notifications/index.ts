@@ -9,3 +9,4 @@ export const generateNotifications = (): Record<string, Notification[]> => {
     ...getNotificationsPart2(now),
   };
 };
+

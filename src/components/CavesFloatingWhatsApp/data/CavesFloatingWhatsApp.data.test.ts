@@ -40,3 +40,4 @@ describe('CavesFloatingWhatsApp.data — WHATSAPP_WIDGET_TEXT', () => {
     expect(cleaned).toBe('');
   });
 });
+

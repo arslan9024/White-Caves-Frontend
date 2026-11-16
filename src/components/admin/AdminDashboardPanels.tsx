@@ -410,3 +410,4 @@ export const AdminSettingsPanel = ({ panelId, tabId }: SettingsPanelProps) => (
     </S.SettingsGroups>
   </S.AdminSettings>
 );
+

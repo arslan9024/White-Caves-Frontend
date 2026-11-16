@@ -10,3 +10,4 @@ describe('ContractPreview Component', () => {
     expect(container).toBeDefined();
   });
 });
+

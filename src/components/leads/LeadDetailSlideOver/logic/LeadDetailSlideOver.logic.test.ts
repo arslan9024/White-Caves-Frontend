@@ -36,3 +36,4 @@ describe('LeadDetailSlideOver.logic', () => {
     expect(onClose).toHaveBeenCalled();
   });
 });
+

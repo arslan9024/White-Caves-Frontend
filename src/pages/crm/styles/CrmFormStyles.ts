@@ -130,3 +130,4 @@ export const ModalFooter = styled.div`
   gap: 0.75rem;
   margin-top: 1.5rem;
 `;
+

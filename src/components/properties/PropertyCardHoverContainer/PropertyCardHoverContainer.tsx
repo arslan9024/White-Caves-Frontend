@@ -33,3 +33,4 @@ export const PropertyCardHoverContainer: FC<{ children: ReactNode; onClick?: () 
 };
 
 export default PropertyCardHoverContainer;
+

@@ -192,3 +192,4 @@ export const MediaThumbnail = styled.img`
   object-fit: cover;
   border-radius: 4px;
 `;
+

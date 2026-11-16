@@ -90,3 +90,4 @@ export const VirtualTourHotspotOverlay: FC = () => {
   );
 };
 export default VirtualTourHotspotOverlay;
+

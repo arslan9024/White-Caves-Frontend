@@ -322,3 +322,4 @@ export const ExtendedWidgetsPanel: React.FC<{ activeTab: string }> = ({ activeTa
       return null;
   }
 };
+

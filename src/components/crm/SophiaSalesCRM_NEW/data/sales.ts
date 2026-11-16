@@ -50,3 +50,4 @@ export const AGENTS: Agent[] = [
   { id: 3, name: 'Aisha Khan', deals: 5, value: 'AED 15.8M', conversion: 72, avatar: '👩‍💻' },
   { id: 4, name: 'Omar Malik', deals: 4, value: 'AED 12.1M', conversion: 48, avatar: '👨‍💻' }
 ];
+

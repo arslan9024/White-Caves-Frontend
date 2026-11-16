@@ -53,3 +53,4 @@ export const MAGNOLIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as magnolia_supervisorExport;
+

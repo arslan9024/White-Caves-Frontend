@@ -110,3 +110,4 @@ export const DragHandle = styled.div`
     background-color: rgba(239, 68, 68, 0.5);
   }
 `;
+

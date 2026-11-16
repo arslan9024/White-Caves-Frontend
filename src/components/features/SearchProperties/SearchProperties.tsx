@@ -400,3 +400,4 @@ export const SearchProperties: React.FC = () => {
 };
 
 export default SearchProperties;
+

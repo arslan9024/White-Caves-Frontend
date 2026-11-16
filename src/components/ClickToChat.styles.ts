@@ -287,3 +287,4 @@ export const ChatAppBtn = styled.button<{ $appColor?: string }>`
     height: 24px;
   }
 `;
+

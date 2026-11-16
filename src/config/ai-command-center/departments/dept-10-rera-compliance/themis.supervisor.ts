@@ -53,3 +53,4 @@ export const THEMIS_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as themis_supervisorExport;
+

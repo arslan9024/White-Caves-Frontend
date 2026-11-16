@@ -150,3 +150,4 @@ export async function fetchAnalyticsDashboardData(): Promise<AnalyticsData> {
     topAgents,
   };
 }
+

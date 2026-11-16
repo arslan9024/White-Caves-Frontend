@@ -8,3 +8,4 @@ export function isCampaignActive(): boolean {
 export function setCampaignActive(active: boolean): void {
   campaignActive = active;
 }
+

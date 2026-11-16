@@ -221,3 +221,4 @@ export function InstallPrompt({ onClose }) {
     </div>
   );
 }
+

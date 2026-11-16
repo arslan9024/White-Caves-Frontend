@@ -21,3 +21,4 @@ describe('VrFullscreenModal Component', () => {
     expect(screen.getByTestId('vr-fullscreen-modal')).toBeDefined();
   });
 });
+

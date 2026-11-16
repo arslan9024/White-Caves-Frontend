@@ -28,3 +28,4 @@ export const LEVEL_COLORS: Record<number, string> = {
   2: '#0EA5E9',
   1: '#94A3B8',
 };
+

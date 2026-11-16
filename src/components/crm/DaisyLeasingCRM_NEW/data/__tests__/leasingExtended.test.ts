@@ -18,3 +18,4 @@ describe('leasingExtended data module', () => {
     expect(Array.isArray(RENEWAL_RECORDS)).toBe(true);
   });
 });
+

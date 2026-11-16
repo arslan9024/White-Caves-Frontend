@@ -81,3 +81,4 @@ describe('CurrencyContext & Global Multi-Currency Engine', () => {
     expect(screen.getByTestId('formatted-price').textContent).toContain('¥');
   });
 });
+

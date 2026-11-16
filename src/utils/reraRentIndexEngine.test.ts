@@ -88,3 +88,4 @@ describe('RERA Rent Index Engine — Decree No. 43 of 2013', () => {
     expect(result.maxPermissibleIncreasePct).toBe(0);
   });
 });
+

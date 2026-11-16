@@ -9,3 +9,4 @@ describe('FloatingHeroSearchPill.style', () => {
     expect(styles.TabBtn).toBeDefined();
   });
 });
+

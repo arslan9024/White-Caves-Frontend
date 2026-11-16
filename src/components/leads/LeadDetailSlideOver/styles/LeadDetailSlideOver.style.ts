@@ -73,3 +73,4 @@ export const DetailRow = styled.div`
 
 export const DetailLabel = styled.span`font-size: 0.8125rem; color: #94a3b8; font-weight: 500;`;
 export const DetailValue = styled.span`font-size: 0.8125rem; color: #1e293b; font-weight: 600;`;
+

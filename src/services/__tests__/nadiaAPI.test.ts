@@ -140,3 +140,4 @@ describe('nadiaAPI Wave 03 contract mapping', () => {
     expect(url).toContain('limit=20');
   });
 });
+

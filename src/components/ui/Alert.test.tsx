@@ -18,3 +18,4 @@ describe('Alert Component', () => {
     expect(handleDismiss).toHaveBeenCalledTimes(1);
   });
 });
+

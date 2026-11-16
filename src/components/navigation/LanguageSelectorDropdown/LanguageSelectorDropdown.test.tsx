@@ -21,3 +21,4 @@ describe('LanguageSelectorDropdown Component', () => {
     expect(onLanguageChange).toHaveBeenCalledWith('ar');
   });
 });
+

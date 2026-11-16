@@ -17,3 +17,4 @@ describe('PredictiveTenantRetention Component', () => {
     expect(screen.getByText('Nadia Call Active')).toBeInTheDocument();
   });
 });
+

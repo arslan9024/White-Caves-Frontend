@@ -56,3 +56,4 @@ export interface AiAssistantManagerMetrics {
   supervisors: number;
   totalWorkload: number;
 }
+

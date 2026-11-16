@@ -17,3 +17,4 @@ describe('InstitutionalTeaserDeckBuilder Component', () => {
     expect(screen.getByText(/✓ Blind Institutional Teaser Deck Compiled/i)).toBeDefined();
   });
 });
+

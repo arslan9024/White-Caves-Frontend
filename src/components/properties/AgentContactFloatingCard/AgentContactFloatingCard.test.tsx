@@ -36,3 +36,4 @@ describe('AgentContactFloatingCard', () => {
     openSpy.mockRestore();
   });
 });
+

@@ -181,3 +181,4 @@ export const CustomersGrid = styled.div`
   gap: 20px;
   margin-bottom: 40px;
 `;
+

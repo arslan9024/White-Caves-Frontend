@@ -1,218 +1,22 @@
 // @ts-nocheck
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import { initialState } from "./kycAml/initialState";
+import {
+  fetchKYCProfiles,
+  fetchVerificationQueue,
+  fetchAMLAlerts,
+  fetchComplianceStats,
+  createKYCProfile,
+  updateKYCProfile,
+  verifyDocument,
+  runPEPScreening,
+  runSanctionsCheck,
+  resolveAMLAlert,
+} from "./kycAml/thunks";
 
-export const fetchKYCProfiles = createAsyncThunk(
-  'kycAml/fetchProfiles',
-  async ({ status, riskLevel, limit = 50 }, { rejectWithValue }) => {
-    try {
-      const params = new URLSearchParams();
-      if (status) params.append('status', status);
-      if (riskLevel) params.append('riskLevel', riskLevel);
-      params.append('limit', limit);
-      
-      const response = await fetch(`/api/compliance/kyc?${params}`);
-      if (!response.ok) throw new Error('Failed to fetch profiles');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const fetchVerificationQueue = createAsyncThunk(
-  'kycAml/fetchQueue',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await fetch('/api/compliance/verification-queue');
-      if (!response.ok) throw new Error('Failed to fetch queue');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const fetchAMLAlerts = createAsyncThunk(
-  'kycAml/fetchAlerts',
-  async ({ status, severity, limit = 50 }, { rejectWithValue }) => {
-    try {
-      const params = new URLSearchParams();
-      if (status) params.append('status', status);
-      if (severity) params.append('severity', severity);
-      params.append('limit', limit);
-      
-      const response = await fetch(`/api/compliance/aml-alerts?${params}`);
-      if (!response.ok) throw new Error('Failed to fetch alerts');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const fetchComplianceStats = createAsyncThunk(
-  'kycAml/fetchStats',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await fetch('/api/compliance/stats');
-      if (!response.ok) throw new Error('Failed to fetch stats');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const createKYCProfile = createAsyncThunk(
-  'kycAml/createProfile',
-  async (profileData, { rejectWithValue }) => {
-    try {
-      const response = await fetch('/api/compliance/kyc', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profileData)
-      });
-      if (!response.ok) throw new Error('Failed to create profile');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const updateKYCProfile = createAsyncThunk(
-  'kycAml/updateProfile',
-  async ({ id, data }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`/api/compliance/kyc/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) throw new Error('Failed to update profile');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const verifyDocument = createAsyncThunk(
-  'kycAml/verifyDocument',
-  async ({ profileId, documentType, documentData }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`/api/compliance/kyc/${profileId}/documents/${documentType}/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(documentData)
-      });
-      if (!response.ok) throw new Error('Document verification failed');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const runPEPScreening = createAsyncThunk(
-  'kycAml/pepScreening',
-  async (screeningData, { rejectWithValue }) => {
-    try {
-      const response = await fetch('/api/compliance/pep-screen', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(screeningData)
-      });
-      if (!response.ok) throw new Error('PEP screening failed');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const runSanctionsCheck = createAsyncThunk(
-  'kycAml/sanctionsCheck',
-  async (checkData, { rejectWithValue }) => {
-    try {
-      const response = await fetch('/api/compliance/sanctions-check', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(checkData)
-      });
-      if (!response.ok) throw new Error('Sanctions check failed');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const resolveAMLAlert = createAsyncThunk(
-  'kycAml/resolveAlert',
-  async ({ alertId, resolution }, { rejectWithValue }) => {
-    try {
-      const response = await fetch(`/api/compliance/aml-alerts/${alertId}/resolve`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(resolution)
-      });
-      if (!response.ok) throw new Error('Failed to resolve alert');
-      return response.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-const initialState = {
-  profiles: {
-    data: [],
-    loading: false,
-    error: null,
-    pagination: { page: 1, limit: 50, total: 0 }
-  },
-  verificationQueue: {
-    data: [],
-    loading: false,
-    error: null
-  },
-  alerts: {
-    data: [],
-    loading: false,
-    error: null,
-    unreadCount: 0
-  },
-  pepScreening: {
-    results: [],
-    loading: false,
-    error: null
-  },
-  sanctionsCheck: {
-    results: [],
-    loading: false,
-    error: null
-  },
-  stats: {
-    data: null,
-    loading: false,
-    error: null
-  },
-  notifications: [],
-  activeProfile: null,
-  selectedAlert: null,
-  filters: {
-    status: 'all',
-    riskLevel: 'all',
-    dateRange: null,
-    search: ''
-  },
-  ui: {
-    sidePanel: null,
-    activeTab: 'queue',
-    showNotifications: false
-  }
-};
+// ── Re-exports ──
+export * from "./kycAml/thunks";
+export * from "./kycAml/selectors";
 
 const kycAmlSlice = createSlice({
   name: 'kycAml',
@@ -413,27 +217,6 @@ export const {
   realTimeProfileUpdate
 } = kycAmlSlice.actions;
 
-export const selectKYCProfiles = (state) => state.kycAml?.profiles || initialState.profiles;
-export const selectVerificationQueue = (state) => state.kycAml?.verificationQueue || initialState.verificationQueue;
-export const selectAMLAlerts = (state) => state.kycAml?.alerts || initialState.alerts;
-export const selectPEPScreening = (state) => state.kycAml?.pepScreening || initialState.pepScreening;
-export const selectSanctionsCheck = (state) => state.kycAml?.sanctionsCheck || initialState.sanctionsCheck;
-export const selectComplianceStats = (state) => state.kycAml?.stats || initialState.stats;
-export const selectActiveProfile = (state) => state.kycAml?.activeProfile || null;
-export const selectSelectedAlert = (state) => state.kycAml?.selectedAlert || null;
-export const selectFilters = (state) => state.kycAml?.filters || initialState.filters;
-export const selectNotifications = (state) => state.kycAml?.notifications || [];
-export const selectUnreadNotifications = (state) => 
-  (state.kycAml?.notifications || []).filter(n => !n.read);
-export const selectUIState = (state) => state.kycAml?.ui || initialState.ui;
-
-export const selectHighRiskProfiles = (state) => 
-  (state.kycAml?.profiles?.data || []).filter(p => p.riskLevel === 'HIGH' || p.riskLevel === 'PROHIBITED');
-
-export const selectPendingVerifications = (state) =>
-  (state.kycAml?.verificationQueue?.data || []).filter(p => p.status === 'PENDING_VERIFICATION');
-
-export const selectActiveAlerts = (state) =>
-  (state.kycAml?.alerts?.data || []).filter(a => a.status === 'OPEN' || a.status === 'INVESTIGATING');
 
 export default kycAmlSlice.reducer;
+

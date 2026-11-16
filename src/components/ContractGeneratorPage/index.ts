@@ -10,3 +10,4 @@ export {
   ContractGeneratorPageView,
   ContractGeneratorPageView as ContractGeneratorPage,
 } from './ContractGeneratorPage.view';
+

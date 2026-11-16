@@ -191,3 +191,4 @@ class PwaOfflineCacheService {
 
 const pwaOfflineCacheService = new PwaOfflineCacheService();
 export default pwaOfflineCacheService;
+

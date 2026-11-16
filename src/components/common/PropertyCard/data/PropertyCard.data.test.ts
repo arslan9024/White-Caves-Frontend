@@ -11,3 +11,4 @@ describe('PropertyCard.data', () => {
     expect(PROPERTY_CARD_TEXT.favoriteAriaRemove).toBeTruthy();
   });
 });
+

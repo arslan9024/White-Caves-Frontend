@@ -42,3 +42,4 @@ describe('ErmsErdDdlExporter (Pillar 3 Verification)', () => {
     expect(screen.getByText(/"id" VARCHAR\(255\) NOT NULL PRIMARY KEY/)).toBeInTheDocument();
   });
 });
+

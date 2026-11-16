@@ -34,3 +34,4 @@ describe('PriceRangeFilter — alert elimination', () => {
     expect(onChange).toHaveBeenCalledWith(100000, 500000);
   });
 });
+

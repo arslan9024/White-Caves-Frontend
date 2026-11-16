@@ -73,3 +73,4 @@ export const typeConfig = {
   price: { color: '#F59E0B', icon: BarChart2 },
   news: { color: '#8B5CF6', icon: Bell },
 };
+

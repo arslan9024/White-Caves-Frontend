@@ -10,3 +10,4 @@ export * from './HenryDocumentHub.logic';
 export * from './HenryDocumentHub.fallback';
 export * from './HenryDocumentHub.editor';
 export { HenryDocumentHubView as default, HenryDocumentHubView } from './HenryDocumentHub.view';
+

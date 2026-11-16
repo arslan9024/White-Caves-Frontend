@@ -26,3 +26,4 @@ describe('OfflineAlertBanner Component', () => {
     expect(screen.getByText(/You are currently offline/i)).toBeDefined();
   });
 });
+

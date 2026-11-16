@@ -54,3 +54,4 @@ export const CHAR_VALUES: Readonly<Record<string, number>> = (() => {
 })();
 
 export const WEIGHTS: readonly number[] = [7, 3, 1];
+

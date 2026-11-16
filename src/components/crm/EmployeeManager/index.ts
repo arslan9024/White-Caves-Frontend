@@ -20,3 +20,4 @@ export * from './EmployeeDetailDossier';
 export * from './EmployeeOverviewView';
 export * from './EmployeeManagerView';
 export { EmployeeManagerView as default } from './EmployeeManagerView';
+

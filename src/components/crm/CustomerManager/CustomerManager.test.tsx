@@ -233,3 +233,4 @@ describe('CustomerManager Module Tests (12-Way Blueprint)', () => {
     expect(result.meritBonusXp).toBeGreaterThanOrEqual(100);
   });
 });
+

@@ -150,3 +150,4 @@ export const AdaArchitectureHub: FC<AdaArchitectureHubProps> = ({ onNavigateAssi
 };
 
 export default AdaArchitectureHub;
+

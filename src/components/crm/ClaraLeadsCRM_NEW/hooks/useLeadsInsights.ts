@@ -56,3 +56,4 @@ export function useLeadsInsights(
     return { qualifiedPercentage, avgDealSize, leadsByType, leadsBySize };
   }, [leads, stats]);
 }
+

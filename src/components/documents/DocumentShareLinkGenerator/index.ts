@@ -1,1 +1,2 @@
 export { DocumentShareLinkGenerator } from './DocumentShareLinkGenerator';
+

@@ -22,3 +22,4 @@ describe('PersonalDetailsInlineEditor Component', () => {
     expect(screen.getByRole('button', { name: /Edit Details/i })).toBeDefined();
   });
 });
+

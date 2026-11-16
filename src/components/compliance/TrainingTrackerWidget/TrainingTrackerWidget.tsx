@@ -93,3 +93,4 @@ export const TrainingTrackerWidget: FC = () => {
     </TrackerContainer>
   );
 };
+

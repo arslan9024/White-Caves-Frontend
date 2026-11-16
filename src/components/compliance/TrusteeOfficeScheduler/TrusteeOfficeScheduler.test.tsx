@@ -18,3 +18,4 @@ describe('TrusteeOfficeScheduler Component', () => {
     expect(screen.getByText(/Appointment Confirmed!/i)).toBeDefined();
   });
 });
+

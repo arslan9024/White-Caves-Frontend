@@ -12,3 +12,4 @@ describe('DirectorsLoanTab', () => {
     expect(screen.getByText(/Property Finder Portal August Subscription/i)).toBeInTheDocument();
   });
 });
+

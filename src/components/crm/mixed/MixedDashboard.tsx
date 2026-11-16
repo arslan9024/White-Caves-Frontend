@@ -99,3 +99,4 @@ export function DashboardSection({ title, icon, children, className = '' }) {
     </motion.div>
   );
 }
+

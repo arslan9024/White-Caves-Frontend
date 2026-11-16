@@ -61,3 +61,4 @@ export const MilestoneNode = styled.div<{ $completed: boolean }>`
     margin-top: 2px;
   }
 `;
+

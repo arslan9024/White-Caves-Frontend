@@ -36,3 +36,4 @@ export const CommunityHeatmap: FC = () => {
   );
 };
 export default CommunityHeatmap;
+

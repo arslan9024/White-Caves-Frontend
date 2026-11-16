@@ -14,3 +14,4 @@ describe('LeadNotificationToast.style', () => {
     expect(styles.SoundToggle).toBeDefined();
   });
 });
+

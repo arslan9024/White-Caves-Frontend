@@ -272,3 +272,4 @@ export const OPERATIONS_CRM_MODULES: Record<string, CRMModuleDefinition> = {
     Component: MarketAnalyticsModule,
   },
 };
+

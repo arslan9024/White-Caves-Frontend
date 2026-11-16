@@ -19,3 +19,4 @@ export const ModuleChip = styled.span`
   display: inline-block; padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; font-weight: 600; margin: 4px;
   background: var(--color-eff6ff, #EFF6FF); color: var(--color-1d4ed8, #1D4ED8); border: 1px solid var(--color-bfdbfe, #BFDBFE);
 `;
+

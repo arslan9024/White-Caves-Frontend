@@ -209,3 +209,4 @@ const LeasesTab: React.FC<LeasesTabProps> = ({ leases, searchQuery, onSearchChan
 };
 
 export default LeasesTab;
+

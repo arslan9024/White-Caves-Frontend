@@ -38,3 +38,4 @@ export function trackHomepageEvent(event: HomepageEventName, payload: EventPaylo
   window.dataLayer.push(eventData);
   window.dispatchEvent(new CustomEvent('wc-homepage-event', { detail: eventData }));
 }
+

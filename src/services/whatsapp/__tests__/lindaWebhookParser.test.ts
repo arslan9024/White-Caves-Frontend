@@ -76,3 +76,4 @@ describe('Linda WhatsApp Webhook & Intent Parser Engine', () => {
     expect(parsed?.extractedParameters.communities).toContain('DAMAC Hills 2');
   });
 });
+

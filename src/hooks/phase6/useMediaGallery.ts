@@ -128,3 +128,4 @@ export const useMediaGallery = (initialFiles: MediaFile[] = []) => {
 };
 
 export default useMediaGallery;
+

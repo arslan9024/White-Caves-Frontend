@@ -82,3 +82,4 @@ const RealtimeTab: React.FC<RealtimeTabProps> = ({ connections, realtimeStats })
 };
 
 export default RealtimeTab;
+

@@ -53,3 +53,4 @@ describe('DubaiGeospatialClusterViewer Component', () => {
     expect(screen.getByText(/9,378 units mapped/i)).toBeInTheDocument();
   });
 });
+

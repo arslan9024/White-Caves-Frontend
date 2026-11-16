@@ -28,3 +28,4 @@ describe('ContextualDashboardRenderer Component', () => {
     expect(container).toBeDefined();
   });
 });
+

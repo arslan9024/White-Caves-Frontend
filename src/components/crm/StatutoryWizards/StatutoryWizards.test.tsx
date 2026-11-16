@@ -107,3 +107,4 @@ describe('StatutoryWizardModal Component', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

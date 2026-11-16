@@ -16,3 +16,4 @@ describe('AIAvatarHub Component', () => {
     expect(screen.getByText('Sentinel')).toBeDefined();
   });
 });
+

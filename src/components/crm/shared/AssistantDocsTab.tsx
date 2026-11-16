@@ -178,3 +178,4 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
 };
 
 export default AssistantDocsTab;
+

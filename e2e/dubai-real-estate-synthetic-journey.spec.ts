@@ -72,3 +72,4 @@ test.describe('Dubai Real Estate Synthetic Journey E2E', () => {
     await expect(dashboardTitle).toBeVisible();
   });
 });
+

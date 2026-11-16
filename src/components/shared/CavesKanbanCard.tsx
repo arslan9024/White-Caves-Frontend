@@ -83,3 +83,4 @@ export const CavesKanbanCard: React.FC<CavesKanbanCardProps> = ({
 };
 
 export default CavesKanbanCard;
+

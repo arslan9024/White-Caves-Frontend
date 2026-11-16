@@ -49,3 +49,4 @@ const DepartmentNode: Model<IDepartmentNode> =
 
 export { DepartmentNode };
 export default DepartmentNode;
+

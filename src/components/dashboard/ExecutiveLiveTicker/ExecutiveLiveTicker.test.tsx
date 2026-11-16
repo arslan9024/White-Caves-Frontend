@@ -11,3 +11,4 @@ describe('ExecutiveLiveTicker Component', () => {
     expect(screen.getAllByText(/Ejari Lease Contract Verified/i).length).toBeGreaterThan(0);
   });
 });
+

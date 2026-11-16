@@ -11,3 +11,4 @@ export const SOURCE_DATA: SourceData[] = [
 export function calcPercent(count: number, total: number): number {
   return Math.round((count / total) * 100);
 }
+

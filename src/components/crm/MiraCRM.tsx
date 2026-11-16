@@ -6,3 +6,4 @@ export * from './MiraCRM/MiraCRM.logic';
 export * from './MiraCRM/MiraCRM.panels';
 
 export default MiraCRMView;
+

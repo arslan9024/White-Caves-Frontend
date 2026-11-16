@@ -11,3 +11,4 @@ describe('OffPlanAssignmentCalculator Component', () => {
     expect(screen.getByText(/ASSIGNMENT ELIGIBLE/i)).toBeDefined();
   });
 });
+

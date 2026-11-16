@@ -11,3 +11,4 @@ describe('MobileLeadCardStack.style', () => {
     expect(styles.ActionRow).toBeDefined();
   });
 });
+

@@ -30,3 +30,4 @@ export const setStoredUser = (user: unknown): void =>
 export const removeStoredUser = (): void =>
   void localStorage.removeItem(AUTH_USER_KEY);
 
+

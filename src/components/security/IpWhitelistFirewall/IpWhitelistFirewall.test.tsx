@@ -13,3 +13,4 @@ describe('IpWhitelistFirewall Component', () => {
     expect(screen.getByText('194.187.168.22')).toBeDefined();
   });
 });
+

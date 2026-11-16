@@ -30,3 +30,4 @@ describe('LeadSLADecayEngine Utility', () => {
     expect(result.remainingValueScore).toBe(5);
   });
 });
+

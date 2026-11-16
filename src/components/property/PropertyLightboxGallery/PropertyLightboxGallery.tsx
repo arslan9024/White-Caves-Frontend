@@ -56,3 +56,4 @@ export const PropertyLightboxGallery: FC = () => {
 };
 
 export default PropertyLightboxGallery;
+

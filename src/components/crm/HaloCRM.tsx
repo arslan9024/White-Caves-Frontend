@@ -126,3 +126,4 @@ const HaloCRM = () => {
 };
 
 export default HaloCRM;
+

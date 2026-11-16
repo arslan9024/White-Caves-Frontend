@@ -332,3 +332,4 @@ export class HenryEmiratesIdScannerService {
 
 export const henryEmiratesIdScannerService = new HenryEmiratesIdScannerService();
 export default henryEmiratesIdScannerService;
+

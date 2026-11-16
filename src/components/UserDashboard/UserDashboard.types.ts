@@ -47,3 +47,4 @@ export interface PropertyItem {
   sqft?: number;
   images?: string[];
 }
+

@@ -152,3 +152,4 @@ export function parseMrzPayload(rawLines: string[]): MrzParsedData | null {
   return null;
 }
 
+

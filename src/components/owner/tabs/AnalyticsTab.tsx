@@ -217,3 +217,4 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ data, loading }) => {
 };
 
 export default React.memo(AnalyticsTab);
+

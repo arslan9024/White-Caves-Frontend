@@ -102,3 +102,4 @@ const ApplicationsTab: React.FC<ApplicationsTabProps> = ({ systemComponents }) =
 };
 
 export default ApplicationsTab;
+

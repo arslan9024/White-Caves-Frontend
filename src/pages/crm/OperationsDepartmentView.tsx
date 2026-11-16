@@ -45,3 +45,4 @@ export const OperationsDepartmentView: FC = () => {
 };
 
 export default OperationsDepartmentView;
+

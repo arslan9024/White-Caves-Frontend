@@ -297,3 +297,4 @@ describe('RoleGuard', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/profile');
   });
 });
+

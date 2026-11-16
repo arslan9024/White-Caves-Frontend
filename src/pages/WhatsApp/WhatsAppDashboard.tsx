@@ -257,3 +257,4 @@ export const WhatsAppDashboard: React.FC = () => {
     </Container>
   );
 };
+

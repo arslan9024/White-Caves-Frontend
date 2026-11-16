@@ -14,3 +14,4 @@ describe('DepartmentAssignmentBadge Component', () => {
     expect(screen.getByText(/Commercial Advisory/i)).toBeDefined();
   });
 });
+

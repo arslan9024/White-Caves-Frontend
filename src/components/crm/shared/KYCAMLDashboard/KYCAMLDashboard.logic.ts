@@ -65,3 +65,4 @@ export function useKycAmlLogic(showTabs: string[] = ['queue']) {
     handleReject,
   };
 }
+

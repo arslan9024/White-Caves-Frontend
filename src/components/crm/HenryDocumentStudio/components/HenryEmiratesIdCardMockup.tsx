@@ -197,3 +197,4 @@ export const HenryEmiratesIdCardMockup: FC<HenryEmiratesIdCardMockupProps> = ({
     </div>
   );
 };
+

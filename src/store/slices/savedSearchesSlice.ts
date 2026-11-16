@@ -197,3 +197,4 @@ export const selectMatchResults = (state: RootWithSavedSearches) =>
 export const selectSavedSearchCount = createSelector(selectSavedSearches, items => items.length);
 
 export default savedSearchesSlice.reducer;
+

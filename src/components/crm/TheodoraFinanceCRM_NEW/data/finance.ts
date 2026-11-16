@@ -35,3 +35,4 @@ export const EXPENSES: Expense[] = [
   { id: 7, category: 'Furniture and Equipment', description: 'Meeting Room Smart Screens & Desks (1510)', amount: 28000, date: '2024-01-05', status: 'approved' },
   { id: 8, category: 'Cost of Goods Sold', description: 'Direct Property Listing Fulfilment (5000)', amount: 35000, date: '2024-01-04', status: 'processed' }
 ];
+

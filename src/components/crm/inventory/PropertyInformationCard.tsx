@@ -6,3 +6,4 @@ export * from './PropertyInformationCard/PropertyInformationCard.logic';
 export * from './PropertyInformationCard/PropertyInformationCard.panels';
 
 export default PropertyInformationCardView;
+

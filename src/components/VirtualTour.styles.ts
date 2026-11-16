@@ -314,3 +314,4 @@ export const ViewsCount = styled.span`
   color: ${colors.primary};
   font-weight: ${typography.weights.semibold};
 `;
+

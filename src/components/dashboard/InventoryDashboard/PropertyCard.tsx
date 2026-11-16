@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import './PropertyCard.css';
 
 const PropertyCard = ({
@@ -126,3 +126,4 @@ const PropertyCard = ({
 };
 
 export default PropertyCard;
+

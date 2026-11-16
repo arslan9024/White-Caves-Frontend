@@ -285,3 +285,4 @@ const PanoramaContent: FC<{ activeRoom: string; room: typeof ROOMS[0] }> = ({ ro
 );
 
 export default VrFullscreenModal;
+

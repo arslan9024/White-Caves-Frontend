@@ -17,3 +17,4 @@ describe('DepartmentViews Component', () => {
     }
   });
 });
+

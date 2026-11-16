@@ -230,3 +230,4 @@ export function scanBouncedCheques(cheques: PDCCheque[]): BouncedChequeSummary[]
       actionRequired: 'Open bounce escalation record and notify landlord within 24h.',
     }));
 }
+

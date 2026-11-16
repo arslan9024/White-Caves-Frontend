@@ -235,3 +235,4 @@ export const SQATab: React.FC<SQATabProps> = () => {
     </div>
   );
 };
+

@@ -629,3 +629,4 @@ class HenryTenancyContractScannerService {
 
 export const henryTenancyContractScannerService = new HenryTenancyContractScannerService();
 export default henryTenancyContractScannerService;
+

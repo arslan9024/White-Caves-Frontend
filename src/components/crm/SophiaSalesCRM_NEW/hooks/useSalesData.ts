@@ -171,3 +171,4 @@ export const useSalesData = () => {
     features: SOPHIA_SALES_FEATURES,
   };
 };
+

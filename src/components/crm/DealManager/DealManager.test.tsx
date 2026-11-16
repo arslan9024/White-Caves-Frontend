@@ -235,3 +235,4 @@ describe('DealManager Suite (12-Way Co-Location Blueprint)', () => {
     expect(result.complianceAttestationToken).toContain('ATTEST-FTA-DEAL-001');
   });
 });
+

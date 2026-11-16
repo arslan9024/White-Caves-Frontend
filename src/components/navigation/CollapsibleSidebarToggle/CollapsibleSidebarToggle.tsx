@@ -42,3 +42,4 @@ export const CollapsibleSidebarToggle: FC = () => {
 };
 
 export default CollapsibleSidebarToggle;
+

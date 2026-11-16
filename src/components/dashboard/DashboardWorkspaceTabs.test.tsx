@@ -49,3 +49,4 @@ describe('DashboardWorkspaceTabs Component', () => {
     expect(screen.getByTestId('fallback-loader')).toBeInTheDocument();
   });
 });
+

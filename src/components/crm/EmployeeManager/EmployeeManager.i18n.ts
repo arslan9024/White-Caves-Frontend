@@ -79,3 +79,4 @@ export function getEmployeeI18n(lang: SupportedLanguage = 'en'): EmployeeTransla
 }
 
 export default EMPLOYEE_TRANSLATIONS;
+

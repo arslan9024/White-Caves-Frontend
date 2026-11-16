@@ -18,3 +18,4 @@ export const ActionBtn = styled.button<{ $variant?: 'danger' }>`
   &:hover { opacity: 0.85; }
 `;
 export const Divider = styled.div`width: 1px; height: 20px; background: #475569;`;
+

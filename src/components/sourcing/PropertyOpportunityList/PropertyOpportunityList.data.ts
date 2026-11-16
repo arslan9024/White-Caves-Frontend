@@ -98,3 +98,4 @@ export const getConfidenceColor = (confidence: number) => {
   if (confidence >= 70) return '#F59E0B';
   return '#EF4444';
 };
+

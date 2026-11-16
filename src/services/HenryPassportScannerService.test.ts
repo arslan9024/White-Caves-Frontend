@@ -161,3 +161,4 @@ describe('Henry passport source extraction', () => {
     expect(canUseScan({ ...reviewed(), dateOfBirth: '31/02/1990' })).toBe(false);
   });
 });
+

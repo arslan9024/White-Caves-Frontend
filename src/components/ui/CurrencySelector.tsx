@@ -40,3 +40,4 @@ export const CurrencySelector: React.FC<CurrencySelectorProps> = ({
 };
 
 export default CurrencySelector;
+

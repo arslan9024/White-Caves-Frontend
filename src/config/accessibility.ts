@@ -257,3 +257,4 @@ export const AccessibleComponentAPI = {
   role: 'string (ARIA role)',
   tabIndex: 'number (-1 for removing from tab order)',
 };
+

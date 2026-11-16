@@ -3,3 +3,4 @@ declare module 'pannellum-react' {
 
   export const Pannellum: ComponentType<Record<string, unknown>>;
 }
+

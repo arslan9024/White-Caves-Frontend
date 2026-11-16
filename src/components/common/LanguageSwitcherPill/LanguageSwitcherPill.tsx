@@ -42,3 +42,4 @@ export const LanguageSwitcherPill: FC<LanguageSwitcherPillProps> = ({
 };
 
 export default LanguageSwitcherPill;
+

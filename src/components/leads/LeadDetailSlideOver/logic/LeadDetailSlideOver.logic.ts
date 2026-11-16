@@ -54,3 +54,4 @@ export function useLeadDetailSlideOverLogic(onClose: () => void) {
 
   return { lead, activeTab, setActiveTab, onClose };
 }
+

@@ -52,3 +52,4 @@ describe('ServiceWorkerRegistrationBanner', () => {
     fireEvent.click(retryBtn);
   });
 });
+

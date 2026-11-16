@@ -230,3 +230,4 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
 };
 
 export default EmployeeManagerView;
+

@@ -386,3 +386,4 @@ const RentalManagementPage: FC = () => {
 };
 
 export default RentalManagementPage;
+

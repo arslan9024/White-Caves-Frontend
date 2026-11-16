@@ -14,3 +14,4 @@ describe('CryptoPaymentSimulator', () => {
     expect(screen.getByText('USDC')).toBeDefined();
   });
 });
+

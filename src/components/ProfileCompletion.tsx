@@ -112,3 +112,4 @@ export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
     </div>
   );
 }
+

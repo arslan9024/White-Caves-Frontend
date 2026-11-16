@@ -234,3 +234,4 @@ export const ROLE_DEFAULT_PERMISSIONS: Record<UserRole, string[]> = {
   contractor: ['can_claim_service_tickets', 'can_upload_repair_photos', 'can_submit_invoices'],
   guest: ['can_view_properties', 'can_use_calculators'],
 };
+

@@ -14,3 +14,4 @@ export const AURORA_HUB_TEXT = {
   copyLinkBtn: '🔗 Copy Spec Link',
   jumpToAssistant: 'Jump to Assistant',
 };
+

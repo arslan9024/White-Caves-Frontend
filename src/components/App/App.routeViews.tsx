@@ -72,3 +72,4 @@ export function createRouteRenderers(user: ReturnType<typeof useAppRuntime>['use
     renderProtectedRedirect,
   };
 }
+

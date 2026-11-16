@@ -15,3 +15,4 @@ describe('ContractTimeline Component', () => {
     expect(screen.getByText(/Keys & Handover/i)).toBeDefined();
   });
 });
+

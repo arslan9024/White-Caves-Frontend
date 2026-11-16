@@ -35,3 +35,4 @@ describe('useTotp2faSetupLogic Hook', () => {
     expect(result.current.errorMessage).toBe('');
   });
 });
+

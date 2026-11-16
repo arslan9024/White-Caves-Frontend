@@ -282,3 +282,4 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
 };
 
 export default SidebarAiAssistantsList;
+

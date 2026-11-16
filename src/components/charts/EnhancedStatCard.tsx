@@ -137,3 +137,4 @@ const EnhancedStatCard: React.FC<EnhancedStatCardProps> = ({
 };
 
 export default React.memo(EnhancedStatCard);
+

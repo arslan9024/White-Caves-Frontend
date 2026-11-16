@@ -329,3 +329,4 @@ export default function MarketingSEOTools({ compact = false }) {
     </div>
   );
 }
+

@@ -8,3 +8,4 @@ export const useWhatsAppWidgetLogic = () => {
 
   return { openWhatsApp };
 };
+

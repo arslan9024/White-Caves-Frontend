@@ -8,22 +8,22 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { TuringOrchestrator, turingOrchestrator } from '../../.agents/aegis/core-loop/turingOrchestrator';
-import { TuringQueue } from '../../.agents/aegis/core-loop/turingQueue';
-import { RULES_VERSION, bumpRulesVersion } from '../../.agents/aegis/core-loop/turingConstants';
-import { registerPlugin, pluginRegistry } from '../../.agents/aegis/core-loop/turingPlugin';
+import { TuringOrchestrator, turingOrchestrator } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingOrchestrator';
+import { TuringQueue } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingQueue';
+import { RULES_VERSION, bumpRulesVersion } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingConstants';
+import { registerPlugin, pluginRegistry } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingPlugin';
 import {
   isOpen,
   recordFailure,
   resetFailures,
   getFailureCount,
-} from '../../.agents/aegis/core-loop/turingCircuitBreaker';
-import { computeHash, verifyPlanIntegrity, saveHashes } from '../../.agents/aegis/core-loop/turingIntegrity';
-import { debounce } from '../../.agents/aegis/core-loop/turingDebounce';
-import { getMetrics, inc, set } from '../../.agents/aegis/core-loop/turingMetrics';
-import { runWithRequestId, getCurrentRequestId } from '../../.agents/aegis/core-loop/turingRequestContext';
-import { serializeError } from '../../.agents/aegis/core-loop/turingErrorUtil';
-import { OrchestratorError, PlanReadError, RuleEvalError } from '../../.agents/aegis/core-loop/turingErrors';
+} from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingCircuitBreaker';
+import { computeHash, verifyPlanIntegrity, saveHashes } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingIntegrity';
+import { debounce } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingDebounce';
+import { getMetrics, inc, set } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingMetrics';
+import { runWithRequestId, getCurrentRequestId } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingRequestContext';
+import { serializeError } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingErrorUtil';
+import { OrchestratorError, PlanReadError, RuleEvalError } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingErrors';
 
 describe('Phase 9 — Turing Orchestrator Stress, Hot-Reload, and Fuzz Suite', () => {
   beforeEach(() => {
@@ -179,3 +179,4 @@ describe('Phase 9 — Turing Orchestrator Stress, Hot-Reload, and Fuzz Suite', (
     expect(r3).toBe(42);
   });
 });
+

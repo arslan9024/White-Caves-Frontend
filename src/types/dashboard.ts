@@ -186,3 +186,4 @@ export interface DashboardSystemHealth {
   database?: string;
   [key: string]: unknown;
 }
+

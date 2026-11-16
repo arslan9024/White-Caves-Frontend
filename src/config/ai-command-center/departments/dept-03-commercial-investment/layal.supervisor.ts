@@ -53,3 +53,4 @@ export const LAYAL_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as layal_supervisorExport;
+

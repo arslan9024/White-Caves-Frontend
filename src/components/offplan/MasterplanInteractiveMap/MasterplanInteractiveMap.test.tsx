@@ -18,3 +18,4 @@ describe('MasterplanInteractiveMap Component', () => {
     expect(screen.getAllByText(/Lagoon Marina Precinct/i).length).toBeGreaterThan(1);
   });
 });
+

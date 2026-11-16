@@ -67,3 +67,4 @@ const DashboardWorkspaceTabs: FC<DashboardWorkspaceTabsProps> = ({
 };
 
 export default DashboardWorkspaceTabs;
+

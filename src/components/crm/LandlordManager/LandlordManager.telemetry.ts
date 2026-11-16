@@ -43,3 +43,4 @@ export function trackLandlordEvent(
 export function getLandlordAuditTrail(): LandlordTelemetryEvent[] {
   return [...auditLedger];
 }
+

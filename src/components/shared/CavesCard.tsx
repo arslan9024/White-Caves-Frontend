@@ -64,3 +64,4 @@ export const CavesCard: React.FC<CavesCardProps> = ({
 };
 
 export default CavesCard;
+

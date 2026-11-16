@@ -335,3 +335,4 @@ export const DepartmentGridDeck: FC<DepartmentGridDeckProps> = ({
     </DepartmentsGrid>
   );
 };
+

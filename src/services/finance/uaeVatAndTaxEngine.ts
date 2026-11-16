@@ -98,3 +98,4 @@ export function calculateDealVatAndCorporateTax(input: DealTaxInput): VatAndTaxB
     }
   };
 }
+

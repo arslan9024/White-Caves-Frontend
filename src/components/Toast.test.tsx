@@ -137,3 +137,4 @@ describe('Toast system', () => {
     expect(container.getAttribute('aria-live')).toBe('polite');
   });
 });
+

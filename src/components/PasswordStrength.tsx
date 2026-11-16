@@ -43,3 +43,4 @@ const PasswordStrength: React.FC<Props> = ({ password }) => {
 };
 
 export default PasswordStrength;
+

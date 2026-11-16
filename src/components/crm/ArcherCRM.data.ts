@@ -114,3 +114,4 @@ export const getVelocityBadge = v => {
   // eslint-disable-next-line security/detect-object-injection
   return map[v] || '#6B7280';
 };
+

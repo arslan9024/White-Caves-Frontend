@@ -33,3 +33,4 @@ const PortalLayout: FC<PortalLayoutProps> = ({ portalType, children }) => (
 );
 
 export default PortalLayout;
+

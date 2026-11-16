@@ -17,3 +17,4 @@ describe('ReraComplianceChecklist Component', () => {
     expect(screen.getByText(/4\/5/i)).toBeDefined();
   });
 });
+

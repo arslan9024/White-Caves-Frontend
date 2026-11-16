@@ -126,3 +126,4 @@ export const SidebarActivityBar: FC<SidebarActivityBarProps> = ({
     </ActivityBar>
   );
 };
+

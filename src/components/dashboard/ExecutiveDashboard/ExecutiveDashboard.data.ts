@@ -178,3 +178,4 @@ export const RECENT_ACTIVITIES: ActivityItem[] = [
     timestamp: '45 min ago',
   },
 ];
+

@@ -53,3 +53,4 @@ export const CLEMENTIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as clementia_supervisorExport;
+

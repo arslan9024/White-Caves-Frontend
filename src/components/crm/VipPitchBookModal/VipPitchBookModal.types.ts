@@ -22,3 +22,4 @@ export interface VipPitchBookData {
   brokerLicenseRera: string;
   generatedDate: string;
 }
+

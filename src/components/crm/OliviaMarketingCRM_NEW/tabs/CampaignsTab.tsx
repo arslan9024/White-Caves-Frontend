@@ -111,3 +111,4 @@ export default function CampaignsTab({ state }: CampaignsTabProps) {
     </div>
   );
 }
+

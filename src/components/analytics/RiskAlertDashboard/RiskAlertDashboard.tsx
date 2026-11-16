@@ -66,3 +66,4 @@ export const RiskAlertDashboard: FC = () => {
   );
 };
 export default RiskAlertDashboard;
+

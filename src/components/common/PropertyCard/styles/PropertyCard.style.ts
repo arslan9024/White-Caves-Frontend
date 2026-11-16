@@ -4,3 +4,4 @@
  */
 
 export * from '../PropertyCard.styles';
+

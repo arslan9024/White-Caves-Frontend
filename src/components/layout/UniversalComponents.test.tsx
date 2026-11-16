@@ -23,3 +23,4 @@ describe('UniversalComponents Component', () => {
     expect(container.firstChild).toBeNull();
   });
 });
+

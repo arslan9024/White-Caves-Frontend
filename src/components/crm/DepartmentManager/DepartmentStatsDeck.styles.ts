@@ -63,3 +63,4 @@ export const StatCard = styled.div<{ $accent?: string }>`
     }
   }
 `;
+

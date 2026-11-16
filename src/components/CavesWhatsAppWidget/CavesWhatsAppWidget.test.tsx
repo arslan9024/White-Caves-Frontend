@@ -63,3 +63,4 @@ describe('CavesWhatsAppWidget', () => {
     expect(openSpy.mock.calls[0][1]).toBe('_blank');
   });
 });
+

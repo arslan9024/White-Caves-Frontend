@@ -333,3 +333,4 @@ export const InventoryDashboard: React.FC = () => {
 };
 
 export default InventoryDashboard;
+

@@ -101,3 +101,4 @@ export const GoAMLRegistrationWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

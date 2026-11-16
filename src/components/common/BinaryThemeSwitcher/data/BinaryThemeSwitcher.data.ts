@@ -16,3 +16,4 @@ export const THEME_OPTIONS: ThemeOption[] = [
   { mode: 'dark', label: 'Dark', icon: '🌙', ariaLabel: 'Switch to Dark Luxury Mode' },
   { mode: 'system', label: 'Auto', icon: '💻', ariaLabel: 'Switch to System Default Theme' },
 ];
+

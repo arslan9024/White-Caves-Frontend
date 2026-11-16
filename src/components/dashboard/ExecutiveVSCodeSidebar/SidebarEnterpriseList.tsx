@@ -115,3 +115,4 @@ export const SidebarEnterpriseList: FC<SidebarEnterpriseListProps> = ({
 };
 
 export default SidebarEnterpriseList;
+

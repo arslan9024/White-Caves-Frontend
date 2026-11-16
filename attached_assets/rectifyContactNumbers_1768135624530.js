@@ -34,3 +34,4 @@ export const rectifyCorrectNumbers = (data) => data.map(row => {
     return res
     }).filter(val => val.length > 7)
 
+

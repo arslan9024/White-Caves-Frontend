@@ -191,3 +191,4 @@ export const ResultItemCard = styled.div`
     font-weight: 800;
   }
 `;
+

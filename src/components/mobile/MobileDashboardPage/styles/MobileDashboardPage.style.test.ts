@@ -12,3 +12,4 @@ describe('MobileDashboardPage.style', () => {
     expect(styles.NotifDot).toBeDefined();
   });
 });
+

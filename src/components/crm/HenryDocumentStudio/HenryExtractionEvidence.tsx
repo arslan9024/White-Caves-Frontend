@@ -41,3 +41,4 @@ export function HenryExtractionEvidence({ diagnostics, scannerValues }: {
     <HenryBenchmarkPanel diagnostics={diagnostics} scannerValues={scannerValues} />
   </section>;
 }
+

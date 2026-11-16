@@ -145,3 +145,4 @@ const PricingToolsPage: FC = () => {
 };
 
 export default PricingToolsPage;
+

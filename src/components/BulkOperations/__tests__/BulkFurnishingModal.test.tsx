@@ -14,3 +14,4 @@ describe('BulkFurnishingModal Component', () => {
     expect(screen.getByText('Unfurnished')).toBeDefined();
   });
 });
+

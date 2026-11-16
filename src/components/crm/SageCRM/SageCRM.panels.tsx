@@ -273,3 +273,4 @@ export const BanksTabPanel: React.FC<BanksTabPanelProps> = ({ banks }) => (
     ))}
   </div>
 );
+

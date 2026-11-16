@@ -28,3 +28,4 @@ describe('bounded heuristic image advisories', () => {
     expect(imageQualityWarnings({ width: 5000, height: 5000, data: new Uint8ClampedArray() })[0]).toMatch(/unavailable/);
   });
 });
+

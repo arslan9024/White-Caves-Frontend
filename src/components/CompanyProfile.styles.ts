@@ -331,3 +331,4 @@ export const DownloadHint = styled.p`
     color: var(--text-secondary, #a0a0a0);
   }
 `;
+

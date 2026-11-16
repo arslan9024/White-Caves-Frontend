@@ -162,3 +162,4 @@ export const CustomerOverviewView: FC<CustomerOverviewViewProps> = ({ onNavigate
 };
 
 export default CustomerOverviewView;
+

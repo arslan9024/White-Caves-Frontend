@@ -32,3 +32,4 @@ export const CATEGORY_COLORS: Record<string, string> = {
 
 export type FilterPriority = MaintenancePriority | 'all';
 export type FilterStatus = MaintenanceStatus | 'all';
+

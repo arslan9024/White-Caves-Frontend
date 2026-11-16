@@ -183,3 +183,4 @@ export default function MarketingView({
 
   return <div className="view-container marketing-view">{renderContent()}</div>;
 }
+

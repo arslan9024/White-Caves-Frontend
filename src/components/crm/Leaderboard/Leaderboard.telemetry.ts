@@ -53,3 +53,4 @@ class LeaderboardTelemetryService {
 }
 
 export const LeaderboardTelemetry = new LeaderboardTelemetryService();
+

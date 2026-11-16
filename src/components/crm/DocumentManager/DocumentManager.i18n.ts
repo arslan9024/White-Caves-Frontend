@@ -79,3 +79,4 @@ export function getDocumentI18n(lang: SupportedLanguage = 'en'): DocumentTransla
 }
 
 export default DOCUMENT_TRANSLATIONS;
+

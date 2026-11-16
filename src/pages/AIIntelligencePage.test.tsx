@@ -13,3 +13,4 @@ describe('AIIntelligencePage exports', () => {
     expect(InsightTile).toBeDefined();
   });
 });
+

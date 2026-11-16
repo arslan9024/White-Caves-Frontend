@@ -9,3 +9,4 @@ export const useInteractiveChartsLogic = () => {
   const [chartType, setChartType] = useState(0);
   return { t, isRtl, chartType, setChartType };
 };
+

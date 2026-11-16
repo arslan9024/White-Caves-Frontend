@@ -118,3 +118,4 @@ export const EmployeeDetailDossier: FC<EmployeeDetailDossierProps> = ({
     </div>
   );
 };
+

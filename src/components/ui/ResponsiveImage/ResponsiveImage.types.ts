@@ -88,3 +88,4 @@ export interface ResponsiveImageProps {
    */
   quality?: number;
 }
+

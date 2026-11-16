@@ -85,3 +85,4 @@ describe('v1ApiClient REST Suite', () => {
     expect(result).toEqual(mockDocs);
   });
 });
+

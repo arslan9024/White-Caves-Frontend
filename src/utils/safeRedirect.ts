@@ -113,3 +113,4 @@ export function safeExternalRedirect(
     window.location.href = fallback;
   }
 }
+

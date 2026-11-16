@@ -179,3 +179,4 @@ const PropertyComparison = () => {
 };
 
 export default PropertyComparison;
+

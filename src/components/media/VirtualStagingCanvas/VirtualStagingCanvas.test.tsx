@@ -17,3 +17,4 @@ describe('VirtualStagingCanvas Component', () => {
     expect(screen.getByText(/AI Staging: ON/i)).toBeDefined();
   });
 });
+

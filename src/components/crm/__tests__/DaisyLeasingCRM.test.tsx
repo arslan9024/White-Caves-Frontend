@@ -14,3 +14,4 @@ describe('DaisyLeasingCRM Component', () => {
     expect(screen.getByText('Ahmed Al Rashid')).toBeDefined();
   });
 });
+

@@ -68,3 +68,4 @@ export function HenryBenchmarkPanel({ diagnostics, scannerValues }: {
     {report && <output aria-label="Aggregate benchmark report"><pre>{JSON.stringify(report, null, 2)}</pre></output>}
   </details>;
 }
+

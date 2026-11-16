@@ -72,3 +72,4 @@ export const DealStatutoryDocsSection: FC<DealStatutoryDocsSectionProps> = ({
     </div>
   );
 };
+

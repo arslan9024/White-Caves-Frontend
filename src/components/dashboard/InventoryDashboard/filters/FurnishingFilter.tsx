@@ -36,3 +36,4 @@ const FurnishingFilter = ({ selected = [], onChange }) => {
 };
 
 export default FurnishingFilter;
+

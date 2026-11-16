@@ -13,3 +13,4 @@ describe('CorporateTaxTab', () => {
     expect(screen.getByText(/Download CT Computation Binder/i)).toBeInTheDocument();
   });
 });
+

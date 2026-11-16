@@ -256,3 +256,4 @@ export const ContractReviewPanel: React.FC<ContractReviewPanelProps> = ({
     </div>
   </div>
 );
+

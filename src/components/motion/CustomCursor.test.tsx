@@ -26,3 +26,4 @@ describe('CustomCursor', () => {
     expect(container).toBeDefined();
   });
 });
+

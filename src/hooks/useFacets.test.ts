@@ -6,3 +6,4 @@ describe('useFacets (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

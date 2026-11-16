@@ -12,3 +12,4 @@ describe('GdprDataDeletionQueue Component', () => {
     expect(screen.getByText(/Marc Dubois \(France \/ GDPR\)/i)).toBeDefined();
   });
 });
+

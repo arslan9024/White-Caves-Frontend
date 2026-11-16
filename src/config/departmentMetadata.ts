@@ -186,3 +186,4 @@ export const getDepartmentsByService = (service: string): DepartmentMetadata[] =
     dept.services.includes(service)
   );
 };
+

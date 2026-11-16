@@ -18,3 +18,4 @@ describe('FormBSignatureStream Component', () => {
     expect(screen.getByText(/Signature pad cleared/i)).toBeDefined();
   });
 });
+

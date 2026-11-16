@@ -141,3 +141,4 @@ describe('StatCard', () => {
     expect(StatCard.displayName).toBe('StatCard');
   });
 });
+

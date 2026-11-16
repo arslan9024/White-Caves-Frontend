@@ -33,3 +33,4 @@ export function validateExpenseReceiptMetadata(
 
   return { valid: Object.keys(errors).length === 0, errors };
 }
+

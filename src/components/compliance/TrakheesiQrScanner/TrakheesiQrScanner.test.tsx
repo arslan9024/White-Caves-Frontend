@@ -12,3 +12,4 @@ describe('TrakheesiQrScanner Component', () => {
     expect(screen.getByText(/44483/i)).toBeDefined();
   });
 });
+

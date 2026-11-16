@@ -115,3 +115,4 @@ export function usePublicFavorites() {
 }
 
 export default usePublicFavorites;
+

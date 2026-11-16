@@ -37,3 +37,4 @@ export function useLeadNotificationToastLogic() {
 
   return { toasts, soundEnabled, toggleSound, dismiss, TYPE_ICONS };
 }
+

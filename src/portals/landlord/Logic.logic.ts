@@ -6,3 +6,4 @@ export function useLandlordPortalLogic() {
   const handleRefresh = useCallback(() => setLastSynced(new Date().toISOString()), []);
   return { data: LANDLORD_PORTAL_DATA, lastSynced, handleRefresh };
 }
+

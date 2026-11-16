@@ -85,3 +85,4 @@ export const VerificationBadge = styled.span`
   padding: 4px 8px;
   border-radius: 999px;
 `;
+

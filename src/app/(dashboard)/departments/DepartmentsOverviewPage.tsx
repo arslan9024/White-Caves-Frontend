@@ -233,3 +233,4 @@ export const DepartmentsOverviewPage: React.FC<DepartmentsOverviewPageProps> = (
 };
 
 export default DepartmentsOverviewPage;
+

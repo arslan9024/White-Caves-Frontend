@@ -25,3 +25,4 @@ export const Headline = styled.h1<{ $fontSize?: string }>`
   animation: ${gradientShift} 6s ease infinite;
   text-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
 `;
+

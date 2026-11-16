@@ -45,3 +45,4 @@ export const SORAYA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as soraya_supervisorExport;
+

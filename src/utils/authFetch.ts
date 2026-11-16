@@ -287,3 +287,4 @@ export async function extractApiError(response: Response, fallback: string): Pro
 
 // Re-export HttpError so existing consumers can still import from this module
 export { HttpError } from './HttpError';
+

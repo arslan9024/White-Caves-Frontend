@@ -68,3 +68,4 @@ describe('SocketService Resilience & Reconnection', () => {
     expect(mockSocket.connected).toBe(true);
   });
 });
+

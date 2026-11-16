@@ -17,3 +17,4 @@ describe('LandlordForm Component', () => {
     }
   });
 });
+

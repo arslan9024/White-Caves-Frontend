@@ -180,3 +180,4 @@ describe('TenantLeaseTab', () => {
     expect(mockAuthFetch).toHaveBeenCalledWith('/api/portal/tenant/lease');
   });
 });
+

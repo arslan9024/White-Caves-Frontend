@@ -85,3 +85,4 @@ export function useAppRuntime() {
   };
   return { user, consentGranted, handleRoleSelect };
 }
+

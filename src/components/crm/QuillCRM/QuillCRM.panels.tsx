@@ -226,3 +226,4 @@ export const GenerateTabPanel: React.FC = () => (
     </div>
   </div>
 );
+

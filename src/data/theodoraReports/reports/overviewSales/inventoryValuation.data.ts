@@ -1,0 +1,232 @@
+import type { EnterpriseReport } from '../../types';
+
+export const inventoryValuationReports: EnterpriseReport[] = [
+  {
+    id: '3.14.R12',
+    key: 'inventory-valuation-summary',
+    name: 'Inventory Valuation Summary',
+    categoryKey: 'inventory',
+    categoryName: 'Inventory Valuation',
+    createdBy: 'System Generated',
+    lastVisited: '21 Aug 2026 02:15 PM',
+    schedule: 'Weekly',
+    description:
+      'Total valuation of active exclusive developer inventory, secondary stock, and off-plan allocations.',
+    uaeRelevance:
+      'Enables real-time agency portfolio valuation for asset-backed operations in Dubai.',
+    columns: [
+      'Community / Development',
+      'Total Units',
+      'Available',
+      'Booked',
+      'Total Asset Value (AED)',
+    ],
+    mockSummary: {
+      'Active Master Portfolio': 'AED 385,000,000',
+      'Available Units': '184',
+      'Booked Units': '62',
+    },
+    sampleRows: [
+      {
+        'Community / Development': 'Sobha Hartland II',
+        'Total Units': '45',
+        Available: '18',
+        Booked: '27',
+        'Total Asset Value (AED)': '94,500,000',
+      },
+      {
+        'Community / Development': 'Dubai Creek Harbour (Emaar)',
+        'Total Units': '60',
+        Available: '32',
+        Booked: '28',
+        'Total Asset Value (AED)': '138,000,000',
+      },
+      {
+        'Community / Development': 'Palm Jumeirah Luxury Resale',
+        'Total Units': '12',
+        Available: '4',
+        Booked: '8',
+        'Total Asset Value (AED)': '152,500,000',
+      },
+    ],
+    tags: ['Inventory', 'Valuation', 'Off-Plan'],
+  },
+  {
+    id: '3.14.R13',
+    key: 'fifo-cost-lot-tracking',
+    name: 'FIFO Cost Lot Tracking',
+    categoryKey: 'inventory',
+    categoryName: 'Inventory Valuation',
+    createdBy: 'System Generated',
+    lastVisited: '17 Aug 2026 11:40 AM',
+    schedule: 'Monthly',
+    description:
+      'First-In, First-Out lot tracking for marketing cost allocation and promotional developer unit lots.',
+    uaeRelevance:
+      'Complies with IFRS inventory standards for proprietary agency property investments.',
+    columns: [
+      'Lot ID',
+      'Acquisition Date',
+      'Unit Allocation',
+      'Base Cost (AED)',
+      'Carrying Value (AED)',
+      'Status',
+    ],
+    mockSummary: {
+      'Total Tracked Lots': '24 Lots',
+      'Valuation Method': 'FIFO Standard',
+      'Carrying Asset Base': 'AED 28,400,000',
+    },
+    sampleRows: [
+      {
+        'Lot ID': 'LOT-2026-04A',
+        'Acquisition Date': '15 Apr 2026',
+        'Unit Allocation': 'Viridis Tower B #504',
+        'Base Cost (AED)': '1,250,000',
+        'Carrying Value (AED)': '1,420,000',
+        Status: 'Held for Resale',
+      },
+      {
+        'Lot ID': 'LOT-2026-05B',
+        'Acquisition Date': '22 May 2026',
+        'Unit Allocation': 'Buko Business Bay #1202',
+        'Base Cost (AED)': '2,100,000',
+        'Carrying Value (AED)': '2,350,000',
+        Status: 'Under Agreement',
+      },
+    ],
+    tags: ['FIFO', 'Cost Lots', 'IFRS'],
+  },
+  {
+    id: '3.14.R14',
+    key: 'abc-classification',
+    name: 'ABC Classification',
+    categoryKey: 'inventory',
+    categoryName: 'Inventory Valuation',
+    createdBy: 'System Generated',
+    lastVisited: '12 Aug 2026 04:50 PM',
+    schedule: 'Quarterly',
+    description:
+      'Pareto 80/20 classification of property listings based on turnover velocity and commission generation.',
+    uaeRelevance:
+      'Focuses ad budget on Class A ultra-luxury listings producing 80% of agency revenue.',
+    columns: [
+      'Class Tier',
+      'Listing Count',
+      '% of Total Listings',
+      'Revenue Contribution (AED)',
+      '% of Total Revenue',
+    ],
+    mockSummary: {
+      'Class A (Top 20%)': '82.4% Revenue',
+      'Class B (Next 30%)': '13.1% Revenue',
+      'Class C (Bottom 50%)': '4.5% Revenue',
+    },
+    sampleRows: [
+      {
+        'Class Tier': 'Class A (Ultra-Luxury > AED 10M)',
+        'Listing Count': '32',
+        '% of Total Listings': '18.5%',
+        'Revenue Contribution (AED)': '12,200,000',
+        '% of Total Revenue': '82.2%',
+      },
+      {
+        'Class Tier': 'Class B (Mid-Market AED 2M - 10M)',
+        'Listing Count': '58',
+        '% of Total Listings': '33.5%',
+        'Revenue Contribution (AED)': '2,150,000',
+        '% of Total Revenue': '14.5%',
+      },
+      {
+        'Class Tier': 'Class C (Entry Level < AED 2M)',
+        'Listing Count': '83',
+        '% of Total Listings': '48.0%',
+        'Revenue Contribution (AED)': '500,000',
+        '% of Total Revenue': '3.3%',
+      },
+    ],
+    tags: ['ABC', 'Pareto', 'Strategy'],
+  },
+  {
+    id: '3.14.R15',
+    key: 'inventory-turnover-by-amount',
+    name: 'Inventory Turnover By Amount',
+    categoryKey: 'inventory',
+    categoryName: 'Inventory Valuation',
+    createdBy: 'System Generated',
+    lastVisited: '14 Aug 2026 01:25 PM',
+    schedule: 'Monthly',
+    description:
+      'Rate at which exclusive property listings are converted to closed sales within a rolling 90-day window.',
+    uaeRelevance:
+      'Monitors listing shelf-life against Dubai Land Department (DLD) market averages.',
+    columns: [
+      'Project / Developer',
+      'Avg Inventory (AED)',
+      'Cost of Sales (AED)',
+      'Turnover Ratio',
+      'Days on Market',
+    ],
+    mockSummary: {
+      'Agency Avg Days on Market': '38.5 Days',
+      'Market Benchmark': '58.0 Days',
+      'Turnover Velocity': '2.34x',
+    },
+    sampleRows: [
+      {
+        'Project / Developer': 'Binghatti Developers',
+        'Avg Inventory (AED)': '18,500,000',
+        'Cost of Sales (AED)': '42,000,000',
+        'Turnover Ratio': '2.27x',
+        'Days on Market': '32 Days',
+      },
+      {
+        'Project / Developer': 'Danube Properties',
+        'Avg Inventory (AED)': '12,000,000',
+        'Cost of Sales (AED)': '31,000,000',
+        'Turnover Ratio': '2.58x',
+        'Days on Market': '28 Days',
+      },
+    ],
+    tags: ['Turnover', 'Velocity', 'DLD'],
+  },
+  {
+    id: '3.14.R16',
+    key: 'weighted-average-cost-summary',
+    name: 'Weighted Average Cost (Moving Average) Summary',
+    categoryKey: 'inventory',
+    categoryName: 'Inventory Valuation',
+    createdBy: 'System Generated',
+    lastVisited: '10 Aug 2026 10:00 AM',
+    schedule: 'Monthly',
+    description:
+      'Moving average cost calculation for bulk developer floor acquisitions and investor group syndications.',
+    uaeRelevance: 'Ensures exact equity unit pricing during bulk investor syndication sell-offs.',
+    columns: [
+      'Asset Pool',
+      'Units Acquired',
+      'Total Investment (AED)',
+      'Moving Avg Unit Cost (AED)',
+      'Current Fair Value (AED)',
+    ],
+    mockSummary: { 'Total Syndicate Pool': 'AED 62,000,000', 'Unrealized Uplift': '+18.4%' },
+    sampleRows: [
+      {
+        'Asset Pool': 'Sobha Reserve Bulk Villa Lot',
+        'Units Acquired': '8',
+        'Total Investment (AED)': '44,000,000',
+        'Moving Avg Unit Cost (AED)': '5,500,000',
+        'Current Fair Value (AED)': '6,400,000',
+      },
+      {
+        'Asset Pool': 'JVC Apartment Bulk Floor',
+        'Units Acquired': '12',
+        'Total Investment (AED)': '18,000,000',
+        'Moving Avg Unit Cost (AED)': '1,500,000',
+        'Current Fair Value (AED)': '1,780,000',
+      },
+    ],
+    tags: ['Moving Average', 'Costing', 'Syndication'],
+  },
+];
+

@@ -54,3 +54,4 @@ export function useDashboardEntryRoute(): RouteDecision {
   if (effectiveRole === 'tenant') return { kind: 'redirect', to: '/tenant-portal' };
   return { kind: 'allow' };
 }
+

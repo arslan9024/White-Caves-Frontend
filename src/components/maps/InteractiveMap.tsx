@@ -156,3 +156,4 @@ const InteractiveMap: FC<InteractiveMapProps> = ({
 };
 
 export default React.memo(InteractiveMap);
+

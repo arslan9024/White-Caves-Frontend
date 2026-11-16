@@ -114,3 +114,4 @@ describe('TenantDocumentsTab', () => {
     expect(screen.getByText(/You must be logged in to view your documents/i)).toBeInTheDocument();
   });
 });
+

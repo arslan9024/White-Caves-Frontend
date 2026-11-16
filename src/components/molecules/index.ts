@@ -9,3 +9,4 @@ export type { SearchBarProps } from './SearchBar';
 
 export { NavItem } from './NavItem';
 export type { NavItemProps } from './NavItem';
+

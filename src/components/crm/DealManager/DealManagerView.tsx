@@ -300,3 +300,4 @@ export const DealManagerView: FC<UseDealManagerProps> = props => {
 };
 
 export default DealManagerView;
+

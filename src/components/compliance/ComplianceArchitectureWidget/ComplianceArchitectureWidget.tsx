@@ -72,3 +72,4 @@ export const ComplianceArchitectureWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

@@ -320,3 +320,4 @@ const InquiriesTab: React.FC<InquiriesTabProps> = ({ inquiries }) => {
 };
 
 export default InquiriesTab;
+

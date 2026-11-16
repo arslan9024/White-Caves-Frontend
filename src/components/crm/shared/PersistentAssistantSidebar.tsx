@@ -236,3 +236,4 @@ const PersistentAssistantSidebar = memo(({
 
 PersistentAssistantSidebar.displayName = 'PersistentAssistantSidebar';
 export default PersistentAssistantSidebar;
+

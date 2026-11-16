@@ -53,3 +53,4 @@ export const VESTA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as vesta_supervisorExport;
+

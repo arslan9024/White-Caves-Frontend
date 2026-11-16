@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Notification Center Component
  * Bell icon with notification dropdown
  */
@@ -225,3 +225,4 @@ const Backdrop = styled.div`
 NotificationCenter.displayName = 'NotificationCenter';
 
 export default NotificationCenter;
+

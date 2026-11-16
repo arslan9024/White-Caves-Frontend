@@ -18,3 +18,4 @@ export interface LanguageInfo {
 }
 
 export type MiraTabType = 'queue' | 'live' | 'languages' | 'docs' | 'lifecycle';
+

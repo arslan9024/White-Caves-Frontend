@@ -463,3 +463,4 @@ export const PropertySearchPanel: FC = () => {
 };
 
 export default PropertySearchPanel;
+

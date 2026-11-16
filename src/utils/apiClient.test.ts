@@ -171,3 +171,4 @@ describe('ApiClient', () => {
     expect(mockFetch.mock.calls[2][1].headers['Authorization']).toBe('Bearer fresh-token');
   });
 });
+

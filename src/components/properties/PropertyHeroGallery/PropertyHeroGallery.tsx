@@ -57,3 +57,4 @@ export const PropertyHeroGallery: FC = () => {
   );
 };
 export default PropertyHeroGallery;
+

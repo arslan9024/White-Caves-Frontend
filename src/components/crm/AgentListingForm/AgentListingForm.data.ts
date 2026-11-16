@@ -153,3 +153,4 @@ export const INITIAL_FORM_DATA = {
   marketingPackage: 'premium',
   featuredLevel: 5,
 };
+

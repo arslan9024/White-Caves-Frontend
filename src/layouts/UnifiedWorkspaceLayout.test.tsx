@@ -62,3 +62,4 @@ describe('UnifiedWorkspaceLayout (4-Way Workspace Architecture)', () => {
     expect(screen.getByTestId('test-child-content')).toBeDefined();
   });
 });
+

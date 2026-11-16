@@ -152,3 +152,4 @@ export async function handleLogout(): Promise<void> {
   removeAuthToken();
   removeStoredUser();
 }
+

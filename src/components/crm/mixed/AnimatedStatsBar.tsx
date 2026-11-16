@@ -132,3 +132,4 @@ export function MiniStatCard({ label, value, icon, trend, onClick }) {
     </motion.div>
   );
 }
+

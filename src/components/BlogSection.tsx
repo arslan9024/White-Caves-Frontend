@@ -309,3 +309,4 @@ const BlogSection: FC<BlogSectionProps> = ({
 };
 
 export default BlogSection;
+

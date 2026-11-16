@@ -189,3 +189,4 @@ export const SharedActionBtn = styled.button<{ $variant?: 'primary' | 'secondary
     cursor: not-allowed;
   }
 `;
+

@@ -6,3 +6,4 @@ describe('assistantFeatures data module', () => {
     expect(NINA_FEATURES.length).toBeGreaterThan(0);
   });
 });
+

@@ -101,3 +101,4 @@ describe('TestimonialsCarousel', () => {
     expect(allStars.length).toBe(25);
   });
 });
+

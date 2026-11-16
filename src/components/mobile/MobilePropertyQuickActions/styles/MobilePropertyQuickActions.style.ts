@@ -107,3 +107,4 @@ export const TriggerBtn = styled.button`
     background: #dc2626;
   }
 `;
+

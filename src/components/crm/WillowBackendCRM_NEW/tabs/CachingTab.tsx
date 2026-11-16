@@ -60,3 +60,4 @@ const CachingTab: React.FC<CachingTabProps> = ({ cacheStats, cacheHealth }) => {
 };
 
 export default CachingTab;
+

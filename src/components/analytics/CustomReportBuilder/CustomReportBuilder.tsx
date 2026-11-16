@@ -31,3 +31,4 @@ export const CustomReportBuilder: FC = () => {
   );
 };
 export default CustomReportBuilder;
+

@@ -13,3 +13,4 @@ describe('LeadFunnelWaterfallChart Component', () => {
     expect(screen.getByText(/5. Signed & Closed/i)).toBeDefined();
   });
 });
+

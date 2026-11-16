@@ -42,3 +42,4 @@ describe('MobileLeadCardStack', () => {
     expect(screen.getByText('Skip')).toBeDefined();
   });
 });
+

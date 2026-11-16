@@ -111,3 +111,4 @@ const RegulationsTab = () => {
 };
 
 export default RegulationsTab;
+

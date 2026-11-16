@@ -403,3 +403,4 @@ export async function exportDashboardExcel(entity: 'leads' | 'properties' = 'lea
   }
   return res.blob();
 }
+

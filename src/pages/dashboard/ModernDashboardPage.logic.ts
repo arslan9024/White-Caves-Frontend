@@ -27,6 +27,8 @@ export const VALID_DASHBOARD_TABS: ActivityTab[] = [
   'tenant',
   'broker',
   'linda',
+  'mary',
+  'zoe',
   'ai-command',
   'audit',
   'governance',
@@ -271,6 +273,10 @@ export function resolveSidebarItemRoute(key: string, activeTab: string): string 
   if (key.startsWith('route-')) return key.replace('route-', '');
   if (key.startsWith('entity-')) return `/dashboard/erms/relationships/${key.replace('entity-', '')}`;
   if (key.startsWith('rel-')) return `/dashboard/erms/relationships/${key.replace('rel-', '')}`;
+  if (key === 'linda') return '/dashboard/linda';
+  if (key === 'mary') return '/dashboard/mary';
+  if (key === 'zoe') return '/dashboard/zoe';
+  if (key === 'aiams' || key === 'ai-command') return '/dashboard/aiams';
 
   const prefixes: Record<string, string> = {
     'emp-': '/dashboard/ems/employees/',
@@ -297,3 +303,4 @@ export function resolveSidebarItemRoute(key: string, activeTab: string): string 
 
   return `/dashboard/${activeTab}`;
 }
+

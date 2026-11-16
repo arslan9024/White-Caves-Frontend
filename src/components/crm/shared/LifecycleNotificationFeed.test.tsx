@@ -209,3 +209,4 @@ describe('LifecycleNotificationFeed', () => {
     expect(document.querySelector('.lnf-footer')).toBeTruthy();
   });
 });
+

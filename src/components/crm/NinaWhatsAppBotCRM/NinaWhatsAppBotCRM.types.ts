@@ -57,3 +57,4 @@ export interface NinaLogicActions {
   initiateDeviceLinkSequence: () => void;
   addHandshakeLog: (msg: string) => void;
 }
+

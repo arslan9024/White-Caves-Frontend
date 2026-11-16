@@ -4,3 +4,4 @@
 export function getDocumentDirection(language: string): 'rtl' | 'ltr' {
   return language.toLowerCase().startsWith('ar') ? 'rtl' : 'ltr';
 }
+

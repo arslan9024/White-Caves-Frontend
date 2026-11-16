@@ -10,3 +10,4 @@ describe('PWAInstallPrompt Component', () => {
     expect(container).toBeDefined();
   });
 });
+

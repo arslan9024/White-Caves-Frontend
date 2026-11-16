@@ -282,3 +282,4 @@ export class BayutAdapter extends BasePortalAdapter {
 }
 
 export default BayutAdapter;
+

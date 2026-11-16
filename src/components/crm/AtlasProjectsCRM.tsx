@@ -1032,3 +1032,4 @@ export const AtlasProjectsCRM: React.FC<AtlasProjectsCRMProps> = ({ moduleId, ro
 };
 
 export default AtlasProjectsCRM;
+

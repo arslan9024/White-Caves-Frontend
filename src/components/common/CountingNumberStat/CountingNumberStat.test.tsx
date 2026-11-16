@@ -10,3 +10,4 @@ describe('CountingNumberStat Component', () => {
     expect(screen.getByText(/Total Revenue YTD/i)).toBeDefined();
   });
 });
+

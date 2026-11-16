@@ -8,3 +8,4 @@ dotenvSafe.config({
   allowEmptyValues: false,
   example: '.env.example',
 });
+

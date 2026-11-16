@@ -116,3 +116,4 @@ export const StatCard: FC<StatCardProps> = ({
     </Card>
   );
 };
+

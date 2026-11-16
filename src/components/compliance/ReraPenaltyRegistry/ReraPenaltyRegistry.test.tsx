@@ -15,3 +15,4 @@ describe('ReraPenaltyRegistry Component', () => {
     expect(screen.getByText(/AED 200,000/i)).toBeDefined();
   });
 });
+

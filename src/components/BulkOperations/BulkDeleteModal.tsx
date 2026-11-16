@@ -93,3 +93,4 @@ const BulkDeleteModal: React.FC<BulkDeleteModalProps> = ({
 };
 
 export default BulkDeleteModal;
+

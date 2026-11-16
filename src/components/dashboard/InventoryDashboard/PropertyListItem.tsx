@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import './PropertyListItem.css';
 
 const PropertyListItem = ({
@@ -112,3 +112,4 @@ const PropertyListItem = ({
 };
 
 export default PropertyListItem;
+

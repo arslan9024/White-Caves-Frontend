@@ -157,3 +157,4 @@ export const NinaWhatsAppBotCRMView: React.FC = () => {
 };
 
 export default NinaWhatsAppBotCRMView;
+

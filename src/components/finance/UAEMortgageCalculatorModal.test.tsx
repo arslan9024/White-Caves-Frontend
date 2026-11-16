@@ -40,3 +40,4 @@ describe('UAEMortgageCalculatorModal Component', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

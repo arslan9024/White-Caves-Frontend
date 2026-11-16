@@ -77,3 +77,4 @@ describe('VipPitchBookModalView UI mounting and interaction', () => {
     expect(window.open).toHaveBeenCalled();
   });
 });
+

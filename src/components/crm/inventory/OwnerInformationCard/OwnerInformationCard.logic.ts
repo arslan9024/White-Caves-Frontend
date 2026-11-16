@@ -183,3 +183,4 @@ export function useOwnerInformationCardLogic({ owner, onUpdate }: OwnerInformati
     handleCancel,
   };
 }
+

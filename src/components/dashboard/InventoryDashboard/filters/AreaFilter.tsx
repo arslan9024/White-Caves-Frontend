@@ -104,3 +104,4 @@ const AreaFilter = ({ selected = [], availableAreas = [], onChange }) => {
 };
 
 export default AreaFilter;
+

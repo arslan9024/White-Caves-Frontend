@@ -51,3 +51,4 @@ export const LeadScoringAI: FC = () => {
   );
 };
 export default LeadScoringAI;
+

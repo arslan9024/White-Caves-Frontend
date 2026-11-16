@@ -16,3 +16,4 @@ describe('BulkDeleteModal Component', () => {
     expect(screen.getByRole('heading', { name: 'Delete Properties' })).toBeDefined();
   });
 });
+

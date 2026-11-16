@@ -534,3 +534,4 @@ const LandlordPaymentsTab: FC = () => {
 };
 
 export default LandlordPaymentsTab;
+

@@ -42,3 +42,4 @@ describe('theodoraReportsRegistry', () => {
     expect(trialBalance?.categoryKey).toBe('accountant');
   });
 });
+

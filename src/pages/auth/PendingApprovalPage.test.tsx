@@ -180,3 +180,4 @@ describe('PendingApprovalPage', () => {
     expect(container.firstChild).toBeNull();
   });
 });
+

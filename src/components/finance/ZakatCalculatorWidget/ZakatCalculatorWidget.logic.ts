@@ -13,3 +13,4 @@ export const useZakatCalculatorLogic = () => {
   const zakatDue = Number(assets) >= nisab ? Number(assets) * zakatRate : 0;
   return { t, isRtl, assets, setAssets, nisab, zakatRate, zakatDue };
 };
+

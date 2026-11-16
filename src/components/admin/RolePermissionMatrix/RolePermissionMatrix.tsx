@@ -60,3 +60,4 @@ export const RolePermissionMatrix: FC = () => {
   );
 };
 export default RolePermissionMatrix;
+

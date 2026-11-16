@@ -118,3 +118,4 @@ export const CavesFloatingSearch: React.FC = () => {
 };
 
 export default CavesFloatingSearch;
+

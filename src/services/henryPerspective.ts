@@ -78,3 +78,4 @@ export async function correctPerspective(file: File, corners: Corners): Promise<
     bitmap.close(); canvas.width = 0; canvas.height = 0;
   }
 }
+

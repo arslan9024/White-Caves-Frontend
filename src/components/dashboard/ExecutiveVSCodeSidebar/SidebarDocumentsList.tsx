@@ -202,3 +202,4 @@ export const SidebarDocumentsList: FC<SidebarDocumentsListProps> = ({
 };
 
 export default SidebarDocumentsList;
+

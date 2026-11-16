@@ -34,3 +34,4 @@ describe('useCavesFloatingSearch logic hook', () => {
     expect(result.current.filters.community).toBe('DAMAC Hills 2');
   });
 });
+

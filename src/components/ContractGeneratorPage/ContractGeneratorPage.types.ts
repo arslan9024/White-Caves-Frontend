@@ -24,3 +24,4 @@ export interface GeneratedContract {
   status: string;
   downloadUrl?: string;
 }
+

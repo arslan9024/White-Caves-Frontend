@@ -270,6 +270,8 @@ export const ModernDashboardPage: FC = () => {
                   navigate('/dashboard/zoe');
                 } else if (agentId === 'linda') {
                   navigate('/dashboard/linda');
+                } else if (agentId === 'mary') {
+                  navigate('/dashboard/mary');
                 } else if (agentId === 'ai-command') {
                   navigate('/dashboard/aiams');
                 } else {
@@ -296,3 +298,4 @@ export const ModernDashboardPage: FC = () => {
 };
 
 export default ModernDashboardPage;
+

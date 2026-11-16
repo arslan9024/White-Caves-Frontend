@@ -13,3 +13,4 @@ describe('PasswordStrengthMeter Component', () => {
     expect(screen.getByText(/Enterprise Grade \(AES Ready\)/i)).toBeDefined();
   });
 });
+

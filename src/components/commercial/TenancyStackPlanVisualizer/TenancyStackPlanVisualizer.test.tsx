@@ -14,3 +14,4 @@ describe('TenancyStackPlanVisualizer Component', () => {
     expect(screen.getByText(/White Caves Global Executive Suites/i)).toBeDefined();
   });
 });
+

@@ -31,3 +31,4 @@ describe('Multi-Currency Precision Utility (currency.ts)', () => {
     expect(totalAED).toBe(567.25);
   });
 });
+

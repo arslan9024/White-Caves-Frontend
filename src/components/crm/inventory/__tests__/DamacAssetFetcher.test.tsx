@@ -346,3 +346,4 @@ describe('DamacAssetFetcher', () => {
     Object.defineProperty(window, 'Image', { value: originalImage, writable: true });
   });
 });
+

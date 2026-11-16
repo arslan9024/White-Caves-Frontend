@@ -22,3 +22,4 @@ describe('zoeBusinessDocsRegistry', () => {
     expect(doc04?.htmlContent).toContain('3.14 Theodora AI');
   });
 });
+

@@ -190,3 +190,4 @@ export const DOCUMENT_TEMPLATES: DocumentTemplate[] = [
     ],
   },
 ];
+

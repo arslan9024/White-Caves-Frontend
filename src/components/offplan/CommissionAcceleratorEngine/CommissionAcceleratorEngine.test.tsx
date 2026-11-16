@@ -17,3 +17,4 @@ describe('CommissionAcceleratorEngine Component', () => {
     expect(screen.getAllByText(/Platinum Tier/i).length).toBeGreaterThan(0);
   });
 });
+

@@ -50,3 +50,4 @@ describe('DashboardConfigurator', () => {
     expect(screen.getByText('Widget Settings')).toBeInTheDocument();
   });
 });
+

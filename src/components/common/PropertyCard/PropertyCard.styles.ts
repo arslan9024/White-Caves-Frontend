@@ -230,3 +230,4 @@ export const PropertySpecs = styled.div`
     gap: 0.3rem;
   }
 `;
+

@@ -124,3 +124,4 @@ describe('MobileBottomNav', () => {
     expect(homeTab.getAttribute('aria-current')).toBe('page');
   });
 });
+

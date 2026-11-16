@@ -141,3 +141,4 @@ export const KYCGateWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

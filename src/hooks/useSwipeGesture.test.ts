@@ -6,3 +6,4 @@ describe('useSwipeGesture (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

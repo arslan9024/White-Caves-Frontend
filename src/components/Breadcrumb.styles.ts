@@ -71,3 +71,4 @@ export const BreadcrumbCurrent = styled.span`
   color: var(--text-primary, #212121);
   font-weight: ${typography.weights.medium};
 `;
+

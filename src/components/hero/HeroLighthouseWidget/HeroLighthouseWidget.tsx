@@ -22,3 +22,4 @@ export const HeroLighthouseWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

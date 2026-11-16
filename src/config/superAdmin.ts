@@ -50,3 +50,4 @@ export const isMDAuthorized = (user) => {
 };
 
 export default SUPER_ADMIN;
+

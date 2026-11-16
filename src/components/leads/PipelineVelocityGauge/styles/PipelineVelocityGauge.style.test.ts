@@ -16,3 +16,4 @@ describe('PipelineVelocityGauge.style', () => {
     expect(styles.Summary).toBeDefined();
   });
 });
+

@@ -78,3 +78,4 @@ describe('DldMarketNewsFeedStrip', () => {
     expect(screen.getByRole('status')).toHaveTextContent('No UAE market updates are available.');
   });
 });
+

@@ -78,3 +78,4 @@ const DashboardTopNav = ({ activeTab, onTabChange, assistantActive, assistantNam
 };
 
 export default DashboardTopNav;
+

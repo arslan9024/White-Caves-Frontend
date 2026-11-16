@@ -9,3 +9,4 @@ export { SavedProperties } from './buyer/SavedProperties';
 export { ViewingSchedule } from './buyer/ViewingSchedule';
 export { PriceAlerts } from './buyer/PriceAlerts';
 export { BuyerOffers } from './buyer/BuyerOffers';
+

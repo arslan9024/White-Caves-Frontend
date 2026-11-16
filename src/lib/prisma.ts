@@ -61,3 +61,4 @@ export async function safeQuery<T>(
 }
 
 export default prisma;
+

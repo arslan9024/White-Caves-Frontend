@@ -30,3 +30,4 @@ describe('DashboardSidebar', () => {
     expect(screen.getByText(/1\. MD Office \(MD Suite\)/i)).toBeInTheDocument();
   });
 });
+

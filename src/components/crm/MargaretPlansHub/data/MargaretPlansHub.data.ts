@@ -14,3 +14,4 @@ export const MARGARET_HUB_TEXT = {
   copyLinkBtn: '🔗 Copy Plan Link',
   jumpToAssistant: 'Jump to Assistant',
 };
+

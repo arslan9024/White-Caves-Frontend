@@ -47,3 +47,4 @@ export function generateResponsiveImageSources(baseUrl: string): {
     fallback: `${cleanUrl}-1200w.jpg`
   };
 }
+

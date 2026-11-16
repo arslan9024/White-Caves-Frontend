@@ -47,3 +47,4 @@ describe('getButtonByName', () => {
     expect(getButtonByVisibleTextInActionGroup('Reset scan')).toBeVisible();
   });
 });
+

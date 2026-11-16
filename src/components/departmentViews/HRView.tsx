@@ -84,3 +84,4 @@ const HRView: React.FC<HRViewProps> = ({
 };
 
 export default HRView;
+

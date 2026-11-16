@@ -267,3 +267,4 @@ export const CANONICAL_CUSTOMERS: CustomerItem[] = [
     ],
   },
 ];
+

@@ -44,3 +44,4 @@ describe('VirtualTourModal (DOM-05 / 3D Matterport & VR Viewer)', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

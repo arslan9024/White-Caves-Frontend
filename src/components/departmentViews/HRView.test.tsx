@@ -17,3 +17,4 @@ describe('HRView Component', () => {
     }
   });
 });
+

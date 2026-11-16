@@ -51,3 +51,4 @@ export interface StatutoryWizardModalProps {
     formData: Record<string, string>;
   }) => void;
 }
+

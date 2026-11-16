@@ -15,3 +15,4 @@ describe('ConstructionProgressStream Component', () => {
     expect(screen.getByText(/MEP & Interiors/i)).toBeDefined();
   });
 });
+

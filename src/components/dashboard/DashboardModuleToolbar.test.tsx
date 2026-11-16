@@ -26,3 +26,4 @@ describe('DashboardModuleToolbar', () => {
     expect(container.querySelector('.dashboard-module-toolbar')).toBeInTheDocument();
   });
 });
+

@@ -35,3 +35,4 @@ export const PageLoader: FC = () => {
   );
 };
 export default PageLoader;
+

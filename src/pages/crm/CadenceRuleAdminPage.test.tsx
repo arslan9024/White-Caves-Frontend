@@ -238,3 +238,4 @@ describe('CadenceRuleAdminPage — P0-018', () => {
     });
   });
 });
+

@@ -194,3 +194,4 @@ export default function ApplicantsTab({ state }: ApplicantsTabProps) {
     </div>
   );
 }
+

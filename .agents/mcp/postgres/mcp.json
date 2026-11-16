@@ -1,4 +1,0 @@
-﻿{
-  "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost:5432/whitecaves"]
-}

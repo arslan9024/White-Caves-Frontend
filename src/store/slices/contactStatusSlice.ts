@@ -158,3 +158,4 @@ export const selectNeverContacted = state =>
   selectAllContactStatuses(state).filter(s => s.contactStatus === 'never-contacted');
 
 export default contactStatusSlice.reducer;
+

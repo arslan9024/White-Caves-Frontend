@@ -69,3 +69,4 @@ describe('MapIndexHash Listing Cache Engine', () => {
     expect(cluster).toHaveLength(2);
   });
 });
+

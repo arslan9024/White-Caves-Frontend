@@ -37,3 +37,4 @@ describe('LeadNotificationToast.logic', () => {
     }
   });
 });
+

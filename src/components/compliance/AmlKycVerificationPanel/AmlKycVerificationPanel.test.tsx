@@ -18,3 +18,4 @@ describe('AmlKycVerificationPanel Component', () => {
     expect(screen.getByText(/LOW RISK/i)).toBeDefined();
   });
 });
+

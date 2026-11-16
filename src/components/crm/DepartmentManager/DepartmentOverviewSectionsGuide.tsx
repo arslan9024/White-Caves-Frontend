@@ -108,3 +108,4 @@ export const DepartmentOverviewSectionsGuide: FC<DepartmentOverviewSectionsGuide
     </div>
   );
 };
+

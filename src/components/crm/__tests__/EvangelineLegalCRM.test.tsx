@@ -9,3 +9,4 @@ describe('EvangelineLegalCRM Component', () => {
     expect(container).toBeDefined();
   });
 });
+

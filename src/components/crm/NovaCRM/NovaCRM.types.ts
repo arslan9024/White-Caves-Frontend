@@ -26,3 +26,4 @@ export interface NovaTab {
   id: NovaTabId;
   label: string;
 }
+

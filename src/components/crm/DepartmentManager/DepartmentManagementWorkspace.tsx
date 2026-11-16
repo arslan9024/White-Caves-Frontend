@@ -301,3 +301,4 @@ export const DepartmentManagementWorkspace: FC<DepartmentManagementWorkspaceProp
 };
 
 export default DepartmentManagementWorkspace;
+

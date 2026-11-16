@@ -19,3 +19,4 @@ describe('ChauffeurViewingCoordinator', () => {
     expect(screen.getByText(/Booked!/i)).toBeDefined();
   });
 });
+

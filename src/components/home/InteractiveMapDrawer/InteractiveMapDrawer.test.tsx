@@ -22,3 +22,4 @@ describe('InteractiveMapDrawer Component', () => {
     fireEvent.click(closeBtn);
   });
 });
+

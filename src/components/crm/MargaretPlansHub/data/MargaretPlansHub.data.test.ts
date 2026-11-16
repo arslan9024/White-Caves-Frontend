@@ -10,3 +10,4 @@ describe('MargaretPlansHub.data', () => {
     expect(MARGARET_HUB_TEXT.printBtn).toContain('Print');
   });
 });
+

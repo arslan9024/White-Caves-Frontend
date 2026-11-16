@@ -20,3 +20,4 @@ describe('NavItem component', () => {
     expect(screen.getByText('5')).toBeDefined();
   });
 });
+

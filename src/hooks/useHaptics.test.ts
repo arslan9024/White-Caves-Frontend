@@ -20,3 +20,4 @@ describe('useHaptics', () => {
     expect(vibrateSpy).toHaveBeenCalledTimes(5);
   });
 });
+

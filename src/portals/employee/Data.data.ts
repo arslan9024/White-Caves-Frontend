@@ -46,3 +46,4 @@ export const EMPLOYEE_PORTAL_DATA = {
     },
   ] as PortalSectionItem[],
 };
+

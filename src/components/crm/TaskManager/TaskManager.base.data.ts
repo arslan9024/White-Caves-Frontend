@@ -340,3 +340,4 @@ export const BASE_OPERATIONAL_TASKS: Array<Omit<TaskNode, 'actor' | 'action' | '
     completionRate: 100,
   },
 ];
+

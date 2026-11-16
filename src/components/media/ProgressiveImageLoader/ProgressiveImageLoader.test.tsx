@@ -10,3 +10,4 @@ describe('ProgressiveImageLoader Component', () => {
     expect(screen.getByText(/Aerial Dubai Marina View/i)).toBeDefined();
   });
 });
+

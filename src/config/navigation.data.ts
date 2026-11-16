@@ -272,3 +272,4 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/owner/business-model': 'Business Model',
   '/owner/client-services': 'Client Services',
 };
+

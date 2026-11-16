@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Unit Tests â€” searchLeadsSlice + createSearchLead thunk
  * TASK-009 / Phase 27: Property Search â†” CRM Lead Integration
  *
@@ -338,3 +338,4 @@ describe('searchLeadsSlice', () => {
     });
   });
 });
+

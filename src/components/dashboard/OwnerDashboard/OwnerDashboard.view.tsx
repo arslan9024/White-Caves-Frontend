@@ -22,3 +22,4 @@ export const OwnerDashboardView: React.FC<OwnerDashboardProps> = () => {
 };
 
 export default OwnerDashboardView;
+

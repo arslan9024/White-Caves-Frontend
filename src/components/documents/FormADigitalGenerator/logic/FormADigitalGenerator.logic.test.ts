@@ -36,3 +36,4 @@ describe('FormADigitalGenerator.logic', () => {
     expect(result.current.generated).toBe(false);
   });
 });
+

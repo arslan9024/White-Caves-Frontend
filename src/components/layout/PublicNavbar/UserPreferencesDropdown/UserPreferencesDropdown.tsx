@@ -283,3 +283,4 @@ export const UserPreferencesDropdown: FC<UserPreferencesDropdownProps> = ({
 };
 
 export default UserPreferencesDropdown;
+

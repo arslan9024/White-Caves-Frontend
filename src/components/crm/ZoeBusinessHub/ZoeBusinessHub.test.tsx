@@ -42,3 +42,4 @@ describe('ZoeBusinessHub Component', () => {
     }
   });
 });
+

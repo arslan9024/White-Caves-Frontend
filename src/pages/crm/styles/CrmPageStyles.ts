@@ -218,3 +218,4 @@ export const EmptyState = styled.div`
   padding: 3rem;
   color: #94A3B8;
 `;
+

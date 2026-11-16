@@ -57,3 +57,4 @@ describe('HenryDocumentHub.logic', () => {
     expect(result.current.xpRewardLedger?.xpDelta).toBe(500);
   });
 });
+

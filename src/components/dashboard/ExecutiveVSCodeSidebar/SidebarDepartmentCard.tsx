@@ -220,3 +220,4 @@ export const SidebarDepartmentCard: FC<SidebarDepartmentCardProps> = ({
     </SidebarCardItem>
   );
 };
+

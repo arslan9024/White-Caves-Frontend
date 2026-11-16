@@ -285,3 +285,4 @@ export const CANONICAL_ERD_RELATIONS: ERDRelation[] = [
     departmentCode: 'DEPT-10',
   },
 ];
+

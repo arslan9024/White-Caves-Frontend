@@ -163,3 +163,4 @@ export const LeaderboardOverviewView: FC<LeaderboardOverviewViewProps> = ({ onNa
 };
 
 export default LeaderboardOverviewView;
+

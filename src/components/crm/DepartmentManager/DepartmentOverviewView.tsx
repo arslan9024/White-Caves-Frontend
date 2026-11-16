@@ -276,3 +276,4 @@ export const DepartmentOverviewView: FC<DepartmentOverviewViewProps> = ({ onNavi
 };
 
 export default DepartmentOverviewView;
+

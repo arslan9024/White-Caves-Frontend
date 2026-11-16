@@ -66,3 +66,4 @@ export const DAISY_LEASING_FEATURES: LeasingFeature[] = [
     status: 'active'
   }
 ];
+

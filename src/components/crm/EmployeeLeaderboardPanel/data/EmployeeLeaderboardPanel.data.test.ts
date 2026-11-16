@@ -8,3 +8,4 @@ describe('EmployeeLeaderboardPanel.data', () => {
     expect(LEVEL_COLORS[4]).toBe('#EF4444');
   });
 });
+

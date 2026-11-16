@@ -84,3 +84,4 @@ const PropertyManagementView: React.FC<PropertyManagementViewProps> = ({
 };
 
 export default PropertyManagementView;
+

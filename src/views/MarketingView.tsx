@@ -38,3 +38,4 @@ export const MarketingView: FC = () => {
   );
 };
 export default MarketingView;
+

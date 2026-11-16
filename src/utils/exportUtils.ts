@@ -173,3 +173,4 @@ export async function fetchAndDownloadCsv(url: string, defaultFilename = 'analyt
     return false;
   }
 }
+

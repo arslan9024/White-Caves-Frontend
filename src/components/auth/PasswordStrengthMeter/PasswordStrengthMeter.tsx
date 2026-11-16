@@ -69,3 +69,4 @@ export const PasswordStrengthMeter: FC<{ password?: string }> = ({ password = ''
 };
 
 export default PasswordStrengthMeter;
+

@@ -140,3 +140,4 @@ const TrendChart: React.FC<TrendChartProps> = ({
 };
 
 export default TrendChart;
+

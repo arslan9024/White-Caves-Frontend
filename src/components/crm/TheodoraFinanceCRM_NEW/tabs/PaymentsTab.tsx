@@ -95,3 +95,4 @@ const PaymentsTab: React.FC<PaymentsTabProps> = ({ selectedInvoice, generatedMes
 };
 
 export default PaymentsTab;
+

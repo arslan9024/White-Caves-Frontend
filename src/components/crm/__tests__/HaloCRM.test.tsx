@@ -9,3 +9,4 @@ describe('HaloCRM Component', () => {
     expect(container).toBeDefined();
   });
 });
+

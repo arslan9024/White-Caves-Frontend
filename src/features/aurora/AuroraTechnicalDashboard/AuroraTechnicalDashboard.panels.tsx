@@ -326,3 +326,4 @@ export const TechnicalAlertsPanel: React.FC = () => (
     )}
   </section>
 );
+

@@ -53,3 +53,4 @@ export const LAILA_LEASING_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as laila_leasing_supervisorExport;
+

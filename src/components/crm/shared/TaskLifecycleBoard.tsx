@@ -331,3 +331,4 @@ const TaskLifecycleBoard = memo(
 
 TaskLifecycleBoard.displayName = 'TaskLifecycleBoard';
 export default TaskLifecycleBoard;
+

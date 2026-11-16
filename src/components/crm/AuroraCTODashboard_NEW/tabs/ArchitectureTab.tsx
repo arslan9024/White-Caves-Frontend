@@ -104,3 +104,4 @@ const ArchitectureTab: React.FC<ArchitectureTabProps> = ({ modules, techStack, s
 };
 
 export default ArchitectureTab;
+

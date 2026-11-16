@@ -284,3 +284,4 @@ describe('WhatsAppAnalyticsPage', () => {
     expect(screen.getByText('WhatsApp Analytics')).toBeInTheDocument();
   });
 });
+

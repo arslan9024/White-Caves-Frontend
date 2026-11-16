@@ -733,3 +733,4 @@ export const GoalsGalleryPage: FC = () => {
 };
 
 export default GoalsGalleryPage;
+

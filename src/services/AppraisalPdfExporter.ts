@@ -106,3 +106,4 @@ export async function exportAppraisalToPdf(data: AppraisalData): Promise<string>
   console.log('[AppraisalPdfExporter] Appraisal data ready for PDF rendering:', data.propertyId);
   return url;
 }
+

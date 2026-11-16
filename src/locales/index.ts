@@ -27,3 +27,4 @@ export const dictionaries: Record<SupportedLanguageCode, typeof en> = {
 };
 
 export default dictionaries;
+

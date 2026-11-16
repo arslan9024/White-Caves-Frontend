@@ -18,3 +18,4 @@ export function evaluateLcpBudget(lcpMs: number, budgetMs = LCP_BUDGET_MS): LcpC
     budgetMs,
   };
 }
+

@@ -83,3 +83,4 @@ const DataQualityIndicators = ({ onFilterClick }: { onFilterClick?: (filterKey: 
 };
 
 export default DataQualityIndicators;
+

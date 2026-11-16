@@ -13,3 +13,4 @@ describe('BottomNav component', () => {
     expect(screen.getByText('More')).toBeDefined();
   });
 });
+

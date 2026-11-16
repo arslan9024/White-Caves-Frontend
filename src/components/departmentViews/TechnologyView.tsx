@@ -84,3 +84,4 @@ const TechnologyView: React.FC<TechnologyViewProps> = ({
 };
 
 export default TechnologyView;
+

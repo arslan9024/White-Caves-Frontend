@@ -474,3 +474,4 @@ PaymentInstructionDeck.displayName = 'PaymentInstructionDeck';
 export default PaymentInstructionDeck;
 
 export { PaymentMethodSelector, QRCodeDisplay, ChequeInstructions, BankTransferDetails };
+

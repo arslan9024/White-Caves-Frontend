@@ -216,3 +216,4 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
 };
 
 export default CavesFloatingSearch;
+

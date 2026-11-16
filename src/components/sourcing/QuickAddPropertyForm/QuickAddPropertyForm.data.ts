@@ -17,3 +17,4 @@ export const formatFeatureLabel = (f: string): string => {
   if (!f) return '';
   return f.charAt(0).toUpperCase() + f.slice(1);
 };
+

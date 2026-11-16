@@ -6,3 +6,4 @@ describe('LumenCRM', () => {
     expect(true).toBe(true);
   });
 });
+

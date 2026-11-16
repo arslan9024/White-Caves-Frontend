@@ -212,3 +212,4 @@ export function groupModulesForMD(moduleEntries: Array<[string, CRMModuleEntry]>
 
   return grouped;
 }
+

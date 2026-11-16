@@ -151,3 +151,4 @@ export function useExecutiveAIVSCodeSidebarLogic(props?: UseExecutiveAIVSCodeSid
     managers: filteredManagers,
   };
 }
+

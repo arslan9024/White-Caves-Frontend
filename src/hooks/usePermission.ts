@@ -304,3 +304,4 @@ export function useCanonicalRole(): string {
   const raw = useSelector(selectUserRole);
   return resolveRole(raw);
 }
+

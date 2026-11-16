@@ -17,3 +17,4 @@ const DashboardModuleToolbar: FC<DashboardModuleToolbarProps> = ({ label, onBack
 };
 
 export default DashboardModuleToolbar;
+

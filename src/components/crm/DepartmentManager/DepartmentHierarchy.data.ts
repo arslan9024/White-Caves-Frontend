@@ -206,3 +206,4 @@ export function buildInitialHierarchyState(): import('./DepartmentHierarchy.type
     unassignedPool: getInitialHierarchyPool(),
   };
 }
+

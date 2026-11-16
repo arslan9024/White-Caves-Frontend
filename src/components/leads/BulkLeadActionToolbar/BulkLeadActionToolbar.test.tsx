@@ -13,3 +13,4 @@ describe('BulkLeadActionToolbar', () => {
     expect(container.firstChild).toBeNull();
   });
 });
+

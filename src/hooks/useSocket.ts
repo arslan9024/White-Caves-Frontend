@@ -207,3 +207,4 @@ export function useSocket(): UseSocketReturn {
     reconnect,
   };
 }
+

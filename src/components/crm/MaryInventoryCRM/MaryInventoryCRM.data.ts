@@ -14,3 +14,4 @@ export const DATA_TOOLS: DataToolItem[] = [
   { id: 'ocr', label: 'Image Scanner', icon: FileImage, color: '#f59e0b' },
   { id: 'harvester', label: 'Web Harvester', icon: Globe, color: '#EF4444' },
 ];
+

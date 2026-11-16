@@ -173,3 +173,4 @@ Badge.Count = CountBadge;
 Badge.Department = DepartmentBadge;
 
 export default Badge;
+

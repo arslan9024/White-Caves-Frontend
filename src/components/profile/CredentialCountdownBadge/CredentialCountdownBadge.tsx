@@ -62,3 +62,4 @@ export const CredentialCountdownBadge: FC = () => {
 };
 
 export default CredentialCountdownBadge;
+

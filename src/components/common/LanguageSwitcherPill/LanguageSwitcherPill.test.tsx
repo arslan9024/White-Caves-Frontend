@@ -52,3 +52,4 @@ describe('LanguageSwitcherPill Component', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('ru');
   });
 });
+

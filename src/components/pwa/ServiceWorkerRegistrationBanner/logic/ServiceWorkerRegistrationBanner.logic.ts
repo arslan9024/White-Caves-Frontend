@@ -48,3 +48,4 @@ export function useServiceWorkerRegistrationBannerLogic(): UseSWBannerReturn {
     handlePurgeCompleted,
   };
 }
+

@@ -90,3 +90,4 @@ export const AREA_RATES: Record<string, number> = {
   'Business Bay': 1600,
   JVC: 850,
 };
+

@@ -69,3 +69,4 @@ describe('ErmsBulkImporterModal (Pillar 1 Upgrades 2 & 3)', () => {
     expect(imported[1].name).toBe('Palm Frond N Villa');
   });
 });
+

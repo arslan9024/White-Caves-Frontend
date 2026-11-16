@@ -91,3 +91,4 @@ const getIconSize = (size) => {
 };
 
 export default ContactStatusBadge;
+

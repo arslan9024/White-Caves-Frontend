@@ -248,3 +248,4 @@ export default function RERAComplianceModule({ role, user, data }: CRMModuleProp
     </div>
   );
 }
+

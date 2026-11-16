@@ -157,3 +157,4 @@ const MessageInput: React.FC<MessageInputProps> = ({
 MessageInput.displayName = 'MessageInput';
 
 export default MessageInput;
+

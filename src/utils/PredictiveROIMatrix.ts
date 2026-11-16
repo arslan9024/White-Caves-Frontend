@@ -72,3 +72,4 @@ export function calculatePredictiveROI({
     estimatedTotalProfitAED: Math.round(estimatedTotalProfitAED),
   };
 }
+

@@ -15,3 +15,4 @@ describe('Badge Component', () => {
     expect(screen.getByText('5')).toBeInTheDocument();
   });
 });
+

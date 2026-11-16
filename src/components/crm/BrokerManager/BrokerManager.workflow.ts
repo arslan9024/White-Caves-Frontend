@@ -73,3 +73,4 @@ export function updateLeadStatus(
 ): AssignedLead[] {
   return leads.map(l => (l.id === leadId ? { ...l, status: newStatus } : l));
 }
+

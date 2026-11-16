@@ -14,3 +14,4 @@ export interface PageTransitionProps {
 }
 export type RouteDecision =
   { kind: 'loading' } | { kind: 'redirect'; to: string; from?: string } | { kind: 'allow' };
+

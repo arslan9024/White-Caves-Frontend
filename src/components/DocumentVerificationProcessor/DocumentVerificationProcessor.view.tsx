@@ -123,3 +123,4 @@ export const DocumentVerificationProcessor: React.FC<DocumentVerificationProcess
 DocumentVerificationProcessor.formatFieldLabel = formatFieldLabel;
 
 export default DocumentVerificationProcessor;
+

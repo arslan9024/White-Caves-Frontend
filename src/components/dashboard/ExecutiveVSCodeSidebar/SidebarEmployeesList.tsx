@@ -205,3 +205,4 @@ export const SidebarEmployeesList: FC<SidebarEmployeesListProps> = ({
 };
 
 export default SidebarEmployeesList;
+

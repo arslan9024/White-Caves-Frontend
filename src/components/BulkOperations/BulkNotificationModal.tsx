@@ -152,3 +152,4 @@ const BulkNotificationModal: React.FC<BulkNotificationModalProps> = ({
 };
 
 export default BulkNotificationModal;
+

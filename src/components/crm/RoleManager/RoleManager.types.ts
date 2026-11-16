@@ -35,3 +35,4 @@ export interface RoleAuditVerificationResult {
   auditAttestationToken: string;
   verificationTimestamp: number;
 }
+

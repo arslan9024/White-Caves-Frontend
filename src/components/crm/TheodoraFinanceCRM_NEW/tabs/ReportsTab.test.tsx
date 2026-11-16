@@ -35,3 +35,4 @@ describe('ReportsTab (All Reports Explorer)', () => {
     expect(screen.getByText(/Export CSV/i)).toBeInTheDocument();
   });
 });
+

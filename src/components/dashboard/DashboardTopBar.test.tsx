@@ -54,3 +54,4 @@ describe('DashboardTopBar Component', () => {
     expect(onQuickAction).toHaveBeenCalled();
   });
 });
+

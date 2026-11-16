@@ -65,3 +65,4 @@ const DealsTab: React.FC<DealsTabProps> = ({ deals, searchQuery, onSearchChange,
 };
 
 export default DealsTab;
+

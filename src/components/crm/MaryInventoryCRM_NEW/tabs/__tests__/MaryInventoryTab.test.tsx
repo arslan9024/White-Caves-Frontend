@@ -330,3 +330,4 @@ describe('MaryInventoryTab', () => {
     expect(screen.queryByTestId('owner-drawer')).not.toBeInTheDocument();
   });
 });
+

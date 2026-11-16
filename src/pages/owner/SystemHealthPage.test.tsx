@@ -342,3 +342,4 @@ describe('SystemHealthPage', () => {
     expect(mockAuthFetch).toHaveBeenCalledTimes(2);
   });
 });
+

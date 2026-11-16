@@ -13,3 +13,4 @@ describe('PdcMicrScanner Component', () => {
     expect(screen.getByText(/Automated MICR routing code extraction & 7-day deposit alert/i)).toBeDefined();
   });
 });
+

@@ -213,6 +213,19 @@ class SocketService {
     return () => this.socket?.off('whatsapp:linda:hot_lead', handler);
   }
 
+  /** Real-time Linda WhatsApp hardware/Baileys connection state sync */
+  onLindaConnectionState(
+    handler: (payload: {
+      account: string;
+      status: 'connected' | 'disconnected' | 'reconnecting' | 'error';
+      isConnected: boolean;
+      timestamp: number;
+    }) => void
+  ): () => void {
+    this.socket?.on('whatsapp:linda:connection_state', handler);
+    return () => this.socket?.off('whatsapp:linda:connection_state', handler);
+  }
+
   /** CRM notification pushed from server */
   onNotification(handler: (payload: CrmNotificationPayload) => void): () => void {
     this.socket?.on('notification:new', handler);
@@ -265,3 +278,4 @@ class SocketService {
 // Export singleton
 const socketService = new SocketService();
 export default socketService;
+

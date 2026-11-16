@@ -220,3 +220,4 @@ export function getHttpErrorMessage(error: unknown): string {
 
   return err.message || ERROR_MESSAGES.SERVER_ERROR;
 }
+

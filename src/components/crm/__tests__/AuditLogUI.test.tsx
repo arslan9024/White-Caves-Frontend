@@ -20,3 +20,4 @@ describe('AuditLogUI Component', () => {
     expect(container).toBeDefined();
   });
 });
+

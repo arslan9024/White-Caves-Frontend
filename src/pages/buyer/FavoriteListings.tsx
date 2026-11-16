@@ -220,3 +220,4 @@ const FavoriteListings: React.FC = () => {
 };
 
 export default FavoriteListings;
+

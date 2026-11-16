@@ -131,3 +131,4 @@ export const UAE_PDPL_DataPrivacyWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

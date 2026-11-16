@@ -315,3 +315,4 @@ export const CORE_CRM_MODULES: Record<string, CRMModuleDefinition> = {
     Component: LindaWhatsAppCRM,
   },
 };
+

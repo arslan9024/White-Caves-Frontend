@@ -162,3 +162,4 @@ export const RERACertificateTrackerWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

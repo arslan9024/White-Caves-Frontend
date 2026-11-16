@@ -98,3 +98,4 @@ describe('roleSlice', () => {
     expect(state.statusHistory[0].type).toBe('error');
   });
 });
+

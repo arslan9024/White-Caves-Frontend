@@ -37,3 +37,4 @@ export function useFollowUpSequenceBuilderLogic() {
 
   return { steps, removeStep, addStep, CHANNEL_COLORS };
 }
+

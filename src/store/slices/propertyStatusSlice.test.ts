@@ -107,3 +107,4 @@ describe('propertyStatusSlice', () => {
     expect(selectStatusFilters(next)).toEqual(selectStatusFilters(initial));
   });
 });
+

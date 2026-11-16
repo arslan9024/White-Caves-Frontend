@@ -91,3 +91,4 @@ describe('HenryPassportScannerView', () => {
     expect(scanner.getCachedPassport()).toBeNull();
   });
 });
+

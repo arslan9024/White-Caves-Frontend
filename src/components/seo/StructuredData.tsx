@@ -32,3 +32,4 @@ const StructuredData: FC<StructuredDataProps> = ({ id, data }) => {
 };
 
 export default StructuredData;
+

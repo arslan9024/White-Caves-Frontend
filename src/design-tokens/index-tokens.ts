@@ -24,3 +24,4 @@ export const borderRadius = {
   xl: '12px',
   full: '9999px',
 };
+

@@ -386,3 +386,4 @@ export const MediaUploadComponent: React.FC<MediaUploadProps> = ({
 };
 
 export default MediaUploadComponent;
+

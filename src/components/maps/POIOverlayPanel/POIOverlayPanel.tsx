@@ -50,3 +50,4 @@ export const POIOverlayPanel: FC = () => {
   );
 };
 export default POIOverlayPanel;
+

@@ -588,3 +588,4 @@ const LeadsTab: React.FC<LeadsTabProps> = ({ data, loading, error }) => {
 };
 
 export default React.memo(LeadsTab);
+

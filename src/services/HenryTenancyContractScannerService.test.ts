@@ -121,3 +121,4 @@ describe('Henry tenancy source extraction', () => {
     expect(await contract.saveToDatabase(data)).toMatchObject({ success: false });
   });
 });
+

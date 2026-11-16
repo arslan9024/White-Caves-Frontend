@@ -69,3 +69,4 @@ export const PropertyInformationCardView: React.FC<PropertyInformationCardProps>
     </div>
   );
 };
+

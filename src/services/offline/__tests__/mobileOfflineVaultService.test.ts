@@ -77,3 +77,4 @@ describe('Mobile PWA Encrypted Offline Vault & Biometric Unlock Service', () => 
     expect(vault.getCachedListings()).toEqual([]);
   });
 });
+

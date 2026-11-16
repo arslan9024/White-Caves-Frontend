@@ -98,3 +98,4 @@ export function useHenryGenericDocument(importedSource?: DriveImport | null) {
     setOptions: (value: VaultSaveOptions) => { setOptions(value); confirm(false); },
     candidates: text === null ? [] : rankGenericTypes(text) };
 }
+

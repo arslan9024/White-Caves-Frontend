@@ -23,3 +23,4 @@ describe('TransactionConfettiTrigger Component', () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
+

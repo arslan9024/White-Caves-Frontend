@@ -37,3 +37,4 @@ export function useDocumentShareLinkGeneratorLogic() {
 
   return { expiry, setExpiry, requirePin, setRequirePin, link, pin, copied, handleGenerate, handleCopy, EXPIRY_LABELS };
 }
+

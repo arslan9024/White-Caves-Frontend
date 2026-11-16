@@ -316,3 +316,4 @@ const DamacAssetFetcher: React.FC<DamacAssetFetcherProps> = ({ selectedProperty 
 };
 
 export default DamacAssetFetcher;
+

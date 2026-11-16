@@ -93,3 +93,4 @@ export const taskStyles = {
   advanceBtn:
     'flex-1 flex items-center justify-center gap-1 px-3 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition-all [data-theme=light]_&:bg-emerald-50 [data-theme=light]_&:text-emerald-700 [data-theme=light]_&:border-emerald-300',
 };
+

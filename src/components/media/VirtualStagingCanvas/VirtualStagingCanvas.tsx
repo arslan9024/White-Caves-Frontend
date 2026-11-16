@@ -296,3 +296,4 @@ export const VirtualStagingCanvas: FC<VirtualStagingCanvasProps> = ({ roomName =
 };
 
 export default VirtualStagingCanvas;
+

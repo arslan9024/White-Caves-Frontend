@@ -86,3 +86,4 @@ export interface UserRoleProviderProps {
   children: ReactNode;
   initialUser?: Partial<UserProfile> | null;
 }
+

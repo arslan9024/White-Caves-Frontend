@@ -15,3 +15,4 @@ describe('SalesLeaderboardPodium Component', () => {
     expect(screen.getByText('Sarah Al Maktoum')).toBeDefined();
   });
 });
+

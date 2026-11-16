@@ -17,3 +17,4 @@ describe('Tag.types Component', () => {
     }
   });
 });
+

@@ -10,3 +10,4 @@ describe('Spinner Component', () => {
     expect(container.firstChild).toBeInTheDocument();
   });
 });
+

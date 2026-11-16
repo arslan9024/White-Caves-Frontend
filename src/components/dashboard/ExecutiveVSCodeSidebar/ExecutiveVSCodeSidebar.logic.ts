@@ -158,3 +158,4 @@ export function useExecutiveVSCodeSidebarLogic(props?: UseExecutiveVSCodeSidebar
     departments: filteredDepartments,
   };
 }
+

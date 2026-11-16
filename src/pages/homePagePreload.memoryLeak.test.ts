@@ -47,3 +47,4 @@ describe('Homepage hero preload memory safety', () => {
     expect(links).toHaveLength(0);
   });
 });
+

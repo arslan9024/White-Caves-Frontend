@@ -52,3 +52,4 @@ describe('CommissionManagementPanel — production quality tests', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

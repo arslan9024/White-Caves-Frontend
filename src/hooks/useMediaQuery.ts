@@ -78,3 +78,4 @@ export function usePrefersReducedMotion(): boolean {
 }
 
 export default useMediaQuery;
+

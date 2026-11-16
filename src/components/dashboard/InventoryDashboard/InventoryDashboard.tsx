@@ -5,3 +5,4 @@
 
 export { default, InventoryDashboard } from '../../features/InventoryDashboard/InventoryDashboard';
 export * from '../../features/InventoryDashboard/InventoryDashboard';
+

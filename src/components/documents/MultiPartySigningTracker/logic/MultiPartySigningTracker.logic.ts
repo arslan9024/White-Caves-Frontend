@@ -33,3 +33,4 @@ export function useMultiPartySigningTrackerLogic() {
 
   return { signers, advanceStatus, signedCount, allSigned };
 }
+

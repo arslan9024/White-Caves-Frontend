@@ -3,16 +3,16 @@ import {
   validateTuringExecutionCriteria,
   getTuringRuleById,
   SUPREME_TURING_LAWS,
-} from '../../.agents/aegis/protocols/turingProtocol';
+} from '../../../Aegis-Sterling/.agents/aegis/protocols/turingProtocol';
 import {
   validateMaryAllenWilkesModule,
   getWilkesLayerTemplate,
   MARY_ALLEN_WILKES_SPEC,
-} from '../../.agents/aegis/protocols/maryAllenWilkesProtocol';
+} from '../../../Aegis-Sterling/.agents/aegis/protocols/maryAllenWilkesProtocol';
 import {
   AEGIS_42_PROTOCOLS,
   enforceProtocolGuard,
-} from '../../.agents/aegis/protocols/aegisMasterProtocols';
+} from '../../../Aegis-Sterling/.agents/aegis/protocols/aegisMasterProtocols';
 
 describe('Turing Protocol & Mary Allen Wilkes Protocol Suite', () => {
   describe('AEGIS 42 Law Protocol Suite', () => {
@@ -156,3 +156,4 @@ describe('Turing Protocol & Mary Allen Wilkes Protocol Suite', () => {
     });
   });
 });
+

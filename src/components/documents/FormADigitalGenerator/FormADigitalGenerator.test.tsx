@@ -10,3 +10,4 @@ describe('FormADigitalGenerator', () => {
     expect(screen.getByText('Generate Form A PDF')).toBeTruthy();
   });
 });
+

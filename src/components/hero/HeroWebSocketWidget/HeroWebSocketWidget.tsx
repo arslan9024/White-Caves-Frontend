@@ -22,3 +22,4 @@ export const HeroWebSocketWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

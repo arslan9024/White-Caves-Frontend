@@ -119,3 +119,4 @@ describe('StatusIndicator', () => {
     expect(container.querySelector('.status-indicator')?.getAttribute('title')).toBe('Online');
   });
 });
+

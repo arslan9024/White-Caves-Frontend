@@ -28,3 +28,4 @@ export const CompleteBanner = styled.div`
   background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.75rem;
   text-align: center; color: #15803d; font-weight: 700; margin-top: 0.75rem;
 `;
+

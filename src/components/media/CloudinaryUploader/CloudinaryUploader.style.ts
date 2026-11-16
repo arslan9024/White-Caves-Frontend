@@ -95,3 +95,4 @@ export const ItemStatus = styled.div`
   font-size: 0.75rem;
   color: #22C55E;
 `;
+

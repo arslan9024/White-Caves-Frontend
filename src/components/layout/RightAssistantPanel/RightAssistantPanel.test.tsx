@@ -17,3 +17,4 @@ describe('RightAssistantPanel Component', () => {
     }
   });
 });
+

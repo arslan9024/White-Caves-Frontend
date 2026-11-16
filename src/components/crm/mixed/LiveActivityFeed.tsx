@@ -146,3 +146,4 @@ export function AIActivityItem({ assistant, action, target, timestamp, status = 
     </motion.div>
   );
 }
+

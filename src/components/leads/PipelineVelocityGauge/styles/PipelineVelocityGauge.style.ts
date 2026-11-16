@@ -20,3 +20,4 @@ export const Summary = styled.div`
   margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #f1f5f9;
   font-size: 0.8125rem; color: #64748b;
 `;
+

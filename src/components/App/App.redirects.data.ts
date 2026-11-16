@@ -22,3 +22,4 @@ export const LEGACY_OWNER_REDIRECT_ROUTES: Array<{ path: string; to: string }> =
   { path: '/crm', to: '/dashboard' },
   { path: '/owner/crm', to: '/dashboard' },
 ];
+

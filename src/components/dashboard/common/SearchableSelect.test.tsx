@@ -88,3 +88,4 @@ describe('SearchableSelect', () => {
     expect(screen.getByRole('listbox')).toBeInTheDocument();
   });
 });
+

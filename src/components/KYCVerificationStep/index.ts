@@ -8,3 +8,4 @@ export * from './KYCVerificationStep.logic';
 export * from './KYCVerificationStep.panels';
 export * from './KYCVerificationStep.view';
 export { KYCVerificationStep as default } from './KYCVerificationStep.view';
+

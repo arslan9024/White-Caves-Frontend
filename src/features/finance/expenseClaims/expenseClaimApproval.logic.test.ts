@@ -34,3 +34,4 @@ describe('expense claim approval transitions', () => {
     expect(afterPayment.nextStatus).toBe('paid');
   });
 });
+

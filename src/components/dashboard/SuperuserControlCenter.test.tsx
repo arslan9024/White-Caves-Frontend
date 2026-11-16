@@ -54,3 +54,4 @@ describe('SuperuserControlCenter', () => {
     expect(props.onRefreshData).toHaveBeenCalledTimes(1);
   });
 });
+

@@ -15,3 +15,4 @@ describe('AdaArchitectureHub.style', () => {
     expect(styles.ViewerOverlay).toBeDefined();
   });
 });
+

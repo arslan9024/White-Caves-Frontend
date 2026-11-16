@@ -17,3 +17,4 @@ describe('EjariContractRegistrar Component', () => {
     expect(screen.getByText(/Ejari Registration Successful/i)).toBeDefined();
   });
 });
+

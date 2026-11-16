@@ -188,3 +188,4 @@ export default function MobileCRMCommandBar(props: MobileCRMCommandBarProps) {
     </div>
   );
 }
+

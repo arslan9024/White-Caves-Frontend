@@ -285,3 +285,4 @@ export const ZoomBtn = styled.button`
     background: rgba(255, 255, 255, 0.25);
   }
 `;
+

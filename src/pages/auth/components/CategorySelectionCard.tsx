@@ -42,3 +42,4 @@ export const CategorySelectionCard = memo(function CategorySelectionCard({
 });
 
 export default CategorySelectionCard;
+

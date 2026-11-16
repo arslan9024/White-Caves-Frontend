@@ -22,3 +22,4 @@ export const HeroCookieConsentWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

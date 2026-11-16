@@ -47,3 +47,4 @@ export function useFinanceWorker(): UseFinanceWorkerReturn {
 }
 
 export default useFinanceWorker;
+

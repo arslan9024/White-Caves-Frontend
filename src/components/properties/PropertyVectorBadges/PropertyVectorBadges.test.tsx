@@ -21,3 +21,4 @@ describe('PropertyVectorBadges', () => {
     expect(screen.getByText('Palm Jumeirah')).toBeDefined();
   });
 });
+

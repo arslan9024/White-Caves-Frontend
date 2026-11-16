@@ -105,3 +105,4 @@ describe('LuxuryPropertyCard', () => {
     expect(handleClick).toHaveBeenCalledWith(mockProperty);
   });
 });
+

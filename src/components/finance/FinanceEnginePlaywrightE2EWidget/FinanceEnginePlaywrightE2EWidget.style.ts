@@ -137,3 +137,4 @@ export const LogsContainer = styled.div`
 export const LogLine = styled.div`
   line-height: 1.4;
 `;
+

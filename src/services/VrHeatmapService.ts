@@ -121,3 +121,4 @@ class VrHeatmapServiceClass {
 
 export const VrHeatmapService = new VrHeatmapServiceClass();
 export default VrHeatmapService;
+

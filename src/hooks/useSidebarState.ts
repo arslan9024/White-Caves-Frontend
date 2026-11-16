@@ -324,3 +324,4 @@ export const useSidebarPagination = <T>(
     hasPrevPage: currentPage > 1,
   };
 };
+

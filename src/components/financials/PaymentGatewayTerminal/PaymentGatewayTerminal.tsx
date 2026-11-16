@@ -38,3 +38,4 @@ export const PaymentGatewayTerminal: FC = () => {
   );
 };
 export default PaymentGatewayTerminal;
+

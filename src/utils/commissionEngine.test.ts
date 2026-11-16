@@ -75,3 +75,4 @@ describe('Commission Engine — calculateMultiAgentSplit', () => {
     expect(split.companyRevenue).toBe(40000);
   });
 });
+

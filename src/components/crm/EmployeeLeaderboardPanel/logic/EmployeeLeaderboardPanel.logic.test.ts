@@ -17,3 +17,4 @@ describe('EmployeeLeaderboardPanel.logic', () => {
     expect(result.current.globalTopManagers.length).toBeGreaterThanOrEqual(0);
   });
 });
+

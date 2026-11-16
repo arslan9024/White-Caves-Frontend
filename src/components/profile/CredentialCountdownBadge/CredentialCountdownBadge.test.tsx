@@ -15,3 +15,4 @@ describe('CredentialCountdownBadge Component', () => {
     expect(screen.getByText(/All Active/i)).toBeDefined();
   });
 });
+

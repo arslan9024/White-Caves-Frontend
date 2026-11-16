@@ -77,3 +77,4 @@ export const TrakheesiQrScanner: FC = () => {
   );
 };
 export default TrakheesiQrScanner;
+

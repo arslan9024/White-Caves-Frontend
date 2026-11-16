@@ -7,3 +7,4 @@ describe('DocumentComplianceChecklist.style', () => {
     expect(Object.keys(styles).length).toBeGreaterThan(0);
   });
 });
+

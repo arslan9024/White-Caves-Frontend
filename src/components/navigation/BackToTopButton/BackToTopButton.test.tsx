@@ -27,3 +27,4 @@ describe('BackToTopButton Component', () => {
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
 });
+

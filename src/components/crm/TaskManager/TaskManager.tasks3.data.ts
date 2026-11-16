@@ -119,3 +119,4 @@ export const RAW_TASKS_PART3: Array< [string, string, string, string, TaskNode['
   ['TSK-299', 'White Caves Sovereign Real Estate Annual Dubai Market Outlook Book', 'pillar-12', 'Pillar XII: Market Research', 'MARKETING', 'Executive Publishing', 'Annual', 'CRITICAL', 'Supervisor Dr. Layla', 'Manager Dr. Omar', 'Director Dr. Farida Khan',],
   ['TSK-300', 'Executive Strategy Briefing for Managing Director & Board of Directors', 'pillar-12', 'Pillar XII: Market Research', 'OPERATIONS', 'Sovereign Strategy Desk', 'Monthly', 'CRITICAL', 'Supervisor Dr. Layla', 'Manager Dr. Omar', 'Director Dr. Farida Khan',],
 ];
+

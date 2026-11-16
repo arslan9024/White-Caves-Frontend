@@ -56,3 +56,4 @@ export const DepartmentStatsDeck: FC<DepartmentStatsDeckProps> = ({ metrics }) =
     </StatsDeck>
   );
 };
+

@@ -32,3 +32,4 @@ describe('HomePage CRM Command Center', () => {
     if (floor1Btn) fireEvent.click(floor1Btn);
   });
 });
+

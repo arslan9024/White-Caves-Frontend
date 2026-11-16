@@ -20,3 +20,4 @@ describe('ArchitectureTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

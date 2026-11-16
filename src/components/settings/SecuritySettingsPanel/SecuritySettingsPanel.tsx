@@ -60,3 +60,4 @@ export const SecuritySettingsPanel: FC = () => {
   );
 };
 export default SecuritySettingsPanel;
+

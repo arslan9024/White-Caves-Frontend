@@ -97,3 +97,4 @@ export const PricePerSqftTooltip: FC<PricePerSqftTooltipProps> = ({
 };
 
 export default PricePerSqftTooltip;
+

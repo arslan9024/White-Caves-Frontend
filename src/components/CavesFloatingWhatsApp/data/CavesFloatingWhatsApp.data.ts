@@ -8,3 +8,4 @@ export const WHATSAPP_WIDGET_TEXT = {
   defaultMessage: 'Hello! I would like to inquire about White Caves Real Estate luxury properties and services.',
   phoneNumber: '+971505110636',
 };
+

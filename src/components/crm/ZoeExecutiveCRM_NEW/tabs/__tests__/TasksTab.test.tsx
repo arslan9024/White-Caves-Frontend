@@ -105,3 +105,4 @@ describe('TasksTab', () => {
     expect(handleFilterChange).toHaveBeenCalledWith('pending');
   });
 });
+

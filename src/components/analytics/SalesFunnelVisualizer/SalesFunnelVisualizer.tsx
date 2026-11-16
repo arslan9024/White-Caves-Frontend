@@ -65,3 +65,4 @@ export const SalesFunnelVisualizer: FC = () => {
   );
 };
 export default SalesFunnelVisualizer;
+

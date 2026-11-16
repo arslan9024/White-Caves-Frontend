@@ -10,3 +10,4 @@ export function hasAccessibleLabel(props: {
     props['aria-label']?.trim() || props['aria-labelledby']?.trim() || props.title?.trim()
   );
 }
+

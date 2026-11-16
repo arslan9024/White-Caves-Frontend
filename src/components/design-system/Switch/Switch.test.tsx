@@ -92,3 +92,4 @@ describe('Switch', () => {
     expect(Switch.displayName).toBe('Switch');
   });
 });
+

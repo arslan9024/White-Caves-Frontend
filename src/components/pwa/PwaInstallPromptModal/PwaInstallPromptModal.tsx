@@ -68,3 +68,4 @@ export const PwaInstallPromptModal: FC = () => {
 };
 
 export default PwaInstallPromptModal;
+

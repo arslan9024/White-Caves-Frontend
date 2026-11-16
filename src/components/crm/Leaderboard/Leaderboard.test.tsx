@@ -281,3 +281,4 @@ describe('Leaderboard 12-Way Suite', () => {
     expect(result.gamifiedAttestationToken).toContain('XP-RANK-ATTEST');
   });
 });
+

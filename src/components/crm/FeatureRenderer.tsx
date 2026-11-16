@@ -65,3 +65,4 @@ const FeatureRenderer = ({ assistantId: propAssistantId, featureId: propFeatureI
 };
 
 export default FeatureRenderer;
+

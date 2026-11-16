@@ -46,3 +46,4 @@ describe('ESignatureCapturepad.logic', () => {
     expect(result.current.saved).toBe(true);
   });
 });
+

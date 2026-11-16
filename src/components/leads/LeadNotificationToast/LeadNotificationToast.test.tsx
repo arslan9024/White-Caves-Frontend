@@ -8,3 +8,4 @@ describe('LeadNotificationToast', () => {
     expect(screen.getByTestId('lead-notification-toast')).toBeTruthy();
   });
 });
+

@@ -182,3 +182,4 @@ describe('MarketAnalyticsModule', () => {
     expect(screen.getByText(/Marina, Downtown, JBR/)).toBeInTheDocument();
   });
 });
+

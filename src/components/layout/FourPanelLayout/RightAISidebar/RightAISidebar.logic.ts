@@ -186,3 +186,4 @@ export function useRightAISidebarLogic(initialActive?: string) {
     hotLeadEscalations,
   };
 }
+

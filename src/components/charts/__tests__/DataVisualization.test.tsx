@@ -339,3 +339,4 @@ describe('Chart Integration', () => {
     expect(container.querySelector('svg') || container.querySelector('div')).toBeInTheDocument();
   });
 });
+

@@ -122,3 +122,4 @@ export const getLifecycleStages = (deptId) => {
 export const getDepartmentKpis = (deptId) => {
   return DEPT_ASSISTANT_MAP[deptId]?.kpis || [];
 };
+

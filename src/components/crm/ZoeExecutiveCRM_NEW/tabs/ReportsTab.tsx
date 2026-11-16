@@ -147,3 +147,4 @@ const ReportsTab: React.FC<ReportsTabProps> = ({ funnelMetrics, complianceMetric
 };
 
 export default ReportsTab;
+

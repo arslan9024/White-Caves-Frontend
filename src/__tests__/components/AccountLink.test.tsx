@@ -198,3 +198,4 @@ describe('AccountLink Component', () => {
     });
   });
 });
+

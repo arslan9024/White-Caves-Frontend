@@ -107,3 +107,4 @@ export interface CompanyMasterLedger {
   personnel: Personnel[];
   properties: Property[];
 }
+

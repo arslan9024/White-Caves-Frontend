@@ -92,3 +92,4 @@ export type DepartmentId = typeof DEPARTMENTS[number]['id'];
 export const getDepartmentById = (id: string) => {
   return DEPARTMENTS.find(d => d.id === id);
 };
+

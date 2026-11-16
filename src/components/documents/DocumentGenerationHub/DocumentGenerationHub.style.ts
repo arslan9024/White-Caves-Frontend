@@ -74,3 +74,4 @@ export const GenerateButton = styled.button<{ $variant?: 'excel' | 'pdf' }>`
       $variant === 'excel' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)'};
   }
 `;
+

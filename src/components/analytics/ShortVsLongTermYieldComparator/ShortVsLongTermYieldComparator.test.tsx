@@ -13,3 +13,4 @@ describe('ShortVsLongTermYieldComparator Component', () => {
     expect(screen.getByText(/Property Value \(AED\)/i)).toBeDefined();
   });
 });
+

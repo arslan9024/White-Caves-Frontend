@@ -25,3 +25,4 @@ export const ChangesBox = styled.div`
   padding: 0.75rem 1rem; font-size: 0.8125rem; color: #15803d; line-height: 1.6;
 `;
 export const AuthorRow = styled.div`margin-top: 0.75rem; font-size: 0.75rem; color: #94a3b8;`;
+

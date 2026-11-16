@@ -46,3 +46,4 @@ export const TENANT_PORTAL_DATA = {
     },
   ] as PortalSectionItem[],
 };
+

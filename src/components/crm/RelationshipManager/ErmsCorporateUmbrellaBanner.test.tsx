@@ -40,3 +40,4 @@ describe('ErmsCorporateUmbrellaBanner', () => {
     expect(handleNavigate).toHaveBeenCalledWith('/dashboard/overview');
   });
 });
+

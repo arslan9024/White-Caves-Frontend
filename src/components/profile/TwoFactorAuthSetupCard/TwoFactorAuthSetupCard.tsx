@@ -145,3 +145,4 @@ export const TwoFactorAuthSetupCard: FC = () => {
 };
 
 export default TwoFactorAuthSetupCard;
+

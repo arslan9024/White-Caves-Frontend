@@ -172,3 +172,4 @@ export const GalleryDetailsTab: React.FC<{ property: PropertyDetails }> = ({ pro
     </div>
   );
 };
+

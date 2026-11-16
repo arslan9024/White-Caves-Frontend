@@ -27,3 +27,4 @@ export const SEO: FC<SEOProps> = ({ title, description, type, name }) => {
   );
 };
 export default SEO;
+

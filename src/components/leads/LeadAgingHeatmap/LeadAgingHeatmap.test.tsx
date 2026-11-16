@@ -9,3 +9,4 @@ describe('LeadAgingHeatmap', () => {
     expect(screen.getByText('Lead Aging Heatmap — Days Since Last Contact')).toBeTruthy();
   });
 });
+

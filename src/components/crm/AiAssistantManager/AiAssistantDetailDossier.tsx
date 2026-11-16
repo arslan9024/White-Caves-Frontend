@@ -232,3 +232,4 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
     </div>
   );
 };
+

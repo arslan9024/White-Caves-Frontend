@@ -179,3 +179,4 @@ export const PropertyCard: FC<PropertyCardProps> = ({
 };
 
 export default PropertyCard;
+

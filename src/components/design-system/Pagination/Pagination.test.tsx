@@ -130,3 +130,4 @@ describe('Pagination', () => {
     expect(container.firstChild).toHaveClass('custom-pagination');
   });
 });
+

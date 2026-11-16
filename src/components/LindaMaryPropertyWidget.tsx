@@ -308,3 +308,4 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
 };
 
 export default LindaMaryPropertyWidget;
+

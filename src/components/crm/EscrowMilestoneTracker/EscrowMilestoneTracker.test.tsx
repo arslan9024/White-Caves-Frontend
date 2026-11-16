@@ -67,3 +67,4 @@ describe('EscrowMilestoneTracker Component', () => {
     expect(screen.getByText(/cleared for AED 3,700,000 release from Escrow/i)).toBeInTheDocument();
   });
 });
+

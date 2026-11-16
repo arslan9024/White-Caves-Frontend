@@ -9,3 +9,4 @@ describe('ESignatureCapturepad.style', () => {
     expect(styles.SaveBtn).toBeDefined();
   });
 });
+

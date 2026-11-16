@@ -71,3 +71,4 @@ describe('TaskActionBar', () => {
     expect(handleCancel).toHaveBeenCalledTimes(1);
   });
 });
+

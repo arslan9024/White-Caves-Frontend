@@ -7,3 +7,4 @@ export const currencyCache = {
     "ARS": 270.5
   }
 };
+

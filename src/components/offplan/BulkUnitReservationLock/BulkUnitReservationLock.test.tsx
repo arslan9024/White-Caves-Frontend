@@ -18,3 +18,4 @@ describe('BulkUnitReservationLock Component', () => {
     expect(screen.getAllByText(/🔒 LOCKED/i).length).toBeGreaterThan(2);
   });
 });
+

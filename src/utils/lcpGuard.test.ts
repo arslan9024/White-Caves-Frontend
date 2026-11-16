@@ -9,3 +9,4 @@ describe('lcpGuard (AEG-040)', () => {
     expect(evaluateLcpBudget(1450).withinBudget).toBe(false);
   });
 });
+

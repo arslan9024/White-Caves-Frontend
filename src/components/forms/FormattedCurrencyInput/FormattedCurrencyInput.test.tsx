@@ -16,3 +16,4 @@ describe('FormattedCurrencyInput Component', () => {
     expect(input.value).toBe('3,500,000');
   });
 });
+

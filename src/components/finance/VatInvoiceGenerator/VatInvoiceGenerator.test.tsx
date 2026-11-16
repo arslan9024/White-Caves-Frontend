@@ -40,3 +40,4 @@ describe('VatInvoiceGenerator Component', () => {
     expect(screen.getByText(/2,200/)).toBeDefined();
   });
 });
+

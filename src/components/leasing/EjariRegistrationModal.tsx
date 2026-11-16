@@ -166,3 +166,4 @@ export const EjariRegistrationModal: React.FC<EjariRegistrationModalProps> = ({
     </Overlay>
   );
 };
+

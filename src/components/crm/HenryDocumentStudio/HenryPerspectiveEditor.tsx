@@ -62,3 +62,4 @@ export function HenryPerspectiveEditor({ file, onConfirm, onCancel }: {
     <button type="button" onClick={() => { generation.current++; onCancel(); }}>Cancel correction</button>
   </section>;
 }
+

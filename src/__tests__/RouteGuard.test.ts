@@ -24,3 +24,4 @@ describe('Route Bounds Guard Utility (RouteGuard.ts)', () => {
     expect(validateEntityId('!@#$%^&*()').isValid).toBe(false);
   });
 });
+

@@ -21,3 +21,4 @@ describe('PannellumVRViewer Component', () => {
     expect(screen.getAllByText(/Master Bedroom/i).length).toBeGreaterThan(0);
   });
 });
+

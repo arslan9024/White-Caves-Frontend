@@ -65,3 +65,4 @@ describe('DashboardSideRail — MD workspace split', () => {
     expect(onSelectTab).toHaveBeenCalledWith('ai-command');
   });
 });
+

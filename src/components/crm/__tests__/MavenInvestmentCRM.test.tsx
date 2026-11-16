@@ -6,3 +6,4 @@ describe('MavenInvestmentCRM', () => {
     expect(true).toBe(true);
   });
 });
+

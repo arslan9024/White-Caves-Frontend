@@ -74,3 +74,4 @@ describe('getLegacyCrmRoute', () => {
     expect(getLegacyCrmRoute(undefined)).toBe('/signin');
   });
 });
+

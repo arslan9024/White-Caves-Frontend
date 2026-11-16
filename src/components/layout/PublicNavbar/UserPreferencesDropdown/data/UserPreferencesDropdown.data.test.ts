@@ -9,3 +9,4 @@ describe('UserPreferencesDropdown.data', () => {
     expect(THEME_ITEMS.length).toBe(3);
   });
 });
+

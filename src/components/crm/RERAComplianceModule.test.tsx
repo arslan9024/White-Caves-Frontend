@@ -382,3 +382,4 @@ describe('RERAComplianceModule', () => {
     // No assertion needed — just confirm no React state update warning
   });
 });
+

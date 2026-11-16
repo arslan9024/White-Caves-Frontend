@@ -130,3 +130,4 @@ export const LeadFunnelWaterfallChart: FC = () => {
 };
 
 export default LeadFunnelWaterfallChart;
+

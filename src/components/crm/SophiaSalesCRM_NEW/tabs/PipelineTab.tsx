@@ -52,3 +52,4 @@ const PipelineTab: React.FC<PipelineTabProps> = ({ data, selectedStage, onSelect
 };
 
 export default PipelineTab;
+

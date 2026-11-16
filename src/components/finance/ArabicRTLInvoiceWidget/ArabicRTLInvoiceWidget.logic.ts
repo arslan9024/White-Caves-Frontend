@@ -19,3 +19,4 @@ export const useArabicRTLInvoiceLogic = () => {
   const grandTotal = subtotal + vat;
   return { t, isRtl, subtotal, vat, grandTotal };
 };
+

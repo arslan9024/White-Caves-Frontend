@@ -164,3 +164,4 @@ describe('propertySearchSlice', () => {
     expect(state.activePropertyId).toBeNull();
   });
 });
+

@@ -286,3 +286,4 @@ describe('TenantScreeningPage', () => {
     expect(checklistTab?.className).not.toContain('active');
   });
 });
+

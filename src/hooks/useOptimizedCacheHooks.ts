@@ -78,3 +78,4 @@ export const useBatchFetchDepartments = (codes: string[], forceRefresh = false) 
     error,
   };
 };
+

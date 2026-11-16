@@ -84,3 +84,4 @@ describe('MobileCRMCommandBar', () => {
     expect(onAction).toHaveBeenCalledWith<[CRMCommandAction]>({ type: 'whatsapp', phone: '+971501234567' });
   });
 });
+

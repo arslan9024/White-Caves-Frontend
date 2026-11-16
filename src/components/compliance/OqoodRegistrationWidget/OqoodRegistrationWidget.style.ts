@@ -200,3 +200,4 @@ export const SuccessCard = styled.div`
     to { opacity: 1; transform: scale(1); }
   }
 `;
+

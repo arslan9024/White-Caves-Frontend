@@ -60,3 +60,4 @@ export const LindaViewTabs: React.FC<LindaViewTabsProps> = ({
     </div>
   );
 };
+

@@ -96,3 +96,4 @@ test.describe('Mobile 375px viewport — responsive layout', () => {
     expect(title.length).toBeGreaterThan(0);
   });
 });
+

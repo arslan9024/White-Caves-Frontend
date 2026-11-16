@@ -13,3 +13,4 @@ export const useIndustryBenchmarkLogic = () => {
   }));
   return { t, isRtl, benchmarks };
 };
+

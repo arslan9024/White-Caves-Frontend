@@ -10,3 +10,4 @@ describe('NadiaAiChatbot Component', () => {
     expect(screen.getByTestId('nadia-ai-chatbot')).toBeDefined();
   });
 });
+

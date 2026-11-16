@@ -48,3 +48,4 @@ const NotificationBadge = memo(({
 
 NotificationBadge.displayName = 'NotificationBadge';
 export default NotificationBadge;
+

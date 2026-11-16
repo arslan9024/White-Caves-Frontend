@@ -53,3 +53,4 @@ export const ROSE_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as rose_supervisorExport;
+

@@ -142,3 +142,4 @@ export default function AnalyticsView({
 
   return <div className="view-container analytics-view">{renderContent()}</div>;
 }
+

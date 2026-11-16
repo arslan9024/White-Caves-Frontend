@@ -528,3 +528,4 @@ const MaryAcquisitionTab: React.FC = () => {
 MaryAcquisitionTab.displayName = 'MaryAcquisitionTab';
 
 export default MaryAcquisitionTab;
+

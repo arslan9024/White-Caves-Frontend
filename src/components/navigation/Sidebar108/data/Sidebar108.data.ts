@@ -23,3 +23,4 @@ export const FOUNDER_QUICK_ACTIONS = [
   { id: 'cash_flow', label: 'Cash-Flow & Escrow P&L', icon: 'TrendingUp', path: '/crm/finance' },
   { id: 'organogram', label: '1-12-108 Organogram', icon: 'Network', path: '/crm/organogram' },
 ];
+

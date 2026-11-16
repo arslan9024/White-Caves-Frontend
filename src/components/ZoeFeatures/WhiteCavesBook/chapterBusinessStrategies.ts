@@ -43,7 +43,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/credit-preservation-law.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/credit-preservation-law.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -147,7 +147,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/CREDIT_PRESERVATION_LAW.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/CREDIT_PRESERVATION_LAW.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -251,7 +251,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: 🔱 Departmental Registry, 100 Job Roles, & RBAC Matrix',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/department-roles-rbac.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/department-roles-rbac.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -337,7 +337,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/dubai-business-strategy.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/dubai-business-strategy.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -441,7 +441,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/DUBAI_BUSINESS_STRATEGY.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/DUBAI_BUSINESS_STRATEGY.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -545,7 +545,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/engine-continuity-law.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/engine-continuity-law.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -632,7 +632,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/ENGINE_CONTINUITY_LAW.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/ENGINE_CONTINUITY_LAW.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -719,7 +719,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/repeating-programming-flows.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/repeating-programming-flows.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -822,7 +822,7 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/strategies/REPEATING_PROGRAMMING_FLOWS.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/strategies/REPEATING_PROGRAMMING_FLOWS.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -896,3 +896,4 @@ export const CHAPTER_BUSINESS_STRATEGIES: ChapterNode = {
     },
   ],
 };
+

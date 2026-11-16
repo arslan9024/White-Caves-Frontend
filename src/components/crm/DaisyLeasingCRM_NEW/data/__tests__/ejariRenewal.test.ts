@@ -223,3 +223,4 @@ describe('EJARI_RENEWAL_DOCUMENTS', () => {
     expect(EJARI_RENEWAL_DOCUMENTS.length).toBeGreaterThanOrEqual(7);
   });
 });
+

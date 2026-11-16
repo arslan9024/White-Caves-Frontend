@@ -16,3 +16,4 @@ describe('PropertyConditionReportGenerator Component', () => {
     expect(screen.getByText(/Formal PCR Signed & PDF Exported/i)).toBeDefined();
   });
 });
+

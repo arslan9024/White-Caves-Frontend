@@ -13,3 +13,4 @@ describe('MasterReleaseCertificate', () => {
     expect(screen.getByText('AEGIS V3 Policy')).toBeDefined();
   });
 });
+

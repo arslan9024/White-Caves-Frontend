@@ -223,3 +223,4 @@ export const txTypeColor: Record<string, string> = {
   Lease: GREEN,
   'Off-Plan': PURPLE,
 };
+

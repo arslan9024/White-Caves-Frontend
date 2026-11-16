@@ -60,3 +60,4 @@ describe('Lead Scoring Engine — Business Rule BR-001', () => {
     expect(result.rawScore).toBeLessThan(40);
   });
 });
+

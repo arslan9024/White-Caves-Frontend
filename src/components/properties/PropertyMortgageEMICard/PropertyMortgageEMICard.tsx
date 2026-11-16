@@ -87,3 +87,4 @@ export const PropertyMortgageEMICard: FC = () => {
   );
 };
 export default PropertyMortgageEMICard;
+

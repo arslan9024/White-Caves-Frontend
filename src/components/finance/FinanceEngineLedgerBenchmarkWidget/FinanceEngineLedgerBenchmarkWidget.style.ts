@@ -126,3 +126,4 @@ export const ActionButton = styled.button<{ $isRunning: boolean }>`
     background: ${props => props.$isRunning ? 'var(--accent-red, #EF4444)' : 'var(--color-dc2626, #DC2626)'};
   }
 `;
+

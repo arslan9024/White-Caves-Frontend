@@ -17,3 +17,4 @@ export const InsurancePremiumWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

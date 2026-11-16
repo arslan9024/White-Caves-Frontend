@@ -11,3 +11,4 @@ describe('OfflineSyncStatusIndicator.logic', () => {
     expect(result.current.stats).toBeDefined();
   });
 });
+

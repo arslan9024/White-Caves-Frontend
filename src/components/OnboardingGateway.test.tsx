@@ -190,3 +190,4 @@ describe('OnboardingGateway', () => {
     expect(link).toHaveAttribute('href', '/contact');
   });
 });
+

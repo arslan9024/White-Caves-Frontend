@@ -124,3 +124,4 @@ export const getAllDepartmentConfigs = (): DepartmentConfig[] => {
 export const getDepartmentCodes = (): string[] => {
   return Object.keys(departmentConfigs);
 };
+

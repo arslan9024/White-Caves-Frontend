@@ -53,3 +53,4 @@ export const LEXA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as lexa_supervisorExport;
+

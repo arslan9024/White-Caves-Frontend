@@ -11,3 +11,4 @@ describe('ejariAlertGuard (AEG-027)', () => {
     expect(getEjariAlertTier(-5)).toBe('expired');
   });
 });
+

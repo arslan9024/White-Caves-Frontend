@@ -65,3 +65,4 @@ export const PropertyHighlightsPillList: FC<{ amenities?: AmenityItem[] }> = ({
 };
 
 export default PropertyHighlightsPillList;
+

@@ -208,3 +208,4 @@ const LifecycleNotificationFeed = memo(
 
 LifecycleNotificationFeed.displayName = 'LifecycleNotificationFeed';
 export default LifecycleNotificationFeed;
+

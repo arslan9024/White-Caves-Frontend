@@ -17,3 +17,4 @@ describe('AmenityBookingCalendar Component', () => {
     expect(screen.getByText(/Reservation Confirmed for/i)).toBeDefined();
   });
 });
+

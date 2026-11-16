@@ -84,3 +84,4 @@ export function transitionChequeStatus(
     executedAt: new Date().toISOString(),
   };
 }
+

@@ -503,3 +503,4 @@ export const NINA_FEATURES: (AssistantFeatureItem & {
     icon: <FileText size={18} />,
   },
 ];
+

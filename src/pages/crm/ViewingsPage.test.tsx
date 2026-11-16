@@ -36,3 +36,4 @@ describe('ViewingsPage — Reschedule Flow Upgrade', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 });
+

@@ -222,3 +222,4 @@ export const EmployeesCRMFooter: React.FC<{
     </div>
   </div>
 );
+

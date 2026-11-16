@@ -20,3 +20,4 @@ describe('useDashboardUpgrades', () => {
     expect(result.current.widgets[0].id).toBe('live_ticker');
   });
 });
+

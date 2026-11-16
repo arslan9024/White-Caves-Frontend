@@ -186,3 +186,4 @@ export const CommingSoon = styled.div`
   text-align: center;
   color: ${props => props.theme?.colors?.info || '#EF4444'};
 `;
+

@@ -198,3 +198,4 @@ export const EmiratesIdMockCard: FC<EmiratesIdMockCardProps> = ({
     </div>
   );
 };
+

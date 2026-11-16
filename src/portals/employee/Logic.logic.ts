@@ -6,3 +6,4 @@ export function useEmployeePortalLogic() {
   const handleRefresh = useCallback(() => setLastSynced(new Date().toISOString()), []);
   return { data: EMPLOYEE_PORTAL_DATA, lastSynced, handleRefresh };
 }
+

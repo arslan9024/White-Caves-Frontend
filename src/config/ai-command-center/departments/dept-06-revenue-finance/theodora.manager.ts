@@ -47,3 +47,4 @@ export const THEODORA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as theodora_managerExport;
+

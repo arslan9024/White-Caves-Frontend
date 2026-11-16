@@ -10,3 +10,4 @@ describe('CmaReportGenerator Component', () => {
     expect(screen.getByTestId('cma-report-generator')).toBeDefined();
   });
 });
+

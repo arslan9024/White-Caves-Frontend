@@ -653,3 +653,4 @@ export const CommissionsTab: React.FC<CommissionsTabProps> = ({ onAction }) => {
     </Container>
   );
 };
+

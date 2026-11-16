@@ -57,3 +57,4 @@ export const ExecutiveLiveTicker: FC = () => {
 };
 
 export default ExecutiveLiveTicker;
+

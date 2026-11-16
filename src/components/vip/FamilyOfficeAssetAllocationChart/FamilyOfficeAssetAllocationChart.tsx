@@ -96,3 +96,4 @@ export const FamilyOfficeAssetAllocationChart: FC = () => {
   );
 };
 export default FamilyOfficeAssetAllocationChart;
+

@@ -11,3 +11,4 @@ describe('useLeadSLADecay Hook', () => {
     expect(result.current.elapsedMinutes).toBeGreaterThanOrEqual(9);
   });
 });
+

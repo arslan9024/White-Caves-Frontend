@@ -95,3 +95,4 @@ export const TECHNICAL_SERVICES: TechnicalServiceStatus[] = [
   { name: 'WebAuthn Service', status: 'healthy', latency: 90, errorRate: 0.15 },
   { name: 'Session Management', status: 'healthy', latency: 70, errorRate: 0.03 },
 ];
+

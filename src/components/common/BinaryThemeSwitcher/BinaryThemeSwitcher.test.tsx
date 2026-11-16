@@ -31,3 +31,4 @@ describe('BinaryThemeSwitcher Component', () => {
     expect(onToggle).toHaveBeenCalledWith('system');
   });
 });
+

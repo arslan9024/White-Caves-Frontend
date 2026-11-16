@@ -71,3 +71,4 @@ export interface KYCAMLDashboardProps {
   accessLevel?: string;
   showTabs?: string[];
 }
+

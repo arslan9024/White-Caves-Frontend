@@ -389,3 +389,4 @@ export const ENTITY_TYPE_OPTIONS: Array<{ id: string; label: string }> = [
   { id: 'KYC_RECORD', label: 'KYC Sanctions Dockets' },
   { id: 'TRAKHEESI_PERMIT', label: 'Trakheesi Permits' },
 ];
+

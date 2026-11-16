@@ -37,3 +37,4 @@ describe('MobileStickyActionBar (DOM-03: Mobile Touch Targets & 375px)', () => {
     expect(handleViewing).toHaveBeenCalledTimes(1);
   });
 });
+

@@ -146,3 +146,4 @@ const PortalNavbar: FC<PortalNavbarProps> = ({ portalType }) => {
 };
 
 export default PortalNavbar;
+

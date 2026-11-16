@@ -19,3 +19,4 @@ describe('DocumentVersionHistory.logic', () => {
     expect(result.current.selected.changes).toContain('exclusivity clause');
   });
 });
+

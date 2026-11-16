@@ -53,3 +53,4 @@ export const NOUR_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as nour_supervisorExport;
+

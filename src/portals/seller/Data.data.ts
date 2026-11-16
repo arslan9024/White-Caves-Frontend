@@ -45,3 +45,4 @@ export const SELLER_PORTAL_DATA = {
     },
   ] as PortalSectionItem[],
 };
+

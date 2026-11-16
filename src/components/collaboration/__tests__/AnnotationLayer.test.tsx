@@ -39,3 +39,4 @@ describe('AnnotationLayer Component', () => {
     expect(onMouseMove).toHaveBeenCalled();
   });
 });
+

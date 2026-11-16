@@ -54,3 +54,4 @@ export interface ExpenseClaimFormProps {
 
 export const MAX_NOTES_LENGTH = 1000;
 export const MAX_LINE_ITEMS = 50;
+

@@ -18,3 +18,4 @@ describe('uaeTaxEngine (5% VAT + 9% Corporate Tax)', () => {
     expect(res.corporateTaxReserveAed).toBe(36_000);
   });
 });
+

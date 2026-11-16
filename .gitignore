@@ -189,7 +189,8 @@ sessions/
 # Backend-only assets (live in White-Caves-Server repo)
 server/
 prisma/
-services/
+/services/
+!src/data/services/
 k8s/
 helm/
 prometheus/

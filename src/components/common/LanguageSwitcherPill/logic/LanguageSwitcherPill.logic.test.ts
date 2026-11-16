@@ -24,3 +24,4 @@ describe('LanguageSwitcherPill.logic', () => {
     expect(onLanguageChange).toHaveBeenCalledWith('ar');
   });
 });
+

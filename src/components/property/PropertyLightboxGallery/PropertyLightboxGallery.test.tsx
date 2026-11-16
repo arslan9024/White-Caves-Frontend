@@ -15,3 +15,4 @@ describe('PropertyLightboxGallery', () => {
     expect(screen.getByText('Photo 3 of 4', { exact: false })).toBeDefined();
   });
 });
+

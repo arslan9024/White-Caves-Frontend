@@ -7,3 +7,4 @@ export const BuyerPortalView: FC = () => {
   return <PortalShell {...data} onRefresh={handleRefresh} />;
 };
 export default BuyerPortalView;
+

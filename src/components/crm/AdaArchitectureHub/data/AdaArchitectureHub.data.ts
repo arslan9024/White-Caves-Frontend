@@ -14,3 +14,4 @@ export const ADA_HUB_TEXT = {
   copyLinkBtn: '🔗 Copy Document Link',
   jumpToAssistant: 'Jump to Assistant',
 };
+

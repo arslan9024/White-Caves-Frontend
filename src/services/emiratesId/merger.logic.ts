@@ -173,3 +173,4 @@ export function exportToJson(extracted: EmiratesIdExtractedData): Record<string,
 export function exportToJsonString(extracted: EmiratesIdExtractedData): string {
   return JSON.stringify(exportToJson(extracted), null, 2);
 }
+

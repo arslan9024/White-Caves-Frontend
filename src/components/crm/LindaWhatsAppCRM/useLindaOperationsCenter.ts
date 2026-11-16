@@ -216,6 +216,8 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     setConversations,
     setCampaigns,
     setToastNotification,
+    setIsConnected,
+    setLindaStatus,
   });
 
   const handleToggleLindaRuntime = useCallback(async (): Promise<void> => {
@@ -297,3 +299,4 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     handleSendQuickReply: actionHandlers.handleSendQuickReply,
   };
 }
+

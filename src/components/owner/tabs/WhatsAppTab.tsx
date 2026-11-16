@@ -177,3 +177,4 @@ const WhatsAppTab: React.FC<WhatsAppTabProps> = ({ data, loading, onAction }) =>
 };
 
 export default React.memo(WhatsAppTab);
+

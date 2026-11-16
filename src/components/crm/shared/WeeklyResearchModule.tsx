@@ -303,3 +303,4 @@ const WeeklyResearchModule = ({
 };
 
 export default WeeklyResearchModule;
+

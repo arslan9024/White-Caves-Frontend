@@ -262,3 +262,4 @@ export default function PropertiesView({
 
   return <div className="view-container properties-view">{renderContent()}</div>;
 }
+

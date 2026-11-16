@@ -5,3 +5,4 @@
 
 export * from './KYCAMLDashboard/index';
 export { default } from './KYCAMLDashboard/index';
+

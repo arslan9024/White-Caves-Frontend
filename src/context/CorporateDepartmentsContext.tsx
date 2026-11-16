@@ -75,3 +75,4 @@ export function useCorporateDepartments(): CorporateDepartmentsContextType {
   const context = useContext(CorporateDepartmentsContext);
   return context || DEFAULT_VALUE;
 }
+

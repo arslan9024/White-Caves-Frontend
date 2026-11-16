@@ -15,3 +15,4 @@ export const FinanceAlertsWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

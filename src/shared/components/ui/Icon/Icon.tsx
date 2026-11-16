@@ -23,3 +23,4 @@ const Icon = React.memo(({ name, size = 24, color, strokeWidth = 2, className = 
 Icon.displayName = 'Icon';
 
 export default Icon;
+

@@ -21,3 +21,4 @@ export const ZakatCalculatorWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

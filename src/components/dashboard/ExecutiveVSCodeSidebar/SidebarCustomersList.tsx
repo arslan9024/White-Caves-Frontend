@@ -181,3 +181,4 @@ export const SidebarCustomersList: FC<SidebarCustomersListProps> = ({
 };
 
 export default SidebarCustomersList;
+

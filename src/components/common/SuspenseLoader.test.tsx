@@ -55,3 +55,4 @@ describe('SuspenseLoader', () => {
     expect(outerDiv!.firstChild).toBeTruthy();
   });
 });
+

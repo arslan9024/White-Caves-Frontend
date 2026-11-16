@@ -105,3 +105,4 @@ describe('LanguageContext and Universal Translation Engine', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('ru');
   });
 });
+

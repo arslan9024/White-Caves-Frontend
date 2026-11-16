@@ -293,3 +293,4 @@ const LindaWhatsAppCRM = memo(() => {
 LindaWhatsAppCRM.displayName = 'LindaWhatsAppCRM';
 
 export default LindaWhatsAppCRM;
+

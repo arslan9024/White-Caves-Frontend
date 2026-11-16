@@ -47,3 +47,4 @@ export const ZARA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as zara_managerExport;
+

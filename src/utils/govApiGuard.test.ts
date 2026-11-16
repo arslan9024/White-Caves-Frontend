@@ -52,3 +52,4 @@ describe('govApiGuard (AEG-011, AEG-012, AEG-017, AEG-028)', () => {
     expect(res.netAfterReserves).toBe(86000);
   });
 });
+

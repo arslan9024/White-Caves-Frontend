@@ -56,3 +56,4 @@ export const OfflineAlertBanner: FC = () => {
 };
 
 export default OfflineAlertBanner;
+

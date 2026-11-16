@@ -256,3 +256,4 @@ export function calculateClientLoyaltyVoucher(
   }
   return { eligible: false, cashbackAED: 0 };
 }
+

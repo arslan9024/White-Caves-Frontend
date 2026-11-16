@@ -277,3 +277,4 @@ describe('InteractiveMap', () => {
     expect(screen.getByText('Avg. AED 3.5M')).toBeInTheDocument();
   });
 });
+

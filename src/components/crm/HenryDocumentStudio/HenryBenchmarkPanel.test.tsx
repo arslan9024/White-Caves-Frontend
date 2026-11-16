@@ -103,3 +103,4 @@ it('fails closed when no pre-review snapshot is available', () => {
   expect(screen.getByRole('alert').textContent).toContain('snapshot');
   expect(screen.queryByLabelText('Aggregate benchmark report')).toBeNull();
 });
+

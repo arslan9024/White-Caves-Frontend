@@ -6,3 +6,4 @@ describe('NinaWhatsAppBotCRM', () => {
     expect(true).toBe(true);
   });
 });
+

@@ -53,3 +53,4 @@ export const URANIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as urania_supervisorExport;
+

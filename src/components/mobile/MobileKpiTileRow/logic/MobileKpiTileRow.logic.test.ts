@@ -12,3 +12,4 @@ describe('MobileKpiTileRow.logic', () => {
     expect(result.current.tiles[0].deltaPositive).toBe(true);
   });
 });
+

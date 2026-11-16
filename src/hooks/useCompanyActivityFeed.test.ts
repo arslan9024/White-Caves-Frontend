@@ -6,3 +6,4 @@ describe('useCompanyActivityFeed (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

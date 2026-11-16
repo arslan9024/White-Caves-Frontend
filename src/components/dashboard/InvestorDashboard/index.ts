@@ -10,3 +10,4 @@ export {
   InvestorDashboardView,
   InvestorDashboardView as InvestorDashboard,
 } from './InvestorDashboard.view';
+

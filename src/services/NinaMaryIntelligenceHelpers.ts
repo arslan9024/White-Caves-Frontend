@@ -66,3 +66,4 @@ export const inferPreferencesFromConversation = (messages: any[], parsePriceFn?:
 
   return preferences;
 };
+

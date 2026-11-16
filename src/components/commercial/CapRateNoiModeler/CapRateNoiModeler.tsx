@@ -45,3 +45,4 @@ export const CapRateNoiModeler: FC = () => {
 };
 
 export default CapRateNoiModeler;
+

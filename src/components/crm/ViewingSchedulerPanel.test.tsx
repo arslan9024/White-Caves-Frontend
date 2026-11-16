@@ -67,3 +67,4 @@ describe('ViewingSchedulerPanel — production quality guards', () => {
     expect(screen.getByText('All Agents')).toBeInTheDocument();
   });
 });
+

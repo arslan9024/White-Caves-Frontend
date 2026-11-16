@@ -40,3 +40,4 @@ export async function ensureCsrfToken(): Promise<string> {
 
   return bootstrapInFlight;
 }
+

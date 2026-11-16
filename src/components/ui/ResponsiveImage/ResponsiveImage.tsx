@@ -181,3 +181,4 @@ export const ResponsiveImage = memo<ResponsiveImageProps>(function ResponsiveIma
     </ImageContainer>
   );
 });
+

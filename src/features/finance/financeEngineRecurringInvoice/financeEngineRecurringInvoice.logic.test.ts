@@ -216,3 +216,4 @@ describe('generateDueInvoices', () => {
     expect(result.skippedScheduleIds).toEqual(['future-only']);
   });
 });
+

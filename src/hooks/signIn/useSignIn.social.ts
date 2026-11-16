@@ -200,3 +200,4 @@ export function useSignInSocial(
   const remainingSocialRetries = Math.max(0, MAX_SOCIAL_RETRY_ATTEMPTS - socialRetryAttempts);
   return { handleSocialAuth, retrySocialAuth, clearSocialRecovery, remainingSocialRetries };
 }
+

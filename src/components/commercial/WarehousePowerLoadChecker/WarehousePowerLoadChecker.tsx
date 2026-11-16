@@ -182,3 +182,4 @@ export const WarehousePowerLoadChecker: FC = () => {
 };
 
 export default WarehousePowerLoadChecker;
+

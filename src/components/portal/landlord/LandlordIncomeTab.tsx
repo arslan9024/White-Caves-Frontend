@@ -271,3 +271,4 @@ const LandlordIncomeTab: FC = () => {
 };
 
 export default LandlordIncomeTab;
+

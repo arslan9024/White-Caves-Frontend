@@ -58,3 +58,4 @@ export function useProtectedRoute(allowedRoles?: string[]): RouteDecision {
   }
   return { kind: 'allow' };
 }
+

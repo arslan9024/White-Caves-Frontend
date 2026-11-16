@@ -179,3 +179,4 @@ export const DashboardGlobalHeader: FC<DashboardGlobalHeaderProps> = ({
 };
 
 export default DashboardGlobalHeader;
+

@@ -267,3 +267,4 @@ describe('config/assistantRegistry', () => {
     });
   });
 });
+

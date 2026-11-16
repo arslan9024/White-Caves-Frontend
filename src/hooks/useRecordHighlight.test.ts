@@ -51,3 +51,4 @@ describe('useRecordHighlight', () => {
     expect(result.current.highlightedId).toBeNull();
   });
 });
+

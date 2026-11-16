@@ -34,3 +34,4 @@ export default function LazyFullScreenDetailModal(props: React.ComponentProps<ty
     </Suspense>
   );
 }
+

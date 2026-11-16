@@ -52,3 +52,4 @@ export function useFacets(): UseFacetsResult {
 
   return { data, loading, error };
 }
+

@@ -90,3 +90,4 @@ export const PortalProfilePasswordSection: FC<PortalProfilePasswordSectionProps>
     </button>
   </div>
 );
+

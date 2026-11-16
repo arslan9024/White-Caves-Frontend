@@ -267,3 +267,4 @@ export const DepartmentManagerModal: FC<DepartmentManagerModalProps> = ({
 };
 
 export default DepartmentManagerModal;
+

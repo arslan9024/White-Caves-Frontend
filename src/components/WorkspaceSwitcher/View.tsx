@@ -52,3 +52,4 @@ export const WorkspaceSwitcherView: FC<WorkspaceSwitcherProps> = props => {
 };
 
 export default WorkspaceSwitcherView;
+

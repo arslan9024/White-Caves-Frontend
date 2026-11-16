@@ -36,3 +36,4 @@ describe('FXCurrencyConverter Component', () => {
     expect(screen.getByDisplayValue('250,000')).toBeInTheDocument();
   });
 });
+

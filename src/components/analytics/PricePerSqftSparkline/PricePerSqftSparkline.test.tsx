@@ -17,3 +17,4 @@ describe('PricePerSqftSparkline Component', () => {
     expect(screen.getByText(/AED 2,650\/sqft/i)).toBeDefined();
   });
 });
+

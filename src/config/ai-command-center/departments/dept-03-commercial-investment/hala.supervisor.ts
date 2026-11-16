@@ -53,3 +53,4 @@ export const HALA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as hala_supervisorExport;
+

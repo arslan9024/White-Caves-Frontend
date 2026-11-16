@@ -96,3 +96,4 @@ describe('usePushNotifications hook', () => {
     expect(result.current.error).toBe('Notification permission was denied');
   });
 });
+

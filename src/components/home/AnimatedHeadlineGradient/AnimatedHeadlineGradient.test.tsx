@@ -15,3 +15,4 @@ describe('AnimatedHeadlineGradient Component', () => {
     expect(screen.getByText(/White Caves Sovereign Portfolio/i)).toBeDefined();
   });
 });
+

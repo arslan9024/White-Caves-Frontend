@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { AgentsTabProps, Agent } from './types';
 import { MOCK_AGENTS } from './AgentsTab.data';
 import './TabStyles.css';
@@ -312,3 +312,4 @@ const AgentsTab: React.FC<AgentsTabProps> = ({ data, loading, onAction }) => {
 };
 
 export default React.memo(AgentsTab);
+

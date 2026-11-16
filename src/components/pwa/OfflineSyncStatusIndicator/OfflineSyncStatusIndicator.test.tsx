@@ -29,3 +29,4 @@ describe('OfflineSyncStatusIndicator', () => {
     expect(el.textContent).toContain('All changes synced');
   });
 });
+

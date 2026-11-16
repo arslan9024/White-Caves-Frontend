@@ -19,3 +19,4 @@ describe('HenryTenancyContractJourneyView', () => {
     expect(screen.queryByText('Save to Henry Vault')).not.toBeInTheDocument();
   });
 });
+

@@ -44,3 +44,4 @@ describe('PullToRefreshWrapper.logic', () => {
     expect(result.current.isRefreshing).toBe(false);
   });
 });
+

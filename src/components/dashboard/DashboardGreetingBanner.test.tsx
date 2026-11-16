@@ -54,3 +54,4 @@ describe('DashboardGreetingBanner', () => {
     expect(spy).toHaveBeenCalledOnce();
   });
 });
+

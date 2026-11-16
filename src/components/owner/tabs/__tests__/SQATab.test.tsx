@@ -20,3 +20,4 @@ describe('SQATab Component', () => {
     expect(screen.getByText(/Security & RBAC Audit/i)).toBeInTheDocument();
   });
 });
+

@@ -11,3 +11,4 @@ describe('RoiDualSliderAppraiser Component', () => {
     expect(screen.getByText(/Property Value \(AED\)/i)).toBeDefined();
   });
 });
+

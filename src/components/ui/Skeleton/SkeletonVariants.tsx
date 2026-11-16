@@ -71,3 +71,4 @@ export const SkeletonTable: React.FC<SkeletonTableProps> = ({ rows = 5 }) => (
     ))}
   </TableWrapper>
 );
+

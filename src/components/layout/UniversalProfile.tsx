@@ -178,3 +178,4 @@ export default function UniversalProfile({ variant = 'default', showSignIn = tru
     </div>
   );
 }
+

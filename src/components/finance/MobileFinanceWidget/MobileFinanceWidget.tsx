@@ -23,3 +23,4 @@ export const MobileFinanceWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

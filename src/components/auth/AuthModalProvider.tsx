@@ -41,3 +41,4 @@ export const AuthModalProvider: React.FC<AuthModalProviderProps> = ({ children }
     </AuthModalContext.Provider>
   );
 };
+

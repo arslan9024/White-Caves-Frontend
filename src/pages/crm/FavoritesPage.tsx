@@ -247,3 +247,4 @@ const FavoritesPage: FC = () => {
 };
 
 export default FavoritesPage;
+

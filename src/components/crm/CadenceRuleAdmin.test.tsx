@@ -265,3 +265,4 @@ describe('CadenceRuleAdmin (W18.1-P0-018)', () => {
     await waitFor(() => expect(screen.getByText('Hot Lead Sequence v2')).toBeInTheDocument());
   });
 });
+

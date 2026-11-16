@@ -169,3 +169,4 @@ export const COMMUNITIES = [
 ];
 
 export const PROP_TYPES = ['Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Studio'];
+

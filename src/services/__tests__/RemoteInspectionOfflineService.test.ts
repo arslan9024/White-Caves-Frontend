@@ -90,3 +90,4 @@ describe('RemoteInspectionOfflineService (Wave 15 PWA Readiness)', () => {
     expect(stats.isOnline).toBe(false);
   });
 });
+

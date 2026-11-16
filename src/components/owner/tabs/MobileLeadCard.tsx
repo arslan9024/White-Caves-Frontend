@@ -195,3 +195,4 @@ export const MobileLeadCard: React.FC<MobileLeadCardProps> = ({ lead, onSnooze }
     </CardContainer>
   );
 };
+

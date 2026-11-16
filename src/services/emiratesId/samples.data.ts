@@ -215,3 +215,4 @@ export const SANIT_SINGH_SAMPLE_EID: EmiratesIdExtractedData = {
   detectedFieldsCount: 11,
   scannedAt: new Date().toISOString(),
 };
+

@@ -83,3 +83,4 @@ export function useDashboardQueryState(): UseDashboardQueryStateReturn {
     setSearchParam,
   };
 }
+

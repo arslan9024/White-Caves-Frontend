@@ -23,3 +23,4 @@ export interface WizardStep {
 }
 
 export type FormErrors = Partial<Record<keyof TaxFilingFormData, string>>;
+

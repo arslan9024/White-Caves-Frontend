@@ -32,3 +32,4 @@ const ForecastingTab = () => {
 };
 
 export default ForecastingTab;
+

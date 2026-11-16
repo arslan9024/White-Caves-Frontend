@@ -162,3 +162,4 @@ const PullToRefresh: React.FC<PullToRefreshProps> = ({
 };
 
 export default PullToRefresh;
+

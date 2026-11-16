@@ -342,3 +342,4 @@ export const DealCard: FC<DealCardProps> = ({ deal, onInspect }) => {
     </div>
   );
 };
+

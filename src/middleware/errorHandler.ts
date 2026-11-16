@@ -17,3 +17,4 @@ export function errorHandler(err: any, _req: Request, res: Response, _next: Next
 
   res.status(status).json(response);
 }
+

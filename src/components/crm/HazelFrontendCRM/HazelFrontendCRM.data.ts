@@ -33,3 +33,4 @@ export const ACCESSIBILITY_AUDIT: AccessibilityAuditItem[] = [
   { category: 'Focus Management', score: 92, issues: 4, status: 'warning' },
   { category: 'Semantic HTML', score: 97, issues: 3, status: 'pass' },
 ];
+

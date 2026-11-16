@@ -290,3 +290,4 @@ export type UAEPassVerificationStatus = 'verified' | 'pending';
 export type UAEPassRole = 'buyer' | 'seller' | 'landlord' | 'tenant' | 'agent';
 
 export type UserStatus = 'active' | 'pending' | 'inactive';
+

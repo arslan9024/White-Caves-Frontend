@@ -328,3 +328,4 @@ const DubaiMap: FC<DubaiMapProps> = ({ properties = [], onPropertySelect }) => {
 };
 
 export default DubaiMap;
+

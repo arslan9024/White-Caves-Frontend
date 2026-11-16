@@ -48,3 +48,4 @@ describe('AnalyticsDashboardPanel — production quality tests', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

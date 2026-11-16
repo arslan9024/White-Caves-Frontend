@@ -200,3 +200,4 @@ export const selectIsDesktop = createSelector(
 );
 
 export default navigationUISlice.reducer;
+

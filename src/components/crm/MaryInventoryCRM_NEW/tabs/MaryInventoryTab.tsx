@@ -323,3 +323,4 @@ const MaryInventoryTab = () => {
 MaryInventoryTab.displayName = 'MaryInventoryTab';
 
 export default MaryInventoryTab;
+

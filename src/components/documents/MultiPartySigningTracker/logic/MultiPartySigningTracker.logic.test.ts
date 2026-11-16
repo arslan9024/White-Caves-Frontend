@@ -18,3 +18,4 @@ describe('MultiPartySigningTracker.logic', () => {
     expect(result.current.signers.find(s => s.id === 'sg2')?.status).toBe('signed');
   });
 });
+

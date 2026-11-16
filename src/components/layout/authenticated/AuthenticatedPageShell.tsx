@@ -28,3 +28,4 @@ const AuthenticatedPageShell: FC<AuthenticatedPageShellProps> = ({
 };
 
 export default AuthenticatedPageShell;
+

@@ -21,3 +21,4 @@ describe('Totp2faSetupCard Component', () => {
     expect(screen.getByText(/2FA Security Enforced/i)).toBeDefined();
   });
 });
+

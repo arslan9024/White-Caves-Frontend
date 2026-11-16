@@ -20,3 +20,4 @@ describe('PropertyOpportunityList — alert elimination', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

@@ -37,3 +37,4 @@ describe('AICommandCenter.logic', () => {
     expect(result.current.selectedAssistantId).toBe('theodora');
   });
 });
+

@@ -192,3 +192,4 @@ export const NavItemButton = styled.button<{ $active: boolean }>`
     color: #EF4444;
   }
 `;
+

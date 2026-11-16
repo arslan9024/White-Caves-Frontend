@@ -9,3 +9,4 @@ describe('SkeletonUiLoader Component', () => {
     expect(screen.getByTestId('skeleton-ui-loader')).toBeDefined();
   });
 });
+

@@ -78,3 +78,4 @@ const MainGridView = ({ content, activeAssistant, children }) => {
 };
 
 export default MainGridView;
+

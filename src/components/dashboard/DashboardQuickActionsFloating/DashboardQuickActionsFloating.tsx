@@ -68,3 +68,4 @@ export const DashboardQuickActionsFloating: FC = () => {
   );
 };
 export default DashboardQuickActionsFloating;
+

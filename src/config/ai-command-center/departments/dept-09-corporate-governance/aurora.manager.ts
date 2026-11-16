@@ -47,3 +47,4 @@ export const AURORA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as aurora_managerExport;
+

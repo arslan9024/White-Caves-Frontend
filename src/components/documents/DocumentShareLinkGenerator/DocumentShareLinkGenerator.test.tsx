@@ -10,3 +10,4 @@ describe('DocumentShareLinkGenerator', () => {
     expect(screen.getByText('Generate Secure Link')).toBeTruthy();
   });
 });
+

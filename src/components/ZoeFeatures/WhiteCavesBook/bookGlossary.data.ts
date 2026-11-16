@@ -85,3 +85,4 @@ export const TOPIC_GLOSSARY: Record<string, TopicGlossaryItem> = {
       'Real-time telemetry, automated velocity calculation, and milestone completion forecasting.',
   },
 };
+

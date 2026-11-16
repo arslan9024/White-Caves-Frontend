@@ -11,3 +11,4 @@ describe('MobilePropertyQuickActions.style', () => {
     expect(styles.ActionTile).toBeDefined();
   });
 });
+

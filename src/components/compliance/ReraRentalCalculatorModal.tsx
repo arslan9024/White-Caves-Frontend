@@ -196,3 +196,4 @@ export const ReraRentalCalculatorModal: FC<ReraRentalCalculatorModalProps> = ({
 };
 
 export default ReraRentalCalculatorModal;
+

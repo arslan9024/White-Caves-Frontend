@@ -77,3 +77,4 @@ export class ListingIndexCache {
     this.referenceMap.clear();
   }
 }
+

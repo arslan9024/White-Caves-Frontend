@@ -535,3 +535,4 @@ const SavedSearchesPage: React.FC = () => {
 };
 
 export default SavedSearchesPage;
+

@@ -264,3 +264,4 @@ export const mockApiRoutes = {
     '/api/departments/:code/export': async (code: string) => exportDepartmentData(code),
   },
 };
+

@@ -46,7 +46,7 @@ const QUICK_DIRECTIVES = [
   {
     label: '🏡 DH2 Inventory',
     query: 'synchronize DH2 clusters with Mary',
-    route: '/dashboard/REproperties',
+    route: '/dashboard/mary',
   },
 ];
 
@@ -91,7 +91,7 @@ export const ExecutiveZoeCard: FC<ExecutiveZoeCardProps> = ({
     ) {
       action = 'Dept 05 • Mary Inventory Ingestion';
       text = 'Zoe dispatched inventory directive to AI Mary: 9,378 listings and 28 DH2 clusters synchronized.';
-      targetRoute = targetRoute || '/dashboard/REproperties';
+      targetRoute = targetRoute || '/dashboard/mary';
     }
 
     setLastDirectiveResult({
@@ -272,3 +272,4 @@ export const ExecutiveZoeCard: FC<ExecutiveZoeCardProps> = ({
 };
 
 export default ExecutiveZoeCard;
+

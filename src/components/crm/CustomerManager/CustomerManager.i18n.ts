@@ -79,3 +79,4 @@ export function getCustomerI18n(lang: SupportedLanguage = 'en'): CustomerTransla
 }
 
 export default CUSTOMER_TRANSLATIONS;
+

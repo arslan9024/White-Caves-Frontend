@@ -10,3 +10,4 @@ export const ScoreTier = styled.span<{ $color: string }>`
 `;
 export const ScoreNum = styled.span`font-size: 0.75rem; color: #475569; font-weight: 600;`;
 export const ScoreLabel = styled.span`font-size: 0.6875rem; color: #64748b;`;
+

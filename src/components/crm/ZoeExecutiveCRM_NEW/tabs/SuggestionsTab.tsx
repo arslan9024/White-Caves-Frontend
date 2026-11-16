@@ -325,3 +325,4 @@ const SuggestionsTab: React.FC<SuggestionsTabProps> = memo(
 );
 
 export default SuggestionsTab;
+

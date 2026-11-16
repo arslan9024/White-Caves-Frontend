@@ -15,3 +15,4 @@ describe('BulkStatusModal Component', () => {
     expect(screen.getByText('Occupied')).toBeDefined();
   });
 });
+

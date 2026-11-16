@@ -7,3 +7,4 @@ describe('AnimatedHeadlineGradient.data', () => {
     expect(ANIMATED_HEADLINE_DATA.defaultTitle).toContain('Dubai Luxury Real Estate');
   });
 });
+

@@ -53,3 +53,4 @@ class WhatsappSessionManager {
 
 const singularWhatsappSessionManager = new WhatsappSessionManager();
 export default singularWhatsappSessionManager;
+

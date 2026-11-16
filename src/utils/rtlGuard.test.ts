@@ -17,3 +17,4 @@ describe('rtlGuard (AEG-004)', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('ar');
   });
 });
+

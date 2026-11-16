@@ -61,3 +61,4 @@ if (typeof self !== 'undefined' && typeof (self as unknown as Worker).postMessag
     }
   };
 }
+

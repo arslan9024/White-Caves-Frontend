@@ -55,3 +55,4 @@ describe('KPIBaselineTracker', () => {
     expect(screen.getByText('First Response Time')).toBeInTheDocument();
   });
 });
+

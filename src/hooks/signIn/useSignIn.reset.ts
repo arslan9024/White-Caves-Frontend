@@ -142,3 +142,4 @@ export function useSignInPasswordReset(state: ReturnType<typeof useSignInState>)
   }, [confirmNewPassword, navigate, newPassword, resetSessionToken]);
   return { handleForgotPassword, handleVerifyResetToken, handleCompletePasswordReset };
 }
+

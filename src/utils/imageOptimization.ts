@@ -206,3 +206,4 @@ export function getOptimalImageFormat(supportsAvif = false, supportsWebp = true)
   if (supportsWebp) return 'webp';
   return 'jpeg';
 }
+

@@ -116,3 +116,4 @@ describe('FavoriteListings', () => {
     expect(removeButtons.length).toBe(2);
   });
 });
+

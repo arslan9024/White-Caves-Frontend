@@ -339,3 +339,4 @@ export const JobCount = styled.span`
   color: var(--text-secondary);
   font-size: 0.9rem;
 `;
+

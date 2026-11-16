@@ -19,3 +19,4 @@ export const TotalRow = styled.div`
   display: flex; justify-content: space-between; padding: 8px 12px; font-size: 0.9rem;
   &.grand { font-weight: 800; font-size: 1.1rem; color: var(--color-1e293b, #1E293B); border-top: 2px solid var(--color-1e293b, #1E293B); margin-top: 4px; padding-top: 12px; }
 `;
+

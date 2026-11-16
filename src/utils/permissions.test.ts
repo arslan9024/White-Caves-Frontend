@@ -672,3 +672,4 @@ describe('Security invariants', () => {
     expect(rolesWithDelete).toHaveLength(3);
   });
 });
+

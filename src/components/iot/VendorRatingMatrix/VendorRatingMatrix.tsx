@@ -61,3 +61,4 @@ export const VendorRatingMatrix: FC = () => (
   </Wrap>
 );
 export default VendorRatingMatrix;
+

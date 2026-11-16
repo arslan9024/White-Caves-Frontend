@@ -31,6 +31,7 @@ import { LandlordManagerView } from '../../components/crm/LandlordManager';
 import { TenantManagerView } from '../../components/crm/TenantManager';
 import { BrokerManagerView } from '../../components/crm/BrokerManager';
 import LindaWhatsAppCRM from '../../components/crm/LindaWhatsAppCRM';
+import MaryInventoryCRM from '../../components/crm/MaryInventoryCRM_NEW';
 import ZoeExecutiveCRM from '../../components/crm/ZoeExecutiveCRM_NEW';
 import { DashboardLiveTicker } from '../../components/dashboard/header/DashboardLiveTicker';
 import { ProfileDashboardView } from './ProfileDashboardView';
@@ -108,6 +109,20 @@ export const DashboardContentRouter: FC<DashboardContentRouterProps> = ({
     return (
       <div style={{ padding: '20px', flex: 1 }}>
         <LindaWhatsAppCRM />
+      </div>
+    );
+  }
+
+  // Direct Mary / Inventory Manager selection
+  if (
+    activeTab === 'mary' ||
+    activeAgent?.id === 'mary' ||
+    (activeTab === 'ai-command' && activeItemId === 'mary') ||
+    (activeTab === 'aiams' && activeItemId === 'mary')
+  ) {
+    return (
+      <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
+        <MaryInventoryCRM />
       </div>
     );
   }
@@ -296,3 +311,4 @@ export const DashboardContentRouter: FC<DashboardContentRouterProps> = ({
 };
 
 export default DashboardContentRouter;
+

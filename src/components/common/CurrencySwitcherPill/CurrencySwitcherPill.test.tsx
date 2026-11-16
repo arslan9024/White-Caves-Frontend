@@ -16,3 +16,4 @@ describe('CurrencySwitcherPill Component', () => {
     expect(onCurrencyChange).toHaveBeenCalledWith('USD');
   });
 });
+

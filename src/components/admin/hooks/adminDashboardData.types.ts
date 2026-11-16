@@ -149,3 +149,4 @@ export const mapActivityType = (rawType: string): ActivityType => {
   if (rawType.includes('system')) return 'system';
   return 'update';
 };
+

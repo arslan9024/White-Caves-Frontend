@@ -53,3 +53,4 @@ export const HANA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as hana_supervisorExport;
+

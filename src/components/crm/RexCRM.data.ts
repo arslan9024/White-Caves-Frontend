@@ -91,3 +91,4 @@ export const REX_RISK_COLORS: Record<string, string> = {
   medium: '#F59E0B',
   high: '#E31E24',
 };
+

@@ -78,3 +78,4 @@ describe('Badge Component', () => {
     });
   });
 });
+

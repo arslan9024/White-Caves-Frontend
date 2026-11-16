@@ -16,3 +16,4 @@ describe('SpatialAudioGuide Component', () => {
     expect(screen.getAllByText(/Nina AI/i).length).toBeGreaterThan(0);
   });
 });
+

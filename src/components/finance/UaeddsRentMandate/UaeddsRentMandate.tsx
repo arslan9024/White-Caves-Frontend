@@ -77,3 +77,4 @@ export const UaeddsRentMandate: FC = () => {
   );
 };
 export default UaeddsRentMandate;
+

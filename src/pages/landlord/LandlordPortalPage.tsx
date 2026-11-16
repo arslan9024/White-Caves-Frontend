@@ -130,3 +130,4 @@ const LandlordPortalPage: FC = () => {
 };
 
 export default LandlordPortalPage;
+

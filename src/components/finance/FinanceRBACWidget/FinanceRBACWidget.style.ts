@@ -18,3 +18,4 @@ export const Badge = styled.span<{ $granted: boolean }>`
   background: ${p => p.$granted ? 'var(--color-dcfce7, #DCFCE7)' : 'var(--color-fee2e2, #FEE2E2)'};
   color: ${p => p.$granted ? 'var(--color-166534, #166534)' : 'var(--color-991b1b, #991B1B)'};
 `;
+

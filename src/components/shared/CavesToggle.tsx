@@ -72,3 +72,4 @@ export const CavesToggle: React.FC<CavesToggleProps> = ({
 };
 
 export default CavesToggle;
+

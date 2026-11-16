@@ -34,3 +34,4 @@ export default function RoleGuard({ roles, children, fallback }: RoleGuardProps)
 
   return <>{children}</>;
 }
+

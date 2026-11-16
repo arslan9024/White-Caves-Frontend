@@ -342,3 +342,4 @@ describe('Henry bounded local OCR lifecycle', () => {
     expect(ocr.createWorker).not.toHaveBeenCalled();
   });
 });
+

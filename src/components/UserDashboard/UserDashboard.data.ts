@@ -19,3 +19,4 @@ export const INITIAL_STATS = {
   totalInquiries: 0,
   scheduledViewings: 0,
 };
+

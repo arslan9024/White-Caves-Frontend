@@ -21,3 +21,4 @@ describe('MobileCRMBottomNav.logic', () => {
     expect(typeof result.current.navigate).toBe('function');
   });
 });
+

@@ -646,3 +646,4 @@ export const DescriptionSection = styled.div`
     }
   }
 `;
+

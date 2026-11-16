@@ -264,3 +264,4 @@ export const DocumentCard: FC<DocumentCardProps> = ({ document: doc, isHighlight
     </div>
   );
 };
+

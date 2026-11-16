@@ -9,3 +9,4 @@ export * from './AuroraTechnicalDashboard.logic';
 export * from './AuroraTechnicalDashboard.panels';
 export * from './AuroraTechnicalDashboard.view';
 export { AuroraTechnicalDashboard as default } from './AuroraTechnicalDashboard.view';
+

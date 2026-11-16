@@ -269,3 +269,4 @@ export class DubizzleAdapter extends BasePortalAdapter {
 }
 
 export default DubizzleAdapter;
+

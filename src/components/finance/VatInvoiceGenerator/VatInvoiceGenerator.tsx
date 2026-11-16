@@ -137,3 +137,4 @@ export const VatInvoiceGenerator: FC = () => {
   );
 };
 export default VatInvoiceGenerator;
+

@@ -102,3 +102,4 @@ describe('LanguageSwitcher', () => {
     expect(screen.getByRole('button')).toHaveClass('custom-class');
   });
 });
+

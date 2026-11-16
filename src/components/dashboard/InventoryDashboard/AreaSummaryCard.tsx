@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import './AreaSummaryCard.css';
 
 const AreaSummaryCard = ({
@@ -69,3 +69,4 @@ const AreaSummaryCard = ({
 };
 
 export default AreaSummaryCard;
+

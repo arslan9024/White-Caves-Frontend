@@ -395,3 +395,4 @@ const BuyerPortalPage: FC = () => {
 };
 
 export default BuyerPortalPage;
+

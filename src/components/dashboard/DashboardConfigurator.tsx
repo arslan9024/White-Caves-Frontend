@@ -90,3 +90,4 @@ const DashboardConfigurator: React.FC<DashboardConfiguratorProps> = ({
 };
 
 export default DashboardConfigurator;
+

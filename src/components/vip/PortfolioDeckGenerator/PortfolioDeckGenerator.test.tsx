@@ -12,3 +12,4 @@ describe('PortfolioDeckGenerator', () => {
     expect(screen.getAllByText(/Family Office/i).length).toBeGreaterThan(0);
   });
 });
+

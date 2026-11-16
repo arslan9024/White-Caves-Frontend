@@ -30,3 +30,4 @@ export const DashboardLiveTicker: FC = () => {
 };
 
 export default DashboardLiveTicker;
+

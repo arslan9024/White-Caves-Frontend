@@ -192,3 +192,4 @@ describe('LandlordPortalHome', () => {
     expect(screen.getByTestId('landlord-metric-maintenance-value')).toHaveTextContent('3');
   });
 });
+

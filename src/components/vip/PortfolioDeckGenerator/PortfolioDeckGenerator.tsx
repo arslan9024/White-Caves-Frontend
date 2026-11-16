@@ -80,3 +80,4 @@ export const PortfolioDeckGenerator: FC = () => {
   );
 };
 export default PortfolioDeckGenerator;
+

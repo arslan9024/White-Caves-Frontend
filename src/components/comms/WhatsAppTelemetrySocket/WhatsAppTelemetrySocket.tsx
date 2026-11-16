@@ -77,3 +77,4 @@ export const WhatsAppTelemetrySocket: FC = () => {
   );
 };
 export default WhatsAppTelemetrySocket;
+

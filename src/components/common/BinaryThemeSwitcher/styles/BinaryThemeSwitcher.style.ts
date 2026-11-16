@@ -36,3 +36,4 @@ export const ModeBtn = styled.button<{ $active: boolean }>`
     background: ${p => (p.$active ? '#EF4444' : 'rgba(239, 68, 68, 0.15)')};
   }
 `;
+

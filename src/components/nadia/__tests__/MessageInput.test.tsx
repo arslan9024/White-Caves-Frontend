@@ -382,3 +382,4 @@ describe('MessageInput', () => {
     expect(screen.getByLabelText('Send message')).toBeInTheDocument();
   });
 });
+

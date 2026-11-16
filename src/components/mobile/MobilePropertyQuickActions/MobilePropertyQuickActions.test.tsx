@@ -45,3 +45,4 @@ describe('MobilePropertyQuickActions', () => {
     expect(mockHandleOpen).toHaveBeenCalled();
   });
 });
+

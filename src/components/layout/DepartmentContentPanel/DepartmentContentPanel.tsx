@@ -286,3 +286,4 @@ const DepartmentContentPanel: React.FC = () => {
 };
 
 export default DepartmentContentPanel;
+

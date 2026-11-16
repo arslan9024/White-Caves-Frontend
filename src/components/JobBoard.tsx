@@ -242,3 +242,4 @@ export default function JobBoard() {
     </div>
   );
 }
+

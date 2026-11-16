@@ -307,3 +307,4 @@ PropertyDetailContainer.displayName = 'PropertyDetailContainer';
 
 export default PropertyMediaGallery;
 export { PropertySpecsGrid, PropertyDetailContainer };
+

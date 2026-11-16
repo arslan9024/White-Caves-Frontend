@@ -22,3 +22,4 @@ export const InvestorDashboardView: React.FC<InvestorDashboardProps> = () => {
 };
 
 export default InvestorDashboardView;
+

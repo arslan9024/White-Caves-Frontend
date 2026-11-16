@@ -190,3 +190,4 @@ describe('useAnnounce', () => {
     consoleSpy.mockRestore();
   });
 });
+

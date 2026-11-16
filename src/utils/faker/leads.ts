@@ -165,3 +165,4 @@ export function generateLeads(count = 100, seed = 137): GeneratedLead[] {
 
   return leads;
 }
+

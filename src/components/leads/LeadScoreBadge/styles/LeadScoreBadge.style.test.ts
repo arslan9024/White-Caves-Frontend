@@ -9,3 +9,4 @@ describe('LeadScoreBadge.style', () => {
     expect(styles.ScoreLabel).toBeDefined();
   });
 });
+

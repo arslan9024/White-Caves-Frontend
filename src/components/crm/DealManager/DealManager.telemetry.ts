@@ -54,3 +54,4 @@ class DealTelemetryService {
 
 export const DealTelemetry = new DealTelemetryService();
 export default DealTelemetry;
+

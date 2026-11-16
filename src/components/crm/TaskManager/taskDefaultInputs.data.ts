@@ -97,3 +97,4 @@ export function getDefaultInputsForTask(task: TaskNode | null): Record<string, s
     targetSla: task.defaultSla,
   };
 }
+

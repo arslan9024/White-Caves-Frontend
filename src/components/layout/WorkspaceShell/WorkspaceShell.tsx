@@ -56,3 +56,4 @@ export const WorkspaceShell: FC<WorkspaceShellProps> = ({
 };
 
 export default WorkspaceShell;
+

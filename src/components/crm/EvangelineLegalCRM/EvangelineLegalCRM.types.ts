@@ -30,3 +30,4 @@ export interface EvictionDispute {
   daysRemaining: number;
   status: string;
 }
+

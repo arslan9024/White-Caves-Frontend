@@ -66,3 +66,4 @@ export const NINA_BOT_FEATURES: BotFeature[] = [
     status: 'active',
   },
 ];
+

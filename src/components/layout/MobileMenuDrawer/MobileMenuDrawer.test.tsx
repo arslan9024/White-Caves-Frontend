@@ -211,3 +211,4 @@ describe('MobileMenuDrawer', () => {
     expect(screen.getByText('White Caves CRM v2.0')).toBeDefined();
   });
 });
+

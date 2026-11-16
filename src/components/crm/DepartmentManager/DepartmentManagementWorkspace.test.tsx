@@ -308,3 +308,4 @@ describe('DepartmentManagementWorkspace Component (7-Category Co-Location Spec)'
     );
   }, 10000);
 });
+

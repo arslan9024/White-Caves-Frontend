@@ -348,3 +348,4 @@ describe('AuroraTechnicalDashboard', () => {
     expect(performanceBadges.length).toBeGreaterThan(0);
   });
 });
+

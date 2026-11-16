@@ -39,3 +39,4 @@ export function useWorkspaceShellLogic(isSidebarCollapsed = false) {
     padding: isMobile ? 16 : WORKSPACE_LAYOUT_CONFIG.defaultPaddingPx,
   };
 }
+

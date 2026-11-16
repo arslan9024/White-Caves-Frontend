@@ -20,3 +20,4 @@ describe('FavoriteHeartButton', () => {
     expect(onToggle).toHaveBeenCalledWith(false);
   });
 });
+

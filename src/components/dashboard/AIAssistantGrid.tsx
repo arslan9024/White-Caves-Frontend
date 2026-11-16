@@ -87,3 +87,4 @@ const AIAssistantGrid: FC<AIAssistantGridProps> = ({ onOpenAssistant }) => {
 };
 
 export default AIAssistantGrid;
+

@@ -52,3 +52,4 @@ export const DashboardViewModeSelector: FC<{ onModeChange?: (mode: 'compact' | '
 };
 
 export default DashboardViewModeSelector;
+

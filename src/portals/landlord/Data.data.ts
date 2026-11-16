@@ -46,3 +46,4 @@ export const LANDLORD_PORTAL_DATA = {
     },
   ] as PortalSectionItem[],
 };
+

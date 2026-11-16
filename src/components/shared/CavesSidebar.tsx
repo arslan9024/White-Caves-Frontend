@@ -131,3 +131,4 @@ export const CavesSidebar: React.FC<CavesSidebarProps> = ({
 };
 
 export default CavesSidebar;
+

@@ -118,3 +118,4 @@ describe('authSlice', () => {
     expect(state.session.sessions).toEqual([]);
   });
 });
+

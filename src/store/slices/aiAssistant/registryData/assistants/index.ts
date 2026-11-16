@@ -23,3 +23,4 @@ Object.values(AI_ASSISTANTS_REGISTRY).forEach(assistant => {
     assistant.dashboardUrl = assistant.dashboardUrl.replace('/owner/dashboard', '/crm');
   }
 });
+

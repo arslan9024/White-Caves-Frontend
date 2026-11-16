@@ -23,3 +23,4 @@ export const SmartReplySuggestions: FC = () => {
   );
 };
 export default SmartReplySuggestions;
+

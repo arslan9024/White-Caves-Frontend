@@ -70,3 +70,4 @@ export const MobileOnboardingCarousel: FC = () => {
   );
 };
 export default MobileOnboardingCarousel;
+

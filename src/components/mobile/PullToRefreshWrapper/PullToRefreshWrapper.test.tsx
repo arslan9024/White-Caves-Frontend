@@ -29,3 +29,4 @@ describe('PullToRefreshWrapper', () => {
     expect(screen.getByTestId('pull-to-refresh-wrapper')).toBeDefined();
   });
 });
+

@@ -164,3 +164,4 @@ describe('TransactionsView — alert elimination', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

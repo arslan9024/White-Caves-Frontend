@@ -14,3 +14,4 @@ export { default as DepartmentManagementWorkspace } from './DepartmentManagement
 export { default as DepartmentFinalizerTable } from './DepartmentFinalizerTable';
 export { default as DepartmentSubItemsModal } from './DepartmentSubItemsModal';
 export { DepartmentHierarchyView as default } from './DepartmentHierarchyView';
+

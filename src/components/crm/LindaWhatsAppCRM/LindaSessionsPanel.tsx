@@ -319,3 +319,4 @@ export const LindaSessionsPanel: React.FC<SessionsPanelProps> = memo(({
     </div>
   );
 });
+

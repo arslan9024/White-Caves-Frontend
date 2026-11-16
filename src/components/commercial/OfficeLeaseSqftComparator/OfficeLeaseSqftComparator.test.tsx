@@ -11,3 +11,4 @@ describe('OfficeLeaseSqftComparator Component', () => {
     expect(screen.getByText(/DIFC & DED COMMERCIAL/i)).toBeDefined();
   });
 });
+

@@ -9,3 +9,4 @@ describe('TitleDeedVerificationPortal.style', () => {
     expect(styles.Result).toBeDefined();
   });
 });
+

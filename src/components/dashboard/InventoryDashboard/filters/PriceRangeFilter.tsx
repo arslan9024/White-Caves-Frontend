@@ -137,3 +137,4 @@ const PriceRangeFilter = ({ minPrice = null, maxPrice = null, onChange }) => {
 };
 
 export default PriceRangeFilter;
+

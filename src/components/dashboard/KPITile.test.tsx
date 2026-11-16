@@ -35,3 +35,4 @@ describe('KPITile Component', () => {
     expect(screen.getByText('94.5%')).toBeInTheDocument();
   });
 });
+

@@ -19,3 +19,4 @@ export const ResultCard = styled.div<{ $highlight: boolean }>`
   .label { font-weight: 600; color: var(--color-334155, #334155); font-size: 0.9rem; }
   .value { font-weight: 800; font-size: 1.2rem; color: ${p => p.$highlight ? 'var(--color-166534, #166534)' : 'var(--color-1e293b, #1E293B)'}; }
 `;
+

@@ -70,3 +70,4 @@ const SankeyChart: React.FC<SankeyChartProps> = ({
 };
 
 export default SankeyChart;
+

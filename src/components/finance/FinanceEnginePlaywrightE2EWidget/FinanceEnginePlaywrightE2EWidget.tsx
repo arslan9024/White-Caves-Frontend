@@ -92,3 +92,4 @@ export const FinanceEnginePlaywrightE2EWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

@@ -113,3 +113,4 @@ describe('DashboardCommandPalette', () => {
     expect(onClose).toHaveBeenCalledOnce();
   });
 });
+

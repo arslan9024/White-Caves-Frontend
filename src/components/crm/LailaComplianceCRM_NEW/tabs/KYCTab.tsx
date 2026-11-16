@@ -99,3 +99,4 @@ const KYCTab: React.FC<KYCTabProps> = ({ verifications, onApprove, onReject }) =
 };
 
 export default KYCTab;
+

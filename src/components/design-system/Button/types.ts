@@ -88,3 +88,4 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    */
   'aria-label'?: string;
 }
+

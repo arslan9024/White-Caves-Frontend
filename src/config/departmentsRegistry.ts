@@ -232,3 +232,4 @@ export const getDepartmentAssistants = (departmentId: string): string[] => {
 };
 
 export default DEPARTMENTS;
+

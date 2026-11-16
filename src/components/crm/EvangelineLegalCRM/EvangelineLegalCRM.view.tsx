@@ -197,3 +197,4 @@ export const EvangelineLegalCRMView: React.FC<EvangelineLegalCRMProps> = ({ modu
 };
 
 export default EvangelineLegalCRMView;
+

@@ -51,3 +51,4 @@ describe('Homepage preload performance regression', () => {
     expect(indexHtml).not.toContain('/images/dubai-skyline.jpg');
   });
 });
+

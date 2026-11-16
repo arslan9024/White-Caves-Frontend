@@ -262,3 +262,4 @@ export const getFeatureById = (assistantId, featureId) => {
 };
 
 export default ASSISTANT_FEATURES;
+

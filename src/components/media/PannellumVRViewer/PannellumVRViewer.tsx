@@ -48,3 +48,4 @@ export const PannellumVRViewer: FC = () => {
 };
 
 export default PannellumVRViewer;
+

@@ -207,3 +207,4 @@ export const AuditPanel: React.FC<{ logs: KycAuditLogItem[] }> = ({ logs }) => (
     </div>
   </div>
 );
+

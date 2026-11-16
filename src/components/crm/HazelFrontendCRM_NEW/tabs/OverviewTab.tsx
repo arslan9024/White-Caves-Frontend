@@ -79,3 +79,4 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ componentStats, accessibility
 };
 
 export default OverviewTab;
+

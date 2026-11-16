@@ -19,3 +19,4 @@ describe('FeaturedCommunityCarousel Component', () => {
     expect(screen.getByText(/Urban Luxury & Burj Views/i)).toBeDefined();
   });
 });
+

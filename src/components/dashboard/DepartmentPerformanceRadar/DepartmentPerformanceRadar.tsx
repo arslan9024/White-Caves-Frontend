@@ -122,3 +122,4 @@ export const DepartmentPerformanceRadar: FC = () => {
 };
 
 export default DepartmentPerformanceRadar;
+

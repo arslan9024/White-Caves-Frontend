@@ -269,3 +269,4 @@ export const marketAssistants: Record<string, AIAssistant> = {
     apiEndpoints: ['/api/staging/generate', '/api/staging/3d', '/api/staging/ar'],
   },
 };
+

@@ -14,3 +14,4 @@ export const DEFAULT_TEMPLATES: ContractTemplate[] = [
     category: 'Commercial',
   },
 ];
+

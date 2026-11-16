@@ -27,3 +27,4 @@ export const FinanceRBACWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

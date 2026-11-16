@@ -32,3 +32,4 @@ export const MD_PORTAL_DATA = {
     },
   ] as PortalSectionItem[],
 };
+

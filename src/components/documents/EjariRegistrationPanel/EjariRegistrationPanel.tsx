@@ -37,3 +37,4 @@ export const EjariRegistrationPanel: FC = () => {
   );
 };
 export default EjariRegistrationPanel;
+

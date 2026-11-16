@@ -321,3 +321,4 @@ export const departmentService = new DepartmentService();
 
 // Export class for testing
 export { DepartmentService };
+

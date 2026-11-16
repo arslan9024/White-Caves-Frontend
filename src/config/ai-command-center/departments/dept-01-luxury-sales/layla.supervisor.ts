@@ -53,3 +53,4 @@ export const LAYLA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as layla_supervisorExport;
+

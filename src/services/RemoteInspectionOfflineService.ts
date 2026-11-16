@@ -193,3 +193,4 @@ export class RemoteInspectionOfflineService {
 }
 
 export const remoteInspectionOfflineService = RemoteInspectionOfflineService.getInstance();
+

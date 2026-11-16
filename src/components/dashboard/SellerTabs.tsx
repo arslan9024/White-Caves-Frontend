@@ -9,3 +9,4 @@ export { SellerInquiries } from './seller/SellerInquiries';
 export { MarketInsights } from './seller/MarketInsights';
 export { ReceivedOffers } from './seller/ReceivedOffers';
 export { SellerAnalytics } from './seller/SellerAnalytics';
+

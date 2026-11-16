@@ -22,3 +22,4 @@ export const HeroStorybookWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

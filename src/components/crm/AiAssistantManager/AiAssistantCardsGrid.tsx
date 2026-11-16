@@ -148,3 +148,4 @@ export const AiAssistantCardsGrid: FC<AiAssistantCardsGridProps> = ({
     </div>
   );
 };
+

@@ -83,3 +83,4 @@ export type HierarchyCrudAction =
   | { type: 'UPDATE_TEAM'; id: string; payload: Partial<SupervisorTeamNode> }
   | { type: 'DEMOTE_TEAM'; id: string }
   | { type: 'REASSIGN_TEAM'; teamId: string; newManagerId: string };
+

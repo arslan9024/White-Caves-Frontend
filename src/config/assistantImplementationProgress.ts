@@ -50,3 +50,4 @@ export const ASSISTANT_PROGRESS_SUMMARY = {
   complete: ASSISTANT_IMPLEMENTATION_PROGRESS.filter(item => item.status === 'complete').length,
   incomplete: ASSISTANT_IMPLEMENTATION_PROGRESS.filter(item => item.status === 'incomplete').length,
 };
+

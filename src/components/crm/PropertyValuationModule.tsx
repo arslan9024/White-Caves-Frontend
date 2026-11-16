@@ -269,3 +269,4 @@ export default function PropertyValuationModule({ role, user, data }: CRMModuleP
     </div>
   );
 }
+

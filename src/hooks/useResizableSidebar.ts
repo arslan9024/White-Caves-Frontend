@@ -77,3 +77,4 @@ export const useResizableSidebar = (side: 'left' | 'right'): UseResizableSidebar
 };
 
 export default useResizableSidebar;
+

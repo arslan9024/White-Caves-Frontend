@@ -53,3 +53,4 @@ export const VERITAS_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as veritas_supervisorExport;
+

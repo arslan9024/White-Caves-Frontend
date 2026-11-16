@@ -10,3 +10,4 @@ describe('DoubleRingLoadingSpinner Component', () => {
     expect(screen.getByText(/Encrypting Vault Key.../i)).toBeDefined();
   });
 });
+

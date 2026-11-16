@@ -90,3 +90,4 @@ export const statusColors: Record<string, string> = {
 };
 
 export const TEMPLATE_CATEGORIES = ['All', 'Sales', 'Leasing', 'Finance', 'Admin'];
+

@@ -53,3 +53,4 @@ export const HUDA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as huda_supervisorExport;
+

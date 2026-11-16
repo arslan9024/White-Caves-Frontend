@@ -223,3 +223,4 @@ export const PaginationBtn = styled.button<{ $active?: boolean; $disabled?: bool
     border-color: var(--primary);
   }
 `;
+

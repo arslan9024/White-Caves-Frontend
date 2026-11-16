@@ -29,3 +29,4 @@ export interface TrakheesiPermitRenewalRadarProps {
   onTriggerRenewal?: (permitId: string, statutoryFeeAED: number) => void;
   onSyncDldPortal?: () => void;
 }
+

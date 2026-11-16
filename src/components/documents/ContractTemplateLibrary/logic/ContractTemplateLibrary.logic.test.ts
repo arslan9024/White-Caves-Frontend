@@ -17,3 +17,4 @@ describe('ContractTemplateLibrary.logic', () => {
     expect(result.current.filtered.every(t => t.category === 'Sales')).toBe(true);
   });
 });
+

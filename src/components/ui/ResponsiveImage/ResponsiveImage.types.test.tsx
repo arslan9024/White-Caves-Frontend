@@ -6,3 +6,4 @@ describe('ResponsiveImage.types', () => {
     expect(ResponsiveImageTypes).toBeDefined();
   });
 });
+

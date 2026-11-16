@@ -148,3 +148,4 @@ export const RAW_TASKS_PART4: Array< [string, string, string, string, TaskNode['
   ['TSK-399', 'Journey J20-S3: Beneficiary Identity & Estate Distribution Ratios Verification', 'pillar-1', 'Pillar I: Legal & Regulatory', 'REGULATORY', 'Estate Execution Desk', '48 Hours', 'CRITICAL', 'Supervisor Amira', 'Manager Farooq', 'Director Adv. Tariq Mansoor',],
   ['TSK-400', 'Journey J20-S4: DLD Inheritance Title Deed Re-Registration to Beneficiaries', 'pillar-1', 'Pillar I: Legal & Regulatory', 'REGULATORY', 'DLD Inheritance Desk', '48 Hours', 'CRITICAL', 'Supervisor Amira', 'Manager Farooq', 'Director Adv. Tariq Mansoor',],
 ];
+

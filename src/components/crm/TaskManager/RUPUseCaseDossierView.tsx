@@ -318,3 +318,4 @@ export const RUPUseCaseDossierView: FC<RUPUseCaseDossierViewProps> = ({
 };
 
 export default RUPUseCaseDossierView;
+

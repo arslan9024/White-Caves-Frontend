@@ -88,3 +88,4 @@ const Table: React.FC<TableProps> = ({ columns, data, onRowClick }) => {
 };
 
 export default Table;
+

@@ -136,3 +136,4 @@ describe('Jack Sparrow Navigation Protocol (TreeNavigationContext)', () => {
     expect(screen.getByTestId('node-expanded').textContent).toBe('no');
   });
 });
+

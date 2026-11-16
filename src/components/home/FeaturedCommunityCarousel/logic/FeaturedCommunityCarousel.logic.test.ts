@@ -15,3 +15,4 @@ describe('FeaturedCommunityCarousel.logic', () => {
     expect(result.current.selectedCommunity).toBe('Downtown Dubai');
   });
 });
+

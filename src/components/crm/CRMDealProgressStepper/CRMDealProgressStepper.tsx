@@ -62,3 +62,4 @@ export const CRMDealProgressStepper: FC = () => (
   </Wrap>
 );
 export default CRMDealProgressStepper;
+

@@ -42,3 +42,4 @@ export function useTitleDeedVerificationPortalLogic() {
 
   return { query, setQuery, status, result, handleVerify, handleReset };
 }
+

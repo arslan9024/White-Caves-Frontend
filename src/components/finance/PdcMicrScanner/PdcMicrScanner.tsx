@@ -80,3 +80,4 @@ export const PdcMicrScanner: FC = () => {
   );
 };
 export default PdcMicrScanner;
+

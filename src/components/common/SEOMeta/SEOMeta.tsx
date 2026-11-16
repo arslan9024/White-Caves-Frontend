@@ -94,3 +94,4 @@ export const SEOMeta: React.FC<SEOMetaProps> = ({
     </Helmet>
   );
 };
+

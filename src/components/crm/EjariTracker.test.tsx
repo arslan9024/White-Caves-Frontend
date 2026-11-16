@@ -212,3 +212,4 @@ describe('EjariTracker — data fetching', () => {
     expect(mockAuthFetch).not.toHaveBeenCalled();
   });
 });
+

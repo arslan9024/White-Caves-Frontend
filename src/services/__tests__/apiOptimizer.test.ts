@@ -111,3 +111,4 @@ describe('APIOptimizer', () => {
     expect(calls).toBe(3);
   });
 });
+

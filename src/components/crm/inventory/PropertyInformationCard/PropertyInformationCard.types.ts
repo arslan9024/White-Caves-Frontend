@@ -15,3 +15,4 @@ export interface PropertyInformationCardProps {
 }
 
 export type PropertyFormErrors = Record<string, string>;
+

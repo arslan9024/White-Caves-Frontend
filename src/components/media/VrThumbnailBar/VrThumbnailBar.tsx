@@ -175,3 +175,4 @@ export const VrThumbnailBar: FC<VrThumbnailBarProps> = ({ onRoomSelect }) => {
 };
 
 export default VrThumbnailBar;
+

@@ -19,3 +19,4 @@ export const SEARCH_MODAL_TEXT = {
   emptyMessage: 'Type a query to search Dubai Land Dept inventory or AI command nodes.',
   closeLabel: 'Close (Esc)',
 };
+

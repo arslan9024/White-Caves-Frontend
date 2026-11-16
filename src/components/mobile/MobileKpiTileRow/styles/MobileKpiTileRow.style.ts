@@ -59,3 +59,4 @@ export const DeltaBadge = styled.span<{ $positive: boolean }>`
   font-weight: 700;
   color: ${({ $positive }) => ($positive ? '#22c55e' : '#ef4444')};
 `;
+

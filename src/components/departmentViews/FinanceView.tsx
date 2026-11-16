@@ -122,3 +122,4 @@ const FinanceView: React.FC<FinanceViewProps> = ({
 };
 
 export default FinanceView;
+

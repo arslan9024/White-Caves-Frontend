@@ -151,3 +151,4 @@ export const PropertyGalleryPageView: React.FC = () => {
     </div>
   );
 };
+

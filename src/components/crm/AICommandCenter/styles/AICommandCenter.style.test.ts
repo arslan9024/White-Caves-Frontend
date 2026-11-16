@@ -11,3 +11,4 @@ describe('AICommandCenter.style', () => {
     expect(styles.LiveBadge.styledComponentId).toBeDefined();
   });
 });
+

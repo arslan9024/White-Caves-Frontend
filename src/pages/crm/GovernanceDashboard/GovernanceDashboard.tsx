@@ -45,3 +45,4 @@ export const GovernanceDashboard: React.FC = () => {
 };
 
 export default GovernanceDashboard;
+

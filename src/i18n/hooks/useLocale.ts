@@ -25,3 +25,4 @@ export const useLocale = (): UseLocaleReturn => {
     [language, isRTL, setLanguage]
   );
 };
+

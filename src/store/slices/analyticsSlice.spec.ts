@@ -96,3 +96,4 @@ describe('store/slices/analyticsSlice', () => {
     expect(selectConnectionStatus(state)).toBe('connected');
   });
 });
+

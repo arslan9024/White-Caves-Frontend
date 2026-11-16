@@ -77,3 +77,4 @@ export const SlaPulseBadge = styled.div`
   font-weight: 800;
   animation: ${pulseRed} 2s infinite;
 `;
+

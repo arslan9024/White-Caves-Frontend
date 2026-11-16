@@ -26,3 +26,4 @@ export default function HenryDriveIntake({ source }: { source: DriveImport }) {
     {isGenericDocumentType(type) && <HenryGenericDocumentPanel key={type} importedSource={source} />}
   </section>;
 }
+

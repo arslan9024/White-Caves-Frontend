@@ -16,3 +16,4 @@ export default function RolePageLayout({ title, subtitle, actions, children }) {
     </section>
   );
 }
+

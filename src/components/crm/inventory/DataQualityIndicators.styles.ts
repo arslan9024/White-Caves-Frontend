@@ -96,3 +96,4 @@ export const IndicatorDesc = styled.span`
   font-size: 11px;
   color: var(--text-secondary);
 `;
+

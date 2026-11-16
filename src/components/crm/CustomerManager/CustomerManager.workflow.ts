@@ -188,3 +188,4 @@ export function validateCustomerKycRequirements(customer: CustomerItem): {
     missingFields: missing,
   };
 }
+

@@ -567,3 +567,4 @@ export const MavenInvestmentCRM = ({ moduleId, role, user }) => {
 };
 
 export default MavenInvestmentCRM;
+

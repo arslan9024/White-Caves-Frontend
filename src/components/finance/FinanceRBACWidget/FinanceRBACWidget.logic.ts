@@ -15,3 +15,4 @@ export const useFinanceRBACLogic = () => {
   const t = isRtl ? ar : en;
   return { t, isRtl, roles: t.roles, permissions: t.permissions, matrix: RBAC_MATRIX, matrixKeys: Object.keys(RBAC_MATRIX) };
 };
+

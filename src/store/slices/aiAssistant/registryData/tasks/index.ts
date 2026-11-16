@@ -23,3 +23,4 @@ export const generateTasks = (): Record<string, Task[]> => {
   }
   return enriched;
 };
+

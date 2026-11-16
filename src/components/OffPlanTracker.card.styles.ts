@@ -77,3 +77,4 @@ export const PaymentPlan = styled.div`
     color: var(--primary-color, #1a365d);
   }
 `;
+

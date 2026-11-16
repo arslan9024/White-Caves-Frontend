@@ -73,3 +73,4 @@ export interface ActivityItem {
 
 export type TimeRange = 'day' | 'week' | 'month' | 'quarter' | 'year';
 export type DashboardTab = 'overview' | 'analytics' | 'team' | 'alerts';
+

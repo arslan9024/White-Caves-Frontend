@@ -96,3 +96,4 @@ export interface Assistant {
 export interface NavigationItem extends Department {
   assistants: Assistant[];
 }
+

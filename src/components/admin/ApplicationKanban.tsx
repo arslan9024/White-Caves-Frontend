@@ -109,3 +109,4 @@ export const ApplicationKanban: React.FC = () => {
     </div>
   );
 };
+

@@ -101,3 +101,4 @@ export const CHANNEL_STATS: ChannelStat[] = [
   { label: 'Email', count: 18, color: '#F59E0B' },
   { label: 'In-Person', count: 8, color: '#8B5CF6' },
 ];
+

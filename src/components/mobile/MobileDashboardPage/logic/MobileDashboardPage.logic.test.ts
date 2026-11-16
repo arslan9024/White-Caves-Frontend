@@ -31,3 +31,4 @@ describe('MobileDashboardPage.logic', () => {
     vi.useRealTimers();
   });
 });
+

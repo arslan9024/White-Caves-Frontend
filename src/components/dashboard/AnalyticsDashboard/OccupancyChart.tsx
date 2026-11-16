@@ -198,3 +198,4 @@ function OccupancyChart({ data, loading = false }) {
 }
 
 export default OccupancyChart;
+

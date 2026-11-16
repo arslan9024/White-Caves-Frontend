@@ -27,3 +27,4 @@ describe('PredictiveROIMatrix Utility', () => {
     expect(result.totalProjectedROI).toBe(0);
   });
 });
+

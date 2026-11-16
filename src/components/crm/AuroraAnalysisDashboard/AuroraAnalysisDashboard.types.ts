@@ -22,3 +22,4 @@ export const AURORA_TABS: AuroraTabDef[] = [
   { id: 'components', label: 'Component Tracker', icon: Layers },
   { id: 'actions', label: 'Actions Demo', icon: PlayCircle },
 ];
+

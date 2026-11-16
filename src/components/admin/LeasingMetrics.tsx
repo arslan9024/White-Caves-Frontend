@@ -33,3 +33,4 @@ export const LeasingMetrics: React.FC<LeasingMetricsProps> = ({
 };
 
 export default LeasingMetrics;
+

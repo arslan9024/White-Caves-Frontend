@@ -7,3 +7,4 @@ describe('HenryTenancyContractModal.style', () => {
     expect(Object.keys(styles).length).toBeGreaterThan(0);
   });
 });
+

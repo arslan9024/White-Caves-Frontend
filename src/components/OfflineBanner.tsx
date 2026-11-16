@@ -124,3 +124,4 @@ const OfflineBanner: React.FC = () => {
 };
 
 export default OfflineBanner;
+

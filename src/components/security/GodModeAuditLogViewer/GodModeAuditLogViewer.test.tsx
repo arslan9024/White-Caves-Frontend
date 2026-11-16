@@ -13,3 +13,4 @@ describe('GodModeAuditLogViewer Component', () => {
     expect(screen.getByText(/Agent Sarah Connor/i)).toBeDefined();
   });
 });
+

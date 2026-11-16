@@ -30,3 +30,4 @@ export interface ContractBuilderProps {
   propertyData?: any;
   partyData?: any;
 }
+

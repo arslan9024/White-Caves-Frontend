@@ -59,3 +59,4 @@ export const SessionSecurityTicker: FC = () => {
 };
 
 export default SessionSecurityTicker;
+

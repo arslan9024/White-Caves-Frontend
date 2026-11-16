@@ -9,3 +9,4 @@ describe('LanguageSwitcherPill.style', () => {
     expect(LangBtn.styledComponentId).toBeDefined();
   });
 });
+

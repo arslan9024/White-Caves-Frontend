@@ -194,3 +194,4 @@ export const EmployeeLeaderboardPanel: FC = () => {
 };
 
 export default EmployeeLeaderboardPanel;
+

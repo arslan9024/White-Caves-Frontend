@@ -74,3 +74,4 @@ export const FeaturesTab: React.FC<FeaturesTabProps> = ({ data }) => {
     </div>
   );
 };
+

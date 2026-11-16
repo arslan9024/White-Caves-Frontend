@@ -11,3 +11,4 @@ describe('MobileKpiTileRow.style', () => {
     expect(styles.DeltaBadge).toBeDefined();
   });
 });
+

@@ -6,3 +6,4 @@ describe('FinanceView', () => {
     expect(true).toBe(true);
   });
 });
+

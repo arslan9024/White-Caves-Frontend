@@ -424,3 +424,4 @@ export const AiAssistantCrudTable: FC = () => {
 };
 
 export default AiAssistantCrudTable;
+

@@ -103,3 +103,4 @@ export const DEFAULT_REQUIREMENTS: RequirementItem[] = [
     status: 'pending',
   },
 ];
+

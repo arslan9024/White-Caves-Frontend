@@ -36,3 +36,4 @@ export function trackBrokerEvent(
 export function getBrokerAuditLedger(): BrokerTelemetryEvent[] {
   return [...brokerAuditLedger];
 }
+

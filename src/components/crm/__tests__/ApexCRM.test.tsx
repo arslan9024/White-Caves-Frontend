@@ -14,3 +14,4 @@ describe('ApexCRM Component', () => {
     expect(screen.getByText('Omar Siddiqui')).toBeDefined();
   });
 });
+

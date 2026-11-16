@@ -131,3 +131,4 @@ export const LeasingJourneyWizard: React.FC<LeasingJourneyWizardProps> = ({ tran
     </div>
   );
 };
+

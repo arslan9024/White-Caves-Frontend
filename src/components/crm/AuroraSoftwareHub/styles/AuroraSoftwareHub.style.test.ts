@@ -15,3 +15,4 @@ describe('AuroraSoftwareHub.style', () => {
     expect(styles.ViewerOverlay).toBeDefined();
   });
 });
+

@@ -222,3 +222,4 @@ export interface TaskNodeRecordEntity {
   propertyId?: string;
   contractId?: string;
 }
+

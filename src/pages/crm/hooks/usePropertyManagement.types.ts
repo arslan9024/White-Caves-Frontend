@@ -67,3 +67,4 @@ export const EMPTY_FORM: PropertyFormData = {
   agent_name: '',
   featured: false,
 };
+

@@ -154,3 +154,4 @@ export const DashboardDeptTile: FC<DashboardDeptTileProps> = ({
 };
 
 export default DashboardDeptTile;
+

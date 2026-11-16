@@ -157,3 +157,4 @@ export const UaeVatForm201TaxWidget: FC<UaeVatForm201TaxWidgetProps> = ({
 };
 
 export default UaeVatForm201TaxWidget;
+

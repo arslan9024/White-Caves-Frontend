@@ -41,3 +41,4 @@ export const ConstructionUpdateFeed: FC = () => {
   );
 };
 export default ConstructionUpdateFeed;
+

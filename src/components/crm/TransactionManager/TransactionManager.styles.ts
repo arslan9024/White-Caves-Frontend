@@ -275,3 +275,4 @@ export const transactionManagerStyles = `
     margin-top: 24px;
   }
 `;
+

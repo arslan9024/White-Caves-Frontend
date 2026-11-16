@@ -269,3 +269,4 @@ export default function ComplianceMixedDashboard({ subItem = 'kyc-aml', selected
     />
   );
 }
+

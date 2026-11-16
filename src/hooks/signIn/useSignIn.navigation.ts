@@ -47,3 +47,4 @@ export function useSignInNavigation(state: ReturnType<typeof useSignInState>) {
   }, []);
   return { switchMode, getRolesForCategory, goBackToStep, resetOtp };
 }
+

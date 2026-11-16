@@ -172,3 +172,4 @@ describe('SavedSearchesPage', () => {
     expect(screen.queryByText('🔍 New Saved Search')).toBeNull();
   });
 });
+

@@ -26,3 +26,4 @@ describe('EmptyState', () => {
     expect(onAction).toHaveBeenCalledTimes(1);
   });
 });
+

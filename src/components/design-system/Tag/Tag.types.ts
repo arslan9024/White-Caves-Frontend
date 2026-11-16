@@ -13,3 +13,4 @@ export interface TagProps {
   size?: TagSize;
   className?: string;
 }
+

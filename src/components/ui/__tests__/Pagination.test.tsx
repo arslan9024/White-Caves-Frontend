@@ -179,3 +179,4 @@ describe('Pagination Component', () => {
     });
   });
 });
+

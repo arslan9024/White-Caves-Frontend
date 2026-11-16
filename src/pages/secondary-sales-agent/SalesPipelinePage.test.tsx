@@ -290,3 +290,4 @@ describe('SalesPipelinePage — alert() elimination', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

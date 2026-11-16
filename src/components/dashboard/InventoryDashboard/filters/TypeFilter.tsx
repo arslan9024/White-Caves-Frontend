@@ -36,3 +36,4 @@ const TypeFilter = ({ selected = [], onChange }) => {
 };
 
 export default TypeFilter;
+

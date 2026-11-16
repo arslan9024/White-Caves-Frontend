@@ -19,3 +19,4 @@ export const FinanceI18NWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

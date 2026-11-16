@@ -92,3 +92,4 @@ export const SnaggingChecklistAnnotator: FC = () => {
   );
 };
 export default SnaggingChecklistAnnotator;
+

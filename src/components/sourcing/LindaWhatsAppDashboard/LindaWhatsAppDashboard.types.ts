@@ -39,3 +39,4 @@ export interface ChatMessageItem {
 }
 
 export type FilterStatus = 'all' | 'opportunity' | 'unread';
+

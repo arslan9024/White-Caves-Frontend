@@ -56,3 +56,4 @@ export function generatePropertyFinderXmlFeed(properties: SyndicationProperty[])
 ${propertyNodes}
 </list>`;
 }
+

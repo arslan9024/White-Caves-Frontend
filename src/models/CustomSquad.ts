@@ -71,3 +71,4 @@ export const CustomSquad: Model<ICustomSquad> =
 
 export default CustomSquad;
 
+

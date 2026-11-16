@@ -104,3 +104,4 @@ export const RENTAL_INQUIRIES = [
     date: '2024-01-08',
   },
 ];
+

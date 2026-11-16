@@ -27,3 +27,4 @@ describe('PricePerSqftTooltip (Target T-0007)', () => {
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
   });
 });
+

@@ -181,3 +181,4 @@ export const FinalizerRow: React.FC<FinalizerRowProps> = ({
     </tr>
   );
 };
+

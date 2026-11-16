@@ -22,3 +22,4 @@ export const Bar = styled.div<{ $height: number; $color: string }>`
   flex: 1; height: ${p => p.$height}%; background: ${p => p.$color}; border-radius: 4px 4px 0 0; min-width: 20px; transition: height 0.3s;
   &:hover { opacity: 0.8; }
 `;
+

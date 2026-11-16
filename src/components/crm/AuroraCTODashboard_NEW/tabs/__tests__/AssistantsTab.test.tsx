@@ -16,3 +16,4 @@ describe('AssistantsTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

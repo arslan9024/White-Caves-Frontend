@@ -87,3 +87,4 @@ export const BrokerCommissionWidget: FC<BrokerCommissionWidgetProps> = ({
     </SectionCard>
   );
 };
+

@@ -38,3 +38,4 @@ export function useFloatingHeroSearchPillLogic() {
     priceRanges: PRICE_RANGES,
   };
 }
+

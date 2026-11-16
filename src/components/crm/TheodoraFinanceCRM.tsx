@@ -6,3 +6,4 @@ export * from './TheodoraFinanceCRM/TheodoraFinanceCRM.logic';
 export * from './TheodoraFinanceCRM/TheodoraFinanceCRM.panels';
 
 export default TheodoraFinanceCRMView;
+

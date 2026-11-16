@@ -214,3 +214,4 @@ export const getPrivilegedRoleFromUser = (user: {
 
   return null;
 };
+

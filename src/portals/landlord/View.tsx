@@ -7,3 +7,4 @@ export const LandlordPortalView: FC = () => {
   return <PortalShell {...data} onRefresh={handleRefresh} />;
 };
 export default LandlordPortalView;
+

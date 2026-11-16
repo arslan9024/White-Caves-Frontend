@@ -9,3 +9,4 @@ describe('FacilityCalendar Component', () => {
     expect(screen.getByText('Resident View')).toBeDefined();
   });
 });
+

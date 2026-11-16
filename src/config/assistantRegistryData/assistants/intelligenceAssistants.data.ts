@@ -237,3 +237,4 @@ export const intelligenceAssistants: Partial<Record<AssistantId, Assistant>> = {
     },
   },
 };
+

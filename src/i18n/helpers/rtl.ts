@@ -26,3 +26,4 @@ export const flipFlexDirection = (
 
 export const textAlignStart = (isRTL: boolean): CSSProperties['textAlign'] =>
   isRTL ? 'right' : 'left';
+

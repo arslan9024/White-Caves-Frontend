@@ -950,3 +950,4 @@ export const PaginationInfo = styled.div`
   color: ${colors.text.secondary};
   min-width: fit-content;
 `;
+

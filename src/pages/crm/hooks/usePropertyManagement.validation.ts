@@ -82,3 +82,4 @@ export function populateEditForm(property: Property): PropertyFormData {
     featured: property.featured || false,
   };
 }
+

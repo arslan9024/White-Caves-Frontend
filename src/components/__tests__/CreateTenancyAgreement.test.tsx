@@ -23,3 +23,4 @@ describe('CreateTenancyAgreement Component', () => {
     ).toBeDefined();
   });
 });
+

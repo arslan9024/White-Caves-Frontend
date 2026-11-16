@@ -78,3 +78,4 @@ export const NinaFeaturesTab: React.FC<NinaFeaturesTabProps> = ({ data }) => {
     </div>
   );
 };
+

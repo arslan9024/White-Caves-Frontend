@@ -73,3 +73,4 @@ export const FilterGrid = styled.div`
     grid-template-columns: 1fr;
   }
 `;
+

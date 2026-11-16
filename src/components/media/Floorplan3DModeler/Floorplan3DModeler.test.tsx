@@ -17,3 +17,4 @@ describe('Floorplan3DModeler Component', () => {
     expect(screen.getByTestId('floorplan-3d-modeler')).toBeDefined();
   });
 });
+

@@ -120,3 +120,4 @@ describe('Skeleton', () => {
     expect(table.children.length).toBe(5);
   });
 });
+

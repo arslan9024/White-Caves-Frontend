@@ -53,3 +53,4 @@ export const FARAH_OFFPLAN_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as farah_offplan_supervisorExport;
+

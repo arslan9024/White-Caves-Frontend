@@ -64,3 +64,4 @@ export function usePullToRefreshLogic(onRefresh: () => Promise<void>): UsePullTo
     onTouchEnd,
   };
 }
+

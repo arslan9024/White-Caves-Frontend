@@ -20,3 +20,4 @@ describe('EmployeeLeaderboardPanel Component', () => {
     fireEvent.click(screen.getByTestId('toggle-by-dept'));
   });
 });
+

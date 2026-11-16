@@ -287,3 +287,4 @@ const LeaderboardTab: React.FC<LeaderboardTabProps> = ({ data }) => {
 };
 
 export default LeaderboardTab;
+

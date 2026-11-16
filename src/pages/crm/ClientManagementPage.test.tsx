@@ -136,3 +136,4 @@ describe('ClientManagementPage', () => {
     expect(screen.getByText('No clients yet — add your first one!')).toBeDefined();
   });
 });
+

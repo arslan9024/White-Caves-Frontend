@@ -37,3 +37,4 @@ describe('crmModuleRegistry', () => {
     expect(resolved.map(m => m.id)).toEqual(['overview', 'henry']);
   });
 });
+

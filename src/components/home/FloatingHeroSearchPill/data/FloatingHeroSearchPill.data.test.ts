@@ -9,3 +9,4 @@ describe('FloatingHeroSearchPill.data', () => {
     expect(SEARCH_PILL_TEXT.locationPlaceholder).toContain('Palm Jumeirah');
   });
 });
+

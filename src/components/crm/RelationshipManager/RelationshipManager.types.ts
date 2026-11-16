@@ -117,3 +117,4 @@ export interface RelationshipChain {
   grossRevenueAED: number;
   meritXPAwarded: number;
 }
+

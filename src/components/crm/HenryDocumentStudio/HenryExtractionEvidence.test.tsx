@@ -32,3 +32,4 @@ it('highlights actual labelled source ranges and honestly omits derived or revie
   expect(screen.queryByRole('status')).toBeNull();
   expect(screen.getByText(/Original image\/page coordinates are unavailable/)).toBeTruthy();
 });
+

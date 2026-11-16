@@ -49,3 +49,4 @@ export const EmailTemplateManager: FC = () => {
   );
 };
 export default EmailTemplateManager;
+

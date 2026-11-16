@@ -20,3 +20,4 @@ export const INITIAL_FORM_DATA: TaxFilingFormData = {
   documents: [],
   agreement: false,
 };
+

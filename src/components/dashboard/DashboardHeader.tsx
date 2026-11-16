@@ -6,3 +6,4 @@ export * from './DashboardHeader/DashboardHeader.logic';
 export * from './DashboardHeader/DashboardHeader.panels';
 
 export default DashboardHeaderView;
+

@@ -9,3 +9,4 @@ describe('InteractiveMapDrawer.style', () => {
     expect(styles.SlideDrawer).toBeDefined();
   });
 });
+

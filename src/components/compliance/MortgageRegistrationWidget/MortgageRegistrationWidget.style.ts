@@ -209,3 +209,4 @@ export const StepItem = styled.div<{ $active: boolean; $completed: boolean }>`
     font-weight: ${({ $active }) => $active ? 600 : 400};
   }
 `;
+

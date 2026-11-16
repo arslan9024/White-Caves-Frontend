@@ -103,3 +103,4 @@ export const QUICK_REPLIES: QuickReply[] = [
   { id: 4, text: 'What is your preferred budget range?' },
   { id: 5, text: 'Our office hours are 9 AM to 6 PM, Sunday to Thursday.' }
 ];
+

@@ -219,3 +219,4 @@ export const InventoryTabPanel: React.FC = () => (
     </div>
   </div>
 );
+

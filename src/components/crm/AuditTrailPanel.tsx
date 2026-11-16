@@ -328,3 +328,4 @@ export const AuditTrailPanel: FC = () => {
 };
 
 export default AuditTrailPanel;
+

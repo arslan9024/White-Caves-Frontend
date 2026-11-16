@@ -248,3 +248,4 @@ export const ModernBookView: React.FC = () => {
     </div>
   );
 };
+

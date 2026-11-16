@@ -33,3 +33,4 @@ export const SEARCH_PILL_TEXT = {
   searchButton: 'Search',
   quickSuggestion: 'Popular: DAMAC Hills 2 (85 Live Villas) · Palm Jumeirah (42 Mansions)',
 };
+

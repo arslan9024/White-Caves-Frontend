@@ -167,3 +167,4 @@ export function markFieldReviewed(diagnostics: ExtractionDiagnostics | undefined
   refreshCoverage(result);
   return result;
 }
+

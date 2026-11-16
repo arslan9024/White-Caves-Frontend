@@ -10,3 +10,4 @@ describe('TitleDeedVerificationPortal', () => {
     expect(screen.getByText(/DLD Title Deed Verification/i)).toBeTruthy();
   });
 });
+

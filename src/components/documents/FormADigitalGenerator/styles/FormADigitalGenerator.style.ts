@@ -26,3 +26,4 @@ export const Preview = styled.div`
   font-family: 'Georgia', serif; font-size: 0.875rem; color: #1e293b; line-height: 1.7;
 `;
 export const PreviewTitle = styled.div`font-size: 1.125rem; font-weight: 700; text-align: center; margin-bottom: 1rem; color: #ef4444;`;
+

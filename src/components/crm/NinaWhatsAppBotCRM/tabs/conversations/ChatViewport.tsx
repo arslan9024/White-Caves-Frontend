@@ -260,3 +260,4 @@ export const ChatViewport: React.FC<ChatViewportProps> = ({
     </div>
   );
 };
+

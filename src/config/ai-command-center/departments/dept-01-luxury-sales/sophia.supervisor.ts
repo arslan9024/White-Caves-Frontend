@@ -53,3 +53,4 @@ export const SOPHIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as sophia_supervisorExport;
+

@@ -83,3 +83,4 @@ export const getFeatureStats = () => ({
 });
 
 export default { FEATURE_REGISTRY, getFeaturesByCategory, getFeaturesByStatus, getFeatureStats };
+

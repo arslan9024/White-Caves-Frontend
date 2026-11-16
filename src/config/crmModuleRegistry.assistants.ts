@@ -226,3 +226,4 @@ export const ASSISTANTS_CRM_MODULES: Record<string, CRMModuleDefinition> = {
     Component: HeroSectionCRM,
   },
 };
+

@@ -12,3 +12,4 @@ describe('useCareerMilestoneTimelineLogic Hook', () => {
     expect(result.current.milestones).toEqual(MILESTONES);
   });
 });
+

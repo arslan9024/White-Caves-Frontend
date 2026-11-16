@@ -178,3 +178,4 @@ describe('Table Component', () => {
     expect(screen.getByText('Item 1')).toBeInTheDocument();
   });
 });
+

@@ -12,3 +12,4 @@ export interface ExpenseCategory {
   category_name: string;
   items: ExpenseCatalogItem[];
 }
+

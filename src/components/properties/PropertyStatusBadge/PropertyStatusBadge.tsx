@@ -63,3 +63,4 @@ export const PropertyStatusBadge: FC<{ status?: PropertyStatus }> = ({ status = 
 };
 
 export default PropertyStatusBadge;
+

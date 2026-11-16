@@ -72,3 +72,4 @@ export const DocumentOcrFieldsSection: FC<DocumentOcrFieldsSectionProps> = ({ me
     </div>
   );
 };
+

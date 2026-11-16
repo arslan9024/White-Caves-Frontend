@@ -48,3 +48,4 @@ export const LandlordROIStatement: FC = () => {
   );
 };
 export default LandlordROIStatement;
+

@@ -90,3 +90,4 @@ export const FinanceEngineVitestUnitTestsWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

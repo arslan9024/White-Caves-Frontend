@@ -111,3 +111,4 @@ describe('bridge-aware authenticated clients', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
+

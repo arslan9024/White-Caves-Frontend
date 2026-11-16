@@ -36,3 +36,4 @@ describe('inventoryIndex (O(1) Map lookups)', () => {
     expect(getIndexedGroup(index, 999)).toEqual([]);
   });
 });
+

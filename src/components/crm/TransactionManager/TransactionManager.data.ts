@@ -47,3 +47,4 @@ export const INITIAL_FILTERS = {
   maxValue: '',
   isOffplan: '',
 };
+

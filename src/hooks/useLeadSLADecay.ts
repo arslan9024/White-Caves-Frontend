@@ -18,3 +18,4 @@ export function useLeadSLADecay(ingestionTimestamp: string | Date): LeadSLADecay
 }
 
 export default useLeadSLADecay;
+

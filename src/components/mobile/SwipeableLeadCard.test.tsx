@@ -48,3 +48,4 @@ describe('SwipeableLeadCard', () => {
     expect(handleClick).toHaveBeenCalledWith(mockLead);
   });
 });
+

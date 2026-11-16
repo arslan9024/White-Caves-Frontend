@@ -115,3 +115,4 @@ export const SwipeableViewingCard: React.FC<SwipeableViewingCardProps> = ({
 };
 
 export default SwipeableViewingCard;
+

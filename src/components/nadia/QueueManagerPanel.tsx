@@ -215,3 +215,4 @@ const QueueManagerPanel: React.FC<QueueManagerPanelProps> = ({ queue, stats, loa
 QueueManagerPanel.displayName = 'QueueManagerPanel';
 
 export default QueueManagerPanel;
+

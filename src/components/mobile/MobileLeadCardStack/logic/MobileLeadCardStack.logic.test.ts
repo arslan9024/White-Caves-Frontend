@@ -33,3 +33,4 @@ describe('MobileLeadCardStack.logic', () => {
     expect(result.current.cards[result.current.cards.length - 1].id).toBe('L001');
   });
 });
+

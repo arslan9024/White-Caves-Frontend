@@ -54,3 +54,4 @@ describe('AuroraSoftwareHub.logic', () => {
     printSpy.mockRestore();
   });
 });
+

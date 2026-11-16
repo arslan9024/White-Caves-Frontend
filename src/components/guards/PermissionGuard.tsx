@@ -58,3 +58,4 @@ export const PermissionGuard: React.FC<PermissionGuardProps> = ({
   if (permOk && roleOk && levelOk) return <>{children}</>;
   return <>{fallback}</>;
 };
+

@@ -73,3 +73,4 @@ const PropertyMap = ({ location }: { location?: string }) => {
 };
 
 export default PropertyMap;
+

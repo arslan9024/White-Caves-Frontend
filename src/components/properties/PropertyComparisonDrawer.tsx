@@ -242,3 +242,4 @@ export const PropertyComparisonDrawer: FC<PropertyComparisonDrawerProps> = ({
 };
 
 export default PropertyComparisonDrawer;
+

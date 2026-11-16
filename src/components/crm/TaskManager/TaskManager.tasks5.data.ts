@@ -123,3 +123,4 @@ export const RAW_TASKS_PART5: Array< [string, string, string, string, TaskNode['
   ['TSK-499', 'Aurora AI: Continuous TypeScript Typecheck & Regression Suite Runner', 'pillar-6', 'Pillar VI: Technology & CRM', 'TECH', 'Aurora Systems Core', 'On-Commit', 'CRITICAL', 'Supervisor Willow', 'Manager Aurora', 'Director Aurora Vance',],
   ['TSK-500', 'Aurora AI: Sovereign Infrastructure 99.99% Uptime Executive Dashboard', 'pillar-6', 'Pillar VI: Technology & CRM', 'TECH', 'Aurora Systems Core', 'Real-Time', 'CRITICAL', 'Supervisor Willow', 'Manager Aurora', 'Director Aurora Vance',],
 ];
+

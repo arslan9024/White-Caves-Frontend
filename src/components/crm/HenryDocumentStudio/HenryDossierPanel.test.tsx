@@ -171,3 +171,4 @@ describe('Henry dossier operations UI', () => {
     expect(onOptions).toHaveBeenLastCalledWith({ tenancyId: undefined, transactionId: undefined });
   });
 });
+

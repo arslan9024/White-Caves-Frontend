@@ -142,3 +142,4 @@ export interface QuarterlyVatValidationError {
 export type QuarterlyVatEngineOutcome =
   | { readonly success: true; readonly result: QuarterlyVatCalculationResult }
   | { readonly success: false; readonly errors: readonly QuarterlyVatValidationError[] };
+

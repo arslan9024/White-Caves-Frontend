@@ -31,3 +31,4 @@ Alice Example | 123 / 456 | 100`);
     expect(result.owners).toEqual([]);
   });
 });
+

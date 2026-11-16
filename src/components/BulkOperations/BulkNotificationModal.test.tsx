@@ -48,3 +48,4 @@ describe('BulkNotificationModal', () => {
     expect(handleConfirm).toHaveBeenCalledTimes(1);
   });
 });
+

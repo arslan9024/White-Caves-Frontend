@@ -89,3 +89,4 @@ export function chequeCountToFrequencyLabel(count: ChequeCount): string {
   };
   return map[count];
 }
+

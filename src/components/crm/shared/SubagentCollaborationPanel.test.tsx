@@ -43,3 +43,4 @@ describe('SubagentCollaborationPanel Component', () => {
     expect(screen.getByText(/98.4% Optimal/i)).toBeInTheDocument();
   });
 });
+

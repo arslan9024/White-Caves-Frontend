@@ -18,3 +18,4 @@ export { SalesPipeline } from './agent/sales/SalesPipeline';
 export { SalesLeads } from './agent/sales/SalesLeads';
 export { ActiveDeals } from './agent/sales/ActiveDeals';
 export { AgentPerformance } from './agent/sales/AgentPerformance';
+

@@ -238,3 +238,4 @@ const TenantPortalHome: FC<TenantPortalHomeProps> = ({ onNavigate }) => {
 };
 
 export default TenantPortalHome;
+

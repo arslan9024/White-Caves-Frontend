@@ -47,3 +47,4 @@ export const ELENA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as elena_managerExport;
+

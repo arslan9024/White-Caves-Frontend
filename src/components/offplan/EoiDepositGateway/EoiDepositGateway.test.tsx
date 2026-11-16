@@ -17,3 +17,4 @@ describe('EoiDepositGateway Component', () => {
     expect(screen.getByText(/EOI Token Received & Priority Queue Locked!/i)).toBeDefined();
   });
 });
+

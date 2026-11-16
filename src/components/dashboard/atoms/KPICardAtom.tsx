@@ -40,3 +40,4 @@ export const KPICardAtom: FC<KPICardProps> = ({
     )}
   </button>
 );
+

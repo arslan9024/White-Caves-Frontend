@@ -52,3 +52,4 @@ export type EmployeeCrudAction =
   | { type: 'UPDATE_EMPLOYEE'; id: string; payload: Partial<EmployeeNode> }
   | { type: 'DEMOTE_EMPLOYEE'; id: string; reason?: string }
   | { type: 'REASSIGN_EMPLOYEE'; id: string; targetPillarId: string; targetSupervisor: string };
+

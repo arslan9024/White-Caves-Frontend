@@ -48,3 +48,4 @@ describe('Henry authenticated Drive frontend contract', () => {
     await expect(driveRequest('search', { q: '' })).rejects.not.toThrow('synthetic-secret');
   });
 });
+

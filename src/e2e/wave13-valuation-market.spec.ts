@@ -306,3 +306,4 @@ test.describe('Wave 13 - Valuation and Market workflow coverage', () => {
     await expect(page.getByText('Palm Jumeirah')).toBeVisible();
   });
 });
+

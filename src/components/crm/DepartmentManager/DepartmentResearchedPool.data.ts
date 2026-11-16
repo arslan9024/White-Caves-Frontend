@@ -401,3 +401,4 @@ export const RESEARCHED_ORGANIZATION_POOL: SupervisorDef[] = [
     metrics: { accuracyRate: 99.9, tasksCompletedToday: 42, systemHealth: 'optimal' },
   },
 ];
+

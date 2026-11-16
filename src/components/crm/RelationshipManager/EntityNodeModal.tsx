@@ -155,3 +155,4 @@ export const EntityNodeModal: FC<EntityNodeModalProps> = ({ node, onClose, onJum
     </div>
   );
 };
+

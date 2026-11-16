@@ -314,3 +314,4 @@ export const LindaPinnedTerminal: React.FC<LindaPinnedTerminalProps> = memo(({
     </div>
   );
 });
+

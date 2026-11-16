@@ -9,3 +9,4 @@ describe('DocumentVersionHistory.style', () => {
     expect(styles.Content).toBeDefined();
   });
 });
+

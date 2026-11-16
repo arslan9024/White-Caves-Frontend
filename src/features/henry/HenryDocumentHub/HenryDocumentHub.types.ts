@@ -72,3 +72,4 @@ export type HenryOcrDocCategory = 'EMIRATES_ID' | 'PASSPORT' | 'TITLE_DEED' | 'E
 export interface HenryDocumentHubProps {
   role?: string;
 }
+

@@ -185,3 +185,4 @@ export const HR_PROMOTION_BYLAWS = {
   DYNAMIC_PROMOTION_FORMULA: 'L5 Agent + 3 Active Mentees + 1000 XP -> Promoted to L4 Team Leader',
   NOTE: 'Bhakti Law B4: Team Leaders are promoted dynamically on-demand based on actual team leadership rather than holding 11,664 fictitious static vacancies.',
 } as const;
+

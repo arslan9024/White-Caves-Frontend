@@ -13,3 +13,4 @@ describe('LeadQualificationTagger Component', () => {
     expect(screen.getByText(/Oliver Vandermeer/i)).toBeDefined();
   });
 });
+

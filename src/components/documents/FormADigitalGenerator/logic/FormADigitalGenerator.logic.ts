@@ -38,3 +38,4 @@ export function useFormADigitalGeneratorLogic() {
 
   return { form, update, generated, handleGenerate, handleReset };
 }
+

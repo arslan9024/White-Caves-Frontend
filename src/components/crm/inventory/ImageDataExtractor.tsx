@@ -426,3 +426,4 @@ const ImageDataExtractor = ({
 };
 
 export default ImageDataExtractor;
+

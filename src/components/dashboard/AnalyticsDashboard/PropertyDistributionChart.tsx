@@ -196,3 +196,4 @@ function PropertyDistributionChart({ data, loading = false }) {
 }
 
 export default PropertyDistributionChart;
+

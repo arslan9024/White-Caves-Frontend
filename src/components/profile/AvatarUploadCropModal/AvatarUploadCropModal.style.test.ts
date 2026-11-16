@@ -8,3 +8,4 @@ describe('AvatarUploadCropModal.style', () => {
     expect(styles.CropPreviewArea).toBeDefined();
   });
 });
+

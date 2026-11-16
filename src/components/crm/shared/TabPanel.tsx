@@ -70,3 +70,4 @@ export const TabContent = memo(({ tabId, children }: TabContentProps) => {
 TabPanel.displayName = 'TabPanel';
 TabContent.displayName = 'TabContent';
 export default TabPanel;
+

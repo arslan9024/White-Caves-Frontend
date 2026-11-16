@@ -92,3 +92,4 @@ export const SPAComplianceWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

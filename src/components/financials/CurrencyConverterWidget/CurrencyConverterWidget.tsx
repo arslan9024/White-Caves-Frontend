@@ -44,3 +44,4 @@ export const CurrencyConverterWidget: FC = () => {
   );
 };
 export default CurrencyConverterWidget;
+

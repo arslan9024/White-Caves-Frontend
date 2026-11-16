@@ -23,3 +23,4 @@ describe('AuthModalProvider Component', () => {
     expect(screen.getByTestId('status').textContent).toBe('closed');
   });
 });
+

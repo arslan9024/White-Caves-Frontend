@@ -117,3 +117,4 @@ export const PwaInstallAppBanner: FC = () => {
 };
 
 export default PwaInstallAppBanner;
+

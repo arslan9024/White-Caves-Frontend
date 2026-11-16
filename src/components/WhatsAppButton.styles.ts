@@ -60,3 +60,4 @@ export const WhatsAppIcon = styled.svg`
     height: 28px;
   }
 `;
+

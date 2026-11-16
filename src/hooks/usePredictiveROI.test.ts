@@ -16,3 +16,4 @@ describe('usePredictiveROI Hook', () => {
     expect(result.current.projectedAppreciation3Yr).toBe(24.0);
   });
 });
+

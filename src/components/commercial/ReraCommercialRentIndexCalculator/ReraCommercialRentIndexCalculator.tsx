@@ -250,3 +250,4 @@ export const ReraCommercialRentIndexCalculator: FC = () => {
 };
 
 export default ReraCommercialRentIndexCalculator;
+

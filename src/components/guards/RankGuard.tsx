@@ -36,3 +36,4 @@ export default function RankGuard({ minRank, children, fallback }: RankGuardProp
 
   return <>{children}</>;
 }
+

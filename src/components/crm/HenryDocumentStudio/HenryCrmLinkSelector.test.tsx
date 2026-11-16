@@ -62,3 +62,4 @@ describe('authorized CRM selection', () => {
     expect(screen.getByText('Load authorized properties')).not.toBeDisabled();
   });
 });
+

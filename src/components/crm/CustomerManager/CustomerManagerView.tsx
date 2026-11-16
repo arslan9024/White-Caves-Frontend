@@ -234,3 +234,4 @@ export const CustomerManagerView: FC<CustomerManagerViewProps> = ({
     </CustomerContainer>
   );
 };
+

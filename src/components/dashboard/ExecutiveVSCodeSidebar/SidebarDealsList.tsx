@@ -205,3 +205,4 @@ export const SidebarDealsList: FC<SidebarDealsListProps> = ({
 };
 
 export default SidebarDealsList;
+

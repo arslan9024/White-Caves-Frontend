@@ -17,3 +17,4 @@ describe('TechnologyView Component', () => {
     }
   });
 });
+

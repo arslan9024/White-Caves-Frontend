@@ -314,3 +314,4 @@ export const getRolesByCategory = (category: RoleDefinition['category']): RoleDe
 };
 
 export default REAL_ESTATE_ROLES;
+

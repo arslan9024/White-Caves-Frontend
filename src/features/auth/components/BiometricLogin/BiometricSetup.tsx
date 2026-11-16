@@ -178,3 +178,4 @@ const BiometricSetup = () => {
 };
 
 export default BiometricSetup;
+

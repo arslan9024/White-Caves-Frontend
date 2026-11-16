@@ -91,3 +91,4 @@ describe('NotificationsPage', () => {
     expect(screen.getByText('Commission Paid')).toBeDefined();
   });
 });
+

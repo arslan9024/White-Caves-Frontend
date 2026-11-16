@@ -13,3 +13,4 @@ describe('PropertyStatusBadge', () => {
     expect(screen.getByText('SOLD & TRANSFERRED')).toBeDefined();
   });
 });
+

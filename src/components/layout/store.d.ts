@@ -23,3 +23,4 @@ declare module '../../store/navigationSlice' {
   export const setTheme: (theme: string) => PayloadAction<string>;
   export default navigationSlice;
 }
+

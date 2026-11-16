@@ -27,3 +27,4 @@ export interface ContactRowItemData {
   activeContactId: string | null;
   onSelect: (id: string) => void;
 }
+

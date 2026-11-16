@@ -5,3 +5,4 @@
 export const ANIMATED_HEADLINE_DATA = {
   defaultTitle: 'Dubai Luxury Real Estate. Sovereign Precision.',
 };
+

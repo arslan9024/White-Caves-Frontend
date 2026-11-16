@@ -6,3 +6,4 @@ describe('ComplianceMixedDashboard', () => {
     expect(true).toBe(true);
   });
 });
+

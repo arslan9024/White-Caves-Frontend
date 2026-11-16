@@ -22,3 +22,4 @@ describe('i18n & RTL Module — Wave 45 (W45-001, W45-002, W45-003)', () => {
     expect(translate('non.existent.key')).toBe('non.existent.key');
   });
 });
+

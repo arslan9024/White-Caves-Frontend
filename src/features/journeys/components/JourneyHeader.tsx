@@ -123,3 +123,4 @@ export const JourneyHeader: React.FC<JourneyHeaderProps> = ({
     </div>
   );
 };
+

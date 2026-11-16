@@ -27,3 +27,4 @@ export const LeadAgingHeatmap: FC = () => (
   </Root>
 );
 export default LeadAgingHeatmap;
+

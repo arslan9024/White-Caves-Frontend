@@ -290,3 +290,4 @@ export function generateActivities(count = 50, seed = 400): GeneratedActivity[] 
     return { ...rest, id: idx + 1, timestamp: ts };
   });
 }
+

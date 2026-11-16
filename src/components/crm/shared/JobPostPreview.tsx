@@ -63,3 +63,4 @@ export const JobPostPreview: React.FC<{ formData: JobData }> = ({ formData }) =>
     </S.JobPreview>
   );
 };
+

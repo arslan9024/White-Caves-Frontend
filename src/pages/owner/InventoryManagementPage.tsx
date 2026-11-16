@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { InventoryDashboard } from '../../components/dashboard/InventoryDashboard';
 import './InventoryManagementPage.css';
 
@@ -11,3 +11,4 @@ const InventoryManagementPage = () => {
 };
 
 export default InventoryManagementPage;
+

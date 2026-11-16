@@ -15,3 +15,4 @@ export const WORKSPACE_SWITCHER_COPY: WorkspaceSwitcherCopy = {
   ariaLabel: 'Switch White Caves Workspace Portal',
   switchLabel: 'Workspace',
 };
+

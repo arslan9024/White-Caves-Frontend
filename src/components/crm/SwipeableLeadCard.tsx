@@ -101,3 +101,4 @@ export const SwipeableLeadCard: React.FC<SwipeableLeadCardProps> = ({
 };
 
 export default SwipeableLeadCard;
+

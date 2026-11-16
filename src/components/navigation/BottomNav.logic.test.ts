@@ -14,3 +14,4 @@ describe('useBottomNavLogic', () => {
     expect(result.current.isActive('/properties')).toBe(false);
   });
 });
+

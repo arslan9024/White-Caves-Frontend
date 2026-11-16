@@ -34,3 +34,4 @@ describe('MargaretPlansHub Component', () => {
     expect(screen.getByText(/Waves 01–65/i)).toBeDefined();
   });
 });
+

@@ -37,3 +37,4 @@ export const useDETLicenseMonitorLogic = () => {
     handleRenew
   };
 };
+

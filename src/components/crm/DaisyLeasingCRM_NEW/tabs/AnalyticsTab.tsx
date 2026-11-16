@@ -402,3 +402,4 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ leases, pdcCheques, inquiri
 };
 
 export default AnalyticsTab;
+

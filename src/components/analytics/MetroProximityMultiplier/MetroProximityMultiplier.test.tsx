@@ -9,3 +9,4 @@ describe('MetroProximityMultiplier Component', () => {
     expect(screen.getByTestId('metro-proximity-multiplier')).toBeInTheDocument();
   });
 });
+

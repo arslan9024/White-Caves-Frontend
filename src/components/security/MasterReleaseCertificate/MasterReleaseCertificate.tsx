@@ -45,3 +45,4 @@ export const MasterReleaseCertificate: FC = () => {
 };
 
 export default MasterReleaseCertificate;
+

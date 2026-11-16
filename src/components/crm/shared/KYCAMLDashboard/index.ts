@@ -11,3 +11,4 @@ export {
   KYCAMLDashboardView,
   KYCAMLDashboardView as KYCAMLDashboard,
 } from './KYCAMLDashboard.view';
+

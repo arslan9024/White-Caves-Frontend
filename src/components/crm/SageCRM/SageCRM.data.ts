@@ -93,3 +93,4 @@ export const statusColors: Record<string, string> = {
   under_review: '#F59E0B',
   rejected: '#EF4444',
 };
+

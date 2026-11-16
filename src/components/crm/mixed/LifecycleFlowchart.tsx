@@ -177,3 +177,4 @@ export function VerticalLifecycle({ stages = [], currentStage = 0, stageData = {
     </div>
   );
 }
+

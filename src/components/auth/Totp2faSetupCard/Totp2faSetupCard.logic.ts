@@ -27,3 +27,4 @@ export function useTotp2faSetupLogic() {
     backupCodes: BACKUP_CODES,
   };
 }
+

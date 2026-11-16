@@ -88,3 +88,4 @@ export const HenryDocumentStudioHeader: FC<HenryDocumentStudioHeaderProps> = ({
     </>
   );
 };
+

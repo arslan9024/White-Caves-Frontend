@@ -13,3 +13,4 @@ describe('commissionSplitGuard (AEG-038)', () => {
     expect(calculateCommissionSplit(100000, 85).splitPercent).toBe(70);
   });
 });
+

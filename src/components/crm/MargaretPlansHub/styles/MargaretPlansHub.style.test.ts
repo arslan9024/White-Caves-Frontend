@@ -15,3 +15,4 @@ describe('MargaretPlansHub.style', () => {
     expect(styles.ViewerOverlay).toBeDefined();
   });
 });
+

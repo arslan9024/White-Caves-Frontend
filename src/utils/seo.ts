@@ -141,3 +141,4 @@ export function applySEO(config: SEOConfig): CleanupFn {
 }
 
 export default applySEO;
+

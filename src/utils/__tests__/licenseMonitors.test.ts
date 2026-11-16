@@ -46,3 +46,4 @@ describe('Government License Expiry Monitors (licenseMonitors.ts)', () => {
     expect(hasExpiringLicenses(statuses)).toBe(true);
   });
 });
+

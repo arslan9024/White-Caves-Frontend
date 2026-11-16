@@ -285,3 +285,4 @@ GlobalToastProvider.propTypes = {
 };
 
 export default GlobalToastProvider;
+

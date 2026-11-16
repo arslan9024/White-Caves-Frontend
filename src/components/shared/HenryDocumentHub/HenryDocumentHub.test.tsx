@@ -21,3 +21,4 @@ describe('HenryDocumentHub', () => {
     expect(onClose).toHaveBeenCalled();
   });
 });
+

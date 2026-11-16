@@ -298,3 +298,4 @@ export const growthAssistants: Record<string, AIAssistant> = {
     apiEndpoints: ['/api/legal', '/api/risks', '/api/contracts'],
   },
 };
+

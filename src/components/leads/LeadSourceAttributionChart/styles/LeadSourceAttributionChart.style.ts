@@ -12,3 +12,4 @@ export const Bar = styled.div<{ $pct: number; $color: string }>`
 export const BarTrack = styled.div`flex: 1; background: #f1f5f9; border-radius: 999px; overflow: hidden;`;
 export const Count = styled.span`font-size: 0.75rem; font-weight: 600; color: #1e293b; width: 32px; text-align: right;`;
 export const Pct = styled.span`font-size: 0.75rem; color: #94a3b8; width: 36px;`;
+

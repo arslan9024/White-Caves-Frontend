@@ -96,3 +96,4 @@ export const LindaBreadcrumbBar = memo(
 );
 
 LindaBreadcrumbBar.displayName = 'LindaBreadcrumbBar';
+

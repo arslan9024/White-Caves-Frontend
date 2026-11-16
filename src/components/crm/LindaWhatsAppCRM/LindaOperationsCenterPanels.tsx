@@ -221,3 +221,4 @@ export const LindaQuickActionsAndTerminal: React.FC<QuickActionsAndTerminalProps
     </div>
   );
 });
+

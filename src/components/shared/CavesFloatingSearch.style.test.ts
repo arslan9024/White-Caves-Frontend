@@ -7,3 +7,4 @@ describe('CavesFloatingSearch.style definitions', () => {
     expect(styles.FloatingPillButton).toBeDefined();
   });
 });
+

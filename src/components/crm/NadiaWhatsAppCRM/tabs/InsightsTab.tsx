@@ -84,3 +84,4 @@ export const InsightsTab: React.FC<InsightsTabProps> = ({ data }) => {
     </div>
   );
 };
+

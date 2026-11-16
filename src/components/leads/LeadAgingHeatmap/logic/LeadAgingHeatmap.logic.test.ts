@@ -21,3 +21,4 @@ describe('LeadAgingHeatmap.logic', () => {
     expect(AGING_LEADS[0].name).toBe('Ahmed Al Mansouri');
   });
 });
+

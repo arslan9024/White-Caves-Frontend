@@ -18,3 +18,4 @@ describe('FinanceMetrics Component', () => {
     expect(screen.getByText('AED 500,000')).toBeDefined();
   });
 });
+

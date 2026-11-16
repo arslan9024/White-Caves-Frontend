@@ -36,3 +36,4 @@ describe('BinaryThemeSwitcher.logic', () => {
     expect(onToggle).toHaveBeenCalledWith('light');
   });
 });
+

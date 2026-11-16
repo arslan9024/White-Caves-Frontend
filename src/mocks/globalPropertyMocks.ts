@@ -115,3 +115,4 @@ export const GLOBAL_PROPERTY_MOCKS: GlobalPropertyMock[] = [
   { id: "PROP-99", title: "Luxury Villa 99", location: "DAMAC Hills 2", price: 2990000, beds: 4, baths: 5, sqft: 3500 },
   { id: "PROP-100", title: "Luxury Villa 100", location: "DAMAC Hills 2", price: 3000000, beds: 4, baths: 5, sqft: 3500 },
 ];
+

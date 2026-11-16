@@ -49,3 +49,4 @@ export const AuthNavTabs = memo(function AuthNavTabs({
 });
 
 export default AuthNavTabs;
+

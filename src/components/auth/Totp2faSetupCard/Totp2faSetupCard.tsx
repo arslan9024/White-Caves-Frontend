@@ -75,3 +75,4 @@ export const Totp2faSetupCard: FC = () => {
 };
 
 export default Totp2faSetupCard;
+

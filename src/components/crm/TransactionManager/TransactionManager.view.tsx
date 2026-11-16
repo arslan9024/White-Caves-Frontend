@@ -414,3 +414,4 @@ export const TransactionManagerView: React.FC = () => {
 };
 
 export default TransactionManagerView;
+

@@ -16,3 +16,4 @@ describe('SmoothAccordion Component', () => {
     expect(screen.getByText(/Under UAE Cabinet Resolution No. 65 of 2022/i)).toBeDefined();
   });
 });
+

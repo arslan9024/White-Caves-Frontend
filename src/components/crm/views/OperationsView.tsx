@@ -172,3 +172,4 @@ export default function OperationsView({
 
   return <div className="view-container operations-view">{renderContent()}</div>;
 }
+

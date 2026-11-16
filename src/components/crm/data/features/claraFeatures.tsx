@@ -110,3 +110,4 @@ export const CLARA_FEATURES: AssistantFeatureItem[] = [
     icon: <AlertCircle size={18} />,
   },
 ];
+

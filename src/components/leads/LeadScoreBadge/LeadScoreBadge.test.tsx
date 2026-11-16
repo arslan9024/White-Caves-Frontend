@@ -13,3 +13,4 @@ describe('LeadScoreBadge', () => {
     expect(screen.getByText('D')).toBeTruthy();
   });
 });
+

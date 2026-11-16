@@ -11,3 +11,4 @@ describe('DummyButton', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Click me')
   })
 })
+

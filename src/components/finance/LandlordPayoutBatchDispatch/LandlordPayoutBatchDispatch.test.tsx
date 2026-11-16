@@ -12,3 +12,4 @@ describe('LandlordPayoutBatchDispatch Component', () => {
     expect(screen.getByText(/Elena Rostova/i)).toBeDefined();
   });
 });
+

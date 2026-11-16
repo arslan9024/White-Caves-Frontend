@@ -32,3 +32,4 @@ const PageMeta: FC<PageMetaProps> = ({
 };
 
 export default PageMeta;
+

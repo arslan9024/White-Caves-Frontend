@@ -81,3 +81,4 @@ export const ContactRow = React.memo(
 );
 
 ContactRow.displayName = 'ContactRow';
+

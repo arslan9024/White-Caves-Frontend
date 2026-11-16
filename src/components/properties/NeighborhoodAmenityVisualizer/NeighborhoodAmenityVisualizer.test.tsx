@@ -14,3 +14,4 @@ describe('NeighborhoodAmenityVisualizer', () => {
     expect(screen.getByText('12 Mins')).toBeDefined();
   });
 });
+

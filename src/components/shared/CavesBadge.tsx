@@ -73,3 +73,4 @@ export const CavesBadge: React.FC<CavesBadgeProps> = ({ status = 'Active', child
 };
 
 export default CavesBadge;
+

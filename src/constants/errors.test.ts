@@ -278,3 +278,4 @@ describe('getHttpErrorMessage', () => {
     expect(getHttpErrorMessage(42)).toBe(ERROR_MESSAGES.SERVER_ERROR);
   });
 });
+

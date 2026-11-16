@@ -78,3 +78,4 @@ describe('API base URL normalization regression', () => {
     expect(url).toBe('http://localhost:3001/api/whatsapp/accounts');
   });
 });
+

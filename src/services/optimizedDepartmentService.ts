@@ -238,3 +238,4 @@ import { departmentService } from './departmentService';
 export const optimizedDepartmentService = new OptimizedDepartmentService(
   departmentService
 );
+

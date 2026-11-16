@@ -211,3 +211,4 @@ export const CustomerRegistrationDrawer: FC<CustomerRegistrationDrawerProps> = (
   );
 };
 export default CustomerRegistrationDrawer;
+

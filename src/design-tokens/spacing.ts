@@ -37,3 +37,4 @@ export const spacingPresets = {
   buttonPadding: `${spacing[2]} ${spacing[4]}`, // 8px 16px
   inputPadding: `${spacing[2]} ${spacing[3]}`, // 8px 12px
 };
+

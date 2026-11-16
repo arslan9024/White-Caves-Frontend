@@ -91,3 +91,4 @@ export async function removeFavorite(propertyId: string): Promise<void> {
   const json = await res.json();
   if (!json.success) throw new Error(json.error || 'Failed to remove favorite');
 }
+

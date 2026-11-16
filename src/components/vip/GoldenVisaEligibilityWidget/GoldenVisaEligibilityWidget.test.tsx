@@ -18,3 +18,4 @@ describe('GoldenVisaEligibilityWidget Component', () => {
     expect(screen.getByText(/ELIGIBLE FOR GOLDEN VISA/i)).toBeDefined();
   });
 });
+

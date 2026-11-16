@@ -6,3 +6,4 @@ describe('StatsBar', () => {
     expect(true).toBe(true);
   });
 });
+

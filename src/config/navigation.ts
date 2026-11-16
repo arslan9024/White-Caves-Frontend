@@ -122,3 +122,4 @@ export function getQuickActionsForRole(role: string): readonly QuickAction[] {
     path: normalizeRolePath(action.path, role),
   }));
 }
+

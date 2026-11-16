@@ -9,3 +9,4 @@ describe('AppointmentScheduler Component', () => {
     expect(screen.getByText('Schedule Viewing')).toBeDefined();
   });
 });
+

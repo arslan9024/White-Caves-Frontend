@@ -6,3 +6,4 @@ describe('useMediaGallery (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

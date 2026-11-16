@@ -22,3 +22,4 @@ describe('usePannellumVRViewerLogic Hook', () => {
     expect(result.current.isVirtualStagingActive).toBe(false);
   });
 });
+

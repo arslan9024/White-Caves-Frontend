@@ -17,3 +17,4 @@ describe('PortalSidebarContainer Component', () => {
     }
   });
 });
+

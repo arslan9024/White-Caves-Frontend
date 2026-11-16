@@ -9,3 +9,4 @@ describe('AuditTrailPanel Component', () => {
     expect(container).toBeDefined();
   });
 });
+

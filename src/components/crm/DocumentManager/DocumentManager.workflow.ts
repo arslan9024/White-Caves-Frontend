@@ -80,3 +80,4 @@ export function validateDocumentExpiration(doc: DocumentItem): {
     daysRemaining: diffDays,
   };
 }
+

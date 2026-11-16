@@ -86,3 +86,4 @@ export const CavesSlider: React.FC<CavesSliderProps> = ({
 };
 
 export default CavesSlider;
+

@@ -80,3 +80,4 @@ export function useContractGeneratorLogic(offerId?: string) {
     updateCustomization,
   };
 }
+

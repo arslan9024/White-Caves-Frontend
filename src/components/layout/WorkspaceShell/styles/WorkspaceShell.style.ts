@@ -50,3 +50,4 @@ export const RedWhiteSkeletonCard = styled.div<{ $height?: string; $isDark: bool
   animation: ${shimmerRedWhite} 1.8s infinite linear;
   box-shadow: 0 4px 16px rgba(239, 68, 68, 0.05);
 `;
+

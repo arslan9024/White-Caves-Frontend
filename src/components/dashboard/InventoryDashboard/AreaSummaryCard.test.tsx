@@ -17,3 +17,4 @@ describe('AreaSummaryCard Component', () => {
     }
   });
 });
+

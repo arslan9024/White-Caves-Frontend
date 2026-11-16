@@ -268,3 +268,4 @@ export const propertyKPIConfigs: DepartmentKPIConfig[] = [
     format: v => `₹${(toNumber(v) / 100000).toFixed(1)}L`,
   },
 ];
+

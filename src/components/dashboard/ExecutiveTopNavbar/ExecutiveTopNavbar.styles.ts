@@ -253,3 +253,4 @@ export const DropdownItem = styled.button<{ $isDanger?: boolean }>`
     color: ${({ $isDanger }) => ($isDanger ? '#F87171' : '#FFFFFF')};
   }
 `;
+

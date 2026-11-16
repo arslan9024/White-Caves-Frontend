@@ -18,3 +18,4 @@ describe('ActiveLoginSessionsCard Component', () => {
     expect(screen.getByText(/MacBook Pro 16" \(Sonoma\)/i)).toBeDefined();
   });
 });
+

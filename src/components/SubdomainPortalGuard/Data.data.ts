@@ -17,3 +17,4 @@ export const PORTAL_GUARD_COPY = {
   signInButton: 'Sign In to Continue',
   unauthorizedTitle: 'Redirecting to Authorized Portal...',
 };
+

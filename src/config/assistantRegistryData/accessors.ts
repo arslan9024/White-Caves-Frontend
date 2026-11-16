@@ -66,3 +66,4 @@ export const getDataFlowsForAssistant = (assistantId: AssistantId): AssistantDat
     outputs: assistant.dataFlows.outputs || [],
   };
 };
+

@@ -110,3 +110,4 @@ describe('GlobalEntityCommandPalette Component', () => {
     expect(handleClose).toHaveBeenCalledTimes(1);
   });
 });
+

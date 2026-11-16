@@ -49,3 +49,4 @@ export interface AuditReportViewerProps {
   onDownload?: () => void;
   onExport?: () => void;
 }
+

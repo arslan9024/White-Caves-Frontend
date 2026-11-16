@@ -71,3 +71,4 @@ export const RegisteredBotsList: React.FC<RegisteredBotsListProps> = ({
     </div>
   );
 };
+

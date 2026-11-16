@@ -8,3 +8,4 @@ describe('InteractiveMapDrawer.data', () => {
     expect(MAP_DRAWER_TEXT.drawerTitle).toBe('Property Quick View');
   });
 });
+

@@ -16,3 +16,4 @@ export function useCareerMilestoneTimelineLogic() {
     milestones: MILESTONES,
   };
 }
+

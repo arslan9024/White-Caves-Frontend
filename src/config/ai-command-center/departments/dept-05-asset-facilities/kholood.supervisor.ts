@@ -53,3 +53,4 @@ export const KHOLOOD_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as kholood_supervisorExport;
+

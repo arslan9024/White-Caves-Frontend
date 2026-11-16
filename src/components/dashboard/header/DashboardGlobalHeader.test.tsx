@@ -26,3 +26,4 @@ describe('DashboardGlobalHeader', () => {
     expect(screen.getByText('White Caves HQ')).toBeInTheDocument();
   });
 });
+

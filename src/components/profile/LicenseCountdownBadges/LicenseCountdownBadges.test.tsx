@@ -15,3 +15,4 @@ describe('LicenseCountdownBadges Component', () => {
     expect(screen.getByText(/#44483/i)).toBeDefined();
   });
 });
+

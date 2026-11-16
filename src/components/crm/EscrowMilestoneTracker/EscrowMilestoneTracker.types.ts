@@ -41,3 +41,4 @@ export interface EscrowMilestoneTrackerProps {
   onDisburseRequest?: (milestoneId: string, amountAED: number) => void;
   onAuditVerification?: (milestoneId: string) => void;
 }
+

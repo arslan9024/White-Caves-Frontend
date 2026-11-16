@@ -285,3 +285,4 @@ export const isOwnerOnlyFeature = (featureName: string): boolean => {
 };
 
 export default BUSINESS_MODEL_CONFIG;
+

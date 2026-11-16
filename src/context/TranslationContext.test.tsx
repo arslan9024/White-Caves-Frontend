@@ -38,3 +38,4 @@ describe('TranslationContext Component', () => {
     expect(screen.getByTestId('title')).toHaveTextContent('إعادة تعريف العقارات الفاخرة في دبي');
   });
 });
+

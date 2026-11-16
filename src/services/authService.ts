@@ -484,3 +484,4 @@ export async function logout(): Promise<void> {
   clearToken();
   safeStorage.remove('userRole');
 }
+

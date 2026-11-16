@@ -108,3 +108,4 @@ export const FounderVipSummaryCard: FC = () => {
 };
 
 export default FounderVipSummaryCard;
+

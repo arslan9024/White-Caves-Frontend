@@ -84,3 +84,4 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 };
 
 export default AnalyticsView;
+

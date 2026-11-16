@@ -45,3 +45,4 @@ export const AIAssistantDashboardView: React.FC<AIAssistantDashboardProps> = ({ 
     </DashboardContainer>
   );
 };
+

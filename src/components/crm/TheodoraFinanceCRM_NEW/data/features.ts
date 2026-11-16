@@ -16,3 +16,4 @@ export const FINANCE_FEATURES: string[] = [
   'Expense categorization',
   'Report generation and export'
 ];
+

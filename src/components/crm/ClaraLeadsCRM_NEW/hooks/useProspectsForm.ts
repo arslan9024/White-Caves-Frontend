@@ -126,3 +126,4 @@ export const STAGE_OPTIONS = [
   'closed_won',
   'closed_lost',
 ] as const;
+

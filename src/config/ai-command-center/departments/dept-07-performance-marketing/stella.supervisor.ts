@@ -53,3 +53,4 @@ export const STELLA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as stella_supervisorExport;
+

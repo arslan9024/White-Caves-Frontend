@@ -317,3 +317,4 @@ const TaskLifecyclePanel = memo(({ task, color = '#0EA5E9', defaultExpanded = fa
 
 TaskLifecyclePanel.displayName = 'TaskLifecyclePanel';
 export default TaskLifecyclePanel;
+

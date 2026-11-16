@@ -152,3 +152,4 @@ export function NotificationDrawer({ onClose }: NotificationDrawerProps) {
     </>
   );
 }
+

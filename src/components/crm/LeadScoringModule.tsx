@@ -225,3 +225,4 @@ export default function LeadScoringModule({ role, user, data }: CRMModuleProps) 
     </div>
   );
 }
+

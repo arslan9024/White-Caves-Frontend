@@ -77,3 +77,4 @@ export function translate(keyPath: string, lang: SupportedLanguage = activeLangu
 
   return typeof current === 'string' ? current : keyPath;
 }
+

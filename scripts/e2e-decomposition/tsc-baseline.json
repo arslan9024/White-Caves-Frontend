@@ -1,0 +1,1160 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-11-15T17:09:46Z",
+  "totalErrors": 1541,
+  "uniqueFiles": 146,
+  "fileCounts": {
+    "src/components/CreateTenancyAgreement.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/AgentListingForm/steps/ListingSpecsStep.tsx": {
+      "count": 2,
+      "codes": [
+        "TS2304"
+      ]
+    },
+    "src/components/crm/AiAssistantManager/AiAssistantDetailDossier.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/ApexCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/ArcherCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/ContextualDashboardRenderer.tsx": {
+      "count": 5,
+      "codes": [
+        "TS7053"
+      ]
+    },
+    "src/components/crm/CRMDocumentViewer.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/DaisyLeasingCRM_NEW/tabs/RenewalCardItem.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/DataTable.tsx": {
+      "count": 7,
+      "codes": [
+        "TS2339",
+        "TS2538",
+        "TS7006"
+      ]
+    },
+    "src/components/crm/DynamicAssistantCRM.tsx": {
+      "count": 16,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/EmployeeManager/EmployeeCardItem.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2305",
+        "TS7006"
+      ]
+    },
+    "src/components/crm/EmployeeManager/EmployeeManagerView.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/FeatureRenderer.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2307",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/FlowchartViewer.tsx": {
+      "count": 15,
+      "codes": [
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/FluxCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/HaloCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/HazelFrontendCRM/HazelFrontendCRM.view.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2739"
+      ]
+    },
+    "src/components/crm/HenryAuditCRM.tsx": {
+      "count": 2,
+      "codes": [
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/HeroSectionCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS7053"
+      ]
+    },
+    "src/components/crm/HunterProspectingCRM.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/crm/inventory/ContactStatusBadge.tsx": {
+      "count": 4,
+      "codes": [
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/inventory/OwnerFollowUpList.tsx": {
+      "count": 58,
+      "codes": [
+        "TS2339",
+        "TS2362",
+        "TS2363",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/inventory/WebDataHarvester.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2367"
+      ]
+    },
+    "src/components/crm/IrisCRM.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2322",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/JunoCommunity.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/crm/KairosLuxuryCRM.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2345",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/LailaComplianceCRM.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2339",
+        "TS2739"
+      ]
+    },
+    "src/components/crm/LindaWhatsAppCRM/LindaLeadContextPane.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/LindaWhatsAppCRM/LindaLiveWhatsAppWeb.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/LindaWhatsAppCRM/lindaSocketSync.ts": {
+      "count": 7,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/LindaWhatsAppCRM/useLindaOperationsCenter.ts": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/LumenCRM.tsx": {
+      "count": 12,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS2345",
+        "TS2362",
+        "TS2532",
+        "TS2551"
+      ]
+    },
+    "src/components/crm/MavenInvestmentCRM.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/AdminMixedDashboard.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2322",
+        "TS2741"
+      ]
+    },
+    "src/components/crm/mixed/AIQuickActions.tsx": {
+      "count": 13,
+      "codes": [
+        "TS2339",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/mixed/AnalyticsMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/AnimatedStatsBar.tsx": {
+      "count": 28,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/ComplianceMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/ExecutiveMixedDashboard.tsx": {
+      "count": 6,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/FinanceMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/LeasingMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/LifecycleFlowchart.tsx": {
+      "count": 16,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/LiveActivityFeed.tsx": {
+      "count": 20,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/mixed/MarketingMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/MixedDashboard.tsx": {
+      "count": 19,
+      "codes": [
+        "TS2322",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/OperationsMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/PropertiesMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/SalesMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/mixed/ServicesMixedDashboard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS2322",
+        "TS2741",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/NinaWhatsAppBotCRM/NinaWhatsAppBotCRM.view.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/OracleCRM.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2322",
+        "TS7053"
+      ]
+    },
+    "src/components/crm/RexCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/crm/SentinelPropertyCRM.tsx": {
+      "count": 4,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/shared/AssistantDocsTab.tsx": {
+      "count": 15,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/crm/shared/DealJourneyTimeline.tsx": {
+      "count": 20,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/shared/DemoDataPanel.tsx": {
+      "count": 8,
+      "codes": [
+        "TS18046",
+        "TS2339",
+        "TS2345",
+        "TS2353",
+        "TS2571"
+      ]
+    },
+    "src/components/crm/shared/JobPostComposer.tsx": {
+      "count": 2,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/crm/SophiaSalesCRM.tsx": {
+      "count": 2,
+      "codes": [
+        "TS2345",
+        "TS2739"
+      ]
+    },
+    "src/components/crm/StatsBar.tsx": {
+      "count": 2,
+      "codes": [
+        "TS18048"
+      ]
+    },
+    "src/components/crm/tabs/ServicesCRMTab.tsx": {
+      "count": 2,
+      "codes": [
+        "TS7053"
+      ]
+    },
+    "src/components/crm/TaskManager/TaskEditDrawer.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2345"
+      ]
+    },
+    "src/components/crm/WillowBackendCRM.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2739"
+      ]
+    },
+    "src/components/dashboard/AnalyticsDashboard/AnalyticsDashboard.tsx": {
+      "count": 30,
+      "codes": [
+        "TS18046",
+        "TS2322",
+        "TS2339",
+        "TS2345"
+      ]
+    },
+    "src/components/dashboard/AnalyticsDashboard/MetricCard.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/dashboard/AnalyticsDashboard/OccupancyChart.tsx": {
+      "count": 6,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/AnalyticsDashboard/PricingAnalyticsChart.tsx": {
+      "count": 14,
+      "codes": [
+        "TS2739",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/AnalyticsDashboard/PropertyDistributionChart.tsx": {
+      "count": 18,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/AreaSummaryCard.tsx": {
+      "count": 10,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/FilterPanel.tsx": {
+      "count": 12,
+      "codes": [
+        "TS2554",
+        "TS7006"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/filters/AreaFilter.tsx": {
+      "count": 7,
+      "codes": [
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/filters/FurnishingFilter.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/filters/PriceRangeFilter.tsx": {
+      "count": 6,
+      "codes": [
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/filters/StatusFilter.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/filters/TypeFilter.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/PropertyCard.tsx": {
+      "count": 8,
+      "codes": [
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/dashboard/InventoryDashboard/PropertyListItem.tsx": {
+      "count": 10,
+      "codes": [
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/dashboard/MainGridView/MainGridView.tsx": {
+      "count": 7,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7031"
+      ]
+    },
+    "src/components/DealTimeline.tsx": {
+      "count": 24,
+      "codes": [
+        "TS2345",
+        "TS2362",
+        "TS2363",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ESignatureFlow.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/ExampleErrorHandling.tsx": {
+      "count": 10,
+      "codes": [
+        "TS18046",
+        "TS2307",
+        "TS2322",
+        "TS2339",
+        "TS2345",
+        "TS7006"
+      ]
+    },
+    "src/components/JobApplicants.tsx": {
+      "count": 41,
+      "codes": [
+        "TS2339",
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/layout/AppLayout/AppLayout.tsx": {
+      "count": 11,
+      "codes": [
+        "TS18046",
+        "TS2322",
+        "TS2353",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/AppShell.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2307",
+        "TS2353",
+        "TS7006"
+      ]
+    },
+    "src/components/layout/AssistantHubSidebar/AssistantHubSidebar.tsx": {
+      "count": 27,
+      "codes": [
+        "TS18046",
+        "TS2353",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/layout/DashboardShell.tsx": {
+      "count": 11,
+      "codes": [
+        "TS18046",
+        "TS2307",
+        "TS2339",
+        "TS2353",
+        "TS2739",
+        "TS7006"
+      ]
+    },
+    "src/components/layout/DashboardTopNav/DashboardTopNav.tsx": {
+      "count": 5,
+      "codes": [
+        "TS2339",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/DashboardWorkspace.tsx": {
+      "count": 33,
+      "codes": [
+        "TS2339",
+        "TS2353",
+        "TS2741",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/DashboardWorkspace/DynamicContentRouter.styles.ts": {
+      "count": 18,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/layout/FourPanelLayout/CentralPane.tsx": {
+      "count": 6,
+      "codes": [
+        "TS18046",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/FourPanelLayout/DarkModeToggle.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2307",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/FourPanelLayout/FourPanelLayout.tsx": {
+      "count": 5,
+      "codes": [
+        "TS18046",
+        "TS2322",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/FourPanelLayout/LeftSidebar.tsx": {
+      "count": 12,
+      "codes": [
+        "TS18046",
+        "TS2322",
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/layout/FourPanelLayout/TopNavigation.tsx": {
+      "count": 7,
+      "codes": [
+        "TS18046",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/layout/RightAssistantPanel/RightAssistantPanel.tsx": {
+      "count": 21,
+      "codes": [
+        "TS2353",
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/layout/RolePageLayout.tsx": {
+      "count": 4,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/layout/TopCommandBar.tsx": {
+      "count": 6,
+      "codes": [
+        "TS2339",
+        "TS7006"
+      ]
+    },
+    "src/components/layout/UniversalProfile.tsx": {
+      "count": 10,
+      "codes": [
+        "TS18046",
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7053"
+      ]
+    },
+    "src/components/LindaMaryPropertyWidget.tsx": {
+      "count": 22,
+      "codes": [
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/MaryImport/ColumnMappingEditor.tsx": {
+      "count": 13,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/MaryImport/DuplicateResolutionPanel.tsx": {
+      "count": 39,
+      "codes": [
+        "TS18047",
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/MaryImport/PreviewGridWithFilters.tsx": {
+      "count": 16,
+      "codes": [
+        "TS2339",
+        "TS2538",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/MaryImport/StatusMappingPreview.tsx": {
+      "count": 22,
+      "codes": [
+        "TS2322",
+        "TS2345",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/modules/finance/VATDashboard.tsx": {
+      "count": 22,
+      "codes": [
+        "TS2339",
+        "TS2345",
+        "TS2554",
+        "TS2739",
+        "TS2741",
+        "TS7031"
+      ]
+    },
+    "src/components/OfferApprovalPage.tsx": {
+      "count": 9,
+      "codes": [
+        "TS2322",
+        "TS2345",
+        "TS7031"
+      ]
+    },
+    "src/components/owner/tabs/SettingsTab.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2322"
+      ]
+    },
+    "src/components/PassportUpload.tsx": {
+      "count": 6,
+      "codes": [
+        "TS2307",
+        "TS2769",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/PerformanceTracker.tsx": {
+      "count": 7,
+      "codes": [
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/plans/AIModelSelector.tsx": {
+      "count": 14,
+      "codes": [
+        "TS2339",
+        "TS2349",
+        "TS2353",
+        "TS7006"
+      ]
+    },
+    "src/components/ProfileCompletion.tsx": {
+      "count": 7,
+      "codes": [
+        "TS18046",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/ServiceTracker.tsx": {
+      "count": 22,
+      "codes": [
+        "TS2307",
+        "TS2322",
+        "TS2339",
+        "TS2345",
+        "TS2365",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/shared/CavesFloatingSearch.tsx": {
+      "count": 1,
+      "codes": [
+        "TS2769"
+      ]
+    },
+    "src/components/shared/FlowDiagram/FlowDiagram.tsx": {
+      "count": 12,
+      "codes": [
+        "TS2339",
+        "TS2349",
+        "TS2353",
+        "TS7006"
+      ]
+    },
+    "src/components/shared/StageCard/StageCard.tsx": {
+      "count": 11,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS2349",
+        "TS7031"
+      ]
+    },
+    "src/components/shared/Timeline/Timeline.tsx": {
+      "count": 12,
+      "codes": [
+        "TS2339",
+        "TS2349",
+        "TS7006"
+      ]
+    },
+    "src/components/SignatureCollection.tsx": {
+      "count": 17,
+      "codes": [
+        "TS18046",
+        "TS18047",
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/sourcing/WhatsAppSetup.tsx": {
+      "count": 10,
+      "codes": [
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/TenancyForms/ContactDetailsForm.tsx": {
+      "count": 25,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/TenancyForms/LandlordForm.tsx": {
+      "count": 37,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/TenancyForms/PropertyInfoForm.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/TenancyForms/TenancyTermsForm.tsx": {
+      "count": 33,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/TenancyForms/TenantForm.tsx": {
+      "count": 39,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/AlertBanner.tsx": {
+      "count": 5,
+      "codes": [
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/Button/Button.tsx": {
+      "count": 1,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/ui/Card/Card.tsx": {
+      "count": 1,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/components/ui/Chart.tsx": {
+      "count": 6,
+      "codes": [
+        "TS7053"
+      ]
+    },
+    "src/components/ui/DataTable.tsx": {
+      "count": 25,
+      "codes": [
+        "TS18047",
+        "TS2339",
+        "TS2353",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/ui/GlobalToastProvider.tsx": {
+      "count": 40,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS2345",
+        "TS2698",
+        "TS2769",
+        "TS7005",
+        "TS7006",
+        "TS7031",
+        "TS7034",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/KPICard.tsx": {
+      "count": 11,
+      "codes": [
+        "TS2322",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/LoadingSpinner.tsx": {
+      "count": 6,
+      "codes": [
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/Modal.tsx": {
+      "count": 13,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/StatusBadge.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/ui/Timeline.tsx": {
+      "count": 15,
+      "codes": [
+        "TS2339",
+        "TS7053"
+      ]
+    },
+    "src/components/ViewingCalendar.tsx": {
+      "count": 29,
+      "codes": [
+        "TS2339",
+        "TS2345",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/ViewingFeedback.tsx": {
+      "count": 10,
+      "codes": [
+        "TS2339",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/WhatsAppLeadsDashboard.tsx": {
+      "count": 54,
+      "codes": [
+        "TS2339",
+        "TS2362",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/workspace/contexts/ActiveViewContext.tsx": {
+      "count": 3,
+      "codes": [
+        "TS2322",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/components/workspace/contexts/AuthContext.tsx": {
+      "count": 10,
+      "codes": [
+        "TS2322",
+        "TS7006",
+        "TS7031",
+        "TS7053"
+      ]
+    },
+    "src/components/workspace/DepartmentViews.tsx": {
+      "count": 43,
+      "codes": [
+        "TS2353",
+        "TS2739",
+        "TS2741",
+        "TS7031"
+      ]
+    },
+    "src/components/workspace/Login.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2349",
+        "TS7006"
+      ]
+    },
+    "src/components/workspace/MainLayout.tsx": {
+      "count": 4,
+      "codes": [
+        "TS2339"
+      ]
+    },
+    "src/components/workspace/Sidebar.tsx": {
+      "count": 10,
+      "codes": [
+        "TS2339",
+        "TS2349",
+        "TS7053"
+      ]
+    },
+    "src/components/ZoeFeatures/Overview/Overview.tsx": {
+      "count": 3,
+      "codes": [
+        "TS7031"
+      ]
+    },
+    "src/context/ProfileContext.tsx": {
+      "count": 16,
+      "codes": [
+        "TS2322",
+        "TS2339",
+        "TS2345",
+        "TS2353",
+        "TS2554",
+        "TS2698",
+        "TS7006",
+        "TS7031"
+      ]
+    },
+    "src/services/socketService.ts": {
+      "count": 2,
+      "codes": [
+        "TS2345"
+      ]
+    },
+    "src/shared/components/ui/Icon/Icon.tsx": {
+      "count": 6,
+      "codes": [
+        "TS2339",
+        "TS7053"
+      ]
+    },
+    "src/shared/components/ui/ProfilePanel.tsx": {
+      "count": 3,
+      "codes": [
+        "TS18047",
+        "TS7031"
+      ]
+    }
+  }
+}

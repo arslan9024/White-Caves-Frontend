@@ -98,3 +98,4 @@ export function useUserPreferencesDropdownLogic({ user, onClose = () => {} }: Us
     handleSelectRole,
   };
 }
+

@@ -229,3 +229,4 @@ describe('CRMHubPage — Modern Atomic ERP Dashboard', () => {
     expect(mockSetSearchParams).toHaveBeenCalled();
   });
 });
+

@@ -152,3 +152,4 @@ const OwnerDetailDrawer: React.FC<OwnerDetailDrawerProps> = ({
 };
 
 export default OwnerDetailDrawer;
+

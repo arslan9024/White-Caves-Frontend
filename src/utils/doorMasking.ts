@@ -67,3 +67,4 @@ function maskNumberString(str: string, maskChar: string): string {
   const masked = maskChar.repeat(str.length - visibleLen);
   return `${visible}${masked}`;
 }
+

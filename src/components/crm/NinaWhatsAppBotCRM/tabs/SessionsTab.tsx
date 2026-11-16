@@ -77,3 +77,4 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({ data }) => {
     </div>
   );
 };
+

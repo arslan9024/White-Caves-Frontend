@@ -14,3 +14,4 @@ export const InfoCard = styled.div`
   .value { font-size: 1.2rem; font-weight: 800; color: var(--color-1e293b, #1E293B); }
   .label { font-size: 0.75rem; color: var(--color-64748b, #64748B); margin-top: 4px; }
 `;
+

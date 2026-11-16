@@ -195,3 +195,4 @@ const UAEPassTab: React.FC<UAEPassTabProps> = ({ data, loading, onAction }) => {
 };
 
 export default React.memo(UAEPassTab);
+

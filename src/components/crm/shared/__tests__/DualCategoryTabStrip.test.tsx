@@ -188,3 +188,4 @@ describe('DualCategoryTabStrip', () => {
     expect(tab.style.getPropertyValue('--tab-active-color')).toBe('#F59E0B');
   });
 });
+

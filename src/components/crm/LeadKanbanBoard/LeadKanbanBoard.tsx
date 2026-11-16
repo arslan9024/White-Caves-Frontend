@@ -92,3 +92,4 @@ export const LeadKanbanBoard: FC = () => (
   </Wrap>
 );
 export default LeadKanbanBoard;
+

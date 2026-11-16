@@ -174,3 +174,4 @@ describe('services/apiClient', () => {
     expect(localStorage.getItem('authToken')).toBeNull();
   });
 });
+

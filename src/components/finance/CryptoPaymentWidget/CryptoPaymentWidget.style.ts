@@ -17,3 +17,4 @@ export const CoinBadge = styled.span<{ $coin: string }>`
   background: ${p => p.$coin === 'BTC' ? '#FEF3C7' : p.$coin === 'ETH' ? '#EDE9FE' : '#DCFCE7'};
   color: ${p => p.$coin === 'BTC' ? '#92400E' : p.$coin === 'ETH' ? '#5B21B6' : '#166534'};
 `;
+

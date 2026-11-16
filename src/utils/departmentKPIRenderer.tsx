@@ -114,3 +114,4 @@ export const getKPIRenderer = (departmentCode: string) => {
 };
 
 export default renderDepartmentKPIs;
+

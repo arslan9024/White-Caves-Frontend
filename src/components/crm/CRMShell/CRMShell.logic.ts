@@ -135,3 +135,4 @@ export function useCRMShellLogic(onTabChange?: (tabId: string) => void) {
     groupedAssistants,
   };
 }
+

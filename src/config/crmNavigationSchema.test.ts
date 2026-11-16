@@ -71,3 +71,4 @@ describe('crmNavigationSchema — MD workspace split', () => {
     expect(getWorkspaceForMDTab('properties')).toBe('md-company-workspace');
   });
 });
+

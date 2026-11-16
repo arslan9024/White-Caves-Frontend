@@ -61,3 +61,4 @@ it.each(['emirates_id', 'title_deed'] as const)('archives original bytes, never 
   expect(save.mock.calls[0]?.[1]?.sources).toEqual([original]);
   expect(save.mock.calls[0]?.[1]?.sources?.[0]).toBe(original);
 });
+

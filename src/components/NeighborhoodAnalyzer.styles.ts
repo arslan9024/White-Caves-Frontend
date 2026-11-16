@@ -302,3 +302,4 @@ export const ResponsiveSection = styled.div`
   padding: 2rem 5%;
   background: var(--bg-secondary);
 `;
+

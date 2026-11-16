@@ -109,3 +109,4 @@ const DealTimeline = ({
 
 export { DealTimeline, StageCard };
 export default DealTimeline;
+

@@ -48,3 +48,4 @@ export interface TheodoraFinanceCRMProps {
   activeTab?: TheodoraTab;
   onTabChange?: (tab: TheodoraTab) => void;
 }
+

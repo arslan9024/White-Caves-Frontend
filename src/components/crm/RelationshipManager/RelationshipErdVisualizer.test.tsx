@@ -50,3 +50,4 @@ describe('RelationshipErdVisualizer', () => {
     expect(screen.getAllByText(/Composition \(Cascade\)/i).length).toBeGreaterThan(0);
   });
 });
+

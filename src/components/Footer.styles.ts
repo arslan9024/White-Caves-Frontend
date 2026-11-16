@@ -320,3 +320,4 @@ export const FooterLegal = styled.div`
     }
   }
 `;
+

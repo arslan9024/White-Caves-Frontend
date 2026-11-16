@@ -124,3 +124,4 @@ export const v1DocumentsApi = {
     return fetchJson<DocumentItem>(`${BASE_URL}/documents/${encodeURIComponent(id)}`);
   },
 };
+

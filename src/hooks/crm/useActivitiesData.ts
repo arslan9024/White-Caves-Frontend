@@ -157,3 +157,4 @@ export function useActivitiesData(options: UseActivitiesOptions = {}) {
 }
 
 export default useActivitiesData;
+

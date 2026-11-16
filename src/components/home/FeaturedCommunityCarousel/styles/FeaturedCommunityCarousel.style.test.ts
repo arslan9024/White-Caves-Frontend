@@ -8,3 +8,4 @@ describe('FeaturedCommunityCarousel.style', () => {
     expect(styles.CommunityGrid).toBeDefined();
   });
 });
+

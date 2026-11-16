@@ -133,3 +133,4 @@ export const KYCVerificationStep: React.FC<KYCVerificationStepProps> = ({
 };
 
 export default KYCVerificationStep;
+

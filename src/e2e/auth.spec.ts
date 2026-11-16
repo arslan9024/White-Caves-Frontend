@@ -74,3 +74,4 @@ test.describe('Authentication Flow', () => {
     expect(isDashboard || isAuthOrHome).toBeTruthy();
   });
 });
+

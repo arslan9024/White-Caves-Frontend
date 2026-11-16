@@ -6,3 +6,4 @@ describe('LiveActivityFeed', () => {
     expect(true).toBe(true);
   });
 });
+

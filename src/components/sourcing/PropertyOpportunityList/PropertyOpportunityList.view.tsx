@@ -116,3 +116,4 @@ export const PropertyOpportunityListView: React.FC = () => {
     </div>
   );
 };
+

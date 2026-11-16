@@ -30,3 +30,4 @@ const uiSlice = createSlice({
 
 export const { setUnreadNotifications, clearNotifications, toggleSidebar } = uiSlice.actions;
 export default uiSlice.reducer;
+

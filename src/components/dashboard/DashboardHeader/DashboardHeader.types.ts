@@ -35,3 +35,4 @@ export interface DashboardHeaderProps {
   user?: DashboardUser | null;
   onLogout?: () => void;
 }
+

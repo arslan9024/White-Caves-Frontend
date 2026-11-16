@@ -11,3 +11,4 @@ describe('LeadMetrics Component', () => {
     expect(screen.getByText('1240')).toBeDefined();
   });
 });
+

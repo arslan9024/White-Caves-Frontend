@@ -59,3 +59,4 @@ export function updateSnagItemStatus(
 ): MoveInInspectionItem[] {
   return items.map(item => (item.id === itemId ? { ...item, status: newStatus } : item));
 }
+

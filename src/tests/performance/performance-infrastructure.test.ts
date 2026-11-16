@@ -168,3 +168,4 @@ describe('Native Lazy Loading', () => {
     expect(source).toContain('loading="lazy"');
   });
 });
+

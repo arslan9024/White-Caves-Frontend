@@ -137,3 +137,4 @@ export const propertySlice = createSlice({
 export const { setProperties, setFilters, clearFilters, applyFilters } = propertySlice.actions;
 
 export default propertySlice.reducer;
+

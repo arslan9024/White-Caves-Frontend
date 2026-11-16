@@ -32,3 +32,4 @@ export const SavedBanner = styled.div`
   background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 0.85rem;
   text-align: center; color: #15803d; font-weight: 700; font-size: 0.875rem;
 `;
+

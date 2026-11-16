@@ -20,3 +20,4 @@ export async function initMongo(): Promise<mongoose.Connection> {
 export async function closeMongo(): Promise<void> {
   await mongoose.disconnect();
 }
+

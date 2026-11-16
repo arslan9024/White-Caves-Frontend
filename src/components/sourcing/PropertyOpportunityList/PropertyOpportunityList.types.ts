@@ -23,3 +23,4 @@ export interface StatusMessage {
 }
 
 export type SortByOption = 'confidence' | 'completeness' | 'recent' | 'price';
+

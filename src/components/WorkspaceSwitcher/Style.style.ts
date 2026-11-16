@@ -63,3 +63,4 @@ export const workspaceSwitcherStyles: Record<string, CSSProperties> = {
     color: '#94A3B8',
   },
 };
+

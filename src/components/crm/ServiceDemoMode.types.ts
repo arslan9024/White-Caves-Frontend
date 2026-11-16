@@ -21,3 +21,4 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   { id: 'marketing', label: 'Marketing', icon: '📣', color: '#EC4899' },
   { id: 'technology', label: 'Technology', icon: '💻', color: '#06B6D4' },
 ];
+

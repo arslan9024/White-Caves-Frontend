@@ -185,3 +185,4 @@ const LandlordPropertiesTab: FC = () => {
 };
 
 export default LandlordPropertiesTab;
+

@@ -23,3 +23,4 @@ describe('FounderEscrowModal (DOM-08 / Targets T-0701 & T-0710)', () => {
     expect(screen.queryByText('Law No. 8 Escrow & goAML Compliance Desk')).not.toBeInTheDocument();
   });
 });
+

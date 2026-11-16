@@ -22,3 +22,4 @@ export const HeroI18NWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

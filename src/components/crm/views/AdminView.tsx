@@ -145,3 +145,4 @@ export default function AdminView({
 
   return <div className="view-container admin-view">{renderContent()}</div>;
 }
+

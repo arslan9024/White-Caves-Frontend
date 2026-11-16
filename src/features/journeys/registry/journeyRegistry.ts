@@ -575,3 +575,4 @@ export const getJourneyById = (id: string): JourneyDefinition | undefined => {
 export const getJourneysByCategory = (category: string): JourneyDefinition[] => {
   return Object.values(FLAGSHIP_JOURNEYS).filter(j => j.category === category);
 };
+

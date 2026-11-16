@@ -109,3 +109,4 @@ export const getCRMModule = (id: string | undefined | null): CRMModuleDefinition
 
 export const resolveCRMModules = (ids: string[]): CRMModuleDefinition[] =>
   ids.map(id => getCRMModule(id)).filter((m): m is CRMModuleDefinition => Boolean(m));
+

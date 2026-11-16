@@ -315,3 +315,4 @@ describe('ConversationsTab – Convert to Lead (P0-017)', () => {
     expect(onConvertToLead).toHaveBeenCalledWith('conv-click');
   });
 });
+

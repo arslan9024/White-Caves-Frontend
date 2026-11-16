@@ -198,3 +198,4 @@ export const SidebarLeaderboardList: FC<SidebarLeaderboardListProps> = ({
 };
 
 export default SidebarLeaderboardList;
+

@@ -15,3 +15,4 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** Badge content */
   children: React.ReactNode;
 }
+

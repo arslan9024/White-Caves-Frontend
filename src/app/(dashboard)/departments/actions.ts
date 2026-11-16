@@ -1,4 +1,4 @@
-﻿import { DepartmentNode, IDepartmentNode } from '../../../models/DepartmentNode';
+import { DepartmentNode, IDepartmentNode } from '../../../models/DepartmentNode';
 import { Personnel, IPersonnel } from '../../../models/Personnel';
 import { TeamSquad, ITeamSquad } from '../../../models/TeamSquad';
 import { AppError } from '../../../../server/middleware/errorHandler';
@@ -289,3 +289,4 @@ export async function deleteDepartmentNode(
   await DepartmentNode.findByIdAndDelete(nodeId);
   return { success: true, message: 'Department node and nested children pruned successfully' };
 }
+

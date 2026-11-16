@@ -179,3 +179,4 @@ const SalesView: React.FC<SalesViewProps> = ({
 };
 
 export default SalesView;
+

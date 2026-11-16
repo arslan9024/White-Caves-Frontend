@@ -9,3 +9,4 @@ describe('OffPlanRiskCalculator Component', () => {
     expect(screen.getByTestId('offplan-risk-calculator')).toBeInTheDocument();
   });
 });
+

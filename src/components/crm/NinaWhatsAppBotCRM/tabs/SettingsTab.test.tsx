@@ -83,3 +83,4 @@ describe('NinaSettingsTab', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

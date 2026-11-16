@@ -184,3 +184,4 @@ export const OwnerPropertiesTable: React.FC<{ properties: OwnerPropertyItem[] }>
     </table>
   </div>
 );
+

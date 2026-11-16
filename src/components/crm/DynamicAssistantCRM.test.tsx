@@ -26,3 +26,4 @@ describe('DynamicAssistantCRM Component', () => {
     expect(getByText('MARKET ANALYSIS')).toBeDefined();
   });
 });
+

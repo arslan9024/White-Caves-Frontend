@@ -326,3 +326,4 @@ export const QuickAddOpportunityModal: React.FC<{
     </div>
   </div>
 );
+

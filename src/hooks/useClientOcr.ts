@@ -83,3 +83,4 @@ export function useClientOcr(): UseClientOcrState {
 
   return { isProcessing, progress, error, runOcr };
 }
+

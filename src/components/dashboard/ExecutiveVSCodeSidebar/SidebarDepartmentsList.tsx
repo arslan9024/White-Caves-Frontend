@@ -250,3 +250,4 @@ export const SidebarDepartmentsList: FC<SidebarDepartmentsListProps> = ({
 };
 
 export default SidebarDepartmentsList;
+

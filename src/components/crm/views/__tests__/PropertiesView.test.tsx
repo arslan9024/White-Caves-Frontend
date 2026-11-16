@@ -6,3 +6,4 @@ describe('PropertiesView', () => {
     expect(true).toBe(true);
   });
 });
+

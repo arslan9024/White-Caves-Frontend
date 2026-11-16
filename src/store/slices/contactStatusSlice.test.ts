@@ -90,3 +90,4 @@ describe('contactStatusSlice', () => {
     expect(selectContactStatusError(root)).toBe('Backend exploded');
   });
 });
+

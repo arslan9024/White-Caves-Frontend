@@ -159,3 +159,4 @@ describe('ExecutiveVSCodeSidebar Component (7-Category Co-Location Spec)', () =>
     expect(onSelectTab).toHaveBeenCalledWith('profile');
   }, 15000);
 });
+

@@ -520,3 +520,4 @@ export const VestaHandoverCRM: React.FC<VestaHandoverCRMProps> = ({ moduleId, ro
 };
 
 export default VestaHandoverCRM;
+

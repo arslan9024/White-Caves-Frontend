@@ -12,3 +12,4 @@ describe('VatReturnTab', () => {
     expect(screen.getByText(/Export EmaraTax XML \/ PDF/i)).toBeInTheDocument();
   });
 });
+

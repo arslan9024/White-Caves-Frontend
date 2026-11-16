@@ -16,3 +16,4 @@ describe('ActivityTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

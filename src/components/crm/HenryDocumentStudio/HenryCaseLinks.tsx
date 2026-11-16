@@ -24,3 +24,4 @@ export default function HenryCaseLinks({ options, onOptions, additionalOnly = fa
     }} />Confirm selected dossier links; the server checks every entity</label>
   </fieldset>;
 }
+

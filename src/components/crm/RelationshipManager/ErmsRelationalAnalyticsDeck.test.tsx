@@ -40,3 +40,4 @@ describe('ErmsRelationalAnalyticsDeck (Pillars 2 & 5 Verification)', () => {
     expect(handleFilterChange).toHaveBeenCalledWith('LEASES');
   });
 });
+

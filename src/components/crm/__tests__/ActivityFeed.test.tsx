@@ -17,3 +17,4 @@ describe('ActivityFeed Component', () => {
     expect(screen.getByText('Lead Contacted')).toBeDefined();
   });
 });
+

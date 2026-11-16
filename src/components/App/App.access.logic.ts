@@ -32,3 +32,4 @@ export function getRoleLandingPath(role: string | null | undefined, email?: stri
 
   return '/crm';
 }
+

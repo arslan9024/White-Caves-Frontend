@@ -10,3 +10,4 @@ describe('AuroraSoftwareHub.data', () => {
     expect(AURORA_HUB_TEXT.printBtn).toContain('Print');
   });
 });
+

@@ -22,3 +22,4 @@ describe('VipResponseSlaTracker Component', () => {
     expect(screen.getByText(/Sheikh Abdullah Al Nahyan/i)).toBeDefined();
   });
 });
+

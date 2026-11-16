@@ -197,3 +197,4 @@ describe('Store — Configuration', () => {
     expect(() => JSON.parse(JSON.stringify(state))).not.toThrow();
   });
 });
+

@@ -80,3 +80,4 @@ export const REALTIME_CONNECTIONS: RealtimeConnection[] = [
   { type: 'Server-Sent Events', active: 23, peak: 56, status: 'healthy' },
   { type: 'Long Polling', active: 12, peak: 34, status: 'degraded' }
 ];
+

@@ -57,3 +57,4 @@ describe('PublicNavbar Component & Internationalization Verification', () => {
     expect(screen.queryByText(/nav\.company/i)).toBeNull();
   });
 });
+

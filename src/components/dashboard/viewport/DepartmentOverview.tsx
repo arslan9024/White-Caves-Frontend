@@ -161,3 +161,4 @@ export const DepartmentOverview: FC<DepartmentOverviewProps> = ({
 };
 
 export default DepartmentOverview;
+

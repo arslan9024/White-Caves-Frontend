@@ -221,3 +221,4 @@ export const selectGlobalSearch = (state: { sidebar: SidebarState }) => state.si
 export const selectSidebarCollapsed = (state: { sidebar: SidebarState }) => state.sidebar.sidebarCollapsed;
 
 export default sidebarSlice.reducer;
+

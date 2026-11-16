@@ -89,3 +89,4 @@ export const ConnectionStatus = styled.span<{ $isOnline?: boolean }>`
     font-size: 0.65rem;
   }
 `;
+

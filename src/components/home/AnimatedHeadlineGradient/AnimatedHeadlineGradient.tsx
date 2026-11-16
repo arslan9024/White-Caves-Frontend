@@ -30,3 +30,4 @@ export const AnimatedHeadlineGradient: FC<AnimatedHeadlineGradientProps> = ({
 };
 
 export default AnimatedHeadlineGradient;
+

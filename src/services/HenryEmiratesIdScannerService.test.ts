@@ -97,3 +97,4 @@ describe('HenryEmiratesIdScannerService — Emirates ID OCR & MRZ Engine', () =>
     expect(viewing.clientPassportOrEid).toBe('784-1993-1805733-0');
   });
 });
+

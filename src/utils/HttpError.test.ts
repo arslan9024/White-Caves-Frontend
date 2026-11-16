@@ -123,3 +123,4 @@ describe('HttpError', () => {
     expect(error.data).toEqual([{ field: 'email', error: 'invalid' }]);
   });
 });
+

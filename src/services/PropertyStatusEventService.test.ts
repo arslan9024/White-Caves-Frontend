@@ -63,3 +63,4 @@ describe('PropertyStatusEventService', () => {
     expect(stats.eventsBySource['daisy']).toBe(1);
   });
 });
+

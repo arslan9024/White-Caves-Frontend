@@ -9,3 +9,4 @@ describe('FollowUpSequenceBuilder', () => {
     expect(screen.getByText('+ Add Step')).toBeTruthy();
   });
 });
+

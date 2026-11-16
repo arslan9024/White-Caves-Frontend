@@ -6,3 +6,4 @@ describe('PricingAnalyticsChart', () => {
     expect(true).toBe(true);
   });
 });
+

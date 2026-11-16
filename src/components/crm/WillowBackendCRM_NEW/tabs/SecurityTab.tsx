@@ -61,3 +61,4 @@ const SecurityTab: React.FC<SecurityTabProps> = ({ checks, securityStatus }) => 
 };
 
 export default SecurityTab;
+

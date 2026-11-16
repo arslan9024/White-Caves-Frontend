@@ -257,3 +257,4 @@ const NotificationsPage: FC = () => {
 };
 
 export default NotificationsPage;
+

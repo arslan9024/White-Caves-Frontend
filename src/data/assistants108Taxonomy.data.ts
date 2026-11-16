@@ -156,3 +156,4 @@ export const SUPERVISOR_TAXONOMY_108: Record<string, SquadBlueprint[]> = {
     { name: 'AI SovereignSignOff', title: 'Founder & Managing Director Digital Seal Supervisor', specialty: 'Final Sovereign Seal Authority', tasks: ['Executive Seal Digital Timestamping', 'High-Value Contract Final Pass Gate', 'Sovereign Veto Logging Engine'] },
   ],
 };
+

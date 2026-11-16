@@ -40,3 +40,4 @@ describe('useFinanceWorker', () => {
     expect(roiRes.netYieldPercent).toBeGreaterThan(0);
   });
 });
+

@@ -41,3 +41,4 @@ describe('Performance Marketing: Client Lead Scoring Algorithm', () => {
     expect(res.routingRecommendation.targetSlaMinutes).toBe(1440);
   });
 });
+

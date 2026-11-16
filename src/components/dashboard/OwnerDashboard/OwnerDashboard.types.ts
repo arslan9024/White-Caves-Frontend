@@ -31,3 +31,4 @@ export interface OwnerPropertyItem {
 export interface OwnerDashboardProps {
   user?: unknown;
 }
+

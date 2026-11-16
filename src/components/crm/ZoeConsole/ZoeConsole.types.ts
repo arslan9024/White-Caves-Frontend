@@ -51,3 +51,4 @@ export interface ZoeConsoleProps {
   initialQuery?: string;
   onQueryComplete?: (response: string) => void;
 }
+

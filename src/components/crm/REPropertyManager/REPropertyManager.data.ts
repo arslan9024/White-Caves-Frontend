@@ -305,3 +305,4 @@ export const PROPERTY_TYPES = [
   'MANSION',
   'COMMERCIAL',
 ];
+

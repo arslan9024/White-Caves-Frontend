@@ -64,3 +64,4 @@ export const STATUS_POLL_INTERVAL_MS = 3000;
 
 // ─── Max handshake log entries to keep in memory ─────────────────────────────
 export const MAX_HANDSHAKE_LOG_ENTRIES = 9;
+

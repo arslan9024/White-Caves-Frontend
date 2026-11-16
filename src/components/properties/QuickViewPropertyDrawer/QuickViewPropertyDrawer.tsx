@@ -139,3 +139,4 @@ export const QuickViewPropertyDrawer: FC<{
 };
 
 export default QuickViewPropertyDrawer;
+

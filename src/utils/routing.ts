@@ -92,3 +92,4 @@ export function getLegacyCrmRoute(role: string | null | undefined): string {
   }
   return '/dashboard';
 }
+

@@ -384,3 +384,4 @@ describe('ChatInterface Component', () => {
     });
   });
 });
+

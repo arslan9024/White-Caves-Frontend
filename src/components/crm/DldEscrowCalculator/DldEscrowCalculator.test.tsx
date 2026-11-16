@@ -69,3 +69,4 @@ describe('DldEscrowCalculatorView component mounting', () => {
     expect(screen.getByTestId('stat-dld-fee')).toHaveTextContent('AED 200,000');
   });
 });
+

@@ -64,3 +64,4 @@ export const DetailRow = styled.div`
   font-size: 14px;
   color: #475569;
 `;
+

@@ -4,3 +4,4 @@
 export function getChartFallbackBox(heightPx = 280) {
   return { height: `${heightPx}px`, width: '100%', role: 'status', 'aria-busy': true as const };
 }
+

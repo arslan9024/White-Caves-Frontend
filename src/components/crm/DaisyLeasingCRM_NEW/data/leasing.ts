@@ -435,3 +435,4 @@ export const RENTAL_INQUIRIES: RentalInquiry[] = [
     source: 'Website',
   },
 ];
+

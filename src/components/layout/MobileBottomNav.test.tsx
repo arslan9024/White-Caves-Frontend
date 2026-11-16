@@ -18,3 +18,4 @@ describe('MobileBottomNav Component', () => {
     expect(screen.getByText('Menu')).toBeInTheDocument();
   });
 });
+

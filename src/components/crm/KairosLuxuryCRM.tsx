@@ -630,3 +630,4 @@ export const KairosLuxuryCRM = ({ moduleId, role, user }) => {
 };
 
 export default KairosLuxuryCRM;
+

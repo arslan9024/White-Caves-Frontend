@@ -24,3 +24,4 @@ describe('useLeadsInsights Hook', () => {
     expect(typeof result.current.avgDealSize).toBe('number');
   });
 });
+

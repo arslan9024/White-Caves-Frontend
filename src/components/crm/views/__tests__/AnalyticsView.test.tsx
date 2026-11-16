@@ -6,3 +6,4 @@ describe('AnalyticsView', () => {
     expect(true).toBe(true);
   });
 });
+

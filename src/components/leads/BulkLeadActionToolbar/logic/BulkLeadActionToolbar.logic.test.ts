@@ -29,3 +29,4 @@ describe('BulkLeadActionToolbar.logic', () => {
     expect(result.current.confirmAction).toBeNull();
   });
 });
+

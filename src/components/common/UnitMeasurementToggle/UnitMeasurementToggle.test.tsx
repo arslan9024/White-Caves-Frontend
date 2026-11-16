@@ -16,3 +16,4 @@ describe('UnitMeasurementToggle Component', () => {
     expect(onUnitChange).toHaveBeenCalledWith('SqM');
   });
 });
+

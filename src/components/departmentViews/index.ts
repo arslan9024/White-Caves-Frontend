@@ -32,3 +32,4 @@ export const departmentViewComponents: Record<string, React.ComponentType<any>> 
   MarketingView: require('./MarketingView').default,
   HRView: require('./HRView').default,
 };
+

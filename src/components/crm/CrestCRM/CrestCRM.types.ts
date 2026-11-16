@@ -20,3 +20,4 @@ export interface ComparableSale {
   psf: number;
   date: string;
 }
+

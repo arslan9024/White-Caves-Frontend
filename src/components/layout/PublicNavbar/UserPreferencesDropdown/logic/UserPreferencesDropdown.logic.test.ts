@@ -54,3 +54,4 @@ describe('UserPreferencesDropdown.logic', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
   });
 });
+

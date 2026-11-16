@@ -22,3 +22,4 @@ describe('InteractiveMapDrawer.logic', () => {
     expect(result.current.selectedProperty).toBeNull();
   });
 });
+

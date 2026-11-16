@@ -14,3 +14,4 @@ describe('AnimatedHeadlineGradient.logic', () => {
     expect(result.current.fontSize).toBe('3rem');
   });
 });
+

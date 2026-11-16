@@ -48,3 +48,4 @@ export interface EnterpriseReport {
   sampleRows: Record<string, string | number>[];
   tags: string[];
 }
+

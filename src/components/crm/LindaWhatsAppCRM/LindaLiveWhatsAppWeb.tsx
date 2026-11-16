@@ -1,10 +1,4 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/LindaLiveWhatsAppWeb.tsx
-/**
- * White Caves Real Estate LLC - Linda WhatsApp Web Dual-Pane Live Client
- * Standard: AEGIS Canonical 12-Way Architecture Standard
- * Single Purpose File Law: < 350 lines (Partitioned)
- */
-
 import React, { useState, useMemo, useEffect, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import socketService from '../../../services/socketService';
@@ -13,6 +7,7 @@ import { LindaChatListPane } from './LindaChatListPane';
 import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
 import { LindaQuickReplyBar } from './LindaQuickReplyBar';
 import { LindaLeadContextPane } from './LindaLeadContextPane';
+import { LindaLiveTopBar } from './LindaLiveTopBar';
 
 export interface LindaLiveWhatsAppWebProps {
   conversations: LindaConversationItem[];
@@ -51,44 +46,51 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     [conversations, selectedConvId]
   );
 
-  // Fetch live thread history when a conversation is selected
   useEffect(() => {
     if (!selectedConv?.phone) return;
     const cleanPhone = selectedConv.phone.replace(/\D/g, '');
     if (!cleanPhone) return;
 
     let cancelled = false;
-    const jid = selectedConv.id.includes('@') ? selectedConv.id : `${cleanPhone}@s.whatsapp.net`;
+    const jid = `${cleanPhone}@s.whatsapp.net`;
     fetch(`/api/whatsapp/chats/${encodeURIComponent(jid)}/messages`)
-      .then(res => (res.ok ? res.json() : null))
+      .then(r => r.json())
       .then(json => {
         if (cancelled || !json?.success || !Array.isArray(json?.data?.messages)) return;
-        if (json.data.messages.length > 0) {
-          const mapped: ChatMessage[] = json.data.messages.map((m: Record<string, unknown>) => ({
-            id: String(m.id || `msg-${Date.now()}`),
-            sender: m.fromMe ? 'bot' : 'client',
-            text: String(m.body || ''),
-            timestamp: String(m.timestamp || 'Just now'),
-            status: m.fromMe
-              ? (String(m.status || 'sent').toLowerCase() as ChatMessage['status'])
-              : undefined,
-          }));
-          setChatMessages(prev => ({
-            ...prev,
-            [selectedConv.id]: mapped,
-          }));
-        }
+        const mapped: ChatMessage[] = json.data.messages.map((m: {
+          id?: string;
+          fromMe?: boolean;
+          body?: string;
+          text?: string;
+          timestamp?: string;
+          status?: 'PENDING' | 'SENT' | 'DELIVERED' | 'READ';
+          mediaType?: string | null;
+          mediaUrl?: string;
+        }) => {
+          const rawStatus = (m.status || 'SENT').toLowerCase();
+          const status: ChatMessage['status'] =
+            rawStatus === 'read' ? 'read' : rawStatus === 'delivered' ? 'delivered' : 'sent';
+          return {
+            id: m.id || `live-${Date.now()}-${Math.random()}`,
+            sender: m.fromMe ? 'agent' : 'client',
+            text: m.body || m.text || '',
+            timestamp: m.timestamp
+              ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+              : 'Now',
+            status,
+            mediaType: m.mediaType ?? null,
+            mediaUrl: m.mediaUrl,
+          };
+        });
+        setChatMessages(prev => ({ ...prev, [selectedConv.id]: mapped }));
       })
-      .catch(() => {
-        // Keep current thread messages if offline
-      });
+      .catch(() => {});
 
     return () => {
       cancelled = true;
     };
   }, [selectedConv?.id, selectedConv?.phone]);
 
-  // Real-time Socket.IO streaming for inbound/outbound messages & read receipts
   useEffect(() => {
     const unsubMsg = socketService.onLindaMessage?.(payload => {
       const p = payload as unknown as Record<string, unknown>;
@@ -104,9 +106,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
             ? rawTs.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const incoming: ChatMessage = {
-        id: String(p.messageId || p.id || `sock-${Date.now()}`),
+        id: String(p.id || `sock-${Date.now()}`),
         sender: isOutbound ? 'bot' : 'client',
-        text: String(p.body || ''),
+        text: String(p.text || p.message || ''),
         timestamp: tsStr,
         status: isOutbound ? 'sent' : undefined,
       };
@@ -148,7 +150,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       rawSocket?.off('linda:receipt', handleReceipt);
       rawSocket?.off('messages.update', handleReceipt);
     };
-  }, []);
+  }, [selectedConv?.id]);
 
   const accountOptions = useMemo(() => {
     const dynamic = Array.from(
@@ -163,68 +165,112 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   const filteredConversations = useMemo(() => {
     return conversations.filter(c => {
-      const ext = c as LindaConversationItem & { accountPhone?: string; isGroup?: boolean };
-      if (selectedAccount !== 'ALL' && ext.accountPhone && ext.accountPhone !== selectedAccount)
-        return false;
-      if (chatTypeFilter === 'groups' && !ext.isGroup) return false;
-      if (chatTypeFilter === 'direct' && ext.isGroup) return false;
-      if (!searchFilter.trim()) return true;
-      const q = searchFilter.toLowerCase();
-      return (
-        c.contactName.toLowerCase().includes(q) ||
-        c.phone.toLowerCase().includes(q) ||
-        c.cluster.toLowerCase().includes(q) ||
-        c.unit.toLowerCase().includes(q)
-      );
+      if (searchFilter) {
+        const q = searchFilter.toLowerCase();
+        const matches =
+          c.contactName?.toLowerCase().includes(q) ||
+          c.phone?.toLowerCase().includes(q) ||
+          c.lastMessage?.toLowerCase().includes(q) ||
+          c.unit?.toLowerCase().includes(q);
+        if (!matches) return false;
+      }
+      if (selectedAccount !== 'ALL') {
+        const cAcc = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
+        if (cAcc && cAcc !== selectedAccount) return false;
+      }
+      if (chatTypeFilter === 'direct' && c.isGroup) return false;
+      if (chatTypeFilter === 'groups' && !c.isGroup) return false;
+      if (unreadOnly && (!c.unreadCount || c.unreadCount <= 0)) return false;
+      return true;
     });
-  }, [conversations, searchFilter, selectedAccount, chatTypeFilter]);
+  }, [conversations, searchFilter, selectedAccount, chatTypeFilter, unreadOnly]);
 
-  const activeMessages = chatMessages[selectedConv?.id || ''] || [
-    {
-      id: 'default-1',
-      sender: 'client',
-      text: selectedConv?.lastMessage || 'Hello White Caves team',
-      timestamp: selectedConv?.timestamp || 'Just now',
-    },
-  ];
+  const activeMessages = useMemo(() => {
+    if (selectedConv && chatMessages[selectedConv.id]) {
+      return chatMessages[selectedConv.id];
+    }
+    return [
+      {
+        id: 'seed-1',
+        sender: 'client' as const,
+        text: `Hi Linda, inquiry regarding ${selectedConv?.unit || 'WC-LUX-402'}. Is this available?`,
+        timestamp: '10:41 AM',
+      },
+      {
+        id: 'seed-2',
+        sender: 'bot' as const,
+        text: `Hello ${selectedConv?.contactName || 'Valued Client'}! Yes, ${selectedConv?.unit || 'Unit 402'} is available. DLD documents ready.`,
+        timestamp: '10:42 AM',
+        status: 'read' as const,
+      },
+    ];
+  }, [selectedConv, chatMessages]);
 
   const handleSend = () => {
     if (!inputMessage.trim() || !selectedConv) return;
+    const textToSend = inputMessage.trim();
     const newMsg: ChatMessage = {
       id: `msg-${Date.now()}`,
       sender: 'agent',
-      text: inputMessage.trim(),
+      text: textToSend,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       status: 'sent',
     };
 
     setChatMessages(prev => ({
       ...prev,
-      [selectedConv.id]: [...(prev[selectedConv.id] || []), newMsg],
+      [selectedConv.id]: [...(prev[selectedConv.id] || activeMessages), newMsg],
     }));
-
-    const textToSend = inputMessage.trim();
-    onSendMessage?.(selectedConv.id, textToSend);
     setInputMessage('');
+    onSendMessage?.(selectedConv.id, textToSend);
 
-    // Dispatch real WhatsApp message via backend bridge
     fetch(`/api/linda/send/${encodeURIComponent(selectedConv.id)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: textToSend,
-        accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
-      }),
-    }).catch(() => {
-      // Optimistic message already rendered; offline fallback handled silently
-    });
+      body: JSON.stringify({ message: textToSend, accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined }),
+    }).catch(() => {});
   };
 
-  const handleAiDraft = () => {
+  const handleAiDraft = (lang: 'EN' | 'AR' = 'EN') => {
     if (!selectedConv) return;
-    const aiDraft = `Thank you ${selectedConv.contactName}. White Caves Luxury Desk has reviewed your ${selectedConv.unit} inquiry. We have prepared the verified DLD paperwork for your review.`;
-    setInputMessage(aiDraft);
+    fallbackLocalDraft(lang);
     onAutoReplyWithAI?.(selectedConv);
+
+    const jid = encodeURIComponent(
+      selectedConv.id.includes('@') ? selectedConv.id : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
+    );
+
+    fetch(`/api/whatsapp/chats/${jid}/ai-draft`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ language: lang, tone: 'luxury' }),
+    })
+      .then(r => r.json())
+      .then(json => {
+        if (json?.success && json?.data?.draft) setInputMessage(json.data.draft);
+      })
+      .catch(() => {});
+  };
+
+  const fallbackLocalDraft = (lang: 'EN' | 'AR') => {
+    if (!selectedConv) return;
+    const aiDraft =
+      lang === 'AR'
+        ? `مرحباً بك ${selectedConv.contactName || ''}. وايت كيفز العقارية الفاخرة استلمت استفسارك حول ${selectedConv.unit}. المستندات جاهزة لمراجعتكم.`
+        : `Thank you ${selectedConv.contactName}. White Caves Luxury Desk has reviewed your ${selectedConv.unit} inquiry. We have prepared the verified DLD paperwork for your review.`;
+    setInputMessage(aiDraft);
+  };
+
+  const handleHumanTakeover = () => {
+    if (!selectedConv) return;
+    const jid = encodeURIComponent(
+      selectedConv.id.includes('@') ? selectedConv.id : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
+    );
+    fetch(`/api/whatsapp/chats/${jid}/takeover`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ humanAgent: 'Arslan Malik', reason: 'TopBar 1-Click Takeover' }),
+    }).catch(() => {});
   };
 
   const unreadTotal = useMemo(
@@ -232,135 +278,18 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     [conversations]
   );
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
-      ) {
-        return;
-      }
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        const idx = filteredConversations.findIndex(c => c.id === selectedConvId);
-        if (idx === -1) return;
-        const nextIdx =
-          e.key === 'ArrowDown'
-            ? Math.min(filteredConversations.length - 1, idx + 1)
-            : Math.max(0, idx - 1);
-        setSelectedConvId(filteredConversations[nextIdx].id);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [filteredConversations, selectedConvId]);
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div
-        data-testid="linda-master-status-bar"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '6px 14px',
-          borderRadius: 10,
-          background: isDark ? 'rgba(15, 23, 42, 0.9)' : '#F8FAFC',
-          border: isDark ? '1px solid rgba(37, 211, 102, 0.25)' : '1px solid #CBD5E1',
-          fontSize: 12,
-          color: isDark ? '#E2E8F0' : '#0F172A',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              backgroundColor: isLiveConnected ? '#22C55E' : '#EF4444',
-              display: 'inline-block',
-            }}
-          />
-          <strong>Primary Master +971505760056</strong>
-          <span style={{ color: isLiveConnected ? '#22C55E' : '#EF4444', fontWeight: 600 }}>
-            {isLiveConnected ? 'Connected' : 'Reconnecting...'}
-          </span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span>Latency: {heartbeatLatency}ms</span>
-          <button
-            type="button"
-            data-testid="linda-unread-filter-btn"
-            onClick={() => setUnreadOnly(prev => !prev)}
-            style={{
-              padding: '2px 8px',
-              borderRadius: 6,
-              border: '1px solid rgba(148, 163, 184, 0.35)',
-              background: unreadOnly ? '#EF4444' : 'transparent',
-              color: unreadOnly ? '#FFFFFF' : 'inherit',
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            Unread ({unreadTotal})
-          </button>
-          <button
-            type="button"
-            data-testid="linda-context-pane-toggle"
-            onClick={() => setShowContextPane(prev => !prev)}
-            style={{
-              padding: '2px 8px',
-              borderRadius: 6,
-              border: '1px solid rgba(148, 163, 184, 0.35)',
-              background: showContextPane ? 'rgba(37, 211, 102, 0.15)' : 'transparent',
-              color: 'inherit',
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            {showContextPane ? 'Hide Context' : 'Show Context'}
-          </button>
-        </div>
-      </div>
-
-      {!isLiveConnected && (
-        <div
-          data-testid="linda-reconnect-banner"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '6px 14px',
-            borderRadius: 8,
-            background: 'rgba(239, 68, 68, 0.12)',
-            border: '1px solid rgba(239, 68, 68, 0.35)',
-            color: isDark ? '#FCA5A5' : '#991B1B',
-            fontSize: 12,
-          }}
-        >
-          <span>
-            Primary Master (+971505760056) socket disconnected. Showing cached conversations.
-          </span>
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            style={{
-              padding: '2px 10px',
-              borderRadius: 6,
-              border: 'none',
-              background: '#EF4444',
-              color: '#FFFFFF',
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            Reconnect
-          </button>
-        </div>
-      )}
+      <LindaLiveTopBar
+        isDark={isDark}
+        isLiveConnected={isLiveConnected}
+        heartbeatLatency={heartbeatLatency}
+        unreadOnly={unreadOnly}
+        unreadTotal={unreadTotal}
+        showContextPane={showContextPane}
+        onToggleUnread={() => setUnreadOnly(prev => !prev)}
+        onToggleContextPane={() => setShowContextPane(prev => !prev)}
+      />
 
       <div
         data-testid="linda-live-whatsapp-web"
@@ -400,6 +329,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
             onInputChange={setInputMessage}
             onSend={handleSend}
             onAiDraft={handleAiDraft}
+            onHumanTakeover={handleHumanTakeover}
           />
         </div>
 
@@ -410,3 +340,4 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 };
 
 export default LindaLiveWhatsAppWeb;
+

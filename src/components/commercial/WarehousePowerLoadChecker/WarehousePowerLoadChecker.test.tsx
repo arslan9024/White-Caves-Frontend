@@ -13,3 +13,4 @@ describe('WarehousePowerLoadChecker Component', () => {
     expect(screen.getByText(/DEWA Connected Power/i)).toBeDefined();
   });
 });
+

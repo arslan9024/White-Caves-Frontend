@@ -10,3 +10,4 @@ describe('ESignatureCapturepad', () => {
     expect(screen.getByText(/Digital Signature/i)).toBeTruthy();
   });
 });
+

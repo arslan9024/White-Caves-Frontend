@@ -416,3 +416,4 @@ export const MODAL_SIZES: Record<ModalSize, string> = {
   large: '800px',
   fullscreen: '100%',
 };
+

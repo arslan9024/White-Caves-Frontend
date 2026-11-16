@@ -10,3 +10,4 @@ describe('LeadSourceAttributionChart', () => {
     expect(screen.getByText('WhatsApp')).toBeTruthy();
   });
 });
+

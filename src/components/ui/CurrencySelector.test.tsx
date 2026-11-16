@@ -22,3 +22,4 @@ describe('CurrencySelector Component — Wave 40 (W40-006)', () => {
     expect(handleCurrencyChange).toHaveBeenCalledWith('USD');
   });
 });
+

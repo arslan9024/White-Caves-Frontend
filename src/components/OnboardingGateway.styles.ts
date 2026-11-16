@@ -237,3 +237,4 @@ export const StyledFooterLink = styled.a`
     text-decoration: underline;
   }
 `;
+

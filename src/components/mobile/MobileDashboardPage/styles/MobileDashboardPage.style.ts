@@ -132,3 +132,4 @@ export const ActivityTime = styled.span`
   color: #94a3b8;
   flex-shrink: 0;
 `;
+

@@ -46,3 +46,4 @@ describe('validateExpenseClaimDraft', () => {
     expect(result.errors.category).toBe('A supported expense category is required.');
   });
 });
+

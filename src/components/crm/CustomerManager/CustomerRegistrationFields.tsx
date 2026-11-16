@@ -161,3 +161,4 @@ export const CustomerRegistrationFields: FC<CustomerRegistrationFieldsProps> = (
     </>
   );
 };
+

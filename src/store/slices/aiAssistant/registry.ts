@@ -8,3 +8,4 @@ export { DEPARTMENT_COLORS } from './registryData/departmentColors.data';
 export { generateActivities } from './registryData/activities.data';
 export { generateNotifications } from './registryData/notifications';
 export { generateTasks } from './registryData/tasks';
+

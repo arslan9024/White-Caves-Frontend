@@ -70,3 +70,4 @@ export {
 export { default as DashboardConfigurator } from './DashboardConfigurator';
 export { default as DashboardKPITile } from './KPITile';
 export { FunnelChart, GaugeChart, HeatmapChart, SankeyChart, TimelineChart } from './charts';
+

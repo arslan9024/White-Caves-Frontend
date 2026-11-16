@@ -154,3 +154,4 @@ describe('EjariRegistrationModal', () => {
     expect(banner).toBeInTheDocument();
   });
 });
+

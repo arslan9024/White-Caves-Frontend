@@ -151,3 +151,4 @@ describe('Henry dedicated OAuth callback', () => {
     expect(screen.queryByText('provider secret')).not.toBeInTheDocument();
   });
 });
+

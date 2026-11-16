@@ -314,3 +314,4 @@ export const getMockDepartmentData = (departmentCode: string): DepartmentData | 
 export const getAvailableDepartments = (): string[] => {
   return Object.keys(MOCK_DEPARTMENT_DATA);
 };
+

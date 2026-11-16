@@ -20,3 +20,4 @@ export const CavesWhatsAppWidget: React.FC = () => {
 };
 
 export default CavesWhatsAppWidget;
+

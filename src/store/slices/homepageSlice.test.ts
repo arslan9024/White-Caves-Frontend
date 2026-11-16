@@ -421,3 +421,4 @@ describe('homepageSlice — selectors', () => {
     await thunk;
   });
 });
+

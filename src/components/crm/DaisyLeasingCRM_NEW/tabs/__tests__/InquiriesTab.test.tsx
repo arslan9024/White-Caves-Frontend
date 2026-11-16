@@ -9,3 +9,4 @@ describe('InquiriesTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

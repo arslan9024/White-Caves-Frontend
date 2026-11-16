@@ -239,3 +239,4 @@ export const ExecutiveVSCodeSidebar: FC<ExecutiveVSCodeSidebarProps> = ({
 };
 
 export default ExecutiveVSCodeSidebar;
+

@@ -63,3 +63,4 @@ describe('AiAssistantCrudTable (Chakra UI Standardized Grid & CRUD Pathways)', (
     expect(screen.queryByTestId('agent-card-ada')).toBeNull();
   });
 });
+

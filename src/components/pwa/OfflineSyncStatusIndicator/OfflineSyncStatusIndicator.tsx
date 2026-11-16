@@ -31,3 +31,4 @@ export const OfflineSyncStatusIndicator: FC = () => {
 };
 
 export default OfflineSyncStatusIndicator;
+

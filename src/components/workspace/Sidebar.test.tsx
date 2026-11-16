@@ -17,3 +17,4 @@ describe('Sidebar Component', () => {
     }
   });
 });
+

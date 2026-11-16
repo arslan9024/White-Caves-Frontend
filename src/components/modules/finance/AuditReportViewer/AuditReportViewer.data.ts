@@ -122,3 +122,4 @@ export const getProgressColor = (progress: number): string => {
   if (progress >= 50) return 'bg-yellow-600 dark:bg-yellow-500';
   return 'bg-red-600 dark:bg-red-500';
 };
+

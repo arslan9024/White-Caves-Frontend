@@ -102,3 +102,4 @@ export default function HenryDossierPanel() {
     {id ? <DossierContents key={`${kind}:${id}`} kind={kind} id={id} /> : <p>Select an authorized record to open its dossier.</p>}
   </Panel>;
 }
+

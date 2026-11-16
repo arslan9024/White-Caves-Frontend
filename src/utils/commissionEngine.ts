@@ -164,3 +164,4 @@ export function calculateMultiAgentSplit(params: MultiAgentSplitParams): MultiAg
     companyRevenue: agentA.companyRevenue + agentB.companyRevenue,
   };
 }
+

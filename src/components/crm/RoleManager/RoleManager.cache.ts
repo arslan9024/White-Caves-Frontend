@@ -71,3 +71,4 @@ export function saveRoleCache(roles: SovereignRoleDefinition[]): void {
     // Fail silently on storage errors
   }
 }
+

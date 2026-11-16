@@ -6,3 +6,4 @@ describe('AnimatedStatsBar', () => {
     expect(true).toBe(true);
   });
 });
+

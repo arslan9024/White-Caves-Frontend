@@ -28,3 +28,4 @@ export const RandomDelay = () => new Promise((resolve, reject) => {
     setTimeout(resolve, delay/Time.Speed);
     }
 })
+

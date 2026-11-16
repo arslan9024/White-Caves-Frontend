@@ -96,3 +96,4 @@ export class PdfPageLimitError extends Error {
     super('Scan at most two pages at a time.');
   }
 }
+

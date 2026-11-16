@@ -19,3 +19,4 @@ export interface ImportBatchItem {
   sourceType: string;
   errors?: Array<{ row: number; error: string }>;
 }
+

@@ -13,3 +13,4 @@ describe('useOptimizedAPI exports', () => {
     expect(hooks.useBatchFetchDepartments).toBeDefined();
   });
 });
+

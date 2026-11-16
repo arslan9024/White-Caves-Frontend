@@ -15,3 +15,4 @@ describe('VendorRatingMatrix Component', () => {
     expect(screen.getByText(/96.2% On-Time/i)).toBeDefined();
   });
 });
+

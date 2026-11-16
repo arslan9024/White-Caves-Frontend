@@ -334,3 +334,4 @@ describe('Henry reviewed extraction safety', () => {
     expect(() => contract.toCrmTenantProfile(contract.getDemoExtractedData())).toThrow('review');
   });
 });
+

@@ -50,3 +50,4 @@ describe('PDC Compliance Engine — checkChequeValidity', () => {
     expect(result.legalStatus).toBe('VALID');
   });
 });
+

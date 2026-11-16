@@ -22,3 +22,4 @@ export const getSignatureStatus = (signature: AgreementSignature) => {
     return <span className="sig-status pending">⏳ Pending</span>;
   }
 };
+

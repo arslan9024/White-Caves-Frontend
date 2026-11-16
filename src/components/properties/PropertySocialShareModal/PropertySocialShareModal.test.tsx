@@ -32,3 +32,4 @@ describe('PropertySocialShareModal', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalled();
   });
 });
+

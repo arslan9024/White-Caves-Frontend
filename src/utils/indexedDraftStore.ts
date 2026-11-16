@@ -71,3 +71,4 @@ export async function setDraft(key: string, value: unknown): Promise<void> {
 export async function clearDraft(key: string): Promise<void> {
   await withStore('readwrite', store => store.delete(key));
 }
+

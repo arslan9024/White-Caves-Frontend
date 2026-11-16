@@ -8,3 +8,4 @@ export const authRateLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Too many authentication attempts, please try again later.' },
 });
+

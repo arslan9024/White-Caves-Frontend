@@ -53,3 +53,4 @@ export const SERAPHINA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as seraphina_supervisorExport;
+

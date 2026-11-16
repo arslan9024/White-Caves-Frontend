@@ -269,3 +269,4 @@ export class PerformanceProfiler {
     return rows.join('\n');
   }
 }
+

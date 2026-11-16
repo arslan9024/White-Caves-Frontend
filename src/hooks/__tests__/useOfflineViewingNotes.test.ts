@@ -100,3 +100,4 @@ describe('useOfflineViewingNotes Hook', () => {
     expect(result.current.conflicts).toEqual([]);
   });
 });
+

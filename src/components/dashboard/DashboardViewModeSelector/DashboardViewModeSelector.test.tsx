@@ -15,3 +15,4 @@ describe('DashboardViewModeSelector Component', () => {
     expect(onModeChange).toHaveBeenCalledWith('compact');
   });
 });
+

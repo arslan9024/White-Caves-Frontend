@@ -158,3 +158,4 @@ const PropertyInfoForm = ({ data, onChange }) => {
 };
 
 export default PropertyInfoForm;
+

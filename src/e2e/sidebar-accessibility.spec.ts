@@ -1,4 +1,4 @@
-﻿import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 async function navigateToDashboard(page: import('@playwright/test').Page) {
   await page.goto('/modern-dashboard', { waitUntil: 'commit', timeout: 10_000 }).catch(() => null);
@@ -79,3 +79,4 @@ test.describe('Enhanced Sidebar Accessibility', () => {
     expect(await selected.count()).toBeGreaterThan(0);
   });
 });
+

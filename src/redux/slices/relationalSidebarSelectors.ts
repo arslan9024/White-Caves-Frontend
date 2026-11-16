@@ -24,3 +24,4 @@ export const selectCurrentServiceCache = state => {
   const cacheKey = `${dept}_${service}`;
   return state.relationalSidebar.serviceStateCache[cacheKey] || null;
 };
+

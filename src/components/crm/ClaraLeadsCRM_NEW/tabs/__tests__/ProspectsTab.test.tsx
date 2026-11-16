@@ -295,3 +295,4 @@ describe('ProspectsTab', () => {
     expect(screen.getAllByText(/Some notes/).length).toBeGreaterThan(0);
   });
 });
+

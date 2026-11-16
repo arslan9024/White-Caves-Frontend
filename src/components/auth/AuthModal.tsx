@@ -591,3 +591,4 @@ const AuthModal: FC<AuthModalProps> = ({ mode: initialMode = 'signin', onClose }
 };
 
 export default AuthModal;
+

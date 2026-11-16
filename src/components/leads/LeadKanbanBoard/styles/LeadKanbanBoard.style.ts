@@ -117,3 +117,4 @@ export const HotBadge = styled.span<{ $heat: 'hot' | 'warm' | 'cold' }>`
   color: ${({ $heat }) =>
     $heat === 'hot' ? '#ef4444' : $heat === 'warm' ? '#f97316' : '#0284c7'};
 `;
+

@@ -101,3 +101,4 @@ export const ErrorFallback = styled.div`
     opacity: 0.5;
   }
 `;
+

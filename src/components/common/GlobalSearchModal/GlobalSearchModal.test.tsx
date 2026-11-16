@@ -20,3 +20,4 @@ describe('GlobalSearchModal Component', () => {
     expect(screen.getAllByText(/Villa 14B Palm Jumeirah/i).length).toBeGreaterThan(0);
   });
 });
+

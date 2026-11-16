@@ -157,3 +157,4 @@ describe('CommissionTrackingPage', () => {
     expect(mockOpenCreateModal).toHaveBeenCalled();
   });
 });
+

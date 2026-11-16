@@ -51,3 +51,4 @@ const WebVitalsTracker = () => {
 };
 
 export default WebVitalsTracker;
+

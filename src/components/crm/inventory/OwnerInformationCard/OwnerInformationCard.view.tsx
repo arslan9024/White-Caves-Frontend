@@ -92,3 +92,4 @@ export const OwnerInformationCard: React.FC<OwnerInformationCardProps> = props =
 };
 
 export default OwnerInformationCard;
+

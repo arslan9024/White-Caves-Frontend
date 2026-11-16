@@ -13,3 +13,4 @@ describe('ExecutiveKpiFlightDeck', () => {
     expect(screen.getByText(/Managed Asset Portfolio/i)).toBeInTheDocument();
   });
 });
+

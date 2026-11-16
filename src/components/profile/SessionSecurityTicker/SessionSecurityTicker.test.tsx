@@ -12,3 +12,4 @@ describe('SessionSecurityTicker Component', () => {
     expect(screen.getByText(/Chrome\/Blink Engine/i)).toBeDefined();
   });
 });
+

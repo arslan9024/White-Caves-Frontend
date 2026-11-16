@@ -177,3 +177,4 @@ export const PDCChequeRow: React.FC<PDCChequeRowProps> = ({ cheque, onUpdate }) 
     </div>
   );
 };
+

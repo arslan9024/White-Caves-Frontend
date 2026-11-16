@@ -35,3 +35,4 @@ export const SkeletonCard: React.FC<{ imageHeight?: number }> = ({ imageHeight =
 );
 
 export default SkeletonCard;
+

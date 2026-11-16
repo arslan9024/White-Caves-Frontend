@@ -33,3 +33,4 @@ describe('AdaArchitectureHub Component', () => {
     expect(screen.getByText(/React 18 \+ Vite/i)).toBeDefined();
   });
 });
+

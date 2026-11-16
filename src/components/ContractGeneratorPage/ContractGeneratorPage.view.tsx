@@ -55,3 +55,4 @@ export const ContractGeneratorPageView: React.FC = () => {
 };
 
 export default ContractGeneratorPageView;
+

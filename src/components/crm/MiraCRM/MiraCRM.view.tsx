@@ -141,3 +141,4 @@ export const MiraCRMView: React.FC = () => {
     </div>
   );
 };
+

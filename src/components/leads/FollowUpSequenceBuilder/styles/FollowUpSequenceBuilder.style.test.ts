@@ -14,3 +14,4 @@ describe('FollowUpSequenceBuilder.style', () => {
     expect(styles.AddBtn).toBeDefined();
   });
 });
+

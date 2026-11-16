@@ -17,3 +17,4 @@ export const CheckIcon = styled.div<{ $ok: boolean }>`
 export const ItemText = styled.div`flex: 1;`;
 export const ItemLabel = styled.div<{ $ok: boolean }>`font-size: 0.8125rem; font-weight: 600; color: ${({ $ok }) => ($ok ? '#1e293b' : '#ef4444')};`;
 export const ItemNote = styled.div`font-size: 0.6875rem; color: #f97316; margin-top: 0.15rem;`;
+

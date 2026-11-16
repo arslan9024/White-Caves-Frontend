@@ -280,3 +280,4 @@ export const coreAssistants: Record<string, AIAssistant> = {
     apiEndpoints: ['/api/sales', '/api/pipeline', '/api/deals'],
   },
 };
+

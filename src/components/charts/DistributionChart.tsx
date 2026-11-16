@@ -117,3 +117,4 @@ const DistributionChart: React.FC<DistributionChartProps> = ({
 };
 
 export default DistributionChart;
+

@@ -68,3 +68,4 @@ export const DaisyMaintenanceView: React.FC = () => {
     </div>
   );
 };
+

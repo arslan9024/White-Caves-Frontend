@@ -334,3 +334,4 @@ export const fetchFavoritesAPI = fetchActivitiesFromAPI;
 export const removeFavoriteAPI = deleteActivityAPI;
 
 export default crmDataSlice.reducer;
+

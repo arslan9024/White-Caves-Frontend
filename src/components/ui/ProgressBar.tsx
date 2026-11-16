@@ -180,3 +180,4 @@ export const ProgressBar: React.FC<ProgressBarProps> = memo(function ProgressBar
 });
 
 export default ProgressBar;
+

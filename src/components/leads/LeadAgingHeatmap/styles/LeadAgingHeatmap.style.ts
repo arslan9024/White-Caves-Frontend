@@ -15,3 +15,4 @@ export const LegendItem = styled.div<{ $color: string }>`
   display: flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: #475569;
   &::before { content: ''; width: 10px; height: 10px; border-radius: 2px; background: ${({ $color }) => $color}; }
 `;
+

@@ -36,3 +36,4 @@ export function useMobileCRMBottomNavLogic(): UseMobileCRMBottomNavReturn {
 
   return { tabs: MOBILE_NAV_TABS, activeTabId, navigate };
 }
+

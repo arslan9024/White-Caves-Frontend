@@ -115,3 +115,4 @@ export const VerificationModalCard = memo(function VerificationModalCard({
 });
 
 export default VerificationModalCard;
+

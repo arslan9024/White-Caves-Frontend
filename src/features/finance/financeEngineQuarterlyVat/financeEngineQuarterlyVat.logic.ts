@@ -334,3 +334,4 @@ export function getQuarterlyVatSummary(
   const summaries = calculateQuarterlyVat(transactions, { ...options, year: key.year });
   return summaries.find(summary => summary.quarter === key.quarter);
 }
+

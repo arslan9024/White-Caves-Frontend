@@ -70,3 +70,4 @@ export const TenantInspectionWidget: FC<TenantInspectionWidgetProps> = ({
     </SectionCard>
   );
 };
+

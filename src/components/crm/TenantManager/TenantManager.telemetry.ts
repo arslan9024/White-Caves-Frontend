@@ -36,3 +36,4 @@ export function trackTenantEvent(
 export function getTenantAuditLog(): TenantTelemetryEvent[] {
   return [...tenantAuditLog];
 }
+

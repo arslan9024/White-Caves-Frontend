@@ -17,3 +17,4 @@ describe('ScheduleViewingSidebarWidget', () => {
     alertSpy.mockRestore();
   });
 });
+

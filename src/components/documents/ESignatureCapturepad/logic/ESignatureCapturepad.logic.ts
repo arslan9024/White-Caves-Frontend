@@ -64,3 +64,4 @@ export function useESignatureCapturepadLogic() {
 
   return { canvasRef, startDraw, draw, stopDraw, hasSignature, mode, setMode, typedName, setTypedName, saved, handleClear, handleSave };
 }
+

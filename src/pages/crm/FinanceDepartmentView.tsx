@@ -178,3 +178,4 @@ export const FinanceDepartmentView: FC = () => {
 };
 
 export default FinanceDepartmentView;
+

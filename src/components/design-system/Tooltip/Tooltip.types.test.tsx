@@ -17,3 +17,4 @@ describe('Tooltip.types Component', () => {
     }
   });
 });
+

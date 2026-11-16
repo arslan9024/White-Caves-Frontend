@@ -62,3 +62,4 @@ export const FormADigitalGenerator: FC = () => {
   );
 };
 export default FormADigitalGenerator;
+

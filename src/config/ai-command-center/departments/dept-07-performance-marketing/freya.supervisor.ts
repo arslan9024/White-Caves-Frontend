@@ -53,3 +53,4 @@ export const FREYA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as freya_supervisorExport;
+

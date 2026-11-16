@@ -9,3 +9,4 @@ describe('FluxCRM Component', () => {
     expect(container).toBeDefined();
   });
 });
+

@@ -118,3 +118,4 @@ export const PropertyPriceHistoryChart: FC = () => {
   );
 };
 export default PropertyPriceHistoryChart;
+

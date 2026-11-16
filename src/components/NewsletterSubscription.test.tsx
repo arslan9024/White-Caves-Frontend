@@ -79,3 +79,4 @@ describe('NewsletterSubscription', () => {
     expect(screen.getByText(/Thank you for subscribing/)).toBeTruthy();
   });
 });
+

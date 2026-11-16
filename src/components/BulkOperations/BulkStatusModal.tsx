@@ -95,3 +95,4 @@ const BulkStatusModal: React.FC<BulkStatusModalProps> = ({
 };
 
 export default BulkStatusModal;
+

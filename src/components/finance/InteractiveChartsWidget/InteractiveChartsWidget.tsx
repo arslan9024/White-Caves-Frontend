@@ -27,3 +27,4 @@ export const InteractiveChartsWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

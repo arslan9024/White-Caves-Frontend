@@ -146,3 +146,4 @@ export const AIAssistantComingSoon: React.FC = () => (
     <p>Performance metrics, conversation history, and advanced controls coming soon!</p>
   </CommingSoon>
 );
+

@@ -233,3 +233,4 @@ describe('useRecentlyViewed hook', () => {
     expect(result.current.recentIds).toEqual([]);
   });
 });
+

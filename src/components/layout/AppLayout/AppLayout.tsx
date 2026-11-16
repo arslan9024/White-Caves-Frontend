@@ -170,3 +170,4 @@ const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) =>
 };
 
 export default DashboardAppLayout;
+

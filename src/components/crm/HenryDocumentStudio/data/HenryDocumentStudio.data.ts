@@ -233,3 +233,4 @@ export const DEMO_LANDLORD_TAX_INVOICE: TaxReceiptPayload = {
 export const DEFAULT_EID_DATA: EmiratesIdExtractedData = ARSLAN_MALIK_SAMPLE_EID;
 export const DEFAULT_TITLE_DEED_DATA: DldTitleDeedExtractedData = VIRIDIS_504_SAMPLE_TITLE_DEED;
 export const DEFAULT_PASSPORT_DATA: InternationalPassportExtractedData = ARSLAN_MALIK_SAMPLE_PASSPORT;
+

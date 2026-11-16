@@ -13,3 +13,4 @@ describe('ExecutiveFlightDeck Component', () => {
     expect(screen.getByText('9,378')).toBeDefined();
   });
 });
+

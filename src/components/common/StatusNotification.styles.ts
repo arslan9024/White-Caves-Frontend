@@ -194,3 +194,4 @@ export const StatusProgress = styled.div<{ $type: 'success' | 'error' | 'warning
     }
   }}
 `;
+

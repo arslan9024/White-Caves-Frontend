@@ -73,3 +73,4 @@ export interface TenantMetrics {
   openTicketsCount: number;
   snagItemsCount: number;
 }
+

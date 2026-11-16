@@ -38,3 +38,4 @@ export function createRng(seed = 42) {
 }
 
 export type Rng = ReturnType<typeof createRng>;
+

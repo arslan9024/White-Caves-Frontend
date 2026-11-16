@@ -161,3 +161,4 @@ export default function FinanceView({
 
   return <div className="view-container finance-view">{renderContent()}</div>;
 }
+

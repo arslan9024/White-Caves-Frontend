@@ -75,3 +75,4 @@ export const WhatsAppBrochureGenerator: FC = () => {
   );
 };
 export default WhatsAppBrochureGenerator;
+

@@ -291,3 +291,4 @@ export const ROLE_ACCESS_MATRIX: Record<UserRole, DashboardView[]> = {
   viewer: ['company', 'performance'],
   support: ['client', 'leads'],
 };
+

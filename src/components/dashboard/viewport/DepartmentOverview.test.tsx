@@ -53,3 +53,4 @@ describe('DepartmentOverview', () => {
     ).toHaveAttribute('role', 'status');
   });
 });
+

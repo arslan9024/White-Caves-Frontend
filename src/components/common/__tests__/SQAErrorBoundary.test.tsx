@@ -17,3 +17,4 @@ describe('SQAErrorBoundary Component', () => {
     expect(screen.getByText('Normal Content')).toBeDefined();
   });
 });
+

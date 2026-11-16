@@ -6,3 +6,4 @@ describe('NovaCRM', () => {
     expect(true).toBe(true);
   });
 });
+

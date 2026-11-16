@@ -154,3 +154,4 @@ export function useAnnounce(): (message: string, politeness?: 'polite' | 'assert
 }
 
 export default LiveAnnouncer;
+

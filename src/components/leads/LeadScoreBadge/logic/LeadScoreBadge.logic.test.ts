@@ -17,3 +17,4 @@ describe('LeadScoreBadge.logic', () => {
     expect(getScoreLabel('D')).toBe('Cold');
   });
 });
+

@@ -312,3 +312,4 @@ export function summarizeApprovalProgress(claim: ExpenseClaim): string {
     `approvals=${approveCount}, rejections=${rejectCount}`
   );
 }
+

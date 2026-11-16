@@ -13,3 +13,4 @@ describe('TenantCreditRiskRating Component', () => {
     expect(screen.getByText(/Rent-to-Revenue Ratio/i)).toBeDefined();
   });
 });
+

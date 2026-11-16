@@ -19,3 +19,4 @@ describe('parseCsvInWorker (Web Worker CSV offloading)', () => {
     expect(result).toEqual({ headers: [], rows: [] });
   });
 });
+

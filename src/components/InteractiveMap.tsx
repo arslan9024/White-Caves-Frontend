@@ -304,3 +304,4 @@ const InteractiveMap = ({ onPropertySelect }: InteractiveMapProps) => {
 };
 
 export default InteractiveMap;
+

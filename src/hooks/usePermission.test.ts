@@ -6,3 +6,4 @@ describe('usePermission (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

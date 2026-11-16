@@ -31,3 +31,4 @@ describe('useAvatarUploadCropModalLogic Hook', () => {
     expect(result.current.previewUrl).toBe('blob:http://localhost/mock-avatar');
   });
 });
+

@@ -26,3 +26,4 @@ export interface HarvestConfig {
 }
 
 export type HarvestStatus = 'idle' | 'fetching' | 'paused' | 'completed' | 'stopped' | 'error';
+

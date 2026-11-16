@@ -47,3 +47,4 @@ describe('PwaInstallPromptModal', () => {
     expect(handleDismiss).toHaveBeenCalled();
   });
 });
+

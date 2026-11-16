@@ -53,3 +53,4 @@ export const EUTERPE_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as euterpe_supervisorExport;
+

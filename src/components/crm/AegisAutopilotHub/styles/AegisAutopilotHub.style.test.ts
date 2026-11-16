@@ -15,3 +15,4 @@ describe('AegisAutopilotHub.style', () => {
     expect(styles.ViewerOverlay).toBeDefined();
   });
 });
+

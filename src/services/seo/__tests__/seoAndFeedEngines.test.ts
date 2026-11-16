@@ -66,3 +66,4 @@ describe('SEO & Feed Syndication: RealEstateListing JSON-LD and Portal XML Feeds
     expect(xml).toContain('<community><![CDATA[DAMAC Hills 2]]></community>');
   });
 });
+

@@ -67,3 +67,4 @@ describe('ApplicationKanban', () => {
     expect(screen.getByText('HR Screening')).toBeInTheDocument();
   });
 });
+

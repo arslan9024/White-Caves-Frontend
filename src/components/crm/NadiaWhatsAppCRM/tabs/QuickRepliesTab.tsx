@@ -48,3 +48,4 @@ export const QuickRepliesTab: React.FC<QuickRepliesTabProps> = ({ data }) => {
     </div>
   );
 };
+

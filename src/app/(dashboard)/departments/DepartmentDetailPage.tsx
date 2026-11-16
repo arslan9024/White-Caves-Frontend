@@ -276,3 +276,4 @@ export const DepartmentDetailPage: React.FC<DepartmentDetailPageProps> = ({
 };
 
 export default DepartmentDetailPage;
+

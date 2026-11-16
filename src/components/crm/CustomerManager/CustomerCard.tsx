@@ -298,3 +298,4 @@ export const CustomerCard: FC<CustomerCardProps> = ({ customer, isHighlighted, o
     </div>
   );
 };
+

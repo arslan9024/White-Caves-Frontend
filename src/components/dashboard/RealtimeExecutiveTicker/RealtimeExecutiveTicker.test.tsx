@@ -13,3 +13,4 @@ describe('RealtimeExecutiveTicker Component', () => {
     expect(screen.getByText(/RERA Notarized: Ejari/i)).toBeDefined();
   });
 });
+

@@ -129,3 +129,4 @@ export const NewChatModal: React.FC<NewChatModalProps> = ({
     </div>
   );
 };
+

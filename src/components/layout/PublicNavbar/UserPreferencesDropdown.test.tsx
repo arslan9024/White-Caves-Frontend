@@ -92,3 +92,4 @@ describe('UserPreferencesDropdown Component', () => {
     expect(screen.getByText(/Sign Out/i)).toBeTruthy();
   });
 });
+

@@ -6,7 +6,7 @@ import {
   enforceRootHygiene,
   parseOptions,
   runPerpetualLoop,
-} from '../../.agents/orchestrator/aegis-perpetual-ouroboros.js';
+} from '../../../Aegis-Sterling/.agents/orchestrator/aegis-perpetual-ouroboros.js';
 
 vi.mock('node:child_process', () => ({ execSync: vi.fn() }));
 vi.mock('node:fs', () => ({
@@ -122,3 +122,4 @@ describe('bounded automation', () => {
     expect(fs.unlinkSync).toHaveBeenCalledWith(expect.stringMatching(/ouroboros\.lock$/));
   });
 });
+

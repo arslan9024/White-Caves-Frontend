@@ -23,3 +23,4 @@ describe('LuxuryTooltip Component', () => {
     expect(screen.queryByText('Verified DLD Permit')).toBeNull();
   });
 });
+

@@ -6,3 +6,4 @@ describe('AnalyticsMixedDashboard', () => {
     expect(true).toBe(true);
   });
 });
+

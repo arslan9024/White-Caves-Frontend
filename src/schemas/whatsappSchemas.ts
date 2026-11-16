@@ -39,3 +39,4 @@ export const WhatsAppSessionStatusSchema = z.object({
 export type WhatsAppMessage = z.infer<typeof WhatsAppMessageSchema>;
 export type WhatsAppContact = z.infer<typeof WhatsAppContactSchema>;
 export type WhatsAppSessionStatus = z.infer<typeof WhatsAppSessionStatusSchema>;
+

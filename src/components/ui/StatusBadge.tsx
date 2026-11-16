@@ -96,3 +96,4 @@ StatusBadge.propTypes = {
 };
 
 export default StatusBadge;
+

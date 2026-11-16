@@ -36,3 +36,4 @@ export async function sendLocalPushNotification(payload: NotificationPayload): P
 
   return false;
 }
+

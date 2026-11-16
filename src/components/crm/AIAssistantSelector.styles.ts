@@ -322,3 +322,4 @@ export const FavoriteBtn = styled.button`
     height: 18px;
   }
 `;
+

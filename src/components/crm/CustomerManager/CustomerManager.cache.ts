@@ -76,3 +76,4 @@ export function saveCustomersCache(customers: CustomerItem[]): void {
     // Non-fatal fallback
   }
 }
+

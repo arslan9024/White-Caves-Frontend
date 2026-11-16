@@ -12,3 +12,4 @@ describe('MfaPolicyToggle Component', () => {
     expect(screen.getByText(/Level 5 Managing Director & Superuser \(Strict TOTP \/ Hardware Key\)/i)).toBeDefined();
   });
 });
+

@@ -65,3 +65,4 @@ export const GoalTrackingKpiBoard: FC = () => (
   </Wrap>
 );
 export default GoalTrackingKpiBoard;
+

@@ -91,3 +91,4 @@ const BulkFurnishingModal: React.FC<BulkFurnishingModalProps> = ({
 };
 
 export default BulkFurnishingModal;
+

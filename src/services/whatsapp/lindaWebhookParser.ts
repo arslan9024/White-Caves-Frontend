@@ -123,3 +123,4 @@ export function parseWhatsAppWebhook(entry: MetaWebhookEntry): ParsedWhatsAppPay
     }
   };
 }
+

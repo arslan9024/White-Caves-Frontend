@@ -6,3 +6,4 @@ describe('OccupancyChart', () => {
     expect(true).toBe(true);
   });
 });
+

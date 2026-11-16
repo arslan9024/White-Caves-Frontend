@@ -68,3 +68,4 @@ export const CavesTicker: React.FC<CavesTickerProps> = ({
 };
 
 export default CavesTicker;
+

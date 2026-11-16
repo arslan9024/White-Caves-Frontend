@@ -6,3 +6,4 @@ describe('HazelFrontendCRM', () => {
     expect(true).toBe(true);
   });
 });
+

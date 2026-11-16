@@ -59,3 +59,4 @@ describe('DocumentGenerationPanel — production quality tests', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

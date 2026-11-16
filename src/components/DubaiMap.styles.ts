@@ -389,3 +389,4 @@ export const LegendDot = styled.div<{ $color: string }>`
   background: ${props => props.$color};
   flex-shrink: 0;
 `;
+

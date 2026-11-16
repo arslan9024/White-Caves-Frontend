@@ -15,3 +15,4 @@ export function loadSecrets(): void {
 
 // Immediately load when this module is imported.
 loadSecrets();
+

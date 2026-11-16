@@ -58,3 +58,4 @@ export function parseCsv(raw: string): { headers: string[]; rows: string[][] } {
   const rows = lines.slice(1).map(parse);
   return { headers, rows };
 }
+

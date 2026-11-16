@@ -40,3 +40,4 @@ export const MetaAdsSync: FC = () => {
   );
 };
 export default MetaAdsSync;
+

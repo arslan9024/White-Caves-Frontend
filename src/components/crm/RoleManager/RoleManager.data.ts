@@ -223,3 +223,4 @@ export const CANONICAL_SOVEREIGN_ROLES: SovereignRoleDefinition[] = [
     canImpersonate: false,
   },
 ];
+

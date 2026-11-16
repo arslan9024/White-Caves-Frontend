@@ -7,18 +7,18 @@
 
 import React, { FC, useEffect, useRef } from 'react';
 import {
-  Send,
   Sparkles,
   Check,
   CheckCheck,
   Phone,
   Video,
   MoreVertical,
-  Paperclip,
-  Smile,
   Bot,
+  UserCheck,
 } from 'lucide-react';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
+import { LindaRichMediaMessage } from './LindaRichMediaMessage';
+import { LindaChatThreadInputDock } from './LindaChatThreadInputDock';
 
 export interface ChatMessage {
   id: string;
@@ -27,6 +27,7 @@ export interface ChatMessage {
   timestamp: string;
   status?: 'sent' | 'delivered' | 'read';
   mediaType?: string | null;
+  mediaUrl?: string;
 }
 
 export interface LindaChatThreadPaneProps {
@@ -36,8 +37,16 @@ export interface LindaChatThreadPaneProps {
   inputMessage: string;
   onInputChange: (val: string) => void;
   onSend: () => void;
-  onAiDraft: () => void;
+  onAiDraft: (lang?: 'EN' | 'AR') => void;
+  onHumanTakeover?: () => void;
 }
+
+const QUICK_REPLIES = [
+  'Send Brochure',
+  'Schedule Viewing',
+  'Request Title Deed',
+  'DLD Valuation',
+];
 
 export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
   isDark,
@@ -47,19 +56,13 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
   onInputChange,
   onSend,
   onAiDraft,
+  onHumanTakeover,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView?.({ behavior: 'smooth' });
   }, [selectedConv?.id, activeMessages.length]);
-
-  const QUICK_REPLIES = [
-    'Send Brochure',
-    'Schedule Viewing',
-    'Request Title Deed',
-    'DLD Valuation',
-  ];
 
   return (
     <div
@@ -109,33 +112,70 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {onHumanTakeover && (
+            <button
+              onClick={onHumanTakeover}
+              data-testid="linda-takeover-btn"
+              title="1-Click Human Takeover"
+              style={{
+                background: 'rgba(239, 68, 68, 0.15)',
+                border: '1px solid #EF4444',
+                color: isDark ? '#FCA5A5' : '#DC2626',
+                borderRadius: 8,
+                padding: '5px 9px',
+                fontSize: 11,
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                cursor: 'pointer',
+              }}
+            >
+              <UserCheck size={12} /> Takeover
+            </button>
+          )}
           <button
-            onClick={onAiDraft}
+            onClick={() => onAiDraft('EN')}
             data-testid="linda-ai-draft-btn"
             style={{
               background: 'rgba(37, 211, 102, 0.15)',
               border: '1px solid #25D366',
               color: isDark ? '#4ADE80' : '#15803D',
               borderRadius: 8,
-              padding: '5px 10px',
+              padding: '5px 8px',
               fontSize: 11,
               fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
-              gap: 5,
+              gap: 4,
               cursor: 'pointer',
             }}
           >
-            <Sparkles size={12} /> Linda Copilot Draft
+            <Sparkles size={12} /> EN
+          </button>
+          <button
+            onClick={() => onAiDraft('AR')}
+            data-testid="linda-ai-draft-ar-btn"
+            style={{
+              background: 'rgba(59, 130, 246, 0.15)',
+              border: '1px solid #3B82F6',
+              color: isDark ? '#93C5FD' : '#2563EB',
+              borderRadius: 8,
+              padding: '5px 8px',
+              fontSize: 11,
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              cursor: 'pointer',
+            }}
+          >
+            <Sparkles size={12} /> AR
           </button>
           <Phone size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
           <Video size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
-          <MoreVertical
-            size={17}
-            color={isDark ? '#AEBAC1' : '#54656F'}
-            style={{ cursor: 'pointer' }}
-          />
+          <MoreVertical size={17} color={isDark ? '#AEBAC1' : '#54656F'} style={{ cursor: 'pointer' }} />
         </div>
       </div>
 
@@ -180,12 +220,8 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                 alignSelf: isOutbound ? 'flex-end' : 'flex-start',
                 maxWidth: '72%',
                 background: isOutbound
-                  ? isDark
-                    ? '#005C4B'
-                    : '#D9FDD3'
-                  : isDark
-                    ? '#202C33'
-                    : '#FFFFFF',
+                  ? isDark ? '#005C4B' : '#D9FDD3'
+                  : isDark ? '#202C33' : '#FFFFFF',
                 color: isDark ? '#E9EDEF' : '#111B21',
                 borderRadius: 10,
                 padding: '8px 12px',
@@ -210,22 +246,11 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
                 </div>
               )}
               {msg.mediaType && (
-                <div
-                  data-testid="linda-media-card"
-                  style={{
-                    marginBottom: 6,
-                    padding: '6px 10px',
-                    borderRadius: 8,
-                    background: isDark ? 'rgba(15, 23, 42, 0.55)' : 'rgba(15, 23, 42, 0.06)',
-                    fontSize: 11,
-                    fontWeight: 600,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                  }}
-                >
-                  <span>📎 {msg.mediaType.toUpperCase()} Attachment</span>
-                </div>
+                <LindaRichMediaMessage
+                  mediaType={msg.mediaType}
+                  mediaUrl={msg.mediaUrl}
+                  text={msg.text}
+                />
               )}
               <div>{msg.text}</div>
               <div
@@ -292,58 +317,14 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
         ))}
       </div>
 
-      {/* Input Dock */}
-      <div
-        style={{
-          padding: '10px 16px',
-          background: isDark ? '#202C33' : '#F0F2F5',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          borderTop: isDark ? '1px solid rgba(255,255,255,0.05)' : '1px solid #D1D7DB',
-        }}
-      >
-        <Smile size={20} color={isDark ? '#8696A0' : '#54656F'} style={{ cursor: 'pointer' }} />
-        <Paperclip size={20} color={isDark ? '#8696A0' : '#54656F'} style={{ cursor: 'pointer' }} />
-        <input
-          type="text"
-          placeholder="Type a message (or click Linda Copilot Draft)..."
-          data-testid="wa-message-input"
-          value={inputMessage}
-          onChange={e => onInputChange(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter') onSend();
-          }}
-          style={{
-            flex: 1,
-            background: isDark ? '#2A3942' : '#FFFFFF',
-            border: 'none',
-            outline: 'none',
-            borderRadius: 8,
-            padding: '10px 14px',
-            color: isDark ? '#D1D7DB' : '#111B21',
-            fontSize: 13,
-          }}
-        />
-        <button
-          onClick={onSend}
-          data-testid="wa-send-btn"
-          style={{
-            width: 38,
-            height: 38,
-            borderRadius: '50%',
-            background: '#25D366',
-            border: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: '#FFFFFF',
-          }}
-        >
-          <Send size={16} />
-        </button>
-      </div>
+      {/* Input Dock Delegated Subcomponent */}
+      <LindaChatThreadInputDock
+        isDark={isDark}
+        inputMessage={inputMessage}
+        onInputChange={onInputChange}
+        onSend={onSend}
+      />
     </div>
   );
 };
+

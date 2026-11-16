@@ -109,3 +109,4 @@ describe('ErmsSyncBridge (TURING-SEPARATION-010 Compliance Suite)', () => {
     expect(updatedRelations.length).toBe(CANONICAL_ERD_RELATIONS.length + 1);
   });
 });
+

@@ -43,3 +43,4 @@ export function getCanonicalUrl(pathname = '/'): string {
 }
 
 export default useSEO;
+

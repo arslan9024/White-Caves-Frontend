@@ -274,3 +274,4 @@ export const RexAlertsTab: React.FC<RexAlertsTabProps> = ({ flagged }) => (
     )}
   </div>
 );
+

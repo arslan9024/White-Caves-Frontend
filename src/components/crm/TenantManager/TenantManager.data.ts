@@ -140,3 +140,4 @@ export const DEFAULT_TENANT_METRICS: TenantMetrics = {
   openTicketsCount: 2,
   snagItemsCount: 1,
 };
+

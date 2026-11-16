@@ -46,3 +46,4 @@ describe('UAE FTA 5% VAT & 9% Corporate Tax Treasury Engine', () => {
     expect(res.companyNetRetainedAed).toBe(218_400); // 240,000 - 21,600
   });
 });
+

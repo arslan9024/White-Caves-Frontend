@@ -12,3 +12,4 @@ describe('ServiceWorkerRegistrationBanner.logic', () => {
     expect(typeof result.current.handlePurgeCompleted).toBe('function');
   });
 });
+

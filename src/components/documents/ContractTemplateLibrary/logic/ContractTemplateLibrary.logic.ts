@@ -30,3 +30,4 @@ export function useContractTemplateLibraryLogic() {
 
   return { filtered, CATEGORIES, activeCategory, setActiveCategory, preview, setPreview };
 }
+

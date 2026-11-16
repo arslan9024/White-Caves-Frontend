@@ -64,3 +64,4 @@ export const PullToRefreshWrapper: FC<Props> = ({ onRefresh, children }) => {
 };
 
 export default PullToRefreshWrapper;
+

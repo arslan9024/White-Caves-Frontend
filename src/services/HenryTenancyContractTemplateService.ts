@@ -849,3 +849,4 @@ class HenryTenancyContractTemplateService {
 
 export const henryTenancyContractTemplateService = new HenryTenancyContractTemplateService();
 export default henryTenancyContractTemplateService;
+

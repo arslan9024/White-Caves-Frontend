@@ -38,3 +38,4 @@ describe('BackendStatusBanner', () => {
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 });
+

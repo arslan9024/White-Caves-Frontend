@@ -72,3 +72,4 @@ export const LandlordProperties: React.FC = () => {
   );
 };
 
+

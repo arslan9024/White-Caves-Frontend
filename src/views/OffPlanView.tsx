@@ -52,3 +52,4 @@ export const OffPlanView: FC = () => {
   );
 };
 export default OffPlanView;
+

@@ -18,3 +18,4 @@ export function PageTransition({ children }: PageTransitionProps): React.JSX.Ele
     </motion.div>
   );
 }
+

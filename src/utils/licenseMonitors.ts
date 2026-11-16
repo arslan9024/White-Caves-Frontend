@@ -41,3 +41,4 @@ export const getLicenseStatuses = (currentDate: Date = new Date()): LicenseStatu
 export const hasExpiringLicenses = (statuses: LicenseStatus[]): boolean => {
   return statuses.some(s => s.status !== 'ACTIVE');
 };
+

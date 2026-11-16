@@ -46,3 +46,4 @@ export const InternalAnnouncementBoard: FC = () => {
   );
 };
 export default InternalAnnouncementBoard;
+

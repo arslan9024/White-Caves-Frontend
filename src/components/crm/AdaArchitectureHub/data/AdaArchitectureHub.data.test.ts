@@ -10,3 +10,4 @@ describe('AdaArchitectureHub.data', () => {
     expect(ADA_HUB_TEXT.printBtn).toContain('Print');
   });
 });
+

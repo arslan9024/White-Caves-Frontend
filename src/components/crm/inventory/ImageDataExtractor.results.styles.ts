@@ -192,3 +192,4 @@ export const ClosePreviewBtn = styled.button`
     color: #f59e0b;
   }
 `;
+

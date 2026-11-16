@@ -24,3 +24,4 @@ describe('CavesFloatingSearch Component', () => {
     expect((searchInput as HTMLInputElement).value).toBe('Nadia');
   });
 });
+

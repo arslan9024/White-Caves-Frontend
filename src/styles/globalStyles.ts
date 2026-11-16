@@ -160,3 +160,4 @@ export const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     overflow: hidden;
   }
 `;
+

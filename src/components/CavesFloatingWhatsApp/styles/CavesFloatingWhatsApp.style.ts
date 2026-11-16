@@ -54,3 +54,4 @@ export const SvgIcon = styled.svg`
   height: 28px;
   fill: currentColor;
 `;
+

@@ -6,3 +6,4 @@ describe('useResponsiveLayout (Hook)', () => {
     expect(HookModule).toBeDefined();
   });
 });
+

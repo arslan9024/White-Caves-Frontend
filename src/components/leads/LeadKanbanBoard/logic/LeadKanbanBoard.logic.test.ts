@@ -29,3 +29,4 @@ describe('LeadKanbanBoard.logic', () => {
     expect(contactedCol?.leads.some((l) => l.id === 'l1')).toBe(true);
   });
 });
+

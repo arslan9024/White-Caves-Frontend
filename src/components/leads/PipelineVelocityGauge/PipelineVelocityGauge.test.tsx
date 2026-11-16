@@ -10,3 +10,4 @@ describe('PipelineVelocityGauge', () => {
     expect(screen.getByText('Offer → Closed')).toBeTruthy();
   });
 });
+

@@ -69,3 +69,4 @@ export const MarketInsights: React.FC = () => {
   );
 };
 
+

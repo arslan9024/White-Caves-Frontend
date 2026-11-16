@@ -59,3 +59,4 @@ describe('PropertyGalleryPage — alert elimination', () => {
     expect(alertSpy).not.toHaveBeenCalled();
   });
 });
+

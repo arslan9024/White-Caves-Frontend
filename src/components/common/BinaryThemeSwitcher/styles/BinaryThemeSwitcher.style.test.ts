@@ -9,3 +9,4 @@ describe('BinaryThemeSwitcher.style', () => {
     expect(ModeBtn.styledComponentId).toBeDefined();
   });
 });
+

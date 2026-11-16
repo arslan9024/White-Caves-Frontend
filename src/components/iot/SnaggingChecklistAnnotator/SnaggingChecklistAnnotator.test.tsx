@@ -23,3 +23,4 @@ describe('SnaggingChecklistAnnotator Component', () => {
     expect(screen.getByText(/Window latch loose/i)).toBeDefined();
   });
 });
+

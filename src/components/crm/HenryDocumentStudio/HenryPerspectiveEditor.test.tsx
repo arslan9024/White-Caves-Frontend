@@ -73,3 +73,4 @@ it('rejects invalid corners and suppresses a stale correction after file changes
   expect(cancel).toHaveBeenCalledOnce();
   expect(confirm).not.toHaveBeenCalled();
 });
+

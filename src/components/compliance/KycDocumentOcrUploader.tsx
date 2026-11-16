@@ -196,3 +196,4 @@ export const KycDocumentOcrUploader: React.FC<KycDocumentOcrUploaderProps> = ({
     </div>
   );
 };
+

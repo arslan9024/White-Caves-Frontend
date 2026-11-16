@@ -264,3 +264,4 @@ export const QuickAddPropertyFormView: React.FC<QuickAddPropertyFormProps> = pro
     </div>
   );
 };
+

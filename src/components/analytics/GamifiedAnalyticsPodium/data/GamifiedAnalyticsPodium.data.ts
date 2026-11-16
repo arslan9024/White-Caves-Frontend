@@ -41,3 +41,4 @@ export const MANAGER_SPARKLINES = [
   { dept: 'Leasing', manager: 'Fatima Al-Nuaimi', trend: [88, 86, 92, 90, 94, 98, 102], targetAchieved: '128%' },
   { dept: 'Commercial', manager: 'Alexander Wright', trend: [30, 42, 55, 60, 62, 75, 89], targetAchieved: '98%' },
 ];
+

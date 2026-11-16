@@ -344,3 +344,4 @@ export const ExecutiveAIVSCodeSidebar: FC<ExecutiveAIVSCodeSidebarProps> = ({
 };
 
 export default ExecutiveAIVSCodeSidebar;
+

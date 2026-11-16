@@ -52,3 +52,4 @@ export interface TechnicalServiceStatus {
 }
 
 export type AuroraTab = 'health' | 'services' | 'apis' | 'alerts';
+

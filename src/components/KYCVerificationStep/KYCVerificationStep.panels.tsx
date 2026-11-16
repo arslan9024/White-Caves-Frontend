@@ -302,3 +302,4 @@ export const KycSuccessPanel: React.FC<{
     </button>
   </div>
 );
+

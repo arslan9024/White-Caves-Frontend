@@ -80,3 +80,4 @@ describe('NotFoundPage', () => {
     expect(screen.getByText('🏠')).toBeTruthy();
   });
 });
+

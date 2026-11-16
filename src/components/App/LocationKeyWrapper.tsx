@@ -11,3 +11,4 @@ export function LocationKeyWrapper({ children }: PageTransitionProps): React.JSX
     </AnimatePresence>
   );
 }
+

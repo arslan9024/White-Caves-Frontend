@@ -264,3 +264,4 @@ export function buildPropertyDetailPageSchemas(
 
   return schemas;
 }
+

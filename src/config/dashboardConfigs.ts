@@ -61,3 +61,4 @@ export const getDashboardRoleConfig = (role: string): DashboardRoleConfig => {
   }
   return DASHBOARD_CONFIGS.agent;
 };
+

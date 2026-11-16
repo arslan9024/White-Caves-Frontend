@@ -174,3 +174,4 @@ function PricingAnalyticsChart({ data, loading = false }) {
 }
 
 export default PricingAnalyticsChart;
+

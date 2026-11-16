@@ -283,3 +283,4 @@ export default function ExecutiveOverview({
 
   return <div className="view-container executive-view">{renderContent()}</div>;
 }
+

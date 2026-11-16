@@ -60,3 +60,4 @@ const CalendarTab: React.FC<CalendarTabProps> = memo(({ meetings, searchQuery, o
 });
 
 export default CalendarTab;
+

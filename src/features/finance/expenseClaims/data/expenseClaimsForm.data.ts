@@ -58,3 +58,4 @@ export const EXPENSE_CLAIM_CATEGORY_LABELS: Record<
   utilities: { en: 'Utilities', ar: 'المرافق' },
   other: { en: 'Other', ar: 'أخرى' },
 };
+

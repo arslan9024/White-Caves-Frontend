@@ -161,3 +161,4 @@ export const selectPropertiesByStatus = (state, field, value) =>
   });
 
 export default propertyStatusSlice.reducer;
+

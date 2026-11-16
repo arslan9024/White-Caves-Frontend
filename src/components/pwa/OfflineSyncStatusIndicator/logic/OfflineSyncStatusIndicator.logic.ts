@@ -43,3 +43,4 @@ export function useOfflineSyncStatusLogic(): UseOfflineSyncReturn {
   const phase = derivePhase(stats);
   return { phase, stats, label: deriveLabel(phase, stats) };
 }
+

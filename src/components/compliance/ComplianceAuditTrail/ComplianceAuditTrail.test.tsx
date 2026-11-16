@@ -18,3 +18,4 @@ describe('ComplianceAuditTrail Component', () => {
     expect(screen.queryByText(/RERA Form A/i)).toBeNull();
   });
 });
+

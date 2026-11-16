@@ -11,3 +11,4 @@ describe('EmployeeLeaderboardPanel.style', () => {
     expect(styles.Title.styledComponentId).toBeDefined();
   });
 });
+

@@ -58,3 +58,4 @@ export const FIELD_INPUT_STYLE: CSSProperties = {
   color: '#FFFFFF',
   fontSize: '0.85rem',
 };
+

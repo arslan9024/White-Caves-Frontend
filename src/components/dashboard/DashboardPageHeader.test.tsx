@@ -57,3 +57,4 @@ describe('DashboardPageHeader', () => {
     expect(ejariElements.length).toBeGreaterThanOrEqual(1);
   });
 });
+

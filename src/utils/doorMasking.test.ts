@@ -38,3 +38,4 @@ describe('AEG-017 Unit Door Masking Security Control', () => {
     expect(maskUnitDoor('Unit 402', { isNdaSigned: false, isPassportVerified: true })).toBe('Unit 4**');
   });
 });
+

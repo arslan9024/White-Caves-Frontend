@@ -526,3 +526,4 @@ export const ForecastPanel: React.FC = () => (
     </div>
   </div>
 );
+

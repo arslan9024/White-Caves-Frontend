@@ -25,3 +25,4 @@ describe('ExecutiveTopNavbar Component (7-Category Co-Location Spec)', () => {
     expect(screen.getByText(/White Caves HQ/i)).toBeInTheDocument();
   });
 });
+

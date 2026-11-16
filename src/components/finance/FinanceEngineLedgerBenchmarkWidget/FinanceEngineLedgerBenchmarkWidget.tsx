@@ -92,3 +92,4 @@ export const FinanceEngineLedgerBenchmarkWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

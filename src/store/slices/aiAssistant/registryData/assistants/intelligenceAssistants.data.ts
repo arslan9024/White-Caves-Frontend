@@ -267,3 +267,4 @@ export const intelligenceAssistants: Record<string, AIAssistant> = {
     apiEndpoints: ['/api/concierge', '/api/vip', '/api/lifestyle'],
   },
 };
+

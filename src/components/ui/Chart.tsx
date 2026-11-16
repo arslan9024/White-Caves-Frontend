@@ -210,3 +210,4 @@ Chart.propTypes = {
 };
 
 export default Chart;
+

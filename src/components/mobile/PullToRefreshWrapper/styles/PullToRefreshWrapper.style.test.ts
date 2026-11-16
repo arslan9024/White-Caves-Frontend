@@ -9,3 +9,4 @@ describe('PullToRefreshWrapper.style', () => {
     expect(styles.ContentShift).toBeDefined();
   });
 });
+

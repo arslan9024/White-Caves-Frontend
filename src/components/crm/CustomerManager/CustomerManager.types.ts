@@ -46,3 +46,4 @@ export interface CustomerItem {
   lastContactDate?: string;
   createdAt: string;
 }
+

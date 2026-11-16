@@ -122,3 +122,4 @@ export function filterDepartmentsBySearch(
       (d.description && d.description.toLowerCase().includes(term))
   );
 }
+

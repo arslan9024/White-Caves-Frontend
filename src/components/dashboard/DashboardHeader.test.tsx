@@ -91,3 +91,4 @@ describe('DashboardHeader', () => {
     expect(initials.length).toBeGreaterThanOrEqual(1);
   });
 });
+

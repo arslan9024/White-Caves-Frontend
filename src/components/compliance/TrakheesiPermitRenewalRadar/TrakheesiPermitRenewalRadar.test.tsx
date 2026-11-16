@@ -56,3 +56,4 @@ describe('TrakheesiPermitRenewalRadar Component', () => {
     expect(screen.getByText(/Successfully harmonized all permits with DLD Trakheesi Gateway API/i)).toBeInTheDocument();
   });
 });
+

@@ -34,3 +34,4 @@ describe('PropertyStatusUpdater', () => {
     expect(screen.getByRole('button', { name: /update status/i })).toBeInTheDocument();
   });
 });
+

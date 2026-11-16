@@ -5,3 +5,4 @@ export const GALLERY_TABS: { id: GalleryTabType; label: string }[] = [
   { id: 'details', label: 'Details' },
   { id: 'documents', label: 'Documents' },
 ];
+

@@ -179,3 +179,4 @@ export const HRDepartmentView: React.FC<HRDepartmentViewProps> = ({
 };
 
 export default HRDepartmentView;
+

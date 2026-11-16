@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Analytics Component
  *
  * Dashboard displaying WhatsApp messaging analytics
@@ -433,3 +433,4 @@ export const Analytics: React.FC<AnalyticsProps> = ({ accountId }) => {
     </Container>
   );
 };
+

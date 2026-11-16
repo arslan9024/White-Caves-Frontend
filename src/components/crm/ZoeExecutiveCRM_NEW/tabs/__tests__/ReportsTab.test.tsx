@@ -51,3 +51,4 @@ describe('ReportsTab', () => {
     expect(screen.getByText('AED 125,000 (100% Escrowed)')).toBeInTheDocument();
   });
 });
+

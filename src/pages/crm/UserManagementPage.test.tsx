@@ -110,3 +110,4 @@ describe('UserManagementPage', () => {
     expect(screen.getByText('No users found')).toBeDefined();
   });
 });
+

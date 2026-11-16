@@ -173,3 +173,4 @@ export const SearchBar: FC<SearchBarProps> = ({
     </Container>
   );
 };
+

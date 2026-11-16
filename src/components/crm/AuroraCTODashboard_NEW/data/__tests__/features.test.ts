@@ -8,3 +8,4 @@ describe('CTO Features Data', () => {
     expect(CTO_FEATURES).toContain('System monitoring and health checks');
   });
 });
+

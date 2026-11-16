@@ -47,3 +47,4 @@ export const LifestyleAmenitiesCarousel: FC = () => {
   );
 };
 export default LifestyleAmenitiesCarousel;
+

@@ -53,3 +53,4 @@ export const GHADA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as ghada_supervisorExport;
+

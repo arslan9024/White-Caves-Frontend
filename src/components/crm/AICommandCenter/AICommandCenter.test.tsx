@@ -31,3 +31,4 @@ describe('AICommandCenter View Component (1-12-108 Protocol)', () => {
     expect(screen.getByTestId('dept-pill-all')).toBeDefined();
   });
 });
+

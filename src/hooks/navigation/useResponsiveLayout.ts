@@ -70,3 +70,4 @@ export function useResponsiveLayout(): ResponsiveLayout {
     width,
   };
 }
+

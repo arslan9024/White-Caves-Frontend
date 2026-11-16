@@ -249,3 +249,4 @@ export const RiskBadge = styled.span<{ $risk: string }>`
           color: #10b981;
         `}
 `;
+

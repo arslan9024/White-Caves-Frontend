@@ -12,3 +12,4 @@ describe('Architecture Data', () => {
     expect(SYSTEM_COMPONENTS.length).toBeGreaterThan(0);
   });
 });
+

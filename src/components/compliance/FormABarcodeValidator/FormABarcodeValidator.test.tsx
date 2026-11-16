@@ -18,3 +18,4 @@ describe('FormABarcodeValidator Component', () => {
     expect(screen.getByText(/DLD REST API VERIFIED/i)).toBeDefined();
   });
 });
+

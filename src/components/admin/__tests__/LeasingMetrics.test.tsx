@@ -11,3 +11,4 @@ describe('LeasingMetrics Component', () => {
     expect(screen.getByText('412')).toBeDefined();
   });
 });
+

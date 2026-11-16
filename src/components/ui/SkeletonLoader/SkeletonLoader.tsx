@@ -82,3 +82,4 @@ export function SkeletonLoader({ type = 'card', count = 1, variant = '' }) {
 }
 
 export default SkeletonLoader;
+

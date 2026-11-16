@@ -15,3 +15,4 @@ export function calcVelocityPct(avgDays: number, target: number): number {
 export function isOnTarget(avgDays: number, target: number): boolean {
   return avgDays <= target * 1.2;
 }
+

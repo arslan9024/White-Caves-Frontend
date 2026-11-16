@@ -53,3 +53,4 @@ export const SCARLETT_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as scarlett_supervisorExport;
+

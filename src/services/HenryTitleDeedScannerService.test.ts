@@ -139,3 +139,4 @@ ${row}`);
     expect(henryTitleDeedScannerService.getCachedTitleDeed()).toBeNull();
   });
 });
+

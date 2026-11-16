@@ -595,3 +595,4 @@ export const SentinelPropertyCRM = ({ moduleId, role, user }) => {
 };
 
 export default SentinelPropertyCRM;
+

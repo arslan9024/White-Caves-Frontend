@@ -151,3 +151,4 @@ export const SEARCH_PLACEHOLDER_MAP: Record<string, string> = {
   analytics: 'Filter analytics metrics & reports...',
   module: 'Filter module parameters...',
 };
+

@@ -14,3 +14,4 @@ describe('LandFeasibilityStudyGenerator Component', () => {
     expect(screen.getByText(/Export Feasibility PDF/i)).toBeDefined();
   });
 });
+

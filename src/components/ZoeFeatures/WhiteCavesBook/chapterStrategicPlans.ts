@@ -43,7 +43,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/ACTIVE_OUROBOROS_PROMPT.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/ACTIVE_OUROBOROS_PROMPT.md',
                   totalLines: 22,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -229,7 +229,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/AEGIS_TOP_1000_ISSUES.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/AEGIS_TOP_1000_ISSUES.md',
                   totalLines: 16,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -316,7 +316,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/AEGIS_TOP_100_TARGETS.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/AEGIS_TOP_100_TARGETS.md',
                   totalLines: 102,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -471,7 +471,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/AEGIS_TOP_12_TARGETS.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/AEGIS_TOP_12_TARGETS.md',
                   totalLines: 14,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -541,7 +541,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: 1. Executive Summary & Objective',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/AIAMS_MODERNIZATION_SUMMARY.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/AIAMS_MODERNIZATION_SUMMARY.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -627,7 +627,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/ANTIGRAVITY_SYNC.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/ANTIGRAVITY_SYNC.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -697,7 +697,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/CURRENT_OUROBOROS_WAVE.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/CURRENT_OUROBOROS_WAVE.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -784,7 +784,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/daily-milestone-tracker.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/daily-milestone-tracker.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -922,7 +922,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: Scope',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/dashboard-sidebar-accessibility.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/dashboard-sidebar-accessibility.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1039,7 +1039,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/ERMS_100_UPGRADES_MASTER_PLAN.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/ERMS_100_UPGRADES_MASTER_PLAN.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1110,7 +1110,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/feature-coverage-matrix.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/feature-coverage-matrix.md',
                   totalLines: 17,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1180,7 +1180,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/IMPROVEMENTS_UX.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/IMPROVEMENTS_UX.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1250,7 +1250,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/in-house-finance-accounting-roadmap.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/in-house-finance-accounting-roadmap.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1320,7 +1320,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/INDEX.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/INDEX.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1406,7 +1406,7 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/plans/LEASING_OPERATIONS_HANDOVER.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/plans/LEASING_OPERATIONS_HANDOVER.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -1447,3 +1447,4 @@ export const CHAPTER_STRATEGIC_PLANS: ChapterNode = {
     },
   ],
 };
+

@@ -43,7 +43,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/daily-wave-command-center.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/daily-wave-command-center.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -129,7 +129,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-flowcharts.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-flowcharts.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -212,7 +212,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-gate-validation-report.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-gate-validation-report.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -296,7 +296,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-implementation-backlog.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-implementation-backlog.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -382,7 +382,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-readiness-packet.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-readiness-packet.md',
                   totalLines: 1,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -452,7 +452,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-sdd.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-sdd.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -522,7 +522,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-01-test-rollout.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-01-test-rollout.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -592,7 +592,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-02-data-contract-inventory.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-02-data-contract-inventory.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -662,7 +662,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: Objective',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-02-implementation-backlog.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-02-implementation-backlog.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -749,7 +749,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-02-permission-boundary-map.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-02-permission-boundary-map.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -816,7 +816,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: 1. Wave Metadata',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-02-readiness-packet.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-02-readiness-packet.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -932,7 +932,7 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/wave-02-readiness-source-of-truth.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/wave-02-readiness-source-of-truth.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -973,3 +973,4 @@ export const CHAPTER_WAVE_SPRINTS: ChapterNode = {
     },
   ],
 };
+

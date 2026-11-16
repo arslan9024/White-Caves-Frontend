@@ -10,3 +10,4 @@ describe('BulkLeadActionToolbar.style', () => {
     expect(styles.Divider).toBeDefined();
   });
 });
+

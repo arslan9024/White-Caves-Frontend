@@ -60,3 +60,4 @@ export const FavoriteHeartButton: FC<{ initialFavorited?: boolean; onToggle?: (f
 };
 
 export default FavoriteHeartButton;
+

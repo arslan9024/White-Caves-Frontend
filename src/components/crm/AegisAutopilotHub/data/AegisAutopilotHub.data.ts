@@ -14,3 +14,4 @@ export const AEGIS_HUB_TEXT = {
   copyLinkBtn: '🔗 Copy Status Link',
   jumpToAssistant: 'Jump to Assistant',
 };
+

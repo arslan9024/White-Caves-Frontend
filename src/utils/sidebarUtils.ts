@@ -271,3 +271,4 @@ export default {
   validateSelection,
   sanitizeSelection,
 };
+

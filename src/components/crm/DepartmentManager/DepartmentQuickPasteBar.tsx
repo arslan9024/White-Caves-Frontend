@@ -254,3 +254,4 @@ export const DepartmentQuickPasteBar: FC<DepartmentQuickPasteBarProps> = ({
 };
 
 export default DepartmentQuickPasteBar;
+

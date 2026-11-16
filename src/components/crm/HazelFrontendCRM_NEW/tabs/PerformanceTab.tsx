@@ -70,3 +70,4 @@ const PerformanceTab: React.FC<PerformanceTabProps> = ({ metrics }) => {
 };
 
 export default PerformanceTab;
+

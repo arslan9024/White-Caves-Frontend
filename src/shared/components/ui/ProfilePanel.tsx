@@ -110,3 +110,4 @@ const ProfilePanel = ({ user, onClose }) => {
 };
 
 export default ProfilePanel;
+

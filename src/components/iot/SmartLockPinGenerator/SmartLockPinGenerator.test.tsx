@@ -16,3 +16,4 @@ describe('SmartLockPinGenerator Component', () => {
     expect(screen.getByText(/Temporary 1-Hour Access PIN/i)).toBeDefined();
   });
 });
+

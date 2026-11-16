@@ -7,3 +7,4 @@ describe('LanguageSwitcherPill.data', () => {
     expect(LANGUAGE_PILL_TEXT.ariaLabel).toBe('Select Language Mode');
   });
 });
+

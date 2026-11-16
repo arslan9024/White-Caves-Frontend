@@ -22,3 +22,4 @@ describe('QuickViewPropertyDrawer', () => {
     expect(onClose).toHaveBeenCalled();
   });
 });
+

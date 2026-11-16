@@ -191,3 +191,4 @@ export const TenantCreditRiskRating: FC = () => {
 };
 
 export default TenantCreditRiskRating;
+

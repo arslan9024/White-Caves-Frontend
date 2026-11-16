@@ -770,3 +770,4 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     },
   },
 };
+

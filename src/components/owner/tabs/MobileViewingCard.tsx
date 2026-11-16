@@ -227,3 +227,4 @@ export const MobileViewingCard: React.FC<MobileViewingCardProps> = ({
     </CardContainer>
   );
 };
+

@@ -314,3 +314,4 @@ const JobPostComposer = memo(({
 
 JobPostComposer.displayName = 'JobPostComposer';
 export default JobPostComposer;
+

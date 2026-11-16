@@ -22,3 +22,4 @@ export const HeroCountersWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

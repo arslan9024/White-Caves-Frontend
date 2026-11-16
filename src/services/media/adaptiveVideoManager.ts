@@ -58,3 +58,4 @@ export class AdaptiveVideoManager {
     return [...this.tracks];
   }
 }
+

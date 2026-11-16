@@ -77,3 +77,4 @@ export const TOP_LEADS: TopLeadItem[] = [
     lastContact: '1 day ago',
   },
 ];
+

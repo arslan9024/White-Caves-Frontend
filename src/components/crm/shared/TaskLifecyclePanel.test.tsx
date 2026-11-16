@@ -238,3 +238,4 @@ describe('TaskLifecyclePanel', () => {
     expect(metaRow?.textContent).toContain('In Progress');
   });
 });
+

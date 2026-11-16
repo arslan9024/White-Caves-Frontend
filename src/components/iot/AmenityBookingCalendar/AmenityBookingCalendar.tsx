@@ -79,3 +79,4 @@ export const AmenityBookingCalendar: FC = () => {
   );
 };
 export default AmenityBookingCalendar;
+

@@ -124,3 +124,4 @@ export const LegacyDomainRouter: FC<LegacyDomainRouterProps> = ({
 };
 
 export default LegacyDomainRouter;
+

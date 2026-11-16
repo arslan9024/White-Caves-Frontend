@@ -10,3 +10,4 @@ describe('DocumentVersionHistory', () => {
     expect(screen.getByText('v4.0')).toBeTruthy();
   });
 });
+

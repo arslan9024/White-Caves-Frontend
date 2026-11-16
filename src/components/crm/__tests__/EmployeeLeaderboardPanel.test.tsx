@@ -30,3 +30,4 @@ describe('EmployeeLeaderboardPanel Component', () => {
     expect(screen.getAllByText(/YTD Revenue \/ Commission/i).length).toBeGreaterThan(0);
   });
 });
+

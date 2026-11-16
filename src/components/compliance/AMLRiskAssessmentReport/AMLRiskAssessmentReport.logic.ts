@@ -41,3 +41,4 @@ export const useAMLReportLogic = () => {
     handleGenerateReport
   };
 };
+

@@ -244,3 +244,4 @@ const PropertyDetailsCard: React.FC<PropertyDetailsCardProps> = ({
 };
 
 export default PropertyDetailsCard;
+

@@ -54,3 +54,4 @@ export const EMPTY_FORM: CommissionFormData = {
   property_title: '',
   notes: '',
 };
+

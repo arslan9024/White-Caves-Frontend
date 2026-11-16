@@ -9,3 +9,4 @@ describe('ProgressBar Component', () => {
     expect(screen.getByText('75%')).toBeInTheDocument();
   });
 });
+

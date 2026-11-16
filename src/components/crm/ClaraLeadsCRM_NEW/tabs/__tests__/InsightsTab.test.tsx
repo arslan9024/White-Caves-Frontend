@@ -249,3 +249,4 @@ describe('InsightsTab', () => {
     expect(screen.getByText('Last 12 months')).toBeInTheDocument();
   });
 });
+

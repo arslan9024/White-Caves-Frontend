@@ -327,3 +327,4 @@ export function useDealManager({
     highlightedDealId: highlightedId,
   };
 }
+

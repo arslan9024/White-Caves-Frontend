@@ -33,3 +33,4 @@ export const FinanceMetrics: React.FC<FinanceMetricsProps> = ({
 };
 
 export default FinanceMetrics;
+

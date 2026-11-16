@@ -15,3 +15,4 @@ describe('FeatureRenderer Component', () => {
     expect(container).toBeDefined();
   });
 });
+

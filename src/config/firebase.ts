@@ -251,3 +251,4 @@ export const clearBiometricSession = (): void => {
 
 export { EmailAuthProvider, reauthenticateWithCredential };
 export default app;
+

@@ -12,3 +12,4 @@ describe('AmlPepScreeningFilter Component', () => {
     expect(screen.getByDisplayValue('Viktor Morozov')).toBeDefined();
   });
 });
+

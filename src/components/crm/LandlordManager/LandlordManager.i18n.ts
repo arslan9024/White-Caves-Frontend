@@ -109,3 +109,4 @@ export const LANDLORD_DICTIONARY = {
 } as const;
 
 export type LandlordLanguage = keyof typeof LANDLORD_DICTIONARY;
+

@@ -24,3 +24,4 @@ describe('useTranslation', () => {
     expect(result.current.formatCurrency(5000)).toBe('AED 5000');
   });
 });
+

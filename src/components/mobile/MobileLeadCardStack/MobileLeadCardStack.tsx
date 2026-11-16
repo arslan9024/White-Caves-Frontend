@@ -69,3 +69,4 @@ export const MobileLeadCardStack: FC = () => {
 };
 
 export default MobileLeadCardStack;
+

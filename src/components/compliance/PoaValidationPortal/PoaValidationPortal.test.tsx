@@ -18,3 +18,4 @@ describe('PoaValidationPortal Component', () => {
     expect(screen.getByText(/RERA Conveyancing Directive:/i)).toBeDefined();
   });
 });
+

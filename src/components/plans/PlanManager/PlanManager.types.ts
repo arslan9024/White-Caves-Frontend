@@ -28,3 +28,4 @@ export interface StatusMessage {
   type: 'error' | 'success' | 'info';
   text: string;
 }
+

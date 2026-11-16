@@ -9,3 +9,4 @@ describe('Checkout Component', () => {
     expect(container).toBeDefined();
   });
 });
+

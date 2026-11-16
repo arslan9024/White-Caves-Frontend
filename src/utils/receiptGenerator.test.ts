@@ -8,3 +8,4 @@ describe('receiptGenerator (AEG-029)', () => {
     expect(formatSequentialReceiptNumber(0, 2026)).toBe('WC-RCP-2026-000001');
   });
 });
+

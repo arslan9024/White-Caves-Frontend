@@ -6,3 +6,4 @@ export type RbacLevel = 1 | 2 | 3 | 4 | 5;
 export function hasRbacAccess(userLevel: RbacLevel, requiredLevel: RbacLevel): boolean {
   return userLevel >= requiredLevel;
 }
+

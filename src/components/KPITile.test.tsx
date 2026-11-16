@@ -10,3 +10,4 @@ describe('KPITile Component', () => {
     expect(screen.getByText(/1,450,000/)).toBeInTheDocument();
   });
 });
+

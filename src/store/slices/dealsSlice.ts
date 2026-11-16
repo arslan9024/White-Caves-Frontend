@@ -228,3 +228,4 @@ const dealsSlice = createSlice({
 export const { updatePipelineValue, setSelectedDeal, clearSelectedDeal, clearError } =
   dealsSlice.actions;
 export default dealsSlice.reducer;
+

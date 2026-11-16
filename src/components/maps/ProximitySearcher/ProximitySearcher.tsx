@@ -51,3 +51,4 @@ export const ProximitySearcher: FC = () => {
   );
 };
 export default ProximitySearcher;
+

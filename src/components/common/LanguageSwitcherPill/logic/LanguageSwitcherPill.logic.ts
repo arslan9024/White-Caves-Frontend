@@ -26,3 +26,4 @@ export function useLanguageSwitcherPillLogic(props?: UseLanguageSwitcherPillProp
     languagesList: Object.values(supportedLanguages),
   };
 }
+

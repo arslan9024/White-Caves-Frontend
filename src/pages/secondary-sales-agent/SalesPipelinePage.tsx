@@ -270,3 +270,4 @@ export const SalesPipelinePage: FC = () => {
 };
 
 export default SalesPipelinePage;
+

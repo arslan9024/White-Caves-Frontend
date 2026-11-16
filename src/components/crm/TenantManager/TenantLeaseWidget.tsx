@@ -118,3 +118,4 @@ export const TenantLeaseWidget: FC<TenantLeaseWidgetProps> = ({ lease, onSignLea
     </SectionCard>
   );
 };
+

@@ -37,3 +37,4 @@ describe('Media Services: Adaptive Video Manager & Responsive Image Helper', () 
     expect(res.fallback).toBe('https://assets.whitecaves.com/villas/damac-hills-2-1200w.jpg');
   });
 });
+

@@ -43,7 +43,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/03_ai_assistants/README.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/03_ai_assistants/README.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -113,7 +113,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/05_requirements/compliance-requirements.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/05_requirements/compliance-requirements.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -201,7 +201,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/analytics-dashboard.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/analytics-dashboard.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -272,7 +272,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/dld-integration.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/dld-integration.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -375,7 +375,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/document-generation.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/document-generation.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -445,7 +445,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/financial-reporting.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/financial-reporting.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -548,7 +548,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/landlord-portal.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/landlord-portal.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -618,7 +618,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/legal-management.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/legal-management.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -721,7 +721,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/tenancy-ejari.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/tenancy-ejari.md',
                   totalLines: 6,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -808,7 +808,7 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
                   title: 'Artifact: Production Data Contract',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/business_docs/09_crm_features/wave-16-security-hardening.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/business_docs/09_crm_features/wave-16-security-hardening.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -849,3 +849,4 @@ export const CHAPTER_DEPARTMENT_SOPS: ChapterNode = {
     },
   ],
 };
+

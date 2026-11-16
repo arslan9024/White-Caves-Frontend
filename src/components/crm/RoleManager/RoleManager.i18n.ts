@@ -88,3 +88,4 @@ export const ROLE_MANAGER_I18N: Record<string, RoleManagerTranslations> = {
     dir: 'ltr',
   },
 };
+

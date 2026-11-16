@@ -53,3 +53,4 @@ export const FIONA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as fiona_supervisorExport;
+

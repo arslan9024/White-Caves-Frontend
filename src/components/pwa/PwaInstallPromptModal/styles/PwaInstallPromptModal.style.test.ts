@@ -10,3 +10,4 @@ describe('PwaInstallPromptModal.style', () => {
     expect(styles.Title).toBeDefined();
   });
 });
+

@@ -6,3 +6,4 @@ export function useMdPortalLogic() {
   const handleRefresh = useCallback(() => setLastSynced(new Date().toISOString()), []);
   return { data: MD_PORTAL_DATA, lastSynced, handleRefresh };
 }
+

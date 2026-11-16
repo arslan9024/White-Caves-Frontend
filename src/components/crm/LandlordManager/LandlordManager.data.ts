@@ -205,3 +205,4 @@ export const DEFAULT_LANDLORD_METRICS: LandlordMetrics = {
   activeMaintenanceTickets: 2,
   netRentalYieldPercent: 7.85,
 };
+

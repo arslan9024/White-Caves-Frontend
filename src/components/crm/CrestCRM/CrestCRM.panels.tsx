@@ -297,3 +297,4 @@ export const CalculatorTabPanel: React.FC<CalculatorTabPanelProps> = ({
     </div>
   </div>
 );
+

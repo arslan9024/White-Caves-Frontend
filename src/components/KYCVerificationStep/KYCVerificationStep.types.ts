@@ -67,3 +67,4 @@ export interface KYCVerificationStepProps {
   onComplete?: (result: { kycSubmitted: boolean }) => void;
   onSkip?: () => void;
 }
+

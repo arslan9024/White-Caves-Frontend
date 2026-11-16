@@ -12,3 +12,4 @@ describe('BouncedChequeWorkflow Component', () => {
     expect(screen.getByText(/Initiate Legal Workflow/i)).toBeDefined();
   });
 });
+

@@ -27,3 +27,4 @@ export const SkeletonUiLoader: FC = () => {
 };
 
 export default SkeletonUiLoader;
+

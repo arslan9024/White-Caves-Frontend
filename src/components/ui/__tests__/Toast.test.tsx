@@ -385,3 +385,4 @@ describe('Toast Component', () => {
     });
   });
 });
+

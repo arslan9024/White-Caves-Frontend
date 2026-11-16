@@ -9,3 +9,4 @@ export function useDriveScannerIntake(source: DriveImport | undefined, upload: (
     if (source) void latest.current(source.file);
   }, [source]);
 }
+

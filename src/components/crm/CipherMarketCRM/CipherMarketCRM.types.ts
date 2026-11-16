@@ -36,3 +36,4 @@ export interface CommunityTrendItem {
   change12m: string;
   demand: string;
 }
+

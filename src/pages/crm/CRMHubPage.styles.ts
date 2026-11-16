@@ -344,3 +344,4 @@ export const TickerItem = styled.div`
     font-weight: 700;
   }
 `;
+

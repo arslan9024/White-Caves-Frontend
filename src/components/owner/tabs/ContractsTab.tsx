@@ -664,3 +664,4 @@ const ContractsTab: React.FC<ContractsTabProps> = ({ data, loading }) => {
 };
 
 export default React.memo(ContractsTab);
+

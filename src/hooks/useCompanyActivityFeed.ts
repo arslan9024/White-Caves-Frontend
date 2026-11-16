@@ -85,3 +85,4 @@ export function useCompanyActivityFeed(seedItems: Record<string, unknown>[] = []
     error,
   };
 }
+

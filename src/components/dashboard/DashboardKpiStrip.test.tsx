@@ -44,3 +44,4 @@ describe('DashboardKpiStrip', () => {
     expect(container.querySelectorAll('.dashboard-kpi-card')).toHaveLength(0);
   });
 });
+

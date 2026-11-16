@@ -82,3 +82,4 @@ export const assistantsService = {
     await apiClient.delete(`${BASE}/${encodeURIComponent(id)}`);
   },
 };
+

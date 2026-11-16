@@ -82,3 +82,4 @@ export const ReceivedOffers: React.FC = () => {
   );
 };
 
+

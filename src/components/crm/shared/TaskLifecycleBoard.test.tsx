@@ -284,3 +284,4 @@ describe('TaskLifecycleBoard', () => {
     expect(emptyMessages.length).toBe(5);
   });
 });
+

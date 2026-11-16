@@ -110,3 +110,4 @@ export async function saveGenericDocument(scan: GenericScan, original: File, opt
     throw new Error('Nothing confirmed saved. Review the current source, check vault access and retry.');
   }
 }
+

@@ -153,3 +153,4 @@ export const ContractPreviewPanel: React.FC<{ contract: GeneratedContract | null
     )}
   </div>
 );
+

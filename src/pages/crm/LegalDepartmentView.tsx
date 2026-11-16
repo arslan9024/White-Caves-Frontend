@@ -302,3 +302,4 @@ export const LegalDepartmentView: FC = () => {
 };
 
 export default LegalDepartmentView;
+

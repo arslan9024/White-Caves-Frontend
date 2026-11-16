@@ -41,7 +41,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/agent-upgrade-executive-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/agent-upgrade-executive-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -111,7 +111,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: 📁 Complete File Structure Created',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/architecture-visual-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/architecture-visual-summary.md',
                   totalLines: 45,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -180,7 +180,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/batch16-final-delivery-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/batch16-final-delivery-summary.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -250,7 +250,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/batch2-delivery-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/batch2-delivery-summary.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -320,7 +320,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/batch22-final-delivery-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/batch22-final-delivery-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -390,7 +390,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: ✅ PROJECT STATUS: COMPLETE & VERIFIED',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/batch9-final-delivery-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/batch9-final-delivery-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -460,7 +460,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/complete-production-readiness-session-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/complete-production-readiness-session-summary.md',
                   totalLines: 5,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -530,7 +530,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/completion-summary-2026.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/completion-summary-2026.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -597,7 +597,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/credit-optimization-execution-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/credit-optimization-execution-summary.md',
                   totalLines: 2,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -665,7 +665,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/crimson-sidebar-migration-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/crimson-sidebar-migration-summary.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -735,7 +735,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: Session Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/critical-fixes-session-3.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/critical-fixes-session-3.md',
                   totalLines: 4,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -802,7 +802,7 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
                   title: 'Artifact: General Overview',
                   type: 'LAW',
                   filePath:
-                    'C:/Users/Dell/Documents/antigravity/White-Caves/White-Caves-Frontend/.agents/docs/css-color-consolidation-executive-summary.md',
+                    'C:/Users/Dell/Documents/antigravity/White-Caves/Aegis-Sterling/.agents/docs/css-color-consolidation-executive-summary.md',
                   totalLines: 3,
                   complexity: 'O(1)',
                   paragraphs: [
@@ -841,3 +841,4 @@ export const CHAPTER_SESSION_TRANSCRIPTS: ChapterNode = {
     },
   ],
 };
+

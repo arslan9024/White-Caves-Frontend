@@ -47,8 +47,34 @@ describe('LindaLeadContextPane 4 Production Workflows', () => {
           }),
         });
       }
+      if (url.includes('/takeover')) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            success: true,
+            data: { jid: 'test@s.whatsapp.net', humanAgent: 'Arslan Malik', aiPaused: true },
+          }),
+        });
+      }
       return Promise.resolve({ ok: true, json: async () => ({ success: true, data: {} }) });
     }) as unknown as typeof fetch;
+  });
+
+  it('executes 1-Click Human Takeover workflow', async () => {
+    render(<LindaLeadContextPane conversation={sampleConv} />);
+    fireEvent.click(screen.getByTestId('linda-takeover-action-btn'));
+    await waitFor(() => {
+      expect(screen.getByTestId('linda-workflow-status').textContent).toContain('Human Takeover Active');
+    });
+  });
+
+  it('executes 1-Click Send to Henry for Form A and Form B', () => {
+    render(<LindaLeadContextPane conversation={sampleConv} />);
+    fireEvent.click(screen.getByTestId('linda-send-henry-forma'));
+    expect(screen.getByTestId('linda-workflow-status').textContent).toContain('Sent to Henry: FORM_A');
+
+    fireEvent.click(screen.getByTestId('linda-send-henry-formb'));
+    expect(screen.getByTestId('linda-workflow-status').textContent).toContain('Sent to Henry: FORM_B');
   });
 
   it('executes Auto-Qualify & Match Units workflow', async () => {
@@ -75,3 +101,4 @@ describe('LindaLeadContextPane 4 Production Workflows', () => {
     });
   });
 });
+

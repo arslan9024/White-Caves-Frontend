@@ -70,3 +70,4 @@ export const NOVA_TABS: NovaTab[] = [
   { id: 'docs', label: '📚 Docs' },
   { id: 'lifecycle', label: '🔄 Lifecycle' },
 ];
+

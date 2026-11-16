@@ -21,3 +21,4 @@ describe('leasing data module', () => {
     expect(lease).toHaveProperty('status');
   });
 });
+

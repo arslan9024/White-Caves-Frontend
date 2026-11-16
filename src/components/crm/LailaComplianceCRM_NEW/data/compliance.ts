@@ -45,3 +45,4 @@ export const AML_ALERTS: AMLAlert[] = [
   { id: 1, client: 'Unknown Source', type: 'large_transaction', amount: 5000000, status: 'investigating', date: '2024-01-08' },
   { id: 2, client: 'Mohammed Khan', type: 'pep_flag', amount: 0, status: 'cleared', date: '2024-01-07' }
 ];
+

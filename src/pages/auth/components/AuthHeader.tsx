@@ -21,3 +21,4 @@ export const AuthHeader = memo(function AuthHeader({ isSignup }: AuthHeaderProps
 });
 
 export default AuthHeader;
+

@@ -274,3 +274,4 @@ export const MilestoneDetailCard = styled.div`
     margin-top: 6px;
   }
 `;
+

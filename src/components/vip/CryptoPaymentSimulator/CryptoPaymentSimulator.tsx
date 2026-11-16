@@ -95,3 +95,4 @@ export const CryptoPaymentSimulator: FC = () => {
   );
 };
 export default CryptoPaymentSimulator;
+

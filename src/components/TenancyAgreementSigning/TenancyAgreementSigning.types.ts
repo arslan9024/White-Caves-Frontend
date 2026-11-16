@@ -34,3 +34,4 @@ export interface TenancyAgreement {
 }
 
 export type UserTenancyRole = 'landlord' | 'tenant' | null;
+

@@ -9,3 +9,4 @@ describe('Auth Utilities', () => {
     expect(getAuthToken()).toBeNull();
   });
 });
+

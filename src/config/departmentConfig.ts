@@ -112,3 +112,4 @@ export const SIDEBAR_DEPARTMENTS: Record<string, DepartmentDef> = {
     ],
   },
 };
+

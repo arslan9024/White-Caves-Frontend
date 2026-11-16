@@ -28,3 +28,4 @@ export function useBinaryThemeSwitcherLogic(props?: UseBinaryThemeSwitcherProps)
     options: THEME_OPTIONS,
   };
 }
+

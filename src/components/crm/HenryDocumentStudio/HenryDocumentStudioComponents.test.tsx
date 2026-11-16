@@ -204,3 +204,4 @@ describe('Henry Document Studio — Shared Uploader & 5 Content Area Views', () 
     }
   });
 });
+

@@ -40,3 +40,4 @@ test('shows outages, supports dismissal and resurfaces after recovery', async ({
   await page.clock.fastForward(31_000);
   await expect(banner).toContainText('Reconnecting');
 });
+

@@ -111,3 +111,4 @@ describe('UserPreferencesDropdown (4-Way Component)', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/profile');
   });
 });
+

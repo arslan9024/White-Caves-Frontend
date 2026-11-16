@@ -58,3 +58,4 @@ export const DepartmentEmptySlotsGrid: FC<DepartmentEmptySlotsGridProps> = ({
     </DepartmentsGrid>
   );
 };
+

@@ -29,3 +29,4 @@ export interface DubaiGeospatialClusterViewerProps {
   onSelectCluster?: (cluster: LuxuryCluster) => void;
   onFilterMetricChange?: (metric: HeatmapMetricMode) => void;
 }
+

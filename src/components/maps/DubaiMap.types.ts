@@ -23,3 +23,4 @@ export interface DubaiMapProps {
   height?: string;
   className?: string;
 }
+

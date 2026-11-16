@@ -9,3 +9,4 @@ export {
   jitterCoords,
 } from './dubaiCoordinates';
 export type { CommunityCoords } from './dubaiCoordinates';
+

@@ -12,3 +12,4 @@ describe('useProfileScheduler Hook', () => {
     expect(result.current.highestSeverity).toMatch(/CRITICAL|WARNING|NOTICE|CLEAR/);
   });
 });
+

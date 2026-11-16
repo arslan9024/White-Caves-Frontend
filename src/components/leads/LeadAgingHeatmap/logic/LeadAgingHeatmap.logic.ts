@@ -25,3 +25,4 @@ export const AGING_LEADS: AgingLead[] = [
   { id: 'l7', name: 'Ivan Petrov', stage: 'Viewing', daysSince: 0, agent: 'NA' },
   { id: 'l8', name: 'Mei Ling', stage: 'New', daysSince: 22, agent: 'MK' },
 ];
+

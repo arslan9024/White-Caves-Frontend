@@ -17,3 +17,4 @@ describe('VrThumbnailBar Component', () => {
     expect(onRoomSelect).toHaveBeenCalledWith('Living Room');
   });
 });
+

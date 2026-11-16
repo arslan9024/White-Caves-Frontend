@@ -22,3 +22,4 @@ export const HeroPreloaderWidget: React.FC = () => {
     </WidgetContainer>
   );
 };
+

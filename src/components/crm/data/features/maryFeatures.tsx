@@ -100,3 +100,4 @@ export const MARY_FEATURES: AssistantFeatureItem[] = [
     icon: <DollarSign size={18} />,
   },
 ];
+

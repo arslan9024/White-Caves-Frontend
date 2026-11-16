@@ -143,3 +143,4 @@ class OfflineSyncQueueService {
 
 export const offlineSyncQueue = new OfflineSyncQueueService();
 export default offlineSyncQueue;
+

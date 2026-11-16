@@ -53,3 +53,4 @@ export const DAISY_FIN_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as daisy_fin_supervisorExport;
+

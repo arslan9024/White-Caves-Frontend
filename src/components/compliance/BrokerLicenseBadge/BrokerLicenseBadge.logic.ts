@@ -15,3 +15,4 @@ export function useBrokerLicenseLogic() {
     det: '987654321',
   };
 }
+

@@ -27,3 +27,4 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   /** Whether input is filled */
   isFilled?: boolean;
 }
+

@@ -144,3 +144,4 @@ export const ASSISTANT_COLORS: Record<string, string> = {
   sophia: '#F97316',
   apex: '#C9A84C',
 };
+

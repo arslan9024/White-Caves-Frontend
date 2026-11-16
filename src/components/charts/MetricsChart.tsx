@@ -89,3 +89,4 @@ const MetricsChart: React.FC<MetricsChartProps> = ({
 };
 
 export default MetricsChart;
+

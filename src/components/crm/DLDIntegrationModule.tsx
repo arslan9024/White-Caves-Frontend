@@ -247,3 +247,4 @@ export default function DLDIntegrationModule({ role, user, data }: CRMModuleProp
     </div>
   );
 }
+

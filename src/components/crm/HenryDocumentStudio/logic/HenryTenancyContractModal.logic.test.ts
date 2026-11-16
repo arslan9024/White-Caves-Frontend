@@ -34,3 +34,4 @@ describe('HenryTenancyContractModal.logic', () => {
     } finally { vi.unstubAllGlobals(); }
   });
 });
+

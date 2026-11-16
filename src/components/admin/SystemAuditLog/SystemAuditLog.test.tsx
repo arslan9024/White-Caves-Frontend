@@ -28,3 +28,4 @@ describe('SystemAuditLog Component', () => {
     expect(screen.getByText(/Automated DB Backup completed successfully/i)).toBeInTheDocument();
   });
 });
+

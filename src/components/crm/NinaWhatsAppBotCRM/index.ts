@@ -14,3 +14,4 @@ export * from './NinaWhatsAppBotCRM.styles';
 export * from './NinaWhatsAppBotCRM.data';
 export { NinaWhatsAppBotCRMView as NinaWhatsAppBotCRM } from './NinaWhatsAppBotCRM.view';
 export { NinaWhatsAppBotCRMView as default } from './NinaWhatsAppBotCRM.view';
+

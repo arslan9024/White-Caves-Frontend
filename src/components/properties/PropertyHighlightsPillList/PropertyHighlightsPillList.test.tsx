@@ -12,3 +12,4 @@ describe('PropertyHighlightsPillList', () => {
     expect(screen.getByText('Direct Private Beach Access')).toBeDefined();
   });
 });
+

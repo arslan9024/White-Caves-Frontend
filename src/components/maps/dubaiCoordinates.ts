@@ -58,3 +58,4 @@ export function jitterCoords(lat: number, lng: number, index: number): [number, 
     lng + r * Math.sin(angle),
   ];
 }
+

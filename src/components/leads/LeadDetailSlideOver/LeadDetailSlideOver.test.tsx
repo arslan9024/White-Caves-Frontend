@@ -15,3 +15,4 @@ describe('LeadDetailSlideOver', () => {
     expect(screen.getByText('Initial Call')).toBeTruthy();
   });
 });
+

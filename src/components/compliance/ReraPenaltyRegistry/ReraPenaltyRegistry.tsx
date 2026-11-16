@@ -56,3 +56,4 @@ export const ReraPenaltyRegistry: FC = () => (
   </Wrapper>
 );
 export default ReraPenaltyRegistry;
+

@@ -12,3 +12,4 @@ describe('BroadcastCampaignSegmenter Component', () => {
     expect(screen.getByText(/482 Verified Leads/i)).toBeDefined();
   });
 });
+

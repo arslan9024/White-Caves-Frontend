@@ -16,3 +16,4 @@ describe('PropertyDetailMortgageEmi', () => {
     expect(screen.getByDisplayValue('10000000')).toBeDefined();
   });
 });
+

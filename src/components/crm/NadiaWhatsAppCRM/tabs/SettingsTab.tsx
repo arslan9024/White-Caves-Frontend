@@ -95,3 +95,4 @@ export const SettingsTab: React.FC<NadiaSettingsTabProps> = ({ data }) => {
     </div>
   );
 };
+

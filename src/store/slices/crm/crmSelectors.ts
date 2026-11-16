@@ -289,3 +289,4 @@ export const makeSelectClientsByAgent = (agentId: string | number) =>
 // Last updated
 export const selectLastUpdated = (state: RootState) => state.crmData?.lastUpdated;
 
+

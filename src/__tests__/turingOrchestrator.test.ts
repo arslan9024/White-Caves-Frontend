@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest';
-import { TuringOrchestrator, turingOrchestrator } from '../../.agents/aegis/core-loop/turingOrchestrator';
+import { TuringOrchestrator, turingOrchestrator } from '../../../Aegis-Sterling/.agents/aegis/core-loop/turingOrchestrator';
 
 describe('TuringOrchestrator Core Loop Suite', () => {
   it('instantiates as singleton instance', () => {
@@ -63,3 +63,4 @@ describe('TuringOrchestrator Core Loop Suite', () => {
     expect(flashPlan.recommendedModel).toBe('flash_lite');
   });
 });
+

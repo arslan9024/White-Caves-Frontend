@@ -202,3 +202,4 @@ export const BaseDepartmentView: React.FC<BaseDepartmentViewProps> = ({
 };
 
 export default BaseDepartmentView;
+

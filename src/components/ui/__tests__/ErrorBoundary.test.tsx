@@ -31,3 +31,4 @@ describe('ErrorBoundary', () => {
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
 });
+

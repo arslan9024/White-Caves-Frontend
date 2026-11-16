@@ -58,3 +58,4 @@ export const ServiceWorkerRegistrationBanner: FC = () => {
 };
 
 export default ServiceWorkerRegistrationBanner;
+

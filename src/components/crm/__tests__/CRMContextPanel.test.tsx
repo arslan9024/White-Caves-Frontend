@@ -19,3 +19,4 @@ describe('CRMContextPanel Component', () => {
     expect(container).toBeDefined();
   });
 });
+

@@ -9,3 +9,4 @@ describe('PannellumVRViewer.style', () => {
     expect(styles.VrControls).toBeDefined();
   });
 });
+

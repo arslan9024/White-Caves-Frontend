@@ -16,3 +16,4 @@ describe('DealsTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

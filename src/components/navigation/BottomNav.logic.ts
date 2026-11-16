@@ -39,3 +39,4 @@ export function useBottomNavLogic(currentPath: string = '/') {
     isActive,
   };
 }
+

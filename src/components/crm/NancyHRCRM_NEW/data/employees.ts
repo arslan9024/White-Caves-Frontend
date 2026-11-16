@@ -103,3 +103,4 @@ export const DUMMY_EMPLOYEES: Employee[] = [
     attendance: 97
   }
 ];
+

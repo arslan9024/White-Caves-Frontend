@@ -106,3 +106,4 @@ export const MARKET_INSIGHTS: MarketInsights = {
     { month: 'Jan', sales: 3420, rentals: 3580, priceIndex: 152.3 }
   ]
 };
+

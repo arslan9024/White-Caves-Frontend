@@ -47,3 +47,4 @@ describe('DashboardActivityFeed', () => {
     expect(screen.getByText('Live activity feed')).toBeInTheDocument();
   });
 });
+

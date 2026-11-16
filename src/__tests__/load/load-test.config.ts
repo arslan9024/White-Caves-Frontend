@@ -376,3 +376,4 @@ export const RESOURCE_LIMITS = {
   maxConnections: 500,
   maxDatabaseConnections: 100,
 };
+

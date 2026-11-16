@@ -14,3 +14,4 @@ describe('LeadSourceAttributionChart.logic', () => {
     expect(calcPercent(0, 100)).toBe(0);
   });
 });
+

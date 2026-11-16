@@ -441,3 +441,4 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
 };
 
 export default HunterProspectingCRM;
+

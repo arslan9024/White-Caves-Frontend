@@ -278,3 +278,4 @@ const DynamicAssistantCRM = memo(({ activeAssistant, assistant, content, ...rest
 
 export default DynamicAssistantCRM;
 export { DynamicAssistantCRM };
+

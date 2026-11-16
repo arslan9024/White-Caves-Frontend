@@ -17,3 +17,4 @@ describe('FeaturedProperties Component', () => {
     }
   });
 });
+

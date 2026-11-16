@@ -53,3 +53,4 @@ class DocumentTelemetryService {
 }
 
 export const DocumentTelemetry = new DocumentTelemetryService();
+

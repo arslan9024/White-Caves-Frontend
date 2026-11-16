@@ -36,3 +36,4 @@ describe('PwaInstallPromptModal.logic', () => {
     expect(localStorage.getItem('wc_pwa_install_dismissed')).toBe('1');
   });
 });
+

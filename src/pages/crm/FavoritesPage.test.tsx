@@ -77,3 +77,4 @@ describe('FavoritesPage', () => {
     expect(screen.getByText('Marina Apartment')).toBeDefined();
   });
 });
+

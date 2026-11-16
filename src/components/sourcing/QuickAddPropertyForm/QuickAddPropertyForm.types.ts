@@ -48,3 +48,4 @@ export interface QuickAddPropertyFormProps {
   onSuccess?: (data: QuickAddFormData) => void | Promise<void>;
   onCancel?: () => void;
 }
+

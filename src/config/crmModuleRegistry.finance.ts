@@ -131,3 +131,4 @@ export const THEODORA_FINANCE_MODULES: Record<string, CRMModuleDefinition> = {
     Component: TheodoraFinanceCRM,
   },
 };
+

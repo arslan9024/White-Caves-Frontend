@@ -381,3 +381,4 @@ describe('UniversalAssistantLayout', () => {
     expect(screen.getByTestId('refresh-icon')).toBeInTheDocument();
   });
 });
+

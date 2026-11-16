@@ -198,3 +198,4 @@ export const GlobalEntityCommandPalette: FC<GlobalEntityCommandPaletteProps> = (
 };
 
 export default GlobalEntityCommandPalette;
+

@@ -143,3 +143,4 @@ export const SuggestionText = styled.div`
   align-items: center;
   gap: 6px;
 `;
+

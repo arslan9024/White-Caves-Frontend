@@ -47,3 +47,4 @@ export const CLARA_MANAGER = {
   supervisorsManagedCount: 9,
   slaWatchdogThresholdMinutes: 15,
 } as clara_managerExport;
+

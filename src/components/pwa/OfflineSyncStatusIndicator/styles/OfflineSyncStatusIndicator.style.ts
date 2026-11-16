@@ -50,3 +50,4 @@ export const SpinIcon = styled.span`
   display: inline-flex;
   animation: ${spin} 1s linear infinite;
 `;
+

@@ -214,3 +214,4 @@ export const GUEST_ITEMS: ActivityItemConfig[] = [
     Icon: Handshake,
   },
 ];
+

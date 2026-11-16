@@ -139,3 +139,4 @@ export const DepartmentsGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 16px;
 `;
+

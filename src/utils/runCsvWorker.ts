@@ -36,3 +36,4 @@ export async function parseCsvInWorker(
     worker.postMessage({ id, text, delimiter });
   });
 }
+

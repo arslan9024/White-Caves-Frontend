@@ -128,3 +128,4 @@ export const MortgageRegistrationWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

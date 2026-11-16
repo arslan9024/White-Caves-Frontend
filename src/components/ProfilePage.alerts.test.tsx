@@ -87,3 +87,4 @@ describe('ProfilePage — alert elimination', () => {
     });
   });
 });
+

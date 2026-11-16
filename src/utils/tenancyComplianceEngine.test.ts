@@ -60,3 +60,4 @@ describe('Tenancy & Ejari Compliance Engine — calculateOverdueRentFee', () => 
     expect(result.lateFeeAED).toBe(500);
   });
 });
+

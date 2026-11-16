@@ -1,4 +1,4 @@
-﻿import React, { FC } from 'react';
+import React, { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}`;
@@ -47,3 +47,4 @@ export const TwilioSMSGateway: FC = () => {
   );
 };
 export default TwilioSMSGateway;
+

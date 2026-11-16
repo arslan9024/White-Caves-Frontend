@@ -54,3 +54,4 @@ describe('routePrefetcher Engine', () => {
     expect(mockLoader).toHaveBeenCalledTimes(1); // Cached
   });
 });
+

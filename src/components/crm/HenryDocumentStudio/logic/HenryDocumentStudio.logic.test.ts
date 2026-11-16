@@ -44,3 +44,4 @@ describe('HenryDocumentStudio.logic', () => {
     } finally { vi.unstubAllGlobals(); }
   });
 });
+

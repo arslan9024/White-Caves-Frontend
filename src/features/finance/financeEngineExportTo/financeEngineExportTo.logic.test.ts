@@ -167,3 +167,4 @@ describe('getSupportedFinanceExportFormats', () => {
     expect(getSupportedFinanceExportFormats()).toEqual(['csv', 'json', 'ndjson']);
   });
 });
+

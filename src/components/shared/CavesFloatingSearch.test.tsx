@@ -31,3 +31,4 @@ describe('CavesFloatingSearch Component', () => {
     expect(screen.getByText('3BR Luxury Townhouse in Vardon')).toBeInTheDocument();
   });
 });
+

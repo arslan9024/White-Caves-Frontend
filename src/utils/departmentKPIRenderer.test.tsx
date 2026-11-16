@@ -22,3 +22,4 @@ describe('departmentKPIRenderer', () => {
     expect(getKPIRenderer('UNKNOWN')).toBe(renderDepartmentKPIs);
   });
 });
+

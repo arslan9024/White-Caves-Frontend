@@ -30,3 +30,4 @@ export interface StatusMessage {
 }
 
 export type GalleryTabType = 'gallery' | 'details' | 'documents';
+

@@ -186,3 +186,4 @@ export default function AIModelSelector({ onModelChange = null }) {
     </div>
   );
 }
+

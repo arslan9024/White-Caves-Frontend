@@ -101,3 +101,4 @@ export const LindaRichMediaMessage: FC<LindaRichMediaMessageProps> = ({
 
   return null;
 };
+

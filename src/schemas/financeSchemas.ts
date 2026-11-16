@@ -26,3 +26,4 @@ export const PostDatedChequeSchema = z.object({
 
 export type VatInvoice = z.infer<typeof VatInvoiceSchema>;
 export type PostDatedCheque = z.infer<typeof PostDatedChequeSchema>;
+

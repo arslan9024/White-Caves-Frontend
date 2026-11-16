@@ -60,3 +60,4 @@ export const LindaQuickReplyBar: FC<LindaQuickReplyBarProps> = ({ onSelectTempla
     ))}
   </div>
 );
+

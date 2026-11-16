@@ -27,3 +27,4 @@ export const usePrismCRM = () => {
     tabs,
   };
 };
+

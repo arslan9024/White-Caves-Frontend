@@ -22,3 +22,4 @@ describe('internalModuleArchitecture', () => {
     expect(getInternalModuleArchitecture('mira')).toBeNull();
   });
 });
+

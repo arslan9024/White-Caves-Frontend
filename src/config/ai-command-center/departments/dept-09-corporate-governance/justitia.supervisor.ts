@@ -53,3 +53,4 @@ export const JUSTITIA_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as justitia_supervisorExport;
+

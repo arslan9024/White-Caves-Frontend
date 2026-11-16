@@ -48,3 +48,4 @@ export const FormattedCurrencyInput: FC = () => {
 };
 
 export default FormattedCurrencyInput;
+

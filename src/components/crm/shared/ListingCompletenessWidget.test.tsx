@@ -100,3 +100,4 @@ describe('ListingCompletenessWidget', () => {
     expect(screen.queryByTestId('completeness-checklist')).not.toBeInTheDocument();
   });
 });
+

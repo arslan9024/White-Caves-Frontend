@@ -21,3 +21,4 @@ describe('AuroraDocumentIndex Component', () => {
     expect(container).toBeDefined();
   });
 });
+

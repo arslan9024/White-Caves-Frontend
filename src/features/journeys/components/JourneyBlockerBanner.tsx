@@ -65,3 +65,4 @@ export const JourneyBlockerBanner: React.FC<JourneyBlockerBannerProps> = ({
     </div>
   );
 };
+

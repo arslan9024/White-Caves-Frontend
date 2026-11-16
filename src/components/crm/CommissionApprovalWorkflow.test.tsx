@@ -18,3 +18,4 @@ describe('CommissionApprovalWorkflow Component', () => {
     expect(screen.getByText('4. Payment Released')).toBeDefined();
   });
 });
+

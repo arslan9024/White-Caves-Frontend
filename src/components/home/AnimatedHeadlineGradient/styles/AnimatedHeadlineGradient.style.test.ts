@@ -7,3 +7,4 @@ describe('AnimatedHeadlineGradient.style', () => {
     expect(styles.Headline).toBeDefined();
   });
 });
+

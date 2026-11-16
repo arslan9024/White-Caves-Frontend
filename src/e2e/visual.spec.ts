@@ -29,3 +29,4 @@ test.describe('Visual Regression Testing', () => {
     });
   });
 });
+

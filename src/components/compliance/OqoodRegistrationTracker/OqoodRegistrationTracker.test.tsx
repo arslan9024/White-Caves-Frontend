@@ -14,3 +14,4 @@ describe('OqoodRegistrationTracker Component', () => {
     expect(screen.getByText(/Façade Completion/i)).toBeDefined();
   });
 });
+

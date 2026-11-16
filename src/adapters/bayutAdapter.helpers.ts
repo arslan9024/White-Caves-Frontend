@@ -70,3 +70,4 @@ export const normalizeBayutPropertyData = (bayutProperty: any) => {
     verified: bayutProperty.isVerified,
   };
 };
+

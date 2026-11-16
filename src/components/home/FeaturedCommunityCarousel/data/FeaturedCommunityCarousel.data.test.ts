@@ -9,3 +9,4 @@ describe('FeaturedCommunityCarousel.data', () => {
     expect(CAROUSEL_TEXT.badge).toContain('DLD');
   });
 });
+

@@ -100,3 +100,4 @@ export const selectActivePropertyId = (s: StateWithPropertySearch) =>
   s.propertySearch.activePropertyId;
 
 export default propertySearchSlice.reducer;
+

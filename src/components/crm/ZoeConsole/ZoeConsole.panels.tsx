@@ -208,3 +208,4 @@ export const QuickActionsBar: React.FC<{
     ))}
   </div>
 );
+

@@ -225,3 +225,4 @@ export const registerDefaultFeatures = () => {
   // These will be registered by their respective modules
   // This function is here as a placeholder for initialization
 };
+

@@ -14,3 +14,4 @@ describe('CipherMarketCRM Component', () => {
     expect(screen.getByText('Palm Jumeirah')).toBeDefined();
   });
 });
+

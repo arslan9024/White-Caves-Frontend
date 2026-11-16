@@ -232,3 +232,4 @@ export const {
 } = landlordSlice.actions;
 
 export default landlordSlice.reducer;
+

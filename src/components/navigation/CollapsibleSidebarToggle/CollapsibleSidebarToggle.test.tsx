@@ -17,3 +17,4 @@ describe('CollapsibleSidebarToggle Component', () => {
     expect(screen.queryByText('Dashboard')).toBeNull();
   });
 });
+

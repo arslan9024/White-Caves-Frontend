@@ -64,3 +64,4 @@ export const gridRowStyle: CSSProperties = {
   gridTemplateColumns: '1fr 1fr',
   gap: '12px',
 };
+

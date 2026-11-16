@@ -307,3 +307,4 @@ export const SidebarRelationshipsList: FC<SidebarRelationshipsListProps> = ({
 };
 
 export default SidebarRelationshipsList;
+

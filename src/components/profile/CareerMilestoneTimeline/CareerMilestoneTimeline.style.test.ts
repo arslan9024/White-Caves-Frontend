@@ -8,3 +8,4 @@ describe('CareerMilestoneTimeline.style', () => {
     expect(styles.MilestoneNode).toBeDefined();
   });
 });
+

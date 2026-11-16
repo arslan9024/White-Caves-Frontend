@@ -97,3 +97,4 @@ export async function checkSavedSearchMatches(id: string): Promise<MatchCheckRes
   if (!json.success) throw new Error(json.error || 'Failed to check matches');
   return json.data;
 }
+

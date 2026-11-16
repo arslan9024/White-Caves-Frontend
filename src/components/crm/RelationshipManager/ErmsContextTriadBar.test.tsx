@@ -50,3 +50,4 @@ describe('ErmsContextTriadBar (Pillar 8 Verification)', () => {
     expect(handleDensity).toHaveBeenCalledWith('ultra-dense');
   });
 });
+

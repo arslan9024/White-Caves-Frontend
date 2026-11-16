@@ -7,3 +7,4 @@ export const useCryptoPaymentLogic = () => {
   const t = isRtl ? ar : en;
   return { t, isRtl };
 };
+

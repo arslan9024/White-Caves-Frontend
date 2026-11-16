@@ -59,3 +59,4 @@ export const CavesTooltip: React.FC<CavesTooltipProps> = ({
 };
 
 export default CavesTooltip;
+

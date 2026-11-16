@@ -122,3 +122,4 @@ export const SanctionsScreeningWidget: FC = () => {
     </WidgetContainer>
   );
 };
+

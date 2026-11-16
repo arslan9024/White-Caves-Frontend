@@ -187,3 +187,4 @@ describe('MortgageCalculatorPage', () => {
     expect(screen.getByText('3.00%')).toBeDefined();
   });
 });
+

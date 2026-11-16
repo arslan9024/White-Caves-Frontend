@@ -34,3 +34,4 @@ describe('ReraCommercialRentIndexCalculator Component', () => {
     });
   });
 });
+

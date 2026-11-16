@@ -294,3 +294,4 @@ export function isPassportExpired(
   const expiry = new Date(`${data.expiryDate}T00:00:00.000Z`);
   return expiry.getTime() < referenceDate.getTime();
 }
+

@@ -46,3 +46,4 @@ export const SystemAuditLog: FC = () => {
   );
 };
 export default SystemAuditLog;
+

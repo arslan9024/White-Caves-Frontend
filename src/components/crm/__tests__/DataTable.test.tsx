@@ -9,3 +9,4 @@ describe('DataTable Component', () => {
     expect(container).toBeDefined();
   });
 });
+

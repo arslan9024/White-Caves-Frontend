@@ -73,3 +73,4 @@ export const DepartmentHierarchyTeamsView: React.FC<DepartmentHierarchyTeamsView
     </div>
   );
 };
+

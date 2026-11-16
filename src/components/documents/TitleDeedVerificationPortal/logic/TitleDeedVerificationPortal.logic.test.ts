@@ -28,3 +28,4 @@ describe('TitleDeedVerificationPortal.logic', () => {
     expect(result.current.result).toBeNull();
   });
 });
+

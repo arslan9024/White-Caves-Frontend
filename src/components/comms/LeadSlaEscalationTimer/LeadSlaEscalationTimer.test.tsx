@@ -13,3 +13,4 @@ describe('LeadSlaEscalationTimer Component', () => {
     expect(screen.getByText(/David Miller/i)).toBeDefined();
   });
 });
+

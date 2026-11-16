@@ -20,3 +20,4 @@ describe('ThemeProvider', () => {
     expect(el.textContent).toBe(LuxuryTokens.colors.goldFoil);
   });
 });
+

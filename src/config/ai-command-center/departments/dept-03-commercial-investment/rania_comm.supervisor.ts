@@ -53,3 +53,4 @@ export const RANIA_COMM_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as rania_comm_supervisorExport;
+

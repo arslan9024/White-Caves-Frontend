@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LandlordMaintenanceTab — Phase 29: Live API integration
  *
  * Maintenance requests for the landlord''s properties.
@@ -301,3 +301,4 @@ const LandlordMaintenanceTab: FC = () => {
 };
 
 export default LandlordMaintenanceTab;
+

@@ -4,3 +4,4 @@
 export function shouldShowSkeleton(isLoading: boolean, hasData: boolean): boolean {
   return isLoading && !hasData;
 }
+

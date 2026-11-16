@@ -11,3 +11,4 @@ describe('ServiceWorkerRegistrationBanner.style', () => {
     expect(styles.ActionButton).toBeDefined();
   });
 });
+

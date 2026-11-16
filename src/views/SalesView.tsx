@@ -50,3 +50,4 @@ export const SalesView: FC = () => {
   );
 };
 export default SalesView;
+

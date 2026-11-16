@@ -33,3 +33,4 @@ describe('MobileCRMBottomNav', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/crm/leads');
   });
 });
+

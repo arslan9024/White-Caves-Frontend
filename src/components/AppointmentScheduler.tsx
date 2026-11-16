@@ -62,3 +62,4 @@ export default function AppointmentScheduler({ propertyId, agentId }: Appointmen
     </div>
   );
 }
+

@@ -209,3 +209,4 @@ export function generateProperties(count = 50, seed = 42): GeneratedProperty[] {
 
   return properties;
 }
+

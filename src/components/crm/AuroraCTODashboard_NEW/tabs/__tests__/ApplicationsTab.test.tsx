@@ -10,3 +10,4 @@ describe('ApplicationsTab Component', () => {
     expect(screen.getByText('Applications & Deployments')).toBeDefined();
   });
 });
+

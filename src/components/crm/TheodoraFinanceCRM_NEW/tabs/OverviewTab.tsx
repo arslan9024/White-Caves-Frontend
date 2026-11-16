@@ -73,3 +73,4 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ financeStats }) => {
 };
 
 export default OverviewTab;
+

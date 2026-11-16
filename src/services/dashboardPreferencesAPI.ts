@@ -106,3 +106,4 @@ export const fetchRoleDashboardConfig = async (): Promise<DashboardPreferences> 
     throw error;
   }
 };
+

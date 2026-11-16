@@ -7,3 +7,4 @@ export const MdPortalView: FC = () => {
   return <PortalShell {...data} onRefresh={handleRefresh} />;
 };
 export default MdPortalView;
+

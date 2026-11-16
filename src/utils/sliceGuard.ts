@@ -9,3 +9,4 @@ export function shallowEqualArrays<T>(a: readonly T[], b: readonly T[]): boolean
   }
   return true;
 }
+

@@ -58,3 +58,4 @@ export function useHenryDossier(kind: DossierKind, id: string) {
     run(current => downloadHenryOriginal(documentId, side, current));
   return { data, answer, candidate, busy, error, load, ask, changeStatus, previewLink, attach, downloadOriginal };
 }
+

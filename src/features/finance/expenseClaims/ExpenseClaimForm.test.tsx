@@ -37,3 +37,4 @@ describe('ExpenseClaimForm', () => {
     expect(screen.getByText('Receipt must be a PDF, JPEG, or PNG file.')).toBeInTheDocument();
   });
 });
+

@@ -21,3 +21,4 @@ describe('FileUploadDropzone Component', () => {
     expect(screen.getByText(/✓ Attached/i)).toBeDefined();
   });
 });
+

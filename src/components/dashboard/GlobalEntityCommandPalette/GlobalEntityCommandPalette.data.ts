@@ -227,3 +227,4 @@ export function buildGlobalCommandPaletteIndex(): CommandPaletteEntityItem[] {
 
   return items;
 }
+

@@ -47,3 +47,4 @@ describe('ConflictResolutionToast Component', () => {
     expect(onDismiss).toHaveBeenCalled();
   });
 });
+

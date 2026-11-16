@@ -12,3 +12,4 @@ describe('ArRoomMeasurer Component', () => {
     expect(screen.getByText(/READY/i)).toBeDefined();
   });
 });
+

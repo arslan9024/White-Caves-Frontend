@@ -20,3 +20,4 @@ export type SessionsData = ReturnType<typeof useBotData>;
 export interface SessionsTabProps {
   data: SessionsData;
 }
+

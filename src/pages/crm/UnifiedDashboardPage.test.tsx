@@ -36,3 +36,4 @@ describe('UnifiedDashboardPage Component', () => {
     expect(screen.getByText('LEVEL 5 MASTER MD')).toBeInTheDocument();
   });
 });
+

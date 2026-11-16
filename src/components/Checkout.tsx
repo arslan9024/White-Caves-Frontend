@@ -184,3 +184,4 @@ export default function Checkout({ property, amount, onSuccess, onCancel }: Chec
     </div>
   );
 }
+

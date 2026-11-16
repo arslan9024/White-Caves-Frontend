@@ -187,3 +187,4 @@ export const ResultSource = styled.div`
   font-weight: ${typography.weights.medium};
   color: var(--text-primary);
 `;
+

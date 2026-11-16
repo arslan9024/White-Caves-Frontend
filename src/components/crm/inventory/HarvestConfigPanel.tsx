@@ -40,3 +40,4 @@ export const HarvestConfigPanel: React.FC<HarvestConfigPanelProps> = ({ config, 
     </div>
   );
 };
+

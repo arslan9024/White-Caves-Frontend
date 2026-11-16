@@ -44,3 +44,4 @@ export const registerServiceWorker = async (): Promise<void> => {
     );
   }
 };
+

@@ -170,3 +170,4 @@ export interface UserActivity {
   lastActive: string;
   status: 'online' | 'offline' | 'away';
 }
+

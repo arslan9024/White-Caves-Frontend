@@ -9,3 +9,4 @@ describe('RenewalsTab Component', () => {
     expect(container).toBeDefined();
   });
 });
+

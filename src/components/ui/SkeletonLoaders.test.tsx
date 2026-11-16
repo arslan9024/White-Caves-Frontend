@@ -19,3 +19,4 @@ describe('SkeletonLoaders Components', () => {
     expect(container.firstChild).toBeDefined();
   });
 });
+

@@ -53,3 +53,4 @@ export const BATOOL_SUPERVISOR = {
     complianceAudit: '100% Green',
   },
 } as batool_supervisorExport;
+

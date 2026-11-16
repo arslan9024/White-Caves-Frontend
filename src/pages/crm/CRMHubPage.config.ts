@@ -77,3 +77,4 @@ export const CRM_HUB_CONFIG: CRMHubPageConfig = {
   defaultAiId: 'nadia',
   zenModeStorageKey: 'wc_crm_zen_mode_active',
 };
+

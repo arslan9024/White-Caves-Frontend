@@ -16,3 +16,4 @@ describe('PwaInstallAppBanner Component', () => {
     expect(screen.queryByTestId('pwa-install-app-banner')).toBeNull();
   });
 });
+

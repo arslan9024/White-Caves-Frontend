@@ -8,3 +8,4 @@ export interface Employee {
   tier: 'corporate' | 'premium' | 'essential';
   avatar: string;
 }
+

@@ -52,3 +52,4 @@ describe('subagentOrchestration config helpers', () => {
     expect(calculateDailyPremiumCap({ weeklyRemaining: 23, businessDaysRemaining: 0 })).toBe(0);
   });
 });
+

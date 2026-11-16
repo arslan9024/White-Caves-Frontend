@@ -23,3 +23,4 @@ describe('ContractGeneratorPage Component', () => {
     expect(container).toBeDefined();
   });
 });
+

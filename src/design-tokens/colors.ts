@@ -130,3 +130,4 @@ export const semanticColors = {
   bgDefault: colors.background.default,
   bgSurface: colors.background.surface,
 };
+

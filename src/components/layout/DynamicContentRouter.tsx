@@ -387,3 +387,4 @@ const DynamicContentRouter = ({ userPermissions = [] }) => {
 };
 
 export default DynamicContentRouter;
+

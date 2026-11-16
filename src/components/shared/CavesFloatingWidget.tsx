@@ -131,3 +131,4 @@ export const CavesFloatingWidget: FC<CavesFloatingWidgetProps> = ({
 };
 
 export default CavesFloatingWidget;
+

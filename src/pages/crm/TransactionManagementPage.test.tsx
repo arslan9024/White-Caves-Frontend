@@ -148,3 +148,4 @@ describe('TransactionManagementPage', () => {
     expect(mockOpenCreateModal).toHaveBeenCalled();
   });
 });
+

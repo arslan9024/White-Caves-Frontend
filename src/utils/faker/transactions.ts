@@ -253,3 +253,4 @@ export function generateTransactions(count = 30, seed = 200): {
 
   return { transactions, commissions };
 }
+
