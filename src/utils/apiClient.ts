@@ -3,6 +3,7 @@ import { HttpError } from './HttpError';
 import { fetchWithRetry } from '../services/http/fetchWithRetry';
 import { getApiUrl } from '../config/constants';
 import { ensureCsrfToken } from './csrfToken';
+import { safeStorage } from './safeStorage';
 
 const API_BASE_URL = getApiUrl('');
 const CSRF_HEADER_NAME = 'x-csrf-token';
@@ -106,14 +107,27 @@ class ApiClient {
 
     const restOptions: RequestOptions = { ...options };
     delete restOptions.signal;
+
+    // Auto-attach Bearer token from safeStorage if not explicitly set
+    const effectiveHeaders: Record<string, string> = {
+      ...this.defaultHeaders,
+      ...options.headers,
+    };
+    if (!effectiveHeaders['Authorization']) {
+      const storedToken =
+        safeStorage.get('token') ||
+        safeStorage.get('whitecaves_token') ||
+        safeStorage.get('authToken');
+      if (storedToken) {
+        effectiveHeaders['Authorization'] = `Bearer ${storedToken}`;
+      }
+    }
+
     const config: RequestInit = {
       ...restOptions,
       signal: controller.signal,
       credentials: options.credentials ?? 'include',
-      headers: {
-        ...this.defaultHeaders,
-        ...options.headers,
-      },
+      headers: effectiveHeaders,
     };
 
     try {
@@ -267,4 +281,3 @@ class ApiClient {
 
 export const apiClient = new ApiClient();
 export { HttpError };
-

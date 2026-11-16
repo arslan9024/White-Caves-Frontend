@@ -132,31 +132,11 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
         const convRes = (await apiClient.get('/linda/conversations')) as {
           success?: boolean;
           data?: {
-            conversations?: Array<{
-              id: string;
-              name: string;
-              unreadCount: number;
-              lastMessage?: string;
-              timestamp?: string;
-            }>;
+            conversations?: LindaConversationItem[];
           };
         };
         if (convRes?.data?.conversations && convRes.data.conversations.length > 0) {
-          const mapped: LindaConversationItem[] = convRes.data.conversations.map(c => ({
-            id: c.id,
-            contactName: c.name,
-            phone: c.id.replace('@c.us', ''),
-            cluster: 'Live WhatsApp Contact',
-            unit: 'Direct Inquiry',
-            intent: 'WhatsApp Communication',
-            sentiment: 'NEUTRAL',
-            confidence: 90,
-            gorahaSaved: true,
-            maryMatch: 'Syncing live chat from device',
-            lastMessage: c.lastMessage || 'No recent messages',
-            timestamp: c.timestamp || 'Just now',
-          }));
-          setConversations(mapped);
+          setConversations(convRes.data.conversations);
         }
       } catch {
         appendLog(
