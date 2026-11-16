@@ -5,17 +5,17 @@
  */
 
 import React, { FC, useState, useEffect } from 'react';
-import {
-  X,
-  Smartphone,
-  QrCode,
-  CheckCircle2,
-  RefreshCw,
-  KeyRound,
-  ShieldCheck,
-} from 'lucide-react';
+import { X, Smartphone, QrCode, KeyRound } from 'lucide-react';
 import QRCode from 'qrcode';
 import { apiClient } from '../../../utils/apiClient';
+import {
+  overlayStyle,
+  modalBoxStyle,
+  modalHeaderStyle,
+  modalTabBarStyle,
+} from './LindaLinkAccountModal.style';
+import { LindaLinkCodeTab } from './LindaLinkCodeTab';
+import { LindaLinkQrTab } from './LindaLinkQrTab';
 
 export interface LindaLinkAccountModalProps {
   isOpen: boolean;
@@ -118,42 +118,9 @@ export const LindaLinkAccountModal: FC<LindaLinkAccountModalProps> = ({
   };
 
   return (
-    <div
-      data-testid="linda-link-account-modal"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9999,
-        background: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(6px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 16,
-      }}
-    >
-      <div
-        style={{
-          width: '100%',
-          maxWidth: 440,
-          background: '#0B141A',
-          border: '1px solid rgba(37, 211, 102, 0.35)',
-          borderRadius: 14,
-          boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
-          overflow: 'hidden',
-          color: '#E9EDEF',
-        }}
-      >
-        <div
-          style={{
-            padding: '12px 16px',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            background: '#111B21',
-          }}
-        >
+    <div data-testid="linda-link-account-modal" style={overlayStyle}>
+      <div style={modalBoxStyle}>
+        <div style={modalHeaderStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div
               style={{
@@ -190,7 +157,7 @@ export const LindaLinkAccountModal: FC<LindaLinkAccountModalProps> = ({
           </button>
         </div>
 
-        <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={modalTabBarStyle}>
           <button
             type="button"
             data-testid="link-tab-code"
@@ -257,192 +224,22 @@ export const LindaLinkAccountModal: FC<LindaLinkAccountModalProps> = ({
           )}
 
           {activeTab === 'code' ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div>
-                <label
-                  style={{ fontSize: 11, color: '#8696A0', display: 'block', marginBottom: 4 }}
-                >
-                  WhatsApp Phone (with Country Code)
-                </label>
-                <input
-                  type="text"
-                  data-testid="link-phone-input"
-                  placeholder="+971 50 123 4567"
-                  value={phoneNumber}
-                  onChange={e => setPhoneNumber(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    borderRadius: 6,
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    background: '#111B21',
-                    color: '#E9EDEF',
-                    fontSize: 13,
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                  }}
-                />
-              </div>
-              {!pairingCode ? (
-                <button
-                  type="button"
-                  data-testid="link-generate-code-btn"
-                  onClick={handleGeneratePairCode}
-                  disabled={loading}
-                  style={{
-                    padding: '9px 14px',
-                    background: '#25D366',
-                    border: 'none',
-                    borderRadius: 6,
-                    color: '#0B141A',
-                    fontWeight: 700,
-                    fontSize: 12,
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 6,
-                  }}
-                >
-                  <KeyRound size={15} />
-                  <span>{loading ? 'Generating...' : 'Generate 8-Digit Pairing Code'}</span>
-                </button>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <div
-                    style={{
-                      background: 'rgba(37, 211, 102, 0.1)',
-                      border: '1px dashed #25D366',
-                      borderRadius: 8,
-                      padding: 12,
-                      textAlign: 'center',
-                    }}
-                  >
-                    <div style={{ fontSize: 10, color: '#8696A0', textTransform: 'uppercase' }}>
-                      Enter Code on Device
-                    </div>
-                    <div
-                      data-testid="link-pairing-code-display"
-                      style={{
-                        fontSize: 24,
-                        fontWeight: 900,
-                        letterSpacing: 3,
-                        color: '#25D366',
-                        fontFamily: 'monospace',
-                        margin: '6px 0',
-                      }}
-                    >
-                      {pairingCode}
-                    </div>
-                    <div style={{ fontSize: 10, color: '#E9EDEF' }}>Expires in {countdown}s</div>
-                  </div>
-                  <div style={{ fontSize: 10, color: '#8696A0', lineHeight: 1.4 }}>
-                    WhatsApp → Linked Devices → Link with phone number instead → Enter code
-                  </div>
-                  <button
-                    type="button"
-                    data-testid="link-confirm-paired-btn"
-                    onClick={handleSimulateLinked}
-                    style={{
-                      padding: '8px 12px',
-                      background: 'rgba(37, 211, 102, 0.2)',
-                      border: '1px solid #25D366',
-                      borderRadius: 6,
-                      color: '#25D366',
-                      fontWeight: 700,
-                      fontSize: 11,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 6,
-                    }}
-                  >
-                    <CheckCircle2 size={14} />
-                    <span>Confirm Linked & Connect</span>
-                  </button>
-                </div>
-              )}
-            </div>
+            <LindaLinkCodeTab
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+              pairingCode={pairingCode}
+              countdown={countdown}
+              loading={loading}
+              onGenerateCode={handleGeneratePairCode}
+              onConfirmLinked={handleSimulateLinked}
+            />
           ) : (
-            <div
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
-            >
-              {loading ? (
-                <div
-                  style={{
-                    height: 180,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <RefreshCw size={24} className="animate-spin" color="#25D366" />
-                </div>
-              ) : qrCodeUrl ? (
-                <div style={{ background: '#FFF', padding: 8, borderRadius: 8 }}>
-                  <img
-                    data-testid="link-qr-code-img"
-                    src={qrCodeUrl}
-                    alt="WhatsApp QR"
-                    style={{ width: 170, height: 170, display: 'block' }}
-                  />
-                </div>
-              ) : (
-                <div style={{ fontSize: 11, color: '#8696A0' }}>No QR Available</div>
-              )}
-              <div style={{ fontSize: 10, color: '#8696A0', textAlign: 'center' }}>
-                WhatsApp → Linked Devices → Link a Device → Scan QR
-              </div>
-              <div style={{ display: 'flex', gap: 8, width: '100%' }}>
-                <button
-                  type="button"
-                  data-testid="link-refresh-qr-btn"
-                  onClick={fetchQrCode}
-                  style={{
-                    flex: 1,
-                    padding: '7px 10px',
-                    background: '#202C33',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 6,
-                    color: '#E9EDEF',
-                    fontSize: 10,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 4,
-                  }}
-                >
-                  <RefreshCw size={12} />
-                  <span>Refresh QR</span>
-                </button>
-                <button
-                  type="button"
-                  data-testid="link-qr-success-btn"
-                  onClick={handleSimulateLinked}
-                  style={{
-                    flex: 1,
-                    padding: '7px 10px',
-                    background: '#25D366',
-                    border: 'none',
-                    borderRadius: 6,
-                    color: '#0B141A',
-                    fontSize: 10,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 4,
-                  }}
-                >
-                  <ShieldCheck size={12} />
-                  <span>Done Scanning</span>
-                </button>
-              </div>
-            </div>
+            <LindaLinkQrTab
+              loading={loading}
+              qrCodeUrl={qrCodeUrl}
+              onRefreshQr={fetchQrCode}
+              onConfirmLinked={handleSimulateLinked}
+            />
           )}
 
           {linkedSuccess && (
