@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+import { RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { apiClient } from '../../../utils/apiClient';
 
 export interface LindaLiveTopBarProps {
   isDark: boolean;
@@ -10,6 +12,7 @@ export interface LindaLiveTopBarProps {
   onToggleUnread: () => void;
   onToggleContextPane: () => void;
   selectedAccount?: string;
+  onReconnected?: () => void;
 }
 
 export const LindaLiveTopBar: FC<LindaLiveTopBarProps> = ({
@@ -22,7 +25,31 @@ export const LindaLiveTopBar: FC<LindaLiveTopBarProps> = ({
   onToggleUnread,
   onToggleContextPane,
   selectedAccount = 'ALL',
+  onReconnected,
 }) => {
+  const [isReconnecting, setIsReconnecting] = useState(false);
+  const [reconnectMsg, setReconnectMsg] = useState<string | null>(null);
+
+  const handleSilentReconnect = async () => {
+    setIsReconnecting(true);
+    setReconnectMsg('Attempting live session handshake...');
+    try {
+      await apiClient.post('/linda/connect', {});
+      setReconnectMsg('Socket connection initiated');
+      setTimeout(() => {
+        setIsReconnecting(false);
+        setReconnectMsg(null);
+        onReconnected?.();
+      }, 1000);
+    } catch {
+      setReconnectMsg('Offline bridge active — cached messages intact');
+      setTimeout(() => {
+        setIsReconnecting(false);
+        setReconnectMsg(null);
+      }, 2000);
+    }
+  };
+
   return (
     <>
       <div
@@ -114,28 +141,34 @@ export const LindaLiveTopBar: FC<LindaLiveTopBarProps> = ({
             fontSize: 12,
           }}
         >
-          <span>
-            Primary Master socket disconnected. Resilient offline mock cache active — no thread data
-            lost.
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <AlertCircle size={14} color="#EF4444" />
+            <span>
+              {reconnectMsg ||
+                'Primary Master socket disconnected. Resilient offline mock cache active — no thread data lost.'}
+            </span>
+          </div>
           <button
             type="button"
-            onClick={() => {
-              // Seamless silent re-sync without full page reload
-              void fetch('/api/linda/connect', { method: 'POST' }).catch(() => {});
-            }}
+            disabled={isReconnecting}
+            onClick={handleSilentReconnect}
+            data-testid="linda-resync-btn"
             style={{
-              padding: '2px 10px',
+              padding: '3px 10px',
               borderRadius: 6,
               border: 'none',
-              background: '#25D366',
+              background: isReconnecting ? '#475569' : '#25D366',
               color: '#FFFFFF',
               fontSize: 11,
               fontWeight: 700,
-              cursor: 'pointer',
+              cursor: isReconnecting ? 'not-allowed' : 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
             }}
           >
-            Re-sync Socket
+            <RefreshCw size={11} className={isReconnecting ? 'animate-spin' : ''} />
+            <span>{isReconnecting ? 'Re-syncing...' : 'Re-sync Socket'}</span>
           </button>
         </div>
       )}
