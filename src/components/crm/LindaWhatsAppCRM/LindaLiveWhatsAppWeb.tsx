@@ -1,4 +1,9 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/LindaLiveWhatsAppWeb.tsx
+/**
+ * White Caves Real Estate LLC - Linda Live WhatsApp Web Desk
+ * Standard: AEGIS Canonical 12-Way Architecture Standard (<350 lines)
+ */
+
 import React, { useState, useMemo, useEffect, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import socketService from '../../../services/socketService';
@@ -9,6 +14,8 @@ import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
 import { LindaQuickReplyBar } from './LindaQuickReplyBar';
 import { LindaLeadContextPane } from './LindaLeadContextPane';
 import { LindaLiveTopBar } from './LindaLiveTopBar';
+import { LindaLinkAccountModal } from './LindaLinkAccountModal';
+import { useLindaAccountAutoload } from './useLindaAccountAutoload';
 
 export interface LindaLiveWhatsAppWebProps {
   conversations: LindaConversationItem[];
@@ -17,13 +24,6 @@ export interface LindaLiveWhatsAppWebProps {
   onSendMessage?: (convId: string, text: string) => void;
   onAutoReplyWithAI?: (conv: LindaConversationItem) => void;
 }
-
-const ACCOUNT_FILTERS = [
-  { id: 'ALL', label: 'All Linked Lines' },
-  { id: '+971505760056', label: 'Primary Master +971505760056' },
-  { id: 'goraha', label: 'Goraha Secondary Line' },
-  { id: 'outreach', label: 'Outreach Campaign Line' },
-];
 
 export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   conversations,
@@ -34,27 +34,53 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 }) => {
   const { isDark } = useTheme();
   const [selectedConvId, setSelectedConvId] = useState<string>(conversations[0]?.id || 'conv-1');
-  const [selectedAccount, setSelectedAccount] = useState<string>('ALL');
-  const [chatTypeFilter, setChatTypeFilter] = useState<'all' | 'direct' | 'groups'>('all');
+  const [chatTypeFilter, setChatTypeFilter] = useState<'all' | 'campaign' | 'direct' | 'groups'>(
+    'all'
+  );
   const [unreadOnly, setUnreadOnly] = useState<boolean>(false);
   const [showContextPane, setShowContextPane] = useState<boolean>(true);
   const [searchFilter, setSearchFilter] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>({});
+  const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
+
+  const {
+    selectedAccount,
+    setSelectedAccount,
+    accountOptions,
+    accountConversations,
+    refreshStatuses,
+  } = useLindaAccountAutoload(conversations, selectedConvId, setSelectedConvId);
+
+  const activePoolConversations = useMemo(() => {
+    if (selectedAccount !== 'ALL' && accountConversations[selectedAccount]) {
+      return accountConversations[selectedAccount];
+    }
+    return conversations;
+  }, [conversations, selectedAccount, accountConversations]);
 
   const selectedConv = useMemo(
-    () => conversations.find(c => c.id === selectedConvId) || conversations[0],
-    [conversations, selectedConvId]
+    () =>
+      activePoolConversations.find(c => c.id === selectedConvId) ||
+      activePoolConversations[0] ||
+      conversations[0],
+    [activePoolConversations, selectedConvId, conversations]
   );
 
+  // History Autoload Engine: queries /api/linda/conversations/:phoneNumber/history?accountPhone=<phone>
   useEffect(() => {
     if (!selectedConv?.phone) return;
     const cleanPhone = selectedConv.phone.replace(/\D/g, '');
     if (!cleanPhone) return;
 
     let cancelled = false;
+    const accParam =
+      selectedAccount !== 'ALL'
+        ? `?accountPhone=${encodeURIComponent(selectedAccount.replace(/\D/g, '') || selectedAccount)}`
+        : '';
+
     apiClient
-      .get(`/linda/conversations/${encodeURIComponent(cleanPhone)}/history`)
+      .get(`/linda/conversations/${encodeURIComponent(cleanPhone)}/history${accParam}`)
       .then((res: unknown) => {
         const json = res as {
           success?: boolean;
@@ -95,8 +121,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [selectedConv?.id, selectedConv?.phone]);
+  }, [selectedConv?.id, selectedConv?.phone, selectedAccount]);
 
+  // Real-time socket message handler
   useEffect(() => {
     const unsubMsg = socketService.onLindaMessage?.(payload => {
       const p = payload as unknown as Record<string, unknown>;
@@ -125,52 +152,13 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       });
     });
 
-    const rawSocket = (
-      socketService as unknown as {
-        socket?: {
-          on: (ev: string, cb: (p: Record<string, unknown>) => void) => void;
-          off: (ev: string, cb: (p: Record<string, unknown>) => void) => void;
-        };
-      }
-    ).socket;
-    const handleReceipt = (payload: Record<string, unknown>) => {
-      const msgId = String(payload.messageId || '');
-      const rawStatus = String(payload.status || '').toLowerCase();
-      const status: ChatMessage['status'] =
-        rawStatus === 'read' ? 'read' : rawStatus === 'delivered' ? 'delivered' : 'sent';
-      if (!msgId) return;
-      setChatMessages(prev => {
-        const next: Record<string, ChatMessage[]> = {};
-        for (const [cid, msgs] of Object.entries(prev)) {
-          next[cid] = msgs.map(m => (m.id === msgId ? { ...m, status } : m));
-        }
-        return next;
-      });
-    };
-
-    rawSocket?.on('linda:receipt', handleReceipt);
-    rawSocket?.on('messages.update', handleReceipt);
-
     return () => {
       unsubMsg?.();
-      rawSocket?.off('linda:receipt', handleReceipt);
-      rawSocket?.off('messages.update', handleReceipt);
     };
-  }, [selectedConv?.id]);
-
-  const accountOptions = useMemo(() => {
-    const dynamic = Array.from(
-      new Set(
-        conversations
-          .map(c => (c as LindaConversationItem & { accountPhone?: string }).accountPhone)
-          .filter((p): p is string => Boolean(p) && p !== '+971505760056')
-      )
-    ).map(p => ({ id: p, label: p }));
-    return [...ACCOUNT_FILTERS, ...dynamic];
-  }, [conversations]);
+  }, []);
 
   const filteredConversations = useMemo(() => {
-    return conversations.filter(c => {
+    return activePoolConversations.filter(c => {
       if (searchFilter) {
         const q = searchFilter.toLowerCase();
         const matches =
@@ -182,14 +170,15 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       }
       if (selectedAccount !== 'ALL') {
         const cAcc = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
-        if (cAcc && cAcc !== selectedAccount) return false;
+        if (cAcc && cAcc !== selectedAccount && !selectedAccount.includes(cAcc)) return false;
       }
+      if (chatTypeFilter === 'campaign' && !c.isCampaignLead) return false;
       if (chatTypeFilter === 'direct' && c.isGroup) return false;
       if (chatTypeFilter === 'groups' && !c.isGroup) return false;
       if (unreadOnly && (!c.unreadCount || c.unreadCount <= 0)) return false;
       return true;
     });
-  }, [conversations, searchFilter, selectedAccount, chatTypeFilter, unreadOnly]);
+  }, [activePoolConversations, searchFilter, selectedAccount, chatTypeFilter, unreadOnly]);
 
   const activeMessages = useMemo(() => {
     if (selectedConv && chatMessages[selectedConv.id]) {
@@ -242,29 +231,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   const handleAiDraft = (lang: 'EN' | 'AR' = 'EN') => {
     if (!selectedConv) return;
-    fallbackLocalDraft(lang);
     onAutoReplyWithAI?.(selectedConv);
-
-    const jid = encodeURIComponent(
-      selectedConv.id.includes('@')
-        ? selectedConv.id
-        : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
-    );
-
-    fetch(`/api/whatsapp/chats/${jid}/ai-draft`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ language: lang, tone: 'luxury' }),
-    })
-      .then(r => r.json())
-      .then(json => {
-        if (json?.success && json?.data?.draft) setInputMessage(json.data.draft);
-      })
-      .catch(() => {});
-  };
-
-  const fallbackLocalDraft = (lang: 'EN' | 'AR') => {
-    if (!selectedConv) return;
     const aiDraft =
       lang === 'AR'
         ? `مرحباً بك ${selectedConv.contactName || ''}. وايت كيفز العقارية الفاخرة استلمت استفسارك حول ${selectedConv.unit}. المستندات جاهزة لمراجعتكم.`
@@ -286,9 +253,14 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     }).catch(() => {});
   };
 
+  const handleLinkSuccess = (newPhone: string) => {
+    setSelectedAccount(newPhone);
+    void refreshStatuses();
+  };
+
   const unreadTotal = useMemo(
-    () => conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0),
-    [conversations]
+    () => activePoolConversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0),
+    [activePoolConversations]
   );
 
   return (
@@ -330,6 +302,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
           onSelectAccount={setSelectedAccount}
           chatTypeFilter={chatTypeFilter}
           onSelectChatType={setChatTypeFilter}
+          onOpenLinkModal={() => setShowLinkModal(true)}
         />
 
         <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%' }}>
@@ -348,6 +321,12 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
         {showContextPane && <LindaLeadContextPane conversation={selectedConv} />}
       </div>
+
+      <LindaLinkAccountModal
+        isOpen={showLinkModal}
+        onClose={() => setShowLinkModal(false)}
+        onSuccess={handleLinkSuccess}
+      />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 // FILE: src/components/crm/LindaWhatsAppCRM/LindaLiveWhatsAppWeb.test.tsx
 /**
  * White Caves Real Estate LLC - Linda WhatsApp Web Test Suite
- * Standard: AEGIS 12-Way Architecture Standard
+ * Standard: AEGIS 12-Way Architecture Standard (<350 lines)
  */
 
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { LindaLiveWhatsAppWeb } from './LindaLiveWhatsAppWeb';
 import { INITIAL_LINDA_CONVERSATIONS } from './LindaWhatsAppCRM.data';
@@ -89,5 +89,50 @@ describe('LindaLiveWhatsAppWeb Component Suite', () => {
     expect(accountDropdown).toBeInTheDocument();
     fireEvent.change(accountDropdown, { target: { value: 'goraha' } });
     expect(accountDropdown).toHaveValue('goraha');
+  });
+
+  it('displays campaign tag and intent pill on conversation cards', () => {
+    render(<LindaLiveWhatsAppWeb conversations={INITIAL_LINDA_CONVERSATIONS} />);
+
+    expect(screen.getByTestId('wa-campaign-tag-conv-1')).toHaveTextContent('Vardon Batch #1');
+    expect(screen.getByTestId('wa-intent-pill-conv-1')).toBeInTheDocument();
+  });
+
+  it('filters by Campaign Leads pill tab', () => {
+    render(<LindaLiveWhatsAppWeb conversations={INITIAL_LINDA_CONVERSATIONS} />);
+
+    const campaignTab = screen.getByTestId('wa-tab-campaign');
+    expect(campaignTab).toBeInTheDocument();
+    fireEvent.click(campaignTab);
+
+    // All test conversations with isCampaignLead: true should remain visible
+    expect(screen.getByTestId('wa-chat-item-conv-1')).toBeInTheDocument();
+  });
+
+  it('opens and interacts with 1-Click Link WhatsApp Account modal', async () => {
+    render(<LindaLiveWhatsAppWeb conversations={INITIAL_LINDA_CONVERSATIONS} />);
+
+    const linkBtn = screen.getByTestId('wa-link-account-btn');
+    fireEvent.click(linkBtn);
+
+    expect(screen.getByTestId('linda-link-account-modal')).toBeInTheDocument();
+    expect(screen.getByTestId('link-tab-code')).toBeInTheDocument();
+    expect(screen.getByTestId('link-tab-qr')).toBeInTheDocument();
+
+    // Test phone pairing code input
+    const phoneInput = screen.getByTestId('link-phone-input');
+    fireEvent.change(phoneInput, { target: { value: '+971501112233' } });
+
+    const genBtn = screen.getByTestId('link-generate-code-btn');
+    fireEvent.click(genBtn);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('link-pairing-code-display')).toBeInTheDocument();
+    });
+
+    // Close modal
+    const closeBtn = screen.getByTestId('link-modal-close-btn');
+    fireEvent.click(closeBtn);
+    expect(screen.queryByTestId('linda-link-account-modal')).not.toBeInTheDocument();
   });
 });
