@@ -1,3 +1,5 @@
+import { getServiceUrl, getRuntimeEnvironment } from './serviceRegistry';
+
 /**
  * API Configuration
  * Centralized API endpoints and settings for all environments
@@ -14,8 +16,8 @@ const getEnv = (key: string): string | undefined => {
 };
 
 export const API_CONFIG = {
-  // Base URL - uses environment variable or defaults
-  BASE_URL: getEnv('VITE_API_URL') || getEnv('REACT_APP_API_URL') || 'https://api.whitecaves.com',
+  // Base URL - uses serviceRegistry dynamic resolution with fallback to env variables
+  BASE_URL: getEnv('VITE_API_URL') || getEnv('REACT_APP_API_URL') || getServiceUrl('server'),
 
   // Request timeout (ms)
   TIMEOUT: parseInt(getEnv('VITE_API_TIMEOUT') || getEnv('REACT_APP_API_TIMEOUT') || '30000', 10),
@@ -194,4 +196,3 @@ export const shouldUseRealApi = (): boolean => {
   }
   return API_CONFIG.FEATURES.useRealApi;
 };
-
