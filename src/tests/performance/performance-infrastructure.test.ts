@@ -85,10 +85,9 @@ describe('Homepage Code Splitting', () => {
     expect(homepageSource).toContain('data-testid="crm-command-center"');
   });
 
-  it('exposes all 12 corporate department floor routes', () => {
-    expect(homepageSource).toContain('DEPARTMENT_FLOORS');
-    expect(homepageSource).toContain('/crm/floor/1');
-    expect(homepageSource).toContain('/crm/floor/12');
+  it('exposes intro welcome and direct authentication gateway routes', () => {
+    expect(homepageSource).toContain('/signin');
+    expect(homepageSource).toContain('/signup');
   });
 
   it('maintains route-scoped hero preload lifecycle hooks', () => {
@@ -168,4 +167,3 @@ describe('Native Lazy Loading', () => {
     expect(source).toContain('loading="lazy"');
   });
 });
-

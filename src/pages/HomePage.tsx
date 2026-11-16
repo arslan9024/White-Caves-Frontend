@@ -1,23 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Building2, Bot, Layers, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Building2, ShieldCheck, UserPlus, KeyRound, ArrowRight, Sparkles } from 'lucide-react';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
 import './HomePage.css';
-
-const DEPARTMENT_FLOORS = [
-  { floor: 1, name: 'Luxury Sales', path: '/crm/floor/1' },
-  { floor: 2, name: 'Strategic Offplan', path: '/crm/floor/2' },
-  { floor: 3, name: 'Commercial Investment', path: '/crm/floor/3' },
-  { floor: 4, name: 'Residential Leasing', path: '/crm/floor/4' },
-  { floor: 5, name: 'Asset & Facilities', path: '/crm/floor/5' },
-  { floor: 6, name: 'Revenue & Finance', path: '/crm/floor/6' },
-  { floor: 7, name: 'Performance Marketing', path: '/crm/floor/7' },
-  { floor: 8, name: 'Client Experience', path: '/crm/floor/8' },
-  { floor: 9, name: 'Corporate Governance', path: '/crm/floor/9' },
-  { floor: 10, name: 'RERA Compliance', path: '/crm/floor/10' },
-  { floor: 11, name: 'Conveyancing & Transactions', path: '/crm/floor/11' },
-  { floor: 12, name: 'Market Intelligence', path: '/crm/floor/12' },
-] as const;
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
@@ -30,48 +15,73 @@ const HomePage: FC = () => {
   }, []);
 
   return (
-    <main className="crm-command-center" data-testid="crm-command-center">
-      <header className="crm-command-center__header">
+    <main className="crm-command-center wc-landing-portal" data-testid="crm-command-center">
+      <header className="crm-command-center__header wc-landing-header">
         <div className="crm-command-center__brand">
-          <Building2 size={28} />
+          <Building2 size={32} className="wc-brand-icon" />
           <div>
-            <h1>White Caves CRM Command Center</h1>
-            <p>Authenticated Enterprise Operations • Department Floors 1–12 &amp; AIAMS</p>
+            <h1>White Caves Real Estate</h1>
+            <p>Dubai Sovereign Prop-Tech Portal • Enterprise Portal &amp; Client Gateway</p>
           </div>
         </div>
         <div className="crm-command-center__actions">
-          <button type="button" onClick={() => navigate('/aiams')}>
-            <Bot size={18} />
-            <span>AIAMS Workforce</span>
-          </button>
-          <button type="button" onClick={() => navigate('/sourcing/linda')}>
-            <MessageCircle size={18} />
-            <span>Linda WhatsApp Sync</span>
-          </button>
-          <button type="button" onClick={() => navigate('/login')}>
+          <button type="button" className="wc-btn-primary" onClick={() => navigate('/signin')}>
             <ShieldCheck size={18} />
-            <span>Operator Sign-In</span>
+            <span>Sign In</span>
+          </button>
+          <button type="button" className="wc-btn-secondary" onClick={() => navigate('/signup')}>
+            <UserPlus size={18} />
+            <span>Create Account</span>
           </button>
         </div>
       </header>
 
-      <section aria-label="Department Floors 1 to 12" className="crm-command-center__floors">
-        <h2>
-          <Layers size={20} />
-          <span>Department Floors (1–12)</span>
-        </h2>
-        <div className="crm-command-center__grid">
-          {DEPARTMENT_FLOORS.map(dept => (
-            <button
-              key={dept.floor}
-              type="button"
-              className="crm-floor-card"
-              onClick={() => navigate(dept.path)}
-            >
-              <span className="crm-floor-card__num">Floor {dept.floor}</span>
-              <span className="crm-floor-card__name">{dept.name}</span>
-            </button>
-          ))}
+      <section className="wc-welcome-hero" aria-label="Welcome and Authentication Gateway">
+        <div className="wc-welcome-card">
+          <div className="wc-welcome-badge">
+            <Sparkles size={16} />
+            <span>Sovereign Real Estate Ecosystem</span>
+          </div>
+          <h2 className="wc-welcome-title">Welcome to White Caves</h2>
+          <p className="wc-welcome-subtitle">
+            Access your personal portal, institutional property intelligence, and secure transaction
+            hub. Sign in to access your properties, manage investments, or register for full
+            platform privileges.
+          </p>
+
+          <div className="wc-gateway-actions">
+            <div className="wc-gateway-flow-card">
+              <div className="wc-flow-icon-wrap">
+                <KeyRound size={24} />
+              </div>
+              <div className="wc-flow-details">
+                <h3>Operator &amp; Client Access</h3>
+                <p>Secure login with Email, Phone SMS, Biometrics, or Enterprise credentials.</p>
+              </div>
+              <button type="button" className="wc-flow-cta" onClick={() => navigate('/signin')}>
+                <span>Sign In</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+
+            <div className="wc-gateway-flow-card">
+              <div className="wc-flow-icon-wrap">
+                <UserPlus size={24} />
+              </div>
+              <div className="wc-flow-details">
+                <h3>New Registration</h3>
+                <p>Register as a Buyer, Seller, Landlord, Tenant, or Corporate Partner.</p>
+              </div>
+              <button
+                type="button"
+                className="wc-flow-cta wc-flow-cta--secondary"
+                onClick={() => navigate('/signup')}
+              >
+                <span>Sign Up</span>
+                <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -79,4 +89,3 @@ const HomePage: FC = () => {
 };
 
 export default HomePage;
-

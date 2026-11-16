@@ -361,3 +361,175 @@ html {
   font-weight: 600;
   color: #f8fafc;
 }
+
+/* ============================================================================
+ * Landing Portal Welcome & Authentication Gateway (HomePage.tsx)
+ * ============================================================================ */
+.wc-landing-portal {
+  display: flex;
+  flex-direction: column;
+}
+
+.wc-brand-icon {
+  color: #ef4444;
+}
+
+.wc-welcome-hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.wc-welcome-card {
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 20px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  backdrop-filter: blur(16px);
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+}
+
+.wc-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.wc-welcome-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+}
+
+.wc-welcome-subtitle {
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.wc-gateway-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.wc-gateway-flow-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.75rem;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  text-align: left;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.wc-gateway-flow-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.wc-flow-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  margin-bottom: 1.25rem;
+}
+
+.wc-flow-details h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem;
+}
+
+.wc-flow-details p {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+}
+
+.wc-flow-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  background: #ef4444;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.925rem;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s ease;
+}
+
+.wc-flow-cta:hover {
+  background: #dc2626;
+}
+
+.wc-flow-cta--secondary {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f8fafc;
+}
+
+.wc-flow-cta--secondary:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.wc-embedded-auth {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.wc-embedded-auth__banner {
+  margin-bottom: 1rem;
+}
+
+.wc-embedded-auth__back {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.15s ease;
+}
+
+.wc-embedded-auth__back:hover {
+  color: #f8fafc;
+}

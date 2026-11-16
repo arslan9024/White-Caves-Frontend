@@ -188,10 +188,12 @@ sessions/
 
 # Backend-only assets (live in White-Caves-Server repo)
 server/*
-!server/shared/
-!server/middleware/
-!server/models/
-!server/utils/
+!server/shared/henryDocumentRegistry.ts
+!server/middleware/errorHandler.ts
+!server/models/InventoryProperty.js
+!server/models/OwnerRelationship.js
+!server/models/PropertyOpportunity.js
+!server/utils/logger.ts
 prisma/*
 !prisma/schema.prisma
 /services/
