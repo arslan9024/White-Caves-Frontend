@@ -94,7 +94,7 @@ describe('authSession utilities', () => {
       ).toBe('/landlord-portal');
     });
 
-    it('routes users without roles to select-role and all others to crm', () => {
+    it('routes users without roles to select-role and customer roles to respective portals', () => {
       expect(
         resolvePostLoginDestination({
           user: { role: '', status: 'active' },
@@ -105,7 +105,7 @@ describe('authSession utilities', () => {
         resolvePostLoginDestination({
           user: { role: 'buyer', status: 'active' },
         })
-      ).toBe('/dashboard');
+      ).toBe('/buyer-portal');
     });
 
     it('hard-fails unauthorized mapped roles to pending approval', () => {
@@ -244,4 +244,3 @@ describe('authSession utilities', () => {
     });
   });
 });
-
