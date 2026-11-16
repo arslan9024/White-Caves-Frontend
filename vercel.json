@@ -24,8 +24,20 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/health",
       "destination": "/api/index.ts"
+    },
+    {
+      "source": "/api/properties",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/api/system/:path*",
+      "destination": "/api/index.ts"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.whitecaves.com/api/:path*"
     },
     {
       "source": "/((?!api/).*)",
@@ -71,7 +83,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.firebaseapp.com https://*.googleapis.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.unsplash.com https://*.googleapis.com https://*.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.firebase.com wss://*.firebaseio.com https://va.vercel-scripts.com https://api.stripe.com https://api.whitecaves.com wss://api.whitecaves.com; frame-src https://*.firebaseapp.com https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.firebaseapp.com https://*.googleapis.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.unsplash.com https://*.googleapis.com https://*.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.firebase.com wss://*.firebaseio.com https://va.vercel-scripts.com https://api.stripe.com https://api.whitecaves.com wss://api.whitecaves.com https://*.whitecaves.com; frame-src https://*.firebaseapp.com https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
         }
       ]
     }

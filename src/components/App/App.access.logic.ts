@@ -2,6 +2,7 @@ import {
   isCreatorSuperUserEmail,
   normalizeRoleForUserContext,
   CANONICAL_SUPERUSER_ROLE,
+  isSuperUserAliasRole,
 } from '../../utils/superUserAccess';
 import { UserRoleData } from './App.config';
 export function resolveEffectiveRole(
@@ -22,6 +23,15 @@ export function resolveEffectiveRole(
 export function getRoleLandingPath(role: string | null | undefined, email?: string): string {
   const normalizedRole = normalizeRoleForUserContext(role, email);
 
+  // TURING-LAW-044: MD/Super Admin → sovereign command center
+  if (
+    normalizedRole === CANONICAL_SUPERUSER_ROLE ||
+    normalizedRole === 'managing_director' ||
+    isSuperUserAliasRole(normalizedRole)
+  ) {
+    return '/md/command-center';
+  }
+
   if (normalizedRole === 'landlord' || normalizedRole === 'property-owner') {
     return '/landlord-portal';
   }
@@ -32,4 +42,3 @@ export function getRoleLandingPath(role: string | null | undefined, email?: stri
 
   return '/crm';
 }
-

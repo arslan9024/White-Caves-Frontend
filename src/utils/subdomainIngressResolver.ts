@@ -6,7 +6,7 @@ export interface SubdomainResolution {
   subdomain: 'tenant' | 'landlord' | 'md' | 'auth' | 'app' | 'default';
   targetPath: string | null;
   requiresAuth: boolean;
-  expectedRole?: 'tenant' | 'landlord' | 'md' | 'superadmin';
+  expectedRole?: 'tenant' | 'landlord' | 'superadmin';
 }
 
 /**
@@ -61,9 +61,9 @@ export function resolveSubdomainIngress(host?: string): SubdomainResolution {
     result = {
       hostname: cleanHost,
       subdomain: 'md',
-      targetPath: '/app',
+      targetPath: '/md/command-center',
       requiresAuth: true,
-      expectedRole: 'md',
+      expectedRole: 'superadmin',
     };
   } else if (cleanHost.startsWith('auth.') || cleanHost === 'auth.whitecaves.com') {
     result = {

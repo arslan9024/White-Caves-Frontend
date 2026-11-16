@@ -29,6 +29,7 @@ import { FounderRedirectGuard } from './FounderRedirectGuard';
 import { LEGACY_DASHBOARD_REDIRECT_ROUTES } from './App.redirects.data';
 import { LEGACY_OWNER_REDIRECT_ROUTES } from './App.redirects.data';
 import { useAppRuntime } from './App.logic';
+import { useSubdomainIngress } from '../../hooks/useSubdomainIngress';
 import { createRouteRenderers } from './App.routeViews';
 import { portalRoutes } from './App.routes';
 import { ownerWhatsAppRoutes } from './App.routes';
@@ -39,6 +40,7 @@ import { publicRoutes } from './App.routes';
 import { AppProviders } from './AppProviders';
 export function AppView() {
   const { user, consentGranted, handleRoleSelect } = useAppRuntime();
+  useSubdomainIngress();
   const {
     renderProtectedAppPage,
     renderPublicPage,
@@ -260,4 +262,3 @@ export function AppView() {
     </AppProviders>
   );
 }
-

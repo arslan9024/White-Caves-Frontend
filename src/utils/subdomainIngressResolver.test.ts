@@ -19,11 +19,11 @@ describe('resolveSubdomainIngress', () => {
     expect(res.expectedRole).toBe('landlord');
   });
 
-  it('resolves md subdomain to /app for Managing Director', () => {
+  it('resolves md subdomain to /md/command-center for Managing Director', () => {
     const res = resolveSubdomainIngress('md.whitecaves.com');
     expect(res.subdomain).toBe('md');
-    expect(res.targetPath).toBe('/app');
-    expect(res.expectedRole).toBe('md');
+    expect(res.targetPath).toBe('/md/command-center');
+    expect(res.expectedRole).toBe('superadmin');
   });
 
   it('resolves auth subdomain to /signin', () => {

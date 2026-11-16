@@ -2,7 +2,7 @@ export const LEGACY_DASHBOARD_REDIRECT_ROUTES: Array<{ path: string; to: string 
   { path: '/lion/dashboard', to: '/dashboard' },
   { path: '/owner/dashboard', to: '/dashboard' },
   { path: '/md/dashboard', to: '/dashboard' },
-  { path: '/md/command-center', to: '/dashboard' },
+  // MD Command Center is a sovereign portal — no redirect (TURING-LAW-044)
   { path: '/employee/workspace', to: '/dashboard' },
   { path: '/buyer/dashboard', to: '/buyer-portal' },
   { path: '/buyer/acquisitions', to: '/buyer-portal' },
@@ -22,4 +22,3 @@ export const LEGACY_OWNER_REDIRECT_ROUTES: Array<{ path: string; to: string }> =
   { path: '/crm', to: '/dashboard' },
   { path: '/owner/crm', to: '/dashboard' },
 ];
-
