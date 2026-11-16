@@ -11,6 +11,7 @@ import {
 } from './TopNavbar.style';
 import { useTopNavbarLogic, TopNavbarProps } from './TopNavbar.logic';
 import { UserPreferencesDropdown } from '../layout/PublicNavbar/UserPreferencesDropdown';
+import { NotificationsDropdown } from './NotificationsDropdown';
 import ThemeToggle from '../ThemeToggle';
 
 export type { TopNavbarProps };
@@ -19,7 +20,6 @@ export const TopNavbar: FC<TopNavbarProps> = props => {
   const {
     scrolled,
     currentPath,
-    isDark,
     user,
     displayName,
     initial,
@@ -27,8 +27,113 @@ export const TopNavbar: FC<TopNavbarProps> = props => {
     isProfileOpen,
     setIsProfileOpen,
     toggleProfile,
+    isNotificationsOpen,
+    setIsNotificationsOpen,
+    toggleNotifications,
     handleNavigate,
   } = useTopNavbarLogic(props);
+
+  const isZen = props.isZenMode;
+
+  if (isZen) {
+    return (
+      <header
+        className="wc-zen-topbar"
+        data-testid="wc-zen-topbar"
+        style={{
+          height: '42px',
+          background: 'rgba(15, 23, 42, 0.95)',
+          borderBottom: '1px solid rgba(239, 68, 68, 0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 16px',
+          zIndex: 1000,
+          position: props.sticky ? 'sticky' : 'relative',
+          top: 0,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div
+            onClick={() => handleNavigate(props.homeRoute || '/dashboard')}
+            title="Return to Dashboard"
+            data-testid="zen-logo-ring"
+            style={{
+              width: '28px',
+              height: '28px',
+              borderRadius: '50%',
+              border: '2px solid #EF4444',
+              padding: '2px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: '#FFFFFF',
+              boxShadow: '0 0 10px rgba(239, 68, 68, 0.4)',
+            }}
+          >
+            <img
+              src="/company-logo.jpg"
+              alt="White Caves Logo"
+              style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'contain' }}
+            />
+          </div>
+          <span
+            style={{
+              fontSize: '0.75rem',
+              fontWeight: 800,
+              color: '#F8FAFC',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+            }}
+          >
+            AICC Zen Workspace
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <ThemeToggle compact={true} />
+
+          <div style={{ position: 'relative' }}>
+            <QuickActionBtn
+              onClick={toggleNotifications}
+              title="Notifications & Escalations"
+              aria-label="Notifications"
+              style={{ width: '28px', height: '28px' }}
+            >
+              <Bell size={13} />
+              <div className="alert-pip" />
+            </QuickActionBtn>
+            <NotificationsDropdown
+              isOpen={isNotificationsOpen}
+              onClose={() => setIsNotificationsOpen(false)}
+            />
+          </div>
+
+          <ProfileMenuWrapper>
+            <ProfileTrigger
+              onClick={toggleProfile}
+              aria-expanded={isProfileOpen}
+              aria-label="User profile and preferences"
+              data-testid="profile-trigger"
+              style={{ padding: '2px 8px', height: '28px' }}
+            >
+              <div
+                className="avatar"
+                style={{ width: '22px', height: '22px', fontSize: '0.65rem' }}
+              >
+                {photoURL ? <img src={photoURL} alt={displayName} /> : initial}
+              </div>
+              <ChevronDown size={11} color="#EF4444" />
+            </ProfileTrigger>
+            {isProfileOpen && (
+              <UserPreferencesDropdown user={user} onClose={() => setIsProfileOpen(false)} />
+            )}
+          </ProfileMenuWrapper>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <NavbarContainer
@@ -91,10 +196,20 @@ export const TopNavbar: FC<TopNavbarProps> = props => {
         <ThemeToggle compact={true} />
 
         {/* Notifications & Escalations */}
-        <QuickActionBtn title="Notifications & Escalations" aria-label="Notifications">
-          <Bell size={16} />
-          <div className="alert-pip" />
-        </QuickActionBtn>
+        <div style={{ position: 'relative' }}>
+          <QuickActionBtn
+            onClick={toggleNotifications}
+            title="Notifications & Escalations"
+            aria-label="Notifications"
+          >
+            <Bell size={16} />
+            <div className="alert-pip" />
+          </QuickActionBtn>
+          <NotificationsDropdown
+            isOpen={isNotificationsOpen}
+            onClose={() => setIsNotificationsOpen(false)}
+          />
+        </div>
 
         {/* Centralized Profile Component (with telemetry, role badge, theme, and full suite) */}
         <ProfileMenuWrapper>
@@ -123,4 +238,3 @@ export const TopNavbar: FC<TopNavbarProps> = props => {
 };
 
 export default TopNavbar;
-

@@ -1,11 +1,20 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, ShieldCheck, UserPlus, KeyRound, ArrowRight, Sparkles } from 'lucide-react';
 import { cleanupHomepageHeroPreload, ensureHomepageHeroPreload } from './homePagePreload';
+import { FastPropertySearchHero } from './components/FastPropertySearchHero';
+import { LandingAuthModal } from './components/LandingAuthModal';
 import './HomePage.css';
 
 const HomePage: FC = () => {
   const navigate = useNavigate();
+  const [authModalState, setAuthModalState] = useState<{
+    isOpen: boolean;
+    mode: 'signin' | 'signup';
+  }>({
+    isOpen: false,
+    mode: 'signin',
+  });
 
   useEffect(() => {
     ensureHomepageHeroPreload();
@@ -13,6 +22,14 @@ const HomePage: FC = () => {
       cleanupHomepageHeroPreload();
     };
   }, []);
+
+  const openAuthModal = (mode: 'signin' | 'signup') => {
+    setAuthModalState({ isOpen: true, mode });
+  };
+
+  const closeAuthModal = () => {
+    setAuthModalState(prev => ({ ...prev, isOpen: false }));
+  };
 
   return (
     <main className="crm-command-center wc-landing-portal" data-testid="crm-command-center">
@@ -25,11 +42,21 @@ const HomePage: FC = () => {
           </div>
         </div>
         <div className="crm-command-center__actions">
-          <button type="button" className="wc-btn-primary" onClick={() => navigate('/signin')}>
+          <button
+            type="button"
+            className="wc-btn-primary"
+            onClick={() => openAuthModal('signin')}
+            data-testid="header-signin-btn"
+          >
             <ShieldCheck size={18} />
             <span>Sign In</span>
           </button>
-          <button type="button" className="wc-btn-secondary" onClick={() => navigate('/signup')}>
+          <button
+            type="button"
+            className="wc-btn-secondary"
+            onClick={() => openAuthModal('signup')}
+            data-testid="header-signup-btn"
+          >
             <UserPlus size={18} />
             <span>Create Account</span>
           </button>
@@ -45,8 +72,8 @@ const HomePage: FC = () => {
           <h2 className="wc-welcome-title">Welcome to White Caves</h2>
           <p className="wc-welcome-subtitle">
             Access your personal portal, institutional property intelligence, and secure transaction
-            hub. Sign in to access your properties, manage investments, or register for full
-            platform privileges.
+            hub. Sign in to access your properties, manage investments, or search the verified Dubai
+            luxury portfolio below.
           </p>
 
           <div className="wc-gateway-actions">
@@ -58,7 +85,12 @@ const HomePage: FC = () => {
                 <h3>Operator &amp; Client Access</h3>
                 <p>Secure login with Email, Phone SMS, Biometrics, or Enterprise credentials.</p>
               </div>
-              <button type="button" className="wc-flow-cta" onClick={() => navigate('/signin')}>
+              <button
+                type="button"
+                className="wc-flow-cta"
+                onClick={() => openAuthModal('signin')}
+                data-testid="gateway-signin-cta"
+              >
                 <span>Sign In</span>
                 <ArrowRight size={16} />
               </button>
@@ -75,7 +107,8 @@ const HomePage: FC = () => {
               <button
                 type="button"
                 className="wc-flow-cta wc-flow-cta--secondary"
-                onClick={() => navigate('/signup')}
+                onClick={() => openAuthModal('signup')}
+                data-testid="gateway-signup-cta"
               >
                 <span>Sign Up</span>
                 <ArrowRight size={16} />
@@ -84,6 +117,30 @@ const HomePage: FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Fast Luxury Property Search Section */}
+      <section className="wc-fast-search-section" aria-label="Fast Luxury Property Search">
+        <div className="wc-search-section-header">
+          <span className="wc-search-section-badge">Live Inventory Feed</span>
+          <h3 className="wc-search-section-title">Explore Verified Dubai Properties</h3>
+          <p className="wc-search-section-sub">
+            Direct access to luxury villas, penthouses, and off-plan investments across Dubai’s
+            prime communities.
+          </p>
+        </div>
+
+        <FastPropertySearchHero
+          onOpenAuthModal={openAuthModal}
+          onSelectProperty={id => navigate(`/dashboard/pms/properties/${id}`)}
+        />
+      </section>
+
+      {/* Direct / Modal Login & Registration Dialog */}
+      <LandingAuthModal
+        isOpen={authModalState.isOpen}
+        initialMode={authModalState.mode}
+        onClose={closeAuthModal}
+      />
     </main>
   );
 };

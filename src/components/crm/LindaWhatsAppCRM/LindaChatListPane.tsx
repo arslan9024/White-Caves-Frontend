@@ -6,8 +6,9 @@
  */
 
 import React, { FC, useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, CheckSquare, Square, Filter } from 'lucide-react';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
+import { LindaChatRow } from './LindaChatRow';
 
 export interface LindaChatListPaneProps {
   isDark: boolean;
@@ -37,7 +38,31 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   onSelectChatType,
 }) => {
   const [visibleCount, setVisibleCount] = useState(50);
+  const [selectedChatIds, setSelectedChatIds] = useState<Set<string>>(new Set());
+  const [bulkMode, setBulkMode] = useState<boolean>(false);
   const visibleConversations = conversations.slice(0, visibleCount);
+
+  const toggleSelectChat = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedChatIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedChatIds.size === visibleConversations.length) {
+      setSelectedChatIds(new Set());
+    } else {
+      setSelectedChatIds(new Set(visibleConversations.map(c => c.id)));
+    }
+  };
+
   return (
     <div
       style={{
@@ -93,10 +118,93 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
             </div>
           </div>
         </div>
-        <span style={{ fontSize: 11, fontWeight: 700, color: isDark ? '#8696A0' : '#54656F' }}>
-          {conversations.length} Active
-        </span>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <button
+            type="button"
+            data-testid="wa-bulk-mode-toggle"
+            onClick={() => setBulkMode(b => !b)}
+            style={{
+              background: bulkMode ? 'rgba(37, 211, 102, 0.2)' : 'transparent',
+              border: '1px solid rgba(37, 211, 102, 0.4)',
+              color: '#25D366',
+              borderRadius: 6,
+              padding: '3px 8px',
+              fontSize: 10,
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <CheckSquare size={12} />
+            <span>{bulkMode ? 'Cancel Bulk' : 'Bulk Select'}</span>
+          </button>
+          <span style={{ fontSize: 11, fontWeight: 700, color: isDark ? '#8696A0' : '#54656F' }}>
+            {conversations.length} Active
+          </span>
+        </div>
       </div>
+
+      {/* Bulk Action Controls Bar */}
+      {bulkMode && (
+        <div
+          data-testid="wa-bulk-actions-bar"
+          style={{
+            padding: '6px 12px',
+            background: isDark ? '#1E293B' : '#E2E8F0',
+            borderBottom: '1px solid rgba(148, 163, 184, 0.2)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: 11,
+          }}
+        >
+          <button
+            type="button"
+            onClick={toggleSelectAll}
+            data-testid="wa-bulk-select-all"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: isDark ? '#F8FAFC' : '#0F172A',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            {selectedChatIds.size === visibleConversations.length ? (
+              <CheckSquare size={13} color="#25D366" />
+            ) : (
+              <Square size={13} />
+            )}
+            <span>Select All ({selectedChatIds.size})</span>
+          </button>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button
+              type="button"
+              data-testid="wa-bulk-broadcast-btn"
+              disabled={selectedChatIds.size === 0}
+              style={{
+                padding: '3px 8px',
+                borderRadius: 4,
+                background: '#25D366',
+                border: 'none',
+                color: '#FFFFFF',
+                fontSize: 10,
+                fontWeight: 700,
+                cursor: selectedChatIds.size > 0 ? 'pointer' : 'not-allowed',
+                opacity: selectedChatIds.size > 0 ? 1 : 0.5,
+              }}
+            >
+              Broadcast ({selectedChatIds.size})
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Search Bar */}
       <div style={{ padding: '8px 12px', background: isDark ? '#111B21' : '#FFFFFF' }}>
@@ -129,163 +237,98 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         </div>
       </div>
 
-      {/* Account Filter Pill Bar */}
+      {/* Account & Chat Type Purpose-Built Controls Bar */}
       {accountOptions.length > 0 && onSelectAccount && (
         <div
           data-testid="wa-account-filter-bar"
           style={{
             display: 'flex',
-            gap: 6,
-            padding: '6px 12px',
-            overflowX: 'auto',
+            flexWrap: 'wrap',
+            gap: 8,
+            padding: '8px 12px',
             background: isDark ? '#111B21' : '#FFFFFF',
             borderBottom: isDark ? '1px solid rgba(255,255,255,0.04)' : '1px solid #E2E8F0',
+            alignItems: 'center',
           }}
         >
-          {accountOptions.map(opt => {
-            const active = selectedAccount === opt.id;
-            return (
-              <button
-                key={opt.id}
-                type="button"
-                data-testid={`wa-account-pill-${opt.id}`}
-                onClick={() => onSelectAccount(opt.id)}
+          <div
+            style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, minWidth: '130px' }}
+          >
+            <Filter size={12} color={isDark ? '#8696A0' : '#64748B'} />
+            <select
+              aria-label="Filter by WhatsApp Account"
+              data-testid="wa-account-dropdown"
+              value={selectedAccount}
+              onChange={e => onSelectAccount(e.target.value)}
+              style={{
+                width: '100%',
+                background: isDark ? '#202C33' : '#F8FAFC',
+                border: '1px solid rgba(37, 211, 102, 0.4)',
+                borderRadius: 6,
+                color: isDark ? '#86EFAC' : '#15803D',
+                padding: '4px 6px',
+                fontSize: 10,
+                fontWeight: 700,
+                cursor: 'pointer',
+                outline: 'none',
+              }}
+            >
+              {accountOptions.map(opt => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {onSelectChatType && (
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, minWidth: '100px' }}
+            >
+              <select
+                aria-label="Filter by Chat Type"
+                data-testid="wa-type-dropdown"
+                value={chatTypeFilter}
+                onChange={e => onSelectChatType(e.target.value as 'all' | 'direct' | 'groups')}
                 style={{
-                  padding: '3px 10px',
-                  borderRadius: 999,
+                  width: '100%',
+                  background: isDark ? '#202C33' : '#F8FAFC',
+                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  borderRadius: 6,
+                  color: isDark ? '#38BDF8' : '#0284C7',
+                  padding: '4px 6px',
                   fontSize: 10,
                   fontWeight: 700,
-                  whiteSpace: 'nowrap',
                   cursor: 'pointer',
-                  border: active
-                    ? '1px solid #25D366'
-                    : isDark
-                      ? '1px solid #2A3942'
-                      : '1px solid #CBD5E1',
-                  background: active ? 'rgba(37, 211, 102, 0.16)' : 'transparent',
-                  color: active ? '#25D366' : isDark ? '#8696A0' : '#475569',
+                  outline: 'none',
                 }}
               >
-                {opt.label}
-              </button>
-            );
-          })}
-          {onSelectChatType && (
-            <>
-              {(['all', 'direct', 'groups'] as const).map(t => {
-                const active = chatTypeFilter === t;
-                return (
-                  <button
-                    key={t}
-                    type="button"
-                    data-testid={`wa-type-pill-${t}`}
-                    onClick={() => onSelectChatType(t)}
-                    style={{
-                      padding: '3px 10px',
-                      borderRadius: 999,
-                      fontSize: 10,
-                      fontWeight: 700,
-                      whiteSpace: 'nowrap',
-                      cursor: 'pointer',
-                      border: active
-                        ? '1px solid #38BDF8'
-                        : isDark
-                          ? '1px solid #2A3942'
-                          : '1px solid #CBD5E1',
-                      background: active ? 'rgba(56, 189, 248, 0.16)' : 'transparent',
-                      color: active ? '#38BDF8' : isDark ? '#8696A0' : '#475569',
-                    }}
-                  >
-                    {t === 'all' ? 'All Chats' : t === 'direct' ? 'Direct' : 'Groups'}
-                  </button>
-                );
-              })}
-            </>
+                <option value="all">All Chats</option>
+                <option value="direct">Direct Chats</option>
+                <option value="groups">Groups</option>
+              </select>
+            </div>
           )}
         </div>
       )}
 
-      {/* Conversations Scrollable List */}
+      {/* Conversations Scrollable List with Responsive Cards & Bulk Selection */}
       <div style={{ flex: 1, overflowY: 'auto' }}>
         {visibleConversations.map(conv => {
           const isSelected = conv.id === selectedConvId;
+          const isChecked = selectedChatIds.has(conv.id);
+
           return (
-            <div
+            <LindaChatRow
               key={conv.id}
-              data-testid={`wa-chat-item-${conv.id}`}
-              onClick={() => onSelectConversation(conv.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '12px 16px',
-                cursor: 'pointer',
-                borderBottom: isDark ? '1px solid rgba(255,255,255,0.04)' : '1px solid #E2E8F0',
-                background: isSelected ? (isDark ? '#2A3942' : '#E9EDEF') : 'transparent',
-                transition: 'background 0.15s ease',
-              }}
-            >
-              <div
-                style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: '50%',
-                  background: conv.gorahaSaved ? '#059669' : '#0284C7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  fontSize: 14,
-                  flexShrink: 0,
-                }}
-              >
-                {(conv.contactName || conv.phone || 'WA').slice(0, 2).toUpperCase()}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 700,
-                      color: isDark ? '#E9EDEF' : '#111B21',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {conv.contactName}
-                  </span>
-                  <span style={{ fontSize: 10, color: isDark ? '#8696A0' : '#667781' }}>
-                    {conv.timestamp}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: isDark ? '#8696A0' : '#667781',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    marginTop: 2,
-                  }}
-                >
-                  {conv.lastMessage ? (
-                    conv.lastMessage
-                  ) : (
-                    <span style={{ fontStyle: 'italic', opacity: 0.7 }}>
-                      Tap to load recent messages
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
+              conversation={conv}
+              isSelected={isSelected}
+              isChecked={isChecked}
+              bulkMode={bulkMode}
+              isDark={isDark}
+              onSelect={onSelectConversation}
+              onToggleSelect={toggleSelectChat}
+            />
           );
         })}
         {conversations.length > visibleCount && (
@@ -299,17 +342,15 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
               background: isDark ? '#202C33' : '#F8FAFC',
               color: '#25D366',
               border: 'none',
-              borderTop: isDark ? '1px solid #2A3942' : '1px solid #E2E8F0',
-              fontSize: 11,
               fontWeight: 700,
+              fontSize: 11,
               cursor: 'pointer',
             }}
           >
-            Load 50 more ({conversations.length - visibleCount} remaining)
+            Load More Chats ({conversations.length - visibleCount} remaining)
           </button>
         )}
       </div>
     </div>
   );
 };
-

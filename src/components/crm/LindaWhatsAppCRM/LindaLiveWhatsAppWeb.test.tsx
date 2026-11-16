@@ -66,6 +66,28 @@ describe('LindaLiveWhatsAppWeb Component Suite', () => {
     expect(input.value).toContain('White Caves Luxury Desk has reviewed your');
     expect(handleAi).toHaveBeenCalled();
   });
+
+  it('toggles bulk selection mode and enables checkboxes', () => {
+    render(<LindaLiveWhatsAppWeb conversations={INITIAL_LINDA_CONVERSATIONS} />);
+
+    const bulkToggle = screen.getByTestId('wa-bulk-mode-toggle');
+    fireEvent.click(bulkToggle);
+
+    expect(screen.getByTestId('wa-bulk-actions-bar')).toBeInTheDocument();
+    expect(screen.getByTestId('wa-checkbox-conv-1')).toBeInTheDocument();
+
+    const checkbox = screen.getByTestId('wa-checkbox-conv-1');
+    fireEvent.click(checkbox);
+
+    expect(screen.getByTestId('wa-bulk-broadcast-btn')).not.toBeDisabled();
+  });
+
+  it('filters account via custom dropdown', () => {
+    render(<LindaLiveWhatsAppWeb conversations={INITIAL_LINDA_CONVERSATIONS} />);
+
+    const accountDropdown = screen.getByTestId('wa-account-dropdown');
+    expect(accountDropdown).toBeInTheDocument();
+    fireEvent.change(accountDropdown, { target: { value: 'goraha' } });
+    expect(accountDropdown).toHaveValue('goraha');
+  });
 });
-
-

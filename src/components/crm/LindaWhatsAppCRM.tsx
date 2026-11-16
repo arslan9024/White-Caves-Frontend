@@ -31,213 +31,152 @@ import { useLindaOperationsCenter } from './LindaWhatsAppCRM/useLindaOperationsC
  * LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterprise)
  * Modularized under AEGIS APOCALYPSE-AEG-042 (< 350 lines).
  */
-const LindaWhatsAppCRM = memo(() => {
-  const { isDark } = useTheme();
-  const [activeViewTab, setActiveViewTab] = useState<LindaViewTab>('whatsapp_web');
-  const [opsDrawerOpen, setOpsDrawerOpen] = useState<boolean>(false);
-  const [activeNodeId, setActiveNodeId] = useState<LindaTreeNodeId>('inbox');
-  const [leafLabel, setLeafLabel] = useState<string | null>(null);
-  const [mdApproved, setMdApproved] = useState<boolean>(true);
+export interface LindaWhatsAppCRMProps {
+  initialTab?: LindaViewTab;
+  initialOpsOpen?: boolean;
+}
 
-  const {
-    isConnected,
-    lindaStatus,
-    loadingAction,
-    controlError,
-    soundEnabled,
-    setSoundEnabled,
-    currentTimeGST,
-    heartbeatLatency,
-    confirmEmergencyStop,
-    setConfirmEmergencyStop,
-    qrCodeDataUrl,
-    setQrCodeDataUrl,
-    isQrLoading,
-    toastNotification,
-    setToastNotification,
-    metrics,
-    sessions,
-    campaigns,
-    conversations,
-    features,
-    playbooks,
-    activeModalOutput,
-    setActiveModalOutput,
-    terminalLines,
-    setTerminalLines,
-    liveLogs,
-    refreshLindaStatus,
-    handleToggleLindaRuntime,
-    handleExecuteCommand,
-    handlePingSession,
-    handlePairDeviceCode,
-    handleScanDeviceQr,
-    handleToggleCampaignStatus,
-    handleQueueOutreachBatch,
-    handleSendQuickReply,
-  } = useLindaOperationsCenter();
+const LindaWhatsAppCRM = memo<LindaWhatsAppCRMProps>(
+  ({ initialTab = 'whatsapp_web', initialOpsOpen = false }) => {
+    const { isDark } = useTheme();
+    const [activeViewTab, setActiveViewTab] = useState<LindaViewTab>(initialTab);
+    const [opsDrawerOpen, setOpsDrawerOpen] = useState<boolean>(initialOpsOpen);
+    const [activeNodeId, setActiveNodeId] = useState<LindaTreeNodeId>('inbox');
+    const [leafLabel, setLeafLabel] = useState<string | null>(null);
+    const [mdApproved, setMdApproved] = useState<boolean>(true);
 
-  const handleSelectTreeNode = useCallback(
-    (nodeId: LindaTreeNodeId) => {
-      const node = LINDA_TREE_NODES.find(n => n.id === nodeId);
-      if (!node) return;
-      if (node.requiresMdApproval && !mdApproved) {
-        setToastNotification('MD Approval required to access governance controls.');
-        return;
-      }
-      setActiveNodeId(nodeId);
-      setActiveViewTab(node.viewTab);
+    const {
+      isConnected,
+      lindaStatus,
+      loadingAction,
+      controlError,
+      soundEnabled,
+      setSoundEnabled,
+      currentTimeGST,
+      heartbeatLatency,
+      confirmEmergencyStop,
+      setConfirmEmergencyStop,
+      qrCodeDataUrl,
+      setQrCodeDataUrl,
+      isQrLoading,
+      toastNotification,
+      setToastNotification,
+      metrics,
+      sessions,
+      campaigns,
+      conversations,
+      features,
+      playbooks,
+      activeModalOutput,
+      setActiveModalOutput,
+      terminalLines,
+      setTerminalLines,
+      liveLogs,
+      refreshLindaStatus,
+      handleToggleLindaRuntime,
+      handleExecuteCommand,
+      handlePingSession,
+      handlePairDeviceCode,
+      handleScanDeviceQr,
+      handleToggleCampaignStatus,
+      handleQueueOutreachBatch,
+      handleSendQuickReply,
+    } = useLindaOperationsCenter();
+
+    const handleSelectTreeNode = useCallback(
+      (nodeId: LindaTreeNodeId) => {
+        const node = LINDA_TREE_NODES.find(n => n.id === nodeId);
+        if (!node) return;
+        if (node.requiresMdApproval && !mdApproved) {
+          setToastNotification('MD Approval required to access governance controls.');
+          return;
+        }
+        setActiveNodeId(nodeId);
+        setActiveViewTab(node.viewTab);
+        setLeafLabel(null);
+      },
+      [mdApproved, setToastNotification]
+    );
+
+    const handleReturnToParent = useCallback(() => {
       setLeafLabel(null);
-    },
-    [mdApproved, setToastNotification]
-  );
+      setToastNotification('Returned to parent workspace.');
+    }, [setToastNotification]);
 
-  const handleReturnToParent = useCallback(() => {
-    setLeafLabel(null);
-    setToastNotification('Returned to parent workspace.');
-  }, [setToastNotification]);
+    useEffect(() => {
+      const onKeyDown = (e: KeyboardEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (
+          target &&
+          (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+        ) {
+          return;
+        }
+        if (e.key === 'Escape' && leafLabel) {
+          handleReturnToParent();
+          return;
+        }
+        const matched = LINDA_TREE_NODES.find(n => n.shortcut === e.key);
+        if (matched) {
+          handleSelectTreeNode(matched.id);
+        }
+      };
+      window.addEventListener('keydown', onKeyDown);
+      return () => window.removeEventListener('keydown', onKeyDown);
+    }, [leafLabel, handleReturnToParent, handleSelectTreeNode]);
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
-      ) {
-        return;
-      }
-      if (e.key === 'Escape' && leafLabel) {
-        handleReturnToParent();
-        return;
-      }
-      const matched = LINDA_TREE_NODES.find(n => n.shortcut === e.key);
-      if (matched) {
-        handleSelectTreeNode(matched.id);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [leafLabel, handleReturnToParent, handleSelectTreeNode]);
+    const breadcrumbState: LindaBreadcrumbState = { nodeId: activeNodeId, leafLabel };
+    const hotLeadCount = conversations.filter(c => c.intent === 'BUY' || c.intent === 'VIP').length;
 
-  const breadcrumbState: LindaBreadcrumbState = { nodeId: activeNodeId, leafLabel };
-  const hotLeadCount = conversations.filter(c => c.intent === 'BUY' || c.intent === 'VIP').length;
-
-  const fallbackContent = (
-    <section
-      aria-label="Linda WhatsApp CRM"
-      data-testid="linda-operations-center"
-      style={{ display: 'grid', gap: 16, paddingBottom: 28 }}
-    >
-      <LindaExecutiveHeader
-        isDark={isDark}
-        isConnected={isConnected}
-        lindaStatus={lindaStatus}
-        loadingAction={loadingAction}
-        controlError={controlError}
-        activeViewTab={activeViewTab}
-        setActiveViewTab={setActiveViewTab}
-        soundEnabled={soundEnabled}
-        setSoundEnabled={setSoundEnabled}
-        currentTimeGST={currentTimeGST}
-        heartbeatLatency={heartbeatLatency}
-        confirmEmergencyStop={confirmEmergencyStop}
-        setConfirmEmergencyStop={setConfirmEmergencyStop}
-        toastNotification={toastNotification}
-        setToastNotification={setToastNotification}
-        onRefreshStatus={() => void refreshLindaStatus()}
-        onToggleRuntime={() => void handleToggleLindaRuntime()}
-      />
-
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button
-          type="button"
-          data-testid="linda-ops-drawer-toggle"
-          onClick={() => setOpsDrawerOpen(prev => !prev)}
-          style={{
-            padding: '6px 14px',
-            borderRadius: 8,
-            border: '1px solid rgba(239, 68, 68, 0.45)',
-            background: opsDrawerOpen ? '#EF4444' : isDark ? '#0F172A' : '#FFFFFF',
-            color: opsDrawerOpen ? '#FFFFFF' : isDark ? '#F8FAFC' : '#0F172A',
-            fontSize: 12,
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
-        >
-          {opsDrawerOpen ? 'Hide Ops & Diagnostics' : 'Ops & Diagnostics'}
-        </button>
-      </div>
-
-      {opsDrawerOpen && (
-        <div data-testid="linda-ops-diagnostics-drawer" style={{ display: 'grid', gap: 16 }}>
-          <LindaTelemetryGrid isDark={isDark} metrics={metrics} />
-          <LindaQuickActionsAndTerminal
-            features={features}
-            playbooks={playbooks}
-            terminalLines={terminalLines}
-            onExecuteCommand={(cmd, label) => void handleExecuteCommand(cmd, label)}
-            onClearTerminal={() =>
-              setTerminalLines(['$ Terminal cleared. Ready for next command.'])
-            }
-            activeModalOutput={activeModalOutput}
-            onCloseModal={() => {
-              setActiveModalOutput(null);
-              setQrCodeDataUrl(null);
-            }}
-            qrCodeDataUrl={qrCodeDataUrl}
-            isQrLoading={isQrLoading}
-          />
-        </div>
-      )}
-
-      <LindaBreadcrumbBar
-        isDark={isDark}
-        breadcrumb={breadcrumbState}
-        mdApproved={mdApproved}
-        onReturnToParent={handleReturnToParent}
-        onToggleMdApproval={() => {
-          setMdApproved(prev => !prev);
-          setToastNotification(!mdApproved ? 'MD Access Approved' : 'MD Access Locked');
-        }}
-      />
-
-      <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-        <LindaTreeDrawer
+    const fallbackContent = (
+      <section
+        aria-label="Linda WhatsApp CRM"
+        data-testid="linda-operations-center"
+        style={{ display: 'grid', gap: 16, paddingBottom: 28 }}
+      >
+        <LindaExecutiveHeader
           isDark={isDark}
-          activeNodeId={activeNodeId}
-          hotLeadCount={hotLeadCount}
-          mdApproved={mdApproved}
-          onSelectNode={handleSelectTreeNode}
+          isConnected={isConnected}
+          lindaStatus={lindaStatus}
+          loadingAction={loadingAction}
+          controlError={controlError}
+          activeViewTab={activeViewTab}
+          setActiveViewTab={setActiveViewTab}
+          soundEnabled={soundEnabled}
+          setSoundEnabled={setSoundEnabled}
+          currentTimeGST={currentTimeGST}
+          heartbeatLatency={heartbeatLatency}
+          confirmEmergencyStop={confirmEmergencyStop}
+          setConfirmEmergencyStop={setConfirmEmergencyStop}
+          toastNotification={toastNotification}
+          setToastNotification={setToastNotification}
+          onRefreshStatus={() => void refreshLindaStatus()}
+          onToggleRuntime={() => void handleToggleLindaRuntime()}
         />
 
-        <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 16 }}>
-          {activeNodeId === 'access_control' && (
-            <LindaMdAccessPanel
-              isDark={isDark}
-              mdApproved={mdApproved}
-              onActionComplete={msg => {
-                setToastNotification(msg);
-                setLeafLabel(null);
-              }}
-            />
-          )}
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button
+            type="button"
+            data-testid="linda-ops-drawer-toggle"
+            onClick={() => setOpsDrawerOpen(prev => !prev)}
+            style={{
+              padding: '6px 14px',
+              borderRadius: 8,
+              border: '1px solid rgba(239, 68, 68, 0.45)',
+              background: opsDrawerOpen ? '#EF4444' : isDark ? '#0F172A' : '#FFFFFF',
+              color: opsDrawerOpen ? '#FFFFFF' : isDark ? '#F8FAFC' : '#0F172A',
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            {opsDrawerOpen ? 'Hide Ops & Diagnostics' : 'Ops & Diagnostics'}
+          </button>
+        </div>
 
-          {(activeViewTab === 'all' || activeViewTab === 'whatsapp_web') && (
-            <LindaLiveWhatsAppWeb
-              conversations={conversations}
-              isLiveConnected={isConnected}
-              heartbeatLatency={heartbeatLatency}
-              onSendMessage={(convId, text) => {
-                const match = conversations.find(c => c.id === convId);
-                if (match) {
-                  handleSendQuickReply({ ...match, lastMessage: text });
-                }
-              }}
-              onAutoReplyWithAI={handleSendQuickReply}
-            />
-          )}
-
-          {(activeViewTab === 'all' || activeViewTab === 'terminal') && (
+        {opsDrawerOpen && (
+          <div data-testid="linda-ops-diagnostics-drawer" style={{ display: 'grid', gap: 16 }}>
+            <LindaTelemetryGrid isDark={isDark} metrics={metrics} />
             <LindaQuickActionsAndTerminal
               features={features}
               playbooks={playbooks}
@@ -254,43 +193,110 @@ const LindaWhatsAppCRM = memo(() => {
               qrCodeDataUrl={qrCodeDataUrl}
               isQrLoading={isQrLoading}
             />
-          )}
+          </div>
+        )}
 
-          {(activeViewTab === 'all' || activeViewTab === 'sessions') && (
-            <LindaSessionsPanel
-              sessions={sessions}
-              onPingSession={handlePingSession}
-              onPairDeviceCode={handlePairDeviceCode}
-              onScanDeviceQr={handleScanDeviceQr}
-            />
-          )}
+        <LindaBreadcrumbBar
+          isDark={isDark}
+          breadcrumb={breadcrumbState}
+          mdApproved={mdApproved}
+          onReturnToParent={handleReturnToParent}
+          onToggleMdApproval={() => {
+            setMdApproved(prev => !prev);
+            setToastNotification(!mdApproved ? 'MD Access Approved' : 'MD Access Locked');
+          }}
+        />
 
-          {(activeViewTab === 'all' || activeViewTab === 'outreach') && (
-            <LindaCampaignsAndOutreachPanel
-              campaigns={campaigns}
-              onToggleCampaignStatus={handleToggleCampaignStatus}
-              outreachOwners={INITIAL_OUTREACH_OWNERS}
-              onQueueOutreachBatch={handleQueueOutreachBatch}
-            />
-          )}
+        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+          <LindaTreeDrawer
+            isDark={isDark}
+            activeNodeId={activeNodeId}
+            hotLeadCount={hotLeadCount}
+            mdApproved={mdApproved}
+            onSelectNode={handleSelectTreeNode}
+          />
 
-          {(activeViewTab === 'all' || activeViewTab === 'conversations') && (
-            <LindaConversationsAndPillarsPanel
-              conversations={conversations}
-              pillars={LINDA_10_PILLARS}
-              liveLogs={liveLogs}
-              onSendQuickReply={handleSendQuickReply}
-            />
-          )}
+          <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 16 }}>
+            {activeNodeId === 'access_control' && (
+              <LindaMdAccessPanel
+                isDark={isDark}
+                mdApproved={mdApproved}
+                onActionComplete={msg => {
+                  setToastNotification(msg);
+                  setLeafLabel(null);
+                }}
+              />
+            )}
+
+            {(activeViewTab === 'all' || activeViewTab === 'whatsapp_web') && (
+              <LindaLiveWhatsAppWeb
+                conversations={conversations}
+                isLiveConnected={isConnected}
+                heartbeatLatency={heartbeatLatency}
+                onSendMessage={(convId, text) => {
+                  const match = conversations.find(c => c.id === convId);
+                  if (match) {
+                    handleSendQuickReply({ ...match, lastMessage: text });
+                  }
+                }}
+                onAutoReplyWithAI={handleSendQuickReply}
+              />
+            )}
+
+            {(activeViewTab === 'terminal' || (activeViewTab === 'all' && !opsDrawerOpen)) && (
+              <LindaQuickActionsAndTerminal
+                features={features}
+                playbooks={playbooks}
+                terminalLines={terminalLines}
+                onExecuteCommand={(cmd, label) => void handleExecuteCommand(cmd, label)}
+                onClearTerminal={() =>
+                  setTerminalLines(['$ Terminal cleared. Ready for next command.'])
+                }
+                activeModalOutput={activeModalOutput}
+                onCloseModal={() => {
+                  setActiveModalOutput(null);
+                  setQrCodeDataUrl(null);
+                }}
+                qrCodeDataUrl={qrCodeDataUrl}
+                isQrLoading={isQrLoading}
+              />
+            )}
+
+            {(activeViewTab === 'all' || activeViewTab === 'sessions') && (
+              <LindaSessionsPanel
+                sessions={sessions}
+                onPingSession={handlePingSession}
+                onPairDeviceCode={handlePairDeviceCode}
+                onScanDeviceQr={handleScanDeviceQr}
+              />
+            )}
+
+            {(activeViewTab === 'all' || activeViewTab === 'outreach') && (
+              <LindaCampaignsAndOutreachPanel
+                campaigns={campaigns}
+                onToggleCampaignStatus={handleToggleCampaignStatus}
+                outreachOwners={INITIAL_OUTREACH_OWNERS}
+                onQueueOutreachBatch={handleQueueOutreachBatch}
+              />
+            )}
+
+            {(activeViewTab === 'all' || activeViewTab === 'conversations') && (
+              <LindaConversationsAndPillarsPanel
+                conversations={conversations}
+                pillars={LINDA_10_PILLARS}
+                liveLogs={liveLogs}
+                onSendQuickReply={handleSendQuickReply}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
 
-  return <InternalModuleMount assistantId="linda" fallback={fallbackContent} />;
-});
+    return <InternalModuleMount assistantId="linda" fallback={fallbackContent} />;
+  }
+);
 
 LindaWhatsAppCRM.displayName = 'LindaWhatsAppCRM';
 
 export default LindaWhatsAppCRM;
-

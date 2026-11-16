@@ -112,5 +112,25 @@ describe('Unified Merged TopNavbar (Consolidation & Even Wings)', () => {
     expect(screen.getByTestId('top-navbar')).toBeDefined();
     expect(screen.getByAltText(/White Caves Logo/i)).toBeDefined();
   });
-});
 
+  it('opens and closes NotificationsDropdown without full re-render', () => {
+    renderNavbar(<TopNavbar />);
+    const bellBtn = screen.getByLabelText('Notifications');
+    fireEvent.click(bellBtn);
+
+    expect(screen.getByTestId('wc-notifications-popover')).toBeInTheDocument();
+    expect(screen.getByText('Notifications & Alerts')).toBeInTheDocument();
+
+    const closeBtn = screen.getByLabelText('Close notifications');
+    fireEvent.click(closeBtn);
+
+    expect(screen.queryByTestId('wc-notifications-popover')).not.toBeInTheDocument();
+  });
+
+  it('renders slim zen logo ring when isZenMode is true', () => {
+    renderNavbar(<TopNavbar isZenMode={true} />);
+    expect(screen.getByTestId('wc-zen-topbar')).toBeInTheDocument();
+    expect(screen.getByTestId('zen-logo-ring')).toBeInTheDocument();
+    expect(screen.getByText('AICC Zen Workspace')).toBeInTheDocument();
+  });
+});

@@ -27,7 +27,7 @@ vi.mock('../../../utils/apiClient', () => ({
 
 describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterprise)', () => {
   it('renders all upgraded Linda components in unified view', () => {
-    renderWithTheme(<LindaWhatsAppCRM />);
+    renderWithTheme(<LindaWhatsAppCRM initialTab="all" initialOpsOpen={true} />);
 
     expect(
       screen.getByRole('heading', { name: /Linda — WhatsApp Bot Visual Operations Center/i })
@@ -36,12 +36,8 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(screen.getByText(/TOP #1 PRIORITY ASSISTANT/i)).toBeInTheDocument();
 
     // 4-Panel Terminal & Feature Catalog (F1-F35) & Playbooks (P1-P6)
-    expect(
-      screen.getByText(/\[PANEL 1 · HEADER\] LINDA VISUAL TERMINAL/i)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/\[PANEL 2 · FEATURE CATALOG F1–F35\]/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/\[PANEL 1 · HEADER\] LINDA VISUAL TERMINAL/i)).toBeInTheDocument();
+    expect(screen.getByText(/\[PANEL 2 · FEATURE CATALOG F1–F35\]/i)).toBeInTheDocument();
     expect(
       screen.getByText(/\[PANEL 3 · MULTI-STEP PLAYBOOKS P1–P10 & DOTTED MENU\]/i)
     ).toBeInTheDocument();
@@ -53,9 +49,7 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(screen.getByText(/\[MASTER\] PowerAgent/i)).toBeInTheDocument();
 
     // Outreach Campaigns & Area Owner Outreach Planner (F35)
-    expect(
-      screen.getByText(/Outreach Campaigns & Drip Broadcasts/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Outreach Campaigns & Drip Broadcasts/i)).toBeInTheDocument();
     expect(
       screen.getByText(/Area Owner Outreach Planner \(Feature F35 · Menu 9\.1\)/i)
     ).toBeInTheDocument();
@@ -64,13 +58,11 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(
       screen.getByText(/WhatsApp Conversation Analyzer \(F34 · Menu 8\.11\)/i)
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Linda Master System Registry — 10 Pillars/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Linda Master System Registry — 10 Pillars/i)).toBeInTheDocument();
   });
 
   it('executes quick actions and opens script output modal when clicked', async () => {
-    renderWithTheme(<LindaWhatsAppCRM />);
+    renderWithTheme(<LindaWhatsAppCRM initialTab="all" initialOpsOpen={true} />);
 
     const doctorBtn = screen.getByRole('button', { name: /Health Doctor \(12\/12\)/i });
     fireEvent.click(doctorBtn);
@@ -79,4 +71,3 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(dialog).toBeInTheDocument();
   });
 });
-

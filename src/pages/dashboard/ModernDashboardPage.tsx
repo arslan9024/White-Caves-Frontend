@@ -78,6 +78,11 @@ export const ModernDashboardPage: FC = () => {
   const { isLeftCollapsed, isRightCollapsed, toggleLeftSidebar, toggleRightSidebar } =
     useSidebarToggles();
 
+  const isZenWorkspace =
+    activeTab === 'linda' ||
+    activeAgent?.id === 'linda' ||
+    (activeTab === 'ai-command' && (activeItemId === 'linda' || !activeItemId));
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -173,44 +178,50 @@ export const ModernDashboardPage: FC = () => {
       <CorporateDepartmentsProvider>
         <ErmsProvider>
           <div style={{ position: 'relative' }}>
-            <ExecutiveTopNavbar sticky={true} homeRoute="/dashboard/departments" />
-            <button
-              type="button"
-              onClick={() => setIsCommandPaletteOpen(true)}
-              data-testid="quick-command-palette-btn"
-              style={{
-                position: 'absolute',
-                right: '260px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                zIndex: 10,
-                background: 'rgba(239, 68, 68, 0.1)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                borderRadius: '6px',
-                padding: '4px 10px',
-                color: '#EF4444',
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              <span>⌘ Quick Find</span>
-              <kbd
+            <ExecutiveTopNavbar
+              sticky={true}
+              homeRoute="/dashboard/departments"
+              isZenMode={isZenWorkspace}
+            />
+            {!isZenWorkspace && (
+              <button
+                type="button"
+                onClick={() => setIsCommandPaletteOpen(true)}
+                data-testid="quick-command-palette-btn"
                 style={{
-                  background: 'rgba(0, 0, 0, 0.3)',
-                  padding: '1px 5px',
-                  borderRadius: '4px',
-                  fontSize: '0.65rem',
+                  position: 'absolute',
+                  right: '260px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  zIndex: 10,
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '6px',
+                  padding: '4px 10px',
+                  color: '#EF4444',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
                 }}
               >
-                Ctrl+K
-              </kbd>
-            </button>
+                <span>⌘ Quick Find</span>
+                <kbd
+                  style={{
+                    background: 'rgba(0, 0, 0, 0.3)',
+                    padding: '1px 5px',
+                    borderRadius: '4px',
+                    fontSize: '0.65rem',
+                  }}
+                >
+                  Ctrl+K
+                </kbd>
+              </button>
+            )}
           </div>
-          <VSCodeBreadcrumbs onNavigate={navigate} />
+          {!isZenWorkspace && <VSCodeBreadcrumbs onNavigate={navigate} />}
 
           {isCommandPaletteOpen && (
             <GlobalEntityCommandPalette
@@ -229,7 +240,7 @@ export const ModernDashboardPage: FC = () => {
               onSelectTab={handleSelectSidebarTab}
               onSelectItem={handleSelectSidebarItem}
               onOpenDeptManager={() => navigate('/dashboard/departments/slots')}
-              isCollapsed={isLeftCollapsed}
+              isCollapsed={isZenWorkspace ? true : isLeftCollapsed}
               onToggleCollapse={toggleLeftSidebar}
             />
 
@@ -279,7 +290,7 @@ export const ModernDashboardPage: FC = () => {
                 }
               }}
               onSelectItem={handleSelectRightExplorerItem}
-              isCollapsed={isRightCollapsed}
+              isCollapsed={isZenWorkspace ? true : isRightCollapsed}
               onToggleCollapse={toggleRightSidebar}
             />
           </div>
@@ -298,4 +309,3 @@ export const ModernDashboardPage: FC = () => {
 };
 
 export default ModernDashboardPage;
-

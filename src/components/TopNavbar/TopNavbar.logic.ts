@@ -9,6 +9,7 @@ export interface TopNavbarProps {
   onToggleSidebar?: () => void;
   onOpenDeptManager?: () => void;
   homeRoute?: string;
+  isZenMode?: boolean;
 }
 
 export const useTopNavbarLogic = (props: TopNavbarProps = {}) => {
@@ -18,6 +19,7 @@ export const useTopNavbarLogic = (props: TopNavbarProps = {}) => {
   const { role, accessLevel, isFounder, isManagingDirector, user, loginAsRole } = useUserRole();
   const [scrolled, setScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,13 +32,20 @@ export const useTopNavbarLogic = (props: TopNavbarProps = {}) => {
   const handleNavigate = useCallback(
     (path: string) => {
       setIsProfileOpen(false);
+      setIsNotificationsOpen(false);
       navigate(path);
     },
     [navigate]
   );
 
   const toggleProfile = useCallback(() => {
+    setIsNotificationsOpen(false);
     setIsProfileOpen(prev => !prev);
+  }, []);
+
+  const toggleNotifications = useCallback(() => {
+    setIsProfileOpen(false);
+    setIsNotificationsOpen(prev => !prev);
   }, []);
 
   const displayName = user?.name || 'Executive Owner';
@@ -59,8 +68,10 @@ export const useTopNavbarLogic = (props: TopNavbarProps = {}) => {
     isProfileOpen,
     setIsProfileOpen,
     toggleProfile,
+    isNotificationsOpen,
+    setIsNotificationsOpen,
+    toggleNotifications,
     loginAsRole,
     handleNavigate,
   };
 };
-
