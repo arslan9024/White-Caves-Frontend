@@ -187,7 +187,11 @@ sessions/
 .vite/
 
 # Backend-only assets (live in White-Caves-Server repo)
-server/
+server/*
+!server/shared/
+!server/middleware/
+!server/models/
+!server/utils/
 prisma/*
 !prisma/schema.prisma
 /services/
