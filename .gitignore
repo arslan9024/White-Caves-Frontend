@@ -188,7 +188,8 @@ sessions/
 
 # Backend-only assets (live in White-Caves-Server repo)
 server/
-prisma/
+prisma/*
+!prisma/schema.prisma
 /services/
 !src/data/services/
 k8s/
