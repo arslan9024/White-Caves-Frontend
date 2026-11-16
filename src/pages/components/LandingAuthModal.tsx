@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, ShieldCheck, Mail, Lock, Phone, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { store } from '../../store/store';
 import {
   finalizeAuthenticatedSession,
   navigateToPostLoginDestination,
@@ -19,7 +19,6 @@ export const LandingAuthModal: React.FC<LandingAuthModalProps> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [mode, setMode] = useState<'signin' | 'signup'>(initialMode);
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
   const [email, setEmail] = useState('');
@@ -50,7 +49,7 @@ export const LandingAuthModal: React.FC<LandingAuthModalProps> = ({
       profileCompleted: true,
     };
     const destination = finalizeAuthenticatedSession({
-      dispatch,
+      dispatch: store.dispatch,
       user: localFounderUser as never,
       token: `dev-founder-local-token-${Date.now()}`,
       provider: 'google' as never,

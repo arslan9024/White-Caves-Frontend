@@ -61,6 +61,3 @@ export const selectDepartmentSummaryError = (state: {
 export const selectSelectedDepartment = (state: {
   departments: { selectedDepartment: string | null };
 }) => state.departments.selectedDepartment;
-
-export default departmentSlice.reducer;
-
