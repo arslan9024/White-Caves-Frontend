@@ -2,6 +2,7 @@
 import React, { useState, useMemo, useEffect, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import socketService from '../../../services/socketService';
+import { apiClient } from '../../../utils/apiClient';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatListPane } from './LindaChatListPane';
 import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
@@ -52,36 +53,41 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     if (!cleanPhone) return;
 
     let cancelled = false;
-    const jid = `${cleanPhone}@s.whatsapp.net`;
-    fetch(`/api/whatsapp/chats/${encodeURIComponent(jid)}/messages`)
-      .then(r => r.json())
-      .then(json => {
+    apiClient
+      .get(`/linda/conversations/${encodeURIComponent(cleanPhone)}/history`)
+      .then((res: unknown) => {
+        const json = res as {
+          success?: boolean;
+          data?: { messages?: Array<Record<string, unknown>> };
+        };
         if (cancelled || !json?.success || !Array.isArray(json?.data?.messages)) return;
-        const mapped: ChatMessage[] = json.data.messages.map((m: {
-          id?: string;
-          fromMe?: boolean;
-          body?: string;
-          text?: string;
-          timestamp?: string;
-          status?: 'PENDING' | 'SENT' | 'DELIVERED' | 'READ';
-          mediaType?: string | null;
-          mediaUrl?: string;
-        }) => {
-          const rawStatus = (m.status || 'SENT').toLowerCase();
-          const status: ChatMessage['status'] =
-            rawStatus === 'read' ? 'read' : rawStatus === 'delivered' ? 'delivered' : 'sent';
-          return {
-            id: m.id || `live-${Date.now()}-${Math.random()}`,
-            sender: m.fromMe ? 'agent' : 'client',
-            text: m.body || m.text || '',
-            timestamp: m.timestamp
-              ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-              : 'Now',
-            status,
-            mediaType: m.mediaType ?? null,
-            mediaUrl: m.mediaUrl,
-          };
-        });
+        const mapped: ChatMessage[] = json.data.messages.map(
+          (m: {
+            id?: string;
+            fromMe?: boolean;
+            sender?: string;
+            body?: string;
+            text?: string;
+            timestamp?: string;
+            status?: 'PENDING' | 'SENT' | 'DELIVERED' | 'READ' | 'sent' | 'delivered' | 'read';
+            mediaType?: string | null;
+            mediaUrl?: string;
+          }) => {
+            const rawStatus = (m.status || 'SENT').toLowerCase();
+            const status: ChatMessage['status'] =
+              rawStatus === 'read' ? 'read' : rawStatus === 'delivered' ? 'delivered' : 'sent';
+            const isAgent = m.fromMe === true || m.sender === 'agent' || m.sender === 'bot';
+            return {
+              id: m.id || `live-${Date.now()}-${Math.random()}`,
+              sender: isAgent ? 'agent' : 'client',
+              text: m.body || m.text || '',
+              timestamp: m.timestamp || 'Now',
+              status,
+              mediaType: m.mediaType ?? null,
+              mediaUrl: m.mediaUrl,
+            };
+          }
+        );
         setChatMessages(prev => ({ ...prev, [selectedConv.id]: mapped }));
       })
       .catch(() => {});
@@ -227,7 +233,10 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     fetch(`/api/linda/send/${encodeURIComponent(selectedConv.id)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: textToSend, accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined }),
+      body: JSON.stringify({
+        message: textToSend,
+        accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
+      }),
     }).catch(() => {});
   };
 
@@ -237,7 +246,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     onAutoReplyWithAI?.(selectedConv);
 
     const jid = encodeURIComponent(
-      selectedConv.id.includes('@') ? selectedConv.id : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
+      selectedConv.id.includes('@')
+        ? selectedConv.id
+        : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
     );
 
     fetch(`/api/whatsapp/chats/${jid}/ai-draft`, {
@@ -264,7 +275,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   const handleHumanTakeover = () => {
     if (!selectedConv) return;
     const jid = encodeURIComponent(
-      selectedConv.id.includes('@') ? selectedConv.id : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
+      selectedConv.id.includes('@')
+        ? selectedConv.id
+        : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
     );
     fetch(`/api/whatsapp/chats/${jid}/takeover`, {
       method: 'POST',
@@ -340,4 +353,3 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 };
 
 export default LindaLiveWhatsAppWeb;
-

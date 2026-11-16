@@ -94,23 +94,12 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
   useEffect(() => {
     let cancelled = false;
     apiClient
-      .get('/whatsapp/chats')
+      .get('/linda/conversations')
       .then((res: unknown) => {
-        const data = (res as { data?: { chats?: Array<Record<string, unknown>> } })?.data;
-        if (cancelled || !Array.isArray(data?.chats) || data.chats.length === 0) return;
-        const mapped: LindaConversationItem[] = data.chats.map((c, idx) => ({
-          id: String(c.jid || `wa-${idx}`),
-          clientName: String(c.pushName || c.phone || 'WhatsApp Contact'),
-          phone: String(c.phone || ''),
-          lastMessage: String(c.lastMessage || ''),
-          timestamp: String(c.lastMessageTimestamp || 'Just now'),
-          unreadCount: Number(c.unreadCount || 0),
-          intent: 'LIVE_SYNC',
-          confidence: 100,
-          isGroup: Boolean(c.isGroup),
-          accountPhone: '+971505760056',
-        }));
-        setConversations(mapped);
+        const liveConvs = (res as { data?: { conversations?: LindaConversationItem[] } })?.data
+          ?.conversations;
+        if (cancelled || !Array.isArray(liveConvs) || liveConvs.length === 0) return;
+        setConversations(liveConvs);
       })
       .catch(() => {
         // Keep fallback conversations if backend is offline
@@ -299,4 +288,3 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     handleSendQuickReply: actionHandlers.handleSendQuickReply,
   };
 }
-

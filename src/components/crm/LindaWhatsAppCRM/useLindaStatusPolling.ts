@@ -86,7 +86,7 @@ export function useLindaStatusPolling({
   useEffect(() => {
     let cancelled = false;
     apiClient
-      .get('/api/linda/conversations')
+      .get('/linda/conversations')
       .then(res => {
         if (cancelled) return;
         const liveConvs = (res as { data?: { conversations?: LindaConversationItem[] } })?.data
@@ -103,4 +103,3 @@ export function useLindaStatusPolling({
     };
   }, [isConnected, setConversations]);
 }
-
