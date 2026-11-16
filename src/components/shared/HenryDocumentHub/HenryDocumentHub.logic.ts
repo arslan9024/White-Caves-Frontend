@@ -4,7 +4,7 @@ import {
   calculateDynamicCommissionSplitPct,
   STATUTORY_GATE_XP_REWARD,
   type StatutoryClearanceMutationResult,
-} from '../../../../../Aegis-Sterling/.agents/aegis/protocols/leaderboardXpHooks';
+} from '../../../aegis-protocols/leaderboardXpHooks';
 
 export type StatutoryDocType = 'EMIRATES_ID' | 'PASSPORT' | 'TITLE_DEED' | 'EJARI';
 
@@ -200,4 +200,3 @@ export function useHenryDocumentHubLogic() {
     steps: WIZARD_STEPS,
   };
 }
-

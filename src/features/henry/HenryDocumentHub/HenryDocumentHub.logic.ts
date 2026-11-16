@@ -8,7 +8,7 @@ import {
   buildStatutoryGateXPReward,
   calculateDynamicCommissionSplitPct,
   type StatutoryClearanceMutationResult,
-} from '../../../../../Aegis-Sterling/.agents/aegis/protocols/leaderboardXpHooks';
+} from '../../../aegis-protocols/leaderboardXpHooks';
 import type {
   DocumentTemplate,
   ComplianceReport,
