@@ -1,5 +1,7 @@
+import './critical.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './App.tsx';
@@ -51,7 +53,9 @@ if (!rootElement) {
             <ThemeProvider>
               <TranslationProvider>
                 <ToastProvider>
-                  <App />
+                  <BrowserRouter>
+                    <App />
+                  </BrowserRouter>
                 </ToastProvider>
               </TranslationProvider>
             </ThemeProvider>
@@ -90,4 +94,3 @@ if (!rootElement) {
     document.body.replaceChildren(container);
   }
 }
-

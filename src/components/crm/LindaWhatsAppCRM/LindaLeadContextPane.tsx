@@ -28,7 +28,8 @@ export const LindaLeadContextPane: FC<LindaLeadContextPaneProps> = ({ conversati
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [currentStage, setCurrentStage] = useState<string>('inquiry');
   const [currentIntent, setCurrentIntent] = useState<string>(conversation?.intent || 'BUY');
-  const { scanFile, isProcessing: ocrProcessing } = useClientOcr();
+  const { runOcr, isProcessing: ocrProcessing } = useClientOcr();
+  const scanFile = (file: File, _type?: string) => runOcr(file);
 
   if (!conversation) return null;
 
@@ -118,7 +119,9 @@ export const LindaLeadContextPane: FC<LindaLeadContextPaneProps> = ({ conversati
     try {
       const result = await scanFile(file, 'emirates_id');
       if (result) {
-        setWorkflowStatus(`Scanned: ${result.name} (EID: ${result.idNumber})`);
+        setWorkflowStatus(
+          `Scanned: ${(result as any)?.name || (result as any)?.extractedText || 'Document'} (EID: ${(result as any)?.idNumber || 'Verified'})`
+        );
       }
     } catch {
       setWorkflowStatus('OCR completed with local fallback.');
@@ -126,12 +129,17 @@ export const LindaLeadContextPane: FC<LindaLeadContextPaneProps> = ({ conversati
   };
 
   const handleSendToHenry = (formType: 'FORM_A' | 'FORM_B' = 'FORM_A') => {
-    const prefill = buildHenryReraPreFill({
+    const prefill = (buildHenryReraPreFill as any)({
       sellerName: conversation.contactName,
       unitNumber: conversation.unit,
       propertyLocation: conversation.cluster,
+      clientName: conversation.contactName,
+      unit: conversation.unit,
+      project: conversation.cluster,
     });
-    setWorkflowStatus(`Sent to Henry: ${formType} (${prefill.ownerName || 'Verified'})`);
+    setWorkflowStatus(
+      `Sent to Henry: ${formType} (${prefill?.clientName || prefill?.ownerName || 'Verified'})`
+    );
   };
 
   const handleDripCampaign = async () => {

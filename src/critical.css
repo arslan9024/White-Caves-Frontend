@@ -1,0 +1,92 @@
+/* Minimal critical CSS — prevents white flash during bundle load */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  background: #fafafa;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+}
+#root {
+  min-height: 100vh;
+}
+/* Skip-to-content (a11y) */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-to-content:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  z-index: 100000;
+  background: #e31e24;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-decoration: none;
+}
+/* Loading skeleton */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+.app-skeleton {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.app-skeleton-bar {
+  height: 64px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.app-skeleton-content {
+  flex: 1;
+  padding: 24px;
+}
+.app-skeleton-block {
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  animation: pulse 1.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+.app-skeleton-block--short {
+  height: 120px;
+  animation-delay: 0.5s;
+}
+.noscript-fallback {
+  padding: 40px;
+  text-align: center;
+  font-family: sans-serif;
+}

@@ -9,19 +9,48 @@ import { apiClient } from '../../../utils/apiClient';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 
 export type AccountStatus = 'connected' | 'needs_auth' | 'offline';
+export type AccountRole = 'master' | 'employee' | 'servant' | 'all';
 
 export interface AccountOption {
   id: string;
   label: string;
   phone?: string;
+  role?: AccountRole;
   status: AccountStatus;
 }
 
 export const BASE_ACCOUNT_FILTERS: Omit<AccountOption, 'status'>[] = [
-  { id: 'ALL', label: 'All Linked Lines' },
-  { id: '+971505760056', label: 'Primary Master +971505760056', phone: '+971505760056' },
-  { id: 'goraha', label: 'Goraha Secondary Line', phone: '+971553633545' },
-  { id: 'outreach', label: 'Outreach Campaign Line', phone: 'outreach' },
+  { id: 'ALL', label: 'All Linked Lines', role: 'all' },
+  {
+    id: '+971505760056',
+    label: 'Primary Master: Arslan Malik (+971505760056)',
+    phone: '+971505760056',
+    role: 'master',
+  },
+  {
+    id: '+971503869886',
+    label: 'Master Desk 2 (+971503869886)',
+    phone: '+971503869886',
+    role: 'master',
+  },
+  {
+    id: '+971505110636',
+    label: 'Master Line 3 (+971505110636)',
+    phone: '+971505110636',
+    role: 'master',
+  },
+  {
+    id: '+971589969886',
+    label: 'Employee Desk (+971589969886)',
+    phone: '+971589969886',
+    role: 'employee',
+  },
+  {
+    id: '+971553633595',
+    label: 'Servant & Outreach Line (+971553633595)',
+    phone: '+971553633595',
+    role: 'servant',
+  },
 ];
 
 export function useLindaAccountAutoload(
@@ -33,20 +62,46 @@ export function useLindaAccountAutoload(
   const [isLoadingAccount, setIsLoadingAccount] = useState<boolean>(false);
   const [, startTransition] = useTransition();
 
+  const [customAccounts, setCustomAccounts] = useState<Omit<AccountOption, 'status'>[]>(() => {
+    try {
+      const saved = localStorage.getItem('wc_linda_custom_accounts');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [accountConversations, setAccountConversations] = useState<
     Record<string, LindaConversationItem[]>
   >({});
   const [accountStatuses, setAccountStatuses] = useState<Record<string, AccountStatus>>({
     ALL: 'connected',
     '+971505760056': 'connected',
-    goraha: 'connected',
-    outreach: 'needs_auth',
+    '+971503869886': 'connected',
+    '+971505110636': 'connected',
+    '+971589969886': 'connected',
+    '+971553633595': 'connected',
   });
 
   const setSelectedAccount = useCallback((newAcc: string) => {
     startTransition(() => {
       setSelectedAccountState(newAcc);
     });
+  }, []);
+
+  const addAccount = useCallback((account: Omit<AccountOption, 'status'>) => {
+    setCustomAccounts(prev => {
+      const exists = prev.some(
+        a => a.id === account.id || (account.phone && a.phone === account.phone)
+      );
+      if (exists) return prev;
+      const updated = [...prev, account];
+      try {
+        localStorage.setItem('wc_linda_custom_accounts', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+    setAccountStatuses(prev => ({ ...prev, [account.id]: 'connected' }));
   }, []);
 
   // Poll / synchronize status badges
@@ -158,12 +213,12 @@ export function useLindaAccountAutoload(
     };
   }, [selectedAccount, conversations, setSelectedConvId, selectedConvId]);
 
-  const accountOptions: AccountOption[] = [
-    ...BASE_ACCOUNT_FILTERS.map(f => ({
-      ...f,
-      status: accountStatuses[f.id] || (f.id === '+971505760056' ? 'connected' : 'offline'),
-    })),
-  ];
+  const allFilters = [...BASE_ACCOUNT_FILTERS, ...customAccounts];
+
+  const accountOptions: AccountOption[] = allFilters.map(f => ({
+    ...f,
+    status: accountStatuses[f.id] || (f.id === '+971505760056' ? 'connected' : 'connected'),
+  }));
 
   return {
     selectedAccount,
@@ -173,5 +228,6 @@ export function useLindaAccountAutoload(
     accountConversations,
     refreshStatuses,
     isLoadingAccount,
+    addAccount,
   };
 }

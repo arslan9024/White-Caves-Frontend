@@ -27,7 +27,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
                   <CurrencyProvider>
                     <UserRoleProvider>
                       <WorkspaceProvider>
-                        <BrowserRouter>{children}</BrowserRouter>
+                        {children}
                         <CookieConsent />
                         <ToastNotificationSystem />
                       </WorkspaceProvider>
@@ -42,4 +42,3 @@ export function AppProviders({ children }: { children: ReactNode }) {
     </HelmetProvider>
   );
 }
-

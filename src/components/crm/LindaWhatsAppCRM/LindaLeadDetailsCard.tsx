@@ -18,18 +18,20 @@ export interface LindaLeadDetailsCardProps {
 }
 
 export const DEAL_STAGES = [
-  { id: 'inquiry', label: 'Inquiry' },
-  { id: 'qualified', label: 'Qualified' },
-  { id: 'viewing', label: 'Viewing' },
-  { id: 'dld', label: 'DLD Closing' },
+  { id: 'inquiry', label: 'Inquiry / Discovery' },
+  { id: 'qualified', label: 'Landlord Qualified' },
+  { id: 'valuation', label: 'Rental Valuation Sent' },
+  { id: 'viewing', label: 'Tenant Viewing Arranged' },
+  { id: 'ejari', label: 'Ejari / Contract Handover' },
 ];
 
 export const INTENT_OPTIONS = [
-  { id: 'BUY', label: 'Buyer Inquiry' },
-  { id: 'SELL', label: 'Seller / Listing Exclusive' },
-  { id: 'RENT', label: 'Rental & Tenant Search' },
-  { id: 'VALUATION', label: 'Property Valuation & Ejari' },
-  { id: 'OFF_PLAN', label: 'Off-Plan Investment' },
+  { id: 'LANDLORD_ACQUISITION', label: '🏢 Landlord Acquisition (Vacant Unit)' },
+  { id: 'EJARI_RENEWAL', label: '📄 Ejari Renewal & Rental Review' },
+  { id: 'PROPERTY_MGMT', label: '🔑 Full Property Management' },
+  { id: 'RENT', label: '🏡 Tenant Search / Placement' },
+  { id: 'BUY', label: '💰 Buyer Inquiry' },
+  { id: 'SELL', label: '🏷️ Seller / Listing Exclusive' },
 ];
 
 export const LindaLeadDetailsCard: FC<LindaLeadDetailsCardProps> = ({

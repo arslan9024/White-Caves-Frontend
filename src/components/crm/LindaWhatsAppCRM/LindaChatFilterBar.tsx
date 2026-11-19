@@ -11,8 +11,8 @@ export interface LindaChatFilterBarProps {
   }>;
   selectedAccount: string;
   onSelectAccount?: (accountId: string) => void;
-  chatTypeFilter: 'all' | 'campaign' | 'direct' | 'groups';
-  onSelectChatType?: (type: 'all' | 'campaign' | 'direct' | 'groups') => void;
+  chatTypeFilter: 'all' | 'landlords' | 'campaign' | 'direct' | 'groups';
+  onSelectChatType?: (type: 'all' | 'landlords' | 'campaign' | 'direct' | 'groups') => void;
 }
 
 export const LindaChatFilterBar: FC<LindaChatFilterBarProps> = ({
@@ -87,7 +87,8 @@ export const LindaChatFilterBar: FC<LindaChatFilterBarProps> = ({
         >
           {[
             { id: 'all', label: 'All', icon: MessagesSquare },
-            { id: 'campaign', label: 'Campaign Leads', icon: Megaphone },
+            { id: 'landlords', label: 'Landlords (Rentals)', icon: User },
+            { id: 'campaign', label: 'Outreach Leads', icon: Megaphone },
             { id: 'direct', label: 'Direct', icon: User },
             { id: 'groups', label: 'Groups', icon: Users },
           ].map(tab => {

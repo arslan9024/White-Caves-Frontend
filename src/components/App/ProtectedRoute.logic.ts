@@ -19,12 +19,16 @@ export function useProtectedRoute(allowedRoles?: string[]): RouteDecision {
   useEffect(() => {
     if (isAuthLoading) return;
     if (!user && !hasLocalToken) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUserData(null);
       setIsLoading(false);
       return;
     }
-    if (!user && hasLocalToken) return;
+    if (!user && hasLocalToken) {
+      // If auth check finished and user is still null even with a token,
+      // the token is invalid/unauthorized or server is down. Stop spinner.
+      setIsLoading(false);
+      return;
+    }
     const stored = safeStorage.getJSON<UserRoleData>('userRole');
     const effectiveRole = resolveEffectiveRole(user, stored);
     if (stored && typeof stored.role === 'string' && effectiveRole) {
@@ -35,8 +39,8 @@ export function useProtectedRoute(allowedRoles?: string[]): RouteDecision {
     setIsLoading(false);
   }, [user, isAuthLoading, hasLocalToken]);
 
-  if (isLoading || isAuthLoading || (!user && hasLocalToken)) return { kind: 'loading' };
-  if (!user && !hasLocalToken) {
+  if (isLoading || isAuthLoading) return { kind: 'loading' };
+  if (!user) {
     return {
       kind: 'redirect',
       to: '/signin',
@@ -58,4 +62,3 @@ export function useProtectedRoute(allowedRoles?: string[]): RouteDecision {
   }
   return { kind: 'allow' };
 }
-

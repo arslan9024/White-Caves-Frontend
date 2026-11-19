@@ -34,9 +34,9 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 }) => {
   const { isDark } = useTheme();
   const [selectedConvId, setSelectedConvId] = useState<string>(conversations[0]?.id || 'conv-1');
-  const [chatTypeFilter, setChatTypeFilter] = useState<'all' | 'campaign' | 'direct' | 'groups'>(
-    'all'
-  );
+  const [chatTypeFilter, setChatTypeFilter] = useState<
+    'all' | 'landlords' | 'campaign' | 'direct' | 'groups'
+  >('all');
   const [unreadOnly, setUnreadOnly] = useState<boolean>(false);
   const [showContextPane, setShowContextPane] = useState<boolean>(true);
   const [searchFilter, setSearchFilter] = useState('');
@@ -87,6 +87,16 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       if (selectedAccount !== 'ALL') {
         const cAcc = (c as LindaConversationItem & { accountPhone?: string }).accountPhone;
         if (cAcc && cAcc !== selectedAccount && !selectedAccount.includes(cAcc)) return false;
+      }
+      if (chatTypeFilter === 'landlords') {
+        const isLandlord =
+          c.intent === 'LANDLORD_ACQUISITION' ||
+          c.intent === 'EJARI_RENEWAL' ||
+          c.intent === 'PROPERTY_MGMT' ||
+          c.intent === 'RENT' ||
+          c.contactName?.toLowerCase().includes('owner') ||
+          c.contactName?.toLowerCase().includes('landlord');
+        if (!isLandlord) return false;
       }
       if (chatTypeFilter === 'campaign' && !c.isCampaignLead) return false;
       if (chatTypeFilter === 'direct' && c.isGroup) return false;

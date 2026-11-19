@@ -2,7 +2,7 @@ export interface LindaSessionItem {
   id: string;
   name: string;
   phone: string;
-  role: 'MASTER' | 'SECONDARY' | 'AGENT';
+  role: 'MASTER' | 'SECONDARY' | 'AGENT' | 'EMPLOYEE' | 'SERVANT';
   status: 'connected' | 'reconnecting' | 'disconnected';
   linkState: 'LINKED' | 'NOT LINKED';
   connState: 'CONNECTED' | 'RECONNECTING' | 'OFFLINE';

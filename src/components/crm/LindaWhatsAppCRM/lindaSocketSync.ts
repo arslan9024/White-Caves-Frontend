@@ -33,27 +33,26 @@ export function useLindaSocketSync({
       }
     );
 
-    const offMessage = socketService?.onLindaMessage?.((payload) => {
+    const offMessage = socketService?.onLindaMessage?.((payload: any) => {
       const phone = payload?.from || payload?.phone || 'Unknown';
       const body = payload?.body || payload?.message || 'New WhatsApp message';
-      setConversations((prev) =>
-        prev.map((c) => (c.phone === phone ? { ...c, lastMessage: body, timestamp: 'Just now' } : c))
+      setConversations(prev =>
+        prev.map(c => (c.phone === phone ? { ...c, lastMessage: body, timestamp: 'Just now' } : c))
       );
       setToastNotification(`New WhatsApp message from ${phone}`);
     });
 
-    const offHotLead = socketService?.onLindaHotLead?.((payload) => {
-      const leadName = payload?.clientName || payload?.phone || 'VIP Lead';
+    const offHotLead = socketService?.onLindaHotLead?.((payload: any) => {
+      const leadName = payload?.clientName || payload?.name || payload?.phone || 'VIP Lead';
       setToastNotification(`HOT LEAD escalated: ${leadName}`);
     });
 
-    const offCampaign = socketService?.onLindaCampaignTelemetry?.((payload) => {
-      if (!payload?.campaignId) return;
-      setCampaigns((prev) =>
-        prev.map((camp) =>
-          camp.id === payload.campaignId
-            ? { ...camp, sentCount: payload.sentCount ?? camp.sentCount }
-            : camp
+    const offCampaign = socketService?.onLindaCampaignTelemetry?.((payload: any) => {
+      const cId = payload?.campaignId || payload?.id;
+      if (!cId) return;
+      setCampaigns(prev =>
+        prev.map(camp =>
+          camp.id === cId ? { ...camp, sent: payload.sent ?? payload.sentCount ?? camp.sent } : camp
         )
       );
     });
@@ -64,6 +63,5 @@ export function useLindaSocketSync({
       offHotLead?.();
       offCampaign?.();
     };
-  }, [setConversations, setCampaigns, setToastNotification]);
+  }, [setConversations, setCampaigns, setToastNotification, setIsConnected, setLindaStatus]);
 }
-

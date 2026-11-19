@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
-import { RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { RefreshCw, CheckCircle2, AlertCircle, QrCode, X } from 'lucide-react';
 import { apiClient } from '../../../utils/apiClient';
+import { WhatsAppPairingModal } from '../../comms/WhatsAppPairingModal/WhatsAppPairingModal';
 
 export interface LindaLiveTopBarProps {
   isDark: boolean;
@@ -29,6 +30,7 @@ export const LindaLiveTopBar: FC<LindaLiveTopBarProps> = ({
 }) => {
   const [isReconnecting, setIsReconnecting] = useState(false);
   const [reconnectMsg, setReconnectMsg] = useState<string | null>(null);
+  const [showPairingModal, setShowPairingModal] = useState(false);
 
   const handleSilentReconnect = async () => {
     setIsReconnecting(true);
@@ -148,28 +150,104 @@ export const LindaLiveTopBar: FC<LindaLiveTopBarProps> = ({
                 'Primary Master socket disconnected. Resilient offline mock cache active — no thread data lost.'}
             </span>
           </div>
-          <button
-            type="button"
-            disabled={isReconnecting}
-            onClick={handleSilentReconnect}
-            data-testid="linda-resync-btn"
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button
+              type="button"
+              onClick={() => setShowPairingModal(true)}
+              data-testid="linda-pairing-code-btn"
+              style={{
+                padding: '3px 10px',
+                borderRadius: 6,
+                border: '1px solid rgba(37, 211, 102, 0.4)',
+                background: 'rgba(37, 211, 102, 0.12)',
+                color: '#25D366',
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+              }}
+            >
+              <QrCode size={11} />
+              <span>Pair WhatsApp</span>
+            </button>
+            <button
+              type="button"
+              disabled={isReconnecting}
+              onClick={handleSilentReconnect}
+              data-testid="linda-resync-btn"
+              style={{
+                padding: '3px 10px',
+                borderRadius: 6,
+                border: 'none',
+                background: isReconnecting ? '#475569' : '#25D366',
+                color: '#FFFFFF',
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: isReconnecting ? 'not-allowed' : 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
+              }}
+            >
+              <RefreshCw size={11} className={isReconnecting ? 'animate-spin' : ''} />
+              <span>{isReconnecting ? 'Re-syncing...' : 'Re-sync Socket'}</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showPairingModal && (
+        <div
+          data-testid="linda-pairing-modal-overlay"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 99999,
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+          }}
+          onClick={e => {
+            if (e.target === e.currentTarget) setShowPairingModal(false);
+          }}
+        >
+          <div
             style={{
-              padding: '3px 10px',
-              borderRadius: 6,
-              border: 'none',
-              background: isReconnecting ? '#475569' : '#25D366',
-              color: '#FFFFFF',
-              fontSize: 11,
-              fontWeight: 700,
-              cursor: isReconnecting ? 'not-allowed' : 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 4,
+              position: 'relative',
+              width: '100%',
+              maxWidth: 480,
             }}
           >
-            <RefreshCw size={11} className={isReconnecting ? 'animate-spin' : ''} />
-            <span>{isReconnecting ? 'Re-syncing...' : 'Re-sync Socket'}</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowPairingModal(false)}
+              aria-label="Close modal"
+              style={{
+                position: 'absolute',
+                top: 14,
+                right: 14,
+                zIndex: 10,
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: 'none',
+                borderRadius: '50%',
+                width: 28,
+                height: 28,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#CBD5E1',
+                cursor: 'pointer',
+              }}
+            >
+              <X size={16} />
+            </button>
+            <WhatsAppPairingModal />
+          </div>
         </div>
       )}
     </>

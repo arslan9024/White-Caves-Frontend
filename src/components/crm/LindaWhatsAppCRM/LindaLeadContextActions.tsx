@@ -126,7 +126,7 @@ export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
           textAlign: 'center',
         }}
       >
-        {ocrProcessing ? 'Scanning OCR...' : 'RERA Form A/B & Ejari Intake'}
+        {ocrProcessing ? 'Scanning OCR...' : '📄 Scan Title Deed / Ejari'}
         <input
           type="file"
           accept="image/*,.pdf"
@@ -134,6 +134,25 @@ export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
           style={{ display: 'none' }}
         />
       </label>
+      <button
+        type="button"
+        data-testid="linda-workflow-rental-valuation"
+        onClick={() => {
+          alert('Generating Instant RERA Rental Valuation Index for Dubai Land Department...');
+        }}
+        style={{
+          padding: '0.45rem 0.75rem',
+          borderRadius: '0.5rem',
+          border: '1px solid rgba(56, 189, 248, 0.45)',
+          backgroundColor: 'rgba(56, 189, 248, 0.14)',
+          color: '#38BDF8',
+          fontSize: '0.78rem',
+          fontWeight: 700,
+          cursor: 'pointer',
+        }}
+      >
+        🏢 DLD Rental Valuation Pitch
+      </button>
       <button
         type="button"
         data-testid="linda-workflow-drip"
@@ -154,4 +173,3 @@ export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
     </div>
   );
 };
-

@@ -4,13 +4,14 @@
  * Standard: AEGIS Canonical 12-Way Architecture Standard (<250 lines)
  */
 
-import React, { FC, useState } from 'react';
-import { Search, CheckSquare, Square } from 'lucide-react';
+import React, { FC, useState, useCallback, UIEvent } from 'react';
+import { Search, CheckSquare, Square, Loader2 } from 'lucide-react';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatRow } from './LindaChatRow';
 import { LindaChatFilterBar } from './LindaChatFilterBar';
 import { LindaChatListHeader } from './LindaChatListHeader';
 import { LindaChatRowSkeleton } from './LindaChatRowSkeleton';
+import styles from './LindaWhatsAppWeb.module.css';
 
 export interface LindaChatListPaneProps {
   isDark: boolean;
@@ -26,11 +27,13 @@ export interface LindaChatListPaneProps {
   }>;
   selectedAccount?: string;
   onSelectAccount?: (accountId: string) => void;
-  chatTypeFilter?: 'all' | 'campaign' | 'direct' | 'groups';
-  onSelectChatType?: (type: 'all' | 'campaign' | 'direct' | 'groups') => void;
+  chatTypeFilter?: 'all' | 'landlords' | 'campaign' | 'direct' | 'groups';
+  onSelectChatType?: (type: 'all' | 'landlords' | 'campaign' | 'direct' | 'groups') => void;
   onOpenLinkModal?: () => void;
   isLoading?: boolean;
 }
+
+const PAGE_SIZE = 40;
 
 export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   isDark,
@@ -47,10 +50,27 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
   onOpenLinkModal,
   isLoading = false,
 }) => {
-  const [visibleCount, setVisibleCount] = useState(50);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [selectedChatIds, setSelectedChatIds] = useState<Set<string>>(new Set());
   const [bulkMode, setBulkMode] = useState<boolean>(false);
   const visibleConversations = conversations.slice(0, visibleCount);
+
+  // WhatsApp Web infinite scrolling on chat list
+  const handleScroll = useCallback(
+    (e: UIEvent<HTMLDivElement>) => {
+      const el = e.currentTarget;
+      const distanceToBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+      if (distanceToBottom < 80 && visibleCount < conversations.length && !isLoadingMore) {
+        setIsLoadingMore(true);
+        setTimeout(() => {
+          setVisibleCount(prev => Math.min(prev + PAGE_SIZE, conversations.length));
+          setIsLoadingMore(false);
+        }, 150);
+      }
+    },
+    [conversations.length, visibleCount, isLoadingMore]
+  );
 
   const toggleSelectChat = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -145,7 +165,7 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         </div>
       )}
 
-      {/* Search Input Bar */}
+      {/* Search Bar */}
       <div style={{ padding: '6px 10px', background: isDark ? '#111B21' : '#FFFFFF' }}>
         <div
           style={{
@@ -185,9 +205,14 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
         onSelectChatType={onSelectChatType}
       />
 
-      <div style={{ flex: 1, overflowY: 'auto' }}>
+      {/* Virtualized Infinite Scroll Container */}
+      <div
+        className={styles.waScrollbar}
+        onScroll={handleScroll}
+        style={{ flex: 1, overflowY: 'auto' }}
+      >
         {isLoading ? (
-          <LindaChatRowSkeleton count={5} isDark={isDark} />
+          <LindaChatRowSkeleton count={6} isDark={isDark} />
         ) : (
           visibleConversations.map(conv => (
             <LindaChatRow
@@ -203,24 +228,22 @@ export const LindaChatListPane: FC<LindaChatListPaneProps> = ({
           ))
         )}
 
-        {conversations.length > visibleCount && !isLoading && (
-          <button
-            type="button"
-            data-testid="wa-load-more-chats"
-            onClick={() => setVisibleCount(c => c + 50)}
+        {isLoadingMore && (
+          <div
             style={{
-              width: '100%',
-              padding: '8px',
-              background: isDark ? '#202C33' : '#F8FAFC',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 6,
+              padding: '12px',
               color: '#25D366',
-              border: 'none',
-              fontWeight: 700,
               fontSize: 11,
-              cursor: 'pointer',
+              fontWeight: 600,
             }}
           >
-            Load More Chats ({conversations.length - visibleCount} remaining)
-          </button>
+            <Loader2 size={14} className="animate-spin" />
+            <span>Loading older chats…</span>
+          </div>
         )}
       </div>
     </div>

@@ -1,63 +1,52 @@
-import React, { FC } from 'react';
+import React, { memo } from 'react';
+import { Zap } from 'lucide-react';
 
-export interface LindaQuickReplyBarProps {
-  onSelectTemplate: (text: string) => void;
+interface Props {
+  onSelect: (text: string) => void;
 }
 
-const UAE_QUICK_REPLIES = [
-  {
-    id: 'viewing',
-    label: 'Viewing Confirmation',
-    text: 'Your private viewing with White Caves Real Estate is confirmed. Please share your preferred time slot.',
-  },
-  {
-    id: 'ejari',
-    label: 'Ejari Checklist',
-    text: 'To complete your Ejari registration, please share your Emirates ID, Passport copy, and signed Tenancy Contract.',
-  },
-  {
-    id: 'location',
-    label: 'Location Pin',
-    text: 'Here is the exact Google Maps pin for the property entrance and visitor parking.',
-  },
-  {
-    id: 'payment',
-    label: 'Payment Plan',
-    text: 'I have attached the official developer payment plan and DLD fee breakdown for your review.',
-  },
+const TEMPLATES = [
+  'Good afternoon! Thank you for contacting White Caves Real Estate.',
+  'Could you please share your preferred layout and budget?',
+  'I have scheduled the viewing for tomorrow at 4:00 PM GST.',
+  'Let me check the title deed records and revert immediately.',
 ];
 
-export const LindaQuickReplyBar: FC<LindaQuickReplyBarProps> = ({ onSelectTemplate }) => (
-  <div
-    data-testid="linda-quick-reply-bar"
-    style={{
-      display: 'flex',
-      flexWrap: 'wrap',
-      gap: '0.4rem',
-      padding: '0.5rem 0.75rem',
-      borderTop: '1px solid rgba(148, 163, 184, 0.2)',
-      backgroundColor: 'rgba(15, 23, 42, 0.6)',
-    }}
-  >
-    {UAE_QUICK_REPLIES.map(tpl => (
-      <button
-        key={tpl.id}
-        type="button"
-        onClick={() => onSelectTemplate(tpl.text)}
-        style={{
-          padding: '0.3rem 0.65rem',
-          borderRadius: '9999px',
-          border: '1px solid rgba(239, 68, 68, 0.4)',
-          backgroundColor: 'rgba(239, 68, 68, 0.12)',
-          color: '#F8FAFC',
-          fontSize: '0.75rem',
-          fontWeight: 600,
-          cursor: 'pointer',
-        }}
-      >
-        {tpl.label}
-      </button>
-    ))}
-  </div>
-);
+export const LindaQuickReplyBar: React.FC<Props> = memo(({ onSelect }) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        gap: '6px',
+        overflowX: 'auto',
+        padding: '4px 0',
+        scrollbarWidth: 'none',
+      }}
+    >
+      {TEMPLATES.map((tpl, i) => (
+        <button
+          key={i}
+          onClick={() => onSelect(tpl)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            whiteSpace: 'nowrap',
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '12px',
+            padding: '3px 10px',
+            color: '#ddd',
+            fontSize: '11px',
+            cursor: 'pointer',
+          }}
+        >
+          <Zap size={10} color="#25D366" />
+          {tpl.slice(0, 30)}...
+        </button>
+      ))}
+    </div>
+  );
+});
 
+export default LindaQuickReplyBar;
