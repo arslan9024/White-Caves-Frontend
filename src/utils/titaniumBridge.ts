@@ -113,3 +113,92 @@ export function buildHenryReraPreFill(lead: HotLeadEscalation): HenryReraPreFill
   return payload;
 }
 
+export interface MaryInventoryPayload {
+  unit: string;
+  cluster: string;
+  landlordPhone: string;
+  landlordName: string;
+  rentEstimate?: number;
+  occupancyStatus: 'vacant' | 'occupied';
+  source: string;
+}
+
+/**
+ * 4. Inter-Agent Bridge: Linda -> Mary Inventory Vault
+ * Forwards captured landlord rental inventory to Mary for portfolio & unit onboarding.
+ */
+export async function bridgeToMaryInventory(lead: HotLeadEscalation & { rentEstimate?: number }) {
+  const payload: MaryInventoryPayload = {
+    unit: lead.unit || 'Pending Allocation',
+    cluster: lead.project || 'Dubai Marina',
+    landlordPhone: lead.phone,
+    landlordName: lead.clientName || 'Landlord',
+    rentEstimate: lead.rentEstimate || 0,
+    occupancyStatus: 'vacant',
+    source: 'Linda WhatsApp Ingress',
+  };
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('wc:mary:inventory', { detail: payload }));
+  }
+
+  try {
+    const res = await authFetch('/api/properties', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: `${payload.cluster} - Unit ${payload.unit}`,
+        unitNumber: payload.unit,
+        location: payload.cluster,
+        price: payload.rentEstimate || 120000,
+        type: 'RENT',
+        status: 'AVAILABLE',
+        landlordPhone: payload.landlordPhone,
+        landlordName: payload.landlordName,
+      }),
+    });
+    return { ok: res.ok, status: res.status, payload };
+  } catch (error) {
+    return { ok: false, error, payload };
+  }
+}
+
+export interface DaisyLeasingListingPayload {
+  unit: string;
+  cluster: string;
+  annualRent: number;
+  listingStatus: 'available' | 'draft';
+  landlordPhone: string;
+  source: string;
+}
+
+/**
+ * 5. Inter-Agent Bridge: Linda -> Daisy Leasing Agent
+ * Direct hand-off of qualified landlord properties to Daisy to publish onto White-Caves-Web.
+ */
+export async function bridgeToDaisyLeasing(lead: HotLeadEscalation & { annualRent?: number }) {
+  const payload: DaisyLeasingListingPayload = {
+    unit: lead.unit || 'Unassigned',
+    cluster: lead.project || 'Downtown Dubai',
+    annualRent: lead.annualRent || 150000,
+    listingStatus: 'available',
+    landlordPhone: lead.phone,
+    source: 'Linda Outreach Direct',
+  };
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('wc:daisy:listing', { detail: payload }));
+  }
+
+  try {
+    const res = await authFetch('/api/properties/sync-leasing', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return { ok: res.ok, status: res.status, payload };
+  } catch (error) {
+    return { ok: false, error, payload };
+  }
+}
+
