@@ -4,7 +4,30 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import federation from '@originjs/vite-plugin-federation';
 
+function loadCentralFrontendPublicEnv() {
+  const filePath = path.resolve(__dirname, '../secrets/frontend-public.env');
+  const vars = {};
+  if (!fs.existsSync(filePath)) return vars;
+  for (const line of fs.readFileSync(filePath, 'utf8').split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq <= 0) continue;
+    const key = trimmed.slice(0, eq).trim();
+    const val = trimmed
+      .slice(eq + 1)
+      .trim()
+      .replace(/^["']|["']$/g, '');
+    if (key.startsWith('VITE_')) {
+      if (!process.env[key]) process.env[key] = val;
+      vars[key] = process.env[key];
+    }
+  }
+  return vars;
+}
+
 export default defineConfig(async ({ command }) => {
+  loadCentralFrontendPublicEnv();
   const apiPort = process.env.API_PORT || '5001';
   if (!/^\d+$/.test(apiPort) || Number(apiPort) < 1 || Number(apiPort) > 65535) {
     throw new Error('API_PORT must be an integer between 1 and 65535.');
@@ -283,4 +306,3 @@ export default defineConfig(async ({ command }) => {
     },
   };
 });
-
