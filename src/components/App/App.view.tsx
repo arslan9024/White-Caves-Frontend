@@ -38,6 +38,7 @@ import { ownerCrmRedirectRoutes } from './App.routes';
 import { ownerUtilityRoutes } from './App.routes';
 import { publicRoutes } from './App.routes';
 import { AppProviders } from './AppProviders';
+import { AiccSanctumView } from '../../portals/md/aicc';
 export function AppView() {
   const { user, consentGranted, handleRoleSelect } = useAppRuntime();
   useSubdomainIngress();
@@ -113,6 +114,22 @@ export function AppView() {
             <Route
               path="/status"
               element={renderProtectedAppPage(<ServerStatusPage />, 'Server Status', ['owner'])}
+            />
+
+            {/* ==================== AICC-SANCTUM (MANAGING DIRECTOR SOVEREIGN GATE) ==================== */}
+            <Route
+              path="/aicc-sanctum"
+              element={
+                <ProtectedRoute
+                  allowedRoles={['owner', 'managing_director', 'founder', 'ceo', 'admin']}
+                >
+                  <RouteErrorBoundary section="AICC-Sanctum Executive Command Hub">
+                    <Suspense fallback={<SuspenseLoader />}>
+                      <AiccSanctumView />
+                    </Suspense>
+                  </RouteErrorBoundary>
+                </ProtectedRoute>
+              }
             />
 
             {/* ==================== EXECUTIVE DASHBOARDS ==================== */}

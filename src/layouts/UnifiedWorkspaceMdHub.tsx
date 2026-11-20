@@ -60,6 +60,49 @@ export const UnifiedWorkspaceMdHub: React.FC<UnifiedWorkspaceMdHubProps> = ({
           }}
         >
           <button
+            onClick={() => onSelectView('AICC-SANCTUM', '/aicc-sanctum')}
+            style={{
+              width: '100%',
+              textAlign: 'left',
+              padding: '10px 12px',
+              borderRadius: '8px',
+              background:
+                'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%)',
+              border: '1.5px solid var(--primary-red, #EF4444)',
+              color: 'var(--bg-light, #F8FAFC)',
+              fontSize: '0.8rem',
+              fontWeight: 800,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)',
+            }}
+          >
+            <span style={{ fontSize: '18px' }}>⚡</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: 'var(--white, #FFFFFF)', fontWeight: 900 }}>
+                AICC-Sanctum Command Center
+              </div>
+              <div style={{ fontSize: '10px', color: '#FCA5A5' }}>
+                121 Agents • 1-12-108 Live Hierarchy
+              </div>
+            </div>
+            <span
+              style={{
+                fontSize: '9px',
+                background: '#EF4444',
+                color: '#FFF',
+                padding: '2px 5px',
+                borderRadius: '4px',
+                fontWeight: 900,
+              }}
+            >
+              APEX
+            </span>
+          </button>
+
+          <button
             onClick={() => onSelectView('MD-BRIEF', '/crm')}
             style={{
               width: '100%',
@@ -153,4 +196,3 @@ export const UnifiedWorkspaceMdHub: React.FC<UnifiedWorkspaceMdHubProps> = ({
 };
 
 export default UnifiedWorkspaceMdHub;
-
