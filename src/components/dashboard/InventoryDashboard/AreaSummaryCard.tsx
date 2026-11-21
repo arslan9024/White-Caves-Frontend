@@ -11,8 +11,18 @@ const AreaSummaryCard = ({
   isExpanded,
   onToggleExpand,
   isLoading,
+}: {
+  area: string;
+  total: number;
+  available: number;
+  rented: number;
+  sold: number;
+  availabilityRate: number;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
+  isLoading?: boolean;
 }) => {
-  const getStatusColor = status => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'available':
         return '#10b981';

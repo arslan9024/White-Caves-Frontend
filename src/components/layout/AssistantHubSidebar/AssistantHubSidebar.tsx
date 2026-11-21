@@ -38,7 +38,7 @@ import { getAssistantWithFeatures } from '../../../config/assistants';
 import { setSidebarSearchQuery, toggleFavoriteAssistant } from '../../../store/appSlice';
 import './AssistantHubSidebar.css';
 
-const ICON_MAP = {
+const ICON_MAP: Record<string, any> = {
   MessageSquare,
   Building2,
   Target,
@@ -75,14 +75,21 @@ const AssistantHubSidebar = ({
   activeAssistant,
   isCollapsed = false,
   userRole = 'owner',
+}: {
+  isOpen?: boolean;
+  onClose?: () => void;
+  onAssistantSelect: (assistant: any) => void;
+  activeAssistant?: any;
+  isCollapsed?: boolean;
+  userRole?: string;
 }) => {
   const dispatch = useDispatch();
-  const searchQuery = useSelector(state => state.app?.sidebarSearchQuery || '');
-  const favoriteAssistants = useSelector(state => state.app?.favoriteAssistants || []);
-  const assistantStatuses = useSelector(state => state.app?.assistantStatuses || {});
-  const notifications = useSelector(state => state.app?.notifications || {});
+  const searchQuery = useSelector((state: any) => state.app?.sidebarSearchQuery || '');
+  const favoriteAssistants = useSelector((state: any) => state.app?.favoriteAssistants || []);
+  const assistantStatuses = useSelector((state: any) => state.app?.assistantStatuses || {});
+  const notifications = useSelector((state: any) => state.app?.notifications || {});
 
-  const [expandedDepartments, setExpandedDepartments] = useState({
+  const [expandedDepartments, setExpandedDepartments] = useState<Record<string, boolean>>({
     executive: true,
     communications: true,
     operations: true,
@@ -117,7 +124,7 @@ const AssistantHubSidebar = ({
   }, [roleFilteredAssistants, searchQuery]);
 
   const assistantsByDepartment = useMemo(() => {
-    const grouped = {};
+    const grouped: Record<string, any[]> = {};
     filteredAssistants.forEach(assistant => {
       if (!grouped[assistant.department]) {
         grouped[assistant.department] = [];
@@ -127,34 +134,34 @@ const AssistantHubSidebar = ({
     return grouped;
   }, [filteredAssistants]);
 
-  const handleSearchChange = e => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSidebarSearchQuery(e.target.value));
   };
 
-  const toggleDepartment = dept => {
+  const toggleDepartment = (dept: string) => {
     setExpandedDepartments(prev => ({
       ...prev,
       [dept]: !prev[dept],
     }));
   };
 
-  const handleAssistantClick = assistant => {
+  const handleAssistantClick = (assistant: any) => {
     const fullAssistant = getAssistantWithFeatures(assistant.id);
     onAssistantSelect(fullAssistant);
   };
 
-  const handleFavoriteToggle = (e, assistantId) => {
+  const handleFavoriteToggle = (e: React.SyntheticEvent, assistantId: string) => {
     e.stopPropagation();
     dispatch(toggleFavoriteAssistant(assistantId));
   };
 
-  const getAssistantIcon = iconName => {
+  const getAssistantIcon = (iconName: string) => {
     return ICON_MAP[iconName] || Building2;
   };
 
-  const getNotificationCount = assistantId => {
+  const getNotificationCount = (assistantId: string) => {
     const notifs = notifications[assistantId];
-    return Array.isArray(notifs) ? notifs.filter(n => !n.isRead).length : 0;
+    return Array.isArray(notifs) ? notifs.filter((n: any) => !n.isRead).length : 0;
   };
 
   const departmentOrder = [
@@ -214,14 +221,14 @@ const AssistantHubSidebar = ({
 
       <div className="assistant-list">
         {departmentOrder.map(deptId => {
-          const dept = DEPARTMENTS[deptId];
+          const dept = (DEPARTMENTS as Record<string, any>)[deptId];
           const assistants = assistantsByDepartment[deptId];
 
           if (!dept || !assistants || assistants.length === 0) return null;
 
           const isExpanded = expandedDepartments[deptId];
           const DeptIcon = getAssistantIcon(dept.icon);
-          const hasActiveAssistant = assistants.some(a => activeAssistant?.id === a.id);
+          const hasActiveAssistant = assistants.some((a: any) => activeAssistant?.id === a.id);
 
           return (
             <div
@@ -231,7 +238,7 @@ const AssistantHubSidebar = ({
               <button
                 className="department-header"
                 onClick={() => toggleDepartment(deptId)}
-                style={{ '--dept-color': dept.color }}
+                style={{ '--dept-color': dept.color } as React.CSSProperties}
               >
                 {isCollapsed ? (
                   <DeptIcon size={20} style={{ color: dept.color }} />
@@ -247,7 +254,7 @@ const AssistantHubSidebar = ({
 
               {isExpanded && !isCollapsed && (
                 <div className="assistants-grid">
-                  {assistants.map(assistant => {
+                  {assistants.map((assistant: any) => {
                     const Icon = getAssistantIcon(assistant.icon);
                     const isActive = activeAssistant?.id === assistant.id;
                     const isFavorite = favoriteAssistants.includes(assistant.id);
@@ -259,7 +266,7 @@ const AssistantHubSidebar = ({
                         key={assistant.id}
                         className={`assistant-card ${isActive ? 'active' : ''}`}
                         onClick={() => handleAssistantClick(assistant)}
-                        style={{ '--assistant-color': assistant.color }}
+                        style={{ '--assistant-color': assistant.color } as React.CSSProperties}
                       >
                         <div className="card-header">
                           <div

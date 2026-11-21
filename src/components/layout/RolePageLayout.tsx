@@ -1,6 +1,16 @@
 import React from 'react';
 
-export default function RolePageLayout({ title, subtitle, actions, children }) {
+export default function RolePageLayout({
+  title,
+  subtitle,
+  actions,
+  children,
+}: {
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  actions?: React.ReactNode;
+  children?: React.ReactNode;
+}) {
   return (
     <section className="role-page-layout" style={{ display: 'grid', gap: 16 }}>
       <header

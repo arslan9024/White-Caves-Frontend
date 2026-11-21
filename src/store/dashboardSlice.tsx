@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { logout } from "./authSlice";
+import {
+  type Property,
+  type Lead,
+  mockProperties,
+  mockLeads,
+  mockRegulatoryContracts,
+} from "../mocks/dubaiRealEstateMocks";
 import type {
   FavoriteItem,
   RecentlyViewedItem,

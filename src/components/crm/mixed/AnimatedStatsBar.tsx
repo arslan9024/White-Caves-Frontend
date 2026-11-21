@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import './AnimatedStatsBar.css';
 
-const cardVariants = {
+const cardVariants: any = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
-  visible: i => ({
+  visible: (i: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
@@ -17,7 +17,7 @@ const cardVariants = {
   }),
 };
 
-function AnimatedNumber({ value, duration = 1000 }) {
+function AnimatedNumber({ value, duration = 1000 }: { value: any; duration?: number }) {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function AnimatedNumber({ value, duration = 1000 }) {
   return <span>{displayValue.toLocaleString()}</span>;
 }
 
-export default function AnimatedStatsBar({ stats = [], className = '' }) {
+export default function AnimatedStatsBar({ stats = [], className = '' }: { stats?: any[]; className?: string }) {
   return (
     <div className={`animated-stats-bar ${className}`}>
       {stats.map((stat, index) => (
@@ -109,7 +109,13 @@ export default function AnimatedStatsBar({ stats = [], className = '' }) {
   );
 }
 
-export function MiniStatCard({ label, value, icon, trend, onClick }) {
+export function MiniStatCard({ label, value, icon, trend, onClick }: {
+  label?: string;
+  value?: any;
+  icon?: React.ReactNode;
+  trend?: number;
+  onClick?: () => void;
+}) {
   return (
     <motion.div
       className="mini-stat-card"

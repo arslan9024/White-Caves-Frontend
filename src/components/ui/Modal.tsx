@@ -28,31 +28,45 @@ import PropTypes from 'prop-types';
  *   Are you sure?
  * </Modal>
  */
-const Modal = ({ isOpen, onClose, title, children, footer, size = 'md' }) => {
-  const modalRef = useRef(null);
-  const previousActiveElement = useRef(null);
+const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  footer,
+  size = 'md',
+}: {
+  isOpen: boolean;
+  onClose?: () => void;
+  title?: string;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | string;
+}) => {
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
-  const sizeClasses = {
+  const sizeClasses: Record<string, string> = {
     sm: 'max-w-sm',
     md: 'max-w-md',
     lg: 'max-w-lg',
   };
 
   const handleEscape = useCallback(
-    e => {
+    (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose?.();
     },
     [onClose]
   );
 
-  const handleBackdropClick = e => {
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose?.();
   };
 
   // Focus trap - keep focus within modal
-  const handleKeyDown = useCallback(e => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!modalRef.current) return;
-    const focusableElements = modalRef.current.querySelectorAll(
+    const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const firstElement = focusableElements[0];
@@ -71,7 +85,7 @@ const Modal = ({ isOpen, onClose, title, children, footer, size = 'md' }) => {
 
   useEffect(() => {
     if (isOpen) {
-      previousActiveElement.current = document.activeElement;
+      previousActiveElement.current = document.activeElement as HTMLElement | null;
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscape);
       modalRef.current?.focus();

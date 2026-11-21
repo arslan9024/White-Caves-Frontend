@@ -15,9 +15,14 @@ const SIDEBAR_COLLAPSED = 70;
 const STORAGE_KEY = 'wc-sidebar-width';
 const COLLAPSED_KEY = 'wc-sidebar-collapsed';
 
-const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) => {
+const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }: {
+  children?: React.ReactNode;
+  user?: any;
+  onLogout?: () => void;
+  userRole?: string;
+}) => {
   const dispatch = useDispatch();
-  const resizeRef = useRef(null);
+  const resizeRef = useRef<HTMLDivElement | null>(null);
   const isResizing = useRef(false);
 
   const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -33,8 +38,8 @@ const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) =>
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
 
-  const activeAssistant = useSelector(state => state.app?.activeAssistant);
-  const mainViewContent = useSelector(state => state.app?.mainViewContent);
+  const activeAssistant = useSelector((state: any) => state.app?.activeAssistant);
+  const mainViewContent = useSelector((state: any) => state.app?.mainViewContent);
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,14 +67,14 @@ const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) =>
     localStorage.setItem(COLLAPSED_KEY, isCollapsed.toString());
   }, [isCollapsed]);
 
-  const handleMouseDown = useCallback(e => {
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
     isResizing.current = true;
     document.body.style.cursor = 'col-resize';
     document.body.style.userSelect = 'none';
   }, []);
 
-  const handleMouseMove = useCallback(e => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isResizing.current) return;
     const sidebarContainer = document.querySelector('.sidebar-container');
     if (!sidebarContainer) return;
@@ -94,14 +99,14 @@ const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) =>
     };
   }, [handleMouseMove, handleMouseUp]);
 
-  const handleAssistantSelect = assistant => {
+  const handleAssistantSelect = (assistant: any) => {
     dispatch(setActiveAssistant(assistant));
     if (isMobile) {
       setSidebarOpen(false);
     }
   };
 
-  const handleFeatureSelect = feature => {
+  const handleFeatureSelect = (feature: any) => {
     dispatch(
       setMainViewContent({
         component: feature.component,
@@ -119,14 +124,15 @@ const DashboardAppLayout = ({ children, user, onLogout, userRole = 'owner' }) =>
   };
 
   const currentWidth = isCollapsed ? SIDEBAR_COLLAPSED : sidebarWidth;
+  const NavBar: any = MainNavBar;
 
   return (
     <div className="dashboard-app-wrapper">
-      <MainNavBar showDashboardNav={true} user={user} onLogout={onLogout} />
+      <NavBar showDashboardNav={true} user={user} onLogout={onLogout} />
 
       <div
         className={`dashboard-app-layout ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'} ${isTablet ? 'tablet' : ''} ${isMobile ? 'mobile' : ''} ${isCollapsed ? 'collapsed' : ''}`}
-        style={{ '--sidebar-width': `${currentWidth}px` }}
+        style={{ '--sidebar-width': `${currentWidth}px` } as React.CSSProperties}
       >
         <div className="sidebar-container" style={{ width: currentWidth }}>
           <AssistantHubSidebar

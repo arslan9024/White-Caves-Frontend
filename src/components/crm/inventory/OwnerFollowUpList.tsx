@@ -14,11 +14,11 @@ import {
 } from 'lucide-react';
 import './OwnerFollowUpList.css';
 
-const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
+const OwnerFollowUpList = ({ owners = [], onFollowUp }: { owners?: any[]; onFollowUp?: (id: any, type: string) => void }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('last-contact');
-  const [expandedId, setExpandedId] = useState(null);
+  const [expandedId, setExpandedId] = useState<any>(null);
 
   const statuses = [
     { value: 'all', label: 'All Owners', color: '#6b7280' },
@@ -56,14 +56,16 @@ const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
       switch (sortBy) {
         case 'name':
           return (a.name || '').localeCompare(b.name || '');
-        case 'last-contact':
-          const aDate = new Date(a.lastContactDate || 0);
-          const bDate = new Date(b.lastContactDate || 0);
+        case 'last-contact': {
+          const aDate = new Date(a.lastContactDate || 0).getTime();
+          const bDate = new Date(b.lastContactDate || 0).getTime();
           return bDate - aDate;
-        case 'follow-up-date':
-          const aFollow = new Date(a.nextFollowUpDate || Infinity);
-          const bFollow = new Date(b.nextFollowUpDate || Infinity);
+        }
+        case 'follow-up-date': {
+          const aFollow = a.nextFollowUpDate ? new Date(a.nextFollowUpDate).getTime() : Infinity;
+          const bFollow = b.nextFollowUpDate ? new Date(b.nextFollowUpDate).getTime() : Infinity;
           return aFollow - bFollow;
+        }
         case 'phone':
           return (b.phones?.length || 0) - (a.phones?.length || 0);
         case 'email':
@@ -76,19 +78,19 @@ const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
     return filtered;
   }, [owners, searchTerm, statusFilter, sortBy]);
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     return statuses.find((s) => s.value === status)?.color || '#6b7280';
   };
 
-  const getStatusLabel = (status) => {
+  const getStatusLabel = (status: string) => {
     return statuses.find((s) => s.value === status)?.label || status;
   };
 
-  const formatDate = (date) => {
+  const formatDate = (date: any) => {
     if (!date) return 'Never';
     const d = new Date(date);
     const now = new Date();
-    const diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60 * 24));
 
     if (diffDays === 0) return 'Today';
     if (diffDays === 1) return 'Yesterday';
@@ -97,11 +99,11 @@ const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
     return d.toLocaleDateString();
   };
 
-  const getDaysUntilFollowUp = (date) => {
+  const getDaysUntilFollowUp = (date: any) => {
     if (!date) return null;
     const d = new Date(date);
     const now = new Date();
-    const diffDays = Math.ceil((d - now) / (1000 * 60 * 60 * 24));
+    const diffDays = Math.ceil((d.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
     return diffDays;
   };
 
@@ -281,7 +283,7 @@ const OwnerFollowUpList = ({ owners = [], onFollowUp }) => {
                       <div className="detail-section">
                         <h4>Recent Interactions</h4>
                         <div className="history-list">
-                          {owner.contactHistory.slice(0, 3).map((history, idx) => (
+                          {owner.contactHistory.slice(0, 3).map((history: any, idx: number) => (
                             <div key={idx} className="history-item">
                               <MessageSquare size={14} />
                               <div className="history-content">

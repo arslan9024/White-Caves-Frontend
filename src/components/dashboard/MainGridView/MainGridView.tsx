@@ -10,8 +10,8 @@ const LoadingSpinner = memo(() => (
   </div>
 ));
 
-const MainGridView = ({ content, activeAssistant, children }) => {
-  const [dashboardData, setDashboardData] = React.useState(null);
+const MainGridView = ({ content, activeAssistant, children }: { content?: any; activeAssistant?: any; children?: React.ReactNode }) => {
+  const [dashboardData, setDashboardData] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {

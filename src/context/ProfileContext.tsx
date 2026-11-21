@@ -1,10 +1,10 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-const ProfileContext = createContext();
+const ProfileContext = createContext<any>(undefined);
 
-export const ProfileProvider = ({ children }) => {
-  const [userProfile, setUserProfile] = useState(null);
-  const [notifications, setNotifications] = useState([]);
+export const ProfileProvider = ({ children }: { children: React.ReactNode }) => {
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [notifications, setNotifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,20 +60,20 @@ export const ProfileProvider = ({ children }) => {
     loadProfileData();
   }, []);
 
-  const updateProfile = updates => {
-    setUserProfile(prev => ({ ...prev, ...updates }));
+  const updateProfile = (updates: any) => {
+    setUserProfile((prev: any) => ({ ...prev, ...updates }));
   };
 
-  const markNotificationAsRead = id => {
-    setNotifications(prev => prev.map(n => (n.id === id ? { ...n, isRead: true } : n)));
+  const markNotificationAsRead = (id: any) => {
+    setNotifications((prev: any[]) => prev.map(n => (n.id === id ? { ...n, isRead: true } : n)));
   };
 
   const markAllNotificationsAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+    setNotifications((prev: any[]) => prev.map(n => ({ ...n, isRead: true })));
   };
 
-  const addNotification = notification => {
-    setNotifications(prev => [
+  const addNotification = (notification: any) => {
+    setNotifications((prev: any[]) => [
       { ...notification, id: Date.now(), timestamp: 'Just now', isRead: false },
       ...prev,
     ]);

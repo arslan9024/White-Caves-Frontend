@@ -94,10 +94,23 @@ const LandlordPortalHome: FC<LandlordPortalHomeProps> = ({ onNavigate }) => {
       authFetch('/api/leases?role=landlord&pageSize=100').then(r => r.json()),
       authFetch('/api/properties?pageSize=100').then(r => r.json()),
       fetchMaintenanceItems(),
+      authFetch('/api/leasing/contracts')
+        .then(r => r.json())
+        .catch(() => ({ data: [] })),
     ])
-      .then(([leasesRes, propsRes, maintRes]) => {
+      .then(([leasesRes, propsRes, maintRes, contractsRes]) => {
         if (cancelled) return;
-        setLeases(leasesRes.data ?? []);
+        const closedContracts: ApiLease[] = Array.isArray(contractsRes?.data)
+          ? contractsRes.data.map((c: any) => ({
+              id: c.id,
+              propertyId: c.propertyId,
+              monthlyRent: Math.round((c.annualRentAed || 90000) / 12),
+              status: 'active',
+              nextPaymentDue: c.chequesSchedule?.[1]?.dueDate || null,
+              property: { id: c.propertyId, location: c.community, title: c.propertyTitle },
+            }))
+          : [];
+        setLeases([...closedContracts, ...(leasesRes.data ?? [])]);
         setProperties(propsRes.data ?? []);
         setMaintenanceItems(maintRes.items ?? []);
         setOpenMaintenance(maintRes.total ?? maintRes.items?.length ?? 0);

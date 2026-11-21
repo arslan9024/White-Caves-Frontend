@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/TenancyForms.css';
 
-const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
-  const [formData, setFormData] = useState({
+const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }: { onNext: (data: any) => void; onPrevious: () => void; initialData?: Record<string, any> }) => {
+  const [formData, setFormData] = useState<Record<string, any>>({
     startDate: initialData.startDate || '',
     endDate: initialData.endDate || '',
     monthlyRent: initialData.monthlyRent || '',
@@ -15,10 +15,10 @@ const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
     specialTerms: initialData.specialTerms || '',
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.startDate) {
       newErrors.startDate = 'Start date is required';
@@ -42,7 +42,7 @@ const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -72,7 +72,7 @@ const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
     return '';
   };
 
-  const handleNoOfChequesChange = e => {
+  const handleNoOfChequesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     handleChange(e);
     // Auto-calculate end date
@@ -231,7 +231,7 @@ const TenancyTermsForm = ({ onNext, onPrevious, initialData = {} }) => {
           value={formData.specialTerms}
           onChange={handleChange}
           placeholder="Enter any additional terms or conditions"
-          rows="4"
+          rows={4}
         />
       </div>
 

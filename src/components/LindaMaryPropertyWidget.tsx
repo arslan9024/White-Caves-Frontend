@@ -7,11 +7,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import PropertyQueryService from '../services/PropertyQueryService';
 
-const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
+const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }: { conversation?: any; onPropertySelected: (p: any) => void }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [filters, setFilters] = useState({
     area: '',
@@ -30,7 +30,7 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
    * Search properties based on natural language query
    */
   const handleSearch = useCallback(
-    async query => {
+    async (query: string) => {
       if (!query.trim()) {
         setProperties([]);
         return;
@@ -65,7 +65,7 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
     setError(null);
 
     try {
-      const queryFilters = {
+      const queryFilters: Record<string, any> = {
         area: filters.area || undefined,
         propertyType: filters.propertyType || undefined,
         minPrice: filters.minPrice ? parseInt(filters.minPrice) : undefined,
@@ -86,7 +86,7 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
 
       if (result.success) {
         setProperties(
-          result.data.map(p => ({
+          result.data.map((p: any) => ({
             id: p._id,
             pNumber: p.pNumber,
             area: p.area,
@@ -126,7 +126,7 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }) => {
     }
   }, [conversation, handleSearch]);
 
-  const handlePropertyClick = property => {
+  const handlePropertyClick = (property: any) => {
     onPropertySelected(property);
   };
 

@@ -20,9 +20,16 @@ const ColumnMappingEditor = ({
   onAutoDetect,
   availableFields = [],
   sampleData = [],
+}: {
+  columns?: string[];
+  existingMapping?: Record<string, string>;
+  onMappingChange?: (mapping: Record<string, string>) => void;
+  onAutoDetect?: (columns: string[], sampleData: any[]) => Promise<Record<string, string>>;
+  availableFields?: Array<{ name: string; category: string }>;
+  sampleData?: any[];
 }) => {
-  const [mapping, setMapping] = useState(existingMapping);
-  const [validationErrors, setValidationErrors] = useState({});
+  const [mapping, setMapping] = useState<Record<string, string>>(existingMapping);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [selectedTab, setSelectedTab] = useState('properties'); // properties, owners, both
 
   const propertyFields =
@@ -49,7 +56,7 @@ const ColumnMappingEditor = ({
   };
 
   // Handle manual mapping change
-  const handleMappingChange = (column, field) => {
+  const handleMappingChange = (column: string, field: string) => {
     const updated = { ...mapping, [column]: field };
     setMapping(updated);
     onMappingChange?.(updated);
@@ -57,8 +64,8 @@ const ColumnMappingEditor = ({
   };
 
   // Validate mapping
-  const validateMapping = currentMapping => {
-    const errors = {};
+  const validateMapping = (currentMapping: Record<string, string>) => {
+    const errors: Record<string, string> = {};
     const requiredFields = ['name', 'referenceNo'];
 
     requiredFields.forEach(field => {
@@ -72,7 +79,7 @@ const ColumnMappingEditor = ({
   };
 
   // Get suggestions for a column
-  const getSuggestions = column => {
+  const getSuggestions = (column: string) => {
     const lowerCol = column.toLowerCase();
     const allFields =
       selectedTab === 'properties'
@@ -90,7 +97,7 @@ const ColumnMappingEditor = ({
   };
 
   // Get column category
-  const getColumnCategory = column => {
+  const getColumnCategory = (column: string) => {
     const field = mapping[column];
     if (!field) return 'unmapped';
 

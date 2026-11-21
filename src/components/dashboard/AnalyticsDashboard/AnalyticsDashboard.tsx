@@ -12,11 +12,11 @@ import './AnalyticsDashboard.css';
  * Comprehensive analytics and reporting dashboard
  */
 function AnalyticsDashboard() {
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   // Fetch dashboard statistics
   const fetchDashboardStats = async () => {
@@ -38,7 +38,7 @@ function AnalyticsDashboard() {
       } else {
         throw new Error('Failed to fetch dashboard statistics');
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'Failed to load analytics data');
     } finally {
       setLoading(false);
@@ -255,7 +255,7 @@ function AnalyticsDashboard() {
         <section className="analytics-section">
           <h2 className="section-title">Area-Wise Analytics</h2>
           <div className="area-analytics-grid">
-            {areaAnalytics.slice(0, 6).map((area, index) => (
+            {areaAnalytics.slice(0, 6).map((area: any, index: number) => (
               <div key={index} className="area-card">
                 <div className="area-header">
                   <h3 className="area-name">{area.area}</h3>

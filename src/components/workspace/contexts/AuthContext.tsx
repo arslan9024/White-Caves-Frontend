@@ -85,20 +85,20 @@ const MOCK_PROFILES = {
 };
 
 // Mock credentials for login form
-const MOCK_CREDENTIALS = {
+const MOCK_CREDENTIALS: Record<string, { password: string; profile: string }> = {
   'arslan.malik@whitecaves.ae': { password: 'admin123', profile: 'admin' },
   'fatima.rashid@whitecaves.ae': { password: 'broker123', profile: 'broker' },
   'arslanmalikgoraha@gmail.com': { password: 'master', profile: 'founder' },
 };
 
 // ─── Context ────────────────────────────────────────────────────────────────
-const AuthContext = createContext(null);
+const AuthContext = createContext<any>(null);
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const login = useCallback((email, password) => {
+  const login = useCallback((email: string, password: string) => {
     const cred = MOCK_CREDENTIALS[email?.toLowerCase()];
     if (!cred) {
       return { success: false, error: 'Account not found. Check your email address.' };
@@ -106,14 +106,14 @@ export function AuthProvider({ children }) {
     if (cred.password !== password) {
       return { success: false, error: 'Invalid password. Please try again.' };
     }
-    const profile = MOCK_PROFILES[cred.profile];
+    const profile = (MOCK_PROFILES as Record<string, any>)[cred.profile];
     setUser(profile);
     setIsAuthenticated(true);
     return { success: true };
   }, []);
 
-  const loginWithProfile = useCallback(profileKey => {
-    const profile = MOCK_PROFILES[profileKey];
+  const loginWithProfile = useCallback((profileKey: string) => {
+    const profile = (MOCK_PROFILES as Record<string, any>)[profileKey];
     if (profile) {
       setUser(profile);
       setIsAuthenticated(true);
@@ -125,8 +125,8 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(false);
   }, []);
 
-  const switchProfile = useCallback(profileKey => {
-    const profile = MOCK_PROFILES[profileKey];
+  const switchProfile = useCallback((profileKey: string) => {
+    const profile = (MOCK_PROFILES as Record<string, any>)[profileKey];
     if (profile) {
       setUser(profile);
     }

@@ -61,7 +61,7 @@ export function useCRMShellLogic(onTabChange?: (tabId: string) => void) {
   };
 
   const handleGroupToggle = (groupId: string) => {
-    dispatch(toggleNavGroup(groupId));
+    dispatch(toggleNavGroup(groupId as never));
   };
 
   const handleSubItemClick = (group: CRMNavGroup, item: CRMNavSubItem) => {
@@ -71,7 +71,7 @@ export function useCRMShellLogic(onTabChange?: (tabId: string) => void) {
         subItemId: item.id,
         categoryLabel: group.label,
         subItemLabel: item.label,
-      })
+      } as never)
     );
     if (onTabChange) {
       onTabChange(item.id);
@@ -79,16 +79,16 @@ export function useCRMShellLogic(onTabChange?: (tabId: string) => void) {
   };
 
   const handleBreadcrumbClick = (crumbId: string) => {
-    dispatch(navigateToBreadcrumb(crumbId));
+    dispatch(navigateToBreadcrumb(crumbId as never));
     if (onTabChange) {
       onTabChange(crumbId);
     }
   };
 
   const handleAssistantClick = (assistantId: string) => {
-    dispatch(setActiveAssistant(assistantId));
-    dispatch(setSelectedAssistantForChat(assistantId));
-    dispatch(setActiveObjectId(assistantId));
+    dispatch(setActiveAssistant(assistantId as never));
+    dispatch(setSelectedAssistantForChat(assistantId as never));
+    dispatch(setActiveObjectId(assistantId as never));
     if (onTabChange) {
       onTabChange(assistantId);
     }

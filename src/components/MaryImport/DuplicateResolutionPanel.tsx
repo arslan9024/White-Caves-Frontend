@@ -11,9 +11,14 @@ const DuplicateResolutionPanel = ({
   onResolutionChange,
   onResolveAll,
   deduplicationStrategy = 'keep',
+}: {
+  duplicates?: any[];
+  onResolutionChange?: (rowIndex: number, resolution: string, duplicate?: any) => void;
+  onResolveAll?: (resolutions: Record<string, any>, strategy: string) => void;
+  deduplicationStrategy?: string;
 }) => {
-  const [selectedDuplicate, setSelectedDuplicate] = useState(null);
-  const [resolutions, setResolutions] = useState({});
+  const [selectedDuplicate, setSelectedDuplicate] = useState<number | null>(null);
+  const [resolutions, setResolutions] = useState<Record<string, any>>({});
   const [viewMode, setViewMode] = useState('pending'); // pending, resolved, all
 
   // Filter duplicates by view mode
@@ -45,8 +50,8 @@ const DuplicateResolutionPanel = ({
   };
 
   // Handle resolution selection
-  const handleResolution = (rowIndex, resolution) => {
-    const updated = {
+  const handleResolution = (rowIndex: number, resolution: string) => {
+    const updated: Record<string, any> = {
       ...resolutions,
       [rowIndex]: {
         ...(resolutions[rowIndex] || {}),
@@ -64,7 +69,7 @@ const DuplicateResolutionPanel = ({
 
   // Handle resolve all with strategy
   const handleResolveAll = async () => {
-    const newResolutions = {};
+    const newResolutions: Record<string, any> = {};
     duplicates.forEach(dup => {
       newResolutions[dup.rowIndex] = {
         resolution: deduplicationStrategy,
@@ -261,8 +266,8 @@ const DuplicateResolutionPanel = ({
             <div className="navigation-controls">
               <button
                 className="btn btn-secondary"
-                disabled={selectedDuplicate === 0}
-                onClick={() => setSelectedDuplicate(Math.max(0, selectedDuplicate - 1))}
+                disabled={(selectedDuplicate ?? 0) === 0}
+                onClick={() => setSelectedDuplicate(Math.max(0, (selectedDuplicate ?? 0) - 1))}
               >
                 ← Previous
               </button>
@@ -272,10 +277,10 @@ const DuplicateResolutionPanel = ({
               </span>
               <button
                 className="btn btn-secondary"
-                disabled={selectedDuplicate === filteredDuplicates.length - 1}
+                disabled={(selectedDuplicate ?? 0) === filteredDuplicates.length - 1}
                 onClick={() =>
                   setSelectedDuplicate(
-                    Math.min(filteredDuplicates.length - 1, selectedDuplicate + 1)
+                    Math.min(filteredDuplicates.length - 1, (selectedDuplicate ?? 0) + 1)
                   )
                 }
               >

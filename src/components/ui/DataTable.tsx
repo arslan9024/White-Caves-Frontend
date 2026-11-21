@@ -32,8 +32,15 @@ const DataTable = ({
   onFilter,
   rowsPerPage = 10,
   emptyMessage = 'No data available',
+}: {
+  columns?: Array<{ key: string; label: string; sortable?: boolean; renderer?: (val: any, row: any) => React.ReactNode }>;
+  rows?: any[];
+  onSort?: (key: string, direction: string) => void;
+  onFilter?: (value: string) => void;
+  rowsPerPage?: number;
+  emptyMessage?: string;
 }) => {
-  const [sortConfig, setSortConfig] = useState(null);
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: string } | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -66,7 +73,7 @@ const DataTable = ({
   const totalPages = Math.ceil(sortedRows.length / rowsPerPage);
 
   const handleSort = useCallback(
-    key => {
+    (key: string) => {
       let direction = 'asc';
       if (sortConfig?.key === key && sortConfig?.direction === 'asc') {
         direction = 'desc';
@@ -79,7 +86,7 @@ const DataTable = ({
   );
 
   const handleSearch = useCallback(
-    value => {
+    (value: string) => {
       setSearchTerm(value);
       setCurrentPage(1);
       onFilter?.(value);

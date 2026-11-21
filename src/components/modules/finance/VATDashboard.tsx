@@ -25,11 +25,23 @@ const VATDashboard = ({
   upcomingFilings = [],
   onFileVAT = () => {},
   onDownloadReport = () => {},
+}: {
+  vatMetrics?: { totalVAT: number; collectedVAT: number; payableVAT: number; filingStatus: string };
+  returns?: any[];
+  upcomingFilings?: any[];
+  onFileVAT?: () => void;
+  onDownloadReport?: (ret?: any) => void;
 }) => {
-  const [expandedReturn, setExpandedReturn] = useState(null);
+  const [expandedReturn, setExpandedReturn] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState('returns');
 
-  const MetricCard = ({ icon: Icon, label, value, trend, color }) => (
+  const MetricCard = ({ icon: Icon, label, value, trend, color }: {
+    icon?: any;
+    label: string;
+    value: any;
+    trend?: string;
+    color?: string;
+  }) => (
     <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div>

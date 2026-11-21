@@ -115,7 +115,7 @@ export const EmployeeManagerView: React.FC<EmployeeManagerViewProps> = ({
               <span className={s.metricLabel}>Active Deployment</span>
             </div>
             <div className={s.metricCard}>
-              <span className={`${s.metricNumber} text-blue-400`}>{metrics.leadership}</span>
+              <span className={`${s.metricNumber} text-blue-400`}>{metrics.directors}</span>
               <span className={s.metricLabel}>Pillar Leadership</span>
             </div>
             <div className={s.metricCard}>

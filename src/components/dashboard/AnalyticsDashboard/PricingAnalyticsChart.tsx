@@ -18,7 +18,7 @@ import './PricingAnalyticsChart.css';
  * PricingAnalyticsChart Component
  * Shows pricing analytics: average price by area and price distribution
  */
-function PricingAnalyticsChart({ data, loading = false }) {
+function PricingAnalyticsChart({ data, loading = false }: { data?: any; loading?: boolean }) {
   if (loading) {
     return <div className="chart-loading">Loading chart data...</div>;
   }
@@ -38,7 +38,7 @@ function PricingAnalyticsChart({ data, loading = false }) {
     '#f97316',
   ];
 
-  const formatPrice = value => {
+  const formatPrice = (value: number) => {
     if (value >= 1000000) {
       return `AED ${(value / 1000000).toFixed(1)}M`;
     } else if (value >= 1000) {
@@ -47,12 +47,12 @@ function PricingAnalyticsChart({ data, loading = false }) {
     return `AED ${value}`;
   };
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="custom-tooltip">
           <p className="tooltip-label">{label}</p>
-          {payload.map((entry, index) => (
+          {payload.map((entry: any, index: number) => (
             <p key={index} style={{ color: entry.color }}>
               {entry.name}: {formatPrice(entry.value)}
             </p>
@@ -87,7 +87,7 @@ function PricingAnalyticsChart({ data, loading = false }) {
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
               />
               <Bar dataKey="avgPrice" fill="#EF4444" radius={[8, 8, 0, 0]}>
-                {data.avgPriceByArea.slice(0, 10).map((entry, index) => (
+                {data.avgPriceByArea.slice(0, 10).map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Bar>
@@ -126,7 +126,7 @@ function PricingAnalyticsChart({ data, loading = false }) {
               <YAxis />
               <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
               <Bar dataKey="count" fill="#8b5cf6" radius={[8, 8, 0, 0]}>
-                {data.priceDistribution.ranges.map((entry, index) => (
+                {data.priceDistribution.ranges.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Bar>
@@ -152,7 +152,7 @@ function PricingAnalyticsChart({ data, loading = false }) {
             {data.avgPriceByArea && data.avgPriceByArea.length > 0
               ? formatPrice(
                   Math.round(
-                    data.avgPriceByArea.reduce((sum, a) => sum + a.avgPrice, 0) /
+                    data.avgPriceByArea.reduce((sum: number, a: any) => sum + a.avgPrice, 0) /
                       data.avgPriceByArea.length
                   )
                 )

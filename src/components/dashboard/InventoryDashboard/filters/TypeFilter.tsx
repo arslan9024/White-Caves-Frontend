@@ -1,10 +1,10 @@
 import React from 'react';
 import '../FilterPanel.css';
 
-const TypeFilter = ({ selected = [], onChange }) => {
+const TypeFilter = ({ selected = [], onChange }: { selected?: string[]; onChange: (types: string[]) => void }) => {
   const types = ['Apartment', 'Villa', 'Studio', 'Penthouse', 'Townhouse'];
 
-  const handleToggle = type => {
+  const handleToggle = (type: string) => {
     if (selected.includes(type)) {
       onChange(selected.filter(t => t !== type));
     } else {

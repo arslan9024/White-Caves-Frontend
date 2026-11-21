@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { logout } from "../authSlice";
 import { initialState } from "./whatsapp/initialState";
+import type { WhatsAppMessage, WhatsAppSession } from "./whatsapp/types";
 import {
   initializeWhatsAppSession,
   connectWhatsApp,

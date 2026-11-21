@@ -135,10 +135,10 @@ const DEPARTMENT_PERFORMANCE = [
   },
 ];
 
-export default function ExecutiveMixedDashboard({ subItem = 'md-dashboard', selectedAssistant }) {
+export default function ExecutiveMixedDashboard({ subItem = 'md-dashboard', selectedAssistant }: { subItem?: string; selectedAssistant?: string }) {
   const deptConfig = DEPT_ASSISTANT_MAP.executive;
 
-  const handleAction = action => {};
+  const handleAction = (_action: any) => {};
 
   return (
     <MixedDashboard

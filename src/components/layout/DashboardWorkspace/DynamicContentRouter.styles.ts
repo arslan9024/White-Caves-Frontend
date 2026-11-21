@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { MEDIA_QUERIES, theme } from '../../../styles/theme';
+import { MEDIA_QUERIES, theme as rawTheme } from '../../../styles/theme';
+
+const theme: any = rawTheme;
 
 export const ContentContainer = styled.div`
   flex: 1;

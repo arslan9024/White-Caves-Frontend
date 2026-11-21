@@ -21,14 +21,24 @@ import PropTypes from 'prop-types';
  *   variant="ring"
  * />
  */
-const LoadingSpinner = ({ size = 'md', color = 'red', text, variant = 'ring' }) => {
-  const sizeClasses = {
+const LoadingSpinner = ({
+  size = 'md',
+  color = 'red',
+  text,
+  variant = 'ring',
+}: {
+  size?: string;
+  color?: string;
+  text?: string;
+  variant?: string;
+}) => {
+  const sizeClasses: Record<string, string> = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',
     lg: 'w-12 h-12',
   };
 
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     red: 'border-red-500 dark:border-red-400',
     blue: 'border-blue-500 dark:border-blue-400',
     green: 'border-green-500 dark:border-green-400',

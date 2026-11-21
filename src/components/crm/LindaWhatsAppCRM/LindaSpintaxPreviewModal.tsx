@@ -4,17 +4,20 @@ import { Sparkles, RefreshCw } from 'lucide-react';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  template: string;
+  template?: string;
+  campaignName?: string;
+  cluster?: string;
 }
 
-export const LindaSpintaxPreviewModal: React.FC<Props> = memo(({ isOpen, onClose, template }) => {
+export const LindaSpintaxPreviewModal: React.FC<Props> = memo(({ isOpen, onClose, template, campaignName, cluster }) => {
   const [variations, setVariations] = useState<string[]>([]);
+  const activeTemplate = template || `{Hi|Hello|Good afternoon}, regarding your property in ${cluster || 'DAMAC Hills 2'} (${campaignName || 'Leasing Campaign'}): {is it currently available for rent?|are you open to a new tenant this month?}`;
 
   const generateVariations = () => {
     const regex = /\{([^{}]+)\}/g;
     const items: string[] = [];
     for (let i = 0; i < 3; i++) {
-      const rendered = template.replace(regex, (_, choices) => {
+      const rendered = activeTemplate.replace(regex, (_, choices) => {
         const parts = choices.split('|');
         return parts[Math.floor(Math.random() * parts.length)];
       });

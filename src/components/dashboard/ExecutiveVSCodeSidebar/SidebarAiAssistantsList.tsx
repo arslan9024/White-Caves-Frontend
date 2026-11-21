@@ -132,14 +132,8 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
       const srcIdx = next.findIndex(a => a.agentId === sourceAgentId);
       const tgtIdx = next.findIndex(a => a.agentId === targetAgentId);
       if (srcIdx === -1 || tgtIdx === -1) return prev;
-      const srcDept = {
-        departmentId: next[srcIdx].departmentId,
-        department: next[srcIdx].department,
-      };
-      const tgtDept = {
-        departmentId: next[tgtIdx].departmentId,
-        department: next[tgtIdx].department,
-      };
+      const srcDept = { departmentId: next[srcIdx].departmentId, department: next[srcIdx].department };
+      const tgtDept = { departmentId: next[tgtIdx].departmentId, department: next[tgtIdx].department };
       next[srcIdx] = { ...next[srcIdx], ...tgtDept };
       next[tgtIdx] = { ...next[tgtIdx], ...srcDept };
       [next[srcIdx], next[tgtIdx]] = [next[tgtIdx], next[srcIdx]];
@@ -227,20 +221,30 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
 
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '4px 8px 8px',
+          padding: '7px 8px',
+          borderRadius: '6px',
+          background: 'rgba(245, 158, 11, 0.12)',
+          border: '1px dashed rgba(245, 158, 11, 0.45)',
+          marginBottom: '8px',
+          cursor: 'grab',
         }}
       >
-        <span
-          style={{
-            fontSize: '0.66rem',
-            fontWeight: 800,
-            color: '#EF4444',
-            textTransform: 'uppercase',
-          }}
-        >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.63rem', color: '#FBBF24', fontWeight: 800 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Briefcase size={11} /> OPEN HUMAN ROLE • DEPT-05
+          </span>
+          <span>DRAG IN DMS</span>
+        </div>
+        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#F8FAFC', marginTop: '2px' }}>
+          Residential Leasing Manager (+12 AM / 108 Sup / 10 Agents)
+        </div>
+        <div style={{ fontSize: '0.62rem', color: '#94A3B8' }}>
+          Reports to: Dir AI Clara (DIR-05) → AI Zoe → Arslan Malik (MD)
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 8px 8px' }}>
+        <span style={{ fontSize: '0.66rem', fontWeight: 800, color: '#EF4444', textTransform: 'uppercase' }}>
           Zoe&apos;s Team ({visibleAgents.length}) · Drag to Swap
         </span>
         <button
@@ -297,16 +301,8 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
             style={{
               padding: '8px 10px',
               borderRadius: '8px',
-              background: isDropTarget
-                ? 'rgba(16, 185, 129, 0.18)'
-                : isSelected
-                  ? 'rgba(239, 68, 68, 0.15)'
-                  : '#070D18',
-              border: isDropTarget
-                ? '1px dashed #10B981'
-                : isSelected
-                  ? '1px solid #EF4444'
-                  : '1px solid rgba(255, 255, 255, 0.05)',
+              background: isDropTarget ? 'rgba(16, 185, 129, 0.18)' : isSelected ? 'rgba(239, 68, 68, 0.15)' : '#070D18',
+              border: isDropTarget ? '1px dashed #10B981' : isSelected ? '1px solid #EF4444' : '1px solid rgba(255, 255, 255, 0.05)',
               cursor: 'grab',
               display: 'flex',
               flexDirection: 'column',
@@ -317,43 +313,16 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <GripVertical size={11} color="#64748B" />
-                <span
-                  style={{
-                    fontSize: '0.63rem',
-                    fontFamily: 'monospace',
-                    color: '#F87171',
-                    background: 'rgba(239,68,68,0.12)',
-                    padding: '1px 5px',
-                    borderRadius: '4px',
-                    fontWeight: 700,
-                  }}
-                >
+                <span style={{ fontSize: '0.63rem', fontFamily: 'monospace', color: '#F87171', background: 'rgba(239,68,68,0.12)', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
                   {agent.code}
                 </span>
-                <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#94A3B8' }}>
-                  {agent.tier}
-                </span>
+                <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#94A3B8' }}>{agent.tier}</span>
               </div>
-              <span style={{ fontSize: '0.62rem', color: '#10B981', fontWeight: 700 }}>
-                {agent.status}
-              </span>
+              <span style={{ fontSize: '0.62rem', color: '#10B981', fontWeight: 700 }}>{agent.status}</span>
             </div>
-            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#F8FAFC' }}>
-              {agent.name}
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                fontSize: '0.65rem',
-                color: '#64748B',
-                gap: '6px',
-              }}
-            >
-              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {agent.role}
-              </span>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#F8FAFC' }}>{agent.name}</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.65rem', color: '#64748B', gap: '6px' }}>
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{agent.role}</span>
               <span style={{ color: '#38BDF8', flexShrink: 0 }}>{agent.model}</span>
             </div>
           </div>

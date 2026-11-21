@@ -163,15 +163,15 @@ const PENDING_RENEWALS = [
   },
 ];
 
-export default function LeasingMixedDashboard({ subItem = 'ejari-system', selectedAssistant }) {
+export default function LeasingMixedDashboard({ subItem = 'ejari-system', selectedAssistant }: { subItem?: string; selectedAssistant?: string }) {
   const [currentStage, setCurrentStage] = useState(5);
   const deptConfig = DEPT_ASSISTANT_MAP.leasing;
 
-  const handleStageClick = (stage, index) => {
+  const handleStageClick = (_stage: any, index: number) => {
     setCurrentStage(index);
   };
 
-  const handleAction = action => {};
+  const handleAction = (_action: any) => {};
 
   return (
     <MixedDashboard

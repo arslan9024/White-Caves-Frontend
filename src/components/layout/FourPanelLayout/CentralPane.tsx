@@ -17,8 +17,8 @@ import './CentralPane.css';
  * Updates dynamically based on left sidebar selection
  */
 
-export default function CentralPane({ view, object, children }) {
-  const selectedObject = useSelector(state => state.navigation?.selectedObject);
+export default function CentralPane({ view, object, children }: { view?: string; object?: any; children?: React.ReactNode }) {
+  const selectedObject = useSelector((state: any) => state.navigation?.selectedObject);
   const currentView = view || 'dashboard';
 
   const getViewComponent = () => {
@@ -67,7 +67,7 @@ export default function CentralPane({ view, object, children }) {
  * Displays KPIs, metrics, quick stats, and key performance indicators
  */
 function DashboardView() {
-  const stats = useSelector(state => state.dashboard?.stats || []);
+  const stats = useSelector((state: any) => state.dashboard?.stats || []);
 
   return (
     <div className="dashboard-view">
@@ -165,7 +165,7 @@ function ListView() {
  * DetailView
  * Displays full object specifications and properties
  */
-function DetailView({ object }) {
+function DetailView({ object }: { object?: any }) {
   if (!object) {
     return (
       <div className="detail-view">

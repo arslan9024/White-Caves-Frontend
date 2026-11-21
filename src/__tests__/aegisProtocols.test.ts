@@ -11,13 +11,16 @@ import {
   buildStatutoryGateXPReward,
   calculateDynamicCommissionSplitPct,
 } from '../../../Aegis-Sterling/.agents/aegis/protocols/leaderboardXpHooks';
+import { AEGIS_42_PROTOCOLS } from '../../../Aegis-Sterling/.agents/aegis/protocols/aegisMasterProtocols';
+
+const AEGIS_ROOT = path.resolve(process.cwd(), '..', 'Aegis-Sterling');
 
 describe('AEGIS V5.0 5-File Protocol Matrices & Leaderboard XP Hooks (.agents/aegis)', () => {
   it('verifies all 5 protocol CSV files exist in .agents/aegis/protocols with standardized line-1 file headers and AEG-001..AEG-042 rules', () => {
     const foundRuleIds: string[] = [];
 
     for (const relPath of AEGIS_PROTOCOL_FILES) {
-      const fullPath = path.resolve(process.cwd(), relPath);
+      const fullPath = path.resolve(AEGIS_ROOT, relPath);
       expect(fs.existsSync(fullPath)).toBe(true);
 
       const content = fs.readFileSync(fullPath, 'utf-8').trim();
@@ -39,6 +42,7 @@ describe('AEGIS V5.0 5-File Protocol Matrices & Leaderboard XP Hooks (.agents/ae
     expect(foundRuleIds).toHaveLength(42);
     expect(foundRuleIds[0]).toBe('AEG-001');
     expect(foundRuleIds[41]).toBe('AEG-042');
+    expect(Object.keys(AEGIS_42_PROTOCOLS)).toHaveLength(42);
   });
 
   it('enforces AEG-012 idempotent submission tracking and drops duplicate submissions', () => {

@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import './ServiceTracker.css';
 import Loading from './Loading';
 
-export default function ServiceTracker({ userId, userRole }) {
-  const [services, setServices] = useState([]);
+export default function ServiceTracker({ userId, userRole }: { userId?: string; userRole?: string }) {
+  const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newService, setNewService] = useState({
+  const [newService, setNewService] = useState<Record<string, any>>({
     type: 'BUYER',
     serviceType: 'CONSULTATION',
     description: '',
   });
-  const [securityCheque, setSecurityCheque] = useState({
+  const [securityCheque, setSecurityCheque] = useState<{ chequeNumber: string; amount: string | number; bankName: string }>({
     chequeNumber: '',
     amount: '',
     bankName: '',
   });
-  const [property, setProperty] = useState(null); // Selected property reference
+  const [property, setProperty] = useState<any>(null); // Selected property reference
 
   useEffect(() => {
     fetchServices();
@@ -32,13 +32,13 @@ export default function ServiceTracker({ userId, userRole }) {
     }
   };
 
-  const validateServiceDependencies = async serviceType => {
+  const validateServiceDependencies = async (serviceType: string) => {
     if (serviceType === 'KEY_HANDOVER') {
-      const completedServices = services.filter(s => s.status === 'COMPLETED');
+      const completedServices = services.filter((s: any) => s.status === 'COMPLETED');
       const requiredServices = ['EJARI_REGISTRATION', 'DEWA_REGISTRATION', 'MOVE_IN_PERMIT'];
 
       const missingServices = requiredServices.filter(
-        required => !completedServices.some(service => service.serviceType === required)
+        required => !completedServices.some((service: any) => service.serviceType === required)
       );
 
       if (missingServices.length > 0) {
@@ -53,13 +53,13 @@ export default function ServiceTracker({ userId, userRole }) {
 
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
     const validation = await validateServiceDependencies(newService.serviceType);
     if (!validation.valid) {
-      setErrorMsg(validation.message);
+      setErrorMsg(validation.message || '');
       return;
     }
 
@@ -69,7 +69,7 @@ export default function ServiceTracker({ userId, userRole }) {
       const requiredAmount = offerPrice * 0.1;
 
       if (
-        securityCheque.amount < requiredAmount ||
+        Number(securityCheque.amount) < requiredAmount ||
         securityCheque.chequeNumber === '' ||
         securityCheque.bankName === ''
       ) {

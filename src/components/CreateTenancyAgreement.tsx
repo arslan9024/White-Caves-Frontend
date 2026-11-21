@@ -327,7 +327,7 @@ export default function CreateTenancyAgreement() {
               value={formData.terms}
               onChange={handleChange}
               placeholder="Add any additional terms, conditions, or special clauses..."
-              rows="6"
+              rows={6}
             />
           </div>
         </div>

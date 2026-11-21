@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../../context/ThemeContext';
 
 /**
  * DarkModeToggle Component
@@ -16,7 +16,7 @@ import { useTheme } from '../context/ThemeContext';
  *
  * @requires lucide-react for Moon and Sun icons
  */
-const DarkModeToggle = ({ Moon, Sun }) => {
+const DarkModeToggle = ({ Moon, Sun }: { Moon: any; Sun: any }) => {
   const { isDark, toggleTheme } = useTheme();
   const [showTooltip, setShowTooltip] = useState(false);
 

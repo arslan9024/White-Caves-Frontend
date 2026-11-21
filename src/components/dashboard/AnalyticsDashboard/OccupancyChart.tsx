@@ -18,7 +18,7 @@ import './OccupancyChart.css';
  * OccupancyChart Component
  * Shows occupancy metrics with pie charts and progress indicators
  */
-function OccupancyChart({ data, loading = false }) {
+function OccupancyChart({ data, loading = false }: { data?: any; loading?: boolean }) {
   if (loading) {
     return <div className="chart-loading">Loading chart data...</div>;
   }
@@ -29,7 +29,7 @@ function OccupancyChart({ data, loading = false }) {
 
   const COLORS = ['#10b981', '#EF4444', '#f59e0b', '#ef4444'];
 
-  const renderCustomLabel = entry => {
+  const renderCustomLabel = (entry: any) => {
     return `${(entry.percent * 100).toFixed(0)}%`;
   };
 
@@ -68,18 +68,18 @@ function OccupancyChart({ data, loading = false }) {
                 dataKey="count"
                 nameKey="status"
               >
-                {data.statusBreakdown.map((entry, index) => (
+                {data.statusBreakdown.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value, name) => [value, name === 'count' ? 'Count' : 'Status']}
+                formatter={(value: any, name: any) => [value, name === 'count' ? 'Count' : 'Status']}
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
               />
             </PieChart>
           </ResponsiveContainer>
           <div className="chart-legend">
-            {data.statusBreakdown.map((item, idx) => (
+            {data.statusBreakdown.map((item: any, idx: number) => (
               <div key={idx} className="legend-item">
                 <span className="legend-color" style={{ backgroundColor: COLORS[idx] }}></span>
                 <div>

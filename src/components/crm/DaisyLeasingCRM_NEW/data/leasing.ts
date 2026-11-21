@@ -102,7 +102,10 @@ export interface RenewalRecord {
   id: number;
   leaseId: number;
   unit: string;
+  property?: string;
   tenant: string;
+  tenantName?: string;
+  landlordName?: string;
   currentRent: number;
   proposedRent: number;
   renewalDate: string;

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './MixedDashboard.css';
 
-const containerVariants = {
+const containerVariants: any = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -12,7 +12,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: any = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -32,6 +32,17 @@ export default function MixedDashboard({
   activityComponent,
   quickActionsComponent,
   children,
+}: {
+  departmentId?: string;
+  departmentLabel?: string;
+  assistantId?: string;
+  assistantName?: string;
+  statsComponent?: React.ReactNode;
+  flowchartComponent?: React.ReactNode;
+  tableComponent?: React.ReactNode;
+  activityComponent?: React.ReactNode;
+  quickActionsComponent?: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <motion.div
@@ -86,7 +97,12 @@ export default function MixedDashboard({
   );
 }
 
-export function DashboardSection({ title, icon, children, className = '' }) {
+export function DashboardSection({ title, icon, children, className = '' }: {
+  title?: string;
+  icon?: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
     <motion.div className={`dashboard-section ${className}`} variants={itemVariants}>
       {title && (

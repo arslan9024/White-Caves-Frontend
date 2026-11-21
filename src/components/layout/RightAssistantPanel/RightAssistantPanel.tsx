@@ -40,7 +40,7 @@ import {
 import { AI_ASSISTANTS, DEPARTMENTS } from '../../../config/assistantRegistry';
 import './RightAssistantPanel.css';
 
-const ICON_MAP = {
+const ICON_MAP: Record<string, any> = {
   MessageSquare,
   Building2,
   Target,
@@ -69,9 +69,9 @@ export default function RightAssistantPanel() {
   const dispatch = useDispatch();
   const rightSidebar = useSelector(selectRightSidebar);
   const [searchTerm, setSearchTerm] = useState('');
-  const [expandedDepartments, setExpandedDepartments] = useState({});
+  const [expandedDepartments, setExpandedDepartments] = useState<Record<string, boolean>>({});
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [favorites, setFavorites] = useState(() => {
+  const [favorites, setFavorites] = useState<string[]>(() => {
     const stored = localStorage.getItem('favoriteAssistants');
     return stored ? JSON.parse(stored) : [];
   });
@@ -81,7 +81,7 @@ export default function RightAssistantPanel() {
   const assistantList = useMemo(() => Object.values(AI_ASSISTANTS), []);
 
   const assistantsByDept = useMemo(() => {
-    const grouped = {};
+    const grouped: Record<string, any[]> = {};
     assistantList.forEach(assistant => {
       const dept = assistant.department;
       if (!grouped[dept]) grouped[dept] = [];
@@ -106,31 +106,31 @@ export default function RightAssistantPanel() {
     return list;
   }, [assistantList, searchTerm, showFavoritesOnly, favorites]);
 
-  const handleAssistantClick = assistant => {
+  const handleAssistantClick = (assistant: any) => {
     dispatch(selectAssistant(assistant.id));
   };
 
-  const toggleDepartment = deptId => {
+  const toggleDepartment = (deptId: string) => {
     setExpandedDepartments(prev => ({
       ...prev,
       [deptId]: !prev[deptId],
     }));
   };
 
-  const toggleFavorite = (assistantId, e) => {
+  const toggleFavorite = (assistantId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const newFavorites = favorites.includes(assistantId)
-      ? favorites.filter(id => id !== assistantId)
+      ? favorites.filter((id: string) => id !== assistantId)
       : [...favorites, assistantId];
     setFavorites(newFavorites);
     localStorage.setItem('favoriteAssistants', JSON.stringify(newFavorites));
   };
 
-  const getIcon = iconName => {
+  const getIcon = (iconName: string) => {
     return ICON_MAP[iconName] || Bot;
   };
 
-  const selectedAssistantData = selectedAssistant ? AI_ASSISTANTS[selectedAssistant] : null;
+  const selectedAssistantData = selectedAssistant ? (AI_ASSISTANTS as Record<string, any>)[selectedAssistant] : null;
 
   if (!isOpen) {
     return (
@@ -211,7 +211,7 @@ export default function RightAssistantPanel() {
               <button
                 className="dept-header"
                 onClick={() => toggleDepartment(deptId)}
-                style={{ '--dept-color': dept.color }}
+                style={{ '--dept-color': dept.color } as React.CSSProperties}
               >
                 {isCollapsed ? (
                   <DeptIcon size={18} style={{ color: dept.color }} />
@@ -227,7 +227,7 @@ export default function RightAssistantPanel() {
 
               {isExpanded && !isCollapsed && (
                 <div className="assistants-list">
-                  {filteredDeptAssistants.map(assistant => {
+                  {filteredDeptAssistants.map((assistant: any) => {
                     const Icon = getIcon(assistant.icon);
                     const isActive = selectedAssistant === assistant.id;
                     const isFavorite = favorites.includes(assistant.id);
@@ -237,7 +237,7 @@ export default function RightAssistantPanel() {
                         key={assistant.id}
                         className={`assistant-item ${isActive ? 'active' : ''}`}
                         onClick={() => handleAssistantClick(assistant)}
-                        style={{ '--assistant-color': assistant.color }}
+                        style={{ '--assistant-color': assistant.color } as React.CSSProperties}
                       >
                         <div
                           className="assistant-avatar"
@@ -289,7 +289,7 @@ export default function RightAssistantPanel() {
           <div className="preview-capabilities">
             <span className="cap-label">Capabilities</span>
             <div className="cap-tags">
-              {selectedAssistantData.capabilities?.slice(0, 4).map((cap, i) => (
+              {selectedAssistantData.capabilities?.slice(0, 4).map((cap: string, i: number) => (
                 <span key={i} className="cap-tag">
                   {cap.replace(/_/g, ' ')}
                 </span>

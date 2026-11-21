@@ -5,6 +5,7 @@ import { PropertyCard } from '../components/leasing/PropertyCard';
 import { DocumentChecklist } from '../components/leasing/DocumentChecklist';
 import { ContractSignModal } from '../components/leasing/ContractSignModal';
 import { EjariRegistrationModal } from '../components/leasing/EjariRegistrationModal';
+import { EmployeeLeasingPipelineView } from '../components/leasing/EmployeeLeasingPipeline';
 import { authFetch } from '../utils/authFetch';
 
 const PageContainer = styled.div`
@@ -159,6 +160,7 @@ export const LeasingAcquisition: React.FC = () => {
 
   return (
     <PageContainer>
+      <EmployeeLeasingPipelineView />
       <Header>
         <Title>Leasing Acquisition Pipeline</Title>
       </Header>

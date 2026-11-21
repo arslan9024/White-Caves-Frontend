@@ -109,12 +109,12 @@ const RECENT_ACTIVITIES = [
   },
 ];
 
-export default function MarketingMixedDashboard({ subItem = 'campaigns', selectedAssistant }) {
+export default function MarketingMixedDashboard({ subItem = 'campaigns', selectedAssistant }: { subItem?: string; selectedAssistant?: string }) {
   const [currentStage, setCurrentStage] = useState(4);
   const deptConfig = DEPT_ASSISTANT_MAP.marketing;
 
-  const handleStageClick = (stage, index) => setCurrentStage(index);
-  const handleAction = action => {};
+  const handleStageClick = (_stage: any, index: number) => setCurrentStage(index);
+  const handleAction = (_action: any) => {};
 
   return (
     <MixedDashboard

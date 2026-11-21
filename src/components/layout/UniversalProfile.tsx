@@ -7,11 +7,11 @@ import { auth } from '../../config/firebase';
 import { signOut } from 'firebase/auth';
 import './UniversalProfile.css';
 
-export default function UniversalProfile({ variant = 'default', showSignIn = true }) {
+export default function UniversalProfile({ variant = 'default', showSignIn = true }: { variant?: string; showSignIn?: boolean }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.currentUser);
-  const { activeRole, theme } = useSelector(state => state.navigation);
+  const user = useSelector((state: any) => state.user.currentUser);
+  const { activeRole, theme } = useSelector((state: any) => state.navigation);
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -19,11 +19,11 @@ export default function UniversalProfile({ variant = 'default', showSignIn = tru
   };
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
     }
@@ -31,11 +31,11 @@ export default function UniversalProfile({ variant = 'default', showSignIn = tru
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const getInitials = (name, email) => {
+  const getInitials = (name?: string, email?: string) => {
     if (name) {
       return name
         .split(' ')
-        .map(n => n[0])
+        .map((n: string) => n[0])
         .join('')
         .toUpperCase()
         .substring(0, 2);
@@ -46,8 +46,8 @@ export default function UniversalProfile({ variant = 'default', showSignIn = tru
     return '?';
   };
 
-  const getRoleInfo = role => {
-    const roles = {
+  const getRoleInfo = (role: string) => {
+    const roles: Record<string, { label: string; icon: string; color: string }> = {
       buyer: { label: 'Buyer', icon: '🏠', color: '#EF4444' },
       seller: { label: 'Seller', icon: '💰', color: '#10b981' },
       landlord: { label: 'Landlord', icon: '🔑', color: '#8b5cf6' },
@@ -62,7 +62,7 @@ export default function UniversalProfile({ variant = 'default', showSignIn = tru
   const handleLogout = async () => {
     setMenuOpen(false);
     try {
-      await signOut(auth);
+      if (auth) await signOut(auth);
       localStorage.removeItem('userRole');
       dispatch(setUser(null));
       dispatch(setActiveRole(null));

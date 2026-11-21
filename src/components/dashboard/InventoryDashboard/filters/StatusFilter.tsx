@@ -1,10 +1,10 @@
 import React from 'react';
 import '../FilterPanel.css';
 
-const StatusFilter = ({ selected = [], onChange }) => {
+const StatusFilter = ({ selected = [], onChange }: { selected?: string[]; onChange: (statuses: string[]) => void }) => {
   const statuses = ['Vacant', 'Occupied', 'Maintenance', 'Available for Lease'];
 
-  const handleToggle = status => {
+  const handleToggle = (status: string) => {
     if (selected.includes(status)) {
       onChange(selected.filter(s => s !== status));
     } else {

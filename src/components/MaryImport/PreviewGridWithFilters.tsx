@@ -12,10 +12,17 @@ const PreviewGridWithFilters = ({
   validationResult = null,
   onRowSelect,
   onApplyChanges,
+}: {
+  data?: any[];
+  columns?: string[];
+  mapping?: Record<string, string>;
+  validationResult?: any;
+  onRowSelect?: (rows: number[]) => void;
+  onApplyChanges?: (rows: number[]) => void;
 }) => {
-  const [filters, setFilters] = useState({});
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
-  const [selectedRows, setSelectedRows] = useState(new Set());
+  const [filters, setFilters] = useState<Record<string, string>>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string }>({ key: null, direction: 'asc' });
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [viewMode, setViewMode] = useState('all'); // all, valid, errors, warnings
 
   // Filter data based on view mode and filters
@@ -70,7 +77,7 @@ const PreviewGridWithFilters = ({
   }, [data, filters, sortConfig, validationResult, viewMode]);
 
   // Get row status
-  const getRowStatus = rowIndex => {
+  const getRowStatus = (rowIndex: number) => {
     if (!validationResult) return 'valid';
     if (validationResult.rowsWithErrors?.includes(rowIndex)) return 'error';
     if (validationResult.rowsWithWarnings?.includes(rowIndex)) return 'warning';
@@ -78,7 +85,7 @@ const PreviewGridWithFilters = ({
   };
 
   // Handle column filter change
-  const handleFilterChange = (column, value) => {
+  const handleFilterChange = (column: string, value: string) => {
     setFilters(prev => ({
       ...prev,
       [column]: value,
@@ -86,7 +93,7 @@ const PreviewGridWithFilters = ({
   };
 
   // Handle sort
-  const handleSort = column => {
+  const handleSort = (column: string) => {
     setSortConfig(prev => ({
       key: column,
       direction: prev.key === column && prev.direction === 'asc' ? 'desc' : 'asc',
@@ -94,7 +101,7 @@ const PreviewGridWithFilters = ({
   };
 
   // Toggle row selection
-  const handleRowToggle = rowIndex => {
+  const handleRowToggle = (rowIndex: number) => {
     const newSelected = new Set(selectedRows);
     if (newSelected.has(rowIndex)) {
       newSelected.delete(rowIndex);

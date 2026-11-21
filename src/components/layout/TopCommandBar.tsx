@@ -71,9 +71,9 @@ const TopCommandBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [theme, setTheme] = useState('light');
-  const searchRef = useRef(null);
-  const notificationRef = useRef(null);
-  const profileRef = useRef(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
+  const notificationRef = useRef<HTMLDivElement | null>(null);
+  const profileRef = useRef<HTMLDivElement | null>(null);
 
   const unreadCount = MOCK_NOTIFICATIONS.filter(n => n.unread).length;
 
@@ -84,12 +84,12 @@ const TopCommandBar = () => {
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = e => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         notificationRef.current &&
-        !notificationRef.current.contains(e.target) &&
+        !notificationRef.current.contains(e.target as Node) &&
         profileRef.current &&
-        !profileRef.current.contains(e.target)
+        !profileRef.current.contains(e.target as Node)
       ) {
         dispatch(closeAllDropdowns());
       }
@@ -99,7 +99,7 @@ const TopCommandBar = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         searchRef.current?.focus();
@@ -116,7 +116,7 @@ const TopCommandBar = () => {
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
-  const handleSearch = e => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);

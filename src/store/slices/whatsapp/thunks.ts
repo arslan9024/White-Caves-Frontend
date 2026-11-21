@@ -3,6 +3,23 @@ import { authFetch } from "../../../utils/authFetch";
 import { getErrorMessage } from "../../../constants";
 import type { WhatsAppMessage } from "./types";
 
+async function extractErrorMessage(response: Response): Promise<string> {
+  let errorData: Record<string, unknown> = {};
+  try {
+    const contentType = response.headers.get('content-type');
+    if (contentType?.includes('application/json')) {
+      errorData = await response.json();
+    }
+  } catch {
+    // ignore parse failure
+  }
+  return (
+    (typeof errorData?.message === 'string' ? errorData.message : '') ||
+    (typeof errorData?.error === 'string' ? errorData.error : '') ||
+    `Request failed with status ${response.status}`
+  );
+}
+
 export const initializeWhatsAppSession = createAsyncThunk(
   'whatsapp/initializeSession',
   async (

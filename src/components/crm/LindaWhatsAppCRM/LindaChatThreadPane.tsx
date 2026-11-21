@@ -29,7 +29,7 @@ export interface LindaChatThreadPaneProps {
   isAiComposing?: boolean;
 }
 
-const QUICK_REPLIES = ['Send Brochure', 'Schedule Viewing', 'Request Title Deed', 'DLD Valuation'];
+const QUICK_REPLIES = ['/property', '/viewing', '/kyc', 'Send Brochure', 'Schedule Viewing'];
 
 export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
   isDark,
@@ -195,7 +195,9 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
             type="button"
             onClick={() =>
               onInputChange(
-                `Hello ${selectedConv?.contactName || 'there'}, regarding ${selectedConv?.unit || 'your property'}: ${label}.`
+                label.startsWith('/')
+                  ? label
+                  : `Hello ${selectedConv?.contactName || 'there'}, regarding ${selectedConv?.unit || 'your property'}: ${label}.`
               )
             }
             style={{

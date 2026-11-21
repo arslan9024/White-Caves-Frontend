@@ -149,8 +149,14 @@ export function getPortalUrl(portalId: PortalId): string {
   if (typeof window === 'undefined') return `https://${config.subdomain}${config.defaultRoute}`;
 
   const hostname = window.location.hostname.toLowerCase();
-  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1';
+  const isLocal =
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname.endsWith('.localhost');
   if (isLocal) {
+    if (hostname.endsWith('.localhost')) {
+      return `${window.location.protocol}//${portalId}.localhost:${window.location.port || '5173'}${config.defaultRoute}`;
+    }
     return `${window.location.origin}${config.defaultRoute}?portal=${portalId}`;
   }
   return `https://${config.subdomain}${config.defaultRoute}`;

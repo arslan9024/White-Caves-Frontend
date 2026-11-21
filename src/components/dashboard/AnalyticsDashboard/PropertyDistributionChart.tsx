@@ -18,7 +18,7 @@ import './PropertyDistributionChart.css';
  * PropertyDistributionChart Component
  * Shows property distribution by status, type, area, and furnishing
  */
-function PropertyDistributionChart({ data, loading = false }) {
+function PropertyDistributionChart({ data, loading = false }: { data?: any; loading?: boolean }) {
   if (loading) {
     return <div className="chart-loading">Loading chart data...</div>;
   }
@@ -34,8 +34,8 @@ function PropertyDistributionChart({ data, loading = false }) {
     area: ['#EF4444', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4'],
   };
 
-  const renderCustomLabel = entry => {
-    const { percent, count } = entry;
+  const renderCustomLabel = (entry: any) => {
+    const { percent } = entry;
     return `${(percent * 100).toFixed(0)}%`;
   };
 
@@ -58,19 +58,19 @@ function PropertyDistributionChart({ data, loading = false }) {
                 dataKey="count"
                 nameKey="status"
               >
-                {data.byStatus.map((entry, index) => (
+                {data.byStatus.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS.status[index % COLORS.status.length]} />
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value, name) => [value, name === 'count' ? 'Count' : 'Status']}
+                formatter={(value: any, name: any) => [value, name === 'count' ? 'Count' : 'Status']}
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
               />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
           <div className="chart-legend">
-            {data.byStatus.map((item, idx) => (
+            {data.byStatus.map((item: any, idx: number) => (
               <div key={idx} className="legend-item">
                 <span
                   className="legend-color"
@@ -96,14 +96,14 @@ function PropertyDistributionChart({ data, loading = false }) {
               <YAxis />
               <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
               <Bar dataKey="count" fill="#EF4444" radius={[8, 8, 0, 0]}>
-                {data.byType.map((entry, index) => (
+                {data.byType.map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS.type[index % COLORS.type.length]} />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
           <div className="chart-legend">
-            {data.byType.map((item, idx) => (
+            {data.byType.map((item: any, idx: number) => (
               <div key={idx} className="legend-item">
                 <span className="legend-color" style={{ backgroundColor: COLORS.type[idx] }}></span>
                 <span>
@@ -132,7 +132,7 @@ function PropertyDistributionChart({ data, loading = false }) {
                 dataKey="count"
                 nameKey="furnishing"
               >
-                {data.byFurnishing.map((entry, index) => (
+                {data.byFurnishing.map((_entry: any, index: number) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS.furnishing[index % COLORS.furnishing.length]}
@@ -140,14 +140,14 @@ function PropertyDistributionChart({ data, loading = false }) {
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value, name) => [value, name === 'count' ? 'Count' : 'Furnishing']}
+                formatter={(value: any, name: any) => [value, name === 'count' ? 'Count' : 'Furnishing']}
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
               />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
           <div className="chart-legend">
-            {data.byFurnishing.map((item, idx) => (
+            {data.byFurnishing.map((item: any, idx: number) => (
               <div key={idx} className="legend-item">
                 <span
                   className="legend-color"
@@ -173,14 +173,14 @@ function PropertyDistributionChart({ data, loading = false }) {
               <YAxis />
               <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }} />
               <Bar dataKey="count" fill="#EF4444" radius={[8, 8, 0, 0]}>
-                {data.byArea.slice(0, 10).map((entry, index) => (
+                {data.byArea.slice(0, 10).map((_entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS.area[index % COLORS.area.length]} />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
           <div className="chart-legend chart-legend--multi-column">
-            {data.byArea.slice(0, 10).map((item, idx) => (
+            {data.byArea.slice(0, 10).map((item: any, idx: number) => (
               <div key={idx} className="legend-item">
                 <span className="legend-color" style={{ backgroundColor: COLORS.area[idx] }}></span>
                 <span>

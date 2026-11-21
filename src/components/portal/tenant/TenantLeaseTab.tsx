@@ -40,9 +40,53 @@ const TenantLeaseTab: FC = () => {
 
     setLoading(true);
     setError(null);
-    authFetch('/api/portal/tenant/lease')
-      .then(r => r.json())
-      .then(data => setLease((data.data as ApiLease) ?? null))
+    Promise.all([
+      authFetch('/api/portal/tenant/lease')
+        .then(r => r.json())
+        .catch(() => ({ data: null })),
+      authFetch('/api/leasing/contracts')
+        .then(r => r.json())
+        .catch(() => ({ data: [] })),
+    ])
+      .then(([portalRes, contractsRes]) => {
+        if (portalRes?.data) {
+          setLease(portalRes.data as ApiLease);
+          return;
+        }
+        const activeContract = Array.isArray(contractsRes?.data) ? contractsRes.data[0] : null;
+        if (activeContract) {
+          setLease({
+            id: activeContract.id,
+            leaseNumber: activeContract.contractNumber,
+            startDate: activeContract.startDate,
+            endDate: activeContract.endDate,
+            monthlyRent: Math.round((activeContract.annualRentAed || 90000) / 12),
+            depositAmount: activeContract.securityDepositAed || 4500,
+            status: 'active',
+            ejariNumber: activeContract.ejariNumber,
+            ejariStatus: 'registered',
+            documents: activeContract.documents || [],
+            property: {
+              id: activeContract.propertyId,
+              title: activeContract.propertyTitle || 'DAMAC Hills 2 Verified Villa',
+              location: activeContract.community || 'DAMAC Hills 2',
+              type: 'villa',
+            },
+            tenant: {
+              id: activeContract.tenantProfileId || 'tenant-1',
+              name: activeContract.tenantName || currentUser.name || 'Tenant',
+              email: currentUser.email || '',
+            },
+            landlord: {
+              id: activeContract.landlordProfileId || 'landlord-1',
+              name: activeContract.landlordName || 'White Caves Landlord',
+              email: 'landlord@whitecaves.ae',
+            },
+          });
+        } else {
+          setLease(null);
+        }
+      })
       .catch(() => setError('Unable to load lease details. Please refresh.'))
       .finally(() => setLoading(false));
   }, [currentUser]);

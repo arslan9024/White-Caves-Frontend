@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-const TOAST_VARIANTS = {
+const TOAST_VARIANTS: Record<string, { bg: string; accent: string; icon: string; label: string }> = {
   success: {
     bg: 'rgba(17,24,39,0.97)',
     accent: '#22c55e',
@@ -46,33 +46,40 @@ const DEFAULT_DURATION = 4500;
 
 // ─── Context ─────────────────────────────────────────────────────────────────
 
-const ToastContext = createContext(null);
+const ToastContext = createContext<any>(null);
 
-let _addToast = null;
+let _addToast: ((opts: any) => string) | null = null;
 
 export const useToast = () => {
   const ctx = useContext(ToastContext);
   if (ctx) return ctx;
   // Fallback: allow calls outside Provider tree via module-level ref
-  const fire = (type, message, options) =>
+  const fire = (type: string, message: string, options?: any) =>
     _addToast?.({ type, message, duration: DEFAULT_DURATION, ...options });
   return {
     toast: {
-      success: (msg, opts) => fire('success', msg, opts),
-      error: (msg, opts) => fire('error', msg, opts),
-      warn: (msg, opts) => fire('warn', msg, opts),
-      info: (msg, opts) => fire('info', msg, opts),
+      success: (msg: string, opts?: any) => fire('success', msg, opts),
+      error: (msg: string, opts?: any) => fire('error', msg, opts),
+      warn: (msg: string, opts?: any) => fire('warn', msg, opts),
+      info: (msg: string, opts?: any) => fire('info', msg, opts),
     },
   };
 };
 
 // ─── Single Toast Item ────────────────────────────────────────────────────────
 
-const ToastItem = ({ id, type, message, duration, title, onDismiss }) => {
+const ToastItem = ({ id, type, message, duration, title, onDismiss }: {
+  id: string;
+  type: string;
+  message: string;
+  duration: number;
+  title?: string;
+  onDismiss: (id: string) => void;
+}) => {
   const variant = TOAST_VARIANTS[type] || TOAST_VARIANTS.info;
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
-  const timerRef = useRef(null);
+  const timerRef = useRef<any>(null);
 
   const dismiss = useCallback(() => {
     setLeaving(true);
@@ -205,11 +212,11 @@ const ToastItem = ({ id, type, message, duration, title, onDismiss }) => {
 
 let _idCounter = 0;
 
-const GlobalToastProvider = ({ children, maxToasts = 5 }) => {
-  const [toasts, setToasts] = useState([]);
+const GlobalToastProvider = ({ children, maxToasts = 5 }: { children: React.ReactNode; maxToasts?: number }) => {
+  const [toasts, setToasts] = useState<any[]>([]);
 
   const addToast = useCallback(
-    ({ type, message, duration = DEFAULT_DURATION, title }) => {
+    ({ type, message, duration = DEFAULT_DURATION, title }: { type: string; message: string; duration?: number; title?: string }) => {
       const id = `wc-toast-${++_idCounter}`;
       setToasts(prev => {
         const next = [...prev, { id, type, message, duration, title }];
@@ -220,7 +227,7 @@ const GlobalToastProvider = ({ children, maxToasts = 5 }) => {
     [maxToasts]
   );
 
-  const dismiss = useCallback(id => {
+  const dismiss = useCallback((id: string) => {
     setToasts(prev => prev.filter(t => t.id !== id));
   }, []);
 
@@ -234,10 +241,10 @@ const GlobalToastProvider = ({ children, maxToasts = 5 }) => {
 
   const ctxValue = {
     toast: {
-      success: (msg, opts) => addToast({ type: 'success', message: msg, ...opts }),
-      error: (msg, opts) => addToast({ type: 'error', message: msg, ...opts }),
-      warn: (msg, opts) => addToast({ type: 'warn', message: msg, ...opts }),
-      info: (msg, opts) => addToast({ type: 'info', message: msg, ...opts }),
+      success: (msg: string, opts?: any) => addToast({ type: 'success', message: msg, ...opts }),
+      error: (msg: string, opts?: any) => addToast({ type: 'error', message: msg, ...opts }),
+      warn: (msg: string, opts?: any) => addToast({ type: 'warn', message: msg, ...opts }),
+      info: (msg: string, opts?: any) => addToast({ type: 'info', message: msg, ...opts }),
     },
     dismiss,
   };

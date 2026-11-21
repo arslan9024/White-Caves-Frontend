@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/TenancyForms.css';
 
-const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }) => {
-  const [formData, setFormData] = useState({
+const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }: { onNext: (data: any) => void; onPrevious: () => void; initialData?: Record<string, any> }) => {
+  const [formData, setFormData] = useState<Record<string, any>>({
     agentName: initialData.agentName || '',
     agentEmail: initialData.agentEmail || '',
     agentPhone: initialData.agentPhone || '',
@@ -12,10 +12,10 @@ const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }) => {
     companyEmail: initialData.companyEmail || '',
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.agentName.trim()) {
       newErrors.agentName = 'Agent name is required';
@@ -35,7 +35,7 @@ const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -131,7 +131,7 @@ const ContactDetailsForm = ({ onNext, onPrevious, initialData = {} }) => {
             value={formData.companyAddress}
             onChange={handleChange}
             placeholder="Enter company address"
-            rows="2"
+            rows={2}
           />
         </div>
 

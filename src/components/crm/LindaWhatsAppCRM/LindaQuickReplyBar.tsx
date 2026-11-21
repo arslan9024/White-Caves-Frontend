@@ -2,7 +2,8 @@ import React, { memo } from 'react';
 import { Zap } from 'lucide-react';
 
 interface Props {
-  onSelect: (text: string) => void;
+  onSelect?: (text: string) => void;
+  onSelectTemplate?: (text: string) => void;
 }
 
 const TEMPLATES = [
@@ -12,7 +13,11 @@ const TEMPLATES = [
   'Let me check the title deed records and revert immediately.',
 ];
 
-export const LindaQuickReplyBar: React.FC<Props> = memo(({ onSelect }) => {
+export const LindaQuickReplyBar: React.FC<Props> = memo(({ onSelect, onSelectTemplate }) => {
+  const handleSelect = (tpl: string) => {
+    onSelect?.(tpl);
+    onSelectTemplate?.(tpl);
+  };
   return (
     <div
       style={{
@@ -26,7 +31,7 @@ export const LindaQuickReplyBar: React.FC<Props> = memo(({ onSelect }) => {
       {TEMPLATES.map((tpl, i) => (
         <button
           key={i}
-          onClick={() => onSelect(tpl)}
+          onClick={() => handleSelect(tpl)}
           style={{
             display: 'flex',
             alignItems: 'center',

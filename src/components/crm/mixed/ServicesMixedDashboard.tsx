@@ -107,12 +107,12 @@ const RECENT_ACTIVITIES = [
   },
 ];
 
-export default function ServicesMixedDashboard({ subItem = 'service-catalog', selectedAssistant }) {
+export default function ServicesMixedDashboard({ subItem = 'service-catalog', selectedAssistant }: { subItem?: string; selectedAssistant?: string }) {
   const [currentStage, setCurrentStage] = useState(2);
   const deptConfig = DEPT_ASSISTANT_MAP.services;
 
-  const handleStageClick = (stage, index) => setCurrentStage(index);
-  const handleAction = action => {};
+  const handleStageClick = (_stage: any, index: number) => setCurrentStage(index);
+  const handleAction = (_action: any) => {};
 
   return (
     <MixedDashboard

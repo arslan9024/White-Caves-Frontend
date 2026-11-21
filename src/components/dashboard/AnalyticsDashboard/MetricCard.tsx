@@ -14,9 +14,18 @@ function MetricCard({
   trendPercent = null,
   color = 'blue',
   size = 'medium',
+}: {
+  title: string;
+  value: any;
+  unit?: string;
+  icon?: React.ReactNode;
+  trend?: string | null;
+  trendPercent?: number | null;
+  color?: string;
+  size?: string;
 }) {
   const getColorClasses = () => {
-    const colors = {
+    const colors: Record<string, string> = {
       blue: 'metric-card--blue',
       green: 'metric-card--green',
       red: 'metric-card--red',

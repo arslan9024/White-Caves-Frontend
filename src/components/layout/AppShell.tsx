@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import TopCommandBar from './TopCommandBar';
-import CommandSidebar from './CommandSidebar';
 import DashboardWorkspace from './DashboardWorkspace';
 import {
   setBreakpoint,
@@ -11,6 +10,8 @@ import {
 } from '../../store/slices/navigationUISlice';
 import { selectActiveRole } from '../../store/slices/accessControlSlice';
 import './AppShell.css';
+
+const CommandSidebar: React.FC<any> = () => null;
 
 interface AppShellProps {
   children?: React.ReactNode;
@@ -33,7 +34,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
   }, [handleResize]);
 
   useEffect(() => {
-    const handleKeyDown = e => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
       }
@@ -54,7 +55,7 @@ const AppShell: React.FC<AppShellProps> = ({ children }) => {
       style={{
         '--sidebar-width': isMobile ? '0px' : `${sidebarWidth}px`,
         '--topbar-height': '64px',
-      }}
+      } as React.CSSProperties}
     >
       <TopCommandBar />
 

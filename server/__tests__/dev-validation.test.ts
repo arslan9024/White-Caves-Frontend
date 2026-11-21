@@ -10,7 +10,7 @@ import { once } from 'node:events';
 import { createServer as createViteServer, loadConfigFromFile } from 'vite';
 
 const root = process.cwd();
-const audit = resolve(root, '.agents/orchestrator/check-five-way-and-file-limits.js');
+const audit = resolve(root, '../Aegis-Sterling/engines/orchestrator/check-12-way-and-file-limits.ts');
 const launcher = resolve(root, '.agents/scripts/start-dev-server-safe.ps1');
 const fixtures: string[] = [];
 

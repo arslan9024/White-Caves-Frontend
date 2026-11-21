@@ -40,6 +40,8 @@ export interface EmployeeNode {
   reward_tier_split?: number; // Dynamic commission split (0.50 to 0.70) based on slab
 }
 
+export type EmployeeItem = EmployeeNode;
+
 export interface EmployeeFilterState {
   searchQuery: string;
   selectedPillar: string;

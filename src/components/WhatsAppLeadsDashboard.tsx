@@ -4,11 +4,11 @@ import { authFetch } from '../utils/authFetch';
 import './WhatsAppLeadsDashboard.css';
 
 const WhatsAppLeadsDashboard = () => {
-  const [leads, setLeads] = useState([]);
+  const [leads, setLeads] = useState<any[]>([]);
   const [filter, setFilter] = useState('new');
   const [loading, setLoading] = useState(false);
-  const [stats, setStats] = useState({});
-  const [selectedLead, setSelectedLead] = useState(null);
+  const [stats, setStats] = useState<any>({});
+  const [selectedLead, setSelectedLead] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -42,20 +42,20 @@ const WhatsAppLeadsDashboard = () => {
 
       setStats({
         total: allLeads.length,
-        new: allLeads.filter(lead => lead.status === 'new').length,
-        hot: allLeads.filter(lead => lead.leadScore >= 80).length,
-        converted: allLeads.filter(lead => lead.status === 'converted').length,
+        new: allLeads.filter((lead: any) => lead.status === 'new').length,
+        hot: allLeads.filter((lead: any) => lead.leadScore >= 80).length,
+        converted: allLeads.filter((lead: any) => lead.status === 'converted').length,
         avgScore:
           allLeads.length > 0
             ? Math.round(
-                allLeads.reduce((sum, lead) => sum + (lead.leadScore || 0), 0) / allLeads.length
+                allLeads.reduce((sum: number, lead: any) => sum + (lead.leadScore || 0), 0) / allLeads.length
               )
             : 0,
       });
     } catch (error) {}
   };
 
-  const handleLeadClick = lead => {
+  const handleLeadClick = (lead: any) => {
     setSelectedLead(lead);
     setShowModal(true);
   };
@@ -218,7 +218,7 @@ const WhatsAppLeadsDashboard = () => {
                 <div className="interests-section">
                   <h4>Property Interests</h4>
                   <div className="interests-tags">
-                    {selectedLead.preferredAreas.map((area, idx) => (
+                    {selectedLead.preferredAreas.map((area: string, idx: number) => (
                       <span key={idx} className="tag">
                         {area}
                       </span>
@@ -242,7 +242,7 @@ const WhatsAppLeadsDashboard = () => {
               <div className="conversation-section">
                 <h4>Conversation History</h4>
                 <div className="conversation">
-                  {selectedLead.conversationHistory?.slice(-5).map((msg, idx) => (
+                  {selectedLead.conversationHistory?.slice(-5).map((msg: any, idx: number) => (
                     <div key={idx} className={`message ${msg.sender}`}>
                       <p>{msg.message}</p>
                       <span className="timestamp">{formatTime(new Date(msg.timestamp))}</span>
@@ -291,7 +291,7 @@ const WhatsAppLeadsDashboard = () => {
 };
 
 // Helper Component
-const StatCard = ({ icon, label, value, color }) => (
+const StatCard = ({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: any; color: string }) => (
   <div className="stat-card">
     <div className="stat-icon" style={{ color }}>
       {icon}
@@ -304,15 +304,15 @@ const StatCard = ({ icon, label, value, color }) => (
 );
 
 // Utility Functions
-const getScoreColor = score => {
+const getScoreColor = (score: number) => {
   if (score >= 70) return '#4caf50'; // Green for hot
   if (score >= 40) return '#ff9800'; // Orange for warm
   return '#ccc'; // Gray for cold
 };
 
-const formatTime = date => {
+const formatTime = (date: Date) => {
   const now = new Date();
-  const diff = now - date;
+  const diff = now.getTime() - date.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff / (1000 * 60)) % 60);
 

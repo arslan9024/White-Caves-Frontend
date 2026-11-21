@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../styles/TenancyForms.css';
 
-const LandlordForm = ({ onNext, onPrevious, initialData = {} }) => {
-  const [formData, setFormData] = useState({
+const LandlordForm = ({ onNext, onPrevious, initialData = {} }: { onNext: (data: any) => void; onPrevious: () => void; initialData?: Record<string, any> }) => {
+  const [formData, setFormData] = useState<Record<string, any>>({
     landlordName: initialData.landlordName || '',
     landlordEmail: initialData.landlordEmail || '',
     landlordPhone: initialData.landlordPhone || '',
@@ -12,10 +12,10 @@ const LandlordForm = ({ onNext, onPrevious, initialData = {} }) => {
     landlordAddress: initialData.landlordAddress || '',
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.landlordName.trim()) {
       newErrors.landlordName = 'Landlord name is required';
@@ -47,7 +47,7 @@ const LandlordForm = ({ onNext, onPrevious, initialData = {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -174,7 +174,7 @@ const LandlordForm = ({ onNext, onPrevious, initialData = {} }) => {
           value={formData.landlordAddress}
           onChange={handleChange}
           placeholder="Enter full address"
-          rows="3"
+          rows={3}
         />
       </div>
 

@@ -205,7 +205,7 @@ export default defineConfig(async ({ command }) => {
       host: '0.0.0.0',
       port: 3000,
       strictPort: false,
-      allowedHosts: true,
+      allowedHosts: ['.localhost', 'localhost', '.whitecaves.com', 'whitecaves.com'],
       watch: {
         ignored: [
           '**/logs/**',

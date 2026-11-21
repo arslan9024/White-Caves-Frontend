@@ -20,6 +20,20 @@ const FilterPanel = ({
   onResetFilters = () => {},
   areas = [],
   isLoading = false,
+}: {
+  filters?: {
+    status: string[];
+    type: string[];
+    areas: string[];
+    priceMin: number | null;
+    priceMax: number | null;
+    furnishing: string[];
+  };
+  onFilterChange?: (key: string, val: any) => void;
+  onApplyFilters?: () => void;
+  onResetFilters?: () => void;
+  areas?: string[];
+  isLoading?: boolean;
 }) => {
   const [showFilters, setShowFilters] = useState(false);
 
@@ -33,28 +47,28 @@ const FilterPanel = ({
   ].reduce((a, b) => a + b, 0);
 
   const handleStatusChange = useCallback(
-    selectedStatuses => {
+    (selectedStatuses: string[]) => {
       onFilterChange('status', selectedStatuses);
     },
     [onFilterChange]
   );
 
   const handleTypeChange = useCallback(
-    selectedTypes => {
+    (selectedTypes: string[]) => {
       onFilterChange('type', selectedTypes);
     },
     [onFilterChange]
   );
 
   const handleAreaChange = useCallback(
-    selectedAreas => {
+    (selectedAreas: string[]) => {
       onFilterChange('areas', selectedAreas);
     },
     [onFilterChange]
   );
 
   const handlePriceChange = useCallback(
-    (priceMin, priceMax) => {
+    (priceMin: number | null, priceMax: number | null) => {
       onFilterChange('priceMin', priceMin);
       onFilterChange('priceMax', priceMax);
     },
@@ -62,7 +76,7 @@ const FilterPanel = ({
   );
 
   const handleFurnishingChange = useCallback(
-    selectedFurnishing => {
+    (selectedFurnishing: string[]) => {
       onFilterChange('furnishing', selectedFurnishing);
     },
     [onFilterChange]

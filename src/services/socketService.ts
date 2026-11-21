@@ -109,8 +109,15 @@ interface ServerToClientEvents {
   'whatsapp:linda:message': (payload: LindaMessagePayload) => void;
   'whatsapp:linda:campaign': (payload: LindaCampaignTelemetryPayload) => void;
   'whatsapp:linda:hot_lead': (payload: LindaHotLeadEscalationPayload) => void;
+  'whatsapp:linda:connection_state': (payload: {
+    account: string;
+    status: 'connected' | 'disconnected' | 'reconnecting' | 'error';
+    isConnected: boolean;
+    timestamp: number;
+  }) => void;
   'notification:new': (payload: CrmNotificationPayload) => void;
   'lead:updated': (payload: LeadUpdatedPayload) => void;
+  'lead:created': (payload: Record<string, unknown>) => void;
   'conversation:updated': (payload: ConversationUpdatedPayload) => void;
   'agent:presence': (payload: AgentPresencePayload) => void;
   pong: (data: { timestamp: Date }) => void;

@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import type { DashboardState } from "./types";
+import type { DashboardState, FavoriteItem } from "./types";
 
 
 export const selectFavorites = createSelector(

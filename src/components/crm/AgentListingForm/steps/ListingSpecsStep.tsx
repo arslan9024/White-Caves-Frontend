@@ -8,7 +8,7 @@ interface StepProps {
   updateField: (field: string, value: any) => void;
   toggleArrayField?: (field: string, value: string) => void;
 }
-export default function ({ formData, updateField }: StepProps) {
+export default function ({ formData, updateField, toggleArrayField }: StepProps) {
   return (
     <div className="form-step-content">
       <h3 className="step-title">Property Specifications</h3>
@@ -118,7 +118,7 @@ export default function ({ formData, updateField }: StepProps) {
               <input
                 type="checkbox"
                 checked={formData.views.includes(view)}
-                onChange={() => toggleArrayField('views', view)}
+                onChange={() => toggleArrayField?.('views', view)}
               />
               <span>{view}</span>
             </label>
@@ -134,7 +134,7 @@ export default function ({ formData, updateField }: StepProps) {
               key={amenity.id}
               type="button"
               className={`amenity-card ${formData.amenities.includes(amenity.id) ? 'selected' : ''}`}
-              onClick={() => toggleArrayField('amenities', amenity.id)}
+              onClick={() => toggleArrayField?.('amenities', amenity.id)}
             >
               <amenity.icon size={20} />
               <span>{amenity.name}</span>

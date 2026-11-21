@@ -6,8 +6,6 @@
  * continues to function offline. Events are logged for reconciliation.
  */
 
-import { createLogger } from '../../server/utils/logger.js';
-
 const log =
   typeof window === 'undefined'
     ? { warn: console.warn, info: console.info, error: console.error }

@@ -1,8 +1,8 @@
 import React from 'react';
 import '../Styles/TenancyForms.css';
 
-const PropertyInfoForm = ({ data, onChange }) => {
-  const handleChange = e => {
+const PropertyInfoForm = ({ data, onChange }: { data: Record<string, any>; onChange: (data: any) => void }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     onChange({
       ...data,

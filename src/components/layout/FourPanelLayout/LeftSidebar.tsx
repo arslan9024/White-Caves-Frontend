@@ -158,7 +158,7 @@ const OBJECT_HIERARCHY = {
 
 export default function LeftSidebar() {
   const dispatch = useDispatch();
-  const [expandedSections, setExpandedSections] = useState({
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     userManagement: true,
     propertyInventory: true,
     aiAssistants: true,
@@ -169,21 +169,21 @@ export default function LeftSidebar() {
     uiPresentation: false,
     utilities: false,
   });
-  const [favorites, setFavorites] = useState(new Set());
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
   const [showRecent, setShowRecent] = useState(true);
 
-  const selectedObject = useSelector(state => state.navigation?.selectedObject);
-  const recentObjects = useSelector(state => state.navigation?.recentObjects || []);
+  const selectedObject = useSelector((state: any) => state.navigation?.selectedObject);
+  const recentObjects = useSelector((state: any) => state.navigation?.recentObjects || []);
 
-  const toggleSection = sectionKey => {
+  const toggleSection = (sectionKey: string) => {
     setExpandedSections(prev => ({
       ...prev,
       [sectionKey]: !prev[sectionKey],
     }));
   };
 
-  const toggleFavorite = objectId => {
+  const toggleFavorite = (objectId: string) => {
     const newFavorites = new Set(favorites);
     if (newFavorites.has(objectId)) {
       newFavorites.delete(objectId);
@@ -193,7 +193,7 @@ export default function LeftSidebar() {
     setFavorites(newFavorites);
   };
 
-  const selectObject = object => {
+  const selectObject = (object: any) => {
     dispatch({
       type: 'SELECT_OBJECT',
       payload: object,
@@ -201,9 +201,9 @@ export default function LeftSidebar() {
   };
 
   // Filter objects based on search query
-  const getFilteredObjects = objects => {
+  const getFilteredObjects = (objects: any[]) => {
     if (!searchQuery) return objects;
-    return objects.filter(obj => obj.label.toLowerCase().includes(searchQuery.toLowerCase()));
+    return objects.filter((obj: any) => obj.label.toLowerCase().includes(searchQuery.toLowerCase()));
   };
 
   return (
@@ -270,7 +270,7 @@ export default function LeftSidebar() {
             <span>Recent</span>
           </div>
           <div className="objects-list">
-            {recentObjects.slice(0, 5).map(obj => (
+            {recentObjects.slice(0, 5).map((obj: any) => (
               <button
                 key={obj.id}
                 className={`object-item ${selectedObject?.id === obj.id ? 'active' : ''}`}

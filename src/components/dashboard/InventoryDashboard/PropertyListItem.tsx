@@ -9,12 +9,20 @@ const PropertyListItem = ({
   onAssignAgent,
   isSelected,
   onSelect,
+}: {
+  property: any;
+  inventory?: any;
+  onViewDetails: (prop: any) => void;
+  onCreateOffer: (prop: any) => void;
+  onAssignAgent: (prop: any) => void;
+  isSelected?: boolean;
+  onSelect?: (id: string, checked: boolean) => void;
 }) => {
   const pNumber = property.pNumber || 'N/A';
-  const tenancyStatus = inventory?.status || 'unknown';
+  const tenancyStatus: string = inventory?.status || 'unknown';
 
-  const getStatusColor = status => {
-    const statusMap = {
+  const getStatusColor = (status: string) => {
+    const statusMap: Record<string, string> = {
       available: '#10b981',
       offer_in_progress: '#f59e0b',
       offer_approved: '#8b5cf6',
@@ -32,7 +40,7 @@ const PropertyListItem = ({
   const statusLabel = tenancyStatus
     .replace(/_/g, ' ')
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
   const assignedAgent = inventory?.assignedAgents?.[0]?.agentId;

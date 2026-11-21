@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialState } from "./department/types";
+import { initialState, type DepartmentState, type DepartmentData } from "./department/types";
 import {
   fetchAllDepartments,
   fetchDepartmentData,

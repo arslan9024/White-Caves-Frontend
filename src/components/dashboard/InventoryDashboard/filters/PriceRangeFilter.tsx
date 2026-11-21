@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../FilterPanel.css';
 
-const PriceRangeFilter = ({ minPrice = null, maxPrice = null, onChange }) => {
-  const [localMin, setLocalMin] = useState(minPrice || '');
-  const [localMax, setLocalMax] = useState(maxPrice || '');
-  const [validationMessage, setValidationMessage] = useState(null);
+const PriceRangeFilter = ({
+  minPrice = null,
+  maxPrice = null,
+  onChange,
+}: {
+  minPrice?: number | null;
+  maxPrice?: number | null;
+  onChange: (min: number | null, max: number | null) => void;
+}) => {
+  const [localMin, setLocalMin] = useState<string | number>(minPrice || '');
+  const [localMax, setLocalMax] = useState<string | number>(maxPrice || '');
+  const [validationMessage, setValidationMessage] = useState<string | null>(null);
 
   // Sync local state with props
   useEffect(() => {
@@ -13,21 +21,21 @@ const PriceRangeFilter = ({ minPrice = null, maxPrice = null, onChange }) => {
     setLocalMax(maxPrice || '');
   }, [minPrice, maxPrice]);
 
-  const handleMinChange = e => {
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalMin(value);
     if (validationMessage) setValidationMessage(null);
   };
 
-  const handleMaxChange = e => {
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalMax(value);
     if (validationMessage) setValidationMessage(null);
   };
 
   const handleApply = () => {
-    const min = localMin ? parseInt(localMin, 10) : null;
-    const max = localMax ? parseInt(localMax, 10) : null;
+    const min = localMin ? parseInt(String(localMin), 10) : null;
+    const max = localMax ? parseInt(String(localMax), 10) : null;
 
     // Validate: min should be less than max
     if (min !== null && max !== null && min > max) {

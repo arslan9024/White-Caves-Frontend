@@ -23,7 +23,7 @@ import './FourPanelLayout.css';
  * - <768px: Single column, bottom navigation
  */
 
-export default function FourPanelLayout({ children }) {
+export default function FourPanelLayout({ children }: { children?: React.ReactNode }) {
   const dispatch = useDispatch();
 
   // UI State
@@ -33,9 +33,9 @@ export default function FourPanelLayout({ children }) {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   // Redux State
-  const selectedObject = useSelector(state => state.navigation?.selectedObject);
-  const currentView = useSelector(state => state.navigation?.currentView);
-  const activeAssistant = useSelector(state => state.ai?.activeAssistant);
+  const selectedObject = useSelector((state: any) => state.navigation?.selectedObject);
+  const currentView = useSelector((state: any) => state.navigation?.currentView);
+  const activeAssistant = useSelector((state: any) => state.ai?.activeAssistant);
 
   // Handle responsive behavior
   useEffect(() => {

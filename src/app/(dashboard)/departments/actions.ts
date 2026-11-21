@@ -1,7 +1,14 @@
 import { DepartmentNode, IDepartmentNode } from '../../../models/DepartmentNode';
 import { Personnel, IPersonnel } from '../../../models/Personnel';
 import { TeamSquad, ITeamSquad } from '../../../models/TeamSquad';
-import { AppError } from '../../../../server/middleware/errorHandler';
+
+class AppError extends Error {
+  statusCode: number;
+  constructor(message: string, statusCode = 400) {
+    super(message);
+    this.statusCode = statusCode;
+  }
+}
 
 export function assertSuperUser(sessionUserEmail?: string): void {
   const superEmail = process.env.SUPER_USER_EMAIL;

@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useCallback, useMemo } from
 // All valid view keys in the workspace. Adding a new view is as simple as
 // adding a string here and a corresponding render branch in MainLayout.
 // STAGE 2 (AEGIS): View keys for the 10 new departments
-export const VIEW_KEYS = {
+export const VIEW_KEYS: Record<string, string> = {
   DASHBOARD: 'dashboard',
   // 10 Departments
   SALES: 'sales',
@@ -20,13 +20,13 @@ export const VIEW_KEYS = {
 };
 
 // ─── Context ────────────────────────────────────────────────────────────────
-const ActiveViewContext = createContext(null);
+const ActiveViewContext = createContext<any>(null);
 
-export function ActiveViewProvider({ children }) {
+export function ActiveViewProvider({ children }: { children: React.ReactNode }) {
   const [activeView, setActiveViewState] = useState(VIEW_KEYS.DASHBOARD);
   const [viewHistory, setViewHistory] = useState([VIEW_KEYS.DASHBOARD]);
 
-  const setActiveView = useCallback(viewKey => {
+  const setActiveView = useCallback((viewKey: string) => {
     setActiveViewState(prev => {
       if (prev !== viewKey) {
         setViewHistory(h => [...h.slice(-19), viewKey]); // keep last 20

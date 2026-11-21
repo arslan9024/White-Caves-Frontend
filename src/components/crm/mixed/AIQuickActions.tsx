@@ -109,8 +109,16 @@ export function QuickActionButton({
   loading = false,
   disabled = false,
   badge,
+}: {
+  icon?: string;
+  label?: string;
+  onClick?: () => void;
+  variant?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  badge?: string | number;
 }) {
-  const IconComponent = ICON_MAP[icon] || Zap;
+  const IconComponent = (ICON_MAP as Record<string, any>)[icon] || Zap;
 
   return (
     <motion.button
@@ -135,6 +143,13 @@ export function AIActionPanel({
   suggestions = [],
   onAction,
   onSuggestionClick,
+}: {
+  title?: string;
+  assistant?: any;
+  actions?: any[];
+  suggestions?: any[];
+  onAction?: (action: any) => void;
+  onSuggestionClick?: (suggestion: any) => void;
 }) {
   return (
     <div className="ai-action-panel">

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import './LiveActivityFeed.css';
 
-const ICON_MAP = {
+const ICON_MAP: Record<string, any> = {
   success: CheckCircle,
   warning: AlertCircle,
   pending: Clock,
@@ -26,7 +26,7 @@ const ICON_MAP = {
   ai: Bot,
 };
 
-const itemVariants = {
+const itemVariants: any = {
   initial: { opacity: 0, x: -20, height: 0 },
   animate: {
     opacity: 1,
@@ -48,6 +48,12 @@ export default function LiveActivityFeed({
   maxItems = 10,
   showTimestamp = true,
   onActivityClick,
+}: {
+  activities?: any[];
+  title?: string;
+  maxItems?: number;
+  showTimestamp?: boolean;
+  onActivityClick?: (activity: any) => void;
 }) {
   const displayActivities = activities.slice(0, maxItems);
 
@@ -115,7 +121,13 @@ export default function LiveActivityFeed({
   );
 }
 
-export function AIActivityItem({ assistant, action, target, timestamp, status = 'completed' }) {
+export function AIActivityItem({ assistant, action, target, timestamp, status = 'completed' }: {
+  assistant?: any;
+  action?: string;
+  target?: string;
+  timestamp?: string;
+  status?: string;
+}) {
   return (
     <motion.div
       className={`ai-activity-item ${status}`}

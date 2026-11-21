@@ -2,8 +2,16 @@ import React from 'react';
 import * as LucideIcons from 'lucide-react';
 import './Icon.css';
 
-const Icon = React.memo(({ name, size = 24, color, strokeWidth = 2, className = '', ...props }) => {
-  const IconComponent = LucideIcons[name];
+interface IconProps extends React.SVGProps<SVGSVGElement> {
+  name: string;
+  size?: number | string;
+  color?: string;
+  strokeWidth?: number;
+  className?: string;
+}
+
+const Icon = React.memo(({ name, size = 24, color, strokeWidth = 2, className = '', ...props }: IconProps) => {
+  const IconComponent = (LucideIcons as Record<string, React.ComponentType<any>>)[name];
 
   if (!IconComponent) {
     return null;

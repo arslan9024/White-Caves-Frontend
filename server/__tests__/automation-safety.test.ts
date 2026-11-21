@@ -6,7 +6,7 @@ import {
   enforceRootHygiene,
   parseOptions,
   runPerpetualLoop,
-} from '../../../Aegis-Sterling/.agents/orchestrator/aegis-perpetual-ouroboros.js';
+} from '../../../Aegis-Sterling/engines/orchestrator/aegis-perpetual-ouroboros.ts';
 
 vi.mock('node:child_process', () => ({ execSync: vi.fn() }));
 vi.mock('node:fs', () => ({
@@ -46,7 +46,7 @@ describe('bounded automation', () => {
     await runPerpetualLoop();
     const commands = vi.mocked(execSync).mock.calls.map(([command]) => command);
     expect(commands).toHaveLength(2);
-    expect(commands[0]).toContain('check-five-way-and-file-limits');
+    expect(commands[0]).toContain('check-12-way-and-file-limits');
     expect(commands[1]).toContain('vitest run');
     expect(commands.join('\n')).not.toMatch(/git|scanner|squads|synthesize/);
     expect(fs.closeSync).toHaveBeenCalledWith(17);

@@ -4,12 +4,12 @@ import { X, User, Mail, Phone, Shield, Settings, LogOut, Edit2 } from 'lucide-re
 import { auth } from '../../../config/firebase';
 import './ProfilePanel.css';
 
-const ProfilePanel = ({ user, onClose }) => {
+const ProfilePanel = ({ user, onClose }: { user?: any; onClose: () => void }) => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
     try {
-      await auth.signOut();
+      await auth?.signOut();
       localStorage.removeItem('userRole');
       navigate('/');
       onClose();

@@ -156,15 +156,15 @@ const FEATURED_PROPERTIES = [
   },
 ];
 
-export default function PropertiesMixedDashboard({ subItem = 'portfolio', selectedAssistant }) {
+export default function PropertiesMixedDashboard({ subItem = 'portfolio', selectedAssistant }: { subItem?: string; selectedAssistant?: string }) {
   const [currentStage, setCurrentStage] = useState(2);
   const deptConfig = DEPT_ASSISTANT_MAP.properties;
 
-  const handleStageClick = (stage, index) => {
+  const handleStageClick = (_stage: any, index: number) => {
     setCurrentStage(index);
   };
 
-  const handleAction = action => {};
+  const handleAction = (_action: any) => {};
 
   return (
     <MixedDashboard

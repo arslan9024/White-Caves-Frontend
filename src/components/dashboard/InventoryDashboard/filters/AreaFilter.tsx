@@ -1,10 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../FilterPanel.css';
 
-const AreaFilter = ({ selected = [], availableAreas = [], onChange }) => {
+const AreaFilter = ({
+  selected = [],
+  availableAreas = [],
+  onChange,
+}: {
+  selected?: string[];
+  availableAreas?: string[];
+  onChange: (areas: string[]) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   // Filter areas based on search term
   const filteredAreas = availableAreas.filter(area =>
@@ -13,8 +21,8 @@ const AreaFilter = ({ selected = [], availableAreas = [], onChange }) => {
 
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = e => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -25,7 +33,7 @@ const AreaFilter = ({ selected = [], availableAreas = [], onChange }) => {
     }
   }, [isOpen]);
 
-  const handleToggle = area => {
+  const handleToggle = (area: string) => {
     if (selected.includes(area)) {
       onChange(selected.filter(a => a !== area));
     } else {
@@ -33,7 +41,7 @@ const AreaFilter = ({ selected = [], availableAreas = [], onChange }) => {
     }
   };
 
-  const handleRemoveTag = area => {
+  const handleRemoveTag = (area: string) => {
     onChange(selected.filter(a => a !== area));
   };
 

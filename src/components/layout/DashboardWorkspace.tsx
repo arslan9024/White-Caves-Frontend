@@ -23,11 +23,19 @@ import { selectLayout } from '../../store/slices/navigationUISlice';
 import { useDashboardSummary } from '../../hooks/useDashboardData';
 import './DashboardWorkspace.css';
 
-const KPICard = ({ title, value, change, changeType, icon: Icon, color, loading }) => {
+const KPICard = ({ title, value, change, changeType, icon: Icon, color, loading }: {
+  title: string;
+  value: any;
+  change?: string;
+  changeType?: string;
+  icon: any;
+  color: string;
+  loading?: boolean;
+}) => {
   const isPositive = changeType === 'positive';
 
   return (
-    <div className={`kpi-card ${loading ? 'loading' : ''}`} style={{ '--accent-color': color }}>
+    <div className={`kpi-card ${loading ? 'loading' : ''}`} style={{ '--accent-color': color } as React.CSSProperties}>
       <div className="kpi-icon">
         <Icon size={22} />
       </div>
@@ -47,7 +55,13 @@ const KPICard = ({ title, value, change, changeType, icon: Icon, color, loading 
   );
 };
 
-const WidgetContainer = ({ title, children, loading, onRefresh, lastUpdated }) => {
+const WidgetContainer = ({ title, children, loading, onRefresh, lastUpdated }: {
+  title: string;
+  children: React.ReactNode;
+  loading?: boolean;
+  onRefresh?: () => void;
+  lastUpdated?: string;
+}) => {
   return (
     <div className={`widget-container ${loading ? 'loading' : ''}`}>
       <div className="widget-header">
@@ -81,7 +95,13 @@ const WidgetContainer = ({ title, children, loading, onRefresh, lastUpdated }) =
   );
 };
 
-const ActivityItem = ({ type, title, description, time, status }) => {
+const ActivityItem = ({ type, title, description, time, status }: {
+  type?: string;
+  title: string;
+  description: string;
+  time: string;
+  status: string;
+}) => {
   const getStatusIcon = () => {
     switch (status) {
       case 'success':
@@ -115,10 +135,11 @@ const DashboardWorkspace = () => {
   const activeRole = useSelector(selectActiveRole);
 
   const {
-    data: summaryData,
+    data: rawSummaryData,
     loading: summaryLoading,
     refresh: refreshSummary,
   } = useDashboardSummary();
+  const summaryData: any = rawSummaryData;
 
   const gridColumns = useMemo(() => {
     if (layout.breakpoint === 'mobile') return 1;
@@ -214,13 +235,13 @@ const DashboardWorkspace = () => {
         </div>
       </header>
 
-      <section className="kpi-strip" style={{ '--grid-columns': Math.min(gridColumns, 4) }}>
+      <section className="kpi-strip" style={{ '--grid-columns': Math.min(gridColumns, 4) } as React.CSSProperties}>
         {kpis.map(kpi => (
           <KPICard key={kpi.id} {...kpi} loading={summaryLoading} />
         ))}
       </section>
 
-      <section className="workspace-grid" style={{ '--grid-columns': gridColumns }}>
+      <section className="workspace-grid" style={{ '--grid-columns': gridColumns } as React.CSSProperties}>
         <WidgetContainer
           title="Lead Pipeline"
           loading={summaryLoading}

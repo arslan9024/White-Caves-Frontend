@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './JobApplicants.css';
 
 export default function JobApplicants() {
-  const [applications, setApplications] = useState([]);
+  const [applications, setApplications] = useState<any[]>([]);
   const [filter, setFilter] = useState('all');
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedApplication, setSelectedApplication] = useState<any>(null);
 
   useEffect(() => {
     fetchApplications();
@@ -18,7 +18,7 @@ export default function JobApplicants() {
     } catch (error) {}
   };
 
-  const updateApplicationStatus = async (applicationId, newStatus) => {
+  const updateApplicationStatus = async (applicationId: string, newStatus: string) => {
     try {
       const response = await fetch(`/api/job-applications/${applicationId}`, {
         method: 'PATCH',
@@ -38,8 +38,8 @@ export default function JobApplicants() {
     return app.status === filter;
   });
 
-  const getRoleName = role => {
-    const roleNames = {
+  const getRoleName = (role: string) => {
+    const roleNames: Record<string, string> = {
       LEASING_AGENT: 'Leasing Agent',
       SALES_AGENT_SECONDARY: 'Sales Agent - Secondary Properties',
       SALES_AGENT_OFF_PLAN: 'Sales Agent - Off Plan Properties',
@@ -49,8 +49,8 @@ export default function JobApplicants() {
     return roleNames[role] || role;
   };
 
-  const getStatusColor = status => {
-    const colors = {
+  const getStatusColor = (status: string) => {
+    const colors: Record<string, string> = {
       PENDING: '#FFA500',
       REVIEWING: '#2196F3',
       ACCEPTED: '#4CAF50',

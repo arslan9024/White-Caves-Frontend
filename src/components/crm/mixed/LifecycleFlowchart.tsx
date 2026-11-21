@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Circle, ArrowRight, Clock, AlertCircle } from 'lucide-react';
 import './LifecycleFlowchart.css';
 
-const stageVariants = {
+const stageVariants: any = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: i => ({
+  visible: (i: number) => ({
     opacity: 1,
     scale: 1,
     transition: {
@@ -16,9 +16,9 @@ const stageVariants = {
   }),
 };
 
-const connectorVariants = {
+const connectorVariants: any = {
   hidden: { scaleX: 0 },
-  visible: i => ({
+  visible: (i: number) => ({
     scaleX: 1,
     transition: {
       delay: i * 0.15 + 0.2,
@@ -28,7 +28,7 @@ const connectorVariants = {
   }),
 };
 
-const pulseVariants = {
+const pulseVariants: any = {
   animate: {
     scale: [1, 1.2, 1],
     opacity: [0.5, 1, 0.5],
@@ -47,14 +47,21 @@ export default function LifecycleFlowchart({
   title = 'Lifecycle',
   onStageClick,
   compact = false,
+}: {
+  stages?: string[];
+  currentStage?: number;
+  stageData?: Record<string, any>;
+  title?: string;
+  onStageClick?: (stage: string, index: number) => void;
+  compact?: boolean;
 }) {
-  const getStageStatus = index => {
+  const getStageStatus = (index: number) => {
     if (index < currentStage) return 'completed';
     if (index === currentStage) return 'active';
     return 'pending';
   };
 
-  const getStageIcon = status => {
+  const getStageIcon = (status: string) => {
     switch (status) {
       case 'completed':
         return <CheckCircle size={compact ? 16 : 20} />;
@@ -141,8 +148,12 @@ export default function LifecycleFlowchart({
   );
 }
 
-export function VerticalLifecycle({ stages = [], currentStage = 0, stageData = {} }) {
-  const getStageStatus = index => {
+export function VerticalLifecycle({ stages = [], currentStage = 0, stageData = {} }: {
+  stages?: string[];
+  currentStage?: number;
+  stageData?: Record<string, any>;
+}) {
+  const getStageStatus = (index: number) => {
     if (index < currentStage) return 'completed';
     if (index === currentStage) return 'active';
     return 'pending';

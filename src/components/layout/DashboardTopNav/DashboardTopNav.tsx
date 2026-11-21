@@ -36,8 +36,18 @@ const NAV_ITEMS = [
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
-const DashboardTopNav = ({ activeTab, onTabChange, assistantActive, assistantName }) => {
-  const tabsRef = useRef(null);
+const DashboardTopNav = ({
+  activeTab,
+  onTabChange,
+  assistantActive,
+  assistantName,
+}: {
+  activeTab?: string;
+  onTabChange: (id: string) => void;
+  assistantActive?: boolean;
+  assistantName?: string;
+}) => {
+  const tabsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (tabsRef.current && activeTab) {

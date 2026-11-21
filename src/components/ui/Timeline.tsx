@@ -22,8 +22,16 @@ import PropTypes from 'prop-types';
  *   color="red"
  * />
  */
-const Timeline = ({ items = [], variant = 'vertical', color = 'red' }) => {
-  const statusConfig = {
+const Timeline = ({
+  items = [],
+  variant = 'vertical',
+  color = 'red',
+}: {
+  items?: Array<{ date: string; title: string; description?: string; status?: string }>;
+  variant?: 'vertical' | 'horizontal' | string;
+  color?: 'red' | 'blue' | 'green' | 'purple' | string;
+}) => {
+  const statusConfig: Record<string, { bg: string; text: string; icon: string }> = {
     completed: {
       bg: 'bg-green-500 dark:bg-green-400',
       text: 'text-green-600 dark:text-green-400',
@@ -41,7 +49,7 @@ const Timeline = ({ items = [], variant = 'vertical', color = 'red' }) => {
     },
   };
 
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     red: 'bg-red-500 dark:bg-red-400',
     blue: 'bg-blue-500 dark:bg-blue-400',
     green: 'bg-green-500 dark:bg-green-400',

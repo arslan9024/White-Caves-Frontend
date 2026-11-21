@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './DealTimeline.css';
 
-const StageCard = ({ stage, isActive, isCompleted, onClick, duration }) => {
+const StageCard = ({ stage, isActive, isCompleted, onClick, duration }: {
+  stage: any;
+  isActive: boolean;
+  isCompleted: boolean;
+  onClick: () => void;
+  duration?: string | null;
+}) => {
   return (
     <div
       className={`stage-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
@@ -34,24 +40,30 @@ const DealTimeline = ({
   onStageClick,
   dealData = {},
   estimatedCompletion,
+}: {
+  stages: any[];
+  currentStage?: any;
+  onStageClick: (stage: any) => void;
+  dealData?: Record<string, any>;
+  estimatedCompletion?: string | Date;
 }) => {
-  const [completedStages, setCompletedStages] = useState([]);
+  const [completedStages, setCompletedStages] = useState<any[]>([]);
 
   useEffect(() => {
     // Update completed stages based on current stage
     if (currentStage) {
       const completed = stages
-        .filter(stage => stage.order < currentStage.order)
-        .map(stage => stage.id);
+        .filter((stage: any) => stage.order < currentStage.order)
+        .map((stage: any) => stage.id);
       setCompletedStages(completed);
     }
   }, [currentStage, stages]);
 
-  const getStageDuration = stage => {
+  const getStageDuration = (stage: any) => {
     if (dealData[`${stage.id}_startDate`] && dealData[`${stage.id}_endDate`]) {
       const start = new Date(dealData[`${stage.id}_startDate`]);
       const end = new Date(dealData[`${stage.id}_endDate`]);
-      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
       return `${days} day${days !== 1 ? 's' : ''}`;
     }
     return null;

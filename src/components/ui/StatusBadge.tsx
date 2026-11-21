@@ -21,8 +21,18 @@ import PropTypes from 'prop-types';
  *   variant="solid"
  * />
  */
-const StatusBadge = ({ status = 'info', label, size = 'md', variant = 'solid' }) => {
-  const statusConfig = {
+const StatusBadge = ({
+  status = 'info',
+  label,
+  size = 'md',
+  variant = 'solid',
+}: {
+  status?: string;
+  label?: string;
+  size?: string;
+  variant?: 'solid' | 'outline' | string;
+}) => {
+  const statusConfig: Record<string, Record<string, string>> = {
     success: {
       solid: 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
       outline: 'border border-green-300 dark:border-green-700 text-green-700 dark:text-green-300',
@@ -62,7 +72,7 @@ const StatusBadge = ({ status = 'info', label, size = 'md', variant = 'solid' })
     },
   };
 
-  const sizeClasses = {
+  const sizeClasses: Record<string, string> = {
     sm: 'px-2 py-1 text-xs',
     md: 'px-3 py-1.5 text-sm',
     lg: 'px-4 py-2 text-base',

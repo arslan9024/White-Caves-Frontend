@@ -145,10 +145,40 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     setInputMessage('');
     onSendMessage?.(selectedConv.id, textToSend);
 
+    if (textToSend.startsWith('/')) {
+      fetch('/api/leasing/linda/slash', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          command: textToSend,
+          conversationId: selectedConv.id,
+        }),
+      })
+        .then(r => r.json())
+        .then(json => {
+          if (json?.data?.replyText) {
+            const botMsg: ChatMessage = {
+              id: `slash-${Date.now()}`,
+              sender: 'bot',
+              text: json.data.replyText,
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              status: 'read',
+            };
+            setChatMessages(prev => ({
+              ...prev,
+              [selectedConv.id]: [...(prev[selectedConv.id] || []), botMsg],
+            }));
+          }
+        })
+        .catch(() => {});
+      return;
+    }
+
     fetch(`/api/linda/send/${encodeURIComponent(selectedConv.id)}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        phoneNumber: selectedConv.phone || selectedConv.id,
         message: textToSend,
         accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
       }),
@@ -173,16 +203,28 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   const handleHumanTakeover = () => {
     if (!selectedConv) return;
-    const jid = encodeURIComponent(
-      selectedConv.id.includes('@')
-        ? selectedConv.id
-        : `${selectedConv.phone.replace(/\D/g, '')}@s.whatsapp.net`
-    );
-    fetch(`/api/whatsapp/chats/${jid}/takeover`, {
+    fetch('/api/leasing/linda/takeover', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ humanAgent: 'Arslan Malik', reason: 'TopBar 1-Click Takeover' }),
-    }).catch(() => {});
+      body: JSON.stringify({ conversationId: selectedConv.id, active: true }),
+    })
+      .then(r => r.json())
+      .then(json => {
+        const noticeMsg: ChatMessage = {
+          id: `takeover-${Date.now()}`,
+          sender: 'agent',
+          text: `🛡️ 30-Minute Human Takeover Active until ${new Date(
+            json?.data?.expiresAt || Date.now() + 1800000
+          ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. Linda automated bot replies are paused on this thread.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          status: 'read',
+        };
+        setChatMessages(prev => ({
+          ...prev,
+          [selectedConv.id]: [...(prev[selectedConv.id] || activeMessages), noticeMsg],
+        }));
+      })
+      .catch(() => {});
   };
 
   const handleLinkSuccess = (newPhone: string) => {

@@ -19,7 +19,7 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = useCallback(
-    e => {
+    (e: React.FormEvent) => {
       e.preventDefault();
       setError('');
       setIsSubmitting(true);
@@ -37,7 +37,7 @@ export default function Login() {
   );
 
   const handleQuickLogin = useCallback(
-    profileKey => {
+    (profileKey: string) => {
       setError('');
       loginWithProfile(profileKey);
     },

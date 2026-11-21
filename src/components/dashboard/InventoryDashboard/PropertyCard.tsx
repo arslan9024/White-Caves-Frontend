@@ -8,19 +8,26 @@ const PropertyCard = ({
   onCreateOffer,
   onAssignAgent,
   onUpdateStatus,
+}: {
+  property: any;
+  inventory?: any;
+  onViewDetails: (prop: any) => void;
+  onCreateOffer: (prop: any) => void;
+  onAssignAgent: (prop: any) => void;
+  onUpdateStatus?: (prop: any, status: string) => void;
 }) => {
   // Format P number
   const pNumber = property.pNumber || 'N/A';
 
   // Get status info
-  const tenancyStatus = inventory?.status || 'unknown';
+  const tenancyStatus: string = inventory?.status || 'unknown';
   const statusLabel =
     tenancyStatus.replace(/_/g, ' ').charAt(0).toUpperCase() +
     tenancyStatus.slice(1).replace(/_/g, ' ');
 
   // Get status color
-  const getStatusColor = status => {
-    const statusMap = {
+  const getStatusColor = (status: string) => {
+    const statusMap: Record<string, string> = {
       available: '#10b981',
       offer_in_progress: '#f59e0b',
       offer_approved: '#8b5cf6',

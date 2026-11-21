@@ -1,6 +1,6 @@
 /* eslint-disable security/detect-object-injection */
 import { createSelector } from "@reduxjs/toolkit";
-import type { InventoryState } from "./types";
+import type { InventoryState, InventoryFilters, InventoryProperty, InventoryOwner } from "./types";
 
 const selectInventory = (state: { inventory: InventoryState }) => state.inventory;
 const selectProperties = (state: { inventory: InventoryState }) => state.inventory.properties;

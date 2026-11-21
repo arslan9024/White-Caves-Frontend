@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
  * Features: count-up animation, glassmorphism, sparkline, trend badge.
  */
 
-const useCountUp = (target, duration = 1200, enabled = true) => {
+const useCountUp = (target: number, duration = 1200, enabled = true) => {
   const [count, setCount] = useState(0);
-  const frameRef = useRef(null);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!enabled || typeof target !== 'number') {
@@ -18,7 +18,7 @@ const useCountUp = (target, duration = 1200, enabled = true) => {
     const startTime = performance.now();
     const startVal = 0;
 
-    const tick = now => {
+    const tick = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       // Ease-out cubic
@@ -38,7 +38,7 @@ const useCountUp = (target, duration = 1200, enabled = true) => {
   return count;
 };
 
-const GRADIENTS = {
+const GRADIENTS: Record<string, string> = {
   red: 'linear-gradient(135deg, rgba(239,68,68,0.12) 0%, rgba(220,38,38,0.04) 100%)',
   blue: 'linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(37,99,235,0.04) 100%)',
   green: 'linear-gradient(135deg, rgba(34,197,94,0.12) 0%, rgba(22,163,74,0.04) 100%)',
@@ -46,7 +46,7 @@ const GRADIENTS = {
   gold: 'linear-gradient(135deg, rgba(234,179,8,0.12) 0%, rgba(202,138,4,0.04) 100%)',
 };
 
-const ACCENT_COLORS = {
+const ACCENT_COLORS: Record<string, string> = {
   red: '#ef4444',
   blue: '#EF4444',
   green: '#22c55e',
@@ -67,6 +67,19 @@ const KPICard = ({
   subtitle,
   animate = true,
   onClick,
+}: {
+  title: string;
+  value: number | string;
+  unit?: string;
+  unitPrefix?: boolean;
+  trend?: number;
+  color?: string;
+  icon?: React.ReactNode;
+  loading?: boolean;
+  sparklineData?: number[];
+  subtitle?: string;
+  animate?: boolean;
+  onClick?: () => void;
 }) => {
   const numericValue =
     typeof value === 'number' ? value : parseFloat(String(value).replace(/[^0-9.-]/g, '')) || 0;

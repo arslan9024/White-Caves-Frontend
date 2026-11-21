@@ -12,14 +12,21 @@ const StatusMappingPreview = ({
   onMappingApproval,
   onMappingAdjustment,
   mappingStrategy = 'auto',
+}: {
+  data?: any[];
+  statusMapping?: Record<string, any>;
+  legacyStatusField?: string;
+  onMappingApproval?: (mapping: any, adjustments: any) => void;
+  onMappingAdjustment?: (status: string, dimension: string, value: string) => void;
+  mappingStrategy?: string;
 }) => {
-  const [selectedRows, setSelectedRows] = useState(new Set());
-  const [showDetails, setShowDetails] = useState(null);
-  const [adjustments, setAdjustments] = useState({});
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [showDetails, setShowDetails] = useState<string | null>(null);
+  const [adjustments, setAdjustments] = useState<Record<string, string>>({});
 
   // Extract unique legacy statuses
   const uniqueStatuses = useMemo(() => {
-    const statuses = new Set();
+    const statuses = new Set<string>();
     data.forEach(row => {
       const status = row[legacyStatusField];
       if (status) {
@@ -30,7 +37,7 @@ const StatusMappingPreview = ({
   }, [data, legacyStatusField]);
 
   // Get mapping for a status
-  const getStatusMapping = legacyStatus => {
+  const getStatusMapping = (legacyStatus: string) => {
     return (
       statusMapping[legacyStatus] || {
         occupancy: 'unknown',
@@ -43,12 +50,12 @@ const StatusMappingPreview = ({
   };
 
   // Count occurrences of each status
-  const getStatusCount = legacyStatus => {
+  const getStatusCount = (legacyStatus: string) => {
     return data.filter(row => String(row[legacyStatusField]).trim() === legacyStatus).length;
   };
 
   // Status dimensions
-  const statusDimensions = {
+  const statusDimensions: Record<string, string[]> = {
     occupancy: ['empty', 'occupied', 'tenanted', 'unknown'],
     market: ['ready', 'pipeline', 'unavailable', 'under-negotiation', 'unknown'],
     construction: ['ready', 'under-construction', 'planning', 'unknown'],
@@ -57,7 +64,7 @@ const StatusMappingPreview = ({
   };
 
   // Status descriptions
-  const dimensionDescriptions = {
+  const dimensionDescriptions: Record<string, string> = {
     occupancy: 'Is the property empty or occupied?',
     market: 'What is the current market status?',
     construction: 'What is the construction status?',
@@ -66,7 +73,7 @@ const StatusMappingPreview = ({
   };
 
   // Handle row toggle
-  const handleRowToggle = idx => {
+  const handleRowToggle = (idx: number) => {
     const newSelected = new Set(selectedRows);
     if (newSelected.has(idx)) {
       newSelected.delete(idx);
@@ -77,7 +84,7 @@ const StatusMappingPreview = ({
   };
 
   // Handle adjustment
-  const handleAdjustment = (status, dimension, value) => {
+  const handleAdjustment = (status: string, dimension: string, value: string) => {
     const key = `${status}:${dimension}`;
     const updated = { ...adjustments, [key]: value };
     setAdjustments(updated);
@@ -92,7 +99,7 @@ const StatusMappingPreview = ({
   };
 
   // Render status dimension select
-  const renderDimensionSelect = (status, dimension) => {
+  const renderDimensionSelect = (status: string, dimension: string) => {
     const currentValue =
       adjustments[`${status}:${dimension}`] || getStatusMapping(status)[dimension];
 

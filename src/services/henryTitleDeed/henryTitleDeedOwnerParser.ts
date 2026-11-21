@@ -186,8 +186,8 @@ export function extractDeedOwners(
       diagnostics.warnings.push('Owner share percentages are out of range or do not total 100%; verify the complete table without guessing.');
     }
     if (owners.length === 1 && !ambiguousOwner) {
-      ownerNameEn = owners[0]!.nameEn;
-      ownerNameAr = owners[0]!.nameAr;
+      const ownerNameEn = owners[0]!.nameEn;
+      const ownerNameAr = owners[0]!.nameAr;
       for (const [key, value] of Object.entries({
         ownerDldNumber: owners[0]!.dldNumber,
         ownerName: `${ownerNameEn} ${ownerNameAr}`.trim(),
@@ -199,8 +199,6 @@ export function extractDeedOwners(
       }
     }
     if (owners.length > 1 || ambiguousOwner) {
-      ownerNameEn = '';
-      ownerNameAr = '';
       diagnostics.fields.ownerName!.state = 'conflict';
       diagnostics.warnings.push(
         'Multiple owners detected. Select the authorized landlord during review; do not assume sole ownership.'

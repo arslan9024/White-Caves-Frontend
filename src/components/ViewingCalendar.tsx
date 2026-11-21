@@ -8,12 +8,17 @@ const ViewingCalendar = ({
   propertyId: _propertyId,
   onSelectSlot,
   selectedDate = null,
+}: {
+  agentId?: string;
+  propertyId?: string;
+  onSelectSlot?: (date: Date) => void;
+  selectedDate?: Date | null;
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [viewings, setViewings] = useState([]);
-  const [availableSlots, setAvailableSlots] = useState([]);
+  const [viewings, setViewings] = useState<any[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(selectedDate);
+  const [selectedSlot, setSelectedSlot] = useState<Date | null>(selectedDate);
 
   useEffect(() => {
     fetchViewings();
@@ -53,11 +58,11 @@ const ViewingCalendar = ({
     } catch (error) {}
   };
 
-  const getDaysInMonth = date => {
+  const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   };
 
-  const getFirstDayOfMonth = date => {
+  const getFirstDayOfMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
@@ -69,13 +74,13 @@ const ViewingCalendar = ({
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
 
-  const handleSelectDate = day => {
+  const handleSelectDate = (day: number) => {
     const selected = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     setSelectedSlot(selected);
     onSelectSlot?.(selected);
   };
 
-  const isDateBooked = day => {
+  const isDateBooked = (day: number) => {
     const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     return viewings.some(v => {
       const vDate = new Date(v.scheduledDate);
@@ -83,7 +88,7 @@ const ViewingCalendar = ({
     });
   };
 
-  const isDateSelected = day => {
+  const isDateSelected = (day: number) => {
     const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     return selectedSlot && selectedSlot.toDateString() === date.toDateString();
   };

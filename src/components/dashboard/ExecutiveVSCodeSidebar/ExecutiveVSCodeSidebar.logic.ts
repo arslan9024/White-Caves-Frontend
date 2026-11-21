@@ -22,6 +22,7 @@ export type ActivityTab =
   | 'tenant'
   | 'broker'
   | 'linda'
+  | 'mary'
   | 'zoe'
   | 'ai-command'
   | 'audit'

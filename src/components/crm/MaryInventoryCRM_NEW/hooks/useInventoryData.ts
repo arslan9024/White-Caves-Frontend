@@ -164,7 +164,7 @@ export function useInventoryData() {
 
     // Check for invalid owner references
     properties.forEach(prop => {
-      prop.owners?.forEach(ownerId => {
+      prop.owners?.forEach((ownerId: string) => {
         if (!owners.byId?.[ownerId]) {
           issues.invalidOwnerRefs.push({ property: prop.pNumber, ownerId });
         }

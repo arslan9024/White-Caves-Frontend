@@ -29,7 +29,7 @@ import './TopNavigation.enhanced.css';
  * - Department/role indicators
  */
 
-export default function TopNavigation({ onMenuToggle, onAssistantToggle }) {
+export default function TopNavigation({ onMenuToggle, onAssistantToggle }: { onMenuToggle?: () => void; onAssistantToggle?: () => void; mobileMenuOpen?: boolean }) {
   const dispatch = useDispatch();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,11 +38,11 @@ export default function TopNavigation({ onMenuToggle, onAssistantToggle }) {
   const [darkMode, setDarkMode] = useState(false);
 
   // Redux state
-  const user = useSelector(state => state.auth?.user);
-  const notifications = useSelector(state => state.notifications?.list || []);
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const user = useSelector((state: any) => state.auth?.user);
+  const notifications = useSelector((state: any) => state.notifications?.list || []);
+  const unreadCount = notifications.filter((n: any) => !n.read).length;
 
-  const handleSearch = e => {
+  const handleSearch = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       dispatch({ type: 'SEARCH_OBJECTS', payload: searchQuery });
@@ -139,7 +139,7 @@ export default function TopNavigation({ onMenuToggle, onAssistantToggle }) {
               <h3 style={{ color: COLOR_TOKENS.primary.red }}>Notifications</h3>
               <div className="notifications-list-enhanced">
                 {notifications.length > 0 ? (
-                  notifications.slice(0, 5).map(notif => (
+                  notifications.slice(0, 5).map((notif: any) => (
                     <div key={notif.id} className="notification-item-enhanced">
                       <div
                         className="notification-dot"

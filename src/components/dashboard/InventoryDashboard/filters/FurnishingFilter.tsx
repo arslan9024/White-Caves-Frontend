@@ -1,10 +1,10 @@
 import React from 'react';
 import '../FilterPanel.css';
 
-const FurnishingFilter = ({ selected = [], onChange }) => {
+const FurnishingFilter = ({ selected = [], onChange }: { selected?: string[]; onChange: (types: string[]) => void }) => {
   const furnishingTypes = ['Furnished', 'Semi-Furnished', 'Unfurnished'];
 
-  const handleToggle = type => {
+  const handleToggle = (type: string) => {
     if (selected.includes(type)) {
       onChange(selected.filter(t => t !== type));
     } else {
