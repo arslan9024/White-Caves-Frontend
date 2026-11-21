@@ -7,12 +7,17 @@ import {
 import { getAssistantDocs } from '../../../config/assistantDocs';
 import './AssistantDocsTab.css';
 
-const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor: propColor }) => {
-  const [expandedSection, setExpandedSection] = useState('features');
-  const docs = getAssistantDocs(assistantId);
+const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor: propColor, color }: {
+  assistantId?: string;
+  assistantName?: string;
+  assistantColor?: string;
+  color?: string;
+}) => {
+  const [expandedSection, setExpandedSection] = useState<string | null>('features');
+  const docs: any = getAssistantDocs(assistantId || '');
   
   const assistantName = propName || docs?.name || assistantId;
-  const assistantColor = propColor || docs?.color || '#8B5CF6';
+  const assistantColor = propColor || color || docs?.color || '#8B5CF6';
 
   if (!docs) {
     return (
@@ -24,7 +29,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
     );
   }
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'active': return <CheckCircle size={14} className="status-active" />;
       case 'beta': return <AlertCircle size={14} className="status-beta" />;
@@ -33,7 +38,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
     }
   };
 
-  const toggleSection = (section) => {
+  const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
 

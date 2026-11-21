@@ -21,16 +21,26 @@ const SignatureCollection = ({
   onSignatureComplete,
   onCancel,
   isOpen = true,
+}: {
+  contractId?: string;
+  signatureId?: string;
+  signerName?: string;
+  signerRole?: string;
+  signerEmail?: string;
+  contractDetails?: Record<string, any>;
+  onSignatureComplete?: (data: any) => void;
+  onCancel?: () => void;
+  isOpen?: boolean;
 }) => {
   const [step, setStep] = useState('review'); // review, sign, confirm
-  const [signatureData, setSignatureData] = useState(null);
+  const [signatureData, setSignatureData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   /**
    * Handle signature capture
    */
-  const handleSignatureCapture = capturedSignature => {
+  const handleSignatureCapture = (capturedSignature: any) => {
     setSignatureData(capturedSignature);
     setStep('confirm');
   };
@@ -83,7 +93,7 @@ const SignatureCollection = ({
           signedAt: data.data.signedAt,
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'Failed to submit signature');
       setStep('sign');
     } finally {

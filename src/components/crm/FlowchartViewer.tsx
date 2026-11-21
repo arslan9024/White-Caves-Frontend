@@ -9,18 +9,25 @@ const FlowchartViewer = ({
   orientation = 'horizontal',
   interactive = true,
   showActions = true,
+}: {
+  stages?: any[];
+  currentStage?: string | null;
+  onStageClick?: (stage: any, index: number) => void;
+  orientation?: string;
+  interactive?: boolean;
+  showActions?: boolean;
 }) => {
-  const [expandedStage, setExpandedStage] = useState(null);
+  const [expandedStage, setExpandedStage] = useState<string | null>(null);
 
-  const getStageStatus = index => {
+  const getStageStatus = (index: number) => {
     if (!currentStage) return 'pending';
-    const currentIndex = stages.findIndex(s => s.id === currentStage);
+    const currentIndex = stages.findIndex((s: any) => s.id === currentStage);
     if (index < currentIndex) return 'completed';
     if (index === currentIndex) return 'current';
     return 'pending';
   };
 
-  const handleStageClick = (stage, index) => {
+  const handleStageClick = (stage: any, index: number) => {
     if (!interactive) return;
     setExpandedStage(expandedStage === stage.id ? null : stage.id);
     onStageClick?.(stage, index);
@@ -59,7 +66,7 @@ const FlowchartViewer = ({
 
             {isExpanded && showActions && stage.actions && (
               <div className="stage-actions">
-                {stage.actions.map((action, idx) => (
+                {stage.actions.map((action: any, idx: number) => (
                   <div key={idx} className="action-item">
                     <span className="action-bullet">•</span>
                     <span>{action}</span>

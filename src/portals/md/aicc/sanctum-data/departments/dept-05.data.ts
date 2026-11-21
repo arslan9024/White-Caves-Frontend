@@ -1,0 +1,242 @@
+import type { DepartmentNode } from '../types';
+
+export const SANCTUM_DEPT_05: DepartmentNode = {
+  "deptCode": "DEPT-05",
+  "name": "Sales, Services & Operations",
+  "color": "#10B981",
+  "director": {
+    "id": "clara",
+    "code": "DIR-05",
+    "name": "AI Clara",
+    "gender": "Female",
+    "tier": "DIRECTOR",
+    "roleTitle": "Director of Sales, Leasing & Brokerage Operations",
+    "departmentCode": "DEPT-05",
+    "reportingTo": "zoe",
+    "allowedTools": [
+      "deal_pipeline",
+      "lead_allocation"
+    ],
+    "capabilities": [
+      "Sales Pipeline Velocity",
+      "Deal Negotiation Oversight"
+    ],
+    "slaResponseMinutes": 10,
+    "status": "ACTIVE",
+    "kpis": {
+      "tasksCompleted": 2190,
+      "accuracyPercent": 99.6,
+      "latencyMs": 260
+    }
+  },
+  "managers": [
+    {
+      "id": "clara-deals",
+      "code": "MGR-05-1",
+      "name": "AI Clara Deals",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Off-Plan Sales & Primary Market Manager",
+      "slot": 1,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "offplan_allocator"
+      ],
+      "capabilities": [
+        "Off-Plan Allocation"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 430,
+        "accuracyPercent": 99.3,
+        "latencyMs": 270
+      }
+    },
+    {
+      "id": "daisy-leasing",
+      "code": "MGR-05-2",
+      "name": "AI Daisy Leasing",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Residential Leasing & Tenancy Manager",
+      "slot": 2,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "lease_calculator"
+      ],
+      "capabilities": [
+        "Ejari Contracts",
+        "Damac Hills 2 Rentals"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 670,
+        "accuracyPercent": 99.8,
+        "latencyMs": 230
+      }
+    },
+    {
+      "id": "sophia-secondary",
+      "code": "MGR-05-3",
+      "name": "AI Sophia Secondary",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Secondary Market Sales & Resale Manager",
+      "slot": 3,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "mou_drafter"
+      ],
+      "capabilities": [
+        "Form F MOU Resales"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 380,
+        "accuracyPercent": 99.4,
+        "latencyMs": 280
+      }
+    },
+    {
+      "id": "maya-leads",
+      "code": "MGR-05-4",
+      "name": "AI Maya LeadScore",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Lead Routing & Instant Ingestion Manager",
+      "slot": 4,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "score_lead"
+      ],
+      "capabilities": [
+        "Lead Scoring"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 890,
+        "accuracyPercent": 99.7,
+        "latencyMs": 210
+      }
+    },
+    {
+      "id": "leona-viewings",
+      "code": "MGR-05-5",
+      "name": "AI Leona Viewings",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Property Viewing & Calendar Logistics Manager",
+      "slot": 5,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "calendar_booking"
+      ],
+      "capabilities": [
+        "Viewing Calendar"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 520,
+        "accuracyPercent": 99.2,
+        "latencyMs": 290
+      }
+    },
+    {
+      "id": "nadine-offers",
+      "code": "MGR-05-6",
+      "name": "AI Nadine Offers",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Offer Counter-Offer & Negotiation Manager",
+      "slot": 6,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "offer_matrix"
+      ],
+      "capabilities": [
+        "Price Negotiation"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 240,
+        "accuracyPercent": 99.1,
+        "latencyMs": 310
+      }
+    },
+    {
+      "id": "amber-conveyancing",
+      "code": "MGR-05-7",
+      "name": "AI Amber Conveyancing",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "DLD Trustee Office & Conveyancing Manager",
+      "slot": 7,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "trustee_booking"
+      ],
+      "capabilities": [
+        "DLD Transfer Booking"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 160,
+        "accuracyPercent": 99.5,
+        "latencyMs": 320
+      }
+    },
+    {
+      "id": "layla-mortgage",
+      "code": "MGR-05-8",
+      "name": "AI Layla Mortgage",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Mortgage Advisory & Bank Pre-Approval Manager",
+      "slot": 8,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "mortgage_calc"
+      ],
+      "capabilities": [
+        "Bank Mortgage Eligibility"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 190,
+        "accuracyPercent": 99,
+        "latencyMs": 340
+      }
+    },
+    {
+      "id": "claudia-commission",
+      "code": "MGR-05-9",
+      "name": "AI Claudia Commission",
+      "gender": "Female",
+      "tier": "MANAGER",
+      "roleTitle": "Commission Distribution & Deal Splitting Manager",
+      "slot": 9,
+      "departmentCode": "DEPT-05",
+      "allowedTools": [
+        "commission_split"
+      ],
+      "capabilities": [
+        "Commission Splits"
+      ],
+      "slaResponseMinutes": 15,
+      "status": "ACTIVE",
+      "kpis": {
+        "tasksCompleted": 210,
+        "accuracyPercent": 99.9,
+        "latencyMs": 250
+      }
+    }
+  ]
+};

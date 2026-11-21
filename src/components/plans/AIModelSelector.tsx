@@ -7,16 +7,16 @@ import './AIModelSelector.css';
  * AIModelSelector - Component to switch between DeepSeek and Ollama AI models
  * Displays model status and allows user to select preferred AI backend
  */
-export default function AIModelSelector({ onModelChange = null }) {
+export default function AIModelSelector({ onModelChange = null }: { onModelChange?: ((model: string) => void) | null }) {
   const [currentModel, setCurrentModel] = useState('deepseek');
   const [modelStatus, setModelStatus] = useState({
     deepseek: false,
     ollama: false,
   });
   const [loading, setLoading] = useState(true);
-  const [statusMessage, setStatusMessage] = useState(null);
+  const [statusMessage, setStatusMessage] = useState<{ type: string; text: string } | null>(null);
 
-  const showStatus = (type, text) => {
+  const showStatus = (type: string, text: string) => {
     setStatusMessage({ type, text });
   };
 
@@ -51,7 +51,7 @@ export default function AIModelSelector({ onModelChange = null }) {
   /**
    * Switch AI model
    */
-  const handleSwitchModel = async modelName => {
+  const handleSwitchModel = async (modelName: string) => {
     try {
       const response = await authFetch('/api/plans/set-ai-model', {
         method: 'POST',
@@ -75,7 +75,7 @@ export default function AIModelSelector({ onModelChange = null }) {
     }
   };
 
-  const getStatusIcon = isAvailable => {
+  const getStatusIcon = (isAvailable: boolean) => {
     return isAvailable ? (
       <CheckCircle size={16} className="text-green-500" />
     ) : (
@@ -83,7 +83,7 @@ export default function AIModelSelector({ onModelChange = null }) {
     );
   };
 
-  const getStatusText = (model, isAvailable) => {
+  const getStatusText = (model: string, isAvailable: boolean) => {
     if (!isAvailable) return 'Unavailable';
     return currentModel === model ? 'Active' : 'Ready';
   };

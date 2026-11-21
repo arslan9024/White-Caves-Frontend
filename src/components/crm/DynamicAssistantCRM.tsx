@@ -45,13 +45,13 @@ const ASSISTANT_LOADERS = {
 // Memoized cache of instantiated lazy components
 const componentCache = new Map();
 
-function getLazyComponent(assistantKey) {
+function getLazyComponent(assistantKey?: string) {
   if (!assistantKey) return null;
   const key = assistantKey.toLowerCase().trim();
   if (componentCache.has(key)) {
     return componentCache.get(key);
   }
-  const loader = ASSISTANT_LOADERS[key];
+  const loader = (ASSISTANT_LOADERS as Record<string, any>)[key];
   if (loader) {
     const LazyComp = lazy(loader);
     componentCache.set(key, LazyComp);
@@ -61,17 +61,17 @@ function getLazyComponent(assistantKey) {
 }
 
 // Resilient Error Boundary for individual Assistant modules
-class AssistantErrorBoundary extends Component {
-  constructor(props) {
+class AssistantErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError: boolean; error: any }> {
+  constructor(props: { children?: React.ReactNode }) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: any) {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: any, errorInfo: any) {
     console.warn('[DynamicAssistantCRM] Component error trapped:', error, errorInfo);
   }
 
@@ -106,7 +106,7 @@ const LoadingSpinner = memo(() => (
  * Universal Dynamic Assistant CRM View
  * Rendered when no specialized component is mapped or as a unified operational interface
  */
-const UniversalAssistantWorkspace = memo(({ assistant, content }) => {
+const UniversalAssistantWorkspace = memo(({ assistant, content }: { assistant?: any; content?: any }) => {
   const capabilities = useMemo(() => {
     return (
       assistant?.capabilities || [
@@ -193,7 +193,7 @@ const UniversalAssistantWorkspace = memo(({ assistant, content }) => {
           <span className="section-tag">Zero-Backlog Protocol Enforced</span>
         </div>
         <div className="capabilities-grid">
-          {capabilities.map((cap, idx) => (
+          {capabilities.map((cap: any, idx: number) => (
             <div key={idx} className="capability-card">
               <div className="cap-check">
                 <CheckCircle2 size={18} />
@@ -242,7 +242,12 @@ const UniversalAssistantWorkspace = memo(({ assistant, content }) => {
  * DynamicAssistantCRM
  * Unified, single-point assistant component consolidating all 25 CRM views.
  */
-const DynamicAssistantCRM = memo(({ activeAssistant, assistant, content, ...restProps }) => {
+const DynamicAssistantCRM = memo(({ activeAssistant, assistant, content, ...restProps }: {
+  activeAssistant?: any;
+  assistant?: any;
+  content?: any;
+  [key: string]: any;
+}) => {
   const currentAssistant = activeAssistant || assistant;
   const assistantId = currentAssistant?.id?.toLowerCase() || currentAssistant?.name?.toLowerCase();
 

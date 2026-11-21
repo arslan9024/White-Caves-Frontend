@@ -51,12 +51,13 @@ const SALES_STAGES = [
 interface DealTimelineEntry {
   stage: string;
   date?: string;
+  timestamp?: string;
   actor?: string;
   notes?: string;
 }
 
 interface DealJourneyTimelineProps {
-  deal?: { status?: string; timeline?: DealTimelineEntry[] };
+  deal?: Record<string, any> & { status?: string; timeline?: DealTimelineEntry[] };
   dealType?: 'tenancy' | 'sales';
   compact?: boolean;
 }
