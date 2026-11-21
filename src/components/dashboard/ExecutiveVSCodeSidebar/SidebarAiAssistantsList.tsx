@@ -1,15 +1,24 @@
 // FILE: src/components/dashboard/ExecutiveVSCodeSidebar/SidebarAiAssistantsList.tsx
 /**
  * SidebarAiAssistantsList.tsx
- * White Caves Real Estate LLC - AI Assistants (AIAMS) Left Sidebar Drawer
- * Standard: AEGIS Canonical 7-Category Architecture Standard (Drawer Sub-View)
- * Single Purpose File Law: < 350 lines
+ * White Caves Real Estate LLC — AICC-Sanctum & AIAMS Left Sidebar Drawer
+ * Supports Drag-and-Drop Manager Swapping & Strict Zoe's Team Separation (<250 lines)
  */
 
 import React, { FC, useState, useEffect } from 'react';
-import { Bot, Plus, ArrowRight, Crown, Shield, GitFork } from 'lucide-react';
+import {
+  Bot,
+  Plus,
+  ArrowRight,
+  Crown,
+  Shield,
+  GitFork,
+  GripVertical,
+  Sparkles,
+} from 'lucide-react';
 import {
   loadAiAgentsFromStorage,
+  saveAiAgentsToStorage,
   AIAMS_SYNC_EVENT,
 } from '../../crm/AiAssistantManager/AiAssistantManager.data';
 import type { AiAgentRecord } from '../../crm/AiAssistantManager/AiAssistantManager.types';
@@ -22,161 +31,176 @@ export interface SidebarAiAssistantsListProps {
   onNavigateToView?: (route: string) => void;
 }
 
+const LEGACY_AEGIS_NAMES = new Set([
+  'aegis',
+  'ada',
+  'nova',
+  'orion',
+  'gwynne',
+  'grace',
+  'turing',
+  'sterling',
+]);
+
+function isZoesBusinessTeamAgent(agent: AiAgentRecord): boolean {
+  const tokens = `${agent.name} ${agent.agentId}`
+    .toLowerCase()
+    .replace(/[^a-z\s]/g, ' ')
+    .split(/\s+/);
+  return !tokens.some(t => LEGACY_AEGIS_NAMES.has(t));
+}
+
+const PORTAL_LINKS = [
+  {
+    route: '/aicc-sanctum',
+    label: 'AICC-Sanctum Command (MD)',
+    color: '#F43F5E',
+    bg: 'rgba(244,63,94,0.14)',
+    border: 'rgba(244,63,94,0.35)',
+    testId: 'link-aicc-sanctum',
+    Icon: Sparkles,
+  },
+  {
+    route: '/dashboard/aiams',
+    label: 'AI Assistants CRUD Hub (AIAMS)',
+    color: '#F87171',
+    bg: 'rgba(239,68,68,0.1)',
+    border: 'rgba(239,68,68,0.25)',
+    testId: 'link-aiams-crud-hub',
+    Icon: Bot,
+  },
+  {
+    route: '/dashboard/aiams/managers',
+    label: 'Executive & 12 Dept AI Directors',
+    color: '#FBBF24',
+    bg: 'rgba(245,158,11,0.08)',
+    border: 'rgba(245,158,11,0.2)',
+    testId: 'link-aiams-managers',
+    Icon: Crown,
+  },
+  {
+    route: '/dashboard/aiams/supervisors',
+    label: '108 Squad Supervisor AIs',
+    color: '#38BDF8',
+    bg: 'rgba(56,189,248,0.08)',
+    border: 'rgba(56,189,248,0.2)',
+    testId: 'link-aiams-supervisors',
+    Icon: Shield,
+  },
+  {
+    route: '/dashboard/aiams/organogram',
+    label: '1-12-108 AI Organogram Tree',
+    color: '#34D399',
+    bg: 'rgba(16,185,129,0.08)',
+    border: 'rgba(16,185,129,0.2)',
+    testId: 'link-aiams-organogram',
+    Icon: GitFork,
+  },
+];
+
 export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
   filterQuery = '',
   selectedAgentId,
   onSelectAgent,
   onNavigateToView,
 }) => {
-  const [agents, setAgents] = useState<AiAgentRecord[]>(() => loadAiAgentsFromStorage());
+  const [agents, setAgents] = useState<AiAgentRecord[]>(() =>
+    loadAiAgentsFromStorage().filter(isZoesBusinessTeamAgent)
+  );
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dragOverId, setDragOverId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleSync = (e: Event) => {
       const customEvent = e as CustomEvent<AiAgentRecord[]>;
-      if (Array.isArray(customEvent.detail)) {
-        setAgents(customEvent.detail);
-      } else {
-        setAgents(loadAiAgentsFromStorage());
-      }
+      const source = Array.isArray(customEvent.detail)
+        ? customEvent.detail
+        : loadAiAgentsFromStorage();
+      setAgents(source.filter(isZoesBusinessTeamAgent));
     };
     window.addEventListener(AIAMS_SYNC_EVENT, handleSync);
     return () => window.removeEventListener(AIAMS_SYNC_EVENT, handleSync);
   }, []);
 
-  const query = filterQuery.trim().toLowerCase();
+  const handleSwapDrop = (sourceAgentId: string, targetAgentId: string) => {
+    if (!sourceAgentId || !targetAgentId || sourceAgentId === targetAgentId) return;
+    setAgents(prev => {
+      const next = [...prev];
+      const srcIdx = next.findIndex(a => a.agentId === sourceAgentId);
+      const tgtIdx = next.findIndex(a => a.agentId === targetAgentId);
+      if (srcIdx === -1 || tgtIdx === -1) return prev;
+      const srcDept = {
+        departmentId: next[srcIdx].departmentId,
+        department: next[srcIdx].department,
+      };
+      const tgtDept = {
+        departmentId: next[tgtIdx].departmentId,
+        department: next[tgtIdx].department,
+      };
+      next[srcIdx] = { ...next[srcIdx], ...tgtDept };
+      next[tgtIdx] = { ...next[tgtIdx], ...srcDept };
+      [next[srcIdx], next[tgtIdx]] = [next[tgtIdx], next[srcIdx]];
+      saveAiAgentsToStorage(next);
+      return next;
+    });
+  };
 
+  const query = filterQuery.trim().toLowerCase();
   const visibleAgents = agents.filter(agent => {
     if (!query) return true;
-    return (
-      agent.name.toLowerCase().includes(query) ||
-      agent.agentId.toLowerCase().includes(query) ||
-      agent.code.toLowerCase().includes(query) ||
-      agent.role.toLowerCase().includes(query) ||
-      agent.department.toLowerCase().includes(query) ||
-      agent.tier.toLowerCase().includes(query)
+    return [agent.name, agent.agentId, agent.code, agent.role, agent.department, agent.tier].some(
+      v => v.toLowerCase().includes(query)
     );
   });
 
   return (
     <SidebarListWrapper data-testid="sidebar-ai-assistants-list">
-      {/* ── Level 1 Category Portals ─────────────────────────────────── */}
       <div style={{ marginBottom: '8px' }}>
-        <div
-          onClick={() => onNavigateToView?.('/dashboard/aiams')}
-          style={{
-            fontSize: '0.68rem',
-            color: '#F87171',
-            padding: '5px 8px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.25)',
-            borderRadius: '6px',
-            marginBottom: '4px',
-          }}
-          data-testid="link-aiams-crud-hub"
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <Bot size={12} /> AI Assistants CRUD Hub (AIAMS)
-          </span>
-          <ArrowRight size={11} />
-        </div>
-
-        <div
-          onClick={() => onNavigateToView?.('/dashboard/aiams/managers')}
-          style={{
-            fontSize: '0.68rem',
-            color: '#FBBF24',
-            padding: '5px 8px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.2)',
-            borderRadius: '6px',
-            marginBottom: '4px',
-          }}
-          data-testid="link-aiams-managers"
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <Crown size={12} /> Executive & 12 Dept AI Directors
-          </span>
-          <ArrowRight size={11} />
-        </div>
-
-        <div
-          onClick={() => onNavigateToView?.('/dashboard/aiams/supervisors')}
-          style={{
-            fontSize: '0.68rem',
-            color: '#38BDF8',
-            padding: '5px 8px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: 'rgba(56, 189, 248, 0.08)',
-            border: '1px solid rgba(56, 189, 248, 0.2)',
-            borderRadius: '6px',
-            marginBottom: '4px',
-          }}
-          data-testid="link-aiams-supervisors"
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <Shield size={12} /> 108 Squad Supervisor AIs
-          </span>
-          <ArrowRight size={11} />
-        </div>
-
-        <div
-          onClick={() => onNavigateToView?.('/dashboard/aiams/organogram')}
-          style={{
-            fontSize: '0.68rem',
-            color: '#34D399',
-            padding: '5px 8px',
-            cursor: 'pointer',
-            fontWeight: 700,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.2)',
-            borderRadius: '6px',
-            marginBottom: '8px',
-          }}
-          data-testid="link-aiams-organogram"
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <GitFork size={12} /> 1-12-108 AI Organogram Tree
-          </span>
-          <ArrowRight size={11} />
-        </div>
+        {PORTAL_LINKS.map(({ route, label, color, bg, border, testId, Icon }) => (
+          <div
+            key={route}
+            onClick={() => onNavigateToView?.(route)}
+            data-testid={testId}
+            style={{
+              fontSize: '0.68rem',
+              color,
+              padding: '5px 8px',
+              cursor: 'pointer',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              background: bg,
+              border: `1px solid ${border}`,
+              borderRadius: '6px',
+              marginBottom: '4px',
+            }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <Icon size={12} /> {label}
+            </span>
+            <ArrowRight size={11} />
+          </div>
+        ))}
       </div>
 
-      {/* Header bar with Count and Register action */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '4px 8px 10px 8px',
+          padding: '4px 8px 8px',
         }}
       >
         <span
           style={{
-            fontSize: '0.68rem',
+            fontSize: '0.66rem',
             fontWeight: 800,
             color: '#EF4444',
             textTransform: 'uppercase',
-            letterSpacing: '0.5px',
           }}
         >
-          AI Workforce ({visibleAgents.length})
+          Zoe&apos;s Team ({visibleAgents.length}) · Drag to Swap
         </span>
         <button
           type="button"
@@ -201,38 +225,64 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
         </button>
       </div>
 
-      {/* ── Level 2 Sub-Items: All Registered AI Agents ──────────────── */}
       {visibleAgents.map(agent => {
         const isSelected = selectedAgentId === agent.agentId;
+        const isDropTarget = dragOverId === agent.agentId && draggedId !== agent.agentId;
         return (
           <div
             key={agent.agentId}
+            draggable
+            onDragStart={e => {
+              setDraggedId(agent.agentId);
+              e.dataTransfer.setData('text/plain', agent.agentId);
+            }}
+            onDragOver={e => {
+              e.preventDefault();
+              setDragOverId(agent.agentId);
+            }}
+            onDragLeave={() => setDragOverId(null)}
+            onDrop={e => {
+              e.preventDefault();
+              const src = e.dataTransfer.getData('text/plain') || draggedId || '';
+              handleSwapDrop(src, agent.agentId);
+              setDraggedId(null);
+              setDragOverId(null);
+            }}
             onClick={() => {
               onSelectAgent?.(agent.agentId, agent.name);
               onNavigateToView?.(`/dashboard/aiams/${agent.agentId}`);
             }}
             data-testid={`sidebar-ai-agent-${agent.agentId}`}
             style={{
-              padding: '9px 11px',
+              padding: '9px 10px',
               borderRadius: '8px',
-              background: isSelected ? 'rgba(239, 68, 68, 0.15)' : '#070D18',
-              border: isSelected ? '1px solid #EF4444' : '1px solid rgba(255, 255, 255, 0.05)',
-              cursor: 'pointer',
+              background: isDropTarget
+                ? 'rgba(16, 185, 129, 0.18)'
+                : isSelected
+                  ? 'rgba(239, 68, 68, 0.15)'
+                  : '#070D18',
+              border: isDropTarget
+                ? '1px dashed #10B981'
+                : isSelected
+                  ? '1px solid #EF4444'
+                  : '1px solid rgba(255, 255, 255, 0.05)',
+              cursor: 'grab',
               display: 'flex',
               flexDirection: 'column',
-              gap: '5px',
+              gap: '4px',
               marginBottom: '6px',
               transition: 'all 0.15s ease',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <GripVertical size={11} color="#64748B" />
                 <span
                   style={{
                     fontSize: '0.63rem',
                     fontFamily: 'monospace',
                     color: '#F87171',
-                    background: 'rgba(239, 68, 68, 0.12)',
+                    background: 'rgba(239,68,68,0.12)',
                     padding: '1px 5px',
                     borderRadius: '4px',
                     fontWeight: 700,
@@ -240,31 +290,23 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
                 >
                   {agent.code}
                 </span>
-                <span
-                  style={{
-                    fontSize: '0.63rem',
-                    fontWeight: 800,
-                    color: '#94A3B8',
-                  }}
-                >
+                <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#94A3B8' }}>
                   {agent.tier}
                 </span>
               </div>
-              <span style={{ fontSize: '0.63rem', color: '#10B981', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.62rem', color: '#10B981', fontWeight: 700 }}>
                 {agent.status}
               </span>
             </div>
-
             <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#F8FAFC' }}>
               {agent.name}
             </div>
-
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                fontSize: '0.66rem',
+                fontSize: '0.65rem',
                 color: '#64748B',
                 gap: '6px',
               }}
@@ -282,4 +324,3 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
 };
 
 export default SidebarAiAssistantsList;
-

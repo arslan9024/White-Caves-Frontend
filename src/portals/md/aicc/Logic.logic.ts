@@ -1,9 +1,10 @@
 /**
- * Logic.logic.ts — State Management, Socket.io Feeds & Swap Operations
- * Supports Managing Director CRUD, slot reassignment, and live delegation listeners.
+ * Logic.logic.ts — AICC-Sanctum State, CRUD, Drag-and-Drop Swap & Governance Guards
+ * Standing Rules: 12 Locked Departments • Zoe's Team isolated from Aegis • All female except Henry (MGR-11-1).
  */
 
 import { useState, useCallback, useMemo } from 'react';
+import { apiClient } from '../../../utils/apiClient';
 import {
   SANCTUM_EXECUTIVE_COO,
   SANCTUM_DEPARTMENTS_DATA,
@@ -21,17 +22,49 @@ export interface LiveDelegationEvent {
   startedAt: string;
 }
 
+const STORAGE_KEY = 'wc_aicc_sanctum_departments_v1';
+const AEGIS_FORBIDDEN = new Set([
+  'aegis',
+  'ada',
+  'nova',
+  'orion',
+  'gwynne',
+  'grace',
+  'turing',
+  'sterling',
+]);
+
+function loadInitialDepartments(): DepartmentNode[] {
+  if (typeof window === 'undefined') return SANCTUM_DEPARTMENTS_DATA;
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as DepartmentNode[];
+      if (Array.isArray(parsed) && parsed.length === 12) return parsed;
+    }
+  } catch {}
+  return SANCTUM_DEPARTMENTS_DATA;
+}
+
+function persistDepartments(depts: DepartmentNode[]) {
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(depts));
+  } catch {}
+}
+
 export function useAiccSanctumLogic() {
-  const [departments, setDepartments] = useState<DepartmentNode[]>(SANCTUM_DEPARTMENTS_DATA);
-  const [selectedDeptCode, setSelectedDeptCode] = useState<string>('DEPT-08'); // Default to Media/Communications (Linda)
+  const [departments, setDepartments] = useState<DepartmentNode[]>(loadInitialDepartments);
+  const [selectedDeptCode, setSelectedDeptCode] = useState<string>('DEPT-08');
   const [standbyRoster, setStandbyRoster] = useState<AgentCard[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [liveDelegations, setLiveDelegations] = useState<LiveDelegationEvent[]>([
+  const [draggedAgentId, setDraggedAgentId] = useState<string | null>(null);
+  const [governanceNotice, setGovernanceNotice] = useState<string>('');
+  const [liveDelegations] = useState<LiveDelegationEvent[]>([
     {
       id: 'del-01',
       taskId: 'TASK-DH2-RENT-801',
       targetAgent: 'AI Linda WhatsApp',
-      role: 'Head of WhatsApp Real Estate Automation',
+      role: 'Head of WhatsApp Automation',
       chain: ['zoe', 'maya', 'linda'],
       status: 'COMPLETED',
       startedAt: 'Just now',
@@ -40,7 +73,7 @@ export function useAiccSanctumLogic() {
       id: 'del-02',
       taskId: 'TASK-VAULT-EID-104',
       targetAgent: 'AI Henry Records',
-      role: 'Chief Document Controller & The Record Keeper',
+      role: 'Chief Document Controller',
       chain: ['zoe', 'sofia', 'henry'],
       status: 'IN_PROGRESS',
       startedAt: '1m ago',
@@ -64,50 +97,183 @@ export function useAiccSanctumLogic() {
     );
   }, [selectedDepartment, searchQuery]);
 
-  // Managing Director Action: Swap two managers within or between slots
-  const swapManagerSlots = useCallback((deptCode: string, slotA: number, slotB: number) => {
-    setDepartments(prev =>
-      prev.map(dept => {
-        if (dept.deptCode !== deptCode) return dept;
-        const newMgrs = [...dept.managers];
-        const indexA = newMgrs.findIndex(m => m.slot === slotA);
-        const indexB = newMgrs.findIndex(m => m.slot === slotB);
-        if (indexA === -1 || indexB === -1) return dept;
-
-        const tempSlot = newMgrs[indexA].slot;
-        newMgrs[indexA] = { ...newMgrs[indexA], slot: newMgrs[indexB].slot };
-        newMgrs[indexB] = { ...newMgrs[indexB], slot: tempSlot };
-
-        return { ...dept, managers: newMgrs.sort((a, b) => (a.slot || 0) - (b.slot || 0)) };
-      })
-    );
-  }, []);
-
-  // Move a manager to Standby Roster (Zero-Data-Loss)
-  const demoteToStandby = useCallback((agentId: string) => {
+  const commitDepartments = useCallback((updater: (prev: DepartmentNode[]) => DepartmentNode[]) => {
     setDepartments(prev => {
-      let found: AgentCard | undefined;
-      const updated = prev.map(dept => {
-        const mgr = dept.managers.find(m => m.id === agentId);
-        if (mgr) {
-          found = mgr;
-          return {
-            ...dept,
-            managers: dept.managers.filter(m => m.id !== agentId),
-          };
-        }
-        return dept;
-      });
-
-      if (found) {
-        setStandbyRoster(curr => [
-          ...curr,
-          { ...found!, tier: 'STANDBY', status: 'STANDBY', slot: undefined },
-        ]);
-      }
-      return updated;
+      const next = updater(prev);
+      persistDepartments(next);
+      return next;
     });
   }, []);
+
+  const swapManagerSlots = useCallback(
+    (deptCode: string, slotA: number, slotB: number) => {
+      commitDepartments(prev =>
+        prev.map(dept => {
+          if (dept.deptCode !== deptCode) return dept;
+          const mgrs = [...dept.managers];
+          const idxA = mgrs.findIndex(m => m.slot === slotA);
+          const idxB = mgrs.findIndex(m => m.slot === slotB);
+          if (idxA === -1 || idxB === -1) return dept;
+          const tmp = mgrs[idxA].slot;
+          mgrs[idxA] = { ...mgrs[idxA], slot: mgrs[idxB].slot };
+          mgrs[idxB] = { ...mgrs[idxB], slot: tmp };
+          return { ...dept, managers: mgrs.sort((a, b) => (a.slot || 0) - (b.slot || 0)) };
+        })
+      );
+    },
+    [commitDepartments]
+  );
+
+  const swapManagersById = useCallback(
+    (sourceId: string, targetId: string) => {
+      if (!sourceId || !targetId || sourceId === targetId) return;
+      commitDepartments(prev => {
+        const next = prev.map(d => ({ ...d, managers: [...d.managers] }));
+        const srcDept = next.find(d => d.managers.some(m => m.id === sourceId));
+        const tgtDept = next.find(d => d.managers.some(m => m.id === targetId));
+        if (!srcDept || !tgtDept) return prev;
+        const srcIdx = srcDept.managers.findIndex(m => m.id === sourceId);
+        const tgtIdx = tgtDept.managers.findIndex(m => m.id === targetId);
+        const srcMgr = { ...srcDept.managers[srcIdx] };
+        const tgtMgr = { ...tgtDept.managers[tgtIdx] };
+
+        if (srcDept.deptCode === tgtDept.deptCode) {
+          const tmp = srcMgr.slot;
+          srcMgr.slot = tgtMgr.slot;
+          tgtMgr.slot = tmp;
+          srcDept.managers[srcIdx] = srcMgr;
+          srcDept.managers[tgtIdx] = tgtMgr;
+          srcDept.managers.sort((a, b) => (a.slot || 0) - (b.slot || 0));
+        } else {
+          const srcSlot = srcMgr.slot;
+          srcMgr.departmentCode = tgtDept.deptCode;
+          srcMgr.slot = tgtMgr.slot;
+          tgtMgr.departmentCode = srcDept.deptCode;
+          tgtMgr.slot = srcSlot;
+          srcDept.managers[srcIdx] = tgtMgr;
+          tgtDept.managers[tgtIdx] = srcMgr;
+        }
+        return next;
+      });
+      void apiClient
+        .post('/sanctum/managers/swap', { sourceAgentId: sourceId, targetAgentId: targetId })
+        .catch(() => {});
+    },
+    [commitDepartments]
+  );
+
+  const transferManagerToDepartment = useCallback(
+    (sourceId: string, targetDeptCode: string) => {
+      if (!sourceId || !targetDeptCode) return;
+      commitDepartments(prev => {
+        const next = prev.map(d => ({ ...d, managers: [...d.managers] }));
+        const srcDept = next.find(d => d.managers.some(m => m.id === sourceId));
+        const tgtDept = next.find(d => d.deptCode === targetDeptCode);
+        if (!srcDept || !tgtDept || srcDept.deptCode === tgtDept.deptCode) return prev;
+        const idx = srcDept.managers.findIndex(m => m.id === sourceId);
+        const [moved] = srcDept.managers.splice(idx, 1);
+        tgtDept.managers.push({
+          ...moved,
+          departmentCode: tgtDept.deptCode,
+          slot: tgtDept.managers.length + 1,
+        });
+        return next;
+      });
+      void apiClient
+        .post('/sanctum/managers/swap', {
+          sourceAgentId: sourceId,
+          targetDepartmentCode: targetDeptCode,
+        })
+        .catch(() => {});
+    },
+    [commitDepartments]
+  );
+
+  const createManager = useCallback(
+    (deptCode: string, name: string, roleTitle: string, capability: string) => {
+      const tokens = name
+        .toLowerCase()
+        .replace(/[^a-z\s]/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean);
+      if (tokens.some(t => AEGIS_FORBIDDEN.has(t))) {
+        setGovernanceNotice(
+          "Blocked: Aegis Team engineering names cannot join Zoe's AICC-Sanctum."
+        );
+        return false;
+      }
+      setGovernanceNotice('');
+      const cleanName = name.trim();
+      const id = `${cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Date.now().toString(36).slice(-4)}`;
+      commitDepartments(prev =>
+        prev.map(dept => {
+          if (dept.deptCode !== deptCode) return dept;
+          const slot = dept.managers.length + 1;
+          const card: AgentCard = {
+            id,
+            code: `MGR-${deptCode.replace('DEPT-', '')}-${slot}`,
+            name: cleanName,
+            gender: 'Female',
+            roleTitle: roleTitle.trim(),
+            tier: 'MANAGER',
+            departmentCode: deptCode,
+            slot,
+            allowedTools: ['sanctum_task'],
+            capabilities: capability.trim()
+              ? capability
+                  .split(',')
+                  .map(c => c.trim())
+                  .filter(Boolean)
+              : ['DH2 Operations'],
+            slaResponseMinutes: 15,
+            status: 'ACTIVE',
+            kpis: { tasksCompleted: 0, accuracyPercent: 100, latencyMs: 180 },
+          };
+          return { ...dept, managers: [...dept.managers, card] };
+        })
+      );
+      void apiClient
+        .post('/sanctum/managers', {
+          departmentCode: deptCode,
+          name: cleanName,
+          roleTitle: roleTitle.trim(),
+          gender: 'Female',
+        })
+        .catch(() => {});
+      return true;
+    },
+    [commitDepartments]
+  );
+
+  const demoteToStandby = useCallback(
+    (agentId: string) => {
+      if (agentId === 'henry') {
+        setGovernanceNotice(
+          'Protected: AI Henry (MGR-11-1) is the sole male Record Keeper and cannot be removed.'
+        );
+        return;
+      }
+      setGovernanceNotice('');
+      commitDepartments(prev => {
+        let found: AgentCard | undefined;
+        const updated = prev.map(dept => {
+          const mgr = dept.managers.find(m => m.id === agentId);
+          if (!mgr) return dept;
+          found = mgr;
+          return { ...dept, managers: dept.managers.filter(m => m.id !== agentId) };
+        });
+        if (found) {
+          setStandbyRoster(curr => [
+            ...curr,
+            { ...found!, tier: 'STANDBY', status: 'STANDBY', slot: undefined },
+          ]);
+        }
+        return updated;
+      });
+      void apiClient.delete(`/sanctum/managers/${encodeURIComponent(agentId)}`).catch(() => {});
+    },
+    [commitDepartments]
+  );
 
   return {
     executiveCoo: SANCTUM_EXECUTIVE_COO,
@@ -120,7 +286,13 @@ export function useAiccSanctumLogic() {
     setSearchQuery,
     liveDelegations,
     standbyRoster,
+    draggedAgentId,
+    setDraggedAgentId,
+    governanceNotice,
     swapManagerSlots,
+    swapManagersById,
+    transferManagerToDepartment,
+    createManager,
     demoteToStandby,
   };
 }
