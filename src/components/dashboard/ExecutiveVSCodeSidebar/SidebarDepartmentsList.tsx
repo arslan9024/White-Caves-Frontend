@@ -6,17 +6,12 @@
  */
 
 import React, { FC, useState } from 'react';
-import {
-  RotateCcw,
-  Building,
-  ArrowRight,
-} from 'lucide-react';
+import { RotateCcw, Building, ArrowRight, Briefcase } from 'lucide-react';
 import { useCorporateDepartments } from '../../../context/CorporateDepartmentsContext';
 import { SidebarListWrapper } from './SidebarDepartmentsList.styles';
 import { SidebarDepartmentCard } from './SidebarDepartmentCard';
-import {
-  getSectionForSlotNumber,
-} from '../../../data/departmentSections.data';
+import { getSectionForSlotNumber } from '../../../data/departmentSections.data';
+import { DMS_OPEN_HUMAN_LEASING_POSITIONS } from '../../../portals/md/aicc/daisyDivision.data';
 
 export interface SidebarDepartmentsListProps {
   filterQuery?: string;
@@ -143,6 +138,76 @@ export const SidebarDepartmentsList: FC<SidebarDepartmentsListProps> = ({
           <ArrowRight size={11} />
         </div>
 
+        {/* ── DMS Open Human Job Positions (DEPT-05 Leasing Chain) ─── */}
+        <div
+          style={{
+            background: 'rgba(245, 158, 11, 0.08)',
+            border: '1px dashed rgba(245, 158, 11, 0.4)',
+            borderRadius: '6px',
+            padding: '6px 8px',
+          }}
+          data-testid="sidebar-dms-open-human-roles"
+        >
+          <div
+            style={{
+              fontSize: '0.62rem',
+              fontWeight: 800,
+              color: '#FBBF24',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '4px',
+            }}
+          >
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Briefcase size={11} /> DEPT-05 OPEN HUMAN ROLES
+            </span>
+            <span>DRAG IN DMS</span>
+          </div>
+          {DMS_OPEN_HUMAN_LEASING_POSITIONS.slice(0, 3).map(pos => (
+            <div
+              key={pos.positionCode}
+              draggable
+              onDragStart={e => e.dataTransfer.setData('text/plain', pos.positionCode)}
+              onClick={() => onNavigateToView?.('/dashboard/dms/DEPT-05')}
+              style={{
+                fontSize: '0.64rem',
+                color: '#F8FAFC',
+                padding: '3px 6px',
+                borderRadius: '4px',
+                background: '#0F172A',
+                border: '1px solid rgba(255,255,255,0.06)',
+                marginBottom: '3px',
+                cursor: 'grab',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 700,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {pos.jobTitle}
+              </span>
+              <span
+                style={{
+                  color: '#FBBF24',
+                  fontFamily: 'monospace',
+                  fontSize: '0.6rem',
+                  flexShrink: 0,
+                }}
+              >
+                {pos.openCount}x
+              </span>
+            </div>
+          ))}
+        </div>
+
         {/* ── Section Hierarchy Selector Filter Tabs ─────────────────────────── */}
         <div
           style={{
@@ -162,18 +227,18 @@ export const SidebarDepartmentsList: FC<SidebarDepartmentsListProps> = ({
               sec === 'ALL'
                 ? 'All'
                 : sec === 'SECTION_A'
-                ? 'Sec A'
-                : sec === 'SECTION_B'
-                ? 'Sec B'
-                : 'Sec C';
+                  ? 'Sec A'
+                  : sec === 'SECTION_B'
+                    ? 'Sec B'
+                    : 'Sec C';
             const color =
               sec === 'SECTION_A'
                 ? '#8B5CF6'
                 : sec === 'SECTION_B'
-                ? '#10B981'
-                : sec === 'SECTION_C'
-                ? '#3B82F6'
-                : '#EF4444';
+                  ? '#10B981'
+                  : sec === 'SECTION_C'
+                    ? '#3B82F6'
+                    : '#EF4444';
 
             return (
               <button
@@ -250,4 +315,3 @@ export const SidebarDepartmentsList: FC<SidebarDepartmentsListProps> = ({
 };
 
 export default SidebarDepartmentsList;
-

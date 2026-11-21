@@ -12,7 +12,7 @@ import { RAW_TASKS_PART3 } from './TaskManager.tasks3.data';
 import { RAW_TASKS_PART4 } from './TaskManager.tasks4.data';
 import { RAW_TASKS_PART5 } from './TaskManager.tasks5.data';
 import { RAW_TASKS_PART6 } from './TaskManager.tasks6.data';
-import { OPERATIONAL_TOOL_TASKS } from './TaskManager.tools.data';
+import { OPERATIONAL_TOOL_TASKS, DH2_AICC_LEASING_TASKS } from './TaskManager.tools.data';
 
 export const TASK_PILLARS = [
   { id: 'all', name: 'All Pillars' },
@@ -54,6 +54,7 @@ export function buildCanonical200Tasks(): TaskNode[] {
   const tasks6: TaskNode[] = RAW_TASKS_PART6.map((row, idx) => buildTaskFromDef(row, idx + 500));
 
   return [
+    ...DH2_AICC_LEASING_TASKS,
     ...OPERATIONAL_TOOL_TASKS,
     ...tasks1,
     ...tasks2,
@@ -63,4 +64,3 @@ export function buildCanonical200Tasks(): TaskNode[] {
     ...tasks6,
   ];
 }
-

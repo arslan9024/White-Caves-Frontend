@@ -10,10 +10,43 @@
 import type { TaskNode } from './TaskManager.types';
 import { BASE_OPERATIONAL_TASKS } from './TaskManager.base.data';
 import { RUP_OPERATIONAL_TASKS } from './TaskManager.rup.data';
+import { TMS_LEASING_TASK_GROUPS } from '../../../portals/md/aicc/daisyDivision.data';
 
 export const ALL_RAW_OPERATIONAL_TASKS = [...BASE_OPERATIONAL_TASKS, ...RUP_OPERATIONAL_TASKS];
 
 import { CORPORATE_DEPARTMENTS_12 } from '../../../data/assistants108Registry.data';
+
+export const DH2_AICC_LEASING_TASKS: TaskNode[] = TMS_LEASING_TASK_GROUPS.map((g, idx) => ({
+  _id: `tms-lease-${idx + 1}`,
+  id: g.collectionCode,
+  taskCode: g.collectionCode,
+  title: g.title,
+  pillarId: 'pillar-4',
+  pillarName: 'Pillar IV: Sales & Residential Leasing Operations (DEPT-05)',
+  category: 'OPERATIONS',
+  statutoryAuthority: 'DLD / RERA / Ejari / DEWA',
+  description: `${g.tasks.join(' • ')} | Reporting Chain: ${g.reportingChain}`,
+  priority: 'CRITICAL',
+  status: 'IN_PROGRESS',
+  defaultSla: '15m SLA',
+  reportingChain: {
+    supervisorName: 'AI Noor Sup-1.1 & AI Layla TL-05-2-01',
+    supervisorCode: 'SUP-05-2-01-1',
+    managerName: 'AI Daisy Leasing (12 Asst Mgrs / 108 Sups)',
+    managerCode: 'MGR-05-2',
+    directorName: 'AI Clara (DEPT-05 Director)',
+    directorCode: 'DIR-05',
+    executiveReviewer: 'Arslan Malik (MD) & AI Zoe (WC-COO-01)',
+  },
+  actor: `${g.aiccActorName} (${g.aiccActorCode})`,
+  action: g.tasks[0] || g.title,
+  results:
+    'Verified Google Drive Unit Folder + Scoped Mary Inventory Vault + MD Google Calendar Sync',
+  departmentCode: 'DEPT-05',
+  divisionCode: 'DIV-05-2',
+  createdAt: '2026-11-21T09:00:00.000Z',
+  completionRate: 100,
+}));
 
 export const OPERATIONAL_TOOL_TASKS: TaskNode[] = ALL_RAW_OPERATIONAL_TASKS.map((t, idx) => {
   const deptNum = (idx % 12) + 1;
@@ -67,4 +100,3 @@ export const OPERATIONAL_TOOL_TASKS: TaskNode[] = ALL_RAW_OPERATIONAL_TASKS.map(
     },
   };
 });
-

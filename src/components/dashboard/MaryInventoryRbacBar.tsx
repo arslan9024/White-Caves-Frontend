@@ -109,7 +109,9 @@ export const MaryInventoryRbacBar = memo(() => {
             }}
           >
             <Smartphone size={12} color="#25D366" />
-            10-SIM Policy: 9 Hunters (Discovery) → Primary Master (+971505760056) Follow-Up
+            10-SIM Policy: 9 Hunters (Discovery) → Primary Master (+971505760056) Follow-Up •
+            8-Tier: MD Arslan Malik → Zoe → Dir Clara → Mgr Daisy → 12 AMs → 108 Sups → 1 TL → 10
+            Agents
           </span>
         </div>
 

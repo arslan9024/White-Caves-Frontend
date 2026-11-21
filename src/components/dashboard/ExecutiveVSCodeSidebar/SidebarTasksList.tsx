@@ -7,8 +7,9 @@
  */
 
 import React, { FC } from 'react';
-import { CheckSquare, PlusCircle, ArrowRight, ShieldCheck, Clock } from 'lucide-react';
+import { PlusCircle, ArrowRight, Clock, Bot } from 'lucide-react';
 import { buildCanonical200Tasks } from '../../crm/TaskManager/TaskManager.data';
+import { TMS_LEASING_TASK_GROUPS } from '../../../portals/md/aicc/daisyDivision.data';
 import { SidebarListWrapper } from './SidebarDepartmentsList.styles';
 
 export interface SidebarTasksListProps {
@@ -83,6 +84,78 @@ export const SidebarTasksList: FC<SidebarTasksListProps> = ({
         >
           🏛️ Tasks by Authority (DLD, RERA, FTA) <ArrowRight size={11} />
         </div>
+      </div>
+
+      {/* ── P0 DAMAC Hills 2 Leasing TMS Task Collections (AICC-Sanctum Actors) ── */}
+      <div style={{ marginBottom: '10px' }} data-testid="sidebar-tms-leasing-collections">
+        <div
+          style={{
+            fontSize: '0.65rem',
+            fontWeight: 800,
+            color: '#EF4444',
+            textTransform: 'uppercase',
+            padding: '2px 8px 6px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span>P0 Leasing Collections ({TMS_LEASING_TASK_GROUPS.length})</span>
+          <span style={{ color: '#34D399' }}>DEPT-05 • AICC Actors</span>
+        </div>
+        {TMS_LEASING_TASK_GROUPS.map(group => (
+          <div
+            key={group.collectionCode}
+            onClick={() => onNavigateToView?.('/aicc-sanctum')}
+            data-testid={`sidebar-tms-group-${group.collectionCode}`}
+            style={{
+              padding: '8px 10px',
+              borderRadius: '8px',
+              background: 'rgba(239, 68, 68, 0.08)',
+              border: '1px solid rgba(239, 68, 68, 0.28)',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+              marginBottom: '6px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span
+                style={{
+                  fontSize: '0.62rem',
+                  fontFamily: 'monospace',
+                  color: '#FCA5A5',
+                  background: 'rgba(239, 68, 68, 0.16)',
+                  padding: '1px 5px',
+                  borderRadius: '4px',
+                  fontWeight: 800,
+                }}
+              >
+                {group.collectionCode}
+              </span>
+              <span
+                style={{
+                  fontSize: '0.6rem',
+                  color: '#34D399',
+                  fontFamily: 'monospace',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '3px',
+                }}
+              >
+                <Bot size={10} /> {group.aiccActorCode}
+              </span>
+            </div>
+            <div style={{ fontSize: '0.74rem', fontWeight: 700, color: '#F8FAFC' }}>
+              {group.title}
+            </div>
+            <div style={{ fontSize: '0.63rem', color: '#FBBF24', fontWeight: 600 }}>
+              Actor: {group.aiccActorName}
+            </div>
+            <div style={{ fontSize: '0.59rem', color: '#94A3B8' }}>{group.reportingChain}</div>
+          </div>
+        ))}
       </div>
 
       {/* Header bar with Count and New Task action */}
@@ -203,4 +276,3 @@ export const SidebarTasksList: FC<SidebarTasksListProps> = ({
 };
 
 export default SidebarTasksList;
-
