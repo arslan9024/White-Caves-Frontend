@@ -1,12 +1,14 @@
 /**
  * View.tsx — AICC-Sanctum Executive Visual Command Center (MD Only)
- * 1 COO Zoe -> 12 Locked Directors -> 108 Managers • Drag-and-Drop Swap & CRUD
+ * 8-Tier Authority Chain: Arslan Malik (MD) -> 1 COO Zoe -> 12 Locked Directors -> 108 Managers
+ * -> Daisy's 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
  */
 
 import React, { useState } from 'react';
 import { GripVertical, Plus, UserMinus } from 'lucide-react';
 import { useAiccSanctumLogic } from './Logic.logic';
 import { styles } from './Style.style';
+import { DaisyLeasingHierarchyPanel } from './DaisyLeasingHierarchyPanel';
 
 export const AiccSanctumView: React.FC = () => {
   const {
@@ -48,20 +50,24 @@ export const AiccSanctumView: React.FC = () => {
 
   const metrics = [
     {
-      label: 'Total Command Network',
-      val: '121 Agents',
-      sub: '1 COO • 12 Locked Depts • 108 Managers',
+      label: '8-Tier Sovereign Authority',
+      val: 'Arslan Malik (MD)',
+      sub: 'Sole Human Today • 121 Core AI + 131 Daisy Division',
     },
     {
-      label: 'Active WhatsApp Channel',
-      val: '5 Numbers',
-      sub: 'AI Linda • DAMAC Hills 2 Rotation',
+      label: 'Daisy Leasing Division (DEPT-05)',
+      val: '12 AMs • 108 Sups',
+      sub: 'Dir Clara (DIR-05) → Mgr Daisy → 1 TL → 10 Agents',
     },
-    { label: 'The Record Keeper', val: 'AI Henry', sub: 'MGR-11-1 • Sole Male AI Officer' },
     {
-      label: 'Standby Reserve Pool',
-      val: `${standbyRoster.length} Agents`,
-      sub: 'Zero-Data-Loss Architecture',
+      label: 'Active WhatsApp Fleet',
+      val: '10 Numbers',
+      sub: '1 Primary Master (+971505760056) + 9 Hunter SIMs',
+    },
+    {
+      label: 'The Record Keeper & Reserve',
+      val: `AI Henry • ${standbyRoster.length} Standby`,
+      sub: 'MGR-11-1 (Sole Male AI) • 6 DMS Open Human Tiers',
     },
   ];
 
@@ -73,15 +79,15 @@ export const AiccSanctumView: React.FC = () => {
           <div>
             <h1 className={styles.h1}>White Caves AI Command Center — Sanctum</h1>
             <p className={styles.subtitle}>
-              Zoe&apos;s Team Only • 1 COO • 12 Locked Directors • 108 Managers • Drag &amp; Drop
-              Swap
+              MD Arslan Malik → COO Zoe → 12 Locked Directors → 108 Managers → Daisy 12 Asst Mgrs /
+              108 Supervisors / 1 TL / 10 Agents
             </p>
           </div>
         </div>
         <div className={styles.execCard}>
           <div className={`${styles.execAvatar} bg-red-600 text-white font-black text-lg`}>Z</div>
           <div className={styles.execInfo}>
-            <span className={styles.execLabel}>AI EXECUTIVE PARTNER</span>
+            <span className={styles.execLabel}>REPORTS TO ARSLAN MALIK (MD)</span>
             <span className={styles.execName}>{executiveCoo.name}</span>
             <span className={styles.execSub}>{executiveCoo.roleTitle}</span>
           </div>
@@ -167,7 +173,9 @@ export const AiccSanctumView: React.FC = () => {
                 </h2>
                 <p className="text-xs text-slate-400 mt-0.5">
                   Director:{' '}
-                  <strong className="text-white">{selectedDepartment?.director.name}</strong>
+                  <strong className="text-white">{selectedDepartment?.director.name}</strong> (
+                  {selectedDepartment?.director.code}) • Reports to AI Zoe (WC-COO-01) → Arslan
+                  Malik (MD)
                 </p>
               </div>
             </div>
@@ -177,7 +185,7 @@ export const AiccSanctumView: React.FC = () => {
                 placeholder="Search manager..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 w-48"
+                className="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 w-44"
               />
               <button
                 type="button"
@@ -198,21 +206,21 @@ export const AiccSanctumView: React.FC = () => {
                 value={newName}
                 onChange={e => setNewName(e.target.value)}
                 placeholder="Female Manager Name (e.g. AI Leila)"
-                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[160px]"
+                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[150px]"
                 required
               />
               <input
                 value={newRole}
                 onChange={e => setNewRole(e.target.value)}
                 placeholder="Role Title"
-                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[160px]"
+                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[150px]"
                 required
               />
               <input
                 value={newCap}
                 onChange={e => setNewCap(e.target.value)}
                 placeholder="Capabilities (comma-separated)"
-                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[160px]"
+                className="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white flex-1 min-w-[150px]"
               />
               <button
                 type="submit"
@@ -303,6 +311,8 @@ export const AiccSanctumView: React.FC = () => {
               </div>
             ))}
           </div>
+
+          <DaisyLeasingHierarchyPanel />
 
           <div className="mt-4 p-4 rounded-xl border border-slate-800 bg-[#1E293B]/40">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800 mb-3">

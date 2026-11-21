@@ -2,7 +2,9 @@
 /**
  * SidebarAiAssistantsList.tsx
  * White Caves Real Estate LLC — AICC-Sanctum & AIAMS Left Sidebar Drawer
- * Supports Drag-and-Drop Manager Swapping & Strict Zoe's Team Separation (<250 lines)
+ * 8-Tier Authority Chain: Arslan Malik (MD) -> Zoe -> Clara (DIR-05) -> Daisy (MGR-05-2)
+ * -> 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
+ * + DMS Draggable Open Human Job Positions (< 240 lines)
  */
 
 import React, { FC, useState, useEffect } from 'react';
@@ -15,6 +17,7 @@ import {
   GitFork,
   GripVertical,
   Sparkles,
+  Briefcase,
 } from 'lucide-react';
 import {
   loadAiAgentsFromStorage,
@@ -53,7 +56,7 @@ function isZoesBusinessTeamAgent(agent: AiAgentRecord): boolean {
 const PORTAL_LINKS = [
   {
     route: '/aicc-sanctum',
-    label: 'AICC-Sanctum Command (MD)',
+    label: 'AICC-Sanctum 8-Tier Command (MD)',
     color: '#F43F5E',
     bg: 'rgba(244,63,94,0.14)',
     border: 'rgba(244,63,94,0.35)',
@@ -71,7 +74,7 @@ const PORTAL_LINKS = [
   },
   {
     route: '/dashboard/aiams/managers',
-    label: 'Executive & 12 Dept AI Directors',
+    label: '12 Dept Directors & 108 Managers',
     color: '#FBBF24',
     bg: 'rgba(245,158,11,0.08)',
     border: 'rgba(245,158,11,0.2)',
@@ -80,7 +83,7 @@ const PORTAL_LINKS = [
   },
   {
     route: '/dashboard/aiams/supervisors',
-    label: '108 Squad Supervisor AIs',
+    label: 'Daisy 12 Asst Mgrs & 108 Supervisors',
     color: '#38BDF8',
     bg: 'rgba(56,189,248,0.08)',
     border: 'rgba(56,189,248,0.2)',
@@ -89,7 +92,7 @@ const PORTAL_LINKS = [
   },
   {
     route: '/dashboard/aiams/organogram',
-    label: '1-12-108 AI Organogram Tree',
+    label: '8-Tier Leasing & TMS Organogram',
     color: '#34D399',
     bg: 'rgba(16,185,129,0.08)',
     border: 'rgba(16,185,129,0.2)',
@@ -184,6 +187,44 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
         ))}
       </div>
 
+      {/* DMS Draggable Open Human Job Position under DEPT-05 */}
+      <div
+        draggable
+        onDragStart={e => e.dataTransfer.setData('text/plain', 'OPEN-DEPT05-MGR-LEASING-01')}
+        onClick={() => onNavigateToView?.('/aicc-sanctum')}
+        data-testid="dms-open-human-leasing-manager-card"
+        style={{
+          padding: '7px 8px',
+          borderRadius: '6px',
+          background: 'rgba(245, 158, 11, 0.12)',
+          border: '1px dashed rgba(245, 158, 11, 0.45)',
+          marginBottom: '8px',
+          cursor: 'grab',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '0.63rem',
+            color: '#FBBF24',
+            fontWeight: 800,
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Briefcase size={11} /> OPEN HUMAN ROLE • DEPT-05
+          </span>
+          <span>DRAG IN DMS</span>
+        </div>
+        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#F8FAFC', marginTop: '2px' }}>
+          Residential Leasing Manager (+12 AM / 108 Sup / 10 Agents)
+        </div>
+        <div style={{ fontSize: '0.62rem', color: '#94A3B8' }}>
+          Reports to: Dir AI Clara (DIR-05) → AI Zoe → Arslan Malik (MD)
+        </div>
+      </div>
+
       <div
         style={{
           display: 'flex',
@@ -254,7 +295,7 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
             }}
             data-testid={`sidebar-ai-agent-${agent.agentId}`}
             style={{
-              padding: '9px 10px',
+              padding: '8px 10px',
               borderRadius: '8px',
               background: isDropTarget
                 ? 'rgba(16, 185, 129, 0.18)'
@@ -271,7 +312,6 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
               flexDirection: 'column',
               gap: '4px',
               marginBottom: '6px',
-              transition: 'all 0.15s ease',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
