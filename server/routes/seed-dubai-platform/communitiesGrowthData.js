@@ -1,0 +1,168 @@
+export function buildGrowthCommunities() {
+  return [
+    {
+      communityId: 'COM-020',
+      communityName: 'Arabian Ranches',
+      arabicName: 'المرابع العربية',
+      tier: 'established',
+      location: {
+        district: 'Dubailand',
+        coordinates: { lat: 25.052, lng: 55.2633 },
+        distanceToDowntownKm: 25,
+      },
+      propertyTypes: [
+        { type: 'villa', available: true, priceRangeAED: { min: 3000000, max: 25000000 } },
+        { type: 'townhouse', available: true, priceRangeAED: { min: 2000000, max: 8000000 } },
+      ],
+      marketData: {
+        averagePricePerSqFt: 1200,
+        rentalYieldPercent: 5.0,
+        priceGrowthYoY: 6,
+        averageDaysOnMarket: 45,
+        demandIndex: 82,
+        lastUpdated: new Date(),
+      },
+      lifestyle: {
+        vibe: 'family',
+        noiseLevel: 'quiet',
+        walkability: 4,
+        nightlife: false,
+        petFriendly: true,
+      },
+      regulations: {
+        freeholdAvailable: true,
+        shortTermRentalAllowed: false,
+        visaEligible: true,
+      },
+      aiRecommendationScore: {
+        forInvestors: 75,
+        forFamilies: 95,
+        forYoungProfessionals: 40,
+        forRetirees: 85,
+        forLuxurySeekers: 60,
+      },
+    },
+    {
+      communityId: 'COM-030',
+      communityName: 'Dubai Hills Estate',
+      arabicName: 'دبي هيلز استيت',
+      tier: 'emerging',
+      location: {
+        district: 'Mohammed Bin Rashid City',
+        coordinates: { lat: 25.1128, lng: 55.2453 },
+        distanceToDowntownKm: 12,
+      },
+      propertyTypes: [
+        { type: 'villa', available: true, priceRangeAED: { min: 4000000, max: 50000000 } },
+        { type: 'apartment', available: true, priceRangeAED: { min: 1000000, max: 8000000 } },
+        { type: 'townhouse', available: true, priceRangeAED: { min: 2500000, max: 6000000 } },
+      ],
+      marketData: {
+        averagePricePerSqFt: 1400,
+        rentalYieldPercent: 5.5,
+        priceGrowthYoY: 12,
+        averageDaysOnMarket: 35,
+        demandIndex: 90,
+        lastUpdated: new Date(),
+      },
+      lifestyle: {
+        vibe: 'family',
+        noiseLevel: 'quiet',
+        walkability: 5,
+        nightlife: false,
+        petFriendly: true,
+      },
+      regulations: {
+        freeholdAvailable: true,
+        visaEligible: true,
+      },
+      aiRecommendationScore: {
+        forInvestors: 88,
+        forFamilies: 90,
+        forYoungProfessionals: 60,
+        forRetirees: 75,
+        forLuxurySeekers: 70,
+      },
+    },
+    {
+      communityId: 'COM-031',
+      communityName: 'Jumeirah Village Circle (JVC)',
+      arabicName: 'قرية جميرا الدائرية',
+      tier: 'emerging',
+      location: {
+        district: 'Jumeirah Village',
+        coordinates: { lat: 25.057, lng: 55.2078 },
+        distanceToDowntownKm: 18,
+      },
+      propertyTypes: [
+        { type: 'apartment', available: true, priceRangeAED: { min: 400000, max: 3000000 } },
+        { type: 'townhouse', available: true, priceRangeAED: { min: 1500000, max: 4000000 } },
+      ],
+      marketData: {
+        averagePricePerSqFt: 850,
+        rentalYieldPercent: 7.2,
+        priceGrowthYoY: 10,
+        averageDaysOnMarket: 20,
+        demandIndex: 85,
+        lastUpdated: new Date(),
+      },
+      lifestyle: {
+        vibe: 'family',
+        noiseLevel: 'moderate',
+        walkability: 4,
+        petFriendly: true,
+      },
+      regulations: {
+        freeholdAvailable: true,
+        shortTermRentalAllowed: true,
+        visaEligible: true,
+      },
+      aiRecommendationScore: {
+        forInvestors: 92,
+        forFamilies: 80,
+        forYoungProfessionals: 75,
+        forRetirees: 60,
+        forLuxurySeekers: 40,
+      },
+    },
+    {
+      communityId: 'COM-040',
+      communityName: 'Dubai South',
+      arabicName: 'دبي الجنوب',
+      tier: 'affordable',
+      location: {
+        district: 'Dubai South',
+        coordinates: { lat: 24.8917, lng: 55.1517 },
+        distanceToAirportKm: 5,
+        distanceToDowntownKm: 40,
+      },
+      propertyTypes: [
+        { type: 'apartment', available: true, priceRangeAED: { min: 300000, max: 1500000 } },
+        { type: 'townhouse', available: true, priceRangeAED: { min: 800000, max: 2500000 } },
+      ],
+      marketData: {
+        averagePricePerSqFt: 650,
+        rentalYieldPercent: 7.5,
+        priceGrowthYoY: 8,
+        averageDaysOnMarket: 35,
+        demandIndex: 75,
+        lastUpdated: new Date(),
+      },
+      lifestyle: {
+        vibe: 'mixed',
+        noiseLevel: 'moderate',
+      },
+      regulations: {
+        freeholdAvailable: true,
+        visaEligible: true,
+      },
+      aiRecommendationScore: {
+        forInvestors: 85,
+        forFamilies: 70,
+        forYoungProfessionals: 65,
+        forRetirees: 50,
+        forLuxurySeekers: 20,
+      },
+    },
+  ];
+}
