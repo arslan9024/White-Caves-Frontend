@@ -1,0 +1,117 @@
+import { DocTemplate, GeneratedDoc } from './types';
+
+export const DOCUMENT_TEMPLATES: DocTemplate[] = [
+  {
+    id: 'tenancy_contract',
+    icon: '📋',
+    title: 'Tenancy Contract (Ejari)',
+    description: 'RERA-approved residential tenancy agreement with Ejari registration data',
+    type: 'TENANCY_CONTRACT',
+    fields: [
+      { label: 'Tenant Name', key: 'tenantName', defaultValue: '' },
+      { label: 'Landlord Name', key: 'landlordName', defaultValue: '' },
+      { label: 'Property Address', key: 'propertyAddress', defaultValue: '' },
+      { label: 'Monthly Rent (AED)', key: 'monthlyRent', defaultValue: '' },
+      { label: 'Lease Start Date', key: 'leaseStart', defaultValue: '' },
+      { label: 'Lease End Date', key: 'leaseEnd', defaultValue: '' },
+    ],
+  },
+  {
+    id: 'mou_sale',
+    icon: '🤝',
+    title: 'MOU / Sale Agreement (Form F)',
+    description: 'Memorandum of Understanding for property sale transactions — DLD Form F compliant',
+    type: 'MOU_SALE',
+    fields: [
+      { label: 'Buyer Full Name', key: 'buyerName', defaultValue: '' },
+      { label: 'Seller Full Name', key: 'sellerName', defaultValue: '' },
+      { label: 'Property Reference', key: 'propertyRef', defaultValue: '' },
+      { label: 'Sale Price (AED)', key: 'salePrice', defaultValue: '' },
+      { label: 'Deposit Amount (AED)', key: 'depositAmount', defaultValue: '' },
+      { label: 'Completion Date', key: 'completionDate', defaultValue: '' },
+    ],
+  },
+  {
+    id: 'noc_letter',
+    icon: '✅',
+    title: 'NOC Letter — RERA Authority',
+    description: 'No Objection Certificate for property sub-leasing, alterations, or ownership transfer',
+    type: 'NOC',
+    fields: [
+      { label: 'Applicant Name', key: 'applicantName', defaultValue: '' },
+      { label: 'Property ID', key: 'propertyId', defaultValue: '' },
+      { label: 'NOC Purpose', key: 'nocPurpose', defaultValue: 'Sub-lease of residential unit' },
+      { label: 'Landlord Name', key: 'landlordName', defaultValue: '' },
+    ],
+  },
+  {
+    id: 'commission_statement',
+    icon: '💰',
+    title: 'Agent Commission Statement',
+    description: 'Itemized commission invoice with split breakdown, deal references, and VAT 5% section',
+    type: 'COMMISSION_STATEMENT',
+    fields: [
+      { label: 'Agent Name', key: 'agentName', defaultValue: '' },
+      { label: 'Deal Reference', key: 'dealReference', defaultValue: '' },
+      { label: 'Transaction Value (AED)', key: 'transactionValue', defaultValue: '' },
+      { label: 'Commission Rate (%)', key: 'commissionRate', defaultValue: '2' },
+      { label: 'Agent Split (%)', key: 'agentSplit', defaultValue: '70' },
+      { label: 'Pay Period', key: 'payPeriod', defaultValue: '' },
+    ],
+  },
+  {
+    id: 'pdc_schedule',
+    icon: '🏦',
+    title: 'Post-Dated Cheque (PDC) Schedule',
+    description: 'Structured PDC issuance schedule for annual/quarterly rent payments',
+    type: 'PDC_SCHEDULE',
+    fields: [
+      { label: 'Tenant Name', key: 'tenantName', defaultValue: '' },
+      { label: 'Annual Rent (AED)', key: 'annualRent', defaultValue: '' },
+      { label: 'No. of Cheques', key: 'noOfCheques', defaultValue: '4' },
+      { label: 'Bank Name', key: 'bankName', defaultValue: '' },
+      { label: 'First Cheque Date', key: 'firstChequeDate', defaultValue: '' },
+    ],
+  },
+  {
+    id: 'rera_form7',
+    icon: '📜',
+    title: 'RERA Form 7 — Eviction Notice',
+    description: 'Legally-compliant Form 7 eviction / non-renewal notice as per Dubai Tenancy Law',
+    type: 'RERA_FORM7',
+    fields: [
+      { label: 'Landlord Name', key: 'landlordName', defaultValue: '' },
+      { label: 'Tenant Name', key: 'tenantName', defaultValue: '' },
+      { label: 'Property Address', key: 'propertyAddress', defaultValue: '' },
+      { label: 'Notice Reason', key: 'noticeReason', defaultValue: 'Non-renewal of tenancy contract' },
+      { label: 'Vacate By Date', key: 'vacateByDate', defaultValue: '' },
+    ],
+  },
+];
+
+export const INITIAL_GENERATED_DOCS: GeneratedDoc[] = [
+  {
+    id: 'doc-001',
+    type: 'TENANCY_CONTRACT',
+    title: 'Tenancy Contract — Khalid Al Rashidi / Dubai Hills',
+    timestamp: '2026-07-27 14:30',
+    sizeKb: 142,
+    status: 'ready',
+  },
+  {
+    id: 'doc-002',
+    type: 'COMMISSION_STATEMENT',
+    title: 'Commission Statement — Nadia Yusuf / Q2 2026',
+    timestamp: '2026-07-26 09:12',
+    sizeKb: 88,
+    status: 'ready',
+  },
+  {
+    id: 'doc-003',
+    type: 'PDC_SCHEDULE',
+    title: 'PDC Schedule — Fatima Al Sayed / 4 Cheques',
+    timestamp: '2026-07-25 16:45',
+    sizeKb: 65,
+    status: 'ready',
+  },
+];

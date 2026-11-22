@@ -1021,7 +1021,7 @@
       "server/services/compliance/DocumentValidationService.js": 392,
       "server/services/compliance/GoAMLRegistrationService.js": 563,
       "server/services/compliance/KYCService.js": 624,
-      "server/services/ContractGeneratorService.js": 600,
+      "server/services/ContractGeneratorService.js": 78,
       "server/services/ContractService.js": 411,
       "server/services/ConversationBatchProcessor.js": 393,
       "server/services/documents/documentAutoFill.test.ts": 492,
