@@ -1,0 +1,155 @@
+/**
+ * Default blank template, demo preset, and official DLD bilingual legal terms.
+ */
+
+import type { DldTenancyContractData } from './types';
+
+export const BLANK_DLD_TENANCY_CONTRACT: DldTenancyContractData = {
+  contractId: '',
+  contractDate: '',
+  ownerName: '',
+  lessorName: '',
+  lessorEmiratesId: '',
+  lessorLicenseNo: '',
+  lessorLicensingAuthority: '',
+  lessorEmail: '',
+  lessorPhone: '',
+  tenantName: '',
+  tenantEmiratesId: '',
+  tenantLicenseNo: '',
+  tenantLicensingAuthority: '',
+  tenantEmail: '',
+  tenantPhone: '',
+  propertyUsage: 'residential',
+  plotNo: '',
+  makaniNo: '',
+  buildingName: '',
+  propertyNo: '',
+  propertyType: '',
+  propertyAreaSqM: 0,
+  location: '',
+  premisesNoDewa: '',
+  contractPeriodFrom: '',
+  contractPeriodTo: '',
+  contractValue: 0,
+  annualRent: 0,
+  securityDepositAmount: 0,
+  modeOfPayment: '4 Cheques',
+  additionalTerms: [
+    '1. The tenant shall maintain the interior of the premises in clean and good tenantable repair.',
+    '2. Minor maintenance up to AED 500 shall be borne by the tenant; major maintenance by the landlord.',
+    '3. Subleasing or sharing the property without prior written landlord authorization is strictly prohibited.',
+    '4. Notice period for lease renewal or vacation shall be at least 90 days prior to contract expiry.',
+    '5. Security deposit is refundable upon successful move-out inspection and settlement of final DEWA bill.',
+  ],
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  status: 'draft',
+};
+
+export const DEMO_PREFILLED_TENANCY_CONTRACT: DldTenancyContractData = {
+  contractId: 'TC-DLD-2026-0891',
+  contractDate: '18/08/2026',
+  ownerName: 'AKRAM DIB NEHME',
+  lessorName: 'AKRAM DIB NEHME',
+  lessorEmiratesId: '784-1985-1234567-1',
+  lessorLicenseNo: '',
+  lessorLicensingAuthority: '',
+  lessorEmail: 'akram.nehme@gmail.com',
+  lessorPhone: '+971 50 123 4567',
+  tenantName: 'Arslan Malik Bashir Ahmad',
+  tenantEmiratesId: '784-1993-1805733-0',
+  tenantLicenseNo: '1388443',
+  tenantLicensingAuthority: 'DET Dubai',
+  tenantEmail: 'admin@whitecaves.com',
+  tenantPhone: '+971 4 335 0592',
+  propertyUsage: 'residential',
+  plotNo: '5120',
+  makaniNo: '24185 62940',
+  buildingName: 'VIRIDIS A (DAMAC Hills 2)',
+  propertyNo: '504',
+  propertyType: 'Hotel Apartment',
+  propertyAreaSqM: 38.76,
+  location: 'Madinat Hind 4, Dubai',
+  premisesNoDewa: '204918273',
+  contractPeriodFrom: '01/09/2026',
+  contractPeriodTo: '31/08/2027',
+  contractValue: 48000,
+  annualRent: 48000,
+  securityDepositAmount: 4800,
+  modeOfPayment: '4 Cheques (PDC)',
+  tenantSignature: 'Arslan Malik',
+  tenantSignatureDate: '18/08/2026',
+  lessorSignature: 'Akram Dib Nehme',
+  lessorSignatureDate: '18/08/2026',
+  additionalTerms: [
+    '1. The tenant shall maintain the interior of the premises in clean and good tenantable repair.',
+    '2. Minor maintenance up to AED 500 shall be borne by the tenant; major maintenance by the landlord.',
+    '3. Subleasing or sharing the property without prior written landlord authorization is strictly prohibited.',
+    '4. Notice period for lease renewal or vacation shall be at least 90 days prior to contract expiry.',
+    '5. Security deposit is refundable upon successful move-out inspection and settlement of final DEWA bill.',
+  ],
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  status: 'ready_for_signature',
+  esignToken: 'ESIGN-DLD-WC-99214',
+};
+
+export const STANDARD_BILINGUAL_LEGAL_TERMS: readonly [string, string][] = [
+  [
+    '1. The tenant has inspected the premises and agreed to lease the unit on its current condition.',
+    '.١ عاين المستأجر الوحدة موضوع الايجار ووافق على إستئجار العقار على حالته الحالية',
+  ],
+  [
+    '2. Tenant undertakes to use the premises for designated purpose, tenant has no rights to transfer or relinquish the tenancy contract either with or without counterpart without landlord written approval. Also, tenant is not allowed to sublease the premises or any part thereof to third party in whole or in part unless it is legally permitted.',
+    '.٢ يتعهد المستأجر باستعمال المأجور للغرض المخصص له، و لا يجوز للمستأجر تحويل أو التنازل عن عقد الايجار للغير بمقابل أو دون مقابل دون موافقة المالك خطيا، كما لا يجوز للمستأجر تأجير المأجور أو أي جزء منه من الباطن مالم يسمح بذلك قانونا',
+  ],
+  [
+    '3. The tenant undertakes not to make any amendments, modifications or addendums to the premises subject of the contract without obtaining the landlord written approval. Tenant shall be liable for any damages or failure due to that.',
+    '.٣ يتعهد المستأجر بعدم إجراء أي تعديلات أو إضافات على العقار موضوع العقد دون موافقة المالك الخطية، و يكون المستأجر مسؤولا عن أي أضرار أو نقص أو تلف يلحق بالعقار',
+  ],
+  [
+    '4. The tenant shall be responsible for payment of all electricity, water, cooling and gas charges resulting of occupying leased unit unless other condition agreed in written.',
+    '.٤ يكون المستأجر مسؤولا عن سداد كافة فواتير الكهرباء و المياه و التبريد و الغاز المترتبة عن اشغاله المأجور مالم يتم الاتفاق على غير ذلك كتابيا',
+  ],
+  [
+    '5. The tenant must pay the rent amount in the manner and dates agreed with the landlord.',
+    '.٥ يتعهد المستأجر بسداد مبلغ الايجار المتفق عليه في هذا العقد في التواريخ و الطريقة المتفق عليها',
+  ],
+  [
+    '6. The tenant fully undertakes to comply with all the regulations and instructions related to the management of the property and the use of the premises and of common areas such (parking, swimming pools, gymnasium, etc…).',
+    '.٦ يلتزم المستأجر التقيد التام بالانظمة و التعليمات المتعلقة باستخدام المأجور و المنافع المشتركة (كمواقف السيارات، أحواض السباحة، النادي الصحي، الخ)',
+  ],
+  [
+    '7. Tenancy contract parties declare all mentioned emails addresses and phone numbers are correct, all formal and legal notifications will be sent to those addresses in case of dispute between parties',
+    '.٧ يقر أطراف التعاقد بصحة العناوين و أرقام الهواتف المذكورة أعلاه، و تكون تلك العناوين هي المعتمدة رسميا للإخطارات و الأعلانات القضائية في حال نشوء أي نزاع بين أطراف العقد',
+  ],
+  [
+    '8. The landlord undertakes to enable the tenant of the full use of the premises including its facilities (swimming pool, gym, parking lot, etc) and do the regular maintenance as intended unless other condition agreed in written, and not to do any act that would detract from the premises benefit.',
+    '.٨ يتعهد المؤجر بتمكين المستأجر من الانتفاع التام بالعقار للغرض المؤجر لأجله و المرافق الخاصة به (حوض سباحة، نادي صحي، مواقف سيارات.... إلخ) كما يكون مسؤولا عن أعمال الصيانة مالم يتم الاتفاق على غير ذلك، و عدم التعرض له في منفعة العقار',
+  ],
+  [
+    '9. By signing this agreement from the first party, the "Landlord" hereby confirms and undertakes that he is the current owner of the property or his legal representative under legal power of attorney duly entitled by the competent authorities.',
+    '.٩ يعتبر توقيع المؤجر على هذا العقد إقرار منه بأنه المالك الحالي للعقار أو الوكيل القانوني للمالك بموجب وكالة قانونية موثقة وفق الأصول لدى الجهات المختصة',
+  ],
+  [
+    '10. Any disagreement or dispute may arise from execution or interpretation of this contract shall be settled by the Rental Dispute Center.',
+    '.١٠ أي خلاف أو نزاع قد ينشأ عن تنفيذ أو تفسير هذا العقد يعود البت فيه لمركز فض المنازعات الإيجارية',
+  ],
+  [
+    '11. This contract is subject to all provisions of Law No (26) of 2007 regulating the relation between landlords and tenants in the emirate of Dubai as amended, and as it will be changed or amended from time to time, as long with any related legislations and regulations applied in the emirate of Dubai.',
+    '.١١ يخضع هذا العقد لكافة أحكام القانون رقم ( 26 ) لسنة 2007 بشأن تنظيم العلاقة بين مؤجري و مستأجري العقارات في إماراة دبي، و تعديلاته و أي تغيير أو تعديل يطرأ عليه من وقت لآخر، كما يخضع للتشريعات و اللوائح الأخرى ذات العلاقة النافذة في دبي',
+  ],
+  [
+    '12. Any additional condition will not be considered in case it conflicts with law.',
+    '.١٢ لا يعتد بأي شرط تم إضافته إلى هذا العقد في حال تعارضه مع القانون',
+  ],
+  [
+    '13. In case of discrepancy occurs between Arabic and non Arabic texts with regards to the interpretation of this agreement or the scope of its application, the Arabic text shall prevail.',
+    '.١٣ في حال حدوث أي تعارض أو اختلاف في التفسير بين النص العربي والنص الأجنبي يعتمد النص العربي',
+  ],
+  [
+    '14. The landlord undertakes to register this tenancy contract on EJARI affiliated to Dubai LandDepartment and provide with all required documents.',
+    '.١٤ يتعهد المؤجر بتسجيل عقد الايجار في نظام إيجاري التابع لدائرة الأراضي و الأملاك و توفير كافة المستندات اللازمة لذلك',
+  ],
+];
