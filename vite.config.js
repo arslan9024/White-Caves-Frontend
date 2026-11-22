@@ -33,20 +33,20 @@ export default defineConfig(async ({ command }) => {
     throw new Error('API_PORT must be an integer between 1 and 65535.');
   }
   const apiTarget = `http://127.0.0.1:${Number(apiPort)}`;
-  const plugins = [
-    react(),
-    federation({
-      name: 'white_caves_host',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './OperationsDepartmentView': './src/pages/crm/OperationsDepartmentView.tsx',
-        './FinanceDepartmentView': './src/pages/crm/FinanceDepartmentView.tsx',
-      },
-      shared: ['react', 'react-dom', 'react-router-dom', '@reduxjs/toolkit', 'react-redux'],
-    }),
-  ];
+  const plugins = [react()];
 
   if (command === 'build') {
+    plugins.push(
+      federation({
+        name: 'white_caves_host',
+        filename: 'remoteEntry.js',
+        exposes: {
+          './OperationsDepartmentView': './src/pages/crm/OperationsDepartmentView.tsx',
+          './FinanceDepartmentView': './src/pages/crm/FinanceDepartmentView.tsx',
+        },
+        shared: ['react', 'react-dom', 'react-router-dom', '@reduxjs/toolkit', 'react-redux'],
+      })
+    );
     try {
       const { visualizer } = await import('rollup-plugin-visualizer');
       plugins.push(
@@ -213,8 +213,14 @@ export default defineConfig(async ({ command }) => {
           '**/secrets/**',
           '**/.agents/**',
           '**/.cache/**',
+          '**/.lighthouseci/**',
           '**/temp/**',
           '**/coverage/**',
+          '**/dist/**',
+          '**/playwright-report/**',
+          '**/test-results/**',
+          '**/data/**',
+          '**/public/.agents/**',
           '**/*.log',
         ],
       },
@@ -302,7 +308,8 @@ export default defineConfig(async ({ command }) => {
       },
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      entries: ['index.html'],
+      include: ['react', 'react-dom', 'react-router-dom', '@reduxjs/toolkit', 'react-redux', 'lucide-react'],
     },
   };
 });

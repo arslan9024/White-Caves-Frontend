@@ -12,7 +12,7 @@
     "ports:check": "npx tsx ../secrets/ports.ts --check",
     "clean:cache": "node -e \"const fs=require('fs');['.vite','dist','tsconfig.tsbuildinfo'].forEach(p=>fs.rmSync(p,{recursive:true,force:true}));\"",
     "dev:all": "npx concurrently --kill-others --names \"SERVER,FRONTEND\" --prefix-colors \"cyan,yellow\" \"npm --prefix ../White-Caves-Server run dev\" \"npm run dev\"",
-    "dev:trio": "npx concurrently --kill-others --names \"SERVER,FRONTEND\" --prefix-colors \"cyan,yellow\" \"npm --prefix ../White-Caves-Server run dev\" \"npm run dev\"",
+    "dev:trio": "npx concurrently --kill-others --names \"SERVER,FRONTEND,WEB\" --prefix-colors \"cyan,yellow,green\" \"npm --prefix ../White-Caves-Server run dev\" \"npm run dev\" \"npm --prefix ../White-Caves-Web run dev\"",
     "dev:web-aegis": "npx concurrently --kill-others --names \"WEB,AEGIS\" --prefix-colors \"green,blue\" \"npm --prefix ../White-Caves-Web run dev\" \"npm --prefix ../Aegis-Sterling run dev\"",
     "dev": "npm run dev:precheck && vite",
     "dev:monorepo": "npm run dev:precheck && concurrently --names \"CLIENT,SERVER\" --prefix-colors \"cyan,green\" \"npm run dev:client\" \"npm run dev:server\"",
