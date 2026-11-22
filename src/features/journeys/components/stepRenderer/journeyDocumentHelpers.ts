@@ -1,10 +1,10 @@
-import type { JourneyResultOutcome } from '../../../types/journey';
-import type { DldTenancyContractData } from '../../../services/HenryTenancyContractTemplateService';
-import henryTenancyContractScannerService from '../../../services/HenryTenancyContractScannerService';
-import henryTitleDeedScannerService from '../../../services/HenryTitleDeedScannerService';
-import henryEmiratesIdScannerService from '../../../services/HenryEmiratesIdScannerService';
-import henryPassportScannerService from '../../../services/HenryPassportScannerService';
-import { canUseScan } from '../../../services/henryScanReview';
+import type { JourneyResultOutcome } from '../../../../types/journey';
+import type { DldTenancyContractData } from '../../../../services/HenryTenancyContractTemplateService';
+import henryTenancyContractScannerService from '../../../../services/HenryTenancyContractScannerService';
+import henryTitleDeedScannerService from '../../../../services/HenryTitleDeedScannerService';
+import henryEmiratesIdScannerService from '../../../../services/HenryEmiratesIdScannerService';
+import henryPassportScannerService from '../../../../services/HenryPassportScannerService';
+import { canUseScan } from '../../../../services/henryScanReview';
 
 export const PROCESSING_TASKS = [
   'Validating property and ownership deed',
