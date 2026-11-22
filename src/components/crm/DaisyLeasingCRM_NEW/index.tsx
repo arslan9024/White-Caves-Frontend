@@ -11,6 +11,7 @@ import {
   AlertCircle,
   TrendingUp,
   ArrowUp,
+  Building2,
 } from 'lucide-react';
 import { useLeasingData } from './hooks/useLeasingData';
 import LeasesTab from './tabs/LeasesTab';
@@ -21,12 +22,14 @@ import AssistantLifecycleTab from '../shared/AssistantLifecycleTab';
 import PipelineTab from './tabs/PipelineTab';
 import PDCPaymentsTab from './tabs/PDCPaymentsTab';
 import AnalyticsTab from './tabs/AnalyticsTab';
+import MdDailyLeasingCockpit from '../MdDailyLeasingCockpit';
 import '../AssistantDashboard.css';
 import './DaisyLeasingCRM.css';
 
-type TabId = 'leases' | 'pipeline' | 'inquiries' | 'pdc' | 'maintenance' | 'renewals' | 'analytics' | 'lifecycle';
+type TabId = 'cockpit' | 'leases' | 'pipeline' | 'inquiries' | 'pdc' | 'maintenance' | 'renewals' | 'analytics' | 'lifecycle';
 
 const TABS: Array<{ id: TabId; label: string; icon: React.ReactNode }> = [
+  { id: 'cockpit', label: 'MD Cockpit', icon: <Building2 size={14} /> },
   { id: 'leases', label: 'Leases', icon: <FileText size={14} /> },
   { id: 'pipeline', label: 'Pipeline', icon: <GitBranch size={14} /> },
   { id: 'inquiries', label: 'Inquiries', icon: <Users size={14} /> },
@@ -160,6 +163,8 @@ const DaisyLeasingCRM = () => {
       </div>
 
       <div className="tab-content">
+        {activeTab === 'cockpit' && <MdDailyLeasingCockpit />}
+
         {activeTab === 'leases' && (
           <LeasesTab
             leases={filteredLeases}
