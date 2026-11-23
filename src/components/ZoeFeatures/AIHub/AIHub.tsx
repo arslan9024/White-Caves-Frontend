@@ -1,28 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  Users,
-  MessageSquare,
-  Bot,
-  Briefcase,
-  ArrowRight,
-  Activity,
-  Zap,
-  ChevronRight,
-  AlertCircle,
-  Network,
-  Layers,
-  Target,
-  Home,
-  DollarSign,
-  Megaphone,
-  Shield,
-  FileText,
-  Users2,
-  Star,
-  Server,
-} from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { Activity, Network, Layers } from 'lucide-react';
 import type { AIAssistant } from '../../../store/slices/aiAssistant/types';
 import {
   selectAllAssistantsArray,
@@ -33,432 +11,52 @@ import {
   selectAssistant,
   addActivity,
 } from '../../../store/slices/aiAssistantDashboardSlice';
-import {
-  ASSISTANT_PROGRESS_SUMMARY,
-  ASSISTANT_SEQUENCE_PLAN,
-} from '../../../config/assistantImplementationProgress';
+import { QuickStatsBar } from './QuickStatsBar';
+import { AssistantCard } from './AssistantCard';
+import { FeatureMapView } from './FeatureMapView';
+import { ActivityFeed } from './ActivityFeed';
+import { ImplementationSequence } from './ImplementationSequence';
 import './AIAssistantHub.css';
 
-const ASSISTANT_ICONS: Record<string, LucideIcon> = {
-  nadia: MessageSquare,
-  mary: FileText,
-  clara: Target,
-  nina: Bot,
-  nancy: Users2,
-  theodora: DollarSign,
-  olivia: Megaphone,
-  zoe: Briefcase,
-  laila: Shield,
-  sophia: Users,
-  daisy: Home,
-  aurora: Server,
-};
+// Re-export subcomponents, helpers, and data for clean backwards compatibility
+export { AssistantCard } from './AssistantCard';
+export { QuickStatsBar } from './QuickStatsBar';
+export { FeatureMapView } from './FeatureMapView';
+export { ActivityFeed } from './ActivityFeed';
+export { ImplementationSequence } from './ImplementationSequence';
+export { ASSISTANT_ICONS, FEATURE_FLOWS } from './aiHubData';
+export type { FeatureFlow } from './aiHubData';
+export { formatTime, getStatusColor } from './aiHubHelpers';
 
-const FEATURE_FLOWS = [
-  {
-    id: 'whatsapp_lead_capture',
-    name: 'WhatsApp Lead Capture',
-    source: 'nadia',
-    target: 'clara',
-    description:
-      'Qualified leads from WhatsApp conversations are automatically transferred to the Leads CRM',
-    automationLevel: 'full',
-  },
-  {
-    id: 'lead_property_matching',
-    name: 'Lead Property Matching',
-    source: 'clara',
-    target: 'mary',
-    description: 'AI matches qualified leads with suitable properties from the inventory',
-    automationLevel: 'semi-auto',
-  },
-  {
-    id: 'bot_conversation_routing',
-    name: 'Bot Conversation Routing',
-    source: 'nina',
-    target: 'nadia',
-    description: 'Complex conversations from bots are escalated to human agents via Nadia',
-    automationLevel: 'full',
-  },
-  {
-    id: 'sales_lead_handoff',
-    name: 'Sales Lead Handoff',
-    source: 'nadia',
-    target: 'sophia',
-    description: 'Hot leads from WhatsApp are handed off to the sales pipeline',
-    automationLevel: 'semi-auto',
-  },
-  {
-    id: 'agent_assignment',
-    name: 'Agent Assignment',
-    source: 'clara',
-    target: 'nancy',
-    description: 'Leads are assigned to available agents based on HR availability data',
-    automationLevel: 'full',
-  },
-  {
-    id: 'financial_tracking',
-    name: 'Deal Financial Tracking',
-    source: 'sophia',
-    target: 'theodora',
-    description: 'Closed deals are synced to finance for invoicing and payment tracking',
-    automationLevel: 'full',
-  },
-  {
-    id: 'compliance_check',
-    name: 'KYC Compliance Check',
-    source: 'clara',
-    target: 'laila',
-    description: 'New leads undergo automated compliance and KYC verification',
-    automationLevel: 'semi-auto',
-  },
-  {
-    id: 'leasing_sync',
-    name: 'Leasing Property Sync',
-    source: 'mary',
-    target: 'daisy',
-    description: 'Available rental properties are synced to the leasing management system',
-    automationLevel: 'full',
-  },
-  {
-    id: 'system_health_reporting',
-    name: 'System Health Reporting',
-    source: 'aurora',
-    target: 'zoe',
-    description: 'Critical system alerts and performance reports are sent to executive dashboard',
-    automationLevel: 'full',
-  },
-  {
-    id: 'deployment_tracking',
-    name: 'Deployment Tracking',
-    source: 'aurora',
-    target: 'theodora',
-    description: 'Infrastructure costs and deployment metrics are synced for financial tracking',
-    automationLevel: 'semi-auto',
-  },
-];
-
-interface AIAssistantHubProps {
+export interface AIAssistantHubProps {
   onSelectAssistant?: (assistantId: string) => void;
 }
 
-const AIAssistantHub = ({ onSelectAssistant }: AIAssistantHubProps) => {
+export const AIAssistantHub: React.FC<AIAssistantHubProps> = ({ onSelectAssistant }) => {
   const dispatch = useDispatch();
   const assistants = useSelector(selectAllAssistantsArray);
   const ui = useSelector(selectUI);
   const favorites = useSelector(selectFavorites);
   const activities = useSelector(selectRecentActivity);
   const performance = useSelector(selectPerformance);
-  const [activeView, setActiveView] = useState<string>('overview');
-  const [selectedFlow, setSelectedFlow] = useState<string | null>(null);
+  const [activeView, setActiveView] = useState<'overview' | 'features' | 'activity'>('overview');
 
-  const handleAssistantClick = (assistantId: string): void => {
-    dispatch(selectAssistant(assistantId));
-    dispatch(
-      addActivity({
-        assistantId: assistantId,
-        action: 'Dashboard accessed',
-        target: assistantId.charAt(0).toUpperCase() + assistantId.slice(1) + ' CRM',
-        type: 'info',
-      })
-    );
-    if (onSelectAssistant) {
-      onSelectAssistant(assistantId);
-    }
-  };
-
-  const formatTime = (timestamp: string | number): string => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diff = Math.floor((now.getTime() - date.getTime()) / 60000);
-    if (diff < 1) return 'Just now';
-    if (diff < 60) return `${diff}m ago`;
-    if (diff < 1440) return `${Math.floor(diff / 60)}h ago`;
-    return date.toLocaleDateString();
-  };
-
-  const getStatusColor = (type: string): string => {
-    switch (type) {
-      case 'success':
-        return '#10B981';
-      case 'active':
-        return '#3B82F6';
-      case 'pending':
-        return '#F59E0B';
-      case 'error':
-        return '#EF4444';
-      case 'info':
-        return '#6366F1';
-      default:
-        return '#64748B';
-    }
-  };
-
-  const renderAssistantCard = (assistant: AIAssistant) => {
-    const Icon = ASSISTANT_ICONS[assistant.id] || Users;
-    const isFavorite = favorites.includes(assistant.id);
-    const isSelected = ui?.selectedAssistant === assistant.id;
-
-    return (
-      <div
-        key={assistant.id}
-        className={`assistant-card ${isSelected ? 'active' : ''}`}
-        style={{ '--assistant-color': assistant.colorScheme } as React.CSSProperties}
-        onClick={() => handleAssistantClick(assistant.id)}
-      >
-        <div className="assistant-header">
-          <div className="assistant-avatar" style={{ background: assistant.colorScheme }}>
-            <Icon size={24} />
-          </div>
-          <div className="assistant-info">
-            <div className="name-row">
-              <h3>{assistant.name}</h3>
-              {isFavorite && (
-                <Star size={14} className="favorite-icon" fill="#F59E0B" color="#F59E0B" />
-              )}
-            </div>
-            <span className="assistant-role">{assistant.title}</span>
-            <span className="assistant-department">{assistant.department}</span>
-          </div>
-          <div className="card-status">
-            <span
-              className={`status-dot ${assistant.metrics.systemHealth}`}
-              title={String(assistant.metrics.systemHealth)}
-            />
-          </div>
-        </div>
-
-        <p className="assistant-description">{assistant.description}</p>
-
-        <div className="assistant-stats">
-          {assistant.quickStats && (
-            <div className="stat-item highlight">
-              <span className="stat-value">
-                {String((assistant.quickStats as unknown as Record<string, unknown>)?.value ?? '')}
-              </span>
-              <span className="stat-label">
-                {String((assistant.quickStats as unknown as Record<string, unknown>)?.label ?? '')}
-              </span>
-            </div>
-          )}
-          <div className="stat-item">
-            <span className="stat-value">{assistant.metrics.tasksCompleted}</span>
-            <span className="stat-label">Tasks</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">{assistant.metrics.activeUsers}</span>
-            <span className="stat-label">Users</span>
-          </div>
-        </div>
-
-        <div className="assistant-capabilities">
-          {assistant.capabilities.slice(0, 3).map(cap => (
-            <span key={cap} className="capability-tag">
-              {cap.replace(/_/g, ' ')}
-            </span>
-          ))}
-          {assistant.capabilities.length > 3 && (
-            <span className="capability-tag more">+{assistant.capabilities.length - 3}</span>
-          )}
-        </div>
-
-        <div className="card-footer">
-          <button className="open-btn">
-            Open Dashboard
-            <ChevronRight size={16} />
-          </button>
-        </div>
-      </div>
-    );
-  };
-
-  const renderFeatureMapView = () => {
-    return (
-      <div className="feature-map-view">
-        <div className="map-header">
-          <Network size={20} />
-          <h3>AI Feature Integration Map</h3>
-          <span className="flow-count">{FEATURE_FLOWS.length} Active Flows</span>
-        </div>
-
-        <div className="flows-grid">
-          {FEATURE_FLOWS.map(flow => {
-            const SourceIcon = ASSISTANT_ICONS[flow.source] || Users;
-            const TargetIcon = ASSISTANT_ICONS[flow.target] || Users;
-            const sourceAssistant = assistants.find(a => a.id === flow.source);
-            const targetAssistant = assistants.find(a => a.id === flow.target);
-
-            return (
-              <div
-                key={flow.id}
-                className={`flow-card ${selectedFlow === flow.id ? 'selected' : ''}`}
-                onClick={() => setSelectedFlow(selectedFlow === flow.id ? null : flow.id)}
-              >
-                <div className="flow-header">
-                  <h4>{flow.name}</h4>
-                  <span className={`automation-badge ${flow.automationLevel}`}>
-                    {flow.automationLevel === 'full' ? 'Automated' : 'Semi-Auto'}
-                  </span>
-                </div>
-
-                <div className="flow-visual">
-                  <div
-                    className="flow-node source"
-                    style={{ background: sourceAssistant?.colorScheme }}
-                  >
-                    <SourceIcon size={18} />
-                    <span>{flow.source}</span>
-                  </div>
-                  <div className="flow-arrow">
-                    <ArrowRight size={20} />
-                  </div>
-                  <div
-                    className="flow-node target"
-                    style={{ background: targetAssistant?.colorScheme }}
-                  >
-                    <TargetIcon size={18} />
-                    <span>{flow.target}</span>
-                  </div>
-                </div>
-
-                {selectedFlow === flow.id && <p className="flow-description">{flow.description}</p>}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
-
-  const renderActivityFeed = () => (
-    <div className="activity-feed">
-      <div className="feed-header">
-        <Activity size={18} />
-        <h3>Live Activity Feed</h3>
-        <span className="activity-count">{activities.length} recent</span>
-      </div>
-
-      <div className="activity-list">
-        {activities.slice(0, 10).map(activity => {
-          const Icon = ASSISTANT_ICONS[activity.assistantId] || Zap;
-          const assistant = assistants.find(a => a.id === activity.assistantId);
-
-          return (
-            <div key={activity.id} className="activity-item">
-              <div
-                className="activity-icon"
-                style={{ background: assistant?.colorScheme || 'var(--text-secondary)' }}
-              >
-                <Icon size={14} />
-              </div>
-              <div className="activity-content">
-                <div className="activity-header">
-                  <span className="assistant-name">{assistant?.name || activity.assistantId}</span>
-                  <span className="activity-time">{formatTime(activity.timestamp)}</span>
-                </div>
-                <div className="activity-action">{activity.action}</div>
-                <div className="activity-target">{activity.target}</div>
-              </div>
-              <div
-                className="activity-status"
-                style={{ background: getStatusColor(activity.type) }}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-
-  const renderQuickStats = () => (
-    <div className="quick-stats-bar">
-      <div className="stat-card">
-        <div className="stat-icon" style={{ background: 'var(--primary-color)' }}>
-          <Users size={20} />
-        </div>
-        <div className="stat-info">
-          <span className="stat-value">{assistants.length}</span>
-          <span className="stat-label">AI Assistants</span>
-        </div>
-      </div>
-
-      <div className="stat-card">
-        <div className="stat-icon" style={{ background: 'var(--green-500, #10B981)' }}>
-          <Activity size={20} />
-        </div>
-        <div className="stat-info">
-          <span className="stat-value">{ASSISTANT_PROGRESS_SUMMARY.complete}</span>
-          <span className="stat-label">Complete</span>
-        </div>
-      </div>
-
-      <div className="stat-card">
-        <div className="stat-icon" style={{ background: 'var(--error-color, #EF4444)' }}>
-          <AlertCircle size={20} />
-        </div>
-        <div className="stat-info">
-          <span className="stat-value">{ASSISTANT_PROGRESS_SUMMARY.incomplete}</span>
-          <span className="stat-label">Incomplete</span>
-        </div>
-      </div>
-
-      <div className="stat-card">
-        <div className="stat-icon" style={{ background: 'var(--accent-color, #8B5CF6)' }}>
-          <Zap size={20} />
-        </div>
-        <div className="stat-info">
-          <span className="stat-value">{performance?.activeTasks || 0}</span>
-          <span className="stat-label">Active Tasks</span>
-        </div>
-      </div>
-
-      {performance?.criticalAlerts?.length > 0 && (
-        <div className="stat-card alert">
-          <div className="stat-icon" style={{ background: 'var(--error-color, #EF4444)' }}>
-            <AlertCircle size={20} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-value">{performance.criticalAlerts.length}</span>
-            <span className="stat-label">Alerts</span>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-
-  const renderImplementationSequence = () => (
-    <div className="department-section">
-      <div className="department-header">
-        <h2>Implementation Sequence</h2>
-        <span className="assistant-count">{ASSISTANT_SEQUENCE_PLAN.length} pending</span>
-      </div>
-      <div className="assistants-grid">
-        {ASSISTANT_SEQUENCE_PLAN.map((assistantId, index) => {
-          const assistant = assistants.find(item => item.id === assistantId);
-          return (
-            <div key={assistantId} className="assistant-card">
-              <div className="assistant-header">
-                <div
-                  className="assistant-avatar"
-                  style={{ background: assistant?.colorScheme || 'var(--primary-color, #E31E24)' }}
-                >
-                  {index + 1}
-                </div>
-                <div className="assistant-info">
-                  <div className="name-row">
-                    <h3>{assistant?.name || assistantId}</h3>
-                  </div>
-                  <span className="assistant-role">
-                    {assistant?.title || 'Assistant upgrade pending'}
-                  </span>
-                  <span className="assistant-department">{assistant?.department || 'unknown'}</span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+  const handleAssistantClick = useCallback(
+    (assistantId: string): void => {
+      dispatch(selectAssistant(assistantId));
+      dispatch(
+        addActivity({
+          assistantId: assistantId,
+          action: 'Dashboard accessed',
+          target: assistantId.charAt(0).toUpperCase() + assistantId.slice(1) + ' CRM',
+          type: 'info',
+        })
+      );
+      if (onSelectAssistant) {
+        onSelectAssistant(assistantId);
+      }
+    },
+    [dispatch, onSelectAssistant]
   );
 
   const groupedAssistants = useMemo(() => {
@@ -481,7 +79,11 @@ const AIAssistantHub = ({ onSelectAssistant }: AIAssistantHubProps) => {
         </div>
       </div>
 
-      {renderQuickStats()}
+      <QuickStatsBar
+        totalAssistants={assistants.length}
+        activeTasks={performance?.activeTasks || 0}
+        criticalAlertsCount={performance?.criticalAlerts?.length || 0}
+      />
 
       <div className="hub-nav">
         <button
@@ -510,7 +112,7 @@ const AIAssistantHub = ({ onSelectAssistant }: AIAssistantHubProps) => {
       <div className="hub-content">
         {activeView === 'overview' && (
           <div className="overview-view">
-            {renderImplementationSequence()}
+            <ImplementationSequence assistants={assistants} />
             {Object.entries(groupedAssistants).map(([department, deptAssistants]) => (
               <div key={department} className="department-section">
                 <div className="department-header">
@@ -518,20 +120,29 @@ const AIAssistantHub = ({ onSelectAssistant }: AIAssistantHubProps) => {
                   <span className="assistant-count">{deptAssistants.length} assistants</span>
                 </div>
                 <div className="assistants-grid">
-                  {deptAssistants.map(assistant => renderAssistantCard(assistant))}
+                  {deptAssistants.map(assistant => (
+                    <AssistantCard
+                      key={assistant.id}
+                      assistant={assistant}
+                      isSelected={ui?.selectedAssistant === assistant.id}
+                      isFavorite={favorites.includes(assistant.id)}
+                      onSelect={handleAssistantClick}
+                    />
+                  ))}
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {activeView === 'features' && renderFeatureMapView()}
+        {activeView === 'features' && <FeatureMapView assistants={assistants} />}
 
-        {activeView === 'activity' && renderActivityFeed()}
+        {activeView === 'activity' && (
+          <ActivityFeed activities={activities} assistants={assistants} />
+        )}
       </div>
     </div>
   );
 };
 
 export default AIAssistantHub;
-

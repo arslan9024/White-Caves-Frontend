@@ -731,7 +731,7 @@
       "src/components/plans/PlanManager.jsx": 762,
       "src/components/portal/landlord/LandlordMaintenanceTab.tsx": 380,
       "src/components/portal/landlord/LandlordOfferReviewTab.tsx": 401,
-      "src/components/portal/landlord/LandlordPaymentsTab.tsx": 537,
+      "src/components/portal/landlord/LandlordPaymentsTab.tsx": 142,
       "src/components/portal/landlord/LandlordPropertiesTab.tsx": 371,
       "src/components/portal/landlord/LandlordTenantsTab.tsx": 556,
       "src/components/portal/PortalProfileTab.tsx": 381,
