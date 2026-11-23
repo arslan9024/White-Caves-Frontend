@@ -28,7 +28,13 @@ interface UnifiedWorkspaceSidebarProps {
   categories: string[];
   activeCategory: string;
   setActiveCategory: (cat: string) => void;
-  filteredViews: Array<{ id: string; code: string; title: string; group?: string; category?: string }>;
+  filteredViews: Array<{
+    id: string;
+    code: string;
+    title: string;
+    group?: string;
+    category?: string;
+  }>;
   activeViewCode: string;
   setActiveViewCode: (code: string) => void;
   activeSubItemId: string | null;
@@ -245,6 +251,7 @@ export const UnifiedWorkspaceSidebar: React.FC<UnifiedWorkspaceSidebarProps> = (
         setActiveViewCode={setActiveViewCode}
         activeSubItemId={activeSubItemId}
         setActiveSubItemId={setActiveSubItemId}
+        onNavigate={onNavigate}
       />
 
       {/* User Footer with Role Badge */}
@@ -258,4 +265,3 @@ export const UnifiedWorkspaceSidebar: React.FC<UnifiedWorkspaceSidebarProps> = (
 };
 
 export default UnifiedWorkspaceSidebar;
-

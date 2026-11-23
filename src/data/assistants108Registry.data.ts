@@ -103,8 +103,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#EF4444',
     gradient: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
     icon: 'MessageSquare',
-    description: 'VIP client welcoming, 5-star concierge, multi-lingual reception, and frontline luxury hospitality.',
-    managerAi: { id: 'mgr_corinne', name: 'AI Corinne', title: 'Director of Customer Experience & Hospitality', avatar: 'https://ui-avatars.com/api/?name=Corinne+Hospitality&background=EF4444&color=fff' },
+    description:
+      'VIP client welcoming, 5-star concierge, multi-lingual reception, and frontline luxury hospitality.',
+    managerAi: {
+      id: 'mgr_corinne',
+      name: 'AI Corinne',
+      title: 'Director of Customer Experience & Hospitality',
+      avatar: 'https://ui-avatars.com/api/?name=Corinne+Hospitality&background=EF4444&color=fff',
+    },
   },
   {
     id: 'marketing_branding',
@@ -113,8 +119,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#EC4899',
     gradient: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
     icon: 'Megaphone',
-    description: 'Omnichannel lead acquisition, luxury brand identity, portal syndication (Bayut/PropertyFinder), and paid campaigns.',
-    managerAi: { id: 'mgr_olivia', name: 'AI Olivia', title: 'Director of Marketing & Brand Acquisition', avatar: 'https://ui-avatars.com/api/?name=Olivia+Marketing&background=EC4899&color=fff' },
+    description:
+      'Omnichannel lead acquisition, luxury brand identity, portal syndication (Bayut/PropertyFinder), and paid campaigns.',
+    managerAi: {
+      id: 'mgr_olivia',
+      name: 'AI Olivia',
+      title: 'Director of Marketing & Brand Acquisition',
+      avatar: 'https://ui-avatars.com/api/?name=Olivia+Marketing&background=EC4899&color=fff',
+    },
   },
   {
     id: 'human_resources',
@@ -123,8 +135,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#8B5CF6',
     gradient: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)',
     icon: 'Users',
-    description: 'Talent acquisition, broker performance KPIs, RERA broker licensing onboarding, and organizational culture.',
-    managerAi: { id: 'mgr_selena', name: 'AI Selena', title: 'Director of Human Resources & Performance', avatar: 'https://ui-avatars.com/api/?name=Selena+HR&background=8B5CF6&color=fff' },
+    description:
+      'Talent acquisition, broker performance KPIs, RERA broker licensing onboarding, and organizational culture.',
+    managerAi: {
+      id: 'mgr_selena',
+      name: 'AI Selena',
+      title: 'Director of Human Resources & Performance',
+      avatar: 'https://ui-avatars.com/api/?name=Selena+HR&background=8B5CF6&color=fff',
+    },
   },
   {
     id: 'technology_systems',
@@ -133,8 +151,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#0EA5E9',
     gradient: 'linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)',
     icon: 'Cpu',
-    description: 'Core CRM software engineering, cloud infrastructure, AI automation pipelines, and API gateway security.',
-    managerAi: { id: 'mgr_aurora', name: 'AI Aurora', title: 'Chief Technology & Digital Infrastructure Director', avatar: 'https://ui-avatars.com/api/?name=Aurora+CTO&background=0EA5E9&color=fff' },
+    description:
+      'Core CRM software engineering, cloud infrastructure, AI automation pipelines, and API gateway security.',
+    managerAi: {
+      id: 'mgr_aurora',
+      name: 'AI Aurora',
+      title: 'Chief Technology & Digital Infrastructure Director',
+      avatar: 'https://ui-avatars.com/api/?name=Aurora+CTO&background=0EA5E9&color=fff',
+    },
   },
   {
     id: 'sales_operations',
@@ -143,8 +167,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#F97316',
     gradient: 'linear-gradient(135deg, #F97316 0%, #EA580C 100%)',
     icon: 'TrendingUp',
-    description: 'Primary and secondary luxury real estate sales, client advisory services, and active deal closing operations.',
-    managerAi: { id: 'mgr_clara', name: 'AI Clara', title: 'Director of Sales & Deal Operations', avatar: 'https://ui-avatars.com/api/?name=Clara+Sales&background=F97316&color=fff' },
+    description:
+      'Primary and secondary luxury real estate sales, client advisory services, and active deal closing operations.',
+    managerAi: {
+      id: 'mgr_clara',
+      name: 'AI Clara',
+      title: 'Director of Sales & Deal Operations',
+      avatar: 'https://ui-avatars.com/api/?name=Clara+Sales&background=F97316&color=fff',
+    },
   },
   {
     id: 'inventory_portfolio',
@@ -153,8 +183,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
     icon: 'Building',
-    description: 'Master property inventory catalog, landlord portfolio custody, developer unit allocation, and asset preservation.',
-    managerAi: { id: 'mgr_sentinel', name: 'AI Sentinel', title: 'Director of Inventory & Asset Management', avatar: 'https://ui-avatars.com/api/?name=Sentinel+Inventory&background=10B981&color=fff' },
+    description:
+      'Master property inventory catalog, landlord portfolio custody, developer unit allocation, and asset preservation.',
+    managerAi: {
+      id: 'mgr_sentinel',
+      name: 'AI Sentinel',
+      title: 'Director of Inventory & Asset Management',
+      avatar: 'https://ui-avatars.com/api/?name=Sentinel+Inventory&background=10B981&color=fff',
+    },
   },
   {
     id: 'partnerships_growth',
@@ -163,8 +199,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#14B8A6',
     gradient: 'linear-gradient(135deg, #14B8A6 0%, #0D9488 100%)',
     icon: 'Briefcase',
-    description: 'Tier-1 master developer alliances (Emaar, Nakheel, Sobha), family office relations, institutional JV capital, and global investor corridors.',
-    managerAi: { id: 'mgr_maktoum', name: 'AI Maktoum', title: 'Director of Strategic Alliances & Capital Growth', avatar: 'https://ui-avatars.com/api/?name=Maktoum+Alliances&background=14B8A6&color=fff' },
+    description:
+      'Tier-1 master developer alliances (Emaar, Nakheel, Sobha), family office relations, institutional JV capital, and global investor corridors.',
+    managerAi: {
+      id: 'mgr_maktoum',
+      name: 'AI Maktoum',
+      title: 'Director of Strategic Alliances & Capital Growth',
+      avatar: 'https://ui-avatars.com/api/?name=Maktoum+Alliances&background=14B8A6&color=fff',
+    },
   },
   {
     id: 'media_public_relations',
@@ -173,8 +215,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#25D366',
     gradient: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
     icon: 'Radio',
-    description: 'Executive press releases, luxury architectural media studio, public relations broadcasts, and corporate reputation management.',
-    managerAi: { id: 'mgr_maya', name: 'AI Maya', title: 'Director of Media & Public Relations', avatar: 'https://ui-avatars.com/api/?name=Maya+Media&background=25D366&color=fff' },
+    description:
+      'Executive press releases, luxury architectural media studio, public relations broadcasts, and corporate reputation management.',
+    managerAi: {
+      id: 'mgr_maya',
+      name: 'AI Maya',
+      title: 'Director of Media & Public Relations',
+      avatar: 'https://ui-avatars.com/api/?name=Maya+Media&background=25D366&color=fff',
+    },
   },
   {
     id: 'research_analytics',
@@ -183,8 +231,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#64748B',
     gradient: 'linear-gradient(135deg, #64748B 0%, #475569 100%)',
     icon: 'BarChart3',
-    description: 'Dubai Land Department macroeconomic transaction indexing, price appreciation forecasting, and real estate data science.',
-    managerAi: { id: 'mgr_elena', name: 'AI Elena', title: 'Chief Research & Intelligence Director', avatar: 'https://ui-avatars.com/api/?name=Elena+CRO&background=64748B&color=fff' },
+    description:
+      'Dubai Land Department macroeconomic transaction indexing, price appreciation forecasting, and real estate data science.',
+    managerAi: {
+      id: 'mgr_elena',
+      name: 'AI Elena',
+      title: 'Chief Research & Intelligence Director',
+      avatar: 'https://ui-avatars.com/api/?name=Elena+CRO&background=64748B&color=fff',
+    },
   },
   {
     id: 'accounting_finance',
@@ -193,8 +247,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#F59E0B',
     gradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
     icon: 'DollarSign',
-    description: 'UAE FTA VAT 5%, Corporate Tax 9%, broker commission ledger, escrow account reconciliations, and P&L financial audits.',
-    managerAi: { id: 'mgr_theodora', name: 'AI Theodora', title: 'Chief Financial Director', avatar: 'https://ui-avatars.com/api/?name=Theodora+Finance&background=F59E0B&color=fff' },
+    description:
+      'UAE FTA VAT 5%, Corporate Tax 9%, broker commission ledger, escrow account reconciliations, and P&L financial audits.',
+    managerAi: {
+      id: 'mgr_theodora',
+      name: 'AI Theodora',
+      title: 'Chief Financial Director',
+      avatar: 'https://ui-avatars.com/api/?name=Theodora+Finance&background=F59E0B&color=fff',
+    },
   },
   {
     id: 'legal_compliance',
@@ -203,8 +263,14 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#6366F1',
     gradient: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)',
     icon: 'FileCheck',
-    description: 'DLD/RERA statutory compliance, Trakheesi permits, Anti-Money Laundering (goAML/KYC), and corporate contract governance.',
-    managerAi: { id: 'mgr_sofia', name: 'AI Sofia', title: 'Chief Legal & Compliance Officer', avatar: 'https://ui-avatars.com/api/?name=Sofia+Legal&background=6366F1&color=fff' },
+    description:
+      'DLD/RERA statutory compliance, Trakheesi permits, Anti-Money Laundering (goAML/KYC), and corporate contract governance.',
+    managerAi: {
+      id: 'mgr_sofia',
+      name: 'AI Sofia',
+      title: 'Chief Legal & Compliance Officer',
+      avatar: 'https://ui-avatars.com/api/?name=Sofia+Legal&background=6366F1&color=fff',
+    },
   },
   {
     id: 'executive_governance',
@@ -213,12 +279,18 @@ export const CORPORATE_DEPARTMENTS_12: DepartmentDef[] = [
     color: '#1E293B',
     gradient: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)',
     icon: 'Shield',
-    description: 'Board of Directors governance, strategic enterprise roadmap execution, M&A operations, and sovereign company policy.',
-    managerAi: { id: 'mgr_zayed', name: 'AI Zayed', title: 'Director of Strategic Governance & Enterprise Operations', avatar: 'https://ui-avatars.com/api/?name=Zayed+Governance&background=1E293B&color=fff' },
+    description:
+      'Board of Directors governance, strategic enterprise roadmap execution, M&A operations, and sovereign company policy.',
+    managerAi: {
+      id: 'mgr_zayed',
+      name: 'AI Zayed',
+      title: 'Director of Strategic Governance & Enterprise Operations',
+      avatar: 'https://ui-avatars.com/api/?name=Zayed+Governance&background=1E293B&color=fff',
+    },
   },
 ];
 
-import { SUPERVISOR_TAXONOMY_108 } from './assistants108Taxonomy.data.js';
+import { SUPERVISOR_TAXONOMY_108 } from './assistants108Taxonomy.data';
 
 // Helper to generate 9 dedicated supervisors for each department (12 * 9 = 108)
 function build108Supervisors(): SupervisorDef[] {
@@ -268,4 +340,3 @@ export const CANONICAL_COUNTS = {
   totalSupervisors: 108,
   totalAiMesh: 1 + 12 + 108, // 121
 };
-
