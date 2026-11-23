@@ -4,12 +4,14 @@
  * Single Purpose File Law: < 350 lines
  */
 
-import React, { FC } from 'react';
-import { X, CheckCircle, ArrowLeft } from 'lucide-react';
+import React, { FC, useState } from 'react';
+import { CheckCircle } from 'lucide-react';
 import { DealItem, DealStatus } from './DealManager.types';
 import { DealPdcScheduleSection } from './DealPdcScheduleSection';
 import { DealStatutoryDocsSection } from './DealStatutoryDocsSection';
 import { DealPrimaryPartiesGrid } from './DealPrimaryPartiesGrid';
+import { DealDetailHeader } from './DealDetailHeader';
+import { TenancyDealCockpit } from './TenancyDealCockpit';
 
 export interface DealDetailModalProps {
   deal: DealItem;
@@ -26,6 +28,11 @@ export const DealDetailModal: FC<DealDetailModalProps> = ({
   onNavigateToDoc,
   isInline = false,
 }) => {
+  const isLeasing = deal.dealType === 'LEASING';
+  const [activeTab, setActiveTab] = useState<'cockpit' | 'dossier'>(
+    isLeasing ? 'cockpit' : 'dossier'
+  );
+
   const allStatuses: DealStatus[] = [
     'INQUIRY',
     'VIEWING',
@@ -36,186 +43,166 @@ export const DealDetailModal: FC<DealDetailModalProps> = ({
     'CANCELLED',
   ];
 
+  const mapStatusToStageOrder = (status: DealStatus): number => {
+    switch (status) {
+      case 'INQUIRY':
+        return 1;
+      case 'VIEWING':
+        return 5;
+      case 'OFFER':
+        return 6;
+      case 'CONTRACT':
+        return 8;
+      case 'EJARI_DLD':
+        return 11;
+      case 'COMPLETED':
+        return 12;
+      default:
+        return 7;
+    }
+  };
+
+  const mapStageOrderToStatus = (stage: number): DealStatus => {
+    if (stage >= 12) return 'COMPLETED';
+    if (stage >= 11) return 'EJARI_DLD';
+    if (stage >= 8) return 'CONTRACT';
+    if (stage >= 6) return 'OFFER';
+    if (stage >= 5) return 'VIEWING';
+    return 'INQUIRY';
+  };
+
+  const handleAdvanceCockpitStage = async (targetStage: number) => {
+    const nextStatus = mapStageOrderToStatus(targetStage);
+    onAdvanceStatus(deal.id, nextStatus);
+
+    try {
+      await fetch(`/api/leasing-formula/tenancy-deals/${deal.id}/advance`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nextStage: `STAGE_${String(targetStage).padStart(2, '0')}`,
+          actorUserId: 'md-arslan-malik',
+        }),
+      });
+    } catch {
+      // Graceful fallback for offline / mock testing
+    }
+  };
+
   const cardContent = (
     <>
-      {/* Top Inline Back Navigation Banner */}
-      {isInline && (
-        <div
-          style={{
-            padding: '14px 24px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-            background: 'rgba(255, 255, 255, 0.02)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <button
-            type="button"
-            onClick={onClose}
-            data-testid="deal-back-btn"
+      <DealDetailHeader
+        deal={deal}
+        isInline={isInline}
+        onClose={onClose}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+
+      {isLeasing && activeTab === 'cockpit' ? (
+        <div style={{ padding: '8px 0 24px 0' }}>
+          <TenancyDealCockpit
+            dealId={deal.id}
+            contractMode={deal.title.toLowerCase().includes('renewal') ? 'RENEWAL_TENANCY' : 'NEW_TENANCY'}
+            area={deal.propertyCommunity || 'DAMAC Hills 2'}
+            project={deal.propertyTitle || 'Camellia'}
+            unitNumber="TH-C-104"
+            landlordName={deal.ownerName || 'Mohammed Al Mansoori'}
+            tenantName={deal.clientName || 'Sarah Jenkins'}
+            annualRentAed={deal.valueAED}
+            chequesCount={deal.pdcSchedule?.length || 4}
+            currentStageOrder={mapStatusToStageOrder(deal.status)}
+            onAdvanceStage={handleAdvanceCockpitStage}
+          />
+        </div>
+      ) : (
+        /* Modal / Inline Dossier Body */
+        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Status & Financials Bar */}
+          <div
             style={{
-              display: 'inline-flex',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              gap: '8px',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              background: 'rgba(255, 255, 255, 0.06)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#38BDF8',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
+              padding: '14px 18px',
+              background: 'rgba(15, 23, 42, 0.6)',
+              borderRadius: '10px',
+              border: '1px solid rgba(255, 255, 255, 0.06)',
+              gap: '12px',
             }}
           >
-            <ArrowLeft size={16} />
-            <span>← Back to Deals Pipeline</span>
-          </button>
-          <span style={{ fontSize: '0.75rem', color: '#94A3B8', fontFamily: 'monospace' }}>
-            Active Dossier · {deal.id}
-          </span>
-        </div>
-      )}
-
-      {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          padding: '20px 24px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-          background: 'rgba(255, 255, 255, 0.02)',
-        }}
-      >
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <span
-              style={{
-                fontSize: '0.72rem',
-                fontWeight: 800,
-                padding: '2px 8px',
-                borderRadius: '6px',
-                background: 'rgba(168, 85, 247, 0.2)',
-                color: '#C084FC',
-                border: '1px solid #C084FC',
-              }}
-            >
-              {deal.dealType}
-            </span>
-            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#38BDF8' }}>
-              {deal.id} · {deal.dealNumber}
-            </span>
-          </div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', margin: 0 }}>
-            {deal.title}
-          </h2>
-        </div>
-
-        {!isInline && (
-          <button
-            onClick={onClose}
-            data-testid="close-deal-modal"
-            style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: 'none',
-              color: '#94A3B8',
-              padding: '6px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-            }}
-          >
-            <X size={18} />
-          </button>
-        )}
-      </div>
-
-      {/* Modal / Inline Body */}
-      <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        {/* Status & Financials Bar */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '14px 18px',
-            background: 'rgba(15, 23, 42, 0.6)',
-            borderRadius: '10px',
-            border: '1px solid rgba(255, 255, 255, 0.06)',
-            gap: '12px',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: '0.7rem', color: '#94A3B8', textTransform: 'uppercase' }}>
-              Current Deal Stage
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '4px' }}>
-              <select
-                value={deal.status}
-                onChange={e => onAdvanceStatus(deal.id, e.target.value as DealStatus)}
-                data-testid="deal-status-select"
-                style={{
-                  background: '#0B132B',
-                  border: '1px solid #38BDF8',
-                  color: '#FFFFFF',
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  fontSize: '0.82rem',
-                  fontWeight: 700,
-                  outline: 'none',
-                  cursor: 'pointer',
-                }}
-              >
-                {allStatuses.map(s => (
-                  <option key={s} value={s}>
-                    {s.replace('_', ' ')}
-                  </option>
-                ))}
-              </select>
-              {deal.status === 'COMPLETED' && (
-                <span
+            <div>
+              <div style={{ fontSize: '0.7rem', color: '#94A3B8', textTransform: 'uppercase' }}>
+                Current Deal Stage
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '4px' }}>
+                <select
+                  value={deal.status}
+                  onChange={e => onAdvanceStatus(deal.id, e.target.value as DealStatus)}
+                  data-testid="deal-status-select"
                   style={{
-                    color: '#34D399',
-                    fontSize: '0.78rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
+                    background: '#0B132B',
+                    border: '1px solid #38BDF8',
+                    color: '#FFFFFF',
+                    padding: '6px 12px',
+                    borderRadius: '6px',
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    outline: 'none',
+                    cursor: 'pointer',
                   }}
                 >
-                  <CheckCircle size={14} /> Revenue Booked
-                </span>
-              )}
+                  {allStatuses.map(s => (
+                    <option key={s} value={s}>
+                      {s.replace('_', ' ')}
+                    </option>
+                  ))}
+                </select>
+                {deal.status === 'COMPLETED' && (
+                  <span
+                    style={{
+                      color: '#34D399',
+                      fontSize: '0.78rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <CheckCircle size={14} /> Revenue Booked
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '24px' }}>
+              <div>
+                <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>Transaction Value</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
+                  AED {deal.valueAED.toLocaleString()}
+                </div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>
+                  Gross Commission ({deal.commissionRate}%)
+                </div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#34D399' }}>
+                  AED {deal.commissionAED.toLocaleString()}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <div>
-              <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>Transaction Value</div>
-              <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#FFFFFF' }}>
-                AED {deal.valueAED.toLocaleString()}
-              </div>
-            </div>
-            <div>
-              <div style={{ fontSize: '0.7rem', color: '#94A3B8' }}>
-                Gross Commission ({deal.commissionRate}%)
-              </div>
-              <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#34D399' }}>
-                AED {deal.commissionAED.toLocaleString()}
-              </div>
-            </div>
-          </div>
+          {/* Primary Parties Grid */}
+          <DealPrimaryPartiesGrid deal={deal} />
+
+          {/* Sequential PDC Cheques Ledger Table */}
+          <DealPdcScheduleSection pdcSchedule={deal.pdcSchedule} />
+
+          {/* Linked Statutory Documents */}
+          <DealStatutoryDocsSection documents={deal.documents} onNavigateToDoc={onNavigateToDoc} />
         </div>
-
-        {/* Primary Parties Grid */}
-        <DealPrimaryPartiesGrid deal={deal} />
-
-        {/* Sequential PDC Cheques Ledger Table */}
-        <DealPdcScheduleSection pdcSchedule={deal.pdcSchedule} />
-
-        {/* Linked Statutory Documents */}
-        <DealStatutoryDocsSection documents={deal.documents} onNavigateToDoc={onNavigateToDoc} />
-      </div>
+      )}
 
       {/* Footer */}
       <div
@@ -292,4 +279,3 @@ export const DealDetailModal: FC<DealDetailModalProps> = ({
     </div>
   );
 };
-

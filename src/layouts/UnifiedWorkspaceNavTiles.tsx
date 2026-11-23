@@ -12,6 +12,7 @@ interface UnifiedWorkspaceNavTilesProps {
   setActiveViewCode: (code: string) => void;
   activeSubItemId: string | null;
   setActiveSubItemId: (id: string | null) => void;
+  onNavigate?: (route: string) => void;
 }
 
 export const UnifiedWorkspaceNavTiles: React.FC<UnifiedWorkspaceNavTilesProps> = ({
@@ -21,6 +22,7 @@ export const UnifiedWorkspaceNavTiles: React.FC<UnifiedWorkspaceNavTilesProps> =
   setActiveViewCode,
   activeSubItemId,
   setActiveSubItemId,
+  onNavigate,
 }) => {
   return (
     <nav
@@ -74,6 +76,9 @@ export const UnifiedWorkspaceNavTiles: React.FC<UnifiedWorkspaceNavTilesProps> =
               onClick={() => {
                 setActiveViewCode(view.code);
                 setActiveSubItemId(null);
+                if (onNavigate && viewRich?.path) {
+                  onNavigate(viewRich.path);
+                }
               }}
             >
               <div
@@ -193,6 +198,12 @@ export const UnifiedWorkspaceNavTiles: React.FC<UnifiedWorkspaceNavTilesProps> =
                           onClick={e => {
                             e.stopPropagation();
                             setActiveSubItemId(sub.id);
+                            if (onNavigate) {
+                              const targetSubRoute = viewRich?.path
+                                ? `${viewRich.path}?subItem=${encodeURIComponent(sub.id)}`
+                                : `/dashboard?subItem=${encodeURIComponent(sub.id)}`;
+                              onNavigate(targetSubRoute);
+                            }
                           }}
                           style={{
                             width: '100%',
