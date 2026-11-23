@@ -1,0 +1,76 @@
+import type { CSSProperties } from 'react';
+
+export const vestaStyles: Record<string, CSSProperties> = {
+  container: {
+    maxWidth: '100%',
+    padding: '0.5rem',
+  },
+  header: {
+    background:
+      'linear-gradient(135deg, var(--color-78350f, #78350F) 0%, var(--color-451a03, #451A03) 100%)',
+    color: 'var(--white, #FFFFFF)',
+    padding: '1.25rem 1.5rem',
+    borderRadius: '16px',
+    marginBottom: '1.25rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '1rem',
+  },
+  iconBox: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '12px',
+    background:
+      'linear-gradient(135deg, var(--accent-gold, #F59E0B) 0%, var(--accent-gold, #D97706) 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1.5rem',
+  },
+  badge: {
+    fontSize: '0.7rem',
+    background: 'rgba(255, 255, 255, 0.15)',
+    padding: '2px 8px',
+    borderRadius: '4px',
+    color: 'var(--color-fef3c7, #FEF3C7)',
+    fontWeight: 800,
+  },
+  tabBar: {
+    display: 'flex',
+    gap: '0.5rem',
+    flexWrap: 'wrap',
+    background: 'var(--white, #FFFFFF)',
+    padding: '8px 12px',
+    borderRadius: '12px',
+    border: '1px solid var(--text-secondary, #E2E8F0)',
+    marginBottom: '1.25rem',
+  },
+  tabButtonActive: {
+    padding: '6px 12px',
+    borderRadius: '6px',
+    border: '1px solid var(--accent-gold, #D97706)',
+    background: 'var(--accent-gold, #D97706)',
+    color: 'var(--white, #FFF)',
+    fontWeight: 800,
+    fontSize: '0.8rem',
+    cursor: 'pointer',
+  },
+  tabButtonInactive: {
+    padding: '6px 12px',
+    borderRadius: '6px',
+    border: '1px solid transparent',
+    background: 'var(--color-f8fafc, #F8FAFC)',
+    color: 'var(--color-334155, #334155)',
+    fontWeight: 800,
+    fontSize: '0.8rem',
+    cursor: 'pointer',
+  },
+  card: {
+    background: 'var(--white, #FFFFFF)',
+    padding: '1.5rem',
+    borderRadius: '12px',
+    border: '1px solid var(--text-secondary, #E2E8F0)',
+  },
+};

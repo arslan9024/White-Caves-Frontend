@@ -27,7 +27,14 @@ import {
   selectSidebar,
   selectLayout,
 } from '../../store/slices/navigationUISlice';
-import { selectUserInfo, selectActiveRole } from '../../store/slices/accessControlSlice';
+import {
+  selectUserInfo,
+  selectActiveRole,
+  setActiveRole as setAccessControlRole,
+} from '../../store/slices/accessControlSlice';
+import { setActiveRole as setNavigationRole } from '../../store/navigationSlice';
+import { safeStorage } from '../../utils/safeStorage';
+import { RoleSelectorModal } from './RoleSelectorModal';
 import { selectActiveWorkspace } from '../../store/slices/dashboardViewSlice';
 import './TopCommandBar.css';
 
@@ -71,6 +78,7 @@ const TopCommandBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [roleModalOpen, setRoleModalOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const notificationRef = useRef<HTMLDivElement | null>(null);
   const profileRef = useRef<HTMLDivElement | null>(null);
@@ -125,6 +133,39 @@ const TopCommandBar = () => {
 
   const isMobile = layout.breakpoint === 'mobile';
 
+  const isManagingDirectorOrOwner =
+    activeRole === 'managing_director' ||
+    activeRole === 'owner' ||
+    activeRole === 'lion' ||
+    activeRole === 'md' ||
+    userInfo.userEmail?.toLowerCase().includes('arslan');
+
+  const isLeasingAgentActive = activeRole === 'leasing_agent' || activeRole === 'leasing-agent';
+
+  const handleRoleSwitch = (targetRole: 'managing_director' | 'leasing_agent') => {
+    dispatch(setAccessControlRole(targetRole));
+    dispatch(setNavigationRole(targetRole));
+    safeStorage.setJSON('userRole', {
+      role: targetRole,
+      selectedAt: new Date().toISOString(),
+      locked: true,
+    });
+    setRoleModalOpen(false);
+    if (targetRole === 'leasing_agent') {
+      navigate('/leasing-ops');
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  const handleToggleRoleClick = () => {
+    if (isLeasingAgentActive) {
+      handleRoleSwitch('managing_director');
+    } else {
+      handleRoleSwitch('leasing_agent');
+    }
+  };
+
   return (
     <header className="top-command-bar">
       <div className="tcb-left">
@@ -172,6 +213,23 @@ const TopCommandBar = () => {
       </div>
 
       <div className="tcb-right">
+        {/* 1-Click Role Switcher Pill for Dual-Role Login */}
+        {(isManagingDirectorOrOwner || isLeasingAgentActive) && (
+          <button
+            type="button"
+            className={`tcb-role-switcher-pill ${isLeasingAgentActive ? 'leasing-mode' : ''}`}
+            onClick={handleToggleRoleClick}
+            title={
+              isLeasingAgentActive
+                ? 'Active: Leasing Agent Desk. Click to switch to Managing Director Dashboard'
+                : 'Active: Managing Director Suite. Click to switch to Leasing Agent Desk'
+            }
+          >
+            <span>{isLeasingAgentActive ? '📋 Leasing Agent' : '👑 Managing Director'}</span>
+            <span className="switch-icon">⇄</span>
+          </button>
+        )}
+
         <button
           className="tcb-icon-btn"
           onClick={toggleTheme}
@@ -256,6 +314,16 @@ const TopCommandBar = () => {
                 </div>
               </div>
               <div className="dropdown-list">
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    dispatch(closeAllDropdowns());
+                    setRoleModalOpen(true);
+                  }}
+                >
+                  <Command size={16} />
+                  <span>Switch Role / Workspace</span>
+                </button>
                 <button className="dropdown-item" onClick={() => navigate('/profile')}>
                   <User size={16} />
                   <span>My Profile</span>
@@ -281,4 +349,3 @@ const TopCommandBar = () => {
 };
 
 export default TopCommandBar;
-

@@ -1,16 +1,15 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { RootState } from '../../store/store';
 import { spacing } from '../../styles/theme/spacing';
+import styled from 'styled-components';
 import type { DashboardView, UnifiedCRMProps } from './types';
 
 // ============================================================================
 // TYPES & CONSTANTS
 // ============================================================================
 
-// Local dashboard configuration type used only in this component.
-interface LocalDashboardConfig {
+export interface LocalDashboardConfig {
   id: DashboardView;
   label: string;
   icon: string;
@@ -20,7 +19,7 @@ interface LocalDashboardConfig {
   features: string[];
 }
 
-const LOCAL_DASHBOARD_CONFIGS: Record<DashboardView, LocalDashboardConfig> = {
+export const LOCAL_DASHBOARD_CONFIGS: Record<DashboardView, LocalDashboardConfig> = {
   company: {
     id: 'company',
     label: 'Company Overview',
@@ -131,17 +130,13 @@ const LOCAL_DASHBOARD_CONFIGS: Record<DashboardView, LocalDashboardConfig> = {
   },
 };
 
-// ============================================================================
-// STYLED COMPONENTS
-// ============================================================================
-
-const StyledContainer = styled.div`
+// Compact style components
+export const StyledContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: ${spacing.lg};
 `;
-
-const Header = styled.div`
+export const Header = styled.div`
   background: white;
   border-radius: 12px;
   padding: ${spacing.lg};
@@ -151,46 +146,39 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: ${spacing.lg};
-
   @media (max-width: 1024px) {
     flex-direction: column;
     align-items: flex-start;
   }
 `;
-
-const HeaderContent = styled.div`
+export const HeaderContent = styled.div`
   flex: 1;
 `;
-
-const Title = styled.h1`
+export const Title = styled.h1`
   margin: 0 0 8px 0;
   font-size: 32px;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: -0.5px;
 `;
-
-const Subtitle = styled.p`
+export const Subtitle = styled.p`
   margin: 0;
   font-size: 14px;
   color: #666;
   display: flex;
   gap: ${spacing.md};
   flex-wrap: wrap;
-
   span {
     display: flex;
     align-items: center;
     gap: 6px;
-
     strong {
       font-weight: 600;
       color: #1976d2;
     }
   }
 `;
-
-const ViewSelectorContainer = styled.div`
+export const ViewSelectorContainer = styled.div`
   display: flex;
   gap: ${spacing.sm};
   flex-wrap: wrap;
@@ -199,14 +187,12 @@ const ViewSelectorContainer = styled.div`
   border-radius: 8px;
   max-width: 100%;
   overflow-x: auto;
-
   @media (max-width: 1024px) {
     width: 100%;
     justify-content: flex-start;
   }
 `;
-
-const ViewButton = styled.button<{ $isActive: boolean; $isDisabled: boolean }>`
+export const ViewButton = styled.button<{ $isActive: boolean; $isDisabled: boolean }>`
   padding: 10px 14px;
   border: 2px solid ${props => (props.$isActive ? '#1976d2' : '#ddd')};
   background: ${props => (props.$isActive ? '#1976d2' : 'white')};
@@ -218,60 +204,50 @@ const ViewButton = styled.button<{ $isActive: boolean; $isDisabled: boolean }>`
   white-space: nowrap;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: ${props => (props.$isDisabled ? 0.5 : 1)};
-
   &:hover:not(:disabled) {
     border-color: #1976d2;
     background: ${props => (props.$isActive ? '#1565c0' : '#f0f8ff')};
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
   }
-
   &:active:not(:disabled) {
     transform: translateY(0);
   }
 `;
-
-const ContentArea = styled.div`
+export const ContentArea = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: ${spacing.lg};
 `;
-
-const Card = styled.div`
+export const Card = styled.div`
   background: white;
   border-radius: 12px;
   padding: ${spacing.lg};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
-
   &:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     transform: translateY(-4px);
   }
 `;
-
-const MetricCard = styled(Card)`
+export const MetricCard = styled(Card)`
   text-align: center;
-
   .metric-value {
     font-size: 28px;
     font-weight: 700;
     color: #1976d2;
     margin: 12px 0;
   }
-
   .metric-label {
     font-size: 14px;
     color: #666;
     font-weight: 500;
   }
 `;
-
-const FeatureList = styled.ul`
+export const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
   margin: ${spacing.md} 0 0 0;
-
   li {
     padding: 8px 0;
     font-size: 14px;
@@ -280,11 +256,9 @@ const FeatureList = styled.ul`
     display: flex;
     align-items: center;
     gap: ${spacing.sm};
-
     &:last-child {
       border-bottom: none;
     }
-
     &:before {
       content: '✓';
       color: #4caf50;
@@ -292,13 +266,11 @@ const FeatureList = styled.ul`
     }
   }
 `;
-
-const RoleIndicator = styled.div`
+export const RoleIndicator = styled.div`
   display: flex;
   gap: ${spacing.sm};
   flex-wrap: wrap;
   margin-top: 12px;
-
   .role-badge {
     background: #f0f0f0;
     color: #666;
@@ -308,15 +280,13 @@ const RoleIndicator = styled.div`
     font-weight: 600;
   }
 `;
-
-const LoadingSpinner = styled.div`
+export const LoadingSpinner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 400px;
   font-size: 16px;
   color: #666;
-
   &:after {
     content: '';
     display: inline-block;
@@ -327,7 +297,6 @@ const LoadingSpinner = styled.div`
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
-
   @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -345,7 +314,6 @@ const LoadingSpinner = styled.div`
 const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
   defaultView = 'company',
   onViewChange,
-  // Additional props from UnifiedCRMProps interface (reserved for future use)
   refreshInterval: _refreshInterval,
   enableExport: _enableExport,
   enableCustomization: _enableCustomization,
@@ -354,24 +322,22 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
   const [currentView, setCurrentView] = useState<DashboardView>(defaultView);
   const [loading, setLoading] = useState(false);
 
-  // Get user role from Redux state
   const userRole = useSelector((state: RootState) => state.auth?.user?.role || 'agent');
 
-  // Get available dashboards based on user role
   const availableDashboards = useMemo(() => {
     return Object.values(LOCAL_DASHBOARD_CONFIGS).filter(config => config.roles.includes(userRole));
   }, [userRole]);
 
-  // Get current dashboard configuration
   const currentConfig = useMemo(() => {
     return LOCAL_DASHBOARD_CONFIGS[currentView];
   }, [currentView]);
 
-  // Handle view change
-  const viewTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const viewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    return () => clearTimeout(viewTimerRef.current);
+    return () => {
+      if (viewTimerRef.current) clearTimeout(viewTimerRef.current);
+    };
   }, []);
 
   const handleViewChange = useCallback(
@@ -380,8 +346,7 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
       setCurrentView(view);
       onViewChange?.(view);
 
-      // Simulate loading delay
-      clearTimeout(viewTimerRef.current);
+      if (viewTimerRef.current) clearTimeout(viewTimerRef.current);
       viewTimerRef.current = setTimeout(() => {
         setLoading(false);
       }, 500);
@@ -389,7 +354,6 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
     [onViewChange]
   );
 
-  // Check if user has access to view
   const hasAccess = useMemo(() => {
     return currentConfig.roles.includes(userRole);
   }, [currentConfig, userRole]);
@@ -413,7 +377,6 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
 
   return (
     <StyledContainer>
-      {/* Header */}
       <Header>
         <HeaderContent>
           <Title>
@@ -441,12 +404,10 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
         </ViewSelectorContainer>
       </Header>
 
-      {/* Content Area */}
       {loading ? (
         <LoadingSpinner data-testid="unified-crm-loading-skeleton" />
       ) : (
         <ContentArea>
-          {/* Metrics Section */}
           {currentConfig.metrics.map(metric => (
             <MetricCard key={metric}>
               <div className="metric-label">{metric.replace(/_/g, ' ').toUpperCase()}</div>
@@ -462,7 +423,6 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
             </MetricCard>
           ))}
 
-          {/* Features Section */}
           <Card>
             <h3 style={{ marginTop: 0, marginBottom: 12, color: 'var(--color-333, #333)' }}>
               Available Features
@@ -488,4 +448,3 @@ const UnifiedCRM: React.FC<UnifiedCRMProps> = ({
 };
 
 export default UnifiedCRM;
-

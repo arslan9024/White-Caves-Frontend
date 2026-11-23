@@ -15,108 +15,37 @@
  * - CRM module select / back handlers
  */
 
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
-import { getTabsForRole, getRoleInfo } from '../config/ROLE_TAB_MAPPING';
-import { useDocumentTitle } from './useDocumentTitle';
 import { getSubNavItems, getModuleById } from '../features/featureRegistry';
-import {
-  openFlyout,
-  closeFlyout,
-  selectAssistant,
-  clearDepartmentSelection,
-  selectFlyoutOpen,
-  selectFlyoutDepartment,
-  selectSelectedAssistant as selectSelectedAssistantSelector,
-  selectSelectedDepartment as selectSelectedDepartmentSelector,
-} from '../store/slices/sidebarSlice';
+import { clearDepartmentSelection } from '../store/slices/sidebarSlice';
 import type { RootState } from '../store/store';
 import { useAppDispatch } from '../store/store';
-import {
-  fetchLeadsFromAPI,
-  fetchPropertiesFromAPI,
-  fetchAgentsFromAPI,
-  fetchDashboardOverview,
-  selectAllLeads,
-  selectAllProperties,
-  selectAllAgents,
-  selectAllCommissions,
-  selectOverviewData,
-  selectLeadsLoading,
-  selectPropertiesLoading,
-  selectAgentsLoading,
-  selectLeadsError,
-  selectPropertiesError,
-  selectAgentsError,
-  selectRecentActivities,
-  selectHotLeads,
-} from '../store/crmDataSlice';
-import { selectAssistant as selectAIAssistant } from '../store/slices/aiAssistantDashboardSlice';
-import { AI_ASSISTANTS_REGISTRY } from '../store/slices/aiAssistant/registry';
 import { isCreatorSuperUserEmail } from '../utils/superUserAccess';
 
-// ─── Types ────────────────────────────────────────────────────
+// Companion sub-modules under AEG-042
+import {
+  type DashboardData,
+  type CRMModuleProps,
+  type CRMEntity,
+  type AbortableDispatch,
+  EMPTY_CRM_ARRAY,
+  normalizeDashboardError,
+} from './dashboard/types';
+import { filterDashboardDataByRole } from './dashboard/filterData';
+import { useDashboardData } from './dashboard/useDashboardData';
+import { useDashboardSidebar } from './dashboard/useDashboardSidebar';
+import { useDashboardTabs } from './dashboard/useDashboardTabs';
 
-/** A generic CRM entity (property, lead, tenant, agent, etc.) keyed by string fields */
-type CRMEntity = Record<string, unknown>;
-type AbortableDispatch = { abort?: () => void };
+// Re-export types & utilities for backwards compatibility
+export type { DashboardData, CRMModuleProps, CRMEntity, AbortableDispatch };
+export { EMPTY_CRM_ARRAY, normalizeDashboardError, filterDashboardDataByRole };
+export * from './dashboard';
 
-export interface DashboardData {
-  properties: CRMEntity[];
-  agents: CRMEntity[];
-  leads: CRMEntity[];
-  hotLeads: CRMEntity[];
-  commissions: CRMEntity[];
-  recentActivities: CRMEntity[];
-  overview: CRMEntity | null;
-  contracts: CRMEntity[];
-  tenants: CRMEntity[];
-  payments: CRMEntity[];
-  leases: CRMEntity[];
-  applications: CRMEntity[];
-  savedProperties: CRMEntity[];
-  searchHistory: CRMEntity[];
-  offers: CRMEntity[];
-  sales: CRMEntity[];
-  myRental: CRMEntity[];
-  maintenanceRequests: CRMEntity[];
-  leaseInfo: CRMEntity[];
-  [key: string]: unknown;
-}
-
-/** Standard props passed to every CRM module and dashboard tab */
-export interface CRMModuleProps {
-  role: string;
-  user: { id: string; name?: string; email: string; role?: string; [key: string]: unknown } | null;
-  data: DashboardData;
-}
-
-/** Stable empty array constant for placeholder data fields */
-const EMPTY_CRM_ARRAY: CRMEntity[] = [];
-
-const normalizeDashboardError = (rawError: string | null): string | null => {
-  if (!rawError) return null;
-
-  const normalized = rawError.toLowerCase();
-  const isDatabaseUnavailable =
-    normalized.includes('p1001') ||
-    normalized.includes("can't reach database server") ||
-    normalized.includes('database server') ||
-    normalized.includes('econnrefused');
-
-  if (isDatabaseUnavailable) {
-    return 'CRM is currently in limited mode while the database connection recovers. You can continue browsing and retry shortly.';
-  }
-
-  return rawError;
-};
-
-// ─── Hook ─────────────────────────────────────────────────────
+// ─── Main Hook ────────────────────────────────────────────────
 
 export function useUnifiedDashboard() {
   const dispatch = useAppDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   // ─── Core Redux State ─────────────────────────────────────
   const currentRole = useSelector((state: RootState) => state.navigation?.activeRole || 'buyer');
@@ -124,276 +53,45 @@ export function useUnifiedDashboard() {
   const currentSubModule = useSelector((state: RootState) => state.navigation?.currentSubModule);
   const user = useSelector((state: RootState) => state.user.currentUser);
 
+  const isSuperUser = isCreatorSuperUserEmail((user as { email?: string } | null)?.email);
+
   // ─── Local UI State ───────────────────────────────────────
-  const [activeTab, setActiveTab] = useState<string>(searchParams.get('tab') || 'overview');
   const [selectedCRMModule, setSelectedCRMModule] = useState<string | null>(null);
 
   // ─── Feature Registry ─────────────────────────────────────
   const roleModule = getModuleById(currentModule ?? currentRole);
   const roleSubNavItems = getSubNavItems(currentRole, currentModule ?? currentRole);
 
-  // ─── Redux CRM Data Selectors ─────────────────────────────
-  const allLeads = useSelector(selectAllLeads);
-  const hotLeads = useSelector(selectHotLeads);
-  const allProperties = useSelector(selectAllProperties);
-  const allAgents = useSelector(selectAllAgents);
-  const allCommissions = useSelector(selectAllCommissions);
-  const overview = useSelector(selectOverviewData);
-  const recentActivities = useSelector((state: RootState) => selectRecentActivities(state, 10));
-  const leadsLoading = useSelector(selectLeadsLoading);
-  const propertiesLoading = useSelector(selectPropertiesLoading);
-  const agentsLoading = useSelector(selectAgentsLoading);
+  // ─── Sidebar Sub-hook ─────────────────────────────────────
+  const {
+    flyoutOpen,
+    leftCollapsed,
+    selectedDepartment,
+    selectedAssistantRedux,
+    handleToggleLeftSidebar,
+    handleSelectAssistant,
+  } = useDashboardSidebar();
 
-  const leadsError = useSelector(selectLeadsError);
-  const propertiesError = useSelector(selectPropertiesError);
-  const agentsError = useSelector(selectAgentsError);
+  // ─── Tabs Sub-hook ────────────────────────────────────────
+  const { activeTab, setActiveTab, availableTabs, roleInfo } = useDashboardTabs({
+    currentRole,
+    isSuperUser,
+    selectedAssistantRedux,
+  });
 
-  // Composite loading / error
-  const isLoading = leadsLoading || propertiesLoading || agentsLoading;
-  const error = useMemo(
-    () => normalizeDashboardError(leadsError || propertiesError || agentsError || null),
-    [leadsError, propertiesError, agentsError]
-  );
-
-  // ─── Dashboard Data (memoized) ────────────────────────────
-  const dashboardData = useMemo<DashboardData>(
-    () => ({
-      properties: allProperties,
-      agents: allAgents,
-      leads: allLeads,
-      hotLeads,
-      commissions: allCommissions,
-      recentActivities,
-      overview,
-      contracts: EMPTY_CRM_ARRAY,
-      tenants: EMPTY_CRM_ARRAY,
-      payments: EMPTY_CRM_ARRAY,
-      leases: EMPTY_CRM_ARRAY,
-      applications: EMPTY_CRM_ARRAY,
-      savedProperties: EMPTY_CRM_ARRAY,
-      searchHistory: EMPTY_CRM_ARRAY,
-      offers: EMPTY_CRM_ARRAY,
-      sales: EMPTY_CRM_ARRAY,
-      myRental: EMPTY_CRM_ARRAY,
-      maintenanceRequests: EMPTY_CRM_ARRAY,
-      leaseInfo: EMPTY_CRM_ARRAY,
-    }),
-    [allProperties, allAgents, allLeads, hotLeads, allCommissions, recentActivities, overview]
-  );
-
-  // ─── Sidebar State ────────────────────────────────────────
-  const flyoutOpen = useSelector(selectFlyoutOpen);
-  const flyoutDepartment = useSelector(selectFlyoutDepartment);
-  const selectedAssistantRedux = useSelector(selectSelectedAssistantSelector);
-  const selectedDepartment = useSelector(selectSelectedDepartmentSelector);
-  const leftCollapsed = !flyoutOpen;
-
-  // Keep latest sidebar values in refs so keyboard listener can stay stable.
-  const flyoutOpenRef = useRef(flyoutOpen);
-  const flyoutDepartmentRef = useRef(flyoutDepartment);
-  const selectedDepartmentRef = useRef(selectedDepartment);
-
-  useEffect(() => {
-    flyoutOpenRef.current = flyoutOpen;
-  }, [flyoutOpen]);
-
-  useEffect(() => {
-    flyoutDepartmentRef.current = flyoutDepartment;
-  }, [flyoutDepartment]);
-
-  useEffect(() => {
-    selectedDepartmentRef.current = selectedDepartment;
-  }, [selectedDepartment]);
-
-  // ─── Sidebar Handlers ─────────────────────────────────────
-  const handleToggleLeftSidebar = useCallback(() => {
-    if (flyoutOpen) {
-      dispatch(closeFlyout());
-    } else {
-      dispatch(openFlyout(flyoutDepartment || selectedDepartment || 'general'));
-    }
-  }, [dispatch, flyoutOpen, flyoutDepartment, selectedDepartment]);
-
-  const handleSelectAssistant = useCallback(
-    (assistant: string | { id?: string }): void => {
-      const id = typeof assistant === 'string' ? assistant : assistant?.id || '';
-      dispatch(selectAssistant(id));
-    },
-    [dispatch]
-  );
-
-  const dispatchDashboardFetches = useCallback(
-    ({ force = false }: { force?: boolean } = {}): AbortableDispatch[] => {
-      const requests: AbortableDispatch[] = [];
-
-      if (force || (!allLeads.length && !leadsLoading)) {
-        requests.push(dispatch(fetchLeadsFromAPI({})) as unknown as AbortableDispatch);
-      }
-
-      if (force || (!allProperties.length && !propertiesLoading)) {
-        requests.push(dispatch(fetchPropertiesFromAPI({})) as unknown as AbortableDispatch);
-      }
-
-      if (force || (!allAgents.length && !agentsLoading)) {
-        requests.push(dispatch(fetchAgentsFromAPI()) as unknown as AbortableDispatch);
-      }
-
-      if (force || !overview) {
-        requests.push(dispatch(fetchDashboardOverview()) as unknown as AbortableDispatch);
-      }
-
-      return requests;
-    },
-    [dispatch, allLeads.length, leadsLoading, allProperties.length, propertiesLoading, allAgents.length, agentsLoading, overview]
-  );
-
-  const handleRetryAll = useCallback(() => {
-    dispatchDashboardFetches({ force: true });
-  }, [dispatchDashboardFetches]);
-
-  // ─── Tab / Role Info ──────────────────────────────────────
-  const availableTabs = getTabsForRole(currentRole);
-  const availableTabIds = useMemo(() => new Set(availableTabs.map(tab => tab.id)), [availableTabs]);
-  const roleInfo = getRoleInfo(currentRole);
-  useDocumentTitle(`${roleInfo.label} Dashboard`);
-
-  const isSuperUser = isCreatorSuperUserEmail((user as { email?: string } | null)?.email);
+  // ─── CRM Data Sub-hook ────────────────────────────────────
+  const { dashboardData, isLoading, error, dispatchDashboardFetches, handleRetryAll } =
+    useDashboardData();
 
   // ─── Role-Based Data Filtering ────────────────────────────
   const filteredData = useMemo<DashboardData>(() => {
-    if (isSuperUser) {
-      return dashboardData;
-    }
-
-    if (!dashboardData) return dashboardData;
-
-    const filtered = { ...dashboardData };
-
-    switch (currentRole) {
-      case 'landlord':
-        filtered.properties = (dashboardData.properties ?? []).filter(p => p.ownerId === user?.id);
-        filtered.tenants = (dashboardData.tenants ?? []).filter(t => t.landlordId === user?.id);
-        filtered.agents = (dashboardData.agents ?? []).filter(
-          a => a.id === (user as CRMEntity)?.assignedAgentId
-        );
-        filtered.leases = (dashboardData.leases ?? []).filter(l => l.landlordId === user?.id);
-        filtered.payments = (dashboardData.payments ?? []).filter(p => p.landlordId === user?.id);
-        break;
-
-      case 'tenant':
-        filtered.myRental = (dashboardData.myRental ?? []).filter(r => r.tenantId === user?.id);
-        filtered.payments = (dashboardData.payments ?? []).filter(p => p.tenantId === user?.id);
-        filtered.maintenanceRequests = (dashboardData.maintenanceRequests ?? []).filter(
-          m => m.tenantId === user?.id
-        );
-        filtered.leaseInfo = (dashboardData.leaseInfo ?? []).filter(l => l.tenantId === user?.id);
-        break;
-
-      case 'leasing-agent':
-        filtered.properties = (dashboardData.properties ?? []).filter(
-          p => p.managingAgentId === user?.id
-        );
-        filtered.tenants = (dashboardData.tenants ?? []).filter(t => t.agentId === user?.id);
-        filtered.contracts = (dashboardData.contracts ?? []).filter(c => c.agentId === user?.id);
-        filtered.applications = (dashboardData.applications ?? []).filter(
-          a => a.agentId === user?.id
-        );
-        break;
-
-      case 'secondary-sales-agent':
-        filtered.properties = (dashboardData.properties ?? []).filter(p => p.agentId === user?.id);
-        filtered.leads = (dashboardData.leads ?? []).filter(l => l.agentId === user?.id);
-        filtered.contracts = (dashboardData.contracts ?? []).filter(c => c.agentId === user?.id);
-        break;
-
-      case 'buyer':
-        filtered.savedProperties = (dashboardData.savedProperties ?? []).filter(
-          p => p.userId === user?.id
-        );
-        filtered.searchHistory = (dashboardData.searchHistory ?? []).filter(
-          s => s.userId === user?.id
-        );
-        filtered.offers = (dashboardData.offers ?? []).filter(o => o.buyerId === user?.id);
-        filtered.applications = (dashboardData.applications ?? []).filter(
-          a => a.buyerId === user?.id
-        );
-        break;
-
-      case 'seller':
-        filtered.properties = (dashboardData.properties ?? []).filter(p => p.sellerId === user?.id);
-        filtered.offers = (dashboardData.offers ?? []).filter(o => {
-          const propertyBelongsToSeller = (dashboardData.properties ?? []).some(
-            p => p.id === o.propertyId && p.sellerId === user?.id
-          );
-          return propertyBelongsToSeller;
-        });
-        filtered.sales = (dashboardData.sales ?? []).filter(s => s.sellerId === user?.id);
-        break;
-
-      default:
-        filtered.properties = [];
-        filtered.leads = [];
-        break;
-    }
-
-    return filtered;
+    return filterDashboardDataByRole({
+      dashboardData,
+      isSuperUser,
+      currentRole,
+      user,
+    });
   }, [dashboardData, isSuperUser, currentRole, user]);
-
-  // ─── Effects ──────────────────────────────────────────────
-
-  // Sync active tab to URL search params
-  useEffect((): void => {
-    if (!activeTab) {
-      return;
-    }
-
-    if (searchParams.get('tab') === activeTab) {
-      return;
-    }
-
-    const nextParams = new URLSearchParams(searchParams);
-    nextParams.set('tab', activeTab);
-    setSearchParams(nextParams);
-  }, [activeTab, searchParams, setSearchParams]);
-
-  // Cockpit mode is executive-only: remove it from URL for non-superusers.
-  useEffect(() => {
-    if (isSuperUser || !searchParams.has('cockpit')) {
-      return;
-    }
-
-    const nextParams = new URLSearchParams(searchParams);
-    nextParams.delete('cockpit');
-    setSearchParams(nextParams);
-  }, [isSuperUser, searchParams, setSearchParams]);
-
-  // Deep-link handling: /dashboard?tab=<assistantId>
-  // If tab matches an AI assistant key, route to AI Command Center context while
-  // preserving the assistant id in URL and selecting the assistant in dashboard state.
-  useEffect(() => {
-    const requestedTab = (searchParams.get('tab') || 'overview').toLowerCase();
-
-    if (requestedTab in AI_ASSISTANTS_REGISTRY) {
-      if (activeTab !== requestedTab) {
-        setActiveTab(requestedTab);
-      }
-
-      if (selectedAssistantRedux !== requestedTab) {
-        dispatch(selectAIAssistant(requestedTab));
-      }
-
-      return;
-    }
-
-    if (availableTabIds.has(requestedTab) && activeTab !== requestedTab) {
-      setActiveTab(requestedTab);
-      return;
-    }
-
-    if (!availableTabIds.has(requestedTab) && activeTab !== 'overview') {
-      setActiveTab('overview');
-    }
-  }, [searchParams, activeTab, dispatch, availableTabIds, selectedAssistantRedux]);
 
   // Fetch CRM data on mount (skip if already loaded)
   useEffect(() => {
@@ -405,51 +103,21 @@ export function useUnifiedDashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
   }, [dispatchDashboardFetches]);
 
-  // Re-fetch overview when role changes
-  const prevRoleRef = useRef(currentRole);
-  useEffect(() => {
-    if (prevRoleRef.current !== currentRole) {
-      prevRoleRef.current = currentRole;
-      const promise = dispatch(fetchDashboardOverview()) as unknown as {
-        abort?: () => void;
-      };
-      return () => {
-        promise.abort?.();
-      };
-    }
-  }, [dispatch, currentRole]);
-
-  // Keyboard shortcut: Ctrl+B / Cmd+B to toggle sidebar flyout
-  useEffect((): (() => void) => {
-    const handleKeyDown = (e: KeyboardEvent): void => {
-      if ((e.ctrlKey || e.metaKey) && e.code === 'KeyB') {
-        e.preventDefault();
-        if (flyoutOpenRef.current) {
-          dispatch(closeFlyout());
-        } else {
-          dispatch(
-            openFlyout(flyoutDepartmentRef.current || selectedDepartmentRef.current || 'general')
-          );
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [dispatch]);
-
   // ─── CRM Module Handlers ──────────────────────────────────
-  const handleCRMModuleSelect = useCallback((moduleId: string): void => {
-    dispatch(clearDepartmentSelection());
-    setSelectedCRMModule(prev => (prev === moduleId ? prev : moduleId));
-    setActiveTab(prev => (prev === '' ? prev : ''));
-  }, [dispatch]);
+  const handleCRMModuleSelect = useCallback(
+    (moduleId: string): void => {
+      dispatch(clearDepartmentSelection());
+      setSelectedCRMModule(prev => (prev === moduleId ? prev : moduleId));
+      setActiveTab(prev => (prev === '' ? prev : ''));
+    },
+    [dispatch, setActiveTab]
+  );
 
   const handleBackFromCRM = useCallback((): void => {
     dispatch(clearDepartmentSelection());
     setSelectedCRMModule(prev => (prev === null ? prev : null));
     setActiveTab(prev => (prev === 'overview' ? prev : 'overview'));
-  }, [dispatch]);
+  }, [dispatch, setActiveTab]);
 
   const handleWorkspaceSelect = useCallback(
     (tabId: string): void => {
@@ -457,7 +125,7 @@ export function useUnifiedDashboard() {
       setSelectedCRMModule(prev => (prev === null ? prev : null));
       setActiveTab(prev => (prev === tabId ? prev : tabId));
     },
-    [dispatch]
+    [dispatch, setActiveTab]
   );
 
   // ─── Return ───────────────────────────────────────────────
@@ -502,4 +170,3 @@ export function useUnifiedDashboard() {
     handleWorkspaceSelect,
   } as const;
 }
-

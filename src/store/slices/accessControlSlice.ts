@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 
@@ -15,7 +16,16 @@ const ROLE_PERMISSIONS = {
     canAccessConfidentialVault: true,
     isSuperUser: true,
     isDecisionMaker: true,
-    dashboards: ['executive', 'agents', 'properties', 'leads', 'finance', 'analytics', 'settings', 'ai-command']
+    dashboards: [
+      'executive',
+      'agents',
+      'properties',
+      'leads',
+      'finance',
+      'analytics',
+      'settings',
+      'ai-command',
+    ],
   },
   owner: {
     canViewAllDashboards: true,
@@ -27,7 +37,16 @@ const ROLE_PERMISSIONS = {
     canAccessAnalytics: true,
     canManageSettings: true,
     canViewExecutiveReports: true,
-    dashboards: ['executive', 'agents', 'properties', 'leads', 'finance', 'analytics', 'settings', 'ai-command']
+    dashboards: [
+      'executive',
+      'agents',
+      'properties',
+      'leads',
+      'finance',
+      'analytics',
+      'settings',
+      'ai-command',
+    ],
   },
   agent: {
     canViewAllDashboards: false,
@@ -39,7 +58,7 @@ const ROLE_PERMISSIONS = {
     canAccessAnalytics: false,
     canManageSettings: false,
     canViewExecutiveReports: false,
-    dashboards: ['agent', 'my-properties', 'my-leads', 'tasks']
+    dashboards: ['agent', 'my-properties', 'my-leads', 'tasks'],
   },
   buyer: {
     canViewAllDashboards: false,
@@ -51,7 +70,7 @@ const ROLE_PERMISSIONS = {
     canAccessAnalytics: false,
     canManageSettings: false,
     canViewExecutiveReports: false,
-    dashboards: ['search', 'favorites', 'inquiries', 'profile']
+    dashboards: ['search', 'favorites', 'inquiries', 'profile'],
   },
   seller: {
     canViewAllDashboards: false,
@@ -63,7 +82,55 @@ const ROLE_PERMISSIONS = {
     canAccessAnalytics: false,
     canManageSettings: false,
     canViewExecutiveReports: false,
-    dashboards: ['my-listings', 'inquiries', 'analytics', 'profile']
+    dashboards: ['my-listings', 'inquiries', 'analytics', 'profile'],
+  },
+  managing_director: {
+    canViewAllDashboards: true,
+    canManageAgents: true,
+    canManageFinances: true,
+    canAccessAIAssistants: true,
+    canManageProperties: true,
+    canManageLeads: true,
+    canAccessAnalytics: true,
+    canManageSettings: true,
+    canViewExecutiveReports: true,
+    canAccessConfidentialVault: true,
+    isSuperUser: true,
+    isDecisionMaker: true,
+    dashboards: [
+      'executive',
+      'agents',
+      'properties',
+      'leads',
+      'finance',
+      'analytics',
+      'settings',
+      'ai-command',
+    ],
+  },
+  leasing_agent: {
+    canViewAllDashboards: false,
+    canManageAgents: false,
+    canManageFinances: false,
+    canAccessAIAssistants: true,
+    canManageProperties: true,
+    canManageLeads: true,
+    canAccessAnalytics: false,
+    canManageSettings: false,
+    canViewExecutiveReports: false,
+    dashboards: ['leasing-ops', 'my-properties', 'my-leads', 'contracts', 'tasks'],
+  },
+  'leasing-agent': {
+    canViewAllDashboards: false,
+    canManageAgents: false,
+    canManageFinances: false,
+    canAccessAIAssistants: true,
+    canManageProperties: true,
+    canManageLeads: true,
+    canAccessAnalytics: false,
+    canManageSettings: false,
+    canViewExecutiveReports: false,
+    dashboards: ['leasing-ops', 'my-properties', 'my-leads', 'contracts', 'tasks'],
   },
   tenant: {
     canViewAllDashboards: false,
@@ -75,8 +142,8 @@ const ROLE_PERMISSIONS = {
     canAccessAnalytics: false,
     canManageSettings: false,
     canViewExecutiveReports: false,
-    dashboards: ['rentals', 'applications', 'contracts', 'profile']
-  }
+    dashboards: ['rentals', 'applications', 'contracts', 'profile'],
+  },
 };
 
 const initialState = {
@@ -92,13 +159,13 @@ const initialState = {
     whatsappIntegration: true,
     advancedAnalytics: true,
     documentManagement: true,
-    paymentProcessing: true
+    paymentProcessing: true,
   },
   sessionInfo: {
     loginTime: null,
     lastActivity: null,
-    deviceType: null
-  }
+    deviceType: null,
+  },
 };
 
 const accessControlSlice = createSlice({
@@ -124,7 +191,7 @@ const accessControlSlice = createSlice({
         state.permissions = ROLE_PERMISSIONS[role];
       }
     },
-    clearUserInfo: (state) => {
+    clearUserInfo: state => {
       state.userId = null;
       state.userName = null;
       state.userEmail = null;
@@ -141,17 +208,12 @@ const accessControlSlice = createSlice({
     },
     updateSessionInfo: (state, action) => {
       state.sessionInfo = { ...state.sessionInfo, ...action.payload };
-    }
-  }
+    },
+  },
 });
 
-export const {
-  setActiveRole,
-  setUserInfo,
-  clearUserInfo,
-  updateFeatureFlag,
-  updateSessionInfo
-} = accessControlSlice.actions;
+export const { setActiveRole, setUserInfo, clearUserInfo, updateFeatureFlag, updateSessionInfo } =
+  accessControlSlice.actions;
 
 const selectAccessControl = state => state.accessControl;
 
@@ -165,43 +227,32 @@ export const selectPermissions = createSelector(
   ac => ac?.permissions || ROLE_PERMISSIONS.owner
 );
 
-export const selectUserInfo = createSelector(
-  [selectAccessControl],
-  ac => ({
-    userId: ac?.userId,
-    userName: ac?.userName,
-    userEmail: ac?.userEmail,
-    userAvatar: ac?.userAvatar,
-    isAuthenticated: ac?.isAuthenticated || false
-  })
-);
+export const selectUserInfo = createSelector([selectAccessControl], ac => ({
+  userId: ac?.userId,
+  userName: ac?.userName,
+  userEmail: ac?.userEmail,
+  userAvatar: ac?.userAvatar,
+  isAuthenticated: ac?.isAuthenticated || false,
+}));
 
 export const selectFeatureFlags = createSelector(
   [selectAccessControl],
   ac => ac?.featureFlags || initialState.featureFlags
 );
 
-export const selectCanAccessDashboard = (dashboardId) => createSelector(
-  [selectPermissions],
-  permissions => permissions?.dashboards?.includes(dashboardId) || false
-);
+export const selectCanAccessDashboard = dashboardId =>
+  createSelector(
+    [selectPermissions],
+    permissions => permissions?.dashboards?.includes(dashboardId) || false
+  );
 
-export const selectHasPermission = (permission) => createSelector(
-  [selectPermissions],
-  permissions => permissions?.[permission] || false
-);
+export const selectHasPermission = permission =>
+  createSelector([selectPermissions], permissions => permissions?.[permission] || false);
 
-export const selectIsOwner = createSelector(
-  [selectActiveRole],
-  role => role === 'owner'
-);
+export const selectIsOwner = createSelector([selectActiveRole], role => role === 'owner');
 
-export const selectIsAgent = createSelector(
-  [selectActiveRole],
-  role => role === 'agent'
-);
+export const selectIsAgent = createSelector([selectActiveRole], role => role === 'agent');
 
 export const ROLE_PERMISSIONS_MAP = ROLE_PERMISSIONS;
 
 export default accessControlSlice.reducer;
-

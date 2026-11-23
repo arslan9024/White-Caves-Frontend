@@ -4,185 +4,36 @@
  * Merges the previous UnifiedNavbar + MainNavBar into one clean bar:
  *   [Logo] | [Breadcrumbs: Home > Dept > Service] ─── [⌘K Search] [🔔] [👤]
  *
- * Features:
- * - Breadcrumb navigation reflecting current dept/service path
- * - Search icon → opens CommandPalette overlay (Cmd+K)
- * - Notification bell with unread count badge
- * - User avatar with dropdown (profile, settings, logout)
+ * Decomposed under AEGIS V5.1 AEG-042 (< 310 lines, target <= 300 lines).
  */
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  Search,
-  Bell,
-  ChevronDown,
-  User,
-  Settings,
-  LogOut,
-  Shield,
-  Menu,
-  Plus,
-} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Menu } from 'lucide-react';
 import type { RootState } from '../../../store/store';
 import { selectSessionUser } from '../../../store/selectors/sessionSelectors';
-import {
-  selectSelectedDepartment,
-  selectSelectedService,
-  selectSelectedAssistant,
-  toggleCommandPalette,
-  clearSelectedAssistant,
-} from '../../../store/slices/sidebarSlice';
+import { toggleCommandPalette } from '../../../store/slices/sidebarSlice';
 import {
   TopBarContainer,
   LogoSection,
   LogoMark,
   LogoName,
   VerticalDivider,
-  BreadcrumbsSection,
-  BreadcrumbItem,
-  BreadcrumbSeparator,
   ActionsSection,
-  ActionAnchor,
   SearchTrigger,
   SearchShortcut,
-  IconButton,
-  NotifBadge,
-  QuickActionButton,
-  UserButton,
-  UserAvatar,
-  UserName,
-  DropdownOverlay,
-  DropdownMenu,
-  DropdownItem,
-  DropdownDivider,
-  DropdownHeader,
-  DropdownHeaderName,
-  DropdownHeaderEmail,
-  DropdownHeaderRole,
   HamburgerButton,
 } from './styles';
+import { useBreadcrumbs } from './useBreadcrumbs';
+import { useTopBarDropdowns } from './useTopBarDropdowns';
+import { TopBarBreadcrumbs } from './TopBarBreadcrumbs';
+import { TopBarQuickActions } from './TopBarQuickActions';
+import { TopBarNotifications } from './TopBarNotifications';
+import { TopBarUserMenu } from './TopBarUserMenu';
+import type { TopBarProps } from './types';
 
-// ─── Types ────────────────────────────────────────────────────────────────
-
-interface TopBarProps {
-  /** Notifications list for badge count */
-  notifications?: Array<{ id: string; read: boolean }>;
-  /** Callback when user clicks logout in the dropdown */
-  onLogout?: () => void;
-  /** Callback when user clicks hamburger (mobile) — opens MobileMenuDrawer */
-  onMenuOpen?: () => void;
-}
-
-// ─── Breadcrumb builder ───────────────────────────────────────────────────
-
-/** All 12 CRM departments */
-const DEPARTMENT_LABELS: Record<string, string> = {
-  operations: 'Operations',
-  finance: 'Finance',
-  sales: 'Sales',
-  marketing: 'Marketing',
-  communications: 'Communications',
-  executive: 'Executive',
-  compliance: 'Compliance',
-  technology: 'Technology',
-  legal: 'Legal',
-  intelligence: 'Intelligence',
-  customer_experience: 'Customer Experience',
-  data_and_ai: 'Data & AI',
-};
-
-/** Assistant display names (from registry — resolved at runtime) */
-const ASSISTANT_LABELS: Record<string, string> = {
-  nadia: 'Nadia',
-  mary: 'Mary',
-  clara: 'Clara',
-  nina: 'Nina',
-  nancy: 'Nancy',
-  sophia: 'Sophia',
-  daisy: 'Daisy',
-  theodora: 'Theodora',
-  olivia: 'Olivia',
-  zoe: 'Zoe',
-  laila: 'Laila',
-  aurora: 'Aurora',
-  hazel: 'Hazel',
-  willow: 'Willow',
-  evangeline: 'Evangeline',
-  sentinel: 'Sentinel',
-  hunter: 'Hunter',
-  henry: 'Henry',
-  cipher: 'Cipher',
-  atlas: 'Atlas',
-};
-
-function useBreadcrumbs() {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const department = useSelector(selectSelectedDepartment);
-  const service = useSelector(selectSelectedService);
-  const assistant = useSelector(selectSelectedAssistant);
-
-  const crumbs: Array<{ label: string; path?: string; action?: () => void }> = [
-    { label: 'Dashboard', path: '/crm' },
-  ];
-
-  // Add path-based breadcrumbs
-  const pathParts = location.pathname.split('/').filter(Boolean);
-  const [rolePart, ...remainingParts] = pathParts;
-  if (pathParts.length > 1 && rolePart && rolePart !== 'dashboard') {
-    crumbs[0] = {
-      label: rolePart.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      path: '/crm',
-    };
-    for (const [idx, part] of remainingParts.entries()) {
-      crumbs.push({
-        label: part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-        path: `/${pathParts.slice(0, idx + 2).join('/')}`,
-      });
-    }
-  }
-
-  // Department level
-  if (department && Object.prototype.hasOwnProperty.call(DEPARTMENT_LABELS, department)) {
-    const alreadyInPath = crumbs.some(c => c.label.toLowerCase() === department);
-    if (!alreadyInPath) {
-      crumbs.push({
-        // eslint-disable-next-line security/detect-object-injection
-        label: DEPARTMENT_LABELS[department],
-        action: () => {
-          dispatch(clearSelectedAssistant());
-        },
-      });
-    }
-  }
-
-  // Service level
-  if (service) {
-    crumbs.push({
-      label: service.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      action: () => {
-        dispatch(clearSelectedAssistant());
-      },
-    });
-  }
-
-  // Assistant level (deepest)
-  if (assistant) {
-    const label =
-      // eslint-disable-next-line security/detect-object-injection
-      ASSISTANT_LABELS[assistant] ??
-      assistant.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-    crumbs.push({ label });
-  }
-
-  return crumbs;
-}
-
-// ─── Component ────────────────────────────────────────────────────────────
-
-const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
+export const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
   notifications = [],
   onLogout,
   onMenuOpen,
@@ -191,78 +42,26 @@ const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
   const navigate = useNavigate();
   const crumbs = useBreadcrumbs();
 
-  // Session user selector bridges user/auth slices during migration.
   const user = useSelector((state: RootState) => selectSessionUser(state));
-  const userRole = (user?.role || 'user').toLowerCase();
-  const isSuperUser = ['lion', 'owner', 'admin', 'managing_director'].includes(userRole);
 
-  // Dropdown state
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showNotifMenu, setShowNotifMenu] = useState(false);
-  const [showQuickActions, setShowQuickActions] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-  const notifMenuRef = useRef<HTMLDivElement>(null);
-  const quickActionsRef = useRef<HTMLDivElement>(null);
-
-  const unreadCount = notifications.filter(n => !n.read).length;
-
-  // Keyboard shortcut: Cmd+K / Ctrl+K → open command palette
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        dispatch(toggleCommandPalette());
-      }
-
-      if (e.key === 'Escape') {
-        setShowUserMenu(false);
-        setShowNotifMenu(false);
-        setShowQuickActions(false);
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [dispatch]);
-
-  // Click outside to close open dropdowns
-  useEffect(() => {
-    const onPointerDown = (e: MouseEvent) => {
-      const target = e.target as Node;
-
-      if (showUserMenu && userMenuRef.current && !userMenuRef.current.contains(target)) {
-        setShowUserMenu(false);
-      }
-
-      if (showNotifMenu && notifMenuRef.current && !notifMenuRef.current.contains(target)) {
-        setShowNotifMenu(false);
-      }
-
-      if (
-        showQuickActions &&
-        quickActionsRef.current &&
-        !quickActionsRef.current.contains(target)
-      ) {
-        setShowQuickActions(false);
-      }
-    };
-
-    document.addEventListener('mousedown', onPointerDown);
-    return () => document.removeEventListener('mousedown', onPointerDown);
-  }, [showUserMenu, showNotifMenu, showQuickActions]);
+  const {
+    showUserMenu,
+    showNotifMenu,
+    showQuickActions,
+    userMenuRef,
+    notifMenuRef,
+    quickActionsRef,
+    toggleUserMenu,
+    toggleNotifMenu,
+    toggleQuickActions,
+    closeUserMenu,
+    closeNotifMenu,
+    closeQuickActions,
+  } = useTopBarDropdowns();
 
   const handleSearchClick = useCallback(() => {
     dispatch(toggleCommandPalette());
   }, [dispatch]);
-
-  const getInitials = (name?: string): string => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2);
-  };
 
   return (
     <TopBarContainer>
@@ -280,89 +79,17 @@ const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
       <VerticalDivider />
 
       {/* Breadcrumbs */}
-      <BreadcrumbsSection aria-label="Breadcrumb">
-        {crumbs.map((crumb, i) => (
-          <React.Fragment key={i}>
-            {i > 0 && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
-            <BreadcrumbItem
-              $isLast={i === crumbs.length - 1}
-              onClick={() => {
-                if (i < crumbs.length - 1) {
-                  if (crumb.action) {
-                    crumb.action();
-                  } else if (crumb.path) {
-                    navigate(crumb.path);
-                  }
-                }
-              }}
-              aria-current={i === crumbs.length - 1 ? 'page' : undefined}
-            >
-              {crumb.label}
-            </BreadcrumbItem>
-          </React.Fragment>
-        ))}
-      </BreadcrumbsSection>
+      <TopBarBreadcrumbs crumbs={crumbs} />
 
       {/* Right actions */}
       <ActionsSection>
         {/* Quick actions */}
-        <ActionAnchor ref={quickActionsRef}>
-          <QuickActionButton
-            onClick={() => {
-              setShowQuickActions(p => !p);
-              setShowNotifMenu(false);
-              setShowUserMenu(false);
-            }}
-            aria-label="Quick actions"
-            data-testid="quick-actions-btn"
-          >
-            <Plus size={16} />
-            <span>Quick Actions</span>
-          </QuickActionButton>
-          {showQuickActions && (
-            <>
-              <DropdownOverlay onClick={() => setShowQuickActions(false)} />
-              <DropdownMenu $align="right" data-testid="quick-actions-menu">
-                <DropdownHeader>
-                  <DropdownHeaderName>Quick Actions</DropdownHeaderName>
-                </DropdownHeader>
-                <DropdownDivider />
-                <DropdownItem
-                  onClick={() => {
-                    navigate('/leads/new');
-                    setShowQuickActions(false);
-                  }}
-                >
-                  Create Lead
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    navigate('/properties/new');
-                    setShowQuickActions(false);
-                  }}
-                >
-                  Add Property
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    navigate('/transactions/new');
-                    setShowQuickActions(false);
-                  }}
-                >
-                  New Transaction
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    dispatch(toggleCommandPalette());
-                    setShowQuickActions(false);
-                  }}
-                >
-                  Global Search
-                </DropdownItem>
-              </DropdownMenu>
-            </>
-          )}
-        </ActionAnchor>
+        <TopBarQuickActions
+          isOpen={showQuickActions}
+          anchorRef={quickActionsRef}
+          onToggle={toggleQuickActions}
+          onClose={closeQuickActions}
+        />
 
         {/* Search trigger → opens Command Palette */}
         <SearchTrigger onClick={handleSearchClick} aria-label="Open search (Ctrl+K)">
@@ -372,117 +99,23 @@ const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
         </SearchTrigger>
 
         {/* Notifications */}
-        <ActionAnchor>
-          <IconButton
-            onClick={() => {
-              setShowNotifMenu(p => !p);
-              setShowUserMenu(false);
-              setShowQuickActions(false);
-            }}
-            aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
-          >
-            <Bell size={18} />
-            {unreadCount > 0 && <NotifBadge>{unreadCount > 9 ? '9+' : unreadCount}</NotifBadge>}
-          </IconButton>
-          {showNotifMenu && (
-            <>
-              <DropdownOverlay onClick={() => setShowNotifMenu(false)} />
-              <DropdownMenu $align="right" ref={notifMenuRef}>
-                <DropdownHeader>
-                  <DropdownHeaderName>Notifications</DropdownHeaderName>
-                </DropdownHeader>
-                <DropdownDivider />
-                {notifications.length === 0 ? (
-                  <DropdownItem disabled style={{ color: 'var(--text-secondary, #9CA3AF)', cursor: 'default' }}>
-                    No new notifications
-                  </DropdownItem>
-                ) : (
-                  notifications.slice(0, 5).map(n => (
-                    <DropdownItem key={n.id}>
-                      <Bell size={14} />
-                      Notification {n.id}
-                    </DropdownItem>
-                  ))
-                )}
-              </DropdownMenu>
-            </>
-          )}
-        </ActionAnchor>
+        <TopBarNotifications
+          isOpen={showNotifMenu}
+          anchorRef={notifMenuRef}
+          notifications={notifications}
+          onToggle={toggleNotifMenu}
+          onClose={closeNotifMenu}
+        />
 
         {/* User menu */}
-        <ActionAnchor>
-          <UserButton
-            onClick={() => {
-              setShowUserMenu(p => !p);
-              setShowNotifMenu(false);
-              setShowQuickActions(false);
-            }}
-            aria-label="User menu"
-          >
-            <UserAvatar>{getInitials(user?.name || user?.email)}</UserAvatar>
-            <UserName>{user?.name || user?.email || 'User'}</UserName>
-            <ChevronDown size={14} style={{ color: 'var(--text-secondary, #9CA3AF)' }} />
-          </UserButton>
-          {showUserMenu && (
-            <>
-              <DropdownOverlay onClick={() => setShowUserMenu(false)} />
-              <DropdownMenu $align="right" ref={userMenuRef}>
-                <DropdownHeader>
-                  <DropdownHeaderName>{user?.name || 'User'}</DropdownHeaderName>
-                  <DropdownHeaderEmail>{user?.email || ''}</DropdownHeaderEmail>
-                  {userRole && <DropdownHeaderRole>{userRole}</DropdownHeaderRole>}
-                </DropdownHeader>
-                <DropdownDivider />
-                <DropdownItem
-                  onClick={() => {
-                    navigate('/profile');
-                    setShowUserMenu(false);
-                  }}
-                >
-                  <User size={16} /> Profile
-                </DropdownItem>
-                <DropdownItem
-                  onClick={() => {
-                    navigate('/settings');
-                    setShowUserMenu(false);
-                  }}
-                >
-                  <Settings size={16} /> Settings
-                </DropdownItem>
-                {isSuperUser && (
-                  <DropdownItem
-                    onClick={() => {
-                      navigate('/crm?tab=overview&cockpit=md');
-                      setShowUserMenu(false);
-                    }}
-                  >
-                    <Shield size={16} /> Operations Cockpit
-                  </DropdownItem>
-                )}
-                {isSuperUser && (
-                  <DropdownItem
-                    onClick={() => {
-                      navigate('/crm?tab=admin&cockpit=md');
-                      setShowUserMenu(false);
-                    }}
-                  >
-                    <Shield size={16} /> Admin Dashboard
-                  </DropdownItem>
-                )}
-                <DropdownDivider />
-                <DropdownItem
-                  $danger
-                  onClick={() => {
-                    onLogout?.();
-                    setShowUserMenu(false);
-                  }}
-                >
-                  <LogOut size={16} /> Sign out
-                </DropdownItem>
-              </DropdownMenu>
-            </>
-          )}
-        </ActionAnchor>
+        <TopBarUserMenu
+          isOpen={showUserMenu}
+          anchorRef={userMenuRef}
+          user={user}
+          onToggle={toggleUserMenu}
+          onClose={closeUserMenu}
+          onLogout={onLogout}
+        />
       </ActionsSection>
     </TopBarContainer>
   );
@@ -490,3 +123,13 @@ const TopBar: React.FC<TopBarProps> = React.memo(function TopBar({
 
 export default TopBar;
 
+// ── Re-exports for backwards compatibility & modular consumption ──────────
+export * from './types';
+export * from './constants';
+export * from './useBreadcrumbs';
+export * from './useTopBarDropdowns';
+export * from './TopBarBreadcrumbs';
+export * from './TopBarQuickActions';
+export * from './TopBarNotifications';
+export * from './TopBarUserMenu';
+export * from './styles';
