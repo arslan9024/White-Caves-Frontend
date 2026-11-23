@@ -19,6 +19,7 @@ import {
   LindaCampaignsAndOutreachPanel,
   LindaConversationsAndPillarsPanel,
 } from './LindaWhatsAppCRM/LindaCampaignsAndOutreachPanels';
+import { LindaDh2CampaignOperationsCenter } from './LindaWhatsAppCRM/LindaDh2CampaignOperationsCenter';
 import { LindaLiveWhatsAppWeb } from './LindaWhatsAppCRM/LindaLiveWhatsAppWeb';
 import { type LindaViewTab } from './LindaWhatsAppCRM/LindaWhatsAppCRM.types';
 import {
@@ -226,6 +227,10 @@ const LindaWhatsAppCRM = memo<LindaWhatsAppCRMProps>(
                   setLeafLabel(null);
                 }}
               />
+            )}
+
+            {(activeViewTab === 'all' || activeViewTab === 'dh2_campaigns') && (
+              <LindaDh2CampaignOperationsCenter />
             )}
 
             {(activeViewTab === 'all' || activeViewTab === 'whatsapp_web') && (

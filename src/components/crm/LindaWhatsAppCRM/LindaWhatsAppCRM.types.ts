@@ -1,5 +1,11 @@
 export type LindaViewTab =
-  'all' | 'terminal' | 'sessions' | 'outreach' | 'conversations' | 'whatsapp_web';
+  | 'all'
+  | 'dh2_campaigns'
+  | 'whatsapp_web'
+  | 'terminal'
+  | 'sessions'
+  | 'outreach'
+  | 'conversations';
 
 export interface LindaMetricsState {
   uptime: string;

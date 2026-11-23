@@ -23,16 +23,16 @@ export const useHQEjariRenewalLogic = () => {
       tradeLicense: true,
       emiratesId: true,
       titleDeed: false,
-      dewaBill: true
-    }
+      dewaBill: true,
+    },
   };
 
   const handleRenew = () => {
-    window.alert('Redirecting to Dubai REST App / DLD Portal for Ejari renewal.');
+    // Initiate DLD REST / Dubai REST App Ejari renewal
   };
 
   const handleUpload = () => {
-    window.alert('Opening document upload dialog for new Ejari contract.');
+    // Open document upload dialog for new Ejari contract
   };
 
   return {
@@ -40,7 +40,6 @@ export const useHQEjariRenewalLogic = () => {
     isRtl,
     data: ejariData,
     handleRenew,
-    handleUpload
+    handleUpload,
   };
 };
-

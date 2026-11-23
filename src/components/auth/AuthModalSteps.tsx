@@ -130,7 +130,7 @@ export const RoleSelectionStep: FC<RoleSelectionStepProps> = ({
 export interface TwoFactorStepProps {
   twoFactorCode: string;
   setTwoFactorCode: (code: string) => void;
-  handleTwoFactorSubmit: (e: FormEvent) => void;
+  handleTwoFactorSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void> | void;
   loading: boolean;
   error?: string | null;
   goBackToStep: (step: number) => void;
@@ -151,11 +151,7 @@ export const TwoFactorStep: FC<TwoFactorStepProps> = ({
         <p className="auth-subtitle">Enter the 6-digit code from your authenticator app</p>
       </div>
 
-      {error && (
-        <div style={authModalStyles.errorAlert}>
-          {error}
-        </div>
-      )}
+      {error && <div style={authModalStyles.errorAlert}>{error}</div>}
 
       <form onSubmit={handleTwoFactorSubmit} className="auth-form">
         <div className="form-group">

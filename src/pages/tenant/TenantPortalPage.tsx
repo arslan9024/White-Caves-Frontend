@@ -23,6 +23,7 @@ import TenantMaintenanceTab from '../../components/portal/tenant/TenantMaintenan
 import TenantDocumentsTab from '../../components/portal/tenant/TenantDocumentsTab';
 import PortalProfileTab from '../../components/portal/PortalProfileTab';
 import PortalSidebarContainer from '../../components/portal/containers/PortalSidebarContainer';
+import PortalLogoRing from '../../components/portal/PortalLogoRing';
 import { useTranslation, Text } from '../../context/TranslationContext';
 
 type TabKey = 'home' | 'lease' | 'payments' | 'maintenance' | 'documents' | 'profile';
@@ -94,6 +95,16 @@ const TenantPortalPage: FC = () => {
             <p>{t('tenant.portal.welcome').replace('{name}', currentUser.name ?? 'User')}</p>
           </div>
 
+          {/* White Caves Center Logo Ring & Live Tenancy Telemetry */}
+          <PortalLogoRing
+            role="tenant"
+            badgeLabel="Resident Suite"
+            title="White Caves Luxury Tenancy"
+            subtitle="Verified Ejari contract, DEWA premises status, and sequential 5% VAT payment receipts."
+            metricPrimary={{ label: 'Lease Status', value: 'Active & Verified' }}
+            metricSecondary={{ label: 'Statutory Shield', value: 'Ejari + DEWA' }}
+          />
+
           {/* Tab Navigation */}
           <PortalSidebarContainer<TabKey>
             tabs={tabs}
@@ -118,4 +129,3 @@ const TenantPortalPage: FC = () => {
 };
 
 export default TenantPortalPage;
-

@@ -9,6 +9,7 @@ export interface LindaViewTabsProps {
 
 const TABS: { id: LindaViewTab; label: string }[] = [
   { id: 'all', label: '🎛️ All Unified View' },
+  { id: 'dh2_campaigns', label: '🚀 DH2 38-Cluster Launch & Fleet' },
   { id: 'whatsapp_web', label: '💬 WhatsApp Web Live Desk' },
   { id: 'terminal', label: '📟 4-Panel Terminal & Playbooks' },
   { id: 'sessions', label: '📱 Multi-Account Sessions & QR/Code' },

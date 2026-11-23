@@ -21,15 +21,15 @@ export const useRERAORNAutoRenewalLogic = () => {
       { id: 'ejari', label: t.step_2, status: 'completed' as 'completed' | 'pending' },
       { id: 'trakheesi', label: t.step_3, status: 'pending' as 'completed' | 'pending' },
       { id: 'final', label: t.step_4, status: 'pending' as 'completed' | 'pending' },
-    ]
+    ],
   };
 
   const handleSync = () => {
-    window.alert('Syncing data with RERA Trakheesi API...');
+    // Sync data with RERA Trakheesi API
   };
 
   const handleAutoRenew = () => {
-    window.alert('Initiating automated renewal workflow. Approvals will be routed to the compliance officer.');
+    // Route automated renewal workflow to compliance officer
   };
 
   return {
@@ -37,7 +37,6 @@ export const useRERAORNAutoRenewalLogic = () => {
     isRtl,
     data: ornData,
     handleSync,
-    handleAutoRenew
+    handleAutoRenew,
   };
 };
-

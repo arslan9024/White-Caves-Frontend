@@ -25,16 +25,11 @@ import LandlordMaintenanceTab from '../../components/portal/landlord/LandlordMai
 import LandlordDocumentsTab from '../../components/portal/landlord/LandlordDocumentsTab';
 import PortalProfileTab from '../../components/portal/PortalProfileTab';
 import PortalSidebarContainer from '../../components/portal/containers/PortalSidebarContainer';
+import PortalLogoRing from '../../components/portal/PortalLogoRing';
 import { useTranslation, Text } from '../../context/TranslationContext';
 
 type TabKey =
-  | 'home'
-  | 'properties'
-  | 'tenants'
-  | 'payments'
-  | 'maintenance'
-  | 'documents'
-  | 'profile';
+  'home' | 'properties' | 'tenants' | 'payments' | 'maintenance' | 'documents' | 'profile';
 
 interface Tab {
   key: TabKey;
@@ -106,6 +101,16 @@ const LandlordPortalPage: FC = () => {
             <p>{t('landlord.portal.welcome').replace('{name}', currentUser.name ?? 'User')}</p>
           </div>
 
+          {/* White Caves Center Logo Ring & Live Portfolio Telemetry */}
+          <PortalLogoRing
+            role="landlord"
+            badgeLabel="Landlord Command Deck"
+            title="DAMAC Hills 2 Asset Portfolio"
+            subtitle="Live rental operations, verified Ejari contracts, and scheduled PDC receivables."
+            metricPrimary={{ label: 'Portfolio Status', value: '100% Leased' }}
+            metricSecondary={{ label: 'Support Channel', value: 'MD WhatsApp VIP' }}
+          />
+
           {/* Tab Navigation */}
           <PortalSidebarContainer<TabKey>
             tabs={tabs}
@@ -130,4 +135,3 @@ const LandlordPortalPage: FC = () => {
 };
 
 export default LandlordPortalPage;
-

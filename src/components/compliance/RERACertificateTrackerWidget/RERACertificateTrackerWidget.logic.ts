@@ -77,12 +77,12 @@ export const useRERACertificateTrackerLogic = () => {
     actionNeeded: 13, // 10 expiring, 3 expired
   };
 
-  const handleRenew = (brn: string) => {
-    window.alert(`Redirecting to DLD/Trakheesi portal to renew BRN: ${brn}`);
+  const handleRenew = (_brn: string) => {
+    // Route to DLD/Trakheesi portal for BRN renewal
   };
 
-  const handleUpload = (brn: string) => {
-    window.alert(`Opening certificate document upload modal for BRN: ${brn}`);
+  const handleUpload = (_brn: string) => {
+    // Open certificate document upload modal for BRN
   };
 
   return {
@@ -98,4 +98,3 @@ export const useRERACertificateTrackerLogic = () => {
     handleUpload,
   };
 };
-

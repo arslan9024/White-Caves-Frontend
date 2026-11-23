@@ -1,5 +1,14 @@
 import React, { FC } from 'react';
-import { ShieldAlert, User, MapPin, ScanSearch, Clock, CheckCircle2, AlertTriangle, Download } from 'lucide-react';
+import {
+  ShieldAlert,
+  User,
+  MapPin,
+  ScanSearch,
+  Clock,
+  CheckCircle2,
+  AlertTriangle,
+  Download,
+} from 'lucide-react';
 import { useAMLPolicyScreeningLogic } from './AMLPolicyScreeningWidget.logic';
 import {
   WidgetContainer,
@@ -10,7 +19,7 @@ import {
   ToggleGroup,
   CheckboxGroup,
   ActionButton,
-  ResultCard
+  ResultCard,
 } from './AMLPolicyScreeningWidget.style';
 
 export const AMLPolicyScreeningWidget: FC = () => {
@@ -31,13 +40,15 @@ export const AMLPolicyScreeningWidget: FC = () => {
     scanResult,
     riskScore,
     isFormValid,
-    handleScan
+    handleScan,
   } = useAMLPolicyScreeningLogic();
 
   return (
     <WidgetContainer $isRtl={isRtl}>
       <WidgetHeader>
-        <h3><ShieldAlert size={28} /> {t.title}</h3>
+        <h3>
+          <ShieldAlert size={28} /> {t.title}
+        </h3>
         <p>{t.subtitle}</p>
       </WidgetHeader>
 
@@ -54,7 +65,11 @@ export const AMLPolicyScreeningWidget: FC = () => {
             </FormGroup>
             <FormGroup>
               <label>{t.nationality}</label>
-              <input type="text" value={nationality} onChange={e => setNationality(e.target.value)} />
+              <input
+                type="text"
+                value={nationality}
+                onChange={e => setNationality(e.target.value)}
+              />
             </FormGroup>
           </FormGrid>
 
@@ -62,15 +77,15 @@ export const AMLPolicyScreeningWidget: FC = () => {
             <ScanSearch size={20} className="icon" />
             {t.screening_type}
           </SectionTitle>
-          
+
           <ToggleGroup>
-            <div 
+            <div
               className={`toggle-btn ${screeningType === 'cdd' ? 'active' : ''}`}
               onClick={() => setScreeningType('cdd')}
             >
               {t.cdd}
             </div>
-            <div 
+            <div
               className={`toggle-btn ${screeningType === 'edd' ? 'active' : ''}`}
               onClick={() => setScreeningType('edd')}
             >
@@ -80,11 +95,19 @@ export const AMLPolicyScreeningWidget: FC = () => {
 
           <CheckboxGroup>
             <label>
-              <input type="checkbox" checked={enablePep} onChange={e => setEnablePep(e.target.checked)} />
+              <input
+                type="checkbox"
+                checked={enablePep}
+                onChange={e => setEnablePep(e.target.checked)}
+              />
               {t.pep_screening}
             </label>
             <label>
-              <input type="checkbox" checked={enableSanctions} onChange={e => setEnableSanctions(e.target.checked)} />
+              <input
+                type="checkbox"
+                checked={enableSanctions}
+                onChange={e => setEnableSanctions(e.target.checked)}
+              />
               {t.sanctions_screening}
             </label>
           </CheckboxGroup>
@@ -96,12 +119,21 @@ export const AMLPolicyScreeningWidget: FC = () => {
         </>
       ) : (
         <ResultCard $status={scanResult}>
-          {scanResult === 'clear' ? <CheckCircle2 size={64} className="icon" /> : <AlertTriangle size={64} className="icon" />}
+          {scanResult === 'clear' ? (
+            <CheckCircle2 size={64} className="icon" />
+          ) : (
+            <AlertTriangle size={64} className="icon" />
+          )}
           <h4>{scanResult === 'clear' ? t.status_clear : t.status_flagged}</h4>
           <div className="score-badge">
             {t.risk_score}: {riskScore} / 100
           </div>
-          <button className="download-btn" onClick={() => window.alert('Downloading CDD/EDD Report PDF...')}>
+          <button
+            className="download-btn"
+            onClick={() => {
+              /* In-app download handler */
+            }}
+          >
             <Download size={16} /> {t.download_report}
           </button>
         </ResultCard>
@@ -109,4 +141,3 @@ export const AMLPolicyScreeningWidget: FC = () => {
     </WidgetContainer>
   );
 };
-

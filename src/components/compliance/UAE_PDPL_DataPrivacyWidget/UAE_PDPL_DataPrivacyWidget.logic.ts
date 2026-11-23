@@ -11,14 +11,14 @@ export const useUAEPDPLDataPrivacyLogic = () => {
   const [clientName, setClientName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  
+
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [thirdPartyConsent, setThirdPartyConsent] = useState(false);
   const [biometricConsent, setBiometricConsent] = useState(true); // Default true for KYC
-  
+
   const [purpose, setPurpose] = useState('sales');
   const [retention, setRetention] = useState('5_years');
-  
+
   const [isLogging, setIsLogging] = useState(false);
   const [pdplRef, setPdplRef] = useState<string | null>(null);
 
@@ -26,7 +26,7 @@ export const useUAEPDPLDataPrivacyLogic = () => {
 
   const handleLogConsent = () => {
     if (!isFormValid) return;
-    
+
     setIsLogging(true);
     setTimeout(() => {
       setIsLogging(false);
@@ -35,7 +35,7 @@ export const useUAEPDPLDataPrivacyLogic = () => {
   };
 
   const handleDownloadDPA = () => {
-    window.alert('Downloading DPA Contract PDF...');
+    // Trigger DPA Contract PDF download
   };
 
   return {
@@ -61,7 +61,6 @@ export const useUAEPDPLDataPrivacyLogic = () => {
     pdplRef,
     isFormValid,
     handleLogConsent,
-    handleDownloadDPA
+    handleDownloadDPA,
   };
 };
-

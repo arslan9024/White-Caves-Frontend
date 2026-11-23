@@ -6,22 +6,14 @@ import '../../pages/auth/AuthPages.css';
 import { AUTH_COPY, getAuthLocale } from './authModalConstants';
 import { authModalStyles } from './authModalStyles';
 import { AuthModalCredentialsStep } from './AuthModalCredentialsStep';
-import {
-  CategorySelectionStep,
-  RoleSelectionStep,
-  TwoFactorStep,
-} from './AuthModalSteps';
+import { CategorySelectionStep, RoleSelectionStep, TwoFactorStep } from './AuthModalSteps';
 
 export { AUTH_COPY, getAuthLocale } from './authModalConstants';
 export type { AuthLocale, AuthCopy } from './authModalConstants';
 export { authModalStyles } from './authModalStyles';
 export { AuthModalCredentialsStep } from './AuthModalCredentialsStep';
 export type { AuthModalCredentialsStepProps } from './AuthModalCredentialsStep';
-export {
-  CategorySelectionStep,
-  RoleSelectionStep,
-  TwoFactorStep,
-} from './AuthModalSteps';
+export { CategorySelectionStep, RoleSelectionStep, TwoFactorStep } from './AuthModalSteps';
 export type {
   CategorySelectionStepProps,
   RoleOption,
@@ -37,7 +29,7 @@ export interface AuthModalProps {
 export const AuthModal: FC<AuthModalProps> = ({ mode: initialMode = 'signin', onClose }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const locale = getAuthLocale();
   const copy = AUTH_COPY[locale];
 
@@ -138,11 +130,7 @@ export const AuthModal: FC<AuthModalProps> = ({ mode: initialMode = 'signin', on
   }, [handleClose]);
 
   return (
-    <div
-      className="auth-modal-overlay"
-      role="presentation"
-      onClick={handleClose}
-    >
+    <div className="auth-modal-overlay" role="presentation" onClick={handleClose}>
       <div
         className="auth-modal-window"
         role="dialog"

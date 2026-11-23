@@ -1,0 +1,91 @@
+import type { Lead } from '../types';
+
+export const MOCK_LEADS: Lead[] = [
+  {
+    id: 1,
+    name: 'Khalid Al Maktoum',
+    phone: '+971 50 111 2222',
+    email: 'khalid@email.com',
+    source: 'whatsapp',
+    interest: 'Palm Jumeirah Villa',
+    priority: 'high',
+    status: 'new',
+    createdAt: new Date().toISOString(),
+    agent: 'Ahmed Ali',
+  },
+  {
+    id: 2,
+    name: 'Emily Watson',
+    phone: '+44 7700 123456',
+    email: 'emily.w@email.com',
+    source: 'website',
+    interest: 'Downtown Apartment',
+    priority: 'medium',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 86400000).toISOString(),
+    agent: 'Sara Khan',
+  },
+  {
+    id: 3,
+    name: 'Chen Wei',
+    phone: '+86 138 0000 1234',
+    email: 'chen.wei@email.com',
+    source: 'chatbot',
+    interest: 'Investment Properties',
+    priority: 'high',
+    status: 'qualified',
+    createdAt: new Date(Date.now() - 172800000).toISOString(),
+    agent: 'Mohammed Hassan',
+  },
+  {
+    id: 4,
+    name: 'Rashid Khan',
+    phone: '+971 55 333 4444',
+    email: 'rashid.k@email.com',
+    source: 'referral',
+    interest: 'Family Townhouse',
+    priority: 'medium',
+    status: 'new',
+    createdAt: new Date(Date.now() - 259200000).toISOString(),
+    agent: '',
+  },
+  {
+    id: 5,
+    name: 'Maria Garcia',
+    phone: '+34 612 345 678',
+    email: 'maria.g@email.com',
+    source: 'whatsapp',
+    interest: 'Luxury Penthouse',
+    priority: 'high',
+    status: 'contacted',
+    createdAt: new Date(Date.now() - 345600000).toISOString(),
+    agent: 'Fatima Ahmed',
+  },
+  {
+    id: 6,
+    name: 'James Miller',
+    phone: '+1 555 123 4567',
+    email: 'james.m@email.com',
+    source: 'website',
+    interest: 'Commercial Space',
+    priority: 'low',
+    status: 'lost',
+    createdAt: new Date(Date.now() - 604800000).toISOString(),
+    agent: 'Omar Rashid',
+  },
+];
+
+export const EMPTY_LEAD: Omit<Lead, 'id' | 'createdAt'> = {
+  name: '',
+  phone: '',
+  email: '',
+  source: 'website',
+  interest: '',
+  priority: 'medium',
+  status: 'new',
+  agent: '',
+};
+
+export const ITEMS_PER_PAGE = 5;
+
+export type ModalMode = 'none' | 'add' | 'edit' | 'delete';

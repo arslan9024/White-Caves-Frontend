@@ -24,8 +24,8 @@ export interface AuthModalCredentialsStepProps {
   setConfirmPassword: (val: string) => void;
   fullName: string;
   setFullName: (val: string) => void;
-  emailInputRef: RefObject<HTMLInputElement | null>;
-  handleEmailSubmit: (e: FormEvent) => void;
+  emailInputRef: RefObject<HTMLInputElement>;
+  handleEmailSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void> | void;
   handleForgotPassword: () => Promise<void> | void;
   handleSocialAuth: (provider: string) => void;
   retrySocialAuth: () => Promise<void> | void;
@@ -71,11 +71,7 @@ export const AuthModalCredentialsStep: FC<AuthModalCredentialsStepProps> = ({
         </p>
       </div>
 
-      {error && (
-        <div style={authModalStyles.errorAlert}>
-          {error}
-        </div>
-      )}
+      {error && <div style={authModalStyles.errorAlert}>{error}</div>}
 
       {socialSyncRecovery && (
         <div style={authModalStyles.socialRecoveryBox}>

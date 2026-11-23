@@ -11,14 +11,13 @@ export const useComplianceArchitectureLogic = () => {
   const [lastSyncTime, setLastSyncTime] = useState(new Date().toLocaleTimeString());
 
   const handleReindex = () => {
-    window.alert('Re-indexing Regulatory Document Registry...');
     setTimeout(() => {
       setLastSyncTime(new Date().toLocaleTimeString());
     }, 1000);
   };
 
   const handleRunRules = () => {
-    window.alert('Running AML Rules Engine against all active portfolios...');
+    // AML Rules Engine evaluation
   };
 
   return {
@@ -26,7 +25,6 @@ export const useComplianceArchitectureLogic = () => {
     isRtl,
     lastSyncTime,
     handleReindex,
-    handleRunRules
+    handleRunRules,
   };
 };
-

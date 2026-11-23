@@ -21,15 +21,15 @@ export const useICPEstablishmentCardLogic = () => {
       { id: 1, type: 'visa', desc: 'New Employment Visa (Agent)', date: '2026-08-10' },
       { id: 2, type: 'quota', desc: 'Quota increased to 120', date: '2026-07-22' },
       { id: 3, type: 'mohre', desc: 'Q2 Emiratisation Data Filed', date: '2026-06-30' },
-    ]
+    ],
   };
 
   const handleRenewICP = () => {
-    window.alert('Redirecting to ICP Smart Services portal for establishment card renewal.');
+    // Route to ICP Smart Services portal for establishment card renewal
   };
 
   const handleFileMoHRE = () => {
-    window.alert('Redirecting to MoHRE portal for WPS and Emiratisation reporting.');
+    // Route to MoHRE portal for WPS and Emiratisation reporting
   };
 
   return {
@@ -37,7 +37,6 @@ export const useICPEstablishmentCardLogic = () => {
     isRtl,
     data: establishmentData,
     handleRenewICP,
-    handleFileMoHRE
+    handleFileMoHRE,
   };
 };
-

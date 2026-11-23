@@ -41,7 +41,7 @@ export const useLoginSecurity = () => {
         setLoading(false);
       }
     },
-    [status, sinceMinutes, emailFilter],
+    [status, sinceMinutes, emailFilter]
   );
 
   useEffect(() => {
@@ -84,7 +84,8 @@ export const useLoginSecurity = () => {
 
   const handleUnlock = async (target: LoginAttempt): Promise<void> => {
     const userId = target.userId;
-    const email = (target.user?.email || (target.metadata?.emailAttempt as string | undefined)) ?? null;
+    const email =
+      (target.user?.email || (target.metadata?.emailAttempt as string | undefined)) ?? null;
     if (!userId && !email) {
       setToast('Cannot unlock — no user identifier on this row.');
       return;
@@ -94,8 +95,16 @@ export const useLoginSecurity = () => {
     }
     try {
       setUnlockingId(target.id);
-      const json = await unlockTarget(userId ? { userId } : { email });
-      setToast(`Unlocked ${json.data?.email ?? email}; cleared ${json.data?.clearedFailures ?? 0} failures.`);
+      const payload: { userId?: string; email?: string } = {};
+      if (userId) {
+        payload.userId = userId;
+      } else if (email) {
+        payload.email = email;
+      }
+      const json = await unlockTarget(payload);
+      setToast(
+        `Unlocked ${json.data?.email ?? email}; cleared ${json.data?.clearedFailures ?? 0} failures.`
+      );
       await fetchAttempts();
       await fetchActiveLockouts();
     } catch (err: unknown) {
@@ -133,7 +142,9 @@ export const useLoginSecurity = () => {
     try {
       setUnlockingId(userId);
       const json = await unlockTarget({ userId });
-      setToast(`Unlocked ${json.data?.email ?? label}; cleared ${json.data?.clearedFailures ?? 0} failures.`);
+      setToast(
+        `Unlocked ${json.data?.email ?? label}; cleared ${json.data?.clearedFailures ?? 0} failures.`
+      );
       await fetchAttempts();
       await fetchActiveLockouts();
     } catch (err: unknown) {

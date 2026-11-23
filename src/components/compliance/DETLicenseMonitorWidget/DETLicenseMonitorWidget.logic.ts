@@ -26,7 +26,7 @@ export const useDETLicenseMonitorLogic = () => {
   }, [licenseData.daysRemaining]);
 
   const handleRenew = () => {
-    window.alert('Redirecting to DET / Invest in Dubai portal...');
+    // Redirect to DET / Invest in Dubai portal
   };
 
   return {
@@ -34,7 +34,6 @@ export const useDETLicenseMonitorLogic = () => {
     isRtl,
     data: licenseData,
     currentPhase,
-    handleRenew
+    handleRenew,
   };
 };
-
