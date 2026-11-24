@@ -4,26 +4,17 @@
  * Architecture: AEGIS Canonical Architecture & Single Purpose File Law (< 350 lines).
  *
  * Capabilities:
- * 1. 38 DAMAC Hills 2 Cluster Selector with 1-click Akoya sheet ingestion.
- * 2. 10-SIM Live Status Bar:
- *    - 1 Primary Master Closer (+971505760056) hard-protected badge.
- *    - 9 Hunter SIMs with 18/hr cap, Gaussian jitter, and Friday prayer indicators.
- * 3. Real-time Template Selector with dynamic variable previews ({{ownerName}}, {{cluster}}, {{unitRef}}).
- * 4. Mission 2 Follow-Up Queue directly integrated for MD Arslan Malik.
+ * 1. 38 DAMAC Hills 2 Cluster Selector with 1-click Akoya sheet & Henry Drive warm contact sync.
+ * 2. 10-SIM Live Status Bar: 1 Primary Master Closer (+971505760056) + 9 Hunter SIMs.
+ * 3. Privacy-Safe Template Selector (zero private unit/villa/plot numbers, whitecaves.ae CTA).
+ * 4. DH2 Warm Contacts & E2E Test Dispatch Verifier + Mission 2 Primary Master Queue.
  */
 
 import React, { FC, useState } from 'react';
-import {
-  Send,
-  Radio,
-  Clock,
-  Sparkles,
-  PhoneCall,
-  CheckCircle,
-  FileSpreadsheet,
-  AlertTriangle,
-} from 'lucide-react';
+import { Send, FileSpreadsheet, ShieldCheck } from 'lucide-react';
+import { apiClient } from '../../../utils/apiClient';
 import { LindaMdFollowUpQueuePanel } from './LindaMdFollowUpQueuePanel';
+import { LindaWarmContactsPanel } from './LindaWarmContactsPanel';
 
 import { DH2_38_CLUSTERS, CAMPAIGN_TEMPLATES, LindaDh2FleetBanner } from './LindaDh2CampaignConfig';
 export { DH2_38_CLUSTERS, CAMPAIGN_TEMPLATES };
@@ -41,43 +32,70 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
   const [launchSuccess, setLaunchSuccess] = useState<string | null>(null);
   const [launchError, setLaunchError] = useState<string | null>(null);
 
-  const activeTemplate =
-    CAMPAIGN_TEMPLATES.find(t => t.id === selectedTemplateId)?.text || CAMPAIGN_TEMPLATES[0].text;
+  const selectedTemplateObj =
+    CAMPAIGN_TEMPLATES.find(t => t.id === selectedTemplateId) || CAMPAIGN_TEMPLATES[0];
+  const activeTemplate = selectedTemplateObj.text;
 
   const previewCluster = selectedCluster === 'All 38 Clusters' ? 'Vardon' : selectedCluster;
   const previewText = activeTemplate
-    .replace('{{ownerName}}', 'Mohammed Al Mansoori')
-    .replace('{{cluster}}', previewCluster)
-    .replace('{{unitRef}}', `${previewCluster} Villa 412`)
-    .replace('{{bedrooms}}', '3');
+    .replace(/\{\{ownerName\}\}/g, 'Mohammed Al Mansoori')
+    .replace(/\{\{cluster\}\}/g, previewCluster)
+    .replace(/\{\{bedrooms\}\}/g, '3');
 
   const handleLaunchCampaign = async () => {
     setLaunching(true);
     setLaunchSuccess(null);
     setLaunchError(null);
     try {
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      if (authToken) headers.Authorization = `Bearer ${authToken}`;
+      const payload = {
+        source: 'akoya_sheet',
+        sequenceKey: selectedTemplateObj.sequenceKey,
+        cluster: selectedCluster === 'All 38 Clusters' ? undefined : selectedCluster,
+        templates: [activeTemplate],
+        customTemplate: activeTemplate,
+        dryRun: isDryRun,
+        limit: 100,
+      };
 
-      const res = await fetch(`${apiBaseUrl}/api/linda/campaigns/dh2-landlord-launch`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          source: 'akoya_sheet',
-          cluster: selectedCluster === 'All 38 Clusters' ? undefined : selectedCluster,
-          templates: [activeTemplate],
-          dryRun: isDryRun,
-          limit: 100,
-        }),
-      });
+      const endpoint =
+        selectedTemplateObj.sequenceKey === 'DH2_LANDLORD_DISCOVERY'
+          ? '/linda/campaigns/dh2-landlord-launch'
+          : '/linda/campaigns/warm-sequence-launch';
 
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.error || 'Failed to dispatch DH2 campaign');
+      let json: {
+        success?: boolean;
+        data?: {
+          validLandlords?: number;
+          totalRecipients?: number;
+          dryRunCount?: number;
+          sentCount?: number;
+        };
+        error?: string;
+      };
+      if (apiBaseUrl || authToken) {
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (authToken) headers.Authorization = `Bearer ${authToken}`;
+        const res = await fetch(`${apiBaseUrl}/api${endpoint}`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload),
+        });
+        json = await res.json();
+        if (!res.ok || !json.success)
+          throw new Error(json.error || 'Failed to dispatch DH2 campaign');
+      } else {
+        json = (await apiClient.post(endpoint, payload)) as typeof json;
+        if (!json?.success) throw new Error(json?.error || 'Failed to dispatch DH2 campaign');
       }
 
+      const count =
+        json.data?.sentCount ||
+        json.data?.dryRunCount ||
+        json.data?.validLandlords ||
+        json.data?.totalRecipients ||
+        'Eligible';
       setLaunchSuccess(
-        `Dispatched! ${json.data?.validLandlords || 'Eligible'} recipients queued across 9 Hunter SIMs with Gaussian anti-ban jitter.`
+        `${isDryRun ? 'Dry-Run Verified' : 'Dispatched'}! ${count} recipients audited under Public Listing Privacy Rule & Gaussian anti-ban pacing.`
       );
     } catch (err: unknown) {
       setLaunchError(err instanceof Error ? err.message : 'Campaign launch failed');
@@ -115,7 +133,6 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
           border: '1px solid rgba(255, 255, 255, 0.06)',
         }}
       >
-        {/* Cluster Picker */}
         <div>
           <label
             style={{
@@ -163,11 +180,10 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
             }}
           >
             <FileSpreadsheet size={14} className="text-emerald-400" />
-            <span>Synced with Google Drive Akoya Oxygen Sheet</span>
+            <span>Synced with Google Drive Akoya Sheet &amp; Henry Tenancy Contracts</span>
           </div>
         </div>
 
-        {/* Template Picker */}
         <div>
           <label
             style={{
@@ -202,7 +218,6 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
             ))}
           </select>
 
-          {/* Mode Switch: Dry-run vs Live */}
           <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <label
               style={{
@@ -241,6 +256,8 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
             justifyContent: 'space-between',
             alignItems: 'center',
             marginBottom: '6px',
+            flexWrap: 'wrap',
+            gap: 6,
           }}
         >
           <span
@@ -253,8 +270,17 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
           >
             ⚡ LIVE WHATSAPP MESSAGE PREVIEW
           </span>
-          <span style={{ fontSize: '0.72rem', color: '#64748B' }}>
-            Target: {previewCluster} Villa
+          <span
+            style={{
+              fontSize: '0.72rem',
+              color: '#10B981',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <ShieldCheck size={13} />
+            Target: {previewCluster} Villa · Privacy-Safe (No Unit #) · whitecaves.ae
           </span>
         </div>
         <p
@@ -269,7 +295,6 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
           "{previewText}"
         </p>
 
-        {/* Dispatch Button */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
           <button
             type="button"
@@ -290,7 +315,6 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
               border: 'none',
               cursor: launching ? 'not-allowed' : 'pointer',
               boxShadow: '0 4px 14px rgba(0, 0, 0, 0.3)',
-              transition: 'all 0.2s ease',
             }}
           >
             <Send size={15} />
@@ -331,6 +355,9 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
           </div>
         )}
       </div>
+
+      {/* ── 3B. DH2 WARM CONTACTS (HENRY DRIVE TENANCY CONTRACTS) & E2E TEST DISPATCH ── */}
+      <LindaWarmContactsPanel selectedCluster={selectedCluster} isDryRun={isDryRun} />
 
       {/* ── 4. MISSION 2 PRIMARY MASTER CLOSER QUEUE ── */}
       <LindaMdFollowUpQueuePanel apiBaseUrl={apiBaseUrl} authToken={authToken} />

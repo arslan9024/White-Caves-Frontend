@@ -48,7 +48,9 @@ export const LindaChatThreadPane: FC<LindaChatThreadPaneProps> = ({
   const [unreadBelow, setUnreadBelow] = useState(0);
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
-    messagesEndRef.current?.scrollIntoView({ behavior });
+    if (typeof messagesEndRef.current?.scrollIntoView === 'function') {
+      messagesEndRef.current.scrollIntoView({ behavior });
+    }
     setShowScrollBottom(false);
     setUnreadBelow(0);
   }, []);

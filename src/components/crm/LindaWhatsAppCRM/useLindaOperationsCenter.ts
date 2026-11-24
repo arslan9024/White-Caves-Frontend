@@ -122,6 +122,54 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
         appendLog('Live WhatsApp conversations synced from local cache.');
       }
 
+      // Live 10-SIM Pool Sessions sync
+      try {
+        const sessRes = (await apiClient.get('/linda/sessions')) as {
+          success?: boolean;
+          data?: {
+            sessions?: Array<{
+              id: string;
+              phone: string;
+              displayName: string;
+              role: string;
+              isConnected: boolean;
+              status: string;
+              sessionDirExists?: boolean;
+              messagesSent?: number;
+              messagesReceived?: number;
+            }>;
+          };
+        };
+        if (Array.isArray(sessRes?.data?.sessions) && sessRes.data.sessions.length > 0) {
+          const mapped: LindaSessionItem[] = sessRes.data.sessions.map(s => ({
+            id: s.id,
+            name: s.displayName,
+            phone: s.phone,
+            role: s.role === 'master' ? 'MASTER' : s.role === 'employee' ? 'EMPLOYEE' : 'AGENT',
+            status: s.isConnected
+              ? 'connected'
+              : String(s.status).toLowerCase() === 'reconnecting'
+                ? 'reconnecting'
+                : 'disconnected',
+            linkState: s.isConnected || s.sessionDirExists ? 'LINKED' : 'NOT LINKED',
+            connState: s.isConnected ? 'CONNECTED' : 'OFFLINE',
+            savedProfile: Boolean(s.sessionDirExists),
+            messagesSent: s.messagesSent ?? 0,
+            messagesReceived: s.messagesReceived ?? 0,
+            uptime: s.isConnected ? 'Live' : 'Standby',
+            lastActivity: s.isConnected ? 'Just now' : 'Ready to pair',
+          }));
+          setSessions(mapped);
+          const connectedCount = mapped.filter(m => m.status === 'connected').length;
+          setMetrics(prev => ({
+            ...prev,
+            activeSessions: `${connectedCount} / ${mapped.length} Online`,
+          }));
+        }
+      } catch {
+        // retain initial 10-SIM session table when offline
+      }
+
       try {
         const metricsRes = (await apiClient.get('/linda/metrics')) as {
           success?: boolean;
@@ -131,7 +179,6 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
           setMetrics(prev => ({
             ...prev,
             uptime: metricsRes.data?.uptime || prev.uptime,
-            activeSessions: `${metricsRes.data?.activeSessions || 4} / 5 Online`,
             rateLimit: metricsRes.data?.rateLimit || prev.rateLimit,
             memory: metricsRes.data?.memory || prev.memory,
           }));

@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { PhoneCall, CheckCircle2, FileText, KeyRound, Calendar, RefreshCw, ShieldAlert } from 'lucide-react';
+import {
+  PhoneCall,
+  CheckCircle2,
+  FileText,
+  KeyRound,
+  Calendar,
+  RefreshCw,
+  ShieldAlert,
+  MessageCircle,
+} from 'lucide-react';
+import { apiClient } from '../../../utils/apiClient';
 
 export interface MdFollowUpQueueItem {
   id: string;
@@ -38,11 +48,19 @@ export const LindaMdFollowUpQueuePanel: React.FC<Props> = ({ apiBaseUrl = '', au
     setLoading(true);
     setError(null);
     try {
-      const headers: Record<string, string> = {};
-      if (authToken) headers.Authorization = `Bearer ${authToken}`;
-      const res = await fetch(`${apiBaseUrl}/api/linda/md-followup-queue?status=pending`, { headers });
-      const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error || 'Failed to load MD queue');
+      let json: { success?: boolean; data?: { items?: MdFollowUpQueueItem[] }; error?: string };
+      if (apiBaseUrl || authToken) {
+        const headers: Record<string, string> = {};
+        if (authToken) headers.Authorization = `Bearer ${authToken}`;
+        const res = await fetch(`${apiBaseUrl}/api/linda/md-followup-queue?status=pending`, {
+          headers,
+        });
+        json = await res.json();
+        if (!res.ok || !json.success) throw new Error(json.error || 'Failed to load MD queue');
+      } else {
+        json = (await apiClient.get('/linda/md-followup-queue?status=pending')) as typeof json;
+        if (!json?.success) throw new Error(json?.error || 'Failed to load MD queue');
+      }
       setItems(json.data?.items || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to fetch Mission 2 MD queue');
@@ -57,13 +75,21 @@ export const LindaMdFollowUpQueuePanel: React.FC<Props> = ({ apiBaseUrl = '', au
 
   const markCompleted = async (id: string) => {
     try {
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-      if (authToken) headers.Authorization = `Bearer ${authToken}`;
-      await fetch(`${apiBaseUrl}/api/linda/md-followup-queue/${id}`, {
-        method: 'PATCH',
-        headers,
-        body: JSON.stringify({ status: 'processed', mdNotes: 'Followed up via Primary Master +971505760056' }),
-      });
+      const payload = {
+        status: 'processed',
+        mdNotes: 'Followed up via Primary Master +971505760056',
+      };
+      if (apiBaseUrl || authToken) {
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (authToken) headers.Authorization = `Bearer ${authToken}`;
+        await fetch(`${apiBaseUrl}/api/linda/md-followup-queue/${id}`, {
+          method: 'PATCH',
+          headers,
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await apiClient.patch(`/linda/md-followup-queue/${id}`, payload);
+      }
       setItems(prev => prev.filter(item => item.id !== id));
     } catch {
       setError('Failed to update follow-up status');
@@ -78,7 +104,8 @@ export const LindaMdFollowUpQueuePanel: React.FC<Props> = ({ apiBaseUrl = '', au
             Mission 2 — Primary Master (+971505760056) Follow-Up Queue
           </h3>
           <p className="text-xs text-slate-500">
-            Confirmed available DH2 landlords handed off from the 9 Hunter SIMs for MD price negotiation
+            Confirmed available DH2 landlords handed off from the 9 Hunter SIMs for MD price
+            negotiation
           </p>
         </div>
         <button
@@ -127,6 +154,17 @@ export const LindaMdFollowUpQueuePanel: React.FC<Props> = ({ apiBaseUrl = '', au
                     <PhoneCall className="h-3.5 w-3.5" />
                     Call {item.landlordPhone}
                   </a>
+                  <a
+                    href={`https://wa.me/${item.landlordPhone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                      `Hello ${item.landlordName}, this is Arslan Malik from White Caves Real Estate LLC regarding your ${item.bedrooms}BR residence in ${item.cluster}, DAMAC Hills 2. Let us schedule a quick call via https://whitecaves.ae.`
+                    )}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-emerald-700"
+                  >
+                    <MessageCircle className="h-3.5 w-3.5" />
+                    WhatsApp
+                  </a>
                   <button
                     type="button"
                     onClick={() => void markCompleted(item.id)}
@@ -139,14 +177,18 @@ export const LindaMdFollowUpQueuePanel: React.FC<Props> = ({ apiBaseUrl = '', au
               </div>
 
               <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-600">
-                <span>Owner: <strong>{item.landlordName}</strong></span>
+                <span>
+                  Owner: <strong>{item.landlordName}</strong>
+                </span>
                 {item.facts?.askingRentAed && (
                   <span className="rounded bg-white px-2 py-0.5 font-semibold text-slate-900">
                     AED {item.facts.askingRentAed.toLocaleString()}/yr
                   </span>
                 )}
                 {item.facts?.chequesCount && (
-                  <span className="rounded bg-white px-2 py-0.5">{item.facts.chequesCount} Cheques</span>
+                  <span className="rounded bg-white px-2 py-0.5">
+                    {item.facts.chequesCount} Cheques
+                  </span>
                 )}
                 {item.facts?.vacantDate && (
                   <span className="inline-flex items-center gap-1 rounded bg-white px-2 py-0.5">

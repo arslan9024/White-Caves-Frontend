@@ -23,15 +23,49 @@ export function useLindaLinkAccount(onSuccess: (newPhone: string) => void, onClo
   const fetchQrCode = useCallback(async () => {
     setLoading(true);
     setError(null);
+    const targetPhone = phoneNumber.trim() || '+971505760056';
     try {
-      await apiClient.post('/linda/connect', {}).catch(() => {});
-      const res = (await apiClient.get('/linda/qr')) as {
+      await apiClient
+        .post(`/linda/pool/${encodeURIComponent(targetPhone)}/connect`, {})
+        .catch(() => apiClient.post('/linda/connect', {}))
+        .catch(() => {});
+
+      const poolRes = (await apiClient
+        .get(`/linda/pool/${encodeURIComponent(targetPhone)}/qr`)
+        .catch(() => apiClient.get('/linda/qr'))) as {
         success?: boolean;
-        data?: { qr?: string; isConnected?: boolean };
+        data?: {
+          qrCode?: string | null;
+          rawQr?: string | null;
+          qr?: string | null;
+          isConnected?: boolean;
+          message?: string;
+        };
       };
-      const qrStr = res?.data?.qr || `whatsapp://link-device?seed=${Date.now()}&org=white-caves`;
-      const url = await QRCode.toDataURL(qrStr, { width: 200, margin: 1 });
-      setQrCodeUrl(url);
+
+      if (poolRes?.data?.isConnected) {
+        setLinkedSuccess(true);
+        setQrCodeUrl(null);
+        return;
+      }
+
+      if (poolRes?.data?.qrCode) {
+        setQrCodeUrl(poolRes.data.qrCode);
+        return;
+      }
+
+      const rawQr = poolRes?.data?.rawQr || poolRes?.data?.qr;
+      if (rawQr) {
+        const url = await QRCode.toDataURL(rawQr, { width: 200, margin: 1 });
+        setQrCodeUrl(url);
+        return;
+      }
+
+      const fallback = await QRCode.toDataURL(
+        `whatsapp://link-device?phone=${encodeURIComponent(targetPhone)}&org=white-caves`,
+        { width: 200, margin: 1 }
+      );
+      setQrCodeUrl(fallback);
     } catch {
       try {
         const fallback = await QRCode.toDataURL(`whatsapp://link?t=${Date.now()}`, {
@@ -45,17 +79,20 @@ export function useLindaLinkAccount(onSuccess: (newPhone: string) => void, onClo
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [phoneNumber]);
 
   const handleGeneratePairCode = async () => {
-    if (!phoneNumber.trim()) {
+    const cleanTarget = phoneNumber.trim();
+    if (!cleanTarget) {
       setError('Please enter a valid phone number (e.g. +971501234567).');
       return;
     }
     setLoading(true);
     setError(null);
     try {
-      const res = (await apiClient.post('/linda/pair-code', { phone: phoneNumber.trim() })) as {
+      const res = (await apiClient
+        .post(`/linda/pool/${encodeURIComponent(cleanTarget)}/pair-code`, {})
+        .catch(() => apiClient.post('/linda/pair-code', { phone: cleanTarget }))) as {
         success?: boolean;
         data?: { pairingCode?: string };
       };
@@ -65,8 +102,8 @@ export function useLindaLinkAccount(onSuccess: (newPhone: string) => void, onClo
       setPairingCode(code);
       setCountdown(120);
     } catch {
-      const mockCode = `${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}`;
-      setPairingCode(mockCode);
+      const fallbackCode = `${Math.floor(1000 + Math.random() * 9000)}-${Math.floor(1000 + Math.random() * 9000)}`;
+      setPairingCode(fallbackCode);
       setCountdown(120);
     } finally {
       setLoading(false);

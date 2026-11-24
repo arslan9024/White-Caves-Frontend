@@ -20,37 +20,68 @@ export interface AccountOption {
 }
 
 export const BASE_ACCOUNT_FILTERS: Omit<AccountOption, 'status'>[] = [
-  { id: 'ALL', label: 'All Linked Lines', role: 'all' },
+  { id: 'ALL', label: 'All Linked Lines (10-SIM Fleet)', role: 'all' },
   {
     id: '+971505760056',
-    label: 'Primary Master: Arslan Malik (+971505760056)',
+    label: 'Primary Master Closer: Arslan Malik (+971505760056)',
     phone: '+971505760056',
     role: 'master',
   },
   {
     id: '+971503869886',
-    label: 'Master Desk 2 (+971503869886)',
+    label: 'Hunter SIM 02 — DH2 Discovery (+971503869886)',
     phone: '+971503869886',
-    role: 'master',
+    role: 'servant',
   },
   {
     id: '+971505110636',
-    label: 'Master Line 3 (+971505110636)',
+    label: 'Hunter SIM 03 — DH2 Discovery (+971505110636)',
     phone: '+971505110636',
-    role: 'master',
+    role: 'servant',
   },
   {
     id: '+971589969886',
-    label: 'Employee Desk (+971589969886)',
+    label: 'Hunter SIM 04 — DH2 Discovery (+971589969886)',
     phone: '+971589969886',
-    role: 'employee',
+    role: 'servant',
   },
   {
     id: '+971553633595',
-    label: 'Servant & Outreach Line (+971553633595)',
+    label: 'Hunter SIM 05 — DH2 Discovery (+971553633595)',
     phone: '+971553633595',
     role: 'servant',
   },
+  {
+    id: '+971559156636',
+    label: 'Hunter SIM 06 — DH2 Discovery (+971559156636)',
+    phone: '+971559156636',
+    role: 'servant',
+  },
+  {
+    id: '+971505845825',
+    label: 'Hunter SIM 07 — DH2 Discovery (+971505845825)',
+    phone: '+971505845825',
+    role: 'servant',
+  },
+  {
+    id: '+971507160096',
+    label: 'Hunter SIM 08 — DH2 Discovery (+971507160096)',
+    phone: '+971507160096',
+    role: 'servant',
+  },
+  {
+    id: '+971553498722',
+    label: 'Hunter SIM 09 — DH2 Discovery (+971553498722)',
+    phone: '+971553498722',
+    role: 'servant',
+  },
+  {
+    id: '+971567160096',
+    label: 'Hunter SIM 10 — DH2 Discovery (+971567160096)',
+    phone: '+971567160096',
+    role: 'servant',
+  },
+  { id: 'goraha', label: 'GorahaBot Legacy Desk (Synced)', role: 'employee' },
 ];
 
 export function useLindaAccountAutoload(

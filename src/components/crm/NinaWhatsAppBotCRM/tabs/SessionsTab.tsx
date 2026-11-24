@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { apiClient } from '../../../../utils/apiClient';
 import { SessionsTabProps } from './sessions/types';
 import { EngineTelemetryBanner } from './sessions/EngineTelemetryBanner';
 import { PairingPortal } from './sessions/PairingPortal';
@@ -10,40 +11,62 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({ data }) => {
   const [pairingMethod, setPairingMethod] = useState<'qr' | 'pairingCode'>('pairingCode');
   const [copiedCode, setCopiedCode] = useState(false);
   const [inputPhoneNumber, setInputPhoneNumber] = useState('+971 50 576 0056');
-  const [generatedPairingCode, setGeneratedPairingCode] = useState('WC-5760-056A');
+  const [generatedPairingCode, setGeneratedPairingCode] = useState('READY-TO-PAIR');
+  const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Real-Time Socket/Polling State Simulation for whatsapp-web.js
   const [lastSyncTime, setLastSyncTime] = useState<string>(new Date().toLocaleTimeString());
   const [networkPing, setNetworkPing] = useState<number>(24);
   const [batteryLevel] = useState<number>(98);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const fetchLiveQr = useCallback(async () => {
+    try {
+      const start = Date.now();
+      const res = (await apiClient.get('/whatsapp-engine/nina/qr')) as {
+        success?: boolean;
+        data?: { qrCode?: string };
+      };
+      setNetworkPing(Math.max(12, Date.now() - start));
       setLastSyncTime(new Date().toLocaleTimeString());
-      setNetworkPing(Math.floor(18 + Math.random() * 12));
-    }, 4000);
-    return () => clearInterval(interval);
+      if (res?.success && res.data?.qrCode) {
+        setQrCodeUrl(res.data.qrCode);
+      }
+    } catch {
+      // keep existing state when offline
+    }
   }, []);
 
+  useEffect(() => {
+    void fetchLiveQr();
+    const interval = setInterval(() => {
+      setLastSyncTime(new Date().toLocaleTimeString());
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [fetchLiveQr]);
+
   const handleCopyPairingCode = () => {
-    navigator.clipboard.writeText(generatedPairingCode);
+    void navigator.clipboard?.writeText(generatedPairingCode);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 3000);
   };
 
-  const handleRegeneratePairingCode = () => {
+  const handleRegeneratePairingCode = async () => {
     setIsGenerating(true);
-    setTimeout(() => {
-      const codePart1 = Math.floor(1000 + Math.random() * 9000);
-      const codePart2 = Math.floor(1000 + Math.random() * 9000);
-      setGeneratedPairingCode(`WC-${codePart1}-${codePart2}`);
+    try {
+      const res = (await apiClient.post('/whatsapp-engine/nina/pair-code', {
+        phoneNumber: inputPhoneNumber.replace(/\s+/g, ''),
+      })) as { success?: boolean; data?: { pairingCode?: string } };
+      if (res?.success && res.data?.pairingCode) {
+        setGeneratedPairingCode(res.data.pairingCode);
+      } else {
+        setGeneratedPairingCode('CONNECT-ENGINE');
+      }
+    } catch {
+      setGeneratedPairingCode('ENGINE-OFFLINE');
+    } finally {
       setIsGenerating(false);
-    }, 500);
+    }
   };
-
-  // High-Resolution Crisp QR Code URL for Arslan's number +971 50 576 0056
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://wa.me/971505760056?text=WhiteCaves-Nina-AI-Core-Verified-Session`;
 
   return (
     <div
@@ -64,7 +87,7 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({ data }) => {
         generatedPairingCode={generatedPairingCode}
         isGenerating={isGenerating}
         copiedCode={copiedCode}
-        onRegenerateCode={handleRegeneratePairingCode}
+        onRegenerateCode={() => void handleRegeneratePairingCode()}
         onCopyCode={handleCopyPairingCode}
         qrCodeUrl={qrCodeUrl}
       />
@@ -77,4 +100,3 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({ data }) => {
     </div>
   );
 };
-

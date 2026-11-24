@@ -6,6 +6,7 @@
 
 import React, { useState, useMemo, FC } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
+import { apiClient } from '../../../utils/apiClient';
 import type { LindaConversationItem } from './LindaWhatsAppCRM.data';
 import { LindaChatListPane } from './LindaChatListPane';
 import { LindaChatThreadPane, type ChatMessage } from './LindaChatThreadPane';
@@ -146,16 +147,13 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     onSendMessage?.(selectedConv.id, textToSend);
 
     if (textToSend.startsWith('/')) {
-      fetch('/api/leasing/linda/slash', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      apiClient
+        .post('/leasing/linda/slash', {
           command: textToSend,
           conversationId: selectedConv.id,
-        }),
-      })
-        .then(r => r.json())
-        .then(json => {
+        })
+        .then((res: unknown) => {
+          const json = res as { data?: { replyText?: string } };
           if (json?.data?.replyText) {
             const botMsg: ChatMessage = {
               id: `slash-${Date.now()}`,
@@ -174,15 +172,13 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       return;
     }
 
-    fetch(`/api/linda/send/${encodeURIComponent(selectedConv.id)}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    apiClient
+      .post(`/linda/send/${encodeURIComponent(selectedConv.id)}`, {
         phoneNumber: selectedConv.phone || selectedConv.id,
         message: textToSend,
         accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
-      }),
-    }).catch(() => {});
+      })
+      .catch(() => {});
   };
 
   const handleAiDraft = (lang: 'EN' | 'AR' = 'EN') => {
@@ -191,11 +187,10 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
     onAutoReplyWithAI?.(selectedConv);
     const aiDraft =
       lang === 'AR'
-        ? `مرحباً بك ${selectedConv.contactName || ''}. وايت كيفز العقارية الفاخرة استلمت استفسارك حول ${selectedConv.unit}. المستندات جاهزة لمراجعتكم.`
-        : `Thank you ${selectedConv.contactName}. White Caves Luxury Desk has reviewed your ${selectedConv.unit} inquiry. We have prepared the verified DLD paperwork for your review.`;
+        ? `مرحباً بك ${selectedConv.contactName || ''}. وايت كيفز العقارية الفاخرة استلمت استفسارك حول ${selectedConv.cluster || 'داماك هيلز 2'}. تفضل بزيارة https://whitecaves.ae لحجز موعد معاينة مع أرسلان مالك.`
+        : `Thank you ${selectedConv.contactName}. White Caves Luxury Desk has reviewed your ${selectedConv.cluster || 'DAMAC Hills 2'} inquiry. Visit https://whitecaves.ae to book a private viewing with Arslan Malik.`;
 
     setInputMessage(aiDraft);
-    // Brief typing indicator pulse
     setTimeout(() => {
       setIsAiComposing(false);
     }, 450);
@@ -203,19 +198,19 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
 
   const handleHumanTakeover = () => {
     if (!selectedConv) return;
-    fetch('/api/leasing/linda/takeover', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ conversationId: selectedConv.id, active: true }),
-    })
-      .then(r => r.json())
-      .then(json => {
+    apiClient
+      .post('/leasing/linda/takeover', { conversationId: selectedConv.id, active: true })
+      .then((res: unknown) => {
+        const json = res as { data?: { expiresAt?: string } };
         const noticeMsg: ChatMessage = {
           id: `takeover-${Date.now()}`,
           sender: 'agent',
           text: `🛡️ 30-Minute Human Takeover Active until ${new Date(
             json?.data?.expiresAt || Date.now() + 1800000
-          ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. Linda automated bot replies are paused on this thread.`,
+          ).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}. Linda automated bot replies are paused on this thread.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           status: 'read',
         };

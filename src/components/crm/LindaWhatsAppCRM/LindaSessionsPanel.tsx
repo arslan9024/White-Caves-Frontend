@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Send } from 'lucide-react';
 import { useTheme } from '../../../context/ThemeContext';
+import { apiClient } from '../../../utils/apiClient';
 import type { LindaSessionItem } from './LindaWhatsAppCRM.data';
 import { LindaSessionRow } from './LindaSessionRow';
 import { LindaSessionTelemetryBar } from './LindaSessionTelemetryBar';
@@ -30,11 +31,23 @@ export const LindaSessionsPanel: React.FC<SessionsPanelProps> = memo(
 
     useEffect(() => {
       let cancelled = false;
-      fetch('/api/linda/pool/telemetry')
-        .then(r => (r.ok ? r.json() : null))
-        .then(json => {
-          if (!cancelled && json?.success && json?.data) {
-            setPoolTelemetry(json.data);
+      apiClient
+        .get('/linda/pool/telemetry')
+        .then((json: unknown) => {
+          const parsed = json as {
+            success?: boolean;
+            data?: {
+              antiBanPolicy?: { totalHourlyCapacity?: number; totalHourlyUsed?: number };
+              totalCapacity?: number;
+              sentToday?: number;
+            };
+          };
+          if (!cancelled && parsed?.success && parsed?.data) {
+            setPoolTelemetry({
+              totalCapacity:
+                parsed.data.antiBanPolicy?.totalHourlyCapacity ?? parsed.data.totalCapacity ?? 162,
+              sentToday: parsed.data.antiBanPolicy?.totalHourlyUsed ?? parsed.data.sentToday ?? 0,
+            });
           }
         })
         .catch(() => {});
@@ -47,15 +60,22 @@ export const LindaSessionsPanel: React.FC<SessionsPanelProps> = memo(
       setDispatching(true);
       setDispatchResult(null);
       try {
-        const res = await fetch('/api/linda/campaign/dispatch-now', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cluster: 'ALL' }),
-        });
-        const json = await res.json();
-        setDispatchResult(json?.success ? 'Batch dispatched' : json?.error || 'Dispatch failed');
+        const json = (await apiClient.post('/linda/campaigns/warm-sequence-launch', {
+          sequenceKey: 'LANDLORD_RETENTION_RENEWAL',
+          dryRun: true,
+          limit: 10,
+        })) as {
+          success?: boolean;
+          data?: { dryRunCount?: number; sentCount?: number };
+          error?: string;
+        };
+        setDispatchResult(
+          json?.success
+            ? `Audited ${json.data?.sentCount || json.data?.dryRunCount || 0} msgs`
+            : json?.error || 'Dispatch failed'
+        );
       } catch {
-        setDispatchResult('Offline (Mock Dispatched)');
+        setDispatchResult('Offline (Dry-Run Guard)');
       } finally {
         setDispatching(false);
       }
