@@ -136,6 +136,9 @@ export const FEMALE_SUP_NAMES_9 = [
 
 export interface GeneratedSupervisorSeat {
   id: string;
+  squadCode: string;
+  unitCode: string;
+  divisionCode: string;
   slot: number;
   name: string;
   gender: 'Female';
@@ -146,6 +149,8 @@ export interface GeneratedSupervisorSeat {
 
 export interface GeneratedAssistantManagerSeat {
   id: string;
+  unitCode: string;
+  divisionCode: string;
   slot: number;
   name: string;
   gender: 'Female';
@@ -153,6 +158,15 @@ export interface GeneratedAssistantManagerSeat {
   deptCode: string;
   supervisors: GeneratedSupervisorSeat[];
 }
+
+export const BHAKTI_ENTITY_COLLECTION_TIERS = [
+  { level: 0, collection: 'Headquarters', codePrefix: 'HQ', leaderRole: 'Managing Director / COO' },
+  { level: 1, collection: 'Department', codePrefix: 'DEPT', leaderRole: 'Director' },
+  { level: 2, collection: 'Division', codePrefix: 'DIV', leaderRole: 'Division Manager' },
+  { level: 3, collection: 'Unit', codePrefix: 'UNIT', leaderRole: 'Assistant Manager' },
+  { level: 4, collection: 'Squad', codePrefix: 'SQD', leaderRole: 'Supervisor' },
+  { level: 5, collection: 'Team', codePrefix: 'TEAM', leaderRole: 'Team Leader (Manual CRUD)' },
+] as const;
 
 /**
  * Generates the exact Bhakti 12-Assistant-Manager -> 108-Supervisor fractal subtree
@@ -165,18 +179,23 @@ export function generateManagerFractalSubtree(
 ): GeneratedAssistantManagerSeat[] {
   const dd = String(deptSlot).padStart(2, '0');
   const deptCode = `DEPT-${dd}`;
+  const divisionCode = `DIV-${dd}-${managerSlot}`;
   const managerCode = `MGR-${dd}-${managerSlot}`;
 
   return FEMALE_AM_NAMES_12.map((amFirstName, amIdx) => {
     const amSlot = amIdx + 1;
     const aa = String(amSlot).padStart(2, '0');
     const amId = `AMGR-${dd}-${managerSlot}-${aa}`;
+    const unitCode = `UNIT-${dd}-${managerSlot}-${aa}`;
 
     const supervisors: GeneratedSupervisorSeat[] = FEMALE_SUP_NAMES_9.map(
       (supFirstName, supIdx) => {
         const supSlot = supIdx + 1;
         return {
           id: `SUP-${dd}-${managerSlot}-${aa}-${supSlot}`,
+          squadCode: `SQD-${dd}-${managerSlot}-${aa}-${supSlot}`,
+          unitCode,
+          divisionCode,
           slot: supSlot,
           name: `AI ${supFirstName} Sup-${dd}.${managerSlot}.${amSlot}.${supSlot}`,
           gender: 'Female',
@@ -189,6 +208,8 @@ export function generateManagerFractalSubtree(
 
     return {
       id: amId,
+      unitCode,
+      divisionCode,
       slot: amSlot,
       name: divisionLabel
         ? `AI ${amFirstName} (${divisionLabel})`
