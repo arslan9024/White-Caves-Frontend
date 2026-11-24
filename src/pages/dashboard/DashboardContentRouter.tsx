@@ -34,6 +34,7 @@ import LindaWhatsAppCRM from '../../components/crm/LindaWhatsAppCRM';
 import MaryInventoryCRM from '../../components/crm/MaryInventoryCRM';
 import ZoeExecutiveCRM from '../../components/crm/ZoeConsole';
 import { DashboardLiveTicker } from '../../components/dashboard/header/DashboardLiveTicker';
+import { MdExecutiveCockpit } from '../../components/dashboard/cockpit/MdExecutiveCockpit';
 import { ProfileDashboardView } from './ProfileDashboardView';
 import { LegacyDomainRouter } from './LegacyDomainRouter';
 import { checkDashboardRoleGuard } from './DashboardRoleGuards';
@@ -85,6 +86,16 @@ export const DashboardContentRouter: FC<DashboardContentRouterProps> = ({
     onOpenRoleModal,
   });
   if (guardedView) return guardedView;
+
+  // Managing Director Apex Executive Cockpit (Illuminated Logo Ring & Live Bhakti Organogram)
+  if (isMdOrFounder && (isRootOverview || (activeTab as string) === 'overview' || !activeTab)) {
+    return (
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <DashboardLiveTicker />
+        <MdExecutiveCockpit onNavigate={navigate} />
+      </div>
+    );
+  }
 
   // Direct Zoe Sovereign Node / Executive Command selection
   if (
