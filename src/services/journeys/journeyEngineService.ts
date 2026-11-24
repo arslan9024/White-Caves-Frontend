@@ -3,6 +3,8 @@
  * 
  * Manages journey sessions, validation state machine, blocker resolution,
  * readiness score computation, and lifecycle audit timeline emission.
+import { JourneyStorageService } from './journeyStorageService';
+import { JourneySessionEvaluator } from './journeySessionEvaluator';
  */
 
 import {
@@ -78,110 +80,11 @@ export class JourneyEngineService {
    * updates step statuses, and computes overall readiness percentage.
    */
   public static evaluateSession(
-    session: JourneySession,
-    definition: JourneyDefinition
-  ): JourneySession {
-    const blockers: BlockerIssue[] = [];
-    let completedStepsCount = 0;
-    let totalEvaluatedWeight = 0;
-    let acquiredWeight = 0;
-
-    const newStatuses = { ...session.stepStatuses };
-
-    definition.steps.forEach((step, idx) => {
-      // Exclude result or purely automated steps from blocker penalty weight
-      const isInformational = step.type === 'processing' || step.type === 'result';
-      const stepWeight = isInformational ? 0 : 10;
-      totalEvaluatedWeight += stepWeight;
-
-      let stepHasErrors = false;
-
-      // 1. Run step validator if present
-      if (step.validate) {
-        const stepBlockers = step.validate(session.data);
-        if (stepBlockers && stepBlockers.length > 0) {
-          blockers.push(...stepBlockers);
-          stepHasErrors = true;
-        }
-      }
-
-      // 2. Check required fields
-      if (step.requiredFields && step.requiredFields.length > 0) {
-        step.requiredFields.forEach(field => {
-          const val = session.data[field];
-          const isMissing = val === undefined || val === null || val === '' || (Array.isArray(val) && val.length === 0);
-          if (isMissing) {
-            stepHasErrors = true;
-            // Only add to blockers if not already captured by step validator
-            if (!blockers.some(b => b.stepId === step.id && b.field === field)) {
-              blockers.push({
-                id: `blocker-${step.id}-${field}`,
-                stepId: step.id,
-                field,
-                title: `Missing ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`,
-                description: `Field "${field}" is required in ${step.title}.`,
-                actionLabel: `Add ${field.replace(/([A-Z])/g, ' $1')}`,
-                severity: 'error'
-              });
-            }
-          }
-        });
-      }
-
-      // Determine step status
-      if (idx < session.currentStepIndex) {
-        if (stepHasErrors) {
-          newStatuses[step.id] = 'BLOCKED';
-          acquiredWeight += stepWeight * 0.5; // Partial credit
-        } else {
-          newStatuses[step.id] = 'COMPLETED';
-          completedStepsCount++;
-          acquiredWeight += stepWeight;
-        }
-      } else if (idx === session.currentStepIndex) {
-        newStatuses[step.id] = stepHasErrors ? 'BLOCKED' : 'IN_PROGRESS';
-        if (!stepHasErrors && !isInformational) {
-          acquiredWeight += stepWeight * 0.8;
-        }
-      } else {
-        // Future steps
-        if (idx === session.currentStepIndex + 1 && !stepHasErrors) {
-          newStatuses[step.id] = 'AVAILABLE';
-        } else {
-          newStatuses[step.id] = 'LOCKED';
-        }
-      }
-    });
-
-    const readinessScore = totalEvaluatedWeight > 0 
-      ? Math.min(100, Math.round((acquiredWeight / totalEvaluatedWeight) * 100))
-      : 100;
-
-    // Session State evaluation
-    let state: JourneyState = session.state;
-    if (session.state !== 'COMPLETED' && session.state !== 'PROCESSING' && session.state !== 'CANCELLED') {
-      if (blockers.some(b => b.severity === 'error' && b.stepId === definition.steps[session.currentStepIndex]?.id)) {
-        state = 'BLOCKED';
-      } else if (readinessScore >= 90 && session.currentStepIndex === definition.steps.length - 2) {
-        state = 'READY';
-      } else {
-        state = 'IN_PROGRESS';
-      }
-    }
-
-    return {
-      ...session,
-      stepStatuses: newStatuses,
-      blockers,
-      readinessScore,
-      state,
-      updatedAt: new Date().toISOString()
-    };
+    definition: JourneyDefinition,
+    session: JourneySession
+  ): JourneyEvaluationResult {
+    return JourneySessionEvaluator.evaluateSession(definition, session);
   }
-
-  /**
-   * Updates session data and triggers re-evaluation
-   */
   public static updateSessionData(
     session: JourneySession,
     definition: JourneyDefinition,
@@ -349,78 +252,30 @@ export class JourneyEngineService {
   // -------------------------------------------------------------
   // Storage & Persistence Layer
   // -------------------------------------------------------------
+  // Storage & Persistence Layer (Delegated to JourneyStorageService)
+  // -------------------------------------------------------------
 
   public static saveSession(session: JourneySession): void {
-    try {
-      if (typeof window === 'undefined' || !window.localStorage) return;
-      const sessions = this.getStoredSessions();
-      sessions[session.sessionId] = session;
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-    } catch {
-      // Safe fallback if local storage is unavailable
-    }
+    JourneyStorageService.saveSession(session);
   }
 
   public static getStoredSessions(): Record<string, JourneySession> {
-    try {
-      if (typeof window === 'undefined' || !window.localStorage) return {};
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch {
-      return {};
-    }
+    return JourneyStorageService.getStoredSessions();
   }
 
   public static getActiveSessionForJourney(journeyId: string): JourneySession | null {
-    const sessions = this.getStoredSessions();
-    const matches = Object.values(sessions).filter(
-      s => s.journeyId === journeyId && s.state !== 'COMPLETED' && s.state !== 'CANCELLED'
-    );
-    if (matches.length === 0) return null;
-    // Sort by latest updated
-    matches.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-    return matches[0];
+    return JourneyStorageService.getActiveSessionForJourney(journeyId);
   }
 
   public static deleteSession(sessionId: string): void {
-    try {
-      if (typeof window === 'undefined' || !window.localStorage) return;
-      const sessions = this.getStoredSessions();
-      delete sessions[sessionId];
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-    } catch {
-      // Safe fallback
-    }
+    JourneyStorageService.deleteSession(sessionId);
   }
 
   public static appendToLifecycleHistory(session: JourneySession): void {
-    try {
-      if (typeof window === 'undefined' || !window.localStorage) return;
-      const raw = window.localStorage.getItem(HISTORY_KEY);
-      const history: JourneySession[] = raw ? JSON.parse(raw) : [];
-      history.unshift(session);
-      // Keep last 100 lifecycle records
-      window.localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 100)));
-    } catch {
-      // Safe fallback
-    }
+    JourneyStorageService.appendToLifecycleHistory(session);
   }
 
   public static getLifecycleHistory(entityId?: string): JourneySession[] {
-    try {
-      if (typeof window === 'undefined' || !window.localStorage) return [];
-      const raw = window.localStorage.getItem(HISTORY_KEY);
-      const history: JourneySession[] = raw ? JSON.parse(raw) : [];
-      if (!entityId) return history;
-      return history.filter(s => 
-        s.entityContext?.propertyId === entityId ||
-        s.entityContext?.landlordId === entityId ||
-        s.entityContext?.tenantId === entityId ||
-        s.entityContext?.dealId === entityId
-      );
-    } catch {
-      return [];
-    }
+    return JourneyStorageService.getLifecycleHistory(entityId);
   }
 }
-

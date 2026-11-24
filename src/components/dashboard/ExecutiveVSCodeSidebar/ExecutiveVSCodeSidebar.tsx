@@ -12,6 +12,7 @@ import { useExecutiveVSCodeSidebarLogic, ActivityTab } from './ExecutiveVSCodeSi
 import { UserRoleContext } from '../../../context/UserRoleContext';
 import { SidebarActivityBar } from './SidebarActivityBar';
 import { SidebarDepartmentsList } from './SidebarDepartmentsList';
+import { ContextualHierarchyTree } from './ContextualHierarchyTree';
 import { SidebarEmployeesList } from './SidebarEmployeesList';
 import { SidebarAiAssistantsList } from './SidebarAiAssistantsList';
 import { SidebarTasksList } from './SidebarTasksList';
@@ -71,10 +72,12 @@ export const ExecutiveVSCodeSidebar: FC<ExecutiveVSCodeSidebarProps> = ({
   const role = roleContext?.role || 'managing_director';
   const isDirectorate = Boolean(
     !roleContext ||
-      roleContext?.isFounder ||
-      roleContext?.isManagingDirector ||
-      (roleContext?.accessLevel && roleContext.accessLevel >= 3)
+    roleContext?.isFounder ||
+    roleContext?.isManagingDirector ||
+    (roleContext?.accessLevel && roleContext.accessLevel >= 3)
   );
+
+  const [deptViewMode, setDeptViewMode] = React.useState<'slots' | 'tree'>('tree');
 
   const handleLeafClick = (key: string, label: string) => {
     setActiveItemKey(key);
@@ -145,11 +148,65 @@ export const ExecutiveVSCodeSidebar: FC<ExecutiveVSCodeSidebarProps> = ({
 
         {/* ── View Selection in Drawer ─────── */}
         {activeTab === 'departments' ? (
-          <SidebarDepartmentsList
-            filterQuery={filterQuery}
-            onOpenCreate={onOpenDeptManager}
-            onNavigateToView={route => handleLeafClick(`route-${route}`, route)}
-          />
+          <>
+            <div style={{ display: 'flex', gap: '4px', padding: '0 8px 6px' }}>
+              <button
+                type="button"
+                onClick={() => setDeptViewMode('tree')}
+                data-testid="sidebar-dept-mode-tree"
+                style={{
+                  flex: 1,
+                  padding: '4px 6px',
+                  fontSize: '0.66rem',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  border:
+                    deptViewMode === 'tree'
+                      ? '1px solid #EF4444'
+                      : '1px solid rgba(255,255,255,0.08)',
+                  backgroundColor:
+                    deptViewMode === 'tree' ? 'rgba(239,68,68,0.15)' : 'rgba(15,23,42,0.5)',
+                  color: deptViewMode === 'tree' ? '#FFFFFF' : '#94A3B8',
+                  cursor: 'pointer',
+                }}
+              >
+                1-12-108 Tree
+              </button>
+              <button
+                type="button"
+                onClick={() => setDeptViewMode('slots')}
+                data-testid="sidebar-dept-mode-slots"
+                style={{
+                  flex: 1,
+                  padding: '4px 6px',
+                  fontSize: '0.66rem',
+                  fontWeight: 700,
+                  borderRadius: '6px',
+                  border:
+                    deptViewMode === 'slots'
+                      ? '1px solid #EF4444'
+                      : '1px solid rgba(255,255,255,0.08)',
+                  backgroundColor:
+                    deptViewMode === 'slots' ? 'rgba(239,68,68,0.15)' : 'rgba(15,23,42,0.5)',
+                  color: deptViewMode === 'slots' ? '#FFFFFF' : '#94A3B8',
+                  cursor: 'pointer',
+                }}
+              >
+                12 Slots CRUD
+              </button>
+            </div>
+            {deptViewMode === 'tree' ? (
+              <ContextualHierarchyTree
+                onNavigateToView={route => handleLeafClick(`route-${route}`, route)}
+              />
+            ) : (
+              <SidebarDepartmentsList
+                filterQuery={filterQuery}
+                onOpenCreate={onOpenDeptManager}
+                onNavigateToView={route => handleLeafClick(`route-${route}`, route)}
+              />
+            )}
+          </>
         ) : activeTab === 'employees' ? (
           <SidebarEmployeesList
             filterQuery={filterQuery}
@@ -239,4 +296,3 @@ export const ExecutiveVSCodeSidebar: FC<ExecutiveVSCodeSidebarProps> = ({
 };
 
 export default ExecutiveVSCodeSidebar;
-

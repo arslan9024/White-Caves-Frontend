@@ -3,13 +3,13 @@
  * 8-Tier Authority Chain: Arslan Malik (MD) -> 1 COO Zoe -> 12 Locked Directors -> 108 Managers
  * -> Daisy's 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
  */
-
 import React, { useState } from 'react';
 import { GripVertical, Plus, UserMinus } from 'lucide-react';
 import { useAiccSanctumLogic } from './Logic.logic';
 import { styles } from './Style.style';
 import { DaisyLeasingHierarchyPanel } from './DaisyLeasingHierarchyPanel';
-
+import { ManagerFractalSubtreePanel } from './ManagerFractalSubtreePanel';
+import { SanctumDelegationPanel } from './SanctumDelegationPanel';
 export const AiccSanctumView: React.FC = () => {
   const {
     executiveCoo,
@@ -31,12 +31,17 @@ export const AiccSanctumView: React.FC = () => {
     createManager,
     demoteToStandby,
   } = useAiccSanctumLogic();
-
   const [showAdd, setShowAdd] = useState(false);
+  const [selectedFractalMgr, setSelectedFractalMgr] = useState<{
+    deptSlot: number;
+    managerSlot: number;
+    code: string;
+    name: string;
+    roleTitle: string;
+  } | null>(null);
   const [newName, setNewName] = useState('');
   const [newRole, setNewRole] = useState('');
   const [newCap, setNewCap] = useState('');
-
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newName.trim() || !newRole.trim() || !selectedDepartment) return;
@@ -47,7 +52,6 @@ export const AiccSanctumView: React.FC = () => {
       setShowAdd(false);
     }
   };
-
   const metrics = [
     {
       label: '8-Tier Sovereign Authority',
@@ -70,7 +74,6 @@ export const AiccSanctumView: React.FC = () => {
       sub: 'MGR-11-1 (Sole Male AI) • 6 DMS Open Human Tiers',
     },
   ];
-
   return (
     <div className={styles.container} data-testid="aicc-sanctum-command-center">
       <header className={styles.header}>
@@ -94,13 +97,11 @@ export const AiccSanctumView: React.FC = () => {
           <span className={styles.execPill}>ONLINE • 15M SLA</span>
         </div>
       </header>
-
       {governanceNotice && (
         <div className="mb-3 px-4 py-2 rounded-lg bg-red-500/15 border border-red-500/40 text-xs text-red-200">
           {governanceNotice}
         </div>
       )}
-
       <div className={styles.metricsGrid}>
         {metrics.map(m => (
           <div key={m.label} className={styles.metricCard}>
@@ -110,7 +111,6 @@ export const AiccSanctumView: React.FC = () => {
           </div>
         ))}
       </div>
-
       <main className={styles.main}>
         <div className={styles.deptList}>
           <div className="flex items-center justify-between mb-2">
@@ -156,7 +156,6 @@ export const AiccSanctumView: React.FC = () => {
             })}
           </div>
         </div>
-
         <div className={styles.board}>
           <div className={styles.directorBanner}>
             <div className="flex items-center gap-3">
@@ -196,7 +195,6 @@ export const AiccSanctumView: React.FC = () => {
               </button>
             </div>
           </div>
-
           {showAdd && (
             <form
               onSubmit={handleAdd}
@@ -230,7 +228,6 @@ export const AiccSanctumView: React.FC = () => {
               </button>
             </form>
           )}
-
           <div className={styles.managersGrid}>
             {filteredManagers.map(mgr => (
               <div
@@ -300,6 +297,28 @@ export const AiccSanctumView: React.FC = () => {
                     )}
                     <button
                       type="button"
+                      onClick={() => {
+                        const deptSlot =
+                          Number(selectedDepartment.deptCode.replace('DEPT-', '')) || 1;
+                        setSelectedFractalMgr(
+                          selectedFractalMgr?.code === mgr.code
+                            ? null
+                            : {
+                                deptSlot,
+                                managerSlot: mgr.slot || 1,
+                                code: mgr.code,
+                                name: mgr.name,
+                                roleTitle: mgr.roleTitle,
+                              }
+                        );
+                      }}
+                      className="px-1.5 py-0.5 text-[10px] bg-red-600/20 hover:bg-red-600/40 text-red-300 rounded border border-red-500/40 font-semibold"
+                      title="Inspect 12 Assistant Managers & 108 Supervisors"
+                    >
+                      12/108
+                    </button>
+                    <button
+                      type="button"
                       onClick={() => demoteToStandby(mgr.id)}
                       className="px-1.5 py-0.5 text-[10px] bg-slate-800 hover:bg-red-900/60 text-slate-300 rounded border border-slate-700"
                       title="Move to Standby"
@@ -311,40 +330,20 @@ export const AiccSanctumView: React.FC = () => {
               </div>
             ))}
           </div>
-
+          {selectedFractalMgr && (
+            <ManagerFractalSubtreePanel
+              deptSlot={selectedFractalMgr.deptSlot}
+              managerSlot={selectedFractalMgr.managerSlot}
+              managerCode={selectedFractalMgr.code}
+              managerName={selectedFractalMgr.name}
+              roleTitle={selectedFractalMgr.roleTitle}
+            />
+          )}
           <DaisyLeasingHierarchyPanel />
-
-          <div className="mt-4 p-4 rounded-xl border border-slate-800 bg-[#1E293B]/40">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800 mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                Live Sanctum Delegation Chain
-              </span>
-              <span className="text-[10px] text-slate-400">
-                Drag any card onto another card or left department to swap
-              </span>
-            </div>
-            <div className="flex flex-col gap-2">
-              {liveDelegations.map(del => (
-                <div
-                  key={del.id}
-                  className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-red-400 font-bold">{del.taskId}</span>
-                    <span className="text-slate-300">
-                      Target: <strong className="text-white">{del.targetAgent}</strong>
-                    </span>
-                    <span className="text-slate-500">Chain: {del.chain.join(' → ')}</span>
-                  </div>
-                  <span className="text-emerald-400 font-semibold">{del.status}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SanctumDelegationPanel delegations={liveDelegations} />
         </div>
       </main>
     </div>
   );
 };
-
 export default AiccSanctumView;
