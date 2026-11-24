@@ -58,62 +58,8 @@ import {
   SuperUserBadge,
   UserInfo,
   UserName,
-  UserRole,
-  ChevronIcon,
-  DropdownDivider,
-  DropdownItem,
-  ProfileHeader,
-  ProfileAvatar,
-  ProfileInfo,
-  ProfileName,
-  ProfileEmail,
-  DropdownFooter,
-  SidebarToggleButton,
-} from './styles';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface UserProp {
-  displayName?: string;
-  email?: string;
-  photoURL?: string;
-}
-
-interface NotificationItem_T {
-  id?: string | number;
-  isRead: boolean;
-  title: string;
-  time?: string;
-  color?: string;
-  icon?: React.ReactNode;
-  [key: string]: unknown;
-}
-
-interface QuickStats {
-  properties?: number;
-  users?: number;
-  leads?: number;
-  systemHealth?: string;
-}
-
-interface MainNavBarProps {
-  theme?: string;
-  onThemeToggle?: () => void;
-  user?: UserProp | null;
-  notifications?: NotificationItem_T[];
-  onLogout?: () => void;
-  isSuperUser?: boolean;
-  quickStats?: QuickStats | null;
-  leftSidebarCollapsed?: boolean;
-  onToggleLeftSidebar?: () => void;
-}
-
-type ProfileAction = 'admin' | 'profile' | 'settings' | 'billing' | 'help' | 'logout';
-
-// ---------------------------------------------------------------------------
-// Component
+import { MainNavBarProps, UserProp, NotificationItem_T, QuickStats, ProfileAction } from './types';
+import { MainNavBarProfileDropdown } from './MainNavBarProfileDropdown';
 // ---------------------------------------------------------------------------
 
 const MainNavBar: React.FC<MainNavBarProps> = ({
@@ -376,68 +322,13 @@ const MainNavBar: React.FC<MainNavBarProps> = ({
             </ChevronIcon>
           </ProfileTrigger>
 
-          {showProfileMenu && (
-            <DropdownMenu>
-              <ProfileHeader>
-                <ProfileAvatar>
-                  {user?.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName || 'User'}
-                      loading="lazy"
-                      width={48}
-                      height={48}
-                    />
-                  ) : (
-                    <span>{getUserInitials()}</span>
-                  )}
-                </ProfileAvatar>
-                <ProfileInfo>
-                  <ProfileName>{user?.displayName || 'Company Owner'}</ProfileName>
-                  <ProfileEmail>{user?.email || 'owner@whitecaves.ae'}</ProfileEmail>
-                </ProfileInfo>
-              </ProfileHeader>
-              <DropdownDivider />
-              <DropdownContent>
-                {effectiveIsSuperUser && (
-                  <>
-                    <DropdownItem $isAdmin={true} onClick={() => handleProfileAction('admin')}>
-                      <Shield size={18} />
-                      <span>Admin Dashboard</span>
-                    </DropdownItem>
-                    <DropdownDivider />
-                  </>
-                )}
-                <DropdownItem onClick={() => handleProfileAction('profile')}>
-                  <User size={18} />
-                  <span>My Profile</span>
-                </DropdownItem>
-                <DropdownItem onClick={() => handleProfileAction('settings')}>
-                  <Settings size={18} />
-                  <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem onClick={() => handleProfileAction('billing')}>
-                  <CreditCard size={18} />
-                  <span>Billing</span>
-                </DropdownItem>
-                <DropdownDivider />
-                <DropdownItem onClick={() => handleProfileAction('help')}>
-                  <HelpCircle size={18} />
-                  <span>Help Center</span>
-                </DropdownItem>
-                <DropdownDivider />
-                <DropdownItem $isLogout={true} onClick={() => handleProfileAction('logout')}>
-                  <LogOut size={18} />
-                  <span>Log Out</span>
-                </DropdownItem>
-              </DropdownContent>
-            </DropdownMenu>
-          )}
-        </DropdownContainer>
-      </NavRightSection>
-    </NavBarContainer>
-  );
-};
+            {showProfileMenu && (
+              <MainNavBarProfileDropdown
+                user={user}
+                isSuperUser={isSuperUser}
+                onAction={handleProfileAction}
+              />
+            )}
 
 export default MainNavBar;
 

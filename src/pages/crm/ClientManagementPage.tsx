@@ -13,6 +13,8 @@ import { Modal } from '../../shared/components/ui/Modal';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import {
   PageContainer,
+import { ClientModals } from './components/ClientModals';
+import { ClientTable } from './components/ClientTable';
   PageHeader,
   PageTitle,
   BackLink,
@@ -296,74 +298,13 @@ const ClientManagementPage: FC = () => {
       </ActionBar>
 
       {/* Clients Table */}
-      <div style={{ marginTop: '1rem', overflowX: 'auto' }}>
-        <Table aria-label="Clients list">
-          <thead>
-            <tr>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Phone</Th>
-              <Th>Type</Th>
-              <Th>Company</Th>
-              <Th>Status</Th>
-              <Th>Tags</Th>
-              <Th>Actions</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedClients.length > 0 ? (
-              paginatedClients.map((client: Client) => (
-                <Tr key={client.id} onClick={() => handleEdit(client)}>
-                  <Td style={{ fontWeight: 500 }}>
-                    {client.name || '—'}
-                    {client.status === 'vip' && <VipBadge>⭐ VIP</VipBadge>}
-                  </Td>
-                  <Td>{client.email || '—'}</Td>
-                  <Td>{client.phone || '—'}</Td>
-                  <Td>
-                    <Badge variant={getTypeBadgeVariant(client.type || '')} size="small">
-                      {TYPE_CONFIG[client.type || '']?.icon}{' '}
-                      {TYPE_CONFIG[client.type || '']?.label || client.type || '—'}
-                    </Badge>
-                  </Td>
-                  <Td>{client.company || '—'}</Td>
-                  <Td>
-                    <Badge variant={getStatusBadgeVariant(client.status || '')} size="small">
-                      {STATUS_CONFIG[client.status || '']?.label || client.status || '—'}
-                    </Badge>
-                  </Td>
-                  <Td>
-                    {client.tags && client.tags.length > 0 ? (
-                      <TagList>
-                        {client.tags.map((tag, idx) => (
-                          <Tag key={idx}>{tag}</Tag>
-                        ))}
-                      </TagList>
-                    ) : (
-                      '—'
-                    )}
-                  </Td>
-                  <Td onClick={e => e.stopPropagation()}>
-                    <div style={{ display: 'flex', gap: '0.4rem' }}>
-                      <SecondaryButton onClick={() => handleEdit(client)}>Edit</SecondaryButton>
-                      <DangerButton onClick={() => confirmDelete(client)}>Delete</DangerButton>
-                    </div>
-                  </Td>
-                </Tr>
-              ))
-            ) : (
-              <tr>
-                <Td colSpan={8}>
-                  <EmptyState>
-                    {search || typeFilter !== 'all' || statusFilter !== 'all'
-                      ? 'No clients match your filters'
-                      : 'No clients yet — add your first one!'}
-                  </EmptyState>
-                </Td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+      <ClientTable
+        clients={clients}
+        openEditModal={openEditModal}
+        openDeleteModal={openDeleteModal}
+        getStatusBadgeVariant={getStatusBadgeVariant}
+        formatDate={formatDate}
+      />
       </div>
 
       {/* Pagination */}
@@ -379,62 +320,20 @@ const ClientManagementPage: FC = () => {
       )}
 
       {/* Create Client Modal */}
-      {showCreateModal && (
-        <Modal
-          title="Add New Client"
-          isOpen={showCreateModal}
-          onClose={closeCreateModal}
-          size="large"
-        >
-          {renderForm()}
-          <ModalFooter>
-            <SecondaryButton onClick={closeCreateModal}>Cancel</SecondaryButton>
-            <PrimaryButton onClick={handleCreate} disabled={!formData.name.trim() || loading}>
-              {loading ? '⏳ Creating...' : 'Add Client'}
-            </PrimaryButton>
-          </ModalFooter>
-        </Modal>
-      )}
-
-      {/* Edit Client Modal */}
-      {showEditModal && selectedClient && (
-        <Modal
-          title={`Edit Client: ${selectedClient.name}`}
-          isOpen={showEditModal}
-          onClose={closeEditModal}
-          size="large"
-        >
-          {renderForm()}
-          <ModalFooter>
-            <SecondaryButton onClick={closeEditModal}>Cancel</SecondaryButton>
-            <PrimaryButton onClick={handleSaveEdit} disabled={!formData.name.trim() || loading}>
-              {loading ? '⏳ Saving...' : 'Save Changes'}
-            </PrimaryButton>
-          </ModalFooter>
-        </Modal>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {showDeleteConfirm && selectedClient && (
-        <Modal
-          title="Delete Client"
-          isOpen={showDeleteConfirm}
-          onClose={closeDeleteModal}
-          size="small"
-        >
-          <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.9rem' }}>
-            Are you sure you want to delete <strong>{selectedClient.name}</strong>? This action
-            cannot be undone.
-          </p>
-          <ModalFooter>
-            <SecondaryButton onClick={closeDeleteModal}>Cancel</SecondaryButton>
-            <DangerButton onClick={handleDelete} disabled={loading}>
-              {loading ? '⏳ Deleting...' : 'Delete Client'}
-            </DangerButton>
-          </ModalFooter>
-        </Modal>
-      )}
-    </PageContainer>
+      <ClientModals
+        isCreateModalOpen={isCreateModalOpen}
+        closeCreateModal={closeCreateModal}
+        formValues={formValues}
+        setFormValues={setFormValues}
+        formErrors={formErrors}
+        handleCreateClient={handleCreateClient}
+        isEditModalOpen={isEditModalOpen}
+        closeEditModal={closeEditModal}
+        handleUpdateClient={handleUpdateClient}
+        isDeleteModalOpen={isDeleteModalOpen}
+        closeDeleteModal={closeDeleteModal}
+        handleDeleteClient={handleDeleteClient}
+      />
   );
 };
 

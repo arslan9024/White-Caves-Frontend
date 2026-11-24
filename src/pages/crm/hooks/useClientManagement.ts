@@ -25,70 +25,11 @@ const log = createLogger('useClientManagement');
 
 // ─── Types ──────────────────────────────────────────────────────────────
 
-export interface Client {
-  id: string | number;
-  name?: string;
-  email?: string;
-  phone?: string;
-  type?: string;
-  company?: string;
-  status?: string;
-  tags?: string[];
-  notes?: string;
-  created_at?: string;
-  updated_at?: string;
-  [key: string]: unknown;
-}
-
-export interface ClientFormData {
-  name: string;
-  email: string;
-  phone: string;
-  type: string;
-  company: string;
-  status: string;
-  tags: string;
-  notes: string;
-}
-
-type ClientBadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-
-// ─── Constants ──────────────────────────────────────────────────────────
-
-export const TYPE_CONFIG: Record<
-  string,
-  { label: string; icon: string; badgeVariant: ClientBadgeVariant }
-> = {
-  buyer: { label: 'Buyer', icon: '🏠', badgeVariant: 'info' },
-  seller: { label: 'Seller', icon: '💼', badgeVariant: 'primary' },
-  owner: { label: 'Owner', icon: '🔑', badgeVariant: 'success' },
-  investor: { label: 'Investor', icon: '📈', badgeVariant: 'warning' },
-};
-
-export const STATUS_CONFIG: Record<
-  string,
-  { label: string; color: string; badgeVariant: ClientBadgeVariant }
-> = {
-  active: { label: 'Active', color: '#10B981', badgeVariant: 'success' },
-  inactive: { label: 'Inactive', color: '#6B7280', badgeVariant: 'secondary' },
-  vip: { label: 'VIP', color: '#F59E0B', badgeVariant: 'warning' },
-};
-
-const ITEMS_PER_PAGE = 10;
-
-const EMPTY_FORM: ClientFormData = {
-  name: '',
-  email: '',
-  phone: '',
-  type: 'buyer',
-  company: '',
-  status: 'active',
-  tags: '',
-  notes: '',
-};
-
-// ─── Hook ───────────────────────────────────────────────────────────────
-
+export * from './clientManagement.types';
+import {
+  Client, ClientFormData, TYPE_CONFIG, STATUS_CONFIG, ITEMS_PER_PAGE, EMPTY_FORM
+import { filterClientsList, computeClientTypeCounts } from './clientManagementFilters';
+} from './clientManagement.types';
 export function useClientManagement() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -123,45 +64,12 @@ export function useClientManagement() {
   // ─── Derived data ───────────────────────────────────────────────
 
   const filteredClients = useMemo(() => {
-    return allClients.filter((c: Client) => {
-      const matchesSearch =
-        !search ||
-        [c.name, c.email, c.phone, c.company].some(field =>
-          field?.toLowerCase().includes(search.toLowerCase())
-        );
-      const matchesType = typeFilter === 'all' || c.type === typeFilter;
-      const matchesStatus = statusFilter === 'all' || c.status === statusFilter;
-      return matchesSearch && matchesType && matchesStatus;
-    });
+    return filterClientsList(allClients, search, typeFilter, statusFilter);
   }, [allClients, search, typeFilter, statusFilter]);
 
-  const totalPages = Math.ceil(filteredClients.length / ITEMS_PER_PAGE);
-
-  const paginatedClients = filteredClients.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
-
   const typeCounts = useMemo(() => {
-    const counts: Record<string, number> = { all: allClients.length };
-    allClients.forEach((c: Client) => {
-      const type = c.type || 'unknown';
-      counts[type] = (counts[type] || 0) + 1;
-    });
-    return counts;
+    return computeClientTypeCounts(allClients);
   }, [allClients]);
-
-  // ─── Actions ────────────────────────────────────────────────────
-
-  const resetForm = useCallback(() => {
-    setFormData({ ...EMPTY_FORM });
-  }, []);
-
-  const openCreateModal = useCallback(() => {
-    resetForm();
-    setShowCreateModal(true);
-  }, [resetForm]);
-
   const closeCreateModal = useCallback(() => {
     setShowCreateModal(false);
     resetForm();

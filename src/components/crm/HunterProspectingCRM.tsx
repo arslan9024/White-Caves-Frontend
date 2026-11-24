@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import './AssistantDashboard.css';
 
+import { INITIAL_PROSPECT_BUYERS, INITIAL_PITCH_TEMPLATES } from './hunterProspecting.data';
+import { HunterPitchTab } from './HunterPitchTab';
 const HunterProspectingCRM = ({ user, role, moduleId }) => {
   const [activeTab, setActiveTab] = useState('matching');
 
@@ -26,70 +28,8 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
 
   // Feature 1: Off-Market Luxury Matcher
   const [buyers, setBuyers] = useState([
-    {
-      id: 'HNW-01',
-      name: 'Dr. Tariq Al Mansoor',
-      budget: 'AED 35M - 45M',
-      pref: 'Palm Jumeirah Waterfront Villa',
-      matchScore: 98,
-      matchedUnit: 'Frond G Signature Villa',
-    },
-    {
-      id: 'HNW-02',
-      name: 'Alexander Volkov',
-      budget: 'AED 15M - 20M',
-      pref: 'Downtown Penthouse Full Burj View',
-      matchScore: 94,
-      matchedUnit: 'Il Primo High Floor Penthouse',
-    },
-    {
-      id: 'HNW-03',
-      name: 'Lady Sophia Sterling',
-      budget: 'AED 50M+',
-      pref: 'Emirates Hills Lake View Mansion',
-      matchScore: 91,
-      matchedUnit: 'Sector E Luxury Palace',
-    },
-  ]);
-
-  // Feature 4: Pitch Generator
-  const [selectedBuyer, setSelectedBuyer] = useState(buyers[0]);
-  const [pitchText, setPitchText] = useState(
-    `Dear ${selectedBuyer.name},\n\nWe have secured an exclusive, off-market opportunity matching your exact criteria: ${selectedBuyer.matchedUnit}.\n\n• Asking Price: ${selectedBuyer.budget}\n• Confidential viewing slots available this Thursday.\n\nBest regards,\nWhite Caves Private Client Group`
-  );
-  const [sentSuccess, setSentSuccess] = useState(false);
-
-  const handleSendPitch = () => {
-    setSentSuccess(true);
-    setTimeout(() => setSentSuccess(false), 4000);
-  };
-
-  return (
-    <div className="crm-container" style={{ maxWidth: '100%', padding: '0.5rem' }}>
-      {/* Header */}
-      <div
-        style={{
-          background:
-            'linear-gradient(135deg, var(--color-065f46, #065F46) 0%, var(--color-064e3b, #064E3B) 100%)',
-          color: 'var(--white, #FFFFFF)',
-          padding: '1.25rem 1.5rem',
-          borderRadius: '16px',
-          marginBottom: '1.25rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              background:
-                'linear-gradient(135deg, var(--accent-green, #10B981) 0%, var(--accent-green, #059669) 100%)',
+  const [buyers, setBuyers] = useState(INITIAL_PROSPECT_BUYERS);
+  const [pitchTemplates, setPitchTemplates] = useState(INITIAL_PITCH_TEMPLATES);
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -338,77 +278,17 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
       )}
 
       {/* Tab 4: Pitch Dispatcher */}
-      {activeTab === 'pitch' && (
-        <div
-          style={{
-            background: 'var(--white, #FFFFFF)',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '1px solid var(--text-secondary, #E2E8F0)',
-          }}
-        >
-          <h4
-            style={{
-              margin: '0 0 0.5rem 0',
-              fontSize: '1rem',
-              fontWeight: 800,
-              color: 'var(--color-1e293b, #1E293B)',
-            }}
-          >
-            VIP WhatsApp Pitch Studio for {selectedBuyer.name}
-          </h4>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-            <textarea
-              rows={8}
-              value={pitchText}
-              onChange={e => setPitchText(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '12px',
-                borderRadius: '8px',
-                border: '1px solid var(--text-secondary, #CBD5E1)',
-                fontSize: '0.85rem',
-                fontFamily: 'sans-serif',
-              }}
-            />
-            {sentSuccess && (
-              <div
-                style={{
-                  background: 'var(--color-ecfdf5, #ECFDF5)',
-                  border: '1px solid var(--color-a7f3d0, #A7F3D0)',
-                  padding: '10px',
-                  borderRadius: '6px',
-                  color: 'var(--color-065f46, #065F46)',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                }}
-              >
-                ✓ Pitch successfully dispatched to {selectedBuyer.name}'s verified WhatsApp session.
-              </div>
-            )}
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button
-                onClick={handleSendPitch}
-                style={{
-                  background: 'var(--accent-green, #059669)',
-                  color: 'var(--white, #FFF)',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '10px 20px',
-                  fontWeight: 800,
-                  fontSize: '0.85rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <Send size={16} /> Send via Nadia WhatsApp Gateway
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+        {activeTab === 'pitch' && (
+          <HunterPitchTab
+            selectedPitch={selectedPitch}
+            setSelectedPitch={setSelectedPitch}
+            pitchTemplates={pitchTemplates}
+            handleGenerateCustomPitch={handleGenerateCustomPitch}
+            isGeneratingPitch={isGeneratingPitch}
+            copiedPitch={copiedPitch}
+            handleCopyPitch={handleCopyPitch}
+          />
+        )}
 
       {/* Tab 2 & 3: Profiler & Geofence */}
       {(activeTab === 'profiler' || activeTab === 'geofence') && (

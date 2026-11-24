@@ -18,6 +18,8 @@ import {
   matchesPattern,
 } from '../../utils/validation';
 import Profile from '../Profile';
+import { AuthEmailForm } from './AuthEmailForm';
+import { AuthPhoneForm } from './AuthPhoneForm';
 import ProfileCompletion from '../ProfileCompletion';
 import FormField from '../ui/FormField/FormField';
 import {
@@ -287,136 +289,35 @@ export default function Auth({ onLogin }: AuthProps) {
               <span>{m.charAt(0).toUpperCase() + m.slice(1)}</span>
             </button>
           ))}
-        </div>
-
-        <div className="auth-content">
-          {/* Email form */}
           {authMode === 'email' && (
-            <form className="auth-form" onSubmit={handleEmailSubmit}>
-              {isSignUp && (
-                <FormField
-                  label="Full Name" name="name" value={values.name}
-                  onChange={handleChange} onBlur={handleBlur}
-                  error={touched.name ? errors.name : undefined}
-                  placeholder="Enter your full name"
-                />
-              )}
-              <FormField
-                label="Email Address" name="email" type="email" value={values.email}
-                onChange={handleChange} onBlur={handleBlur}
-                error={touched.email ? errors.email : undefined}
-                placeholder="Enter your email"
-              />
-              {/* Password: manual for show/hide toggle */}
-              <div className="input-group">
-                <label className="input-label">Password</label>
-                <div className="input-wrapper">
-                  <span className="input-icon"><LockIcon /></span>
-                  <input
-                    type={showPassword ? 'text' : 'password'} name="password"
-                    value={values.password} onChange={handleChange} onBlur={handleBlur}
-                    placeholder="Enter your password"
-                    className={`auth-input ${errors.password && touched.password ? 'error' : ''}`}
-                  />
-                  <button type="button" className="password-toggle" onClick={() => setShowPassword((p) => !p)}>
-                    {showPassword ? 'Hide' : 'Show'}
-                  </button>
-                </div>
-                {errors.password && touched.password && <span className="input-error">{errors.password}</span>}
-              </div>
-              {isSignUp && (
-                <FormField
-                  label="Confirm Password" name="confirmPassword" type="password"
-                  value={values.confirmPassword} onChange={handleChange} onBlur={handleBlur}
-                  error={touched.confirmPassword ? errors.confirmPassword : undefined}
-                  placeholder="Confirm your password"
-                />
-              )}
-              {!isSignUp && (
-                <div className="forgot-password">
-                  <button type="button" className="forgot-btn">Forgot password?</button>
-                </div>
-              )}
-              <button type="submit" className="auth-submit-btn" disabled={loading}>
-                {loading
-                  ? <span className="btn-loading"><span className="spinner" />Please wait...</span>
-                  : isSignUp ? 'Create Account' : 'Sign In'}
-              </button>
-              <p className="auth-toggle">
-                {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
-                <button type="button" onClick={() => setIsSignUp((s) => !s)} className="auth-toggle-btn">
-                  {isSignUp ? 'Sign In' : 'Sign Up'}
-                </button>
-              </p>
-            </form>
+            <AuthEmailForm
+              isSignUp={isSignUp}
+              setIsSignUp={setIsSignUp}
+              values={values}
+              errors={errors}
+              touched={touched}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              loading={loading}
+              handleEmailSubmit={handleEmailSubmit}
+            />
           )}
-
-          {/* Phone form */}
           {authMode === 'phone' && (
-            <form className="auth-form" onSubmit={confirmationResult ? handleVerifyOTP : handleSendOTP}>
-              <div id="recaptcha-container" />
-              {!confirmationResult ? (
-                <>
-                  <FormField
-                    label="Phone Number" name="phone" type="tel" value={values.phone}
-                    onChange={handleChange} onBlur={handleBlur}
-                    error={touched.phone ? errors.phone : undefined}
-                    placeholder="+971 50 123 4567"
-                  />
-                  <button type="submit" className="auth-submit-btn" disabled={loading}>
-                    {loading
-                      ? <span className="btn-loading"><span className="spinner" />Sending...</span>
-                      : 'Send Verification Code'}
-                  </button>
-                </>
-              ) : (
-                <>
-                  <div className="otp-header">
-                    <button type="button" className="back-btn" onClick={() => setConfirmationResult(null)}>
-                      <ArrowLeftIcon />
-                    </button>
-                    <div className="otp-info">
-                      <h3>Verify Your Phone</h3>
-                      <p>Enter the 6-digit code sent to <strong>{values.phone}</strong></p>
-                    </div>
-                  </div>
-                  <div className="input-group">
-                    <label className="input-label">Verification Code</label>
-                    <div className="otp-input-container">
-                      <input
-                        type="text" name="otp" value={values.otp}
-                        onChange={(e) =>
-                          handleChange({
-                            target: { name: 'otp', value: e.target.value.replace(/\D/g, '').slice(0, 6) },
-                          } as React.ChangeEvent<HTMLInputElement>)
-                        }
-                        onBlur={handleBlur} placeholder="000000"
-                        className={`otp-input ${errors.otp && touched.otp ? 'error' : ''}`}
-                        maxLength={6} autoComplete="one-time-code"
-                      />
-                    </div>
-                    {errors.otp && touched.otp && <span className="input-error">{errors.otp}</span>}
-                  </div>
-                  {otpCountdown > 0 ? (
-                    <p className="resend-timer">Resend code in {otpCountdown}s</p>
-                  ) : (
-                    <button
-                      type="button" className="resend-btn"
-                      onClick={() => { setConfirmationResult(null); setFieldValue('otp', ''); }}
-                    >
-                      Didn't receive code? Send again
-                    </button>
-                  )}
-                  <button type="submit" className="auth-submit-btn" disabled={loading}>
-                    {loading
-                      ? <span className="btn-loading"><span className="spinner" />Verifying...</span>
-                      : 'Verify & Continue'}
-                  </button>
-                </>
-              )}
-            </form>
+            <AuthPhoneForm
+              confirmationResult={confirmationResult}
+              values={values}
+              errors={errors}
+              touched={touched}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              loading={loading}
+              handleSendOTP={handleSendOTP}
+              handleVerifyOTP={handleVerifyOTP}
+              setConfirmationResult={setConfirmationResult}
+            />
           )}
-
           {/* Social buttons */}
           <div className="auth-divider"><span>or continue with</span></div>
           <div className="social-buttons">

@@ -13,6 +13,8 @@ import {
   XCircle,
   User,
   ArrowUp,
+import { LailaContractsTab } from './LailaContractsTab';
+import { MOCK_CONTRACTS } from './lailaCompliance.data';
   ArrowDown,
   AlertCircle,
   Lock,
@@ -44,36 +46,6 @@ import {
   flagTransaction,
 } from '../../store/slices/aiAssistantDashboardSlice';
 import './AssistantDashboard.css';
-
-const MOCK_CONTRACTS = [
-  {
-    id: 1,
-    title: 'Sales Agreement - Villa 348',
-    parties: 'White Caves ↔ Al Rashid',
-    status: 'pending_review',
-    type: 'sale',
-    value: 2500000,
-    date: '2024-01-08',
-  },
-  {
-    id: 2,
-    title: 'Tenancy Contract - Apt 1205',
-    parties: 'Owner ↔ Tenant',
-    status: 'approved',
-    type: 'lease',
-    value: 120000,
-    date: '2024-01-07',
-  },
-  {
-    id: 3,
-    title: 'Agency Agreement - Palm',
-    parties: 'White Caves ↔ Developer',
-    status: 'under_negotiation',
-    type: 'agency',
-    value: 0,
-    date: '2024-01-06',
-  },
-];
 
 const LailaComplianceCRM = () => {
   const dispatch = useDispatch();
@@ -275,40 +247,8 @@ const LailaComplianceCRM = () => {
         )}
 
         {activeTab === 'contracts' && (
-          <div className="contracts-view">
-            <h3>Contract Reviews</h3>
-            <div className="contract-cards">
-              {MOCK_CONTRACTS.map(contract => (
-                <div key={contract.id} className="contract-card">
-                  <div className="contract-header">
-                    <h4>{contract.title}</h4>
-                    <span className={`status-badge ${contract.status}`}>
-                      {contract.status.replace('_', ' ')}
-                    </span>
-                  </div>
-                  <div className="contract-details">
-                    <span>
-                      <Users size={14} /> {contract.parties}
-                    </span>
-                    {contract.value > 0 && <span>AED {contract.value.toLocaleString()}</span>}
-                    <span>
-                      <Calendar size={14} /> {contract.date}
-                    </span>
-                  </div>
-                  <div className="contract-actions">
-                    <button>
-                      <Eye size={14} /> Review
-                    </button>
-                    <button>
-                      <Download size={14} /> Download
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <LailaContractsTab onValidateContract={handleValidateContract} />
         )}
-
         {activeTab === 'regulations' && (
           <div className="regulations-view">
             <h3>Regulatory Compliance</h3>

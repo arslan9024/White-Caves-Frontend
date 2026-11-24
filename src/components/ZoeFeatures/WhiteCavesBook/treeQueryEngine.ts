@@ -1,23 +1,7 @@
 // src/components/ZoeFeatures/WhiteCavesBook/treeQueryEngine.ts
 /**
  * AEGIS 12-Level Sovereign Knowledge Tree Query Engine (TURING-LAW-000)
- * Enables sub-60-token surgical node resolution across the 12-level hierarchy:
- * Level 0: Corpus
- * Level 1: Library
- * Level 2: Book
- * Level 3: Volume
- * Level 4: Canto
- * Level 5: Chapter
- * Level 6: SubChapter
- * Level 7: Section
- * Level 8: Topic
- * Level 9: Artifact
- * Level 10: Paragraph
- * Level 11: Sentence
- * Level 12: Line
- *
- * Impact: Reduces AI context consumption from 5,000-10,000 tokens (bulk markdown parsing)
- * to < 60 tokens per surgical statutory query (85%-95% token savings).
+ * Enables sub-60-token surgical node resolution across the 12-level hierarchy.
  */
 
 import {
@@ -35,6 +19,13 @@ import {
   SentenceNode,
   LineNode,
 } from './treeTypes';
+import {
+  type SearchMatch,
+  calculateTokenSavingsBenchmark,
+  search12LevelTree,
+} from './treeOmniSearch';
+
+export { type SearchMatch, calculateTokenSavingsBenchmark, search12LevelTree };
 
 export type TreeNode =
   | MasterCorpusRoot
@@ -77,9 +68,6 @@ export interface NodeLookupResult {
   tokenEstimate: number;
 }
 
-/**
- * Fast O(1) or indexed lookup by exact NodeId across the entire 12-level tree
- */
 export function findNodeById(
   root: MasterCorpusRoot,
   targetNodeId: string
@@ -264,212 +252,25 @@ export function findNodeById(
   return null;
 }
 
-/**
- * Surgical query resolving down to a specific atomic sentence or line coordinate
- */
 export function queryTreeCoordinate(
   root: MasterCorpusRoot,
   coord: QueryCoordinate
 ): TreeNode | null {
-  if (coord.lineId) {
-    const res = findNodeById(root, coord.lineId);
-    if (res && res.level === 12) return res.node;
-  }
-  if (coord.sentenceId) {
-    const res = findNodeById(root, coord.sentenceId);
-    if (res && res.level === 11) return res.node;
-  }
-  if (coord.paragraphId) {
-    const res = findNodeById(root, coord.paragraphId);
-    if (res && res.level === 10) return res.node;
-  }
-  if (coord.artifactId) {
-    const res = findNodeById(root, coord.artifactId);
-    if (res && res.level === 9) return res.node;
-  }
-  if (coord.topicId) {
-    const res = findNodeById(root, coord.topicId);
-    if (res && res.level === 8) return res.node;
-  }
-  if (coord.sectionId) {
-    const res = findNodeById(root, coord.sectionId);
-    if (res && res.level === 7) return res.node;
-  }
-  if (coord.subChapterId) {
-    const res = findNodeById(root, coord.subChapterId);
-    if (res && res.level === 6) return res.node;
-  }
-  if (coord.chapterId) {
-    const res = findNodeById(root, coord.chapterId);
-    if (res && res.level === 5) return res.node;
+  const checks: Array<[string | undefined, number]> = [
+    [coord.lineId, 12],
+    [coord.sentenceId, 11],
+    [coord.paragraphId, 10],
+    [coord.artifactId, 9],
+    [coord.topicId, 8],
+    [coord.sectionId, 7],
+    [coord.subChapterId, 6],
+    [coord.chapterId, 5],
+  ];
+  for (const [id, expectedLevel] of checks) {
+    if (id) {
+      const res = findNodeById(root, id);
+      if (res && res.level === expectedLevel) return res.node;
+    }
   }
   return null;
 }
-
-/**
- * Computes exact token savings benchmark compared to whole-file markdown ingestion
- */
-export function calculateTokenSavingsBenchmark(
-  traditionalMarkdownTokenCost: number = 8000,
-  surgicalNodeTokenCost: number = 50
-): {
-  markdownCost: number;
-  surgicalCost: number;
-  savingsPercentage: number;
-  multiplierFactor: number;
-} {
-  const savings =
-    ((traditionalMarkdownTokenCost - surgicalNodeTokenCost) / traditionalMarkdownTokenCost) * 100;
-  const factor = traditionalMarkdownTokenCost / Math.max(1, surgicalNodeTokenCost);
-  return {
-    markdownCost: traditionalMarkdownTokenCost,
-    surgicalCost: surgicalNodeTokenCost,
-    savingsPercentage: Number(savings.toFixed(2)),
-    multiplierFactor: Number(factor.toFixed(1)),
-  };
-}
-
-/**
- * Global 12-Level Omni-Search: Searches keywords across all books, chapters, artifacts, and lines
- */
-export interface SearchMatch {
-  nodeId: string;
-  level: number;
-  levelName: string;
-  title: string;
-  snippet: string;
-  bookId: string;
-  bookTitle: string;
-  chapterTitle: string;
-  tokenEstimate: number;
-}
-
-export function search12LevelTree(
-  root: MasterCorpusRoot,
-  rawQuery: string,
-  limit: number = 20
-): SearchMatch[] {
-  if (!rawQuery || rawQuery.trim().length < 2) return [];
-  const q = rawQuery.toLowerCase().trim();
-  const results: SearchMatch[] = [];
-
-  for (const lib of root.libraries) {
-    for (const book of lib.books) {
-      for (const vol of book.volumes) {
-        for (const canto of vol.cantos) {
-          for (const ch of canto.chapters) {
-            if (ch.title.toLowerCase().includes(q) || ch.subtitle.toLowerCase().includes(q)) {
-              results.push({
-                nodeId: ch.nodeId,
-                level: 5,
-                levelName: 'Chapter',
-                title: ch.title,
-                snippet: ch.subtitle,
-                bookId: book.bookId,
-                bookTitle: book.title,
-                chapterTitle: ch.title,
-                tokenEstimate: 60,
-              });
-              if (results.length >= limit) return results;
-            }
-
-            for (const sc of ch.subChapters) {
-              if (sc.title.toLowerCase().includes(q) || sc.summary.toLowerCase().includes(q)) {
-                results.push({
-                  nodeId: sc.nodeId,
-                  level: 6,
-                  levelName: 'SubChapter',
-                  title: sc.title,
-                  snippet: sc.summary.slice(0, 120),
-                  bookId: book.bookId,
-                  bookTitle: book.title,
-                  chapterTitle: ch.title,
-                  tokenEstimate: 50,
-                });
-                if (results.length >= limit) return results;
-              }
-
-              for (const sec of sc.sections) {
-                for (const top of sec.topics) {
-                  for (const art of top.artifacts) {
-                    if (art.title.toLowerCase().includes(q)) {
-                      results.push({
-                        nodeId: art.nodeId,
-                        level: 9,
-                        levelName: 'Artifact',
-                        title: art.title,
-                        snippet: `Artifact [${art.type}] in ${sec.title}`,
-                        bookId: book.bookId,
-                        bookTitle: book.title,
-                        chapterTitle: ch.title,
-                        tokenEstimate: 45,
-                      });
-                      if (results.length >= limit) return results;
-                    }
-
-                    for (const p of art.paragraphs) {
-                      if (
-                        p.narrative.toLowerCase().includes(q) ||
-                        (p.header && p.header.toLowerCase().includes(q))
-                      ) {
-                        results.push({
-                          nodeId: p.nodeId,
-                          level: 10,
-                          levelName: 'Paragraph',
-                          title: p.header || `Paragraph ${p.paragraphNumber}`,
-                          snippet: p.narrative.slice(0, 140) + '...',
-                          bookId: book.bookId,
-                          bookTitle: book.title,
-                          chapterTitle: ch.title,
-                          tokenEstimate: 35,
-                        });
-                        if (results.length >= limit) return results;
-                      }
-
-                      for (const s of p.sentences) {
-                        if (s.statement.toLowerCase().includes(q)) {
-                          results.push({
-                            nodeId: s.nodeId,
-                            level: 11,
-                            levelName: 'Sentence',
-                            title: `Sentence ${s.sentenceNumber}`,
-                            snippet: s.statement,
-                            bookId: book.bookId,
-                            bookTitle: book.title,
-                            chapterTitle: ch.title,
-                            tokenEstimate: 25,
-                          });
-                          if (results.length >= limit) return results;
-                        }
-
-                        for (const l of s.lines) {
-                          if (l.text.toLowerCase().includes(q)) {
-                            results.push({
-                              nodeId: l.nodeId,
-                              level: 12,
-                              levelName: 'Line',
-                              title: `Line ${l.lineNumber}`,
-                              snippet: l.text,
-                              bookId: book.bookId,
-                              bookTitle: book.title,
-                              chapterTitle: ch.title,
-                              tokenEstimate: 15,
-                            });
-                            if (results.length >= limit) return results;
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return results;
-}
-

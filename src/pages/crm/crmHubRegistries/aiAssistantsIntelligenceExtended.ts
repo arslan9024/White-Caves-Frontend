@@ -1,0 +1,188 @@
+export const AI_ASSISTANTS_INTELLIGENCE_EXTENDED = [
+  {
+    id: 'lumen',
+    num: '3.39',
+    name: 'Lumen AI',
+    role: 'Visual Analytics & Geospatial Heatmap Engine',
+    icon: '📊',
+    items: [
+      {
+        id: 'lumen-geo-heatmaps',
+        label: '3.39.1 Geospatial Transaction Heatmaps',
+        icon: '📊',
+        badge: 'Heatmap',
+      },
+      {
+        id: 'lumen-funnel-dashboard',
+        label: '3.39.2 Interactive Funnel Dashboard',
+        icon: '📉',
+        badge: 'Visual BI',
+      },
+      {
+        id: 'lumen-board-deck',
+        label: '3.39.3 Board Deck PowerPoint Exporter',
+        icon: '📑',
+        badge: 'Presentation',
+      },
+    ],
+  },
+  {
+    id: 'crest',
+    num: '3.40',
+    name: 'Crest AI',
+    role: 'Automated Property Valuation Engine (AVM)',
+    icon: '🏠',
+    items: [
+      {
+        id: 'crest-avm-model',
+        label: '3.40.1 Automated Valuation Model (AVM)',
+        icon: '🏠',
+        badge: 'AVM Calc',
+      },
+      {
+        id: 'crest-comparables-matcher',
+        label: '3.40.2 Radius Comparable Evidence Matcher',
+        icon: '🗺️',
+        badge: 'DLD Comps',
+      },
+      {
+        id: 'crest-bulk-valuation',
+        label: '3.40.3 Bulk Portfolio Valuation Run',
+        icon: '📈',
+        badge: 'Portfolio Run',
+      },
+    ],
+  },
+  {
+    id: 'archer',
+    num: '3.41',
+    name: 'Archer AI',
+    role: 'Lead Scoring & Conversion Probability',
+    icon: '🎯',
+    items: [
+      {
+        id: 'archer-lead-scorecard',
+        label: '3.41.1 Lead Scoring Matrix & Weights',
+        icon: '🎯',
+        badge: 'Scoring',
+      },
+      {
+        id: 'archer-routing-engine',
+        label: '3.41.2 Agent Auto-Assignment Queue',
+        icon: '⚡',
+        badge: 'Routing',
+      },
+      {
+        id: 'archer-churn-predictor',
+        label: '3.41.3 Buyer Churn & Stall Detector',
+        icon: '⚠️',
+        badge: 'Risk Shield',
+      },
+    ],
+  },
+  {
+    id: 'amira',
+    num: '3.42',
+    name: 'Amira AI',
+    role: 'Strategic Planning & Master Backlog Architect',
+    icon: '🗺️',
+    items: [
+      {
+        id: 'amira-master-roadmap',
+        label: '3.42.1 Master Roadmap (Waves 01–65)',
+        icon: '🗺️',
+        badge: 'Roadmap',
+      },
+      {
+        id: 'amira-feature-matrix',
+        label: '3.42.2 Feature Coverage & Traceability Matrix',
+        icon: '📋',
+        badge: 'Traceability',
+      },
+      {
+        id: 'amira-backlog-allocator',
+        label: '3.42.3 Sprint Milestone Allocation',
+        icon: '⚡',
+        badge: 'Apollo Sprint',
+      },
+      {
+        id: 'amira-plans-docs',
+        label: '3.42.4 Hyper-Linked Strategic Plans Hub',
+        icon: '📜',
+        badge: 'Plans Hub',
+      },
+    ],
+  },
+  {
+    id: 'mona',
+    num: '3.43',
+    name: 'Mona AI',
+    role: 'Chief Architecture & SDLC Governance Gatekeeper',
+    icon: '🏛️',
+    items: [
+      {
+        id: 'mona-topology-matrix',
+        label: '3.43.1 Sovereign Architecture Topology',
+        icon: '🏛️',
+        badge: 'Topology',
+      },
+      {
+        id: 'mona-zero-token-gate',
+        label: '3.43.2 Zero-Token Local Gate Verifier',
+        icon: '🛡️',
+        badge: 'Zero Defect',
+      },
+      {
+        id: 'mona-dedup-enforcer',
+        label: '3.43.3 Deduplication Law & AST Optimizer',
+        icon: '⚡',
+        badge: 'Dedup Law',
+      },
+      {
+        id: 'mona-architecture-docs',
+        label: '3.43.4 Hyper-Linked Architecture Hub',
+        icon: '📜',
+        badge: 'Architecture',
+      },
+    ],
+  },
+  {
+    id: 'althea',
+    num: '3.44',
+    name: 'Althea AI',
+    role: 'Autonomous Autopilot & Swarm Orchestrator',
+    icon: '🚀',
+    items: [
+      {
+        id: 'althea-telemetry-heartbeat',
+        label: '3.44.1 Live Telemetry & Scanner Health (0 Issues)',
+        icon: '🚀',
+        badge: 'Heartbeat',
+      },
+      {
+        id: 'althea-governance-policy',
+        label: '3.44.2 Sovereign Governance Policy (v2026.08.18)',
+        icon: '🛡️',
+        badge: 'Policy',
+      },
+      {
+        id: 'althea-swarm-matrix',
+        label: '3.44.3 170-Agent Swarm Allocation Matrix',
+        icon: '🤖',
+        badge: '170 Swarm',
+      },
+      {
+        id: 'althea-daily-chronology',
+        label: '3.44.4 Daily Execution Chronology & Milestone Log',
+        icon: '📊',
+        badge: 'Chronology',
+      },
+      {
+        id: 'althea-autopilot-hub',
+        label: '3.44.5 Hyper-Linked Autopilot & Telemetry Hub',
+        icon: '📜',
+        badge: 'Autopilot',
+      },
+    ],
+  },
+];

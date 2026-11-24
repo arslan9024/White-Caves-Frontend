@@ -1,46 +1,14 @@
 import React, { FC, useState, useMemo, useCallback } from 'react';
 
-const RED = '#EF4444';
-const WHITE = '#FFFFFF';
-const SLATE = '#1E293B';
-const BORDER = 'rgba(239, 68, 68, 0.2)';
-const CARD_BG = '#F8FAFC';
-const TEXT_MUTED = '#64748B';
-const GREEN = '#10B981';
-const ORANGE = '#F59E0B';
-const BLUE = '#3B82F6';
-const PURPLE = '#8B5CF6';
-
-interface Viewing {
-  id: string;
-  clientName: string;
-  clientPhone: string;
-  propertyTitle: string;
-  propertyId: string;
-  agentName: string;
-  date: string; // YYYY-MM-DD
-  timeSlot: string; // HH:MM
-  status: 'Confirmed' | 'Pending' | 'Completed' | 'Cancelled' | 'No-Show';
-  type: 'In-Person' | 'Virtual';
-  notes: string;
-}
-
-const SEED_VIEWINGS: Viewing[] = [
-  { id: 'VW-001', clientName: 'Mark Stevenson', clientPhone: '+971501234567', propertyTitle: 'Luxury Property 14 — Palm Jumeirah', propertyId: 'prop-014', agentName: 'Nadia Yusuf', date: '2026-07-28', timeSlot: '10:00', status: 'Confirmed', type: 'In-Person', notes: 'Buyer interested in 3BR+study layout' },
-  { id: 'VW-002', clientName: 'Fatima Al Sayed', clientPhone: '+971509876543', propertyTitle: 'Luxury Property 7 — DAMAC Hills 2', propertyId: 'prop-007', agentName: 'Clara Osei', date: '2026-07-28', timeSlot: '14:00', status: 'Confirmed', type: 'In-Person', notes: 'First viewing — needs Arabic-speaking agent' },
-  { id: 'VW-003', clientName: 'Khalid Al Rashidi', clientPhone: '+971555000123', propertyTitle: 'Luxury Property 33 — Dubai Marina', propertyId: 'prop-033', agentName: 'Sophia Lin', date: '2026-07-28', timeSlot: '16:30', status: 'Pending', type: 'Virtual', notes: 'Overseas investor — Zoom call requested' },
-  { id: 'VW-004', clientName: 'James O\'Brien', clientPhone: '+971509182736', propertyTitle: 'Luxury Property 55 — Business Bay', propertyId: 'prop-055', agentName: 'Nadia Yusuf', date: '2026-07-29', timeSlot: '11:00', status: 'Confirmed', type: 'In-Person', notes: '' },
-  { id: 'VW-005', clientName: 'Sarah Connor', clientPhone: '+971508887766', propertyTitle: 'Luxury Property 22 — Downtown Dubai', propertyId: 'prop-022', agentName: 'Clara Osei', date: '2026-07-29', timeSlot: '15:00', status: 'Confirmed', type: 'In-Person', notes: 'Bring DLD title deed copy' },
-  { id: 'VW-006', clientName: 'Amir Khan', clientPhone: '+971507654321', propertyTitle: 'Luxury Property 41 — DAMAC Hills 2', propertyId: 'prop-041', agentName: 'Sophia Lin', date: '2026-07-30', timeSlot: '09:30', status: 'Pending', type: 'In-Person', notes: 'High-priority VIP client' },
-  { id: 'VW-007', clientName: 'Elena Petrova', clientPhone: '+971501122334', propertyTitle: 'Luxury Property 78 — Palm Jumeirah', propertyId: 'prop-078', agentName: 'Nadia Yusuf', date: '2026-07-30', timeSlot: '13:00', status: 'Confirmed', type: 'Virtual', notes: '' },
-  { id: 'VW-008', clientName: 'Robert Kim', clientPhone: '+971509988776', propertyTitle: 'Luxury Property 5 — Dubai Marina', propertyId: 'prop-005', agentName: 'Clara Osei', date: '2026-07-25', timeSlot: '11:00', status: 'Completed', type: 'In-Person', notes: 'Client submitted offer after viewing' },
-  { id: 'VW-009', clientName: 'Mia Johnson', clientPhone: '+971507711223', propertyTitle: 'Luxury Property 19 — Business Bay', propertyId: 'prop-019', agentName: 'Sophia Lin', date: '2026-07-24', timeSlot: '14:30', status: 'No-Show', type: 'In-Person', notes: 'Client unreachable — reschedule required' },
-  { id: 'VW-010', clientName: 'Omar Al Farsi', clientPhone: '+971505544332', propertyTitle: 'Luxury Property 62 — Downtown Dubai', propertyId: 'prop-062', agentName: 'Nadia Yusuf', date: '2026-07-27', timeSlot: '10:00', status: 'Completed', type: 'In-Person', notes: 'Very interested — sent contract for review' },
-];
+import {
+  RED, WHITE, SLATE, BORDER, CARD_BG, TEXT_MUTED, GREEN, ORANGE, BLUE, PURPLE,
+  ViewingStatus, ViewingType, Viewing, SEED_VIEWINGS
+} from './viewingScheduler.data';
 
 const TIME_SLOTS = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
 const AGENTS = ['Nadia Yusuf', 'Clara Osei', 'Sophia Lin', 'Mark Johnson', 'Laila Hassan'];
 
+import { ViewingSchedulerBookingForm } from './ViewingSchedulerBookingForm';
 const statusConfig = {
   Confirmed: { bg: '#DEF7EC', color: GREEN, icon: '✅' },
   Pending: { bg: '#FFFBEB', color: ORANGE, icon: '⏳' },
@@ -178,85 +146,17 @@ export const ViewingSchedulerPanel: FC = () => {
             <option value="ALL">All Agents</option>
             {AGENTS.map(a => <option key={a} value={a}>{a}</option>)}
           </select>
-          <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
-            style={{ padding: '6px 10px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.8rem' }}>
-            <option value="ALL">All Statuses</option>
-            {Object.keys(statusConfig).map(s => <option key={s} value={s}>{s}</option>)}
-          </select>
-        </div>
-      </div>
-
       {/* NEW VIEWING FORM */}
       {activeView === 'new' && (
-        <div style={{ background: CARD_BG, padding: '24px', borderRadius: '12px', border: `1px solid ${BORDER}`, maxWidth: '600px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <h3 style={{ margin: 0, color: SLATE }}>📅 Book New Property Viewing</h3>
-            <button onClick={() => setActiveView('week')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: TEXT_MUTED, fontSize: '1.1rem' }}>✕</button>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
-            {[
-              { label: 'Client Name *', key: 'clientName', type: 'text', placeholder: 'e.g. Mark Stevenson' },
-              { label: 'Client Phone', key: 'clientPhone', type: 'tel', placeholder: '+971 50 XXX XXXX' },
-              { label: 'Property Title *', key: 'propertyTitle', type: 'text', placeholder: 'e.g. Villa 14 — DAMAC Hills 2' },
-            ].map(f => (
-              <div key={f.key} style={{ gridColumn: f.key === 'propertyTitle' ? 'span 2' : 'span 1' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>{f.label}</label>
-                <input type={f.type} value={(newViewing as any)[f.key]} placeholder={f.placeholder}
-                  onChange={e => setNewViewing(prev => ({ ...prev, [f.key]: e.target.value }))}
-                  style={{ width: '100%', padding: '8px 12px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem', boxSizing: 'border-box' }} />
-              </div>
-            ))}
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px', marginBottom: '14px' }}>
-            <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>Date</label>
-              <input type="date" value={newViewing.date} onChange={e => setNewViewing(prev => ({ ...prev, date: e.target.value }))}
-                style={{ width: '100%', padding: '8px 10px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem', boxSizing: 'border-box' }} />
-            </div>
-            <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>Time Slot</label>
-              <select value={newViewing.timeSlot} onChange={e => setNewViewing(prev => ({ ...prev, timeSlot: e.target.value }))}
-                style={{ width: '100%', padding: '8px 10px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem', boxSizing: 'border-box' }}>
-                {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>Type</label>
-              <select value={newViewing.type} onChange={e => setNewViewing(prev => ({ ...prev, type: e.target.value as 'In-Person' | 'Virtual' }))}
-                style={{ width: '100%', padding: '8px 10px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem', boxSizing: 'border-box' }}>
-                <option>In-Person</option>
-                <option>Virtual</option>
-              </select>
-            </div>
-          </div>
-          <div style={{ marginBottom: '14px' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>Assign Agent</label>
-            <select value={newViewing.agentName} onChange={e => setNewViewing(prev => ({ ...prev, agentName: e.target.value }))}
-              style={{ width: '100%', padding: '8px 12px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem' }}>
-              {AGENTS.map(a => <option key={a} value={a}>{a}</option>)}
-            </select>
-          </div>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: 600, color: SLATE, display: 'block', marginBottom: '4px' }}>Notes</label>
-            <textarea value={newViewing.notes} onChange={e => setNewViewing(prev => ({ ...prev, notes: e.target.value }))}
-              placeholder="Any special instructions, language preferences, or property access notes..."
-              style={{ width: '100%', height: '70px', padding: '8px 12px', border: `1px solid ${BORDER}`, borderRadius: '6px', fontSize: '0.875rem', boxSizing: 'border-box', resize: 'vertical' }} />
-          </div>
-          <div style={{ background: 'var(--color-eff6ff, #EFF6FF)', padding: '10px 14px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.8rem', color: BLUE }}>
-            💬 <strong>Auto-notification:</strong> WhatsApp confirmation + calendar invite will be sent to client and agent upon booking.
-          </div>
-          <button onClick={handleAddViewing}
-            style={{ width: '100%', padding: '12px', background: RED, color: WHITE, border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer' }}>
-            ✅ Confirm Viewing Booking
-          </button>
-        </div>
+        <ViewingSchedulerBookingForm
+          newViewing={newViewing}
+          setNewViewing={setNewViewing}
+          setActiveView={setActiveView}
+          handleAddViewing={handleAddViewing}
+          AGENTS={AGENTS}
+          TIME_SLOTS={TIME_SLOTS}
+        />
       )}
-
-      {/* WEEK VIEW */}
-      {activeView === 'week' && (
-        <div>
-          {/* Week nav */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
             <button onClick={() => { const d = new Date(currentWeek); d.setDate(d.getDate() - 7); setCurrentWeek(d); }}
               style={{ padding: '6px 12px', border: `1px solid ${BORDER}`, borderRadius: '6px', background: WHITE, cursor: 'pointer', fontWeight: 700 }}>‹ Prev</button>
             <span style={{ fontWeight: 700, color: SLATE, fontSize: '0.95rem' }}>

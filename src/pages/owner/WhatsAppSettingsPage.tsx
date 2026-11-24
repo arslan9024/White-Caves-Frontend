@@ -13,6 +13,8 @@ const WhatsAppSettingsPage: FC = () => {
     handleChange,
     handleSaveSettings,
     handleInitializeConnection,
+import { WhatsAppMessagesTab } from './WhatsAppMessagesTab';
+import { WhatsAppQrTab } from './WhatsAppQrTab';
     handleDisconnect,
     testPhone,
     setTestPhone,
@@ -149,106 +151,27 @@ const WhatsAppSettingsPage: FC = () => {
           </div>
         )}
 
-        {/* QR CODE TAB */}
         {activeTab === 'qr' && (
-          <div className="settings-section">
-            <h3>QR Code Scanner</h3>
-            <div className="qr-panel">
-              {whatsappState.qrCode ? (
-                <div className="qr-container">
-                  <img 
-                    src={whatsappState.qrCode} 
-                    alt="WhatsApp QR Code"
-                    className="qr-code-image"
-                    loading="lazy"
-                    width={200}
-                    height={200}
-                  />
-                  <p className="qr-instructions">
-                    1. Open WhatsApp on your phone<br/>
-                    2. Go to Settings → Linked Devices<br/>
-                    3. Scan this QR code with your phone
-                  </p>
-                </div>
-              ) : (
-                <div className="qr-placeholder">
-                  <p>No QR code available yet.</p>
-                  <p className="muted">Initialize the connection to generate QR code.</p>
-                </div>
-              )}
-            </div>
-          </div>
+          <WhatsAppQrTab
+            qrCode={qrCode}
+            loading={loading}
+            status={status}
+            handleRefreshQr={handleRefreshQr}
+          />
         )}
-
         {/* MESSAGES TAB */}
         {activeTab === 'messages' && (
-          <div className="settings-section">
-            <h3>Test Message</h3>
-            <div className="test-message-form">
-              <div className="form-group">
-                <label htmlFor="testPhone">Recipient Phone (with country code)</label>
-                <input
-                  id="testPhone"
-                  type="tel"
-                  value={testPhone}
-                  onChange={(e) => setTestPhone(e.target.value)}
-                  placeholder="+971561234567"
-                  pattern="\+?[0-9]{7,15}"
-                  maxLength={16}
-                  required
-                  disabled={!whatsappState.session?.connectionStatus.includes('authenticated')}
-                />
-                <small>Include country code (e.g., +971 for UAE)</small>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="testMessage">Message</label>
-                <textarea
-                  id="testMessage"
-                  value={testMessage}
-                  onChange={(e) => setTestMessage(e.target.value)}
-                  placeholder="Type your test message here..."
-                  rows={4}
-                  maxLength={4096}
-                  required
-                  disabled={!whatsappState.session?.connectionStatus.includes('authenticated')}
-                />
-              </div>
-
-              <button
-                onClick={handleSendTestMessage}
-                disabled={sendingTest || !whatsappState.session?.connectionStatus.includes('authenticated')}
-                className="btn-primary"
-              >
-                {sendingTest ? 'Sending...' : 'Send Test Message'}
-              </button>
-
-              {!whatsappState.session?.connectionStatus.includes('authenticated') && (
-                <p className="info-text">⚠️ Connect WhatsApp first to send messages</p>
-              )}
-            </div>
-
-            {whatsappState.messages.length > 0 && (
-              <div className="messages-history">
-                <h4>Recent Messages</h4>
-                <div className="messages-list">
-                  {whatsappState.messages.slice(-10).map((msg) => (
-                    <div key={msg.id} className={`message-item message-${msg.direction}`}>
-                      <div className="message-header">
-                        <span className="message-phone">{msg.phoneNumber}</span>
-                        <span className="message-time">{msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString() : ''}</span>
-                      </div>
-                      <div className="message-body">{msg.body}</div>
-                      <span className={`message-status status-${msg.status}`}>{msg.status}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+          <WhatsAppMessagesTab
+            welcomeMessage={welcomeMessage}
+            setWelcomeMessage={setWelcomeMessage}
+            awayMessage={awayMessage}
+            setAwayMessage={setAwayMessage}
+            enableAwayMessage={enableAwayMessage}
+            setEnableAwayMessage={setEnableAwayMessage}
+            handleSaveMessages={handleSaveMessages}
+            savingMessages={savingMessages}
+          />
         )}
-
-        {/* QUEUE TAB */}
         {activeTab === 'queue' && (
           <div className="settings-section">
             <h3>Message Queue</h3>

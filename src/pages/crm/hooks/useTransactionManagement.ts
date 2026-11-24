@@ -1,7 +1,5 @@
 /**
  * useTransactionManagement — Custom hook for Transaction CRUD operations
- * Extracts all business logic, state, and Redux interactions from TransactionManagementPage.
- * Makes the page component a pure rendering layer and this hook independently testable.
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,138 +17,51 @@ import {
   deleteTransactionAPI,
   addActivity,
 } from '../../../store/crmDataSlice';
-
+import {
+  type Transaction,
+  type TransactionFormData,
+  STATUS_CONFIG,
+  TYPE_LABELS,
+  PIPELINE_STAGES,
+  ITEMS_PER_PAGE,
+  EMPTY_FORM,
+  calculateCommission,
+  validateStateTransition,
+  validateKYC,
+} from './transactionManagement.helpers';
+export {
+  type Transaction,
+  type TransactionFormData,
+  STATUS_CONFIG,
+  TYPE_LABELS,
+  PIPELINE_STAGES,
+  calculateCommission,
+  validateStateTransition,
+  validateKYC,
+};
 const log = createLogger('useTransactionManagement');
-// ─── Types ──────────────────────────────────────────────────────────────
-
-export interface Transaction {
-  id: string | number;
-  type?: string;
-  status?: string;
-  amount?: number;
-  property_id?: string | number;
-  property_title?: string;
-  client_name?: string;
-  agent_name?: string;
-  closing_date?: string;
-  notes?: string;
-  created_at?: string;
-  updated_at?: string;
-  commission?: number;
-  rera_status?: string;
-  [key: string]: unknown;
-}
-
-export interface TransactionFormData {
-  type: string;
-  status: string;
-  amount: string;
-  property_title: string;
-  client_name: string;
-  agent_name: string;
-  closing_date: string;
-  notes: string;
-}
-
-type TransactionBadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
-
-// ─── Constants ──────────────────────────────────────────────────────────
-
-export const STATUS_CONFIG: Record<
-  string,
-  { label: string; color: string; badgeVariant: TransactionBadgeVariant }
-> = {
-  draft: { label: 'Draft', color: '#6B7280', badgeVariant: 'secondary' },
-  pending: { label: 'Pending', color: '#F59E0B', badgeVariant: 'warning' },
-  in_progress: { label: 'In Progress', color: '#3B82F6', badgeVariant: 'info' },
-  completed: { label: 'Completed', color: '#10B981', badgeVariant: 'success' },
-  cancelled: { label: 'Cancelled', color: '#EF4444', badgeVariant: 'error' },
-};
-
-export const TYPE_LABELS: Record<string, string> = {
-  sale: '🏠 Sale',
-  rental: '🔑 Rental',
-  lease: '📋 Lease',
-};
-
-export const PIPELINE_STAGES = ['draft', 'pending', 'in_progress', 'completed'];
-
-// ─── AI & Business Logic Helpers ─────────────────────────────────────────
-
-export const calculateCommission = (amount: number) => {
-  const totalCommission = amount * 0.02; // 2% standard Dubai fee
-  return {
-    total: totalCommission,
-    agencySplit: totalCommission * 0.5,
-    agentSplit: totalCommission * 0.5,
-  };
-};
-
-export const validateStateTransition = (current: string, next: string): boolean => {
-  if (current === next) return true;
-  if (next === 'cancelled') return true;
-  
-  const order = ['draft', 'pending', 'in_progress', 'completed'];
-  const currentIndex = order.indexOf(current);
-  const nextIndex = order.indexOf(next);
-  
-  // Enforce linear progression or backward movement, but block skipping steps
-  if (nextIndex > currentIndex + 1) return false;
-  return true;
-};
-
-export const validateKYC = (formData: TransactionFormData): boolean => {
-  return formData.client_name.trim() !== '' && formData.property_title.trim() !== '';
-};
-
-const ITEMS_PER_PAGE = 10;
-
-const EMPTY_FORM: TransactionFormData = {
-  type: 'sale',
-  status: 'draft',
-  amount: '',
-  property_title: '',
-  client_name: '',
-  agent_name: '',
-  closing_date: '',
-  notes: '',
-};
-
-// ─── Hook ───────────────────────────────────────────────────────────────
-
 export function useTransactionManagement() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const allTransactions = useSelector(selectAllTransactions) as Transaction[];
   const loading = useSelector(selectTransactionsLoading);
   const error = useSelector(selectTransactionsError);
-
-  // Fetch on mount
   useEffect(() => {
     dispatch(fetchTransactionsFromAPI({}));
   }, [dispatch]);
-
-  // ─── Local state ────────────────────────────────────────────────
-
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Reset pagination when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, statusFilter, typeFilter]);
-
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const [formData, setFormData] = useState<TransactionFormData>({ ...EMPTY_FORM });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  // ─── Derived data ───────────────────────────────────────────────
-
   const filteredTransactions = useMemo(() => {
     return allTransactions.filter((t: Transaction) => {
       const matchesSearch =
@@ -163,14 +74,11 @@ export function useTransactionManagement() {
       return matchesSearch && matchesStatus && matchesType;
     });
   }, [allTransactions, search, statusFilter, typeFilter]);
-
   const totalPages = Math.ceil(filteredTransactions.length / ITEMS_PER_PAGE);
-
   const paginatedTransactions = filteredTransactions.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-
   const summaryStats = useMemo(() => {
     const total = allTransactions.length;
     const pending = allTransactions.filter(t => t.status === 'pending').length;
@@ -178,7 +86,6 @@ export function useTransactionManagement() {
     const totalValue = allTransactions.reduce((sum, t) => sum + (t.amount || 0), 0);
     return { total, pending, completed, totalValue };
   }, [allTransactions]);
-
   const pipelineCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     PIPELINE_STAGES.forEach(stage => {
@@ -186,47 +93,32 @@ export function useTransactionManagement() {
     });
     return counts;
   }, [allTransactions]);
-
-  // ─── Actions ────────────────────────────────────────────────────
-
-  const resetForm = useCallback(() => {
-    setFormData({ ...EMPTY_FORM });
-  }, []);
-
+  const resetForm = useCallback(() => setFormData({ ...EMPTY_FORM }), []);
   const openCreateModal = useCallback(() => {
     resetForm();
     setShowCreateModal(true);
   }, [resetForm]);
-
   const closeCreateModal = useCallback(() => {
     setShowCreateModal(false);
     resetForm();
   }, [resetForm]);
-
   const closeEditModal = useCallback(() => {
     setShowEditModal(false);
     setSelectedTransaction(null);
     resetForm();
   }, [resetForm]);
-
   const closeDeleteModal = useCallback(() => {
     setShowDeleteConfirm(false);
     setSelectedTransaction(null);
   }, []);
-
   const handleCreate = useCallback(() => {
     if (!formData.amount || Number(formData.amount) <= 0) return;
-
-    // State Machine Validation (Creation is always draft or pending)
     if (formData.status !== 'draft' && formData.status !== 'pending') {
       setErrorMessage('New deals must start in Draft or Pending state.');
       return;
     }
-
     const { total } = calculateCommission(Number(formData.amount));
-    const isKYCValid = validateKYC(formData);
-    const rera_status = isKYCValid ? 'Forms Cleared' : 'Forms Pending';
-
+    const rera_status = validateKYC(formData) ? 'Forms Cleared' : 'Forms Pending';
     const transactionData = {
       type: formData.type,
       amount: Number(formData.amount),
@@ -241,7 +133,6 @@ export function useTransactionManagement() {
         .filter(Boolean)
         .join(' | '),
     };
-
     dispatch(createTransactionAPI(transactionData))
       .then(result => {
         if (createTransactionAPI.fulfilled.match(result)) {
@@ -256,20 +147,16 @@ export function useTransactionManagement() {
           setShowCreateModal(false);
           resetForm();
         } else if (createTransactionAPI.rejected.match(result)) {
-          const msg =
-            (result.payload as string) || 'Failed to create transaction. Please try again.';
-          setErrorMessage(msg);
+          setErrorMessage(
+            (result.payload as string) || 'Failed to create transaction. Please try again.'
+          );
         }
       })
-      .catch((error: unknown) => {
-        log.error(
-          'Failed to create transaction:',
-          error instanceof Error ? error.message : String(error)
-        );
+      .catch((err: unknown) => {
+        log.error('Failed to create transaction:', err instanceof Error ? err.message : String(err));
         setErrorMessage('An unexpected error occurred. Please try again.');
       });
   }, [dispatch, formData, resetForm]);
-
   const handleEdit = useCallback((transaction: Transaction) => {
     setSelectedTransaction(transaction);
     setFormData({
@@ -284,143 +171,118 @@ export function useTransactionManagement() {
     });
     setShowEditModal(true);
   }, []);
-
   const handleSaveEdit = useCallback(() => {
     if (!formData.amount || Number(formData.amount) <= 0) {
       setErrorMessage('Transaction amount is required.');
       return;
     }
-    if (selectedTransaction) {
-      // Deal State Machine Validation
-      if (!validateStateTransition(selectedTransaction.status || 'draft', formData.status)) {
-        setErrorMessage(`Invalid status transition from ${selectedTransaction.status} to ${formData.status}. Please follow the pipeline stages.`);
-        return;
-      }
-
-      const { total } = calculateCommission(Number(formData.amount));
-      const isKYCValid = validateKYC(formData);
-      const rera_status = isKYCValid ? 'Forms Cleared' : 'Forms Pending';
-
-      const typeSnapshot = formData.type;
-      dispatch(
-        updateTransactionAPI({
-          id: String(selectedTransaction.id),
-          type: formData.type,
-          status: formData.status,
-          amount: Number(formData.amount) || 0,
-          commission: total,
-          rera_status,
-          closingDate: formData.closing_date || undefined,
-          notes: [
-            formData.notes.trim(),
-            formData.property_title.trim() ? `property: ${formData.property_title.trim()}` : '',
-            formData.client_name.trim() ? `client: ${formData.client_name.trim()}` : '',
-            formData.agent_name.trim() ? `agent: ${formData.agent_name.trim()}` : '',
-          ]
-            .filter(Boolean)
-            .join(' | '),
-        })
-      )
-        .then(result => {
-          if (updateTransactionAPI.fulfilled.match(result)) {
-            dispatch(
-              addActivity({
-                id: Date.now(),
-                type: 'transaction',
-                description: `Transaction updated: ${typeSnapshot}`,
-                timestamp: new Date().toISOString(),
-              })
-            );
-            setShowEditModal(false);
-            setSelectedTransaction(null);
-            resetForm();
-          } else if (updateTransactionAPI.rejected.match(result)) {
-            const msg =
-              (result.payload as string) || 'Failed to update transaction. Please try again.';
-            setErrorMessage(msg);
-          }
-        })
-        .catch((error: unknown) => {
-          log.error(
-            'Failed to update transaction:',
-            error instanceof Error ? error.message : String(error)
-          );
-          setErrorMessage('An unexpected error occurred. Please try again.');
-        });
+    if (!selectedTransaction) return;
+    if (!validateStateTransition(selectedTransaction.status || 'draft', formData.status)) {
+      setErrorMessage(
+        `Invalid status transition from ${selectedTransaction.status} to ${formData.status}. Please follow the pipeline stages.`
+      );
+      return;
     }
+    const { total } = calculateCommission(Number(formData.amount));
+    const rera_status = validateKYC(formData) ? 'Forms Cleared' : 'Forms Pending';
+    const typeSnapshot = formData.type;
+    dispatch(
+      updateTransactionAPI({
+        id: String(selectedTransaction.id),
+        type: formData.type,
+        status: formData.status,
+        amount: Number(formData.amount) || 0,
+        commission: total,
+        rera_status,
+        closingDate: formData.closing_date || undefined,
+        notes: [
+          formData.notes.trim(),
+          formData.property_title.trim() ? `property: ${formData.property_title.trim()}` : '',
+          formData.client_name.trim() ? `client: ${formData.client_name.trim()}` : '',
+          formData.agent_name.trim() ? `agent: ${formData.agent_name.trim()}` : '',
+        ]
+          .filter(Boolean)
+          .join(' | '),
+      })
+    )
+      .then(result => {
+        if (updateTransactionAPI.fulfilled.match(result)) {
+          dispatch(
+            addActivity({
+              id: Date.now(),
+              type: 'transaction',
+              description: `Transaction updated: ${typeSnapshot}`,
+              timestamp: new Date().toISOString(),
+            })
+          );
+          setShowEditModal(false);
+          setSelectedTransaction(null);
+          resetForm();
+        } else if (updateTransactionAPI.rejected.match(result)) {
+          setErrorMessage(
+            (result.payload as string) || 'Failed to update transaction. Please try again.'
+          );
+        }
+      })
+      .catch((err: unknown) => {
+        log.error('Failed to update transaction:', err instanceof Error ? err.message : String(err));
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      });
   }, [dispatch, selectedTransaction, formData, resetForm]);
-
   const handleDelete = useCallback(() => {
-    if (selectedTransaction) {
-      dispatch(deleteTransactionAPI(String(selectedTransaction.id)))
-        .then(result => {
-          if (deleteTransactionAPI.fulfilled.match(result)) {
-            dispatch(
-              addActivity({
-                id: Date.now(),
-                type: 'transaction',
-                description: `Transaction deleted`,
-                timestamp: new Date().toISOString(),
-              })
-            );
-            setShowDeleteConfirm(false);
-            setSelectedTransaction(null);
-          } else if (deleteTransactionAPI.rejected.match(result)) {
-            const msg =
-              (result.payload as string) || 'Failed to delete transaction. Please try again.';
-            setErrorMessage(msg);
-          }
-        })
-        .catch((error: unknown) => {
-          log.error(
-            'Failed to delete transaction:',
-            error instanceof Error ? error.message : String(error)
+    if (!selectedTransaction) return;
+    dispatch(deleteTransactionAPI(String(selectedTransaction.id)))
+      .then(result => {
+        if (deleteTransactionAPI.fulfilled.match(result)) {
+          dispatch(
+            addActivity({
+              id: Date.now(),
+              type: 'transaction',
+              description: `Transaction deleted`,
+              timestamp: new Date().toISOString(),
+            })
           );
-          setErrorMessage('An unexpected error occurred. Please try again.');
-        });
-    }
+          setShowDeleteConfirm(false);
+          setSelectedTransaction(null);
+        } else if (deleteTransactionAPI.rejected.match(result)) {
+          setErrorMessage(
+            (result.payload as string) || 'Failed to delete transaction. Please try again.'
+          );
+        }
+      })
+      .catch((err: unknown) => {
+        log.error('Failed to delete transaction:', err instanceof Error ? err.message : String(err));
+        setErrorMessage('An unexpected error occurred. Please try again.');
+      });
   }, [dispatch, selectedTransaction]);
-
   const confirmDelete = useCallback((transaction: Transaction) => {
     setSelectedTransaction(transaction);
     setShowDeleteConfirm(true);
   }, []);
-
-  const getStatusBadgeVariant = useCallback((status: string) => {
-    return STATUS_CONFIG[status]?.badgeVariant || 'secondary';
-  }, []);
-
+  const getStatusBadgeVariant = useCallback(
+    (status: string) => STATUS_CONFIG[status]?.badgeVariant || 'secondary',
+    []
+  );
   const formatCurrency = useCallback(
     (amount: number | undefined) => formatCurrencyUtil(amount),
     []
   );
   const formatDate = useCallback((dateStr: string | undefined) => formatDateUtil(dateStr), []);
-
   const handleSearchChange = useCallback((value: string) => {
     setSearch(value);
     setCurrentPage(1);
   }, []);
-
   const handleStatusFilterChange = useCallback((value: string) => {
     setStatusFilter(value);
     setCurrentPage(1);
   }, []);
-
   const handleTypeFilterChange = useCallback((value: string) => {
     setTypeFilter(value);
     setCurrentPage(1);
   }, []);
-
-  const retryFetch = useCallback(() => {
-    dispatch(fetchTransactionsFromAPI({}));
-  }, [dispatch]);
-
-  const goBack = useCallback(() => {
-    navigate('/owner/crm');
-  }, [navigate]);
-
+  const retryFetch = useCallback(() => dispatch(fetchTransactionsFromAPI({})), [dispatch]);
+  const goBack = useCallback(() => navigate('/owner/crm'), [navigate]);
   return {
-    // Data
     allTransactions,
     filteredTransactions,
     paginatedTransactions,
@@ -429,7 +291,6 @@ export function useTransactionManagement() {
     totalPages,
     loading,
     error,
-    // State
     search,
     statusFilter,
     typeFilter,
@@ -442,9 +303,7 @@ export function useTransactionManagement() {
     setFormData,
     errorMessage,
     setErrorMessage,
-    // Page constants
     ITEMS_PER_PAGE,
-    // Actions
     openCreateModal,
     closeCreateModal,
     closeEditModal,
@@ -460,10 +319,8 @@ export function useTransactionManagement() {
     setCurrentPage,
     retryFetch,
     goBack,
-    // Formatters
     getStatusBadgeVariant,
     formatCurrency,
     formatDate,
   };
 }
-

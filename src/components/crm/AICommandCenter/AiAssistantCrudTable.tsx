@@ -10,53 +10,8 @@ import { Flex, Grid, Card, CardHeader, CardBody } from '../../ui/chakra';
 import { useTheme } from '../../../context/ThemeContext';
 
 export interface AiAssistantRecord {
-  id: string;
-  agentId: string;
-  name: string;
-  role: string;
-  department: string;
-  status: string;
-  tier: string;
-  model: string;
-  activeWorkload: number;
-}
-
-const INITIAL_SEED: AiAssistantRecord[] = [
-  {
-    id: 'ai-linda-001',
-    agentId: 'linda',
-    name: 'AI Linda',
-    role: 'Autonomous WhatsApp Broker & Lead Nurturer',
-    department: 'Marketing & Strategic Growth',
-    status: 'ACTIVE',
-    tier: 'SPECIALIST',
-    model: 'gemini-1.5-flash',
-    activeWorkload: 14,
-  },
-  {
-    id: 'ai-zoe-001',
-    agentId: 'zoe',
-    name: 'AI Zoe',
-    role: 'Chief Operating Partner & Autonomous Workforce Orchestrator',
-    department: 'Executive Governance & Sovereign Operations',
-    status: 'ACTIVE',
-    tier: 'EXECUTIVE',
-    model: 'gemini-1.5-pro',
-    activeWorkload: 28,
-  },
-  {
-    id: 'ai-ada-001',
-    agentId: 'ada',
-    name: 'Ada Lovelace',
-    role: 'Chief Architect Lead',
-    department: 'Autonomous Agent Orchestration',
-    status: 'ACTIVE',
-    tier: 'SUPERVISOR',
-    model: 'gemini-1.5-pro',
-    activeWorkload: 8,
-  },
-];
-
+import { AiAssistantRecord, INITIAL_SEED } from './aiAssistantCrud.data';
+import { AiAssistantCreateForm } from './AiAssistantCreateForm';
 export const AiAssistantCrudTable: FC = () => {
   const { isDark } = useTheme();
   const [assistants, setAssistants] = useState<AiAssistantRecord[]>(INITIAL_SEED);
@@ -185,130 +140,16 @@ export const AiAssistantCrudTable: FC = () => {
 
       {isCreating && (
         <Card bg={cardBg} borderColor="#EF4444" p={16} data-testid="ai-assistant-form-card">
-          <form onSubmit={handleCreate}>
-            <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={12} m="0 0 12px 0">
-              <div>
-                <label
-                  style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: subtextColor,
-                    display: 'block',
-                    marginBottom: '4px',
-                  }}
-                >
-                  Agent ID (Key)
-                </label>
-                <input
-                  required
-                  placeholder="e.g. dept-02-sup-01"
-                  value={formData.agentId}
-                  onChange={e => setFormData({ ...formData, agentId: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    border: `1px solid ${borderTone}`,
-                    background: isDark ? '#020617' : '#F8FAFC',
-                    color: textColor,
-                    fontSize: '0.8rem',
-                  }}
-                  data-testid="input-agent-id"
-                />
-              </div>
-              <div>
-                <label
-                  style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: subtextColor,
-                    display: 'block',
-                    marginBottom: '4px',
-                  }}
-                >
-                  Agent Name
-                </label>
-                <input
-                  required
-                  placeholder="e.g. Una View Primitive"
-                  value={formData.name}
-                  onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    border: `1px solid ${borderTone}`,
-                    background: isDark ? '#020617' : '#F8FAFC',
-                    color: textColor,
-                    fontSize: '0.8rem',
-                  }}
-                  data-testid="input-agent-name"
-                />
-              </div>
-              <div>
-                <label
-                  style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: subtextColor,
-                    display: 'block',
-                    marginBottom: '4px',
-                  }}
-                >
-                  Role & Specialization
-                </label>
-                <input
-                  required
-                  placeholder="e.g. UI/UX View Architect"
-                  value={formData.role}
-                  onChange={e => setFormData({ ...formData, role: e.target.value })}
-                  style={{
-                    width: '100%',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    border: `1px solid ${borderTone}`,
-                    background: isDark ? '#020617' : '#F8FAFC',
-                    color: textColor,
-                    fontSize: '0.8rem',
-                  }}
-                  data-testid="input-agent-role"
-                />
-              </div>
-            </Grid>
-            <Flex justify="flex-end" gap={8}>
-              <button
-                type="button"
-                onClick={() => setIsCreating(false)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: `1px solid ${borderTone}`,
-                  background: 'transparent',
-                  color: textColor,
-                  fontSize: '0.78rem',
-                  cursor: 'pointer',
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                data-testid="submit-create-agent-btn"
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  background: '#10B981',
-                  color: '#FFFFFF',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                Save Agent to Table
-              </button>
-            </Flex>
-          </form>
+            <AiAssistantCreateForm
+              formData={formData}
+              setFormData={setFormData}
+              handleCreate={handleCreate}
+              cardBg={cardBg}
+              borderColor={borderColor}
+              textColor={textColor}
+              subTextColor={subTextColor}
+              inputBg={inputBg}
+            />
         </Card>
       )}
 
