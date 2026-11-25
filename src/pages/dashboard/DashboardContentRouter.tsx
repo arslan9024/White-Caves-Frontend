@@ -31,6 +31,7 @@ import { LandlordManagerView } from '../../components/crm/LandlordManager';
 import { TenantManagerView } from '../../components/crm/TenantManager';
 import { BrokerManagerView } from '../../components/crm/BrokerManager';
 import LindaWhatsAppCRM from '../../components/crm/LindaWhatsAppCRM';
+import DianaEmailCampaignCenter from '../../components/crm/DianaEmailCRM/DianaEmailCampaignCenter';
 import MaryInventoryCRM from '../../components/crm/MaryInventoryCRM';
 import ZoeExecutiveCRM from '../../components/crm/ZoeConsole';
 import { DashboardLiveTicker } from '../../components/dashboard/header/DashboardLiveTicker';
@@ -120,6 +121,21 @@ export const DashboardContentRouter: FC<DashboardContentRouterProps> = ({
     return (
       <div style={{ padding: '20px', flex: 1 }}>
         <LindaWhatsAppCRM />
+      </div>
+    );
+  }
+
+  // Direct Diana / Property Owner Email Campaign selection
+  if (
+    (activeTab as string) === 'diana' ||
+    activeAgent?.id === 'diana-email' ||
+    activeAgent?.id === 'diana' ||
+    (activeTab === 'ai-command' && activeItemId === 'diana') ||
+    (activeTab === 'aiams' && activeItemId === 'diana')
+  ) {
+    return (
+      <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
+        <DianaEmailCampaignCenter />
       </div>
     );
   }
