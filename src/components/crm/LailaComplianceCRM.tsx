@@ -246,9 +246,7 @@ const LailaComplianceCRM = () => {
           />
         )}
 
-        {activeTab === 'contracts' && (
-          <LailaContractsTab onValidateContract={handleValidateContract} />
-        )}
+        {activeTab === 'contracts' && <LailaContractsTab />}
         {activeTab === 'regulations' && (
           <div className="regulations-view">
             <h3>Regulatory Compliance</h3>

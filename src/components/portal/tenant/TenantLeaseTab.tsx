@@ -40,10 +40,14 @@ const TenantLeaseTab: FC = () => {
 
     setLoading(true);
     setError(null);
+    let portalFailed = false;
     Promise.all([
       authFetch('/api/portal/tenant/lease')
         .then(r => r.json())
-        .catch(() => ({ data: null })),
+        .catch(() => {
+          portalFailed = true;
+          return { data: null };
+        }),
       authFetch('/api/leasing/contracts')
         .then(r => r.json())
         .catch(() => ({ data: [] })),
@@ -83,6 +87,8 @@ const TenantLeaseTab: FC = () => {
               email: 'landlord@whitecaves.ae',
             },
           });
+        } else if (portalFailed) {
+          setError('Unable to load lease details. Please refresh.');
         } else {
           setLease(null);
         }
