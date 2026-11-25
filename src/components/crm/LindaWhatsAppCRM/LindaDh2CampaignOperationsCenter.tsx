@@ -107,58 +107,21 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
   return (
     <div
       data-testid="linda-campaign-ops-center"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.25rem',
-        padding: '1.25rem',
-        background: '#0B1120',
-        borderRadius: '16px',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        color: '#FFFFFF',
-      }}
+      className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-[#0B1120] p-5 text-white"
     >
       {/* ── 1. 10-SIM FLEET STATUS & ANTI-BAN BANNER ── */}
       <LindaDh2FleetBanner />
 
       {/* ── 2. CAMPAIGN BUILDER: 38 CLUSTERS & TEMPLATES ── */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.25rem',
-          padding: '16px',
-          background: 'rgba(255, 255, 255, 0.02)',
-          borderRadius: '12px',
-          border: '1px solid rgba(255, 255, 255, 0.06)',
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5 rounded-xl border border-white/5 bg-white/[0.02] p-4">
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '0.8rem',
-              fontWeight: 800,
-              color: '#CBD5E1',
-              marginBottom: '8px',
-            }}
-          >
+          <label className="mb-2 block text-xs font-extrabold text-slate-300">
             Select DAMAC Hills 2 Cluster (38 Total):
           </label>
           <select
             value={selectedCluster}
             onChange={e => setSelectedCluster(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              background: '#0F172A',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#FFFFFF',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              outline: 'none',
-            }}
+            className="w-full rounded-lg border border-white/15 bg-[#0F172A] px-3 py-2.5 text-sm font-semibold text-white outline-none"
           >
             {DH2_38_CLUSTERS.map(c => (
               <option key={c} value={c}>
@@ -169,47 +132,20 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
             ))}
           </select>
 
-          <div
-            style={{
-              marginTop: '10px',
-              fontSize: '0.74rem',
-              color: '#64748B',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
+          <div className="mt-2.5 flex items-center gap-1.5 text-xs text-slate-500">
             <FileSpreadsheet size={14} className="text-emerald-400" />
             <span>Synced with Google Drive Akoya Sheet &amp; Henry Tenancy Contracts</span>
           </div>
         </div>
 
         <div>
-          <label
-            style={{
-              display: 'block',
-              fontSize: '0.8rem',
-              fontWeight: 800,
-              color: '#CBD5E1',
-              marginBottom: '8px',
-            }}
-          >
+          <label className="mb-2 block text-xs font-extrabold text-slate-300">
             Outreach Message Template:
           </label>
           <select
             value={selectedTemplateId}
             onChange={e => setSelectedTemplateId(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              background: '#0F172A',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              color: '#FFFFFF',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              outline: 'none',
-            }}
+            className="w-full rounded-lg border border-white/15 bg-[#0F172A] px-3 py-2.5 text-sm font-semibold text-white outline-none"
           >
             {CAMPAIGN_TEMPLATES.map(t => (
               <option key={t.id} value={t.id}>
@@ -218,22 +154,13 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
             ))}
           </select>
 
-          <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <label
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '0.78rem',
-                color: '#E2E8F0',
-                cursor: 'pointer',
-              }}
-            >
+          <div className="mt-3 flex items-center gap-2.5">
+            <label className="flex cursor-pointer items-center gap-1.5 text-xs text-slate-200">
               <input
                 type="checkbox"
                 checked={isDryRun}
                 onChange={e => setIsDryRun(e.target.checked)}
-                style={{ accentColor: '#EF4444' }}
+                className="accent-red-500"
               />
               <span>Dry Run Simulation (No real WhatsApp SMS sent)</span>
             </label>
@@ -242,80 +169,28 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
       </div>
 
       {/* ── 3. LIVE VARIABLE SPINTAX PREVIEW ── */}
-      <div
-        style={{
-          padding: '14px 16px',
-          background: 'rgba(0, 0, 0, 0.35)',
-          borderRadius: '10px',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '6px',
-            flexWrap: 'wrap',
-            gap: 6,
-          }}
-        >
-          <span
-            style={{
-              fontSize: '0.75rem',
-              fontWeight: 800,
-              color: '#38BDF8',
-              letterSpacing: '0.04em',
-            }}
-          >
+      <div className="rounded-xl border border-white/10 bg-black/35 px-4 py-3.5">
+        <div className="mb-1.5 flex flex-wrap items-center justify-between gap-1.5">
+          <span className="text-xs font-extrabold tracking-wide text-sky-400">
             ⚡ LIVE WHATSAPP MESSAGE PREVIEW
           </span>
-          <span
-            style={{
-              fontSize: '0.72rem',
-              color: '#10B981',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
+          <span className="inline-flex items-center gap-1 text-xs text-emerald-400">
             <ShieldCheck size={13} />
             Target: {previewCluster} Villa · Privacy-Safe (No Unit #) · whitecaves.ae
           </span>
         </div>
-        <p
-          style={{
-            margin: 0,
-            fontSize: '0.82rem',
-            color: '#E2E8F0',
-            lineHeight: 1.5,
-            fontStyle: 'italic',
-          }}
-        >
-          "{previewText}"
-        </p>
+        <p className="m-0 text-xs italic leading-relaxed text-slate-200">"{previewText}"</p>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+        <div className="mt-3 flex justify-end">
           <button
             type="button"
             disabled={launching}
             onClick={handleLaunchCampaign}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 22px',
-              borderRadius: '8px',
-              background: isDryRun
-                ? 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)'
-                : 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
-              color: '#FFFFFF',
-              fontSize: '0.85rem',
-              fontWeight: 800,
-              border: 'none',
-              cursor: launching ? 'not-allowed' : 'pointer',
-              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.3)',
-            }}
+            className={`inline-flex items-center gap-2 rounded-lg border-0 px-5 py-2.5 text-sm font-extrabold text-white shadow-lg ${
+              isDryRun
+                ? 'bg-gradient-to-br from-blue-500 to-blue-700'
+                : 'bg-gradient-to-br from-red-500 to-red-700'
+            } ${launching ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'}`}
           >
             <Send size={15} />
             <span>
@@ -325,32 +200,12 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
         </div>
 
         {launchSuccess && (
-          <div
-            style={{
-              marginTop: '10px',
-              padding: '8px 12px',
-              background: 'rgba(16, 185, 129, 0.15)',
-              border: '1px solid #10B981',
-              borderRadius: '6px',
-              color: '#10B981',
-              fontSize: '0.78rem',
-            }}
-          >
+          <div className="mt-2.5 rounded-md border border-emerald-500 bg-emerald-500/15 px-3 py-2 text-xs text-emerald-400">
             {launchSuccess}
           </div>
         )}
         {launchError && (
-          <div
-            style={{
-              marginTop: '10px',
-              padding: '8px 12px',
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid #EF4444',
-              borderRadius: '6px',
-              color: '#EF4444',
-              fontSize: '0.78rem',
-            }}
-          >
+          <div className="mt-2.5 rounded-md border border-red-500 bg-red-500/15 px-3 py-2 text-xs text-red-400">
             {launchError}
           </div>
         )}

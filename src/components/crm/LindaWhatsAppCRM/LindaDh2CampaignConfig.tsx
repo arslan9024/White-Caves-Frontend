@@ -1,6 +1,46 @@
 import React, { FC } from 'react';
 import { Radio, Clock } from 'lucide-react';
 
+export interface WarmContactRow {
+  id: string;
+  name: string;
+  e164: string;
+  role: 'LANDLORD' | 'TENANT';
+  category: 'LANDLORD_RETENTION_RENEWAL' | 'TENANT_FOLLOWUP';
+  urgency: string;
+  cluster: string;
+  bedrooms: string;
+  leaseEndDate: string | null;
+  daysUntilExpiry: number | null;
+  source: string;
+  dncSuppressed: boolean;
+}
+
+export interface WarmSummary {
+  total: number;
+  landlordRetentionCount: number;
+  tenantFollowUpCount: number;
+  expiringWithin90DaysCount: number;
+  dncSuppressedCount: number;
+  contacts: WarmContactRow[];
+}
+
+export interface TestDispatchReport {
+  verified: boolean;
+  outboundPayload?: {
+    to: string;
+    assignedSim: string;
+    message: string;
+    privacyAuditPassed: boolean;
+    spamRiskScore: number;
+    status: string;
+  } | null;
+  inboundTriage?: {
+    simulatedMessage: string;
+    result?: { syncedToMaryVault?: boolean; routed?: boolean; reason?: string };
+  };
+}
+
 export const DH2_38_CLUSTERS = [
   'All 38 Clusters',
   'Pacifica',

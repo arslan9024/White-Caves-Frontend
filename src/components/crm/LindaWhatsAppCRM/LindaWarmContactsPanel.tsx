@@ -11,46 +11,7 @@
 import React, { FC, useEffect, useState, useCallback } from 'react';
 import { Users, ShieldCheck, Send, RefreshCw, CheckCircle2, FlaskConical, Ban } from 'lucide-react';
 import { apiClient } from '../../../utils/apiClient';
-
-interface WarmContactRow {
-  id: string;
-  name: string;
-  e164: string;
-  role: 'LANDLORD' | 'TENANT';
-  category: 'LANDLORD_RETENTION_RENEWAL' | 'TENANT_FOLLOWUP';
-  urgency: string;
-  cluster: string;
-  bedrooms: string;
-  leaseEndDate: string | null;
-  daysUntilExpiry: number | null;
-  source: string;
-  dncSuppressed: boolean;
-}
-
-interface WarmSummary {
-  total: number;
-  landlordRetentionCount: number;
-  tenantFollowUpCount: number;
-  expiringWithin90DaysCount: number;
-  dncSuppressedCount: number;
-  contacts: WarmContactRow[];
-}
-
-interface TestDispatchReport {
-  verified: boolean;
-  outboundPayload?: {
-    to: string;
-    assignedSim: string;
-    message: string;
-    privacyAuditPassed: boolean;
-    spamRiskScore: number;
-    status: string;
-  } | null;
-  inboundTriage?: {
-    simulatedMessage: string;
-    result?: { syncedToMaryVault?: boolean; routed?: boolean; reason?: string };
-  };
-}
+import type { WarmSummary, TestDispatchReport } from './LindaDh2CampaignConfig';
 
 interface Props {
   selectedCluster: string;
