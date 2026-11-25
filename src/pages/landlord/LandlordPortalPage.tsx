@@ -1,19 +1,19 @@
 /**
- * LandlordPortalPage — Phase 2.1-2.6 + 2.13: Landlord Self-Service Portal
+ * LandlordPortalPage — Landlord Self-Service Portal
  *
- * Provides landlords with read-only access to:
- * - Home Dashboard (2.13) ← default landing
- * - My Properties (2.2)
- * - Tenants (2.3)
- * - Rent Payments (2.4)
- * - Maintenance Requests (2.5)
- * - Documents (2.6)
+ * Provides landlords with access to:
+ * - Home Dashboard & Live Portfolio KPIs
+ * - Listed DAMAC Hills 2 Properties
+ * - Tenants, Tenancy Contract Copies & 12-Stage Deal Cockpit
+ * - PDC Cheque Schedule & Sequential Receipts
+ * - Maintenance Tickets & 1-click WhatsApp channel to MD (+971505760056)
  *
  * @component
  */
 
 import React, { FC, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Home, Building2, Users, CreditCard, Wrench, FileText, Layers, User } from 'lucide-react';
 import type { RootState } from '../../store/store';
 import '../RolePages.css';
 import PortalLayout from '../../components/portal/PortalLayout';
@@ -23,34 +23,56 @@ import LandlordTenantsTab from '../../components/portal/landlord/LandlordTenants
 import LandlordPaymentsTab from '../../components/portal/landlord/LandlordPaymentsTab';
 import LandlordMaintenanceTab from '../../components/portal/landlord/LandlordMaintenanceTab';
 import LandlordDocumentsTab from '../../components/portal/landlord/LandlordDocumentsTab';
+import LandlordDirectMdBanner from '../../components/portal/landlord/LandlordDirectMdBanner';
 import PortalProfileTab from '../../components/portal/PortalProfileTab';
-import PortalSidebarContainer from '../../components/portal/containers/PortalSidebarContainer';
+import PortalSidebarContainer, {
+  type TabConfig,
+} from '../../components/portal/containers/PortalSidebarContainer';
 import PortalLogoRing from '../../components/portal/PortalLogoRing';
+import { TenancyDealCockpit } from '../../components/crm/DealManager/TenancyDealCockpit';
 import { useTranslation, Text } from '../../context/TranslationContext';
 
 type TabKey =
-  'home' | 'properties' | 'tenants' | 'payments' | 'maintenance' | 'documents' | 'profile';
-
-interface Tab {
-  key: TabKey;
-  label: string;
-  icon: string;
-}
+  | 'home'
+  | 'properties'
+  | 'tenants'
+  | 'payments'
+  | 'maintenance'
+  | 'documents'
+  | 'cockpit'
+  | 'profile';
 
 const LandlordPortalPage: FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('home');
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const { t } = useTranslation();
 
-  const tabs: Tab[] = useMemo(
+  const tabs: TabConfig<TabKey>[] = useMemo(
     () => [
-      { key: 'home', label: t('landlord.portal.tabs.home'), icon: '🏠' },
-      { key: 'properties', label: t('landlord.portal.tabs.properties'), icon: '🏢' },
-      { key: 'tenants', label: t('landlord.portal.tabs.tenants'), icon: '👥' },
-      { key: 'payments', label: t('landlord.portal.tabs.payments'), icon: '💰' },
-      { key: 'maintenance', label: t('landlord.portal.tabs.maintenance'), icon: '🔧' },
-      { key: 'documents', label: t('landlord.portal.tabs.documents'), icon: '📄' },
-      { key: 'profile', label: t('landlord.portal.tabs.profile'), icon: '👤' },
+      { key: 'home', label: t('landlord.portal.tabs.home'), icon: <Home size={15} /> },
+      {
+        key: 'properties',
+        label: t('landlord.portal.tabs.properties'),
+        icon: <Building2 size={15} />,
+      },
+      { key: 'tenants', label: t('landlord.portal.tabs.tenants'), icon: <Users size={15} /> },
+      {
+        key: 'payments',
+        label: t('landlord.portal.tabs.payments'),
+        icon: <CreditCard size={15} />,
+      },
+      {
+        key: 'maintenance',
+        label: t('landlord.portal.tabs.maintenance'),
+        icon: <Wrench size={15} />,
+      },
+      {
+        key: 'documents',
+        label: t('landlord.portal.tabs.documents'),
+        icon: <FileText size={15} />,
+      },
+      { key: 'cockpit', label: '12-Stage Deal Cockpit', icon: <Layers size={15} /> },
+      { key: 'profile', label: t('landlord.portal.tabs.profile'), icon: <User size={15} /> },
     ],
     [t]
   );
@@ -83,6 +105,15 @@ const LandlordPortalPage: FC = () => {
         return <LandlordMaintenanceTab />;
       case 'documents':
         return <LandlordDocumentsTab />;
+      case 'cockpit':
+        return (
+          <TenancyDealCockpit
+            landlordName={currentUser.name ?? 'White Caves Landlord'}
+            area="DAMAC Hills 2"
+            project="Camellia"
+            unitNumber="TH-C-104"
+          />
+        );
       case 'profile':
         return <PortalProfileTab />;
       default:
@@ -109,6 +140,12 @@ const LandlordPortalPage: FC = () => {
             subtitle="Live rental operations, verified Ejari contracts, and scheduled PDC receivables."
             metricPrimary={{ label: 'Portfolio Status', value: '100% Leased' }}
             metricSecondary={{ label: 'Support Channel', value: 'MD WhatsApp VIP' }}
+          />
+
+          {/* 1-Click Direct MD WhatsApp Channel (+971505760056) & Quick Actions */}
+          <LandlordDirectMdBanner
+            landlordName={currentUser.name}
+            onSelectTab={tab => setActiveTab(tab)}
           />
 
           {/* Tab Navigation */}

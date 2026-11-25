@@ -227,14 +227,58 @@ export default function ValuationPage() {
         )}
 
         {/* Override Form */}
-        {history.length > 0 && (
-          <ValuationHistoryTable history={history} />
-        )}
-                </tbody>
-              </table>
+        {showOverride && (
+          <form
+            onSubmit={handleOverride}
+            className="bg-gray-800 border border-yellow-700 rounded-xl p-6 mb-6"
+          >
+            <h3 className="text-lg font-semibold mb-4 text-yellow-400">Manual Override</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Override Value (AED)</label>
+                <input
+                  type="number"
+                  value={overrideValue}
+                  onChange={e => setOverrideValue(e.target.value)}
+                  required
+                  min="1"
+                  className="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-gray-100"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Reason (required)</label>
+                <input
+                  type="text"
+                  value={overrideReason}
+                  onChange={e => setOverrideReason(e.target.value)}
+                  required
+                  minLength={5}
+                  placeholder="e.g. RERA-certified valuer assessment"
+                  className="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 text-gray-100"
+                />
+              </div>
             </div>
-          </div>
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={overrideLoading}
+                className="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 disabled:opacity-50 text-white rounded-lg text-sm font-medium"
+              >
+                {overrideLoading ? 'Saving…' : 'Save Override'}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowOverride(false)}
+                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-lg text-sm"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         )}
+
+        {/* History Table */}
+        <ValuationHistoryTable history={history} />
 
         {/* Yield Calculator */}
         <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
@@ -298,4 +342,3 @@ export default function ValuationPage() {
     </div>
   );
 }
-

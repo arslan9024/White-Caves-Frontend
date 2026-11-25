@@ -20,8 +20,10 @@ import {
 import type { AppDispatch } from '../../../store/store';
 import {
   MAX_SOCIAL_RETRIES,
+  PORTAL_GATEWAY_OPTIONS,
   type AuthMode,
   type AuthTab,
+  type PortalGatewayRole,
   type SignupStep,
   type SocialRecoveryState,
 } from './authTypes';
@@ -35,6 +37,8 @@ export function useSignInController() {
 
   const [mode, setMode] = useState<AuthMode>('signin');
   const [activeTab, setActiveTab] = useState<AuthTab>('email');
+  const [selectedPortalRole, setSelectedPortalRole] =
+    useState<PortalGatewayRole>('managing_director');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -158,7 +162,10 @@ export function useSignInController() {
       }
     } catch (err: unknown) {
       const lowerEmail = email.toLowerCase();
-      if (import.meta.env?.DEV && (lowerEmail.includes('arslan') || lowerEmail.includes('whitecaves'))) {
+      if (
+        import.meta.env?.DEV &&
+        (lowerEmail.includes('arslan') || lowerEmail.includes('whitecaves'))
+      ) {
         const devUser = {
           id: `dev-user-${Date.now()}`,
           email: lowerEmail.trim(),
@@ -190,9 +197,22 @@ export function useSignInController() {
 
   const handleCategoryContinue = useCallback(() => {
     if (!selectedCategory || !registeredUser) return;
-    const destination = resolvePostLoginDestination({ user: registeredUser as never, returnTo });
+    if (selectedCategory === 'landlord') {
+      navigateToPostLoginDestination(navigate, '/landlord-portal');
+      return;
+    }
+    if (selectedCategory === 'tenant') {
+      navigateToPostLoginDestination(navigate, '/tenant-portal');
+      return;
+    }
+    const portalOverride =
+      PORTAL_GATEWAY_OPTIONS.find(opt => opt.id === selectedPortalRole)?.targetRoute ?? null;
+    const destination = resolvePostLoginDestination({
+      user: registeredUser as never,
+      returnTo: returnTo ?? (selectedCategory === 'client' ? portalOverride : null),
+    });
     navigateToPostLoginDestination(navigate, destination);
-  }, [navigate, registeredUser, returnTo, selectedCategory]);
+  }, [navigate, registeredUser, returnTo, selectedCategory, selectedPortalRole]);
 
   const handleSocialRecoveryDismiss = useCallback(() => {
     setSocialRecovery(prev => ({ ...prev, visible: false }));
@@ -213,6 +233,8 @@ export function useSignInController() {
   return {
     mode,
     activeTab,
+    selectedPortalRole,
+    setSelectedPortalRole,
     email,
     setEmail,
     password,
@@ -246,4 +268,3 @@ export function useSignInController() {
     handleBiometricSuccess,
   };
 }
-

@@ -9,6 +9,7 @@ import { useAiccSanctumLogic } from './Logic.logic';
 import { styles } from './Style.style';
 import { DaisyLeasingHierarchyPanel } from './DaisyLeasingHierarchyPanel';
 import { ManagerFractalSubtreePanel } from './ManagerFractalSubtreePanel';
+import { OperationalSupervisorsChainPanel } from './OperationalSupervisorsChainPanel';
 import { SanctumDelegationPanel } from './SanctumDelegationPanel';
 export const AiccSanctumView: React.FC = () => {
   const {
@@ -54,24 +55,24 @@ export const AiccSanctumView: React.FC = () => {
   };
   const metrics = [
     {
-      label: '8-Tier Sovereign Authority',
+      label: 'Bhakti 1-12-108 Authority',
       val: 'Arslan Malik (MD)',
-      sub: 'Sole Human Today • 121 Core AI + 131 Daisy Division',
+      sub: '13,081 Fixed Seats • 5 Operational AI Supervisors',
     },
     {
-      label: 'Daisy Leasing Division (DEPT-05)',
-      val: '12 AMs • 108 Sups',
-      sub: 'Dir Clara (DIR-05) → Mgr Daisy → 1 TL → 10 Agents',
+      label: 'Operational AI Supervisors',
+      val: 'Diana · Daisy · Mary · Linda · Henry',
+      sub: 'Each seated at SUP-DD-M-01-1 with full AM → Mgr → Dir chain',
     },
     {
       label: 'Active WhatsApp Fleet',
       val: '10 Numbers',
-      sub: '1 Primary Master (+971505760056) + 9 Hunter SIMs',
+      sub: 'AI Linda (SUP-08-1-01-1) • +971505760056 + 9 Hunters',
     },
     {
-      label: 'The Record Keeper & Reserve',
+      label: 'Record Keeper & Reserve',
       val: `AI Henry • ${standbyRoster.length} Standby`,
-      sub: 'MGR-11-1 (Sole Male AI) • 6 DMS Open Human Tiers',
+      sub: 'SUP-11-1-01-1 (Sole Male AI) • 6 DMS Open Human Tiers',
     },
   ];
   return (
@@ -339,6 +340,18 @@ export const AiccSanctumView: React.FC = () => {
               roleTitle={selectedFractalMgr.roleTitle}
             />
           )}
+          <OperationalSupervisorsChainPanel
+            onInspectChain={chain => {
+              setSelectedDeptCode(chain.deptCode);
+              setSelectedFractalMgr({
+                deptSlot: chain.deptSlot,
+                managerSlot: chain.managerSlot,
+                code: chain.manager.code,
+                name: chain.manager.name,
+                roleTitle: chain.manager.roleTitle,
+              });
+            }}
+          />
           <DaisyLeasingHierarchyPanel />
           <SanctumDelegationPanel delegations={liveDelegations} />
         </div>

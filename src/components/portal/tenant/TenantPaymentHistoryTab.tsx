@@ -296,6 +296,24 @@ const TenantPaymentHistoryTab: FC = () => {
               </div>
               <div>
                 <span className={`status-badge status-${payment.status}`}>{payment.status}</span>
+                {payment.status === 'paid' && (
+                  <a
+                    href={`/api/leasing-formula/tenancy-deals/${FALLBACK_LEASE.id}/receipt-pdf`}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-testid={`tenant-payment-receipt-${payment.id}`}
+                    style={{
+                      display: 'inline-block',
+                      marginLeft: '8px',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      color: '#EF4444',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Receipt &amp; 5% VAT PDF
+                  </a>
+                )}
               </div>
             </div>
           ))}

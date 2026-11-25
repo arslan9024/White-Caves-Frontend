@@ -209,6 +209,22 @@ const TenantLeaseTab: FC = () => {
               Download Ejari Certificate
             </a>
           )}
+          <a
+            href={`/api/leasing-formula/tenancy-deals/${lease.id}/receipt-pdf`}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="lease-receipt-pdf-download"
+          >
+            Download Sequential Receipt PDF
+          </a>
+          <a
+            href={`/api/leasing-formula/tenancy-deals/${lease.id}/receipt-pdf?type=vat`}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="lease-vat-invoice-download"
+          >
+            Download 5% UAE VAT Invoice
+          </a>
           <button
             type="button"
             className="btn-secondary"

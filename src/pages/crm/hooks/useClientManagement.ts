@@ -27,9 +27,14 @@ const log = createLogger('useClientManagement');
 
 export * from './clientManagement.types';
 import {
-  Client, ClientFormData, TYPE_CONFIG, STATUS_CONFIG, ITEMS_PER_PAGE, EMPTY_FORM
-import { filterClientsList, computeClientTypeCounts } from './clientManagementFilters';
+  Client,
+  ClientFormData,
+  TYPE_CONFIG,
+  STATUS_CONFIG,
+  ITEMS_PER_PAGE,
+  EMPTY_FORM,
 } from './clientManagement.types';
+import { filterClientsList, computeClientTypeCounts } from './clientManagementFilters';
 export function useClientManagement() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -322,4 +327,3 @@ export function useClientManagement() {
     formatDate,
   };
 }
-

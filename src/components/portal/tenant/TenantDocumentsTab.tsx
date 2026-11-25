@@ -146,6 +146,42 @@ const TenantDocumentsTab: FC = () => {
       <div className="tab-header">
         <h3>Documents</h3>
         <p>Access your lease agreement, Ejari certificate, and receipts.</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+          <a
+            href={`/api/leasing-formula/tenancy-deals/${lease?.id ?? 'lease-tenant-001'}/receipt-pdf`}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="tenant-docs-receipt-pdf-link"
+            style={{
+              padding: '6px 12px',
+              borderRadius: '8px',
+              background: '#EF4444',
+              color: '#FFFFFF',
+              fontSize: '12px',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            Sequential Payment Receipt PDF
+          </a>
+          <a
+            href={`/api/leasing-formula/tenancy-deals/${lease?.id ?? 'lease-tenant-001'}/receipt-pdf?type=vat`}
+            target="_blank"
+            rel="noreferrer"
+            data-testid="tenant-docs-vat-invoice-link"
+            style={{
+              padding: '6px 12px',
+              borderRadius: '8px',
+              background: '#0F172A',
+              color: '#FFFFFF',
+              fontSize: '12px',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            5% UAE VAT Tax Invoice PDF
+          </a>
+        </div>
       </div>
 
       <div className="tab-controls">

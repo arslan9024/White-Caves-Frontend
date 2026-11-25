@@ -13,7 +13,6 @@ import {
   FilterTabs,
   FilterTab,
   ProjectsGrid,
-import { STATIC_OFFPLAN_PROJECTS } from './offPlanTracker.data';
   ProjectCard,
   ProjectImage,
   ProjectBadge,
@@ -41,6 +40,7 @@ import { STATIC_OFFPLAN_PROJECTS } from './offPlanTracker.data';
   PaymentPlan,
   LocationIcon,
 } from './OffPlanTracker.styles';
+import { STATIC_OFFPLAN_PROJECTS } from './offPlanTracker.data';
 
 interface OffPlanProject {
   id: number;
@@ -104,9 +104,11 @@ function buildLiveOffPlanProjects(
     location: trend.name,
     type: featuredProperties[index]?.type || 'Apartment',
     segment:
-      trend.avgPrice >= 12_000_000 ? 'ultra-luxury' :
-      trend.avgPrice >= 5_000_000 ? 'luxury' :
-      'residential',
+      trend.avgPrice >= 12_000_000
+        ? 'ultra-luxury'
+        : trend.avgPrice >= 5_000_000
+          ? 'luxury'
+          : 'residential',
     launchDate: addDays(14 + index * 9),
     completionDate: addMonths(18 + index * 4),
     priceFrom: Math.max(Math.round(trend.avgPrice * 0.75), 950_000),
@@ -138,21 +140,21 @@ const OffPlanTracker = ({
   const calculateCountdown = (date: Date): CountdownValue => {
     const now = new Date();
     const diff = date.getTime() - now.getTime();
-    
+
     if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
+
     return { days, hours, minutes, seconds };
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       const newCountdowns: Countdowns = {};
-      offPlanProjects.forEach((project) => {
+      offPlanProjects.forEach(project => {
         newCountdowns[project.id] = calculateCountdown(project.launchDate);
       });
       setCountdowns(newCountdowns);
@@ -161,9 +163,10 @@ const OffPlanTracker = ({
     return () => clearInterval(interval);
   }, [offPlanProjects]);
 
-  const filteredProjects = activeFilter === 'all' 
-    ? offPlanProjects 
-    : offPlanProjects.filter((p) => p.segment === activeFilter);
+  const filteredProjects =
+    activeFilter === 'all'
+      ? offPlanProjects
+      : offPlanProjects.filter(p => p.segment === activeFilter);
 
   return (
     <OffplanTrackerContainer>
@@ -181,32 +184,28 @@ const OffPlanTracker = ({
             <StatLabel>Active Projects</StatLabel>
           </StatBadge>
           <StatBadge>
-            <StatNumber>AED {(offPlanProjects.reduce((sum, p) => sum + p.priceFrom, 0) / 1000000).toFixed(0)}B</StatNumber>
+            <StatNumber>
+              AED {(offPlanProjects.reduce((sum, p) => sum + p.priceFrom, 0) / 1000000).toFixed(0)}B
+            </StatNumber>
             <StatLabel>Total Investment</StatLabel>
           </StatBadge>
         </TrackerStats>
       </TrackerHeader>
 
       <FilterTabs>
-        <FilterTab 
-          $isActive={activeFilter === 'all'}
-          onClick={() => setActiveFilter('all')}
-        >
+        <FilterTab $isActive={activeFilter === 'all'} onClick={() => setActiveFilter('all')}>
           All Projects
         </FilterTab>
-        <FilterTab 
-          $isActive={activeFilter === 'luxury'}
-          onClick={() => setActiveFilter('luxury')}
-        >
+        <FilterTab $isActive={activeFilter === 'luxury'} onClick={() => setActiveFilter('luxury')}>
           Luxury
         </FilterTab>
-        <FilterTab 
+        <FilterTab
           $isActive={activeFilter === 'residential'}
           onClick={() => setActiveFilter('residential')}
         >
           Residential
         </FilterTab>
-        <FilterTab 
+        <FilterTab
           $isActive={activeFilter === 'commercial'}
           onClick={() => setActiveFilter('commercial')}
         >
@@ -215,7 +214,7 @@ const OffPlanTracker = ({
       </FilterTabs>
 
       <ProjectsGrid>
-        {filteredProjects.map((project) => (
+        {filteredProjects.map(project => (
           <ProjectCard key={project.id}>
             <ProjectImage style={{ backgroundImage: `url(${project.image})` }}>
               <ProjectBadge>{project.status}</ProjectBadge>
@@ -264,8 +263,23 @@ const OffPlanTracker = ({
                   fontSize: '0.75rem',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <span style={{ fontWeight: 800, color: '#059669', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '4px',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontWeight: 800,
+                      color: '#059669',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
                     🛡️ DLD Escrow Law No. 8
                   </span>
                   <span style={{ color: '#047857', fontWeight: 700, fontSize: '0.7rem' }}>
@@ -278,7 +292,7 @@ const OffPlanTracker = ({
               </div>
 
               <ProjectFeatures>
-                {project.features.map((feature) => (
+                {project.features.map(feature => (
                   <FeaturesChip key={feature}>{feature}</FeaturesChip>
                 ))}
               </ProjectFeatures>
@@ -322,4 +336,3 @@ const OffPlanTracker = ({
 };
 
 export default OffPlanTracker;
-

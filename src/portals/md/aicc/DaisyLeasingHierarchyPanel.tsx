@@ -36,7 +36,8 @@ export const DaisyLeasingHierarchyPanel: React.FC = () => {
               8-TIER LEASING AUTHORITY CHAIN • DEPT-05
             </span>
             <span className="text-[11px] font-mono text-slate-400">
-              MD (Arslan Malik) → Zoe → Clara (DIR-05) → Daisy (MGR-05-2)
+              MD (Arslan Malik) → Zoe → Clara (DIR-05) → Layla (MGR-05-2) → Amina (AMGR-05-2-01) →
+              Daisy (SUP-05-2-01-1)
             </span>
           </div>
           <h3 className="text-sm font-bold text-white mt-1">

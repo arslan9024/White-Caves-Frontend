@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import { useWhatsAppSettings } from '../../hooks/useWhatsAppSettings';
+import { WhatsAppMessagesTab } from './WhatsAppMessagesTab';
+import { WhatsAppQrTab } from './WhatsAppQrTab';
 import './WhatsAppSettingsPage.css';
 
 const WhatsAppSettingsPage: FC = () => {
@@ -13,8 +15,6 @@ const WhatsAppSettingsPage: FC = () => {
     handleChange,
     handleSaveSettings,
     handleInitializeConnection,
-import { WhatsAppMessagesTab } from './WhatsAppMessagesTab';
-import { WhatsAppQrTab } from './WhatsAppQrTab';
     handleDisconnect,
     testPhone,
     setTestPhone,
@@ -33,7 +33,9 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
         </header>
 
         {savedMessage && (
-          <div className={`message ${savedMessage.includes('Error') || savedMessage.includes('Failed') ? 'error' : 'success'}`}>
+          <div
+            className={`message ${savedMessage.includes('Error') || savedMessage.includes('Failed') ? 'error' : 'success'}`}
+          >
             {savedMessage}
           </div>
         )}
@@ -78,11 +80,13 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
             <div className="status-panel">
               <div className="status-item">
                 <label>Connection Status:</label>
-                <span className={`status-badge status-${whatsappState.session?.connectionStatus || 'disconnected'}`}>
+                <span
+                  className={`status-badge status-${whatsappState.session?.connectionStatus || 'disconnected'}`}
+                >
                   {whatsappState.session?.connectionStatus || 'Disconnected'}
                 </span>
               </div>
-              
+
               {whatsappState.session?.phoneNumber && (
                 <div className="status-item">
                   <label>Phone Number:</label>
@@ -111,7 +115,9 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
 
               <div className="status-item">
                 <label>Queue Size:</label>
-                <span>{whatsappState.queue.size} / {whatsappState.queue.maxSize}</span>
+                <span>
+                  {whatsappState.queue.size} / {whatsappState.queue.maxSize}
+                </span>
               </div>
 
               {whatsappState.error && (
@@ -130,8 +136,9 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
             </div>
 
             <div className="action-buttons">
-              {whatsappState.session?.connectionStatus === 'disconnected' || !whatsappState.session ? (
-                <button 
+              {whatsappState.session?.connectionStatus === 'disconnected' ||
+              !whatsappState.session ? (
+                <button
                   onClick={handleInitializeConnection}
                   disabled={whatsappState.loading.connecting}
                   className="btn-primary"
@@ -139,7 +146,7 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
                   {whatsappState.loading.connecting ? 'Initializing...' : 'Initialize Connection'}
                 </button>
               ) : (
-                <button 
+                <button
                   onClick={handleDisconnect}
                   disabled={whatsappState.loading.disconnecting}
                   className="btn-danger"
@@ -192,10 +199,10 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
                 <div className="queue-stat">
                   <label>Progress:</label>
                   <div className="queue-progress">
-                    <div 
+                    <div
                       className="queue-progress-bar"
-                      style={{ 
-                        width: `${(whatsappState.queue.size / whatsappState.queue.maxSize) * 100}%` 
+                      style={{
+                        width: `${(whatsappState.queue.size / whatsappState.queue.maxSize) * 100}%`,
                       }}
                     />
                   </div>
@@ -210,7 +217,9 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
                       <div key={msg.id ?? `${msg.phoneNumber}-${idx}`} className="queue-item">
                         <span className="queue-index">{idx + 1}.</span>
                         <span className="queue-phone">{msg.phoneNumber}</span>
-                        <span className="queue-preview">{(msg.body || '').substring(0, 50)}...</span>
+                        <span className="queue-preview">
+                          {(msg.body || '').substring(0, 50)}...
+                        </span>
                         <span className={`queue-priority priority-${msg.priority || 'normal'}`}>
                           {msg.priority || 'normal'}
                         </span>
@@ -329,4 +338,3 @@ import { WhatsAppQrTab } from './WhatsAppQrTab';
 };
 
 export default WhatsAppSettingsPage;
-

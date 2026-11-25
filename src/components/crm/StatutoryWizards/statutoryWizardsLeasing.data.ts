@@ -1,6 +1,8 @@
-import { StatutoryFlowType, StatutoryFlowConfig } from '../../../types/statutoryFlow.types';
+import { StatutoryFlowType, StatutoryFlowDefinition } from './StatutoryWizards.types';
 
-export const LEASING_AND_TAX_STATUTORY_FLOWS: Partial<Record<StatutoryFlowType, StatutoryFlowConfig>> = {
+export const LEASING_AND_TAX_STATUTORY_FLOWS: Partial<
+  Record<StatutoryFlowType, StatutoryFlowDefinition>
+> = {
   EJARI_TENANCY_ATTESTATION: {
     flowType: 'EJARI_TENANCY_ATTESTATION',
     title: 'Ejari Tenancy Contract Registration & Attestation',
@@ -189,6 +191,4 @@ export const LEASING_AND_TAX_STATUTORY_FLOWS: Partial<Record<StatutoryFlowType, 
       },
     ],
   },
-};
-
 };

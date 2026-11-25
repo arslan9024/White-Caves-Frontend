@@ -8,13 +8,10 @@
 
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { Badge, Pagination } from '../../components/ui';
-import { Modal } from '../../shared/components/ui/Modal';
+import { Pagination } from '../../components/ui';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import {
   PageContainer,
-import { ClientModals } from './components/ClientModals';
-import { ClientTable } from './components/ClientTable';
   PageHeader,
   PageTitle,
   BackLink,
@@ -23,12 +20,6 @@ import { ClientTable } from './components/ClientTable';
   FilterSelect,
   PrimaryButton,
   SecondaryButton,
-  DangerButton,
-  Table,
-  Th,
-  Td,
-  Tr,
-  EmptyState,
   FormGroup,
   FormLabel,
   FormInput,
@@ -38,10 +29,10 @@ import { ClientTable } from './components/ClientTable';
   PaginationWrapper,
   LoadingBanner,
   ErrorBanner,
-  ModalFooter,
 } from './styles/CrmPageStyles';
 import { useClientManagement, TYPE_CONFIG, STATUS_CONFIG } from './hooks/useClientManagement';
-import type { Client } from './hooks/useClientManagement';
+import { ClientModals } from './components/ClientModals';
+import { ClientTable } from './components/ClientTable';
 
 // ─── Client-Specific Styled Components ──────────────────────────────────
 
@@ -70,30 +61,6 @@ const Tab = styled.button<{ $active: boolean; $color: string }>`
     border-color: ${props => props.$color};
     background: ${props => (props.$active ? props.$color : `${props.$color}20`)};
   }
-`;
-
-const VipBadge = styled.span`
-  background: #c9a84c;
-  color: #0f0f0f;
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  margin-left: 0.4rem;
-`;
-
-const TagList = styled.div`
-  display: flex;
-  gap: 0.3rem;
-  flex-wrap: wrap;
-`;
-
-const Tag = styled.span`
-  background: #1f1f1f;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 10px;
 `;
 
 // ─── Component ──────────────────────────────────────────────────────────
@@ -299,13 +266,15 @@ const ClientManagementPage: FC = () => {
 
       {/* Clients Table */}
       <ClientTable
-        clients={clients}
-        openEditModal={openEditModal}
-        openDeleteModal={openDeleteModal}
+        paginatedClients={paginatedClients}
+        search={search}
+        typeFilter={typeFilter}
+        statusFilter={statusFilter}
+        handleEdit={handleEdit}
+        confirmDelete={confirmDelete}
+        getTypeBadgeVariant={getTypeBadgeVariant}
         getStatusBadgeVariant={getStatusBadgeVariant}
-        formatDate={formatDate}
       />
-      </div>
 
       {/* Pagination */}
       {filteredClients.length > ITEMS_PER_PAGE && (
@@ -319,23 +288,24 @@ const ClientManagementPage: FC = () => {
         </PaginationWrapper>
       )}
 
-      {/* Create Client Modal */}
+      {/* Client Modals */}
       <ClientModals
-        isCreateModalOpen={isCreateModalOpen}
+        showCreateModal={showCreateModal}
+        showEditModal={showEditModal}
+        showDeleteConfirm={showDeleteConfirm}
+        selectedClient={selectedClient}
+        formData={formData}
+        loading={loading}
+        renderForm={renderForm}
         closeCreateModal={closeCreateModal}
-        formValues={formValues}
-        setFormValues={setFormValues}
-        formErrors={formErrors}
-        handleCreateClient={handleCreateClient}
-        isEditModalOpen={isEditModalOpen}
         closeEditModal={closeEditModal}
-        handleUpdateClient={handleUpdateClient}
-        isDeleteModalOpen={isDeleteModalOpen}
         closeDeleteModal={closeDeleteModal}
-        handleDeleteClient={handleDeleteClient}
+        handleCreate={handleCreate}
+        handleSaveEdit={handleSaveEdit}
+        handleDelete={handleDelete}
       />
+    </PageContainer>
   );
 };
 
 export default ClientManagementPage;
-

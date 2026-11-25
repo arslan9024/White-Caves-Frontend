@@ -8,7 +8,7 @@ import { StatutoryFlowDefinition, StatutoryFlowType } from './StatutoryWizards.t
 
 import { LEASING_AND_TAX_STATUTORY_FLOWS } from './statutoryWizardsLeasing.data';
 
-export const STATUTORY_FLOWS: Record<StatutoryFlowType, StatutoryFlowConfig> = {
+export const STATUTORY_FLOWS: Record<StatutoryFlowType, StatutoryFlowDefinition> = {
   FORM_A_SELLER_AGREEMENT: {
     flowType: 'FORM_A_SELLER_AGREEMENT',
     title: 'DLD Form A: Seller Agency Listing Agreement',
@@ -225,5 +225,5 @@ export const STATUTORY_FLOWS: Record<StatutoryFlowType, StatutoryFlowConfig> = {
     ],
   },
 
-  ...(LEASING_AND_TAX_STATUTORY_FLOWS as Record<StatutoryFlowType, StatutoryFlowConfig>),
+  ...(LEASING_AND_TAX_STATUTORY_FLOWS as Record<StatutoryFlowType, StatutoryFlowDefinition>),
 };

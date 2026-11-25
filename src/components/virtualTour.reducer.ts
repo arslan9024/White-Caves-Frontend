@@ -1,13 +1,11 @@
-import React from 'react';
-
-export TourInteractionState {
+export interface TourInteractionState {
   rotation: { x: number; y: number };
   zoom: number;
   isDragging: boolean;
   startPos: { x: number; y: number };
 }
 
-export TourAction =
+export type TourAction =
   | { type: 'START_DRAG'; payload: { x: number; y: number } }
   | { type: 'DRAG_MOVE'; payload: { clientX: number; clientY: number } }
   | { type: 'STOP_DRAG' }
@@ -17,7 +15,7 @@ export TourAction =
   | { type: 'RESET_VIEW' }
   | { type: 'SET_ROTATION'; payload: { x: number; y: number } };
 
-export tourReducer(state: TourInteractionState, action: TourAction): TourInteractionState {
+export function tourReducer(state: TourInteractionState, action: TourAction): TourInteractionState {
   switch (action.type) {
     case 'START_DRAG':
       return { ...state, isDragging: true, startPos: action.payload };
@@ -50,34 +48,8 @@ export tourReducer(state: TourInteractionState, action: TourAction): TourInterac
       return state;
   }
 }
-import {
-  VirtualTourContainer,
-  TourHeader,
-  TourTitle,
-  TourBadge,
-  TourTitleText,
-  TourControlsHeader,
-  TourBtn,
-  TourViewport,
-  TourPanorama,
-  TourHotspot,
-  HotspotIcon,
-  HotspotLabel,
-  TourCompass,
-  CompassNeedle,
-  TourFooter,
-  ZoomControls,
-  ZoomBtn,
-  ZoomLevel,
-  RoomNavigator,
-  RoomThumb,
-  RoomName,
-  TourInfo,
-  TourInfoText,
-  ViewsCount,
-} from './VirtualTour.styles';
 
-export TourImage {
+export interface TourImage {
   url?: string;
   title?: string;
   name?: string;
@@ -86,7 +58,7 @@ export TourImage {
   [key: string]: unknown;
 }
 
-export TourHotspotData {
+export interface TourHotspotData {
   id?: string;
   x: number;
   y: number;
@@ -97,10 +69,9 @@ export TourHotspotData {
   action?: () => void;
 }
 
-export VirtualTourProps {
+export interface VirtualTourProps {
   images?: TourImage[];
   initialIndex?: number;
   onClose?: () => void;
   propertyTitle?: string;
 }
-

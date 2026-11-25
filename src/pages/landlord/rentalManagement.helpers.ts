@@ -1,17 +1,17 @@
-export LeaseProperty {
+export interface LeaseProperty {
   id: string;
   title: string;
   location: string;
   type: string;
 }
 
-export LeaseTenant {
+export interface LeaseTenant {
   id: string;
   name: string;
   phone: string | null;
 }
 
-export Lease {
+export interface Lease {
   id: string;
   property: LeaseProperty;
   tenant: LeaseTenant;
@@ -23,7 +23,7 @@ export Lease {
   nextPaymentDue: string | null;
 }
 
-export OverdueQueueItem {
+export interface OverdueQueueItem {
   id: string;
   chequeNumber: string;
   amount: number;
@@ -39,7 +39,7 @@ export OverdueQueueItem {
   };
 }
 
-export EjariSummary {
+export interface EjariSummary {
   total: number;
   pending: number;
   registered: number;
@@ -48,7 +48,7 @@ export EjariSummary {
   expiringSoon: number;
 }
 
-export defaultEjariSummary: EjariSummary = {
+export const defaultEjariSummary: EjariSummary = {
   total: 0,
   pending: 0,
   registered: 0,
@@ -57,7 +57,7 @@ export defaultEjariSummary: EjariSummary = {
   expiringSoon: 0,
 };
 
-export buildEjariSummaryFromLeases = (rawLeases: Lease[]): EjariSummary => {
+export const buildEjariSummaryFromLeases = (rawLeases: Lease[]): EjariSummary => {
   return {
     total: rawLeases.length,
     pending: rawLeases.filter(lease => lease.ejariNumber == null || lease.ejariNumber === '')
@@ -69,4 +69,3 @@ export buildEjariSummaryFromLeases = (rawLeases: Lease[]): EjariSummary => {
     expiringSoon: rawLeases.filter(lease => lease.status.toLowerCase() === 'expiring').length,
   };
 };
-

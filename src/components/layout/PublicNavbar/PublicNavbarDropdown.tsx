@@ -1,17 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { PUBLIC_NAV } from '../../../config/navigation';
+import { Link, NavLink } from 'react-router-dom';
 import type { NavItem } from '../../../config/navigation';
-import { useLanguage } from '../../../context/LanguageContext';
-import { selectSessionUser } from '../../../store/selectors/sessionSelectors';
-import { UserPreferencesDropdown } from './UserPreferencesDropdown';
 import './PublicNavbar.css';
 
 // ---------------------------------------------------------------------------
 // Dropdown menu config – each top-level item may have a sub-menu
 // ---------------------------------------------------------------------------
-export DropdownGroup {
+export interface DropdownGroup {
   label: string;
   path: string;
   children?: NavItem[];
@@ -20,11 +15,11 @@ export DropdownGroup {
 // ---------------------------------------------------------------------------
 // DropdownItem component (desktop)
 // ---------------------------------------------------------------------------
-export DropdownNavItemProps {
+export interface DropdownNavItemProps {
   group: DropdownGroup;
 }
 
-export DropdownNavItem: React.FC<DropdownNavItemProps> = ({ group }) => {
+export const DropdownNavItem: React.FC<DropdownNavItemProps> = ({ group }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

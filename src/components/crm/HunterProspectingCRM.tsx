@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Target,
-  Users,
-  Send,
-  MapPin,
-  Sparkles,
-  CheckCircle,
-  MessageSquare,
-  Filter,
-  Search,
-  Phone,
-} from 'lucide-react';
 import './AssistantDashboard.css';
 
 import { INITIAL_PROSPECT_BUYERS, type ProspectBuyer } from './hunterProspecting.data';

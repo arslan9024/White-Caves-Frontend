@@ -1,37 +1,38 @@
 import React from 'react';
-import { Modal, ModalFooter } from '../../shared/components/ui/Modal';
-import { PrimaryButton, SecondaryButton, DangerButton } from '../../shared/components/ui/Button';
-import { FormField } from '../../shared/components/ui/FormField';
-import { ClientFormValues } from './hooks/useClientManagement';
+import { Modal } from '../../../shared/components/ui/Modal';
+import { ModalFooter, PrimaryButton, SecondaryButton, DangerButton } from '../styles/CrmPageStyles';
+import type { Client, ClientFormData } from '../hooks/useClientManagement';
 
 interface ClientModalsProps {
-  isCreateModalOpen: boolean;
+  showCreateModal: boolean;
+  showEditModal: boolean;
+  showDeleteConfirm: boolean;
+  selectedClient: Client | null;
+  formData: ClientFormData;
+  loading: boolean;
+  renderForm: () => React.ReactNode;
   closeCreateModal: () => void;
-  formValues: ClientFormValues;
-  setFormValues: React.Dispatch<React.SetStateAction<ClientFormValues>>;
-  formErrors: Record<string, string>;
-  handleCreateClient: () => void;
-  isEditModalOpen: boolean;
   closeEditModal: () => void;
-  handleUpdateClient: () => void;
-  isDeleteModalOpen: boolean;
   closeDeleteModal: () => void;
-  handleDeleteClient: () => void;
+  handleCreate: () => void;
+  handleSaveEdit: () => void;
+  handleDelete: () => void;
 }
 
 export const ClientModals: React.FC<ClientModalsProps> = ({
-  isCreateModalOpen,
+  showCreateModal,
+  showEditModal,
+  showDeleteConfirm,
+  selectedClient,
+  formData,
+  loading,
+  renderForm,
   closeCreateModal,
-  formValues,
-  setFormValues,
-  formErrors,
-  handleCreateClient,
-  isEditModalOpen,
   closeEditModal,
-  handleUpdateClient,
-  isDeleteModalOpen,
   closeDeleteModal,
-  handleDeleteClient,
+  handleCreate,
+  handleSaveEdit,
+  handleDelete,
 }) => {
   return (
     <>
@@ -90,7 +91,6 @@ export const ClientModals: React.FC<ClientModalsProps> = ({
           </ModalFooter>
         </Modal>
       )}
-    </PageContainer>
     </>
   );
 };

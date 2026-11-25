@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTranslation } from '../../../context/TranslationContext';
 
 export interface TabConfig<T extends string> {
   key: T;
   label: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 interface PortalSidebarContainerProps<T extends string> {
@@ -38,7 +38,9 @@ export const PortalSidebarContainer = <T extends string>({
           onClick={() => onTabChange(tab.key)}
           data-testid={`tab-${tab.key}`}
         >
-          <span className="tab-icon">{tab.icon}</span>
+          <span className="tab-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            {tab.icon}
+          </span>
           <span className="tab-label">{tab.label}</span>
         </button>
       ))}
@@ -47,4 +49,3 @@ export const PortalSidebarContainer = <T extends string>({
 };
 
 export default PortalSidebarContainer;
-

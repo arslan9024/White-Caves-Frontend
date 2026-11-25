@@ -1,27 +1,12 @@
-  UserRole,
-  ChevronIcon,
-  DropdownDivider,
-  DropdownItem,
-  ProfileHeader,
-  ProfileAvatar,
-  ProfileInfo,
-  ProfileName,
-  ProfileEmail,
-  DropdownFooter,
-  SidebarToggleButton,
-} from './styles';
+import type React from 'react';
 
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface UserProp {
+export interface UserProp {
   displayName?: string;
   email?: string;
   photoURL?: string;
 }
 
-interface NotificationItem_T {
+export interface NotificationItem_T {
   id?: string | number;
   isRead: boolean;
   title: string;
@@ -31,14 +16,14 @@ interface NotificationItem_T {
   [key: string]: unknown;
 }
 
-interface QuickStats {
+export interface QuickStats {
   properties?: number;
   users?: number;
   leads?: number;
   systemHealth?: string;
 }
 
-interface MainNavBarProps {
+export interface MainNavBarProps {
   theme?: string;
   onThemeToggle?: () => void;
   user?: UserProp | null;
@@ -50,7 +35,4 @@ interface MainNavBarProps {
   onToggleLeftSidebar?: () => void;
 }
 
-type ProfileAction = 'admin' | 'profile' | 'settings' | 'billing' | 'help' | 'logout';
-
-// ---------------------------------------------------------------------------
-// Component
+export type ProfileAction = 'admin' | 'profile' | 'settings' | 'billing' | 'help' | 'logout';

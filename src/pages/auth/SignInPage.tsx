@@ -15,6 +15,7 @@ import { CategorySelectionCard } from './components/CategorySelectionCard';
 import { EmailAuthForm } from './components/EmailAuthForm';
 import { GmailTroubleshootingPanel } from './components/GmailTroubleshootingPanel';
 import { PhoneAuthForm } from './components/PhoneAuthForm';
+import { PortalRoleGatewayBar } from './components/PortalRoleGatewayBar';
 import { SocialAuthButtons } from './components/SocialAuthButtons';
 import { SocialRecoveryPanel } from './components/SocialRecoveryPanel';
 import { VerificationModalCard } from './components/VerificationModalCard';
@@ -25,6 +26,8 @@ const SignInPage: React.FC = () => {
   const {
     mode,
     activeTab,
+    selectedPortalRole,
+    setSelectedPortalRole,
     email,
     setEmail,
     password,
@@ -83,6 +86,13 @@ const SignInPage: React.FC = () => {
 
         {/* Multi-layered flow toggle: Sign In vs Register */}
         <AuthNavTabs mode={mode} onSelectMode={handleSelectMode} disabled={loading} />
+
+        {/* Branded Role-Based Portal Selector (MD / Landlord / Tenant) */}
+        <PortalRoleGatewayBar
+          selectedRole={selectedPortalRole}
+          onSelectRole={setSelectedPortalRole}
+          disabled={loading}
+        />
 
         {loading && <Spinner />}
 
@@ -178,4 +188,3 @@ const SignInPage: React.FC = () => {
 };
 
 export default SignInPage;
-

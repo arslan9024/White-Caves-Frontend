@@ -1,18 +1,18 @@
 /**
- * TenantPortalPage — Phase 2.7-2.11 + 2.13: Tenant Self-Service Portal
+ * TenantPortalPage — Tenant Self-Service Portal
  *
- * Provides tenants with read-only access to:
- * - Home Dashboard (2.13) ← default landing
- * - My Lease (2.8)
- * - Payment History (2.9)
- * - Maintenance Requests (2.10)
- * - Documents (2.11)
+ * Provides tenants with access to:
+ * - Active Tenancy Contract & Verified Ejari Status Badge
+ * - 1-click download of sequential Payment Receipts & 5% UAE VAT invoices
+ * - Scheduled PDC Cheques & Payment History
+ * - Move-In & Maintenance Requests
  *
  * @component
  */
 
 import React, { FC, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { Home, FileCheck, CreditCard, Wrench, FileText, User } from 'lucide-react';
 import type { RootState } from '../../store/store';
 import '../RolePages.css';
 import PortalLayout from '../../components/portal/PortalLayout';
@@ -21,32 +21,33 @@ import TenantLeaseTab from '../../components/portal/tenant/TenantLeaseTab';
 import TenantPaymentHistoryTab from '../../components/portal/tenant/TenantPaymentHistoryTab';
 import TenantMaintenanceTab from '../../components/portal/tenant/TenantMaintenanceTab';
 import TenantDocumentsTab from '../../components/portal/tenant/TenantDocumentsTab';
+import TenantStatutoryReceiptBar from '../../components/portal/tenant/TenantStatutoryReceiptBar';
 import PortalProfileTab from '../../components/portal/PortalProfileTab';
-import PortalSidebarContainer from '../../components/portal/containers/PortalSidebarContainer';
+import PortalSidebarContainer, {
+  type TabConfig,
+} from '../../components/portal/containers/PortalSidebarContainer';
 import PortalLogoRing from '../../components/portal/PortalLogoRing';
 import { useTranslation, Text } from '../../context/TranslationContext';
 
 type TabKey = 'home' | 'lease' | 'payments' | 'maintenance' | 'documents' | 'profile';
-
-interface Tab {
-  key: TabKey;
-  label: string;
-  icon: string;
-}
 
 const TenantPortalPage: FC = () => {
   const [activeTab, setActiveTab] = useState<TabKey>('home');
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const { t } = useTranslation();
 
-  const tabs: Tab[] = useMemo(
+  const tabs: TabConfig<TabKey>[] = useMemo(
     () => [
-      { key: 'home', label: t('tenant.portal.tabs.home'), icon: '🏠' },
-      { key: 'lease', label: t('tenant.portal.tabs.lease'), icon: '📋' },
-      { key: 'payments', label: t('tenant.portal.tabs.payments'), icon: '💳' },
-      { key: 'maintenance', label: t('tenant.portal.tabs.maintenance'), icon: '🔧' },
-      { key: 'documents', label: t('tenant.portal.tabs.documents'), icon: '📄' },
-      { key: 'profile', label: t('tenant.portal.tabs.profile'), icon: '👤' },
+      { key: 'home', label: t('tenant.portal.tabs.home'), icon: <Home size={15} /> },
+      { key: 'lease', label: t('tenant.portal.tabs.lease'), icon: <FileCheck size={15} /> },
+      { key: 'payments', label: t('tenant.portal.tabs.payments'), icon: <CreditCard size={15} /> },
+      {
+        key: 'maintenance',
+        label: t('tenant.portal.tabs.maintenance'),
+        icon: <Wrench size={15} />,
+      },
+      { key: 'documents', label: t('tenant.portal.tabs.documents'), icon: <FileText size={15} /> },
+      { key: 'profile', label: t('tenant.portal.tabs.profile'), icon: <User size={15} /> },
     ],
     [t]
   );
@@ -103,6 +104,12 @@ const TenantPortalPage: FC = () => {
             subtitle="Verified Ejari contract, DEWA premises status, and sequential 5% VAT payment receipts."
             metricPrimary={{ label: 'Lease Status', value: 'Active & Verified' }}
             metricSecondary={{ label: 'Statutory Shield', value: 'Ejari + DEWA' }}
+          />
+
+          {/* Ejari Badge + 1-Click Sequential Receipt & 5% UAE VAT PDF Bar */}
+          <TenantStatutoryReceiptBar
+            tenantName={currentUser.name}
+            onNavigateTab={tab => setActiveTab(tab)}
           />
 
           {/* Tab Navigation */}
