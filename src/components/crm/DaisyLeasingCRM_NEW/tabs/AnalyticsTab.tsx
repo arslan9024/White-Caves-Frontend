@@ -8,9 +8,6 @@ import {
 } from '../data/leasing';
 
 import { KPICard, ProgressBar, PnLSummary, AnalyticsTabProps } from './DaisyAnalyticsWidgets';
-    </div>
-  </div>
-);
 
 const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ leases, pdcCheques, inquiries, pnl }) => {
   const totalLeases = leases.length;
@@ -335,4 +332,3 @@ const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ leases, pdcCheques, inquiri
 };
 
 export default AnalyticsTab;
-

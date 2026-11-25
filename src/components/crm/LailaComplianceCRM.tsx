@@ -13,8 +13,6 @@ import {
   XCircle,
   User,
   ArrowUp,
-import { LailaContractsTab } from './LailaContractsTab';
-import { MOCK_CONTRACTS } from './lailaCompliance.data';
   ArrowDown,
   AlertCircle,
   Lock,
@@ -22,6 +20,8 @@ import { MOCK_CONTRACTS } from './lailaCompliance.data';
   Users,
   Calendar,
 } from 'lucide-react';
+import { LailaContractsTab } from './LailaContractsTab';
+import { MOCK_CONTRACTS } from './lailaCompliance.data';
 import { AssistantDocsTab } from './shared';
 import KYCAMLDashboard from './shared/KYCAMLDashboard';
 import { RERAFormWidget } from '../compliance/RERAFormWidget/RERAFormWidget';
@@ -346,4 +346,3 @@ const LailaComplianceCRM = () => {
 };
 
 export default LailaComplianceCRM;
-

@@ -8,7 +8,35 @@ interface DashboardProps {
   onRefresh?: () => Promise<void>;
 }
 
-import { , , , , , , , , , , , , , , , , , , , , , , , , , ,  } from './Dashboard.styles';
+import {
+  Container,
+  StatsGrid,
+  StatCard,
+  StatIcon,
+  StatValue,
+  StatLabel,
+  StatTrend,
+  HeaderRow,
+  Title,
+  RefreshButton,
+  MetricsSection,
+  MetricCard,
+  MetricTitle,
+  MetricRow,
+  MetricLabel,
+  MetricValue,
+  ProgressBar,
+  ProgressFill,
+  EmptyState,
+  Chart,
+  ChartTitle,
+  ChartBar,
+  ChartLabel,
+  ChartBarContainer,
+  ChartBarFill,
+  ChartValue,
+  LoadingOverlay,
+} from './Dashboard.styles';
 
 export const Dashboard: React.FC<DashboardProps> = ({
   stats,

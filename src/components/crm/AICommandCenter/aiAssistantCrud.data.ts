@@ -1,3 +1,4 @@
+export interface AiAssistantRecord {
   id: string;
   agentId: string;
   name: string;
@@ -9,7 +10,7 @@
   activeWorkload: number;
 }
 
-const INITIAL_SEED: AiAssistantRecord[] = [
+export const INITIAL_SEED: AiAssistantRecord[] = [
   {
     id: 'ai-linda-001',
     agentId: 'linda',

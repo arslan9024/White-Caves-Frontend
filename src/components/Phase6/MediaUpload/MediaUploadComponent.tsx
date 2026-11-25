@@ -13,7 +13,17 @@ interface MediaUploadProps {
   conversationId?: string;
 }
 
-import { , , , , , , , ,  } from './MediaUploadComponent.styles';
+import {
+  Container,
+  DropZone,
+  DropZoneContent,
+  HiddenInput,
+  ButtonGroup,
+  Button,
+  FileList,
+  ErrorMessage,
+  SuccessMessage,
+} from './MediaUploadComponent.styles';
 
 export const MediaUploadComponent: React.FC<MediaUploadProps> = ({
   onUploadComplete,

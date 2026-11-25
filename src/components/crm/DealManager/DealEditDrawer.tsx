@@ -9,11 +9,11 @@ import { X, Handshake, Save } from 'lucide-react';
 import { DealItem, DealType, DealStatus } from './DealManager.types';
 import { useDirtyStateGuard } from '../../../hooks/useDirtyStateGuard';
 import { UnsavedChangesModal, TaskActionBar } from '../../common/UnsavedChangesModal';
+import { DealEditFormFields } from './DealEditFormFields';
 
 interface DealEditDrawerProps {
   isOpen: boolean;
   deal: DealItem | null;
-import { DealEditFormFields } from './DealEditFormFields';
   onClose: () => void;
   onSave: (dealData: Partial<DealItem>) => void;
 }
@@ -88,7 +88,18 @@ export const DealEditDrawer: FC<DealEditDrawerProps> = ({ isOpen, deal, onClose,
       agentName,
     });
     return Boolean(initialSnapshot && current !== initialSnapshot);
-  }, [isOpen, title, dealType, status, valueAED, propertyId, clientName, clientRole, agentName, initialSnapshot]);
+  }, [
+    isOpen,
+    title,
+    dealType,
+    status,
+    valueAED,
+    propertyId,
+    clientName,
+    clientRole,
+    agentName,
+    initialSnapshot,
+  ]);
 
   const { showPrompt, proceed, cancel, confirmExit } = useDirtyStateGuard({
     isDirty,
@@ -184,6 +195,12 @@ export const DealEditDrawer: FC<DealEditDrawerProps> = ({ isOpen, deal, onClose,
           style={{
             flex: 1,
             overflowY: 'auto',
+            padding: '24px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+          }}
+        >
           <DealEditFormFields
             title={title}
             setTitle={setTitle}
@@ -202,26 +219,6 @@ export const DealEditDrawer: FC<DealEditDrawerProps> = ({ isOpen, deal, onClose,
             agentName={agentName}
             setAgentName={setAgentName}
           />
-              Lead Agent / Executive
-            </label>
-            <input
-              type="text"
-              value={agentName}
-              onChange={e => setAgentName(e.target.value)}
-              placeholder="Arslan Malik"
-              data-testid="deal-agent-input"
-              required
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                background: '#0F172A',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '6px',
-                color: '#FFFFFF',
-                fontSize: '0.85rem',
-              }}
-            />
-          </div>
 
           <div style={{ marginTop: 'auto', paddingTop: '16px' }}>
             <TaskActionBar
@@ -237,12 +234,7 @@ export const DealEditDrawer: FC<DealEditDrawerProps> = ({ isOpen, deal, onClose,
         </form>
       </div>
 
-      <UnsavedChangesModal
-        isOpen={showPrompt}
-        onProceed={proceed}
-        onCancel={cancel}
-      />
+      <UnsavedChangesModal isOpen={showPrompt} onProceed={proceed} onCancel={cancel} />
     </div>
   );
 };
-

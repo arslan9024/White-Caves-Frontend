@@ -14,7 +14,7 @@ import { MASTER_35_AI_ASSISTANTS } from '../../../data/assistants35Registry.data
 import { loadStoredDepartments } from '../DepartmentManager/DepartmentManagementWorkspace.storage';
 import type { AiAgentRecord } from './AiAssistantManager.types';
 
-export const AIAMS_STORAGE_KEY = 'wc_aiams_agents_v1';
+export const AIAMS_STORAGE_KEY = 'wc_aiams_agents_v2';
 export const AIAMS_SYNC_EVENT = 'wc-aiams-agents-updated';
 
 /**
@@ -78,21 +78,21 @@ function buildCanonicalAiAgentsSeed(): AiAgentRecord[] {
   const lindaAgent: AiAgentRecord = {
     id: 'ai-linda-001',
     agentId: 'linda',
-    code: 'BOT-LINDA',
-    name: 'AI Linda',
-    role: 'Autonomous WhatsApp Broker & Lead Nurturer (v2.0)',
-    departmentId: 'performance_marketing',
-    department: 'Performance Marketing & Lead Generation',
-    tier: 'SPECIALIST',
+    code: 'SUP-08-1-01-1',
+    name: 'AI Linda Supervisor',
+    role: 'Supervisor — WhatsApp Automation & 10-SIM Fleet (Reports to AMGR-08-1-01 AI Samira → MGR-08-1 AI Nadia → DIR-08 AI Maya → AI Zoe)',
+    departmentId: 'media_public_relations',
+    department: 'DEPT-08 · Media, Public Relations & Communications',
+    tier: 'SUPERVISOR',
     status: 'ACTIVE',
     model: 'gemini-1.5-flash',
-    specialty: 'Multi-Account WhatsApp Outreach & Lead Qualification',
+    specialty: '10-SIM WhatsApp Outreach (+971505760056 Master + 9 Hunters) & Lead Qualification',
     systemPrompt:
-      'Sovereign conversational AI agent driving luxury lead conversions, bilingual EN/AR qualification, and automated viewing bookings.',
+      'Sovereign WhatsApp Supervisor (SUP-08-1-01-1) driving DAMAC Hills 2 landlord outreach, bilingual EN/AR qualification, and Mary/Daisy/Henry handoffs.',
     capabilities: [
-      'WhatsApp Business API',
+      '10-SIM WhatsApp Fleet',
       'Bilingual EN/AR',
-      'Area Owner Outreach',
+      'DH2 Landlord Outreach',
       'Lead Scoring',
     ],
     assignedTasks: [
@@ -102,23 +102,23 @@ function buildCanonicalAiAgentsSeed(): AiAgentRecord[] {
     slaResponseTime: '< 3s',
     accuracyRate: 99.6,
     activeWorkload: 18,
-    avatar: 'https://ui-avatars.com/api/?name=Linda+Bot&background=25D366&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Linda+Sup&background=25D366&color=fff',
   };
 
   const maryAgent: AiAgentRecord = {
     id: 'ai-mary-001',
     agentId: 'mary',
-    code: 'AI_MARY',
-    name: 'AI Mary',
-    role: 'Listing Ingestion & Data Hygiene Specialist (Inventory Master)',
-    departmentId: 'asset_facilities',
-    department: 'Asset Management & Facilities (DH2 Hub)',
+    code: 'SUP-06-1-01-1',
+    name: 'AI Mary Supervisor',
+    role: 'Supervisor — DAMAC Hills 2 Master Inventory Vault (Reports to AMGR-06-1-01 AI Farah → MGR-06-1 AI Yasmin → DIR-06 AI Sentinel → AI Zoe)',
+    departmentId: 'inventory_portfolio',
+    department: 'DEPT-06 · Inventory, Portfolio & Asset Management',
     tier: 'SUPERVISOR',
     status: 'OPTIMAL',
     model: 'gemini-1.5-pro',
-    specialty: '9,378+ DAMAC Hills 2 Inventory Ingestion, Title Deed Normalization & De-duplication',
+    specialty: '9,378+ DAMAC Hills 2 Inventory Ingestion, Title Deed Normalization & Tenant Unit Matching',
     systemPrompt:
-      'Single source of truth for 9,378+ portfolio listings across Dubai. Normalizes property specs, validates square footage from title deeds, and eliminates duplicate listings.',
+      'Single source of truth Supervisor (SUP-06-1-01-1) for 9,378+ portfolio listings across Dubai. Normalizes property specs, validates square footage from title deeds, and matches live tenants.',
     capabilities: [
       'Listing Deduplication Engine',
       'Photo Resolution Enhancer',
@@ -135,7 +135,73 @@ function buildCanonicalAiAgentsSeed(): AiAgentRecord[] {
     slaResponseTime: '< 5s',
     accuracyRate: 100.0,
     activeWorkload: 512,
-    avatar: 'https://ui-avatars.com/api/?name=Mary+AI&background=3B82F6&color=fff',
+    avatar: 'https://ui-avatars.com/api/?name=Mary+Sup&background=3B82F6&color=fff',
+  };
+
+  const dianaAgent: AiAgentRecord = {
+    id: 'ai-diana-001',
+    agentId: 'diana',
+    code: 'SUP-02-6-01-1',
+    name: 'AI Diana Supervisor',
+    role: 'Supervisor — Property Owner Email Campaigns (Reports to AMGR-02-6-01 AI Rania → MGR-02-6 AI Celine → DIR-02 AI Olivia → AI Zoe)',
+    departmentId: 'marketing_branding',
+    department: 'DEPT-02 · Marketing, Branding & Digital Acquisition',
+    tier: 'SUPERVISOR',
+    status: 'ACTIVE',
+    model: 'gemini-1.5-pro',
+    specialty: 'Gmail Property Owner Outreach (the.arslan.broker@gmail.com) & Investor Newsletters',
+    systemPrompt:
+      'Email Campaign Supervisor (SUP-02-6-01-1) running property owner email campaigns for White Caves Real Estate LLC.',
+    capabilities: ['Owner Email Campaigns', 'Gmail SMTP Dispatch', 'DH2 Owner Targeting'],
+    assignedTasks: ['Execute daily owner email campaigns via /dashboard/diana'],
+    slaResponseTime: '< 4s',
+    accuracyRate: 99.8,
+    activeWorkload: 24,
+    avatar: 'https://ui-avatars.com/api/?name=Diana+Sup&background=F59E0B&color=fff',
+  };
+
+  const daisyAgent: AiAgentRecord = {
+    id: 'ai-daisy-001',
+    agentId: 'daisy',
+    code: 'SUP-05-2-01-1',
+    name: 'AI Daisy Supervisor',
+    role: 'Supervisor — Residential Leasing & Tenancy Pipeline (Reports to AMGR-05-2-01 AI Amina → MGR-05-2 AI Layla → DIR-05 AI Clara → AI Zoe)',
+    departmentId: 'sales_operations',
+    department: 'DEPT-05 · Sales, Services & Operations',
+    tier: 'SUPERVISOR',
+    status: 'OPTIMAL',
+    model: 'gemini-1.5-pro',
+    specialty: 'DAMAC Hills 2 Residential Leasing, Viewings, Ejari Drafts & 90-Day Renewals',
+    systemPrompt:
+      'Residential Leasing Supervisor (SUP-05-2-01-1) commanding tenant pipelines, viewing schedules, and Ejari tenancy execution.',
+    capabilities: ['Leasing Pipeline', 'Ejari Drafts', '90-Day RERA Renewals'],
+    assignedTasks: ['Qualify inbound tenants & close DH2 residential leases'],
+    slaResponseTime: '< 4s',
+    accuracyRate: 99.8,
+    activeWorkload: 42,
+    avatar: 'https://ui-avatars.com/api/?name=Daisy+Sup&background=10B981&color=fff',
+  };
+
+  const henryAgent: AiAgentRecord = {
+    id: 'ai-henry-001',
+    agentId: 'henry',
+    code: 'SUP-11-1-01-1',
+    name: 'AI Henry Supervisor',
+    role: 'Supervisor — Chief Document Controller & Record Keeper (Sole Male AI · Reports to AMGR-11-1-01 AI Dalia → MGR-11-1 AI Mireille → DIR-11 AI Sofia → AI Zoe)',
+    departmentId: 'legal_compliance',
+    department: 'DEPT-11 · Legal, Compliance & Audit',
+    tier: 'SUPERVISOR',
+    status: 'OPTIMAL',
+    model: 'gemini-1.5-pro',
+    specialty: 'Sovereign Google Drive Vault, Form A/Ejari Seals & Passport/EID MRZ OCR',
+    systemPrompt:
+      'Sole Male AI Officer & Record Keeper Supervisor (SUP-11-1-01-1) enforcing DLD/Ejari statutory compliance and encrypted Google Drive archival.',
+    capabilities: ['Sole Male AI Officer', 'Document Vault Encryption', 'MRZ OCR', 'Form A / Ejari Seals'],
+    assignedTasks: ['Seal Form A, Tenancy Contracts, Ejari & KYC files in Google Drive'],
+    slaResponseTime: '< 3s',
+    accuracyRate: 100.0,
+    activeWorkload: 36,
+    avatar: 'https://ui-avatars.com/api/?name=Henry+Sup&background=EF4444&color=fff',
   };
 
   const managerAgents: AiAgentRecord[] = CORPORATE_DEPARTMENTS_12.map((dept, idx) => {
@@ -194,6 +260,9 @@ function buildCanonicalAiAgentsSeed(): AiAgentRecord[] {
     zoeAgent.agentId.toLowerCase(),
     lindaAgent.agentId.toLowerCase(),
     maryAgent.agentId.toLowerCase(),
+    dianaAgent.agentId.toLowerCase(),
+    daisyAgent.agentId.toLowerCase(),
+    henryAgent.agentId.toLowerCase(),
     ...managerAgents.map(m => m.agentId.toLowerCase()),
     ...supervisorAgents.map(s => s.agentId.toLowerCase()),
   ]);
@@ -221,7 +290,17 @@ function buildCanonicalAiAgentsSeed(): AiAgentRecord[] {
       avatar: ast.avatar,
     }));
 
-  return [zoeAgent, lindaAgent, maryAgent, ...managerAgents, ...supervisorAgents, ...specialist35Agents];
+  return [
+    zoeAgent,
+    lindaAgent,
+    dianaAgent,
+    maryAgent,
+    daisyAgent,
+    henryAgent,
+    ...managerAgents,
+    ...supervisorAgents,
+    ...specialist35Agents,
+  ];
 }
 
 export const INITIAL_AI_AGENTS_SEED: AiAgentRecord[] = buildCanonicalAiAgentsSeed();

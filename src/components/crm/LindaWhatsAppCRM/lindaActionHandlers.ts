@@ -53,127 +53,149 @@ export function createLindaActionHandlers(deps: LindaActionHandlersDeps) {
         success?: boolean;
         data?: { output?: string };
       };
-      if (res?.data?.output) {
-        outputText = res.data.output;
-      }
+      if (res?.data?.output) outputText = res.data.output;
     } catch {
       // Fallback local execution
     }
 
-    if (!outputText) {
-      outputText = getFallbackCommandOutput(normalized, title);
-    }
-
+    if (!outputText) outputText = getFallbackCommandOutput(normalized, title);
     setTerminalLines(prev => [...prev, `$ ${cmd}`, outputText]);
     setActiveModalOutput({ title, output: outputText });
     appendLog(`Executed command "${cmd}" (${title})`);
   };
 
-  const handlePingSession = (sessionId: string) => {
-    void apiClient
-      .post(`/linda/sessions/${encodeURIComponent(sessionId)}/ping`, {})
-      .catch(() => {});
-    setSessions(prev =>
-      prev.map(s =>
-        s.id === sessionId
-          ? { ...s, status: 'connected', connState: 'CONNECTED', lastActivity: 'Just now' }
-          : s
-      )
-    );
-    appendLog(`Pinged session ${sessionId} -> Heartbeat OK (CONNECTED).`);
+  const handlePingSession = async (sessionId: string) => {
+    try {
+      const res = (await apiClient.post(
+        `/linda/sessions/${encodeURIComponent(sessionId)}/ping`,
+        {}
+      )) as {
+        success?: boolean;
+        data?: {
+          isConnected?: boolean;
+          status?: string;
+          connState?: 'CONNECTED' | 'RECONNECTING' | 'OFFLINE';
+          linkState?: 'LINKED' | 'NOT LINKED';
+          message?: string;
+        };
+      };
+      const isLive = Boolean(res?.data?.isConnected);
+      setSessions(prev =>
+        prev.map(s =>
+          s.id === sessionId
+            ? {
+                ...s,
+                status: isLive ? 'connected' : 'disconnected',
+                connState: res?.data?.connState || (isLive ? 'CONNECTED' : 'OFFLINE'),
+                linkState: res?.data?.linkState || s.linkState,
+                lastActivity: isLive ? 'Just now' : 'Offline — pair required',
+              }
+            : s
+        )
+      );
+      appendLog(res?.data?.message || `Pinged ${sessionId}: ${isLive ? 'CONNECTED' : 'OFFLINE'}.`);
+    } catch (err) {
+      appendLog(
+        `Ping failed for ${sessionId}: ${err instanceof Error ? err.message : 'Server unreachable'}`
+      );
+    }
   };
 
   const handlePairDeviceCode = async (session: LindaSessionItem) => {
     const cleanPhone = session.phone.replace(/\s+/g, '');
-    let code = '';
-    let sourceLabel = 'Live Multi-SIM Gateway';
+    let output = '';
     try {
       const res = (await apiClient.post(
         `/linda/pool/${encodeURIComponent(cleanPhone)}/pair-code`,
         {}
-      )) as { success?: boolean; data?: { pairingCode?: string } };
-      code = res?.data?.pairingCode || '';
-    } catch {
-      sourceLabel = 'Offline Fallback';
+      )) as { success?: boolean; data?: { pairingCode?: string }; error?: string };
+      if (!res?.success || !res?.data?.pairingCode) {
+        throw new Error(res?.error || 'WhatsApp client not ready for pairing code yet.');
+      }
+      output = [
+        `🔑 8-DIGIT LIVE PHONE PAIRING CODE (Multi-SIM Gateway · Feature F2)`,
+        `  Account: ${session.name}`,
+        `  Phone:   ${session.phone}`,
+        `  Code:    ${res.data.pairingCode} (Valid for 60 seconds)`,
+        `  Steps:   Open WhatsApp on phone -> Linked Devices -> Link with phone number -> Enter ${res.data.pairingCode}`,
+      ].join('\n');
+      appendLog(`Generated live 8-digit pairing code for ${session.phone}`);
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : 'Pairing code request failed';
+      output = [
+        `⚠️ PAIRING CODE NOT READY FOR ${session.phone}`,
+        `  Reason: ${errMsg}`,
+        `  Action: Click "Scan QR" to initialize Chromium first or retry in 5 seconds.`,
+      ].join('\n');
+      appendLog(`Pairing code failed for ${session.phone}: ${errMsg}`);
     }
-    if (!code) {
-      code = 'RETRY-CONNECT';
-    }
-    const output = [
-      `🔑 8-DIGIT PHONE PAIRING CODE (${sourceLabel} · Menu 2.1 · Feature F2)`,
-      `  Account: ${session.name}`,
-      `  Phone:   ${session.phone}`,
-      `  Code:    ${code} (Valid for 180 seconds)`,
-      `  Steps:   Open WhatsApp on phone -> Linked Devices -> Link with phone number instead -> Enter ${code}`,
-    ].join('\n');
     setActiveModalOutput({ title: `8-Digit Pairing Code — ${session.phone}`, output });
     setTerminalLines(prev => [...prev, `$ link-code ${cleanPhone}`, output]);
-    appendLog(`Requested 8-digit pairing code for ${session.phone} (${sourceLabel})`);
   };
 
   const handleScanDeviceQr = async (session: LindaSessionItem) => {
     setIsQrLoading(true);
+    setQrCodeDataUrl(null);
     const cleanPhone = session.phone.replace(/\s+/g, '');
-    let qrImgUrl: string | null = null;
-    let statusMessage = 'Scan with WhatsApp on phone (Linked Devices -> Link a Device).';
+    let statusMessage = 'Initializing Chromium WhatsApp Web — waiting for live QR...';
+
     try {
       await apiClient
         .post(`/linda/pool/${encodeURIComponent(cleanPhone)}/connect`, {})
-        .catch(() => apiClient.post('/linda/connect', {}));
+        .catch(() => apiClient.post('/linda/connect', { phone: cleanPhone }));
 
-      const res = (await apiClient
-        .get(`/linda/pool/${encodeURIComponent(cleanPhone)}/qr`)
-        .catch(() => apiClient.get('/linda/qr'))) as {
-        success?: boolean;
-        data?: {
-          qrCode?: string | null;
-          rawQr?: string | null;
-          qr?: string | null;
-          isConnected?: boolean;
-          message?: string;
+      for (let attempt = 0; attempt < 6; attempt++) {
+        const res = (await apiClient
+          .get(`/linda/pool/${encodeURIComponent(cleanPhone)}/qr`)
+          .catch(() => apiClient.get('/linda/qr'))) as {
+          success?: boolean;
+          data?: {
+            qrCode?: string | null;
+            rawQr?: string | null;
+            qr?: string | null;
+            isConnected?: boolean;
+            message?: string;
+          };
         };
-      };
-      if (res?.data?.isConnected) {
-        statusMessage = 'Already paired & authenticated — LocalAuth session active.';
-      } else if (res?.data?.qrCode) {
-        qrImgUrl = res.data.qrCode;
-        setQrCodeDataUrl(qrImgUrl);
-      } else if (res?.data?.rawQr || res?.data?.qr) {
-        qrImgUrl = await QRCode.toDataURL(String(res.data.rawQr || res.data.qr), {
-          width: 220,
-          margin: 1,
-        });
-        setQrCodeDataUrl(qrImgUrl);
-      } else if (res?.data?.message) {
-        statusMessage = res.data.message;
+        if (res?.data?.isConnected) {
+          statusMessage = 'Already paired & authenticated — LocalAuth session active.';
+          break;
+        }
+        if (res?.data?.qrCode) {
+          setQrCodeDataUrl(res.data.qrCode);
+          statusMessage = 'Live QR ready — scan with WhatsApp (Linked Devices -> Link a Device).';
+          break;
+        }
+        if (res?.data?.rawQr || res?.data?.qr) {
+          const qrUrl = await QRCode.toDataURL(String(res.data.rawQr || res.data.qr), {
+            width: 220,
+            margin: 1,
+          });
+          setQrCodeDataUrl(qrUrl);
+          statusMessage = 'Live QR ready — scan with WhatsApp (Linked Devices -> Link a Device).';
+          break;
+        }
+        if (res?.data?.message) statusMessage = res.data.message;
+        if (attempt < 5) await new Promise(resolve => setTimeout(resolve, 2000));
       }
-    } catch {
-      statusMessage = 'Backend initializing LocalAuth QR — retry in 3 seconds.';
+    } catch (err) {
+      statusMessage =
+        err instanceof Error
+          ? `Gateway error: ${err.message}`
+          : 'Backend initializing LocalAuth QR — retry in 5 seconds.';
     } finally {
       setIsQrLoading(false);
     }
 
-    if (!qrImgUrl && !statusMessage.includes('Already paired')) {
-      try {
-        qrImgUrl = await QRCode.toDataURL(
-          `whatsapp://connect?session=${session.id}&phone=${cleanPhone}`,
-          { width: 220, margin: 1 }
-        );
-        setQrCodeDataUrl(qrImgUrl);
-      } catch {
-        // ignore
-      }
-    }
-
     const output = [
-      `📷 QR CODE DEVICE LINKING SESSION READY (Menu 2.2 · Feature F3)`,
-      `  Account: ${session.name} (${session.phone})`,
+      `📷 LIVE QR DEVICE LINKING (${session.phone})`,
+      `  Account: ${session.name}`,
       `  Profile: LocalAuth ./.linda-sessions/session-${cleanPhone.replace(/\D/g, '')}`,
       `  Status:  ${statusMessage}`,
     ].join('\n');
     setActiveModalOutput({ title: `QR Device Linking — ${session.name}`, output });
     setTerminalLines(prev => [...prev, `$ link-qr ${cleanPhone}`, output]);
-    appendLog(`Opened QR linking modal for ${session.name}`);
+    appendLog(`QR linking status for ${session.name}: ${statusMessage}`);
   };
 
   const handleToggleCampaignStatus = (campaignId: string) => {
@@ -217,10 +239,28 @@ export function createLindaActionHandlers(deps: LindaActionHandlersDeps) {
     appendLog(summaryMsg);
   };
 
-  const handleSendQuickReply = (conv: LindaConversationItem) => {
-    const msg = `Automated quick response dispatched to ${conv.contactName} (${conv.phone}) via NLP Assistant.`;
-    setTerminalLines(prev => [...prev, `$ reply ${conv.phone} --auto`, msg]);
-    appendLog(`Quick-reply sent to ${conv.contactName} on WhatsApp.`);
+  const handleSendQuickReply = async (conv: LindaConversationItem) => {
+    const cleanPhone = (conv.phone || conv.id || '').replace(/\D/g, '');
+    const replyBody =
+      conv.lastMessage?.trim() ||
+      `Hello ${conv.contactName}, this is AI Linda from White Caves Real Estate LLC regarding ${conv.cluster || 'DAMAC Hills 2'}. Visit https://whitecaves.ae to book with Arslan Malik.`;
+    try {
+      const res = (await apiClient.post(`/linda/send/${encodeURIComponent(conv.id)}`, {
+        phoneNumber: cleanPhone || conv.phone,
+        message: replyBody,
+        accountPhone: conv.accountPhone,
+      })) as { success?: boolean; error?: string };
+      if (res && res.success === false) {
+        throw new Error(res.error || 'WhatsApp gateway rejected message');
+      }
+      const msg = `Sent WhatsApp reply to ${conv.contactName} (${conv.phone}).`;
+      setTerminalLines(prev => [...prev, `$ reply ${conv.phone}`, msg]);
+      appendLog(msg);
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : 'WhatsApp line offline';
+      setTerminalLines(prev => [...prev, `$ reply ${conv.phone}`, `FAILED: ${errMsg}`]);
+      appendLog(`Failed sending WhatsApp reply to ${conv.contactName}: ${errMsg}`);
+    }
   };
 
   return {

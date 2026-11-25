@@ -45,7 +45,9 @@ export const SANCTUM_DEPT_12: DepartmentNode = {
         "board_resolution"
       ],
       "capabilities": [
-        "Sovereign Decrees"
+        "Sovereign Decrees",
+        "AMGR-12-1-01 AI Ada Architecture Governance",
+        "SUP-12-1-01-1 AI Mary Wilkes Frontend Wave 2 Decomposition Supervisor"
       ],
       "slaResponseMinutes": 15,
       "status": "ACTIVE",

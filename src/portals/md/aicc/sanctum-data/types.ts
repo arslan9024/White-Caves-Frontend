@@ -4,7 +4,7 @@ export interface AgentCard {
   name: string;
   gender: 'Female' | 'Male';
   roleTitle: string;
-  tier: 'COO' | 'DIRECTOR' | 'MANAGER' | 'STANDBY';
+  tier: 'COO' | 'DIRECTOR' | 'MANAGER' | 'ASSISTANT_MANAGER' | 'SUPERVISOR' | 'STANDBY';
   departmentCode?: string;
   slot?: number;
   reportingTo?: string;

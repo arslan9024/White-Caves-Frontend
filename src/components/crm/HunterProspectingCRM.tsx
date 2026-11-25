@@ -13,9 +13,13 @@ import {
 } from 'lucide-react';
 import './AssistantDashboard.css';
 
-import { INITIAL_PROSPECT_BUYERS, INITIAL_PITCH_TEMPLATES } from './hunterProspecting.data';
+import { INITIAL_PROSPECT_BUYERS, type ProspectBuyer } from './hunterProspecting.data';
 import { HunterPitchTab } from './HunterPitchTab';
-const HunterProspectingCRM = ({ user, role, moduleId }) => {
+
+const buildBuyerPitch = (buyer: ProspectBuyer) =>
+  `Dear ${buyer.name},\n\nWe have secured an exclusive, off-market opportunity matching your exact criteria: ${buyer.matchedUnit}.\n\n• Asking Price: ${buyer.budget}\n• Confidential viewing slots available this Thursday.\n\nBest regards,\nWhite Caves Private Client Group`;
+
+const HunterProspectingCRM = ({ user: _user, role: _role, moduleId }: any) => {
   const [activeTab, setActiveTab] = useState('matching');
 
   useEffect(() => {
@@ -26,10 +30,41 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
     else if (moduleId.includes('pitch')) setActiveTab('pitch');
   }, [moduleId]);
 
-  // Feature 1: Off-Market Luxury Matcher
-  const [buyers, setBuyers] = useState([
-  const [buyers, setBuyers] = useState(INITIAL_PROSPECT_BUYERS);
-  const [pitchTemplates, setPitchTemplates] = useState(INITIAL_PITCH_TEMPLATES);
+  const [buyers] = useState<ProspectBuyer[]>(INITIAL_PROSPECT_BUYERS);
+  const [selectedBuyer, setSelectedBuyer] = useState<ProspectBuyer>(INITIAL_PROSPECT_BUYERS[0]);
+  const [pitchText, setPitchText] = useState(() => buildBuyerPitch(INITIAL_PROSPECT_BUYERS[0]));
+  const [sentSuccess, setSentSuccess] = useState(false);
+
+  const handleSendPitch = () => {
+    setSentSuccess(true);
+    setTimeout(() => setSentSuccess(false), 4000);
+  };
+
+  return (
+    <div className="crm-container" style={{ maxWidth: '100%', padding: '0.5rem' }}>
+      {/* Header */}
+      <div
+        style={{
+          background:
+            'linear-gradient(135deg, var(--color-065f46, #065F46) 0%, var(--color-064e3b, #064E3B) 100%)',
+          color: 'var(--white, #FFFFFF)',
+          padding: '1.25rem 1.5rem',
+          borderRadius: '16px',
+          marginBottom: '1.25rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              background: 'rgba(255, 255, 255, 0.15)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -254,6 +289,8 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
                     <button
                       onClick={() => {
                         setSelectedBuyer(b);
+                        setPitchText(buildBuyerPitch(b));
+                        setSentSuccess(false);
                         setActiveTab('pitch');
                       }}
                       style={{
@@ -278,17 +315,15 @@ const HunterProspectingCRM = ({ user, role, moduleId }) => {
       )}
 
       {/* Tab 4: Pitch Dispatcher */}
-        {activeTab === 'pitch' && (
-          <HunterPitchTab
-            selectedPitch={selectedPitch}
-            setSelectedPitch={setSelectedPitch}
-            pitchTemplates={pitchTemplates}
-            handleGenerateCustomPitch={handleGenerateCustomPitch}
-            isGeneratingPitch={isGeneratingPitch}
-            copiedPitch={copiedPitch}
-            handleCopyPitch={handleCopyPitch}
-          />
-        )}
+      {activeTab === 'pitch' && (
+        <HunterPitchTab
+          selectedBuyer={selectedBuyer}
+          pitchText={pitchText}
+          setPitchText={setPitchText}
+          sentSuccess={sentSuccess}
+          handleSendPitch={handleSendPitch}
+        />
+      )}
 
       {/* Tab 2 & 3: Profiler & Geofence */}
       {(activeTab === 'profiler' || activeTab === 'geofence') && (

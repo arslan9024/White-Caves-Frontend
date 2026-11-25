@@ -1,242 +1,203 @@
 import type { DepartmentNode } from '../types';
 
 export const SANCTUM_DEPT_06: DepartmentNode = {
-  "deptCode": "DEPT-06",
-  "name": "Inventory, Portfolio & Asset Management",
-  "color": "#F97316",
-  "director": {
-    "id": "sentinel",
-    "code": "DIR-06",
-    "name": "AI Sentinel",
-    "gender": "Female",
-    "tier": "DIRECTOR",
-    "roleTitle": "Director of Inventory, Portfolio & Asset Management",
-    "departmentCode": "DEPT-06",
-    "reportingTo": "zoe",
-    "allowedTools": [
-      "inventory_audit",
-      "damac_sync"
-    ],
-    "capabilities": [
-      "DAMAC Hills 2 Cluster Matrix",
-      "Portfolio Valuation"
-    ],
-    "slaResponseMinutes": 10,
-    "status": "ACTIVE",
-    "kpis": {
-      "tasksCompleted": 1850,
-      "accuracyPercent": 99.7,
-      "latencyMs": 270
-    }
+  deptCode: 'DEPT-06',
+  name: 'Inventory, Portfolio & Asset Management',
+  color: '#F97316',
+  director: {
+    id: 'sentinel',
+    code: 'DIR-06',
+    name: 'AI Sentinel',
+    gender: 'Female',
+    tier: 'DIRECTOR',
+    roleTitle: 'Director of Inventory, Portfolio & Asset Management',
+    departmentCode: 'DEPT-06',
+    reportingTo: 'zoe',
+    allowedTools: ['inventory_audit', 'damac_sync'],
+    capabilities: ['DAMAC Hills 2 Cluster Matrix', 'Portfolio Valuation'],
+    slaResponseMinutes: 10,
+    status: 'ACTIVE',
+    kpis: {
+      tasksCompleted: 1850,
+      accuracyPercent: 99.7,
+      latencyMs: 270,
+    },
   },
-  "managers": [
+  managers: [
     {
-      "id": "mary-inventory",
-      "code": "MGR-06-1",
-      "name": "AI Mary Inventory",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "DAMAC Hills 2 Master Inventory Manager",
-      "slot": 1,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "dh2_units_matrix"
+      id: 'yasmin-inventory-mgr',
+      code: 'MGR-06-1',
+      name: 'AI Yasmin Portfolio',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Division Manager — Residential Portfolio & Master Inventory',
+      slot: 1,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['dh2_units_matrix', 'google_sheets_sync_sarita'],
+      capabilities: [
+        'AMGR-06-1-01 AI Farah Inventory',
+        'SUP-06-1-01-1 AI Mary Supervisor',
+        'AI Sarita Sheets Supervision',
       ],
-      "capabilities": [
-        "DAMAC Hills 2 Cluster Units",
-        "Rent Valuations"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 780,
-        "accuracyPercent": 99.8,
-        "latencyMs": 220
-      }
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 780,
+        accuracyPercent: 99.8,
+        latencyMs: 220,
+      },
     },
     {
-      "id": "valeria-portals",
-      "code": "MGR-06-2",
-      "name": "AI Valeria Listings",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Portal Syndication (Property Finder/Bayut) Manager",
-      "slot": 2,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "portal_syndicator"
-      ],
-      "capabilities": [
-        "Portal Syndication"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 340,
-        "accuracyPercent": 99.3,
-        "latencyMs": 310
-      }
+      id: 'valeria-portals',
+      code: 'MGR-06-2',
+      name: 'AI Valeria Listings',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Portal Syndication (Property Finder/Bayut) Manager',
+      slot: 2,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['portal_syndicator'],
+      capabilities: ['Portal Syndication'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 340,
+        accuracyPercent: 99.3,
+        latencyMs: 310,
+      },
     },
     {
-      "id": "dalia-trakheesi",
-      "code": "MGR-06-3",
-      "name": "AI Dalia Trakheesi",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "DLD Trakheesi Permit Verification Manager",
-      "slot": 3,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "trakheesi_permit"
-      ],
-      "capabilities": [
-        "Trakheesi Permits"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 290,
-        "accuracyPercent": 100,
-        "latencyMs": 240
-      }
+      id: 'dalia-trakheesi',
+      code: 'MGR-06-3',
+      name: 'AI Dalia Trakheesi',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'DLD Trakheesi Permit Verification Manager',
+      slot: 3,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['trakheesi_permit'],
+      capabilities: ['Trakheesi Permits'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 290,
+        accuracyPercent: 100,
+        latencyMs: 240,
+      },
     },
     {
-      "id": "reem-pricing",
-      "code": "MGR-06-4",
-      "name": "AI Reem Pricing",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Market Price Valuation & Rental Index Manager",
-      "slot": 4,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "rera_calc"
-      ],
-      "capabilities": [
-        "Rental Index Estimates"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 210,
-        "accuracyPercent": 99.1,
-        "latencyMs": 280
-      }
+      id: 'reem-pricing',
+      code: 'MGR-06-4',
+      name: 'AI Reem Pricing',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Market Price Valuation & Rental Index Manager',
+      slot: 4,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['rera_calc'],
+      capabilities: ['Rental Index Estimates'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 210,
+        accuracyPercent: 99.1,
+        latencyMs: 280,
+      },
     },
     {
-      "id": "samar-handover",
-      "code": "MGR-06-5",
-      "name": "AI Samar Snagging",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Unit Snagging & Inspection Audit Manager",
-      "slot": 5,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "snagging_report"
-      ],
-      "capabilities": [
-        "Snagging Checklists"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 110,
-        "accuracyPercent": 98.9,
-        "latencyMs": 330
-      }
+      id: 'samar-handover',
+      code: 'MGR-06-5',
+      name: 'AI Samar Snagging',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Unit Snagging & Inspection Audit Manager',
+      slot: 5,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['snagging_report'],
+      capabilities: ['Snagging Checklists'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 110,
+        accuracyPercent: 98.9,
+        latencyMs: 330,
+      },
     },
     {
-      "id": "zeina-keys",
-      "code": "MGR-06-6",
-      "name": "AI Zeina Vault",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Access Key Vault & Smart Lock Manager",
-      "slot": 6,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "keybox_auth"
-      ],
-      "capabilities": [
-        "Smart Lock Passes"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 165,
-        "accuracyPercent": 99.4,
-        "latencyMs": 260
-      }
+      id: 'zeina-keys',
+      code: 'MGR-06-6',
+      name: 'AI Zeina Vault',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Access Key Vault & Smart Lock Manager',
+      slot: 6,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['keybox_auth'],
+      capabilities: ['Smart Lock Passes'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 165,
+        accuracyPercent: 99.4,
+        latencyMs: 260,
+      },
     },
     {
-      "id": "yasmeen-luxury",
-      "code": "MGR-06-7",
-      "name": "AI Yasmeen Trophy",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Off-Market Ultra-Luxury Portfolio Manager",
-      "slot": 7,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "nda_vault"
-      ],
-      "capabilities": [
-        "Off-Market Penthouses"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 75,
-        "accuracyPercent": 99.6,
-        "latencyMs": 290
-      }
+      id: 'yasmeen-luxury',
+      code: 'MGR-06-7',
+      name: 'AI Yasmeen Trophy',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Off-Market Ultra-Luxury Portfolio Manager',
+      slot: 7,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['nda_vault'],
+      capabilities: ['Off-Market Penthouses'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 75,
+        accuracyPercent: 99.6,
+        latencyMs: 290,
+      },
     },
     {
-      "id": "nour-maintenance",
-      "code": "MGR-06-8",
-      "name": "AI Nour Maintenance",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Asset Maintenance & Refurbishment Manager",
-      "slot": 8,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "vendor_dispatch"
-      ],
-      "capabilities": [
-        "Turnover Prep"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 195,
-        "accuracyPercent": 99,
-        "latencyMs": 310
-      }
+      id: 'nour-maintenance',
+      code: 'MGR-06-8',
+      name: 'AI Nour Maintenance',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Asset Maintenance & Refurbishment Manager',
+      slot: 8,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['vendor_dispatch'],
+      capabilities: ['Turnover Prep'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 195,
+        accuracyPercent: 99,
+        latencyMs: 310,
+      },
     },
     {
-      "id": "halima-archive",
-      "code": "MGR-06-9",
-      "name": "AI Halima Archive",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Historical Transactions & Deed Archive Manager",
-      "slot": 9,
-      "departmentCode": "DEPT-06",
-      "allowedTools": [
-        "deed_archive"
-      ],
-      "capabilities": [
-        "Deed Archive"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 120,
-        "accuracyPercent": 99.5,
-        "latencyMs": 270
-      }
-    }
-  ]
+      id: 'halima-archive',
+      code: 'MGR-06-9',
+      name: 'AI Halima Archive',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Historical Transactions & Deed Archive Manager',
+      slot: 9,
+      departmentCode: 'DEPT-06',
+      allowedTools: ['deed_archive'],
+      capabilities: ['Deed Archive'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 120,
+        accuracyPercent: 99.5,
+        latencyMs: 270,
+      },
+    },
+  ],
 };

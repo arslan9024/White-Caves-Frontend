@@ -5,12 +5,14 @@ interface InventoryHeaderProps {
   loadingData: boolean;
   analyticsKPIs: AnalyticsKPIs;
   onOpenAddModal: () => void;
+  onOpenSheetsSupervisor?: () => void;
 }
 
 export const InventoryHeader: React.FC<InventoryHeaderProps> = ({
   loadingData,
   analyticsKPIs,
   onOpenAddModal,
+  onOpenSheetsSupervisor,
 }) => (
   <div
     style={{
@@ -56,6 +58,27 @@ export const InventoryHeader: React.FC<InventoryHeaderProps> = ({
         </h2>
       </div>
       <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        {onOpenSheetsSupervisor && (
+          <button
+            onClick={onOpenSheetsSupervisor}
+            style={{
+              background: '#10B981',
+              color: '#0F172A',
+              fontWeight: 800,
+              fontSize: '0.85rem',
+              padding: '9px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.35)',
+            }}
+          >
+            📊 AI Sarita Sheets
+          </button>
+        )}
         <button
           onClick={onOpenAddModal}
           style={{

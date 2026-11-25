@@ -4,6 +4,8 @@
  * Standard: AEGIS Canonical Architecture & Single Purpose File Law (< 350 lines, AEG-042)
  */
 
+import { getNamedSeatOverrideForManager } from './aiAssistantSupervisorHierarchy.formula';
+
 export const BHAKTI_LOCKED_DEPARTMENTS_12 = [
   {
     slot: 1,
@@ -141,7 +143,7 @@ export interface GeneratedSupervisorSeat {
   divisionCode: string;
   slot: number;
   name: string;
-  gender: 'Female';
+  gender: 'Female' | 'Male';
   reportsToId: string;
   deptCode: string;
   managerCode: string;
@@ -153,7 +155,7 @@ export interface GeneratedAssistantManagerSeat {
   divisionCode: string;
   slot: number;
   name: string;
-  gender: 'Female';
+  gender: 'Female' | 'Male';
   reportsToId: string;
   deptCode: string;
   supervisors: GeneratedSupervisorSeat[];
@@ -182,6 +184,8 @@ export function generateManagerFractalSubtree(
   const divisionCode = `DIV-${dd}-${managerSlot}`;
   const managerCode = `MGR-${dd}-${managerSlot}`;
 
+  const namedChain = getNamedSeatOverrideForManager(deptSlot, managerSlot);
+
   return FEMALE_AM_NAMES_12.map((amFirstName, amIdx) => {
     const amSlot = amIdx + 1;
     const aa = String(amSlot).padStart(2, '0');
@@ -191,14 +195,17 @@ export function generateManagerFractalSubtree(
     const supervisors: GeneratedSupervisorSeat[] = FEMALE_SUP_NAMES_9.map(
       (supFirstName, supIdx) => {
         const supSlot = supIdx + 1;
+        const isNamedOpSup = Boolean(namedChain && amSlot === 1 && supSlot === 1);
         return {
           id: `SUP-${dd}-${managerSlot}-${aa}-${supSlot}`,
           squadCode: `SQD-${dd}-${managerSlot}-${aa}-${supSlot}`,
           unitCode,
           divisionCode,
           slot: supSlot,
-          name: `AI ${supFirstName} Sup-${dd}.${managerSlot}.${amSlot}.${supSlot}`,
-          gender: 'Female',
+          name: isNamedOpSup
+            ? namedChain!.supervisor.name
+            : `AI ${supFirstName} Sup-${dd}.${managerSlot}.${amSlot}.${supSlot}`,
+          gender: isNamedOpSup ? namedChain!.supervisor.gender : 'Female',
           reportsToId: amId,
           deptCode,
           managerCode,
@@ -206,14 +213,17 @@ export function generateManagerFractalSubtree(
       }
     );
 
+    const isNamedAm = Boolean(namedChain && amSlot === 1);
     return {
       id: amId,
       unitCode,
       divisionCode,
       slot: amSlot,
-      name: divisionLabel
-        ? `AI ${amFirstName} (${divisionLabel})`
-        : `AI ${amFirstName} AM-${dd}.${managerSlot}.${aa}`,
+      name: isNamedAm
+        ? namedChain!.assistantManager.name
+        : divisionLabel
+          ? `AI ${amFirstName} (${divisionLabel})`
+          : `AI ${amFirstName} AM-${dd}.${managerSlot}.${aa}`,
       gender: 'Female',
       reportsToId: managerCode,
       deptCode,

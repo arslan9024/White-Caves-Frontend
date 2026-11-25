@@ -13,7 +13,6 @@ import {
   Download,
   Upload,
   Plus,
-import { TransactionManagerModal } from './TransactionManagerModal';
   Edit2,
   Trash2,
   Eye,
@@ -29,6 +28,7 @@ import { TransactionManagerModal } from './TransactionManagerModal';
   RefreshCw,
   FileSpreadsheet,
 } from 'lucide-react';
+import { TransactionManagerModal } from './TransactionManagerModal';
 import { useTransactionManagerLogic } from './TransactionManager.logic';
 import {
   PROPERTY_TYPES,
@@ -308,4 +308,3 @@ export const TransactionManagerView: React.FC = () => {
 };
 
 export default TransactionManagerView;
-

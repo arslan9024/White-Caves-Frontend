@@ -1,3 +1,4 @@
+import React from 'react';
 import { ActiveLease, PDCCheque, RentalInquiry } from '../data/leasing';
 
 export type PnLSummary = {
@@ -14,8 +15,6 @@ export interface AnalyticsTabProps {
   inquiries: RentalInquiry[];
   pnl: PnLSummary;
 }
-
-import React from 'react';
 
 export const KPICard: React.FC<{ label: string; value: string; sub?: string; color: string }> = ({
   label,
@@ -40,12 +39,12 @@ export const KPICard: React.FC<{ label: string; value: string; sub?: string; col
   </div>
 );
 
-export const ProgressBar: React.FC<{ label: string; pct: number; color: string; value?: string }> = ({
-  label,
-  pct,
-  color,
-  value,
-}) => (
+export const ProgressBar: React.FC<{
+  label: string;
+  pct: number;
+  color: string;
+  value?: string;
+}> = ({ label, pct, color, value }) => (
   <div style={{ marginBottom: '10px' }}>
     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
       <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>{label}</span>
@@ -68,3 +67,8 @@ export const ProgressBar: React.FC<{ label: string; pct: number; color: string; 
           background: color,
           borderRadius: '4px',
           transition: 'width 0.3s',
+        }}
+      />
+    </div>
+  </div>
+);

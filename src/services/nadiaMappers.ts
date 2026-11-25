@@ -1,5 +1,10 @@
-import { Conversation, Message, QueuedConversation, UpdateConversationPayload, ListConversationsQuery } from '../types/nadia';
-
+import {
+  Conversation,
+  Message,
+  QueuedConversation,
+  UpdateConversationPayload,
+  ListConversationsQuery,
+} from '../types/nadia';
 
 export const CONVERSATION_STATUS_MAP: Record<string, Conversation['status']> = {
   active: 'ACTIVE',
@@ -44,7 +49,9 @@ export const denormalizeConversationStatus = (
   }
 };
 
-export const denormalizeListStatus = (status: ListConversationsQuery['status']): string | undefined => {
+export const denormalizeListStatus = (
+  status: ListConversationsQuery['status']
+): string | undefined => {
   switch (status) {
     case 'ACTIVE':
       return 'active';
@@ -90,8 +97,12 @@ export const normalizeConversation = (raw: Record<string, unknown>): Conversatio
     priority: normalizePriority(leadScore),
     leadScore,
     assignedAgent: raw?.agentPhone ? String(raw.agentPhone) : undefined,
-    createdAt: (raw?.createdAt ? (raw.createdAt as string | Date) : new Date().toISOString()),
-    updatedAt: (raw?.updatedAt ? (raw.updatedAt as string | Date) : (raw?.createdAt ? (raw.createdAt as string | Date) : new Date().toISOString())),
+    createdAt: raw?.createdAt ? (raw.createdAt as string | Date) : new Date().toISOString(),
+    updatedAt: raw?.updatedAt
+      ? (raw.updatedAt as string | Date)
+      : raw?.createdAt
+        ? (raw.createdAt as string | Date)
+        : new Date().toISOString(),
     closedAt: raw?.closedAt ? (raw.closedAt as string | Date) : undefined,
     lastMessage: latestMessage?.body ? String(latestMessage.body) : undefined,
     unreadCount: Number(raw?.unreadCount ?? 0),
@@ -108,26 +119,41 @@ export const normalizeMessage = (raw: Record<string, unknown>): Message => ({
   intent: normalizeIntent(raw?.intent),
   entities: (raw?.entities as any) ?? undefined,
   leadScore: raw?.leadScore !== undefined ? Number(raw.leadScore) : undefined,
-  timestamp: (raw?.timestamp ? (raw.timestamp as string | Date) : (raw?.createdAt ? (raw.createdAt as string | Date) : new Date().toISOString())),
+  timestamp: raw?.timestamp
+    ? (raw.timestamp as string | Date)
+    : raw?.createdAt
+      ? (raw.createdAt as string | Date)
+      : new Date().toISOString(),
   createdAt: raw?.createdAt ? (raw.createdAt as string | Date) : undefined,
 });
 
-export const normalizeQueuedConversation = (raw: Record<string, unknown>, sortOrder = 0): QueuedConversation => {
+export const normalizeQueuedConversation = (
+  raw: Record<string, unknown>,
+  sortOrder = 0
+): QueuedConversation => {
   const conv = (raw?.conversation as Record<string, unknown>) || {};
   return {
     queueId: String(raw?.queueId ?? raw?.id ?? ''),
     conversationId: String(raw?.conversationId ?? conv?.id ?? ''),
     customerPhone: String(raw?.customerPhone ?? conv?.customerPhone ?? ''),
-    customerName: (raw?.customerName ?? conv?.customerName) ? String(raw?.customerName ?? conv?.customerName) : undefined,
+    customerName:
+      (raw?.customerName ?? conv?.customerName)
+        ? String(raw?.customerName ?? conv?.customerName)
+        : undefined,
     priority:
-      Number(raw?.priority ?? 0) <= 3 ? 'URGENT' : Number(raw?.priority ?? 0) <= 6 ? 'NORMAL' : 'LOW',
+      Number(raw?.priority ?? 0) <= 3
+        ? 'URGENT'
+        : Number(raw?.priority ?? 0) <= 6
+          ? 'NORMAL'
+          : 'LOW',
     leadScore: Number(raw?.leadScore ?? conv?.leadScore ?? 0),
-    createdAt: (raw?.queuedAt ? (raw.queuedAt as string | Date) : (raw?.createdAt ? (raw.createdAt as string | Date) : new Date().toISOString())),
+    createdAt: raw?.queuedAt
+      ? (raw.queuedAt as string | Date)
+      : raw?.createdAt
+        ? (raw.createdAt as string | Date)
+        : new Date().toISOString(),
     waitTimeMinutes: Number(raw?.waitTimeMinutes ?? 0),
     sortOrder,
     status: normalizeConversationStatus(raw?.status ?? conv?.status),
   };
 };
-
-/**
- * Generic fetch wrapper with error handling

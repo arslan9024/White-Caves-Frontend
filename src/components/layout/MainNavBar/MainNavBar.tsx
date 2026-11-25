@@ -58,7 +58,12 @@ import {
   SuperUserBadge,
   UserInfo,
   UserName,
-import { MainNavBarProps, UserProp, NotificationItem_T, QuickStats, ProfileAction } from './types';
+  UserRole,
+  ChevronIcon,
+  DropdownFooter,
+  SidebarToggleButton,
+} from './styles';
+import { MainNavBarProps, NotificationItem_T, ProfileAction } from './types';
 import { MainNavBarProfileDropdown } from './MainNavBarProfileDropdown';
 // ---------------------------------------------------------------------------
 
@@ -322,13 +327,19 @@ const MainNavBar: React.FC<MainNavBarProps> = ({
             </ChevronIcon>
           </ProfileTrigger>
 
-            {showProfileMenu && (
-              <MainNavBarProfileDropdown
-                user={user}
-                isSuperUser={isSuperUser}
-                onAction={handleProfileAction}
-              />
-            )}
+          {showProfileMenu && (
+            <MainNavBarProfileDropdown
+              user={user}
+              isSuperUser={effectiveIsSuperUser}
+              userInitials={getUserInitials()}
+              onAction={handleProfileAction}
+            />
+          )}
+        </DropdownContainer>
+      </NavRightSection>
+    </NavBarContainer>
+  );
+};
 
 export default MainNavBar;
 

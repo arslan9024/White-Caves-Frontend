@@ -1,54 +1,18 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Invoice, Expense } from '../data/finance';
-import { FINANCE_FEATURES } from '../data/features';
-import {
-  fetchCommissionsFromAPI,
-  fetchFinanceSummary,
-  createCommissionAPI,
-  updateCommissionAPI,
-  bulkPayCommissionsAPI,
-  selectAllCommissions,
-  selectPendingCommissions,
-  selectApprovedCommissions,
-  selectPaidCommissions,
-  selectCommissionsLoading,
-  selectCommissionsError,
-  fetchInvoicesFromAPI,
-  createInvoiceAPI,
-  updateInvoiceAPI,
-  deleteInvoiceAPI,
-  selectAllInvoices,
-  selectPendingInvoices,
-  selectPaidInvoices,
-  selectOverdueInvoices,
-  selectInvoicesLoading,
-  selectInvoicesError,
-  fetchExpensesFromAPI,
-  createExpenseAPI,
-  updateExpenseAPI,
-  deleteExpenseAPI,
-  selectAllExpenses,
-  selectPendingExpenses,
-  selectApprovedExpenses,
-  selectExpensesLoading,
-  selectExpensesError,
-} from '../../../../store/crmDataSlice';
-import type { AppDispatch } from '../../../../store/store';
 
-export InvoiceRecord extends Invoice {
+export interface InvoiceRecord extends Invoice {
   totalAmount?: number;
   notes?: string;
   vatAmount?: number;
   createdAt?: string | Date;
 }
 
-export ExpenseRecord extends Expense {
+export interface ExpenseRecord extends Expense {
   notes?: string;
   receiptUrl?: string;
 }
 
-export CommissionRecord {
+export interface CommissionRecord {
   id: string;
   amount: number;
   status: string;
@@ -65,7 +29,7 @@ export CommissionRecord {
   [key: string]: unknown;
 }
 
-export mapInvoiceRecord = (item: Record<string, unknown>): InvoiceRecord => ({
+export const mapInvoiceRecord = (item: Record<string, unknown>): InvoiceRecord => ({
   id: String(item.id ?? ''),
   client: String(item.client ?? 'Unknown Client'),
   property: String(item.property ?? 'N/A'),
@@ -78,7 +42,7 @@ export mapInvoiceRecord = (item: Record<string, unknown>): InvoiceRecord => ({
   vatAmount: item.vatAmount !== undefined ? Number(item.vatAmount) : undefined,
 });
 
-export mapExpenseRecord = (item: Record<string, unknown>): ExpenseRecord => ({
+export const mapExpenseRecord = (item: Record<string, unknown>): ExpenseRecord => ({
   id: Number(item.id ?? 0),
   category: String(item.category ?? 'General'),
   description: String(item.description ?? ''),
@@ -89,7 +53,7 @@ export mapExpenseRecord = (item: Record<string, unknown>): ExpenseRecord => ({
   receiptUrl: item.receiptUrl ? String(item.receiptUrl) : undefined,
 });
 
-export mapCommissionRecord = (item: Record<string, unknown>): CommissionRecord => ({
+export const mapCommissionRecord = (item: Record<string, unknown>): CommissionRecord => ({
   id: String(item.id ?? ''),
   amount: Number(item.amount ?? 0),
   status: String(item.status ?? 'pending'),
@@ -104,4 +68,3 @@ export mapCommissionRecord = (item: Record<string, unknown>): CommissionRecord =
   paidAt: item.paidAt ? String(item.paidAt) : undefined,
   createdAt: item.createdAt ? String(item.createdAt) : undefined,
 });
-

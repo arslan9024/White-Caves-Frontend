@@ -12,13 +12,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#14B8A6',
     avatar: 'https://ui-avatars.com/api/?name=Evangeline+AI&background=14B8A6&color=fff',
     status: 'optimal',
-    description: 'Coordinates developer No Objection Certificates (NOCs), service charge clearances, and Form F bindings.',
+    description:
+      'Coordinates developer No Objection Certificates (NOCs), service charge clearances, and Form F bindings.',
     specialty: 'Conveyancing & NOC Verification',
-    capabilities: ['Developer NOC Workflow Automation', 'Service Charge Balance Audit', 'Form F Digital Signature Tracking'],
+    capabilities: [
+      'Developer NOC Workflow Automation',
+      'Service Charge Balance Audit',
+      'Form F Digital Signature Tracking',
+    ],
     slaResponseTime: '< 15s',
     metrics: { accuracyRate: 99.6, tasksCompletedToday: 82, systemHealth: 'optimal' },
     apiEndpoints: ['/api/conveyancing/noc', '/api/conveyancing/transfer-status'],
-    dataFlows: { inputs: ['signed_mou_documents', 'developer_statements'], outputs: ['noc_applications', 'cleared_transfer_packets'] },
+    dataFlows: {
+      inputs: ['signed_mou_documents', 'developer_statements'],
+      outputs: ['noc_applications', 'cleared_transfer_packets'],
+    },
   },
   {
     id: 'trustee_bot',
@@ -31,13 +39,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#0D9488',
     avatar: 'https://ui-avatars.com/api/?name=Trustee+AI&background=0D9488&color=fff',
     status: 'optimal',
-    description: 'Schedules and coordinates closing appointments with approved DLD Registration Trustee offices across Dubai.',
+    description:
+      'Schedules and coordinates closing appointments with approved DLD Registration Trustee offices across Dubai.',
     specialty: 'Trustee Closing Management',
-    capabilities: ['Trustee Office Availability Scans', 'Managers Cheque Calculation (4% DLD Fee + AED 4,000 Trustee Fee)', 'Title Deed Delivery Tracking'],
+    capabilities: [
+      'Trustee Office Availability Scans',
+      'Managers Cheque Calculation (4% DLD Fee + AED 4,000 Trustee Fee)',
+      'Title Deed Delivery Tracking',
+    ],
     slaResponseTime: '< 25s',
     metrics: { accuracyRate: 100.0, tasksCompletedToday: 48, systemHealth: 'optimal' },
     apiEndpoints: ['/api/trustee/book', '/api/trustee/fee-calculator'],
-    dataFlows: { inputs: ['noc_approval_packets', 'buyer_seller_schedules'], outputs: ['trustee_booking_confirmations', 'managers_cheque_breakdowns'] },
+    dataFlows: {
+      inputs: ['noc_approval_packets', 'buyer_seller_schedules'],
+      outputs: ['trustee_booking_confirmations', 'managers_cheque_breakdowns'],
+    },
   },
 
   // ─── 12. Market Intelligence & IoT Data Science ───────────────────────────
@@ -52,13 +68,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#64748B',
     avatar: 'https://ui-avatars.com/api/?name=Predict+AI&background=64748B&color=fff',
     status: 'optimal',
-    description: 'Applies neural regressors over 10 years of historical DLD transactions to predict 12-month capital appreciation.',
+    description:
+      'Applies neural regressors over 10 years of historical DLD transactions to predict 12-month capital appreciation.',
     specialty: 'Automated Valuation Models (AVM)',
-    capabilities: ['Square Foot Price Projection', 'Rental Yield Simulation', 'Macroeconomic FX Correlation'],
+    capabilities: [
+      'Square Foot Price Projection',
+      'Rental Yield Simulation',
+      'Macroeconomic FX Correlation',
+    ],
     slaResponseTime: '< 8s',
     metrics: { accuracyRate: 98.9, tasksCompletedToday: 420, systemHealth: 'optimal' },
     apiEndpoints: ['/api/predict/valuation', '/api/predict/forecast'],
-    dataFlows: { inputs: ['property_attributes', 'dld_transaction_timeseries'], outputs: ['avm_valuation_estimates', 'confidence_intervals'] },
+    dataFlows: {
+      inputs: ['property_attributes', 'dld_transaction_timeseries'],
+      outputs: ['avm_valuation_estimates', 'confidence_intervals'],
+    },
   },
   {
     id: 'heatmap',
@@ -71,13 +95,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#475569',
     avatar: 'https://ui-avatars.com/api/?name=Heatmap+AI&background=475569&color=fff',
     status: 'optimal',
-    description: 'Visualizes real-time investor search clusters and transaction velocities across Downtown, Marina, and DAMAC Hills 2.',
+    description:
+      'Visualizes real-time investor search clusters and transaction velocities across Downtown, Marina, and DAMAC Hills 2.',
     specialty: 'Geospatial Demand Clustering',
-    capabilities: ['Search Density Heatmapping', 'Metro Proximity Premium Indexing', 'Yield Density Contours'],
+    capabilities: [
+      'Search Density Heatmapping',
+      'Metro Proximity Premium Indexing',
+      'Yield Density Contours',
+    ],
     slaResponseTime: '< 12s',
     metrics: { accuracyRate: 99.3, tasksCompletedToday: 680, systemHealth: 'optimal' },
     apiEndpoints: ['/api/heatmap/vectors', '/api/heatmap/community-demand'],
-    dataFlows: { inputs: ['search_query_logs', 'listing_view_telemetry'], outputs: ['geospatial_geojson_layers', 'hotspot_alerts'] },
+    dataFlows: {
+      inputs: ['search_query_logs', 'listing_view_telemetry'],
+      outputs: ['geospatial_geojson_layers', 'hotspot_alerts'],
+    },
   },
 
   // ─── 9 Operational & Cross-Department Utility Agents ──────────────────────
@@ -92,13 +124,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#25D366',
     avatar: 'https://ui-avatars.com/api/?name=Nina+AI&background=25D366&color=fff',
     status: 'optimal',
-    description: 'Dedicated conversational AI proxy managing direct client inquiries and executive scheduling for MD Arslan Malik.',
+    description:
+      'Dedicated conversational AI proxy managing direct client inquiries and executive scheduling for MD Arslan Malik.',
     specialty: 'Executive WhatsApp Brokering',
-    capabilities: ['Natural Language WhatsApp Dialogue', 'Viewing Schedule Lock', 'Document PDF Push'],
+    capabilities: [
+      'Natural Language WhatsApp Dialogue',
+      'Viewing Schedule Lock',
+      'Document PDF Push',
+    ],
     slaResponseTime: '< 2s',
     metrics: { accuracyRate: 99.9, tasksCompletedToday: 1120, systemHealth: 'optimal' },
     apiEndpoints: ['/api/nina/chat', '/api/nina/sessions'],
-    dataFlows: { inputs: ['whatsapp_inbox', 'md_calendar'], outputs: ['verified_leads', 'booked_appointments'] },
+    dataFlows: {
+      inputs: ['whatsapp_inbox', 'md_calendar'],
+      outputs: ['verified_leads', 'booked_appointments'],
+    },
   },
   {
     id: 'linda',
@@ -111,13 +151,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#06B6D4',
     avatar: 'https://ui-avatars.com/api/?name=Linda+AI&background=06B6D4&color=fff',
     status: 'optimal',
-    description: 'Engages web visitors on whitecaves.com, answering community questions and recommending matched properties.',
+    description:
+      'Engages web visitors on whitecaves.com, answering community questions and recommending matched properties.',
     specialty: 'Public Website Concierge',
-    capabilities: ['Live Chatbot Dialogue', 'Interactive Property Carousel Push', 'Multilingual Translation'],
+    capabilities: [
+      'Live Chatbot Dialogue',
+      'Interactive Property Carousel Push',
+      'Multilingual Translation',
+    ],
     slaResponseTime: '< 1s',
     metrics: { accuracyRate: 99.4, tasksCompletedToday: 2450, systemHealth: 'optimal' },
     apiEndpoints: ['/api/linda/chat', '/api/linda/recommend'],
-    dataFlows: { inputs: ['website_chat_sessions'], outputs: ['captured_leads', 'viewing_handoffs'] },
+    dataFlows: {
+      inputs: ['website_chat_sessions'],
+      outputs: ['captured_leads', 'viewing_handoffs'],
+    },
   },
   {
     id: 'mary',
@@ -130,13 +178,45 @@ export const governanceAgents: AssistantDef[] = [
     color: '#3B82F6',
     avatar: 'https://ui-avatars.com/api/?name=Mary+AI&background=3B82F6&color=fff',
     status: 'optimal',
-    description: 'Normalizes property specs, validates square footage from title deeds, and eliminates duplicate listings.',
+    description:
+      'Normalizes property specs, validates square footage from title deeds, and eliminates duplicate listings.',
     specialty: 'Catalog Integrity & De-duplication',
-    capabilities: ['Listing Deduplication Engine', 'Photo Resolution Enhancer', 'Title Deed Data Harmonizer'],
+    capabilities: [
+      'Listing Deduplication Engine',
+      'Photo Resolution Enhancer',
+      'Title Deed Data Harmonizer',
+    ],
     slaResponseTime: '< 5s',
     metrics: { accuracyRate: 100.0, tasksCompletedToday: 512, systemHealth: 'optimal' },
     apiEndpoints: ['/api/catalog/clean', '/api/catalog/dedup'],
     dataFlows: { inputs: ['raw_listing_imports'], outputs: ['clean_property_catalog'] },
+  },
+  {
+    id: 'sarita_sheets',
+    name: 'AI Sarita Sheets',
+    code: 'AI_SARITA_SHEETS',
+    title: 'Google Sheets & Inventory Operations Supervisor',
+    departmentId: 'asset_facilities',
+    departmentName: 'Asset Management & Facilities (DH2 Hub)',
+    icon: 'Sheet',
+    color: '#10B981',
+    avatar: 'https://ui-avatars.com/api/?name=Sarita+Sheets&background=10B981&color=fff',
+    status: 'optimal',
+    description:
+      'Autonomous Google Sheets supervisor for AI Mary. Handles live sheet ingestion, tab extraction, range syncing, and inventory normalization.',
+    specialty: 'Google Sheets Automation & Data Hygiene',
+    capabilities: [
+      'Google Sheets Real-Time Sync',
+      'Akoya Oxygen Multi-Tab Ingestion',
+      'Inventory Schema Harmonizer',
+    ],
+    slaResponseTime: '< 3s',
+    metrics: { accuracyRate: 100.0, tasksCompletedToday: 1240, systemHealth: 'optimal' },
+    apiEndpoints: ['/api/linda/campaigns/akoya-landlords', '/api/inventory/sheets/sync'],
+    dataFlows: {
+      inputs: ['google_sheets_live_tabs', 'akoya_oxygen_matrix'],
+      outputs: ['mary_inventory_vault_records', 'campaign_recipients'],
+    },
   },
   {
     id: 'nancy',
@@ -149,13 +229,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#8B5CF6',
     avatar: 'https://ui-avatars.com/api/?name=Nancy+AI&background=8B5CF6&color=fff',
     status: 'optimal',
-    description: 'Manages agent BRN registration renewals, onboarding checklists, and quarterly sales quota leaderboards.',
+    description:
+      'Manages agent BRN registration renewals, onboarding checklists, and quarterly sales quota leaderboards.',
     specialty: 'Broker Lifecycle & Accreditation',
-    capabilities: ['BRN Card Expiry Alerts', 'Agent Commission Tier Calculation', 'KYC Document Vault'],
+    capabilities: [
+      'BRN Card Expiry Alerts',
+      'Agent Commission Tier Calculation',
+      'KYC Document Vault',
+    ],
     slaResponseTime: '< 30s',
     metrics: { accuracyRate: 99.7, tasksCompletedToday: 54, systemHealth: 'optimal' },
     apiEndpoints: ['/api/hr/agents', '/api/hr/onboarding'],
-    dataFlows: { inputs: ['agent_applications', 'rera_brn_database'], outputs: ['active_agent_credentials', 'quota_reports'] },
+    dataFlows: {
+      inputs: ['agent_applications', 'rera_brn_database'],
+      outputs: ['active_agent_credentials', 'quota_reports'],
+    },
   },
   {
     id: 'daisy',
@@ -168,13 +256,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#EC4899',
     avatar: 'https://ui-avatars.com/api/?name=Daisy+AI&background=EC4899&color=fff',
     status: 'optimal',
-    description: 'Runs credit checks, verifies salary certificates, and scores tenant default probabilities.',
+    description:
+      'Runs credit checks, verifies salary certificates, and scores tenant default probabilities.',
     specialty: 'Tenant Risk Profiling',
-    capabilities: ['Salary Certificate OCR', 'Rental History Cross-Check', 'Default Risk Scorecard'],
+    capabilities: [
+      'Salary Certificate OCR',
+      'Rental History Cross-Check',
+      'Default Risk Scorecard',
+    ],
     slaResponseTime: '< 15s',
     metrics: { accuracyRate: 99.1, tasksCompletedToday: 218, systemHealth: 'optimal' },
     apiEndpoints: ['/api/tenant/screen', '/api/tenant/risk-score'],
-    dataFlows: { inputs: ['tenant_salary_slips', 'bank_statements'], outputs: ['screening_certificates', 'risk_flags'] },
+    dataFlows: {
+      inputs: ['tenant_salary_slips', 'bank_statements'],
+      outputs: ['screening_certificates', 'risk_flags'],
+    },
   },
   {
     id: 'aurora',
@@ -187,13 +283,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#F43F5E',
     avatar: 'https://ui-avatars.com/api/?name=Aurora+AI&background=F43F5E&color=fff',
     status: 'optimal',
-    description: 'Designs and delivers personalized property market updates to over 50,000 registered investors.',
+    description:
+      'Designs and delivers personalized property market updates to over 50,000 registered investors.',
     specialty: 'Investor Email Automation',
-    capabilities: ['Dynamic Newsletter Generation', 'Open-Rate AI Optimization', 'Unsubscribe Compliance'],
+    capabilities: [
+      'Dynamic Newsletter Generation',
+      'Open-Rate AI Optimization',
+      'Unsubscribe Compliance',
+    ],
     slaResponseTime: '< 10s',
     metrics: { accuracyRate: 98.5, tasksCompletedToday: 12000, systemHealth: 'optimal' },
     apiEndpoints: ['/api/marketing/newsletter', '/api/marketing/blast'],
-    dataFlows: { inputs: ['investor_segments', 'featured_deals'], outputs: ['delivered_campaigns', 'engagement_analytics'] },
+    dataFlows: {
+      inputs: ['investor_segments', 'featured_deals'],
+      outputs: ['delivered_campaigns', 'engagement_analytics'],
+    },
   },
   {
     id: 'hazel',
@@ -206,13 +310,17 @@ export const governanceAgents: AssistantDef[] = [
     color: '#A855F7',
     avatar: 'https://ui-avatars.com/api/?name=Hazel+AI&background=A855F7&color=fff',
     status: 'optimal',
-    description: 'Generates customized NDAs, agency listing agreements (Form A/B), and addendums with digital signature integration.',
+    description:
+      'Generates customized NDAs, agency listing agreements (Form A/B), and addendums with digital signature integration.',
     specialty: 'Legal Document Templating',
     capabilities: ['Form A/B/F Template Engine', 'NDA Generator', 'DocuSign/UAE PASS Integration'],
     slaResponseTime: '< 5s',
     metrics: { accuracyRate: 100.0, tasksCompletedToday: 310, systemHealth: 'optimal' },
     apiEndpoints: ['/api/legal/generate-contract', '/api/legal/sign-request'],
-    dataFlows: { inputs: ['deal_parameters', 'party_details'], outputs: ['legally_binding_pdfs', 'signature_audit_trails'] },
+    dataFlows: {
+      inputs: ['deal_parameters', 'party_details'],
+      outputs: ['legally_binding_pdfs', 'signature_audit_trails'],
+    },
   },
   {
     id: 'willow',
@@ -225,13 +333,21 @@ export const governanceAgents: AssistantDef[] = [
     color: '#0284C7',
     avatar: 'https://ui-avatars.com/api/?name=Willow+AI&background=0284C7&color=fff',
     status: 'optimal',
-    description: 'Monitors database latency, edge caching, WebSocket connection pools, and API uptime across the platform.',
+    description:
+      'Monitors database latency, edge caching, WebSocket connection pools, and API uptime across the platform.',
     specialty: 'Cloud Infrastructure & High Availability',
-    capabilities: ['Redis Edge Invalidation', 'Postgres Connection Pooling', '0-Downtime Deployment Sentinel'],
+    capabilities: [
+      'Redis Edge Invalidation',
+      'Postgres Connection Pooling',
+      '0-Downtime Deployment Sentinel',
+    ],
     slaResponseTime: '< 1s',
     metrics: { accuracyRate: 100.0, tasksCompletedToday: 86400, systemHealth: 'optimal' },
     apiEndpoints: ['/api/health', '/api/metrics/infrastructure'],
-    dataFlows: { inputs: ['server_telemetry', 'database_metrics'], outputs: ['health_reports', 'auto_scale_triggers'] },
+    dataFlows: {
+      inputs: ['server_telemetry', 'database_metrics'],
+      outputs: ['health_reports', 'auto_scale_triggers'],
+    },
   },
   {
     id: 'hunter',
@@ -244,13 +360,20 @@ export const governanceAgents: AssistantDef[] = [
     color: '#B91C1C',
     avatar: 'https://ui-avatars.com/api/?name=Hunter+AI&background=B91C1C&color=fff',
     status: 'optimal',
-    description: 'Scans distressed listings, motivated seller signals, and below-market opportunities for instant client acquisition.',
+    description:
+      'Scans distressed listings, motivated seller signals, and below-market opportunities for instant client acquisition.',
     specialty: 'Distressed Asset & Motivated Seller Discovery',
-    capabilities: ['Below-Market Value Scanner', 'Distressed Debt Search', 'Direct-to-Owner Pipeline'],
+    capabilities: [
+      'Below-Market Value Scanner',
+      'Distressed Debt Search',
+      'Direct-to-Owner Pipeline',
+    ],
     slaResponseTime: '< 20s',
     metrics: { accuracyRate: 98.2, tasksCompletedToday: 135, systemHealth: 'optimal' },
     apiEndpoints: ['/api/sourcing/distressed', '/api/sourcing/leads'],
-    dataFlows: { inputs: ['public_auction_feeds', 'mortgage_distress_indicators'], outputs: ['sourcing_pipeline_leads'] },
+    dataFlows: {
+      inputs: ['public_auction_feeds', 'mortgage_distress_indicators'],
+      outputs: ['sourcing_pipeline_leads'],
+    },
   },
 ];
-

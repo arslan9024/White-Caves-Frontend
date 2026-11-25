@@ -45,6 +45,7 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
   const [chatMessages, setChatMessages] = useState<Record<string, ChatMessage[]>>({});
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
   const [isAiComposing, setIsAiComposing] = useState<boolean>(false);
+  const [sendError, setSendError] = useState<string | null>(null);
 
   const {
     selectedAccount,
@@ -172,13 +173,26 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
       return;
     }
 
+    setSendError(null);
     apiClient
       .post(`/linda/send/${encodeURIComponent(selectedConv.id)}`, {
         phoneNumber: selectedConv.phone || selectedConv.id,
         message: textToSend,
         accountPhone: selectedAccount !== 'ALL' ? selectedAccount : undefined,
       })
-      .catch(() => {});
+      .then((res: unknown) => {
+        const json = res as { success?: boolean; error?: string };
+        if (json && json.success === false) {
+          setSendError(json.error || 'Message failed — WhatsApp SIM may be offline.');
+        }
+      })
+      .catch((err: unknown) => {
+        setSendError(
+          err instanceof Error
+            ? err.message
+            : 'Delivery failed — ensure the selected WhatsApp SIM is paired and connected.'
+        );
+      });
   };
 
   const handleAiDraft = (lang: 'EN' | 'AR' = 'EN') => {
@@ -277,6 +291,36 @@ export const LindaLiveWhatsAppWeb: FC<LindaLiveWhatsAppWebProps> = ({
         />
 
         <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, height: '100%' }}>
+          {sendError && (
+            <div
+              role="alert"
+              style={{
+                padding: '6px 12px',
+                background: 'rgba(239, 68, 68, 0.16)',
+                borderBottom: '1px solid rgba(239, 68, 68, 0.45)',
+                color: '#FCA5A5',
+                fontSize: 11,
+                fontWeight: 600,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <span>Delivery error: {sendError}</span>
+              <button
+                type="button"
+                onClick={() => setSendError(null)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#FCA5A5',
+                  cursor: 'pointer',
+                }}
+              >
+                Dismiss
+              </button>
+            </div>
+          )}
           <LindaQuickReplyBar onSelectTemplate={setInputMessage} />
           <LindaChatThreadPane
             isDark={isDark}

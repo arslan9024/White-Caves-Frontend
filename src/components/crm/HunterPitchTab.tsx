@@ -1,25 +1,21 @@
 import React from 'react';
-import { Send, Sparkles } from 'lucide-react';
-import { PitchTemplate } from './hunterProspecting.data';
+import { Send } from 'lucide-react';
+import type { ProspectBuyer } from './hunterProspecting.data';
 
 interface PitchTabProps {
-  selectedPitch: PitchTemplate;
-  setSelectedPitch: (pitch: PitchTemplate) => void;
-  pitchTemplates: PitchTemplate[];
-  handleGenerateCustomPitch: () => void;
-  isGeneratingPitch: boolean;
-  copiedPitch: boolean;
-  handleCopyPitch: () => void;
+  selectedBuyer: ProspectBuyer;
+  pitchText: string;
+  setPitchText: (text: string) => void;
+  sentSuccess: boolean;
+  handleSendPitch: () => void;
 }
 
 export const HunterPitchTab: React.FC<PitchTabProps> = ({
-  selectedPitch,
-  setSelectedPitch,
-  pitchTemplates,
-  handleGenerateCustomPitch,
-  isGeneratingPitch,
-  copiedPitch,
-  handleCopyPitch,
+  selectedBuyer,
+  pitchText,
+  setPitchText,
+  sentSuccess,
+  handleSendPitch,
 }) => {
   return (
         <div

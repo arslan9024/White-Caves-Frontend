@@ -106,12 +106,8 @@ export function useLindaAccountAutoload(
     Record<string, LindaConversationItem[]>
   >({});
   const [accountStatuses, setAccountStatuses] = useState<Record<string, AccountStatus>>({
-    ALL: 'connected',
-    '+971505760056': 'connected',
-    '+971503869886': 'connected',
-    '+971505110636': 'connected',
-    '+971589969886': 'connected',
-    '+971553633595': 'connected',
+    ALL: 'offline',
+    '+971505760056': 'offline',
   });
 
   const setSelectedAccount = useCallback((newAcc: string) => {
@@ -248,7 +244,7 @@ export function useLindaAccountAutoload(
 
   const accountOptions: AccountOption[] = allFilters.map(f => ({
     ...f,
-    status: accountStatuses[f.id] || (f.id === '+971505760056' ? 'connected' : 'connected'),
+    status: accountStatuses[f.id] || 'offline',
   }));
 
   return {

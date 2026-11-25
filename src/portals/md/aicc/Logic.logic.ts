@@ -22,7 +22,7 @@ export interface LiveDelegationEvent {
   startedAt: string;
 }
 
-const STORAGE_KEY = 'wc_aicc_sanctum_departments_v1';
+const STORAGE_KEY = 'wc_aicc_sanctum_departments_v2';
 const AEGIS_FORBIDDEN = new Set([
   'aegis',
   'ada',
@@ -63,18 +63,18 @@ export function useAiccSanctumLogic() {
     {
       id: 'del-01',
       taskId: 'TASK-DH2-RENT-801',
-      targetAgent: 'AI Linda WhatsApp',
-      role: 'Head of WhatsApp Automation',
-      chain: ['zoe', 'maya', 'linda'],
+      targetAgent: 'AI Linda Supervisor (SUP-08-1-01-1)',
+      role: 'Supervisor — WhatsApp Real Estate Automation & 10-SIM Fleet',
+      chain: ['zoe', 'maya', 'nadia-whatsapp-mgr', 'amgr-08-1-01', 'linda'],
       status: 'COMPLETED',
       startedAt: 'Just now',
     },
     {
       id: 'del-02',
       taskId: 'TASK-VAULT-EID-104',
-      targetAgent: 'AI Henry Records',
-      role: 'Chief Document Controller',
-      chain: ['zoe', 'sofia', 'henry'],
+      targetAgent: 'AI Henry Supervisor (SUP-11-1-01-1)',
+      role: 'Supervisor — Chief Document Controller & The Record Keeper',
+      chain: ['zoe', 'sofia', 'mireille-records-mgr', 'amgr-11-1-01', 'henry'],
       status: 'IN_PROGRESS',
       startedAt: '1m ago',
     },
@@ -247,9 +247,9 @@ export function useAiccSanctumLogic() {
 
   const demoteToStandby = useCallback(
     (agentId: string) => {
-      if (agentId === 'henry') {
+      if (agentId === 'henry' || agentId === 'mireille-records-mgr') {
         setGovernanceNotice(
-          'Protected: AI Henry (MGR-11-1) is the sole male Record Keeper and cannot be removed.'
+          'Protected: AI Henry Supervisor (SUP-11-1-01-1) & his Records Division (MGR-11-1) cannot be removed.'
         );
         return;
       }

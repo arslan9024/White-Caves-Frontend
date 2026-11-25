@@ -26,23 +26,23 @@ import { useLindaLiveClock } from './useLindaLiveClock';
  * Refactored under Turing Law (< 250 lines).
  */
 export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
-  const [isConnected, setIsConnected] = useState<boolean>(true);
-  const [lindaStatus, setLindaStatus] = useState<string>('connected');
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [lindaStatus, setLindaStatus] = useState<string>('checking');
   const [loadingAction, setLoadingAction] = useState<'start' | 'stop' | 'restart' | null>(null);
   const [controlError, setControlError] = useState<string>('');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const currentTimeGST = useLindaLiveClock();
-  const [heartbeatLatency, setHeartbeatLatency] = useState<number>(38);
+  const [heartbeatLatency, setHeartbeatLatency] = useState<number>(0);
   const [confirmEmergencyStop, setConfirmEmergencyStop] = useState<boolean>(false);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState<string | null>(null);
   const [isQrLoading, setIsQrLoading] = useState<boolean>(false);
   const [toastNotification, setToastNotification] = useState<string | null>(null);
 
   const [metrics, setMetrics] = useState<LindaMetricsState>({
-    activeSessions: '4 / 5 Online',
-    rateLimit: '42 WPM (Gaussian)',
-    uptime: '99.98% (14d 6h)',
-    memory: '214 MB / 1024 MB',
+    activeSessions: '0 / 10 Online',
+    rateLimit: '0 / 162 hr (Gaussian)',
+    uptime: 'Syncing...',
+    memory: '-- MB',
     conversionVelocity: '94.2%',
     antiBanSafetyScore: '99.8/100',
   });
@@ -213,20 +213,36 @@ export function useLindaOperationsCenter(): UseLindaOperationsCenterReturn {
     setLoadingAction(nextAction);
     setControlError('');
     try {
-      await apiClient.post(isConnected ? '/linda/disconnect' : '/linda/connect', {});
-      setIsConnected(!isConnected);
-      setLindaStatus(!isConnected ? 'connected' : 'disconnected');
-      appendLog(
-        `Runtime switched to ${!isConnected ? 'CONNECTED' : 'DISCONNECTED'} by Managing Director.`
-      );
-    } catch {
-      setIsConnected(!isConnected);
-      setLindaStatus(!isConnected ? 'connected' : 'disconnected');
-      appendLog(`Runtime toggled locally to ${!isConnected ? 'CONNECTED' : 'DISCONNECTED'}.`);
+      const endpoint = isConnected ? '/linda/disconnect' : '/linda/connect';
+      const res = (await apiClient.post(endpoint, {})) as {
+        success?: boolean;
+        message?: string;
+        error?: string;
+      };
+      if (res && res.success === false) {
+        throw new Error(res.error || 'Linda gateway rejected runtime toggle');
+      }
+      if (isConnected) {
+        setIsConnected(false);
+        setLindaStatus('disconnected');
+        appendLog('Primary Master (+971505760056) disconnected by Managing Director.');
+      } else {
+        setLindaStatus('authenticating');
+        appendLog(
+          res?.message ||
+            'Linda initialization started for +971505760056 — open Live QR to complete device link.'
+        );
+      }
+      void refreshLindaStatus();
+    } catch (err) {
+      const errMsg =
+        err instanceof Error ? err.message : 'Unable to reach Linda WhatsApp gateway on :5001';
+      setControlError(errMsg);
+      appendLog(`Runtime toggle failed: ${errMsg}`);
     } finally {
       setLoadingAction(null);
     }
-  }, [appendLog, isConnected, loadingAction]);
+  }, [appendLog, isConnected, loadingAction, refreshLindaStatus]);
 
   const actionHandlers = createLindaActionHandlers({
     appendLog,

@@ -21,16 +21,7 @@ import Profile from '../Profile';
 import { AuthEmailForm } from './AuthEmailForm';
 import { AuthPhoneForm } from './AuthPhoneForm';
 import ProfileCompletion from '../ProfileCompletion';
-import FormField from '../ui/FormField/FormField';
-import {
-  GoogleIcon,
-  AppleIcon,
-  FacebookIcon,
-  EmailIcon,
-  PhoneIcon,
-  LockIcon,
-  ArrowLeftIcon,
-} from './Auth.icons';
+import { GoogleIcon, AppleIcon, FacebookIcon, EmailIcon, PhoneIcon } from './Auth.icons';
 import {
   handleSocialSignIn,
   handleEmailAuth as doEmailAuth,
@@ -39,12 +30,7 @@ import {
   handleLogout,
   resolveFirebaseError,
 } from './Auth.logic';
-import {
-  getAuthToken,
-  setAuthToken,
-  getStoredUser,
-  setStoredUser,
-} from './Auth.data';
+import { getAuthToken, setAuthToken, getStoredUser, setStoredUser } from './Auth.data';
 import { firebaseAuth as auth } from '../../auth/firebaseInit';
 import type { AuthMode, AuthUser, AuthProps } from './Auth.types';
 import type { ConfirmationResult } from 'firebase/auth';
@@ -92,7 +78,7 @@ export default function Auth({ onLogin }: AuthProps) {
   // ─── OTP countdown ───────────────────────────────────────────────────────
   useEffect(() => {
     if (otpCountdown <= 0) return;
-    const t = setTimeout(() => setOtpCountdown((c) => c - 1), 1000);
+    const t = setTimeout(() => setOtpCountdown(c => c - 1), 1000);
     return () => clearTimeout(t);
   }, [otpCountdown]);
 
@@ -102,14 +88,18 @@ export default function Auth({ onLogin }: AuthProps) {
       {
         email: [required(), emailValidator()],
         password: [required(), minLength(6)],
-        confirmPassword: [],  // validated inline in submit
+        confirmPassword: [], // validated inline in submit
         name: isSignUp ? [required()] : [],
-        phone: authMode === 'phone'
-          ? [required(), matchesPattern(PHONE_UAE_RE, 'Please enter a valid phone number with country code')]
-          : [],
+        phone:
+          authMode === 'phone'
+            ? [
+                required(),
+                matchesPattern(PHONE_UAE_RE, 'Please enter a valid phone number with country code'),
+              ]
+            : [],
         otp: confirmationResult !== null ? [required(), minLength(6), maxLength(6)] : [],
       },
-      { email: '', password: '', confirmPassword: '', name: '', phone: '', otp: '' },
+      { email: '', password: '', confirmPassword: '', name: '', phone: '', otp: '' }
     );
 
   // ─── Shared success handler ───────────────────────────────────────────────
@@ -119,7 +109,7 @@ export default function Auth({ onLogin }: AuthProps) {
       dispatch(setUser(toAppUser(user)));
       onLogin(user);
     },
-    [dispatch, onLogin],
+    [dispatch, onLogin]
   );
 
   // ─── Social sign-in ───────────────────────────────────────────────────────
@@ -136,23 +126,32 @@ export default function Auth({ onLogin }: AuthProps) {
         onSuccess(user);
       } catch (err: unknown) {
         const e = err as { code?: string; message?: string };
-        toast.error(resolveFirebaseError(e.code, e.message ?? `Failed to sign in with ${provider}`));
+        toast.error(
+          resolveFirebaseError(e.code, e.message ?? `Failed to sign in with ${provider}`)
+        );
       } finally {
         setLoading(false);
       }
     },
-    [auth, onSuccess, toast],
+    [auth, onSuccess, toast]
   );
 
   // ─── Email auth ───────────────────────────────────────────────────────────
   const handleEmailSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!isValid) { toast.error('Please fix the form errors'); return; }
-      if (isSignUp && values.password !== values.confirmPassword) {
-        toast.error('Passwords do not match'); return;
+      if (!isValid) {
+        toast.error('Please fix the form errors');
+        return;
       }
-      if (!auth) { toast.error('Firebase is not configured.'); return; }
+      if (isSignUp && values.password !== values.confirmPassword) {
+        toast.error('Passwords do not match');
+        return;
+      }
+      if (!auth) {
+        toast.error('Firebase is not configured.');
+        return;
+      }
       setLoading(true);
       try {
         const user = await doEmailAuth(values.email, values.password, values.name, isSignUp);
@@ -167,15 +166,21 @@ export default function Auth({ onLogin }: AuthProps) {
         setLoading(false);
       }
     },
-    [auth, isSignUp, isValid, onSuccess, toast, values],
+    [auth, isSignUp, isValid, onSuccess, toast, values]
   );
 
   // ─── Phone OTP ────────────────────────────────────────────────────────────
   const handleSendOTP = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!isValid) { toast.error('Please enter a valid phone number'); return; }
-      if (!auth) { toast.error('Firebase is not configured.'); return; }
+      if (!isValid) {
+        toast.error('Please enter a valid phone number');
+        return;
+      }
+      if (!auth) {
+        toast.error('Firebase is not configured.');
+        return;
+      }
       setLoading(true);
       try {
         const result = await sendPhoneOTP(values.phone);
@@ -184,20 +189,28 @@ export default function Auth({ onLogin }: AuthProps) {
         toast.success('OTP sent to your phone!');
       } catch (err: unknown) {
         const e = err as { code?: string };
-        toast.error(resolveFirebaseError(e.code, 'Failed to send OTP. Please check your phone number.'));
+        toast.error(
+          resolveFirebaseError(e.code, 'Failed to send OTP. Please check your phone number.')
+        );
         if (typeof window !== 'undefined') window.recaptchaVerifier = null;
       } finally {
         setLoading(false);
       }
     },
-    [auth, isValid, toast, values.phone],
+    [auth, isValid, toast, values.phone]
   );
 
   const handleVerifyOTP = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!values.otp || values.otp.length !== 6) { toast.error('Please enter the 6-digit OTP'); return; }
-      if (!confirmationResult) { toast.error('Please send OTP first'); return; }
+      if (!values.otp || values.otp.length !== 6) {
+        toast.error('Please enter the 6-digit OTP');
+        return;
+      }
+      if (!confirmationResult) {
+        toast.error('Please send OTP first');
+        return;
+      }
       setLoading(true);
       try {
         const user = await verifyPhoneOTP(confirmationResult, values.otp, values.phone);
@@ -210,7 +223,7 @@ export default function Auth({ onLogin }: AuthProps) {
         setLoading(false);
       }
     },
-    [confirmationResult, onSuccess, toast, values.otp, values.phone],
+    [confirmationResult, onSuccess, toast, values.otp, values.phone]
   );
 
   // ─── Logout ───────────────────────────────────────────────────────────────
@@ -238,7 +251,7 @@ export default function Auth({ onLogin }: AuthProps) {
       setPendingToken(null);
       onLogin(user);
     },
-    [dispatch, onLogin],
+    [dispatch, onLogin]
   );
 
   const onProfileSkip = useCallback(() => {
@@ -276,19 +289,28 @@ export default function Auth({ onLogin }: AuthProps) {
       <div className="auth-container">
         {/* Header */}
         <div className="auth-header">
-          <div className="auth-logo"><div className="auth-logo-icon">WC</div></div>
+          <div className="auth-logo">
+            <div className="auth-logo-icon">WC</div>
+          </div>
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to access your account</p>
         </div>
 
         {/* Method tabs */}
         <div className="auth-method-selector">
-          {(['phone', 'email'] as AuthMode[]).map((m) => (
-            <button key={m} className={`method-btn ${authMode === m ? 'active' : ''}`} onClick={() => setAuthMode(m)}>
+          {(['phone', 'email'] as AuthMode[]).map(m => (
+            <button
+              key={m}
+              className={`method-btn ${authMode === m ? 'active' : ''}`}
+              onClick={() => setAuthMode(m)}
+            >
               {m === 'phone' ? <PhoneIcon /> : <EmailIcon />}
               <span>{m.charAt(0).toUpperCase() + m.slice(1)}</span>
             </button>
           ))}
+        </div>
+
+        <div className="auth-content">
           {authMode === 'email' && (
             <AuthEmailForm
               isSignUp={isSignUp}
@@ -316,13 +338,22 @@ export default function Auth({ onLogin }: AuthProps) {
               handleSendOTP={handleSendOTP}
               handleVerifyOTP={handleVerifyOTP}
               setConfirmationResult={setConfirmationResult}
+              otpCountdown={otpCountdown}
+              setFieldValue={setFieldValue}
             />
           )}
           {/* Social buttons */}
-          <div className="auth-divider"><span>or continue with</span></div>
+          <div className="auth-divider">
+            <span>or continue with</span>
+          </div>
           <div className="social-buttons">
-            {(['google', 'apple', 'facebook'] as const).map((p) => (
-              <button key={p} className={`social-btn ${p}`} onClick={() => handleSocial(p)} disabled={loading}>
+            {(['google', 'apple', 'facebook'] as const).map(p => (
+              <button
+                key={p}
+                className={`social-btn ${p}`}
+                onClick={() => handleSocial(p)}
+                disabled={loading}
+              >
                 {p === 'google' ? <GoogleIcon /> : p === 'apple' ? <AppleIcon /> : <FacebookIcon />}
                 <span>{p.charAt(0).toUpperCase() + p.slice(1)}</span>
               </button>
@@ -331,10 +362,12 @@ export default function Auth({ onLogin }: AuthProps) {
         </div>
 
         <div className="auth-footer">
-          <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+          <p>
+            By continuing, you agree to our <a href="#">Terms of Service</a> and{' '}
+            <a href="#">Privacy Policy</a>
+          </p>
         </div>
       </div>
     </div>
   );
 }
-

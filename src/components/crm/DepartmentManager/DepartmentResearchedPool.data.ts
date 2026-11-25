@@ -1,4 +1,5 @@
 import type { SupervisorDef } from '../../../data/assistants108Registry.data';
+import { DEPARTMENT_RESEARCHED_POOL_EXTENDED } from './DepartmentResearchedPoolExtended.data';
 
 /**
  * Researched corporate departments, delivery units, and operational squads
@@ -206,4 +207,7 @@ export const RESEARCHED_ORGANIZATION_POOL: SupervisorDef[] = [
   },
 
   // ── 2. seedData.js Core Operational Squads & Services ──────────────────────
+  ...(DEPARTMENT_RESEARCHED_POOL_EXTENDED as SupervisorDef[]),
+];
+
 export * from './DepartmentResearchedPoolExtended.data';

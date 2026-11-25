@@ -64,7 +64,10 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
 
       let json: {
         success?: boolean;
+        asyncJob?: boolean;
         data?: {
+          jobId?: string;
+          status?: string;
           validLandlords?: number;
           totalRecipients?: number;
           dryRunCount?: number;
@@ -88,15 +91,21 @@ export const LindaDh2CampaignOperationsCenter: FC<Props> = ({ apiBaseUrl = '', a
         if (!json?.success) throw new Error(json?.error || 'Failed to dispatch DH2 campaign');
       }
 
-      const count =
-        json.data?.sentCount ||
-        json.data?.dryRunCount ||
-        json.data?.validLandlords ||
-        json.data?.totalRecipients ||
-        'Eligible';
-      setLaunchSuccess(
-        `${isDryRun ? 'Dry-Run Verified' : 'Dispatched'}! ${count} recipients audited under Public Listing Privacy Rule & Gaussian anti-ban pacing.`
-      );
+      if (json.asyncJob && json.data?.jobId) {
+        setLaunchSuccess(
+          `Live Fleet Job Queued (${json.data.jobId}) for ${json.data.totalRecipients ?? 'eligible'} recipients — running safely in background with 35–65s Gaussian anti-ban pacing.`
+        );
+      } else {
+        const count =
+          json.data?.sentCount ||
+          json.data?.dryRunCount ||
+          json.data?.validLandlords ||
+          json.data?.totalRecipients ||
+          'Eligible';
+        setLaunchSuccess(
+          `${isDryRun ? 'Dry-Run Verified' : 'Dispatched'}! ${count} recipients audited under Public Listing Privacy Rule & Gaussian anti-ban pacing.`
+        );
+      }
     } catch (err: unknown) {
       setLaunchError(err instanceof Error ? err.message : 'Campaign launch failed');
     } finally {

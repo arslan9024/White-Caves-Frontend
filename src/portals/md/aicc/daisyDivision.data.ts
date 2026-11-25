@@ -49,7 +49,7 @@ const AM_CONFIGS: Array<[string, string]> = [
   ['AI Karima Leasing', 'Centaury, Janusia & Sycamore'],
   ['AI Lubna Leasing', 'Sanctnary, Aquilegia & Mimosa'],
   ['AI Maha Leasing', 'Odora, Lirio & Veronica'],
-  ['AIoura Leasing', 'Viridis Towers A-D'],
+  ['AI Noura Leasing', 'Viridis Towers A-D'],
   ['AI Rania Leasing', 'Navitas Hotel Residences'],
   ['AI Salma Leasing', 'Elo, Park Greens & Verona'],
 ];
@@ -63,8 +63,14 @@ export const DAISY_12_ASSISTANT_MANAGERS: DaisyAssistantManagerCard[] = AM_CONFI
     const supervisors = SUP_NAMES.map((sName, sIdx) => ({
       id: `SUP-05-2-${String(slot).padStart(2, '0')}-${sIdx + 1}`,
       slot: sIdx + 1,
-      name: `AI ${sName} Sup-${slot}.${sIdx + 1}`,
-      zone: `${clusterFocus.split(',')[0]} Zone ${sIdx + 1}`,
+      name:
+        slot === 1 && sIdx === 0
+          ? 'AI Daisy Supervisor'
+          : `AI ${sName} Sup-${slot}.${sIdx + 1}`,
+      zone:
+        slot === 1 && sIdx === 0
+          ? 'DAMAC Hills 2 Primary Leasing Desk'
+          : `${clusterFocus.split(',')[0]} Zone ${sIdx + 1}`,
     }));
     return { id: amId, slot, name, clusterFocus, reportsToId: 'MGR-05-2', supervisors };
   }
@@ -73,7 +79,7 @@ export const DAISY_12_ASSISTANT_MANAGERS: DaisyAssistantManagerCard[] = AM_CONFI
 export const DAISY_TEAM_LEADER = {
   id: 'TL-05-2-01',
   name: 'AI Layla DH2 Field Team Leader',
-  reportsToId: 'SUP-05-2-01-1 (AI Noor Sup-1.1)',
+  reportsToId: 'SUP-05-2-01-1 (AI Daisy Supervisor)',
   roleTitle: 'DAMAC Hills 2 WhatsApp Outreach & Viewing Squad Leader',
 };
 
@@ -208,9 +214,9 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-02',
     title: 'Inventory Vault & Google Drive Formula Sync',
-    aiccActorName: 'AI Mary Inventory + AI Henry Record Keeper',
-    aiccActorCode: 'MGR-06-1 / MGR-11-1',
-    reportingChain: 'Mary/Henry -> Dir Eleanor/Victoria -> COO Zoe -> MD Arslan Malik',
+    aiccActorName: 'AI Mary Supervisor + AI Henry Supervisor',
+    aiccActorCode: 'SUP-06-1-01-1 / SUP-11-1-01-1',
+    reportingChain: 'Mary (SUP-06-1-01-1) & Henry (SUP-11-1-01-1) -> AMs -> Mgrs -> Dirs -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Update scoped Mary Inventory Vault (Agents own vs MD all)',
       'Enforce Drive formula: Area/Project/Unit/[5 Canonical Folders]',
@@ -260,6 +266,30 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
     tasks: [
       'Send care messages from +971505760056',
       'Schedule 90-day RERA notice & 30-day renewal check on MD Calendar',
+    ],
+  },
+  {
+    collectionCode: 'TMS-LEASE-07',
+    title: 'Track A: Branded Auth, MD/Landlord/Tenant Portals & 12-Stage Deal Cockpit',
+    aiccActorName: 'AI Noor (Leasing Portals & Deal Cockpit Supervisor)',
+    aiccActorCode: 'SUP-05-2-01-1 / SQD-05-2-01-1',
+    reportingChain:
+      'SUP-05-2-01-1 AI Noor -> AMGR-05-2-01 AI Amina -> MGR-05-2 AI Daisy -> DIR-05 AI Clara -> AI Zoe (COO) -> MD-01 Arslan Malik',
+    tasks: [
+      'Maintain branded White Caves MD / Landlord / Tenant Auth Gateway & Portals',
+      'Enforce 12-Stage Deal Cockpit sequential gates, 5% VAT receipts & Google Drive 4-folder sync',
+    ],
+  },
+  {
+    collectionCode: 'TMS-ARCH-W2',
+    title: 'Track B: Wave 2 Atomic Decomposition (< 350 Lines AEG-042 Governance)',
+    aiccActorName: 'AI Mary Wilkes (Frontend Architecture Decomposition Supervisor)',
+    aiccActorCode: 'SUP-12-1-01-1 / SQD-12-1-01-1',
+    reportingChain:
+      'SUP-12-1-01-1 AI Mary Wilkes -> AMGR-12-1-01 AI Ada -> MGR-12-1 AI Victoria Secretariat -> DIR-12 AI Victoria -> AI Zoe (COO) -> MD-01 Arslan Malik',
+    tasks: [
+      'Verify & decompose oversized frontend monoliths into < 350-line modules with backwards-compatible barrels',
+      'Maintain zero ESLint warnings and 100% passing targeted Vitest suites',
     ],
   },
 ];

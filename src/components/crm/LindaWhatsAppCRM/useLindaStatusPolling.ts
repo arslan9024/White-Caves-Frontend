@@ -34,10 +34,12 @@ export function useLindaStatusPolling({
           try {
             const data = JSON.parse(event.data);
             if (data) {
+              const onlineCount = typeof data.activeSessions === 'number' ? data.activeSessions : 0;
+              const totalLines = typeof data.poolSize === 'number' ? data.poolSize : 10;
               setMetrics(prev => ({
                 ...prev,
                 uptime: data.uptime || prev.uptime,
-                activeSessions: `${data.activeSessions || 4} / 5 Online`,
+                activeSessions: `${onlineCount} / ${totalLines} Online`,
                 rateLimit: data.rateLimit || prev.rateLimit,
                 memory: data.memory || prev.memory,
               }));

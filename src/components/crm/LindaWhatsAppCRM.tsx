@@ -241,10 +241,14 @@ const LindaWhatsAppCRM = memo<LindaWhatsAppCRMProps>(
                 onSendMessage={(convId, text) => {
                   const match = conversations.find(c => c.id === convId);
                   if (match) {
-                    handleSendQuickReply({ ...match, lastMessage: text });
+                    setToastNotification(
+                      `Sending WhatsApp message to ${match.contactName}: ${text.slice(0, 40)}`
+                    );
                   }
                 }}
-                onAutoReplyWithAI={handleSendQuickReply}
+                onAutoReplyWithAI={conv => {
+                  setToastNotification(`AI Draft generated for ${conv.contactName}`);
+                }}
               />
             )}
 

@@ -18,6 +18,7 @@ import { AssetProfileDrawer } from './sections/AssetProfileDrawer';
 import { FilterDesk } from './sections/FilterDesk';
 import { InventoryHeader } from './sections/InventoryHeader';
 import { PropertyMatrix } from './sections/PropertyMatrix';
+import { MaryGoogleSheetsSupervisorModal } from './sections/MaryGoogleSheetsSupervisorModal';
 import {
   buildFallbackOwner,
   buildOwnerMap,
@@ -50,6 +51,7 @@ export default function MaryInventoryCRM() {
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showSheetsModal, setShowSheetsModal] = useState(false);
   const [, setShowEditDetailsModal] = useState(false);
   const [, setShowEditOwnerModal] = useState(false);
   const [newPropForm, setNewPropForm] = useState<NewPropertyFormState>(INITIAL_NEW_PROPERTY_FORM);
@@ -152,6 +154,7 @@ export default function MaryInventoryCRM() {
         loadingData={loadingData}
         analyticsKPIs={analyticsKPIs}
         onOpenAddModal={() => setShowAddModal(true)}
+        onOpenSheetsSupervisor={() => setShowSheetsModal(true)}
       />
 
       <FilterDesk
@@ -205,6 +208,14 @@ export default function MaryInventoryCRM() {
           onClose={() => setShowAddModal(false)}
         />
       )}
+
+      <MaryGoogleSheetsSupervisorModal
+        isOpen={showSheetsModal}
+        onClose={() => setShowSheetsModal(false)}
+        onIngestComplete={newProps => {
+          setPropertiesList(prev => [...newProps, ...prev]);
+        }}
+      />
     </div>
   );
 }

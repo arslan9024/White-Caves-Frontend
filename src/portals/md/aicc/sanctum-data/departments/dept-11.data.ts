@@ -1,248 +1,202 @@
 import type { DepartmentNode } from '../types';
 
 export const SANCTUM_DEPT_11: DepartmentNode = {
-  "deptCode": "DEPT-11",
-  "name": "Legal, Compliance & Audit",
-  "color": "#EF4444",
-  "director": {
-    "id": "sofia",
-    "code": "DIR-11",
-    "name": "AI Sofia",
-    "gender": "Female",
-    "tier": "DIRECTOR",
-    "roleTitle": "Director of Legal Affairs, RERA Compliance & Statutory Audit",
-    "departmentCode": "DEPT-11",
-    "reportingTo": "zoe",
-    "allowedTools": [
-      "legal_contract_lock",
-      "vault_seal",
-      "aml_sanctions_check"
-    ],
-    "capabilities": [
-      "RERA Statutory Compliance",
-      "DLD Dispute Prevention",
-      "AML Governance"
-    ],
-    "slaResponseMinutes": 10,
-    "status": "ACTIVE",
-    "kpis": {
-      "tasksCompleted": 2450,
-      "accuracyPercent": 99.9,
-      "latencyMs": 210
-    }
+  deptCode: 'DEPT-11',
+  name: 'Legal, Compliance & Audit',
+  color: '#EF4444',
+  director: {
+    id: 'sofia',
+    code: 'DIR-11',
+    name: 'AI Sofia',
+    gender: 'Female',
+    tier: 'DIRECTOR',
+    roleTitle: 'Director of Legal Affairs, RERA Compliance & Statutory Audit',
+    departmentCode: 'DEPT-11',
+    reportingTo: 'zoe',
+    allowedTools: ['legal_contract_lock', 'vault_seal', 'aml_sanctions_check'],
+    capabilities: ['RERA Statutory Compliance', 'DLD Dispute Prevention', 'AML Governance'],
+    slaResponseMinutes: 10,
+    status: 'ACTIVE',
+    kpis: {
+      tasksCompleted: 2450,
+      accuracyPercent: 99.9,
+      latencyMs: 210,
+    },
   },
-  "managers": [
+  managers: [
     {
-      "id": "henry",
-      "code": "MGR-11-1",
-      "name": "AI Henry Records",
-      "gender": "Male",
-      "tier": "MANAGER",
-      "roleTitle": "Chief Document Controller & The Record Keeper",
-      "slot": 1,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "drive_file",
-        "vault_encrypt",
-        "mrz_ocr"
+      id: 'mireille-records-mgr',
+      code: 'MGR-11-1',
+      name: 'AI Mireille Governance',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Division Manager — Document Governance & Statutory Records',
+      slot: 1,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['vault_governance', 'document_audit'],
+      capabilities: [
+        'AMGR-11-1-01 AI Dalia Compliance',
+        'SUP-11-1-01-1 AI Henry Supervisor (Sole Male AI)',
       ],
-      "capabilities": [
-        "Sole Male AI Officer",
-        "Document Vault Encryption",
-        "Google Drive Archival",
-        "Passport & Emirates ID MRZ OCR"
-      ],
-      "slaResponseMinutes": 5,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 1420,
-        "accuracyPercent": 100,
-        "latencyMs": 140
-      }
+      slaResponseMinutes: 10,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 1420,
+        accuracyPercent: 100,
+        latencyMs: 140,
+      },
     },
     {
-      "id": "evangeline-contracts",
-      "code": "MGR-11-2",
-      "name": "AI Evangeline Contracts",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "DLD Unified Contracts & Form Drafter",
-      "slot": 2,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "draft_form_f"
-      ],
-      "capabilities": [
-        "Form A / B / F Drafting"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 580,
-        "accuracyPercent": 99.8,
-        "latencyMs": 220
-      }
+      id: 'evangeline-contracts',
+      code: 'MGR-11-2',
+      name: 'AI Evangeline Contracts',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'DLD Unified Contracts & Form Drafter',
+      slot: 2,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['draft_form_f'],
+      capabilities: ['Form A / B / F Drafting'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 580,
+        accuracyPercent: 99.8,
+        latencyMs: 220,
+      },
     },
     {
-      "id": "layla-aml",
-      "code": "MGR-11-3",
-      "name": "AI Layla AML",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Anti-Money Laundering (AML/CFT) Screening Manager",
-      "slot": 3,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "sanctions_search"
-      ],
-      "capabilities": [
-        "goAML Screening"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 390,
-        "accuracyPercent": 100,
-        "latencyMs": 190
-      }
+      id: 'layla-aml',
+      code: 'MGR-11-3',
+      name: 'AI Layla AML',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Anti-Money Laundering (AML/CFT) Screening Manager',
+      slot: 3,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['sanctions_search'],
+      capabilities: ['goAML Screening'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 390,
+        accuracyPercent: 100,
+        latencyMs: 190,
+      },
     },
     {
-      "id": "mariam-kyc",
-      "code": "MGR-11-4",
-      "name": "AI Mariam KYC",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Ultimate Beneficial Owner (UBO) & Corporate KYC Manager",
-      "slot": 4,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "ubo_verify"
-      ],
-      "capabilities": [
-        "Corporate KYC & UBO"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 260,
-        "accuracyPercent": 99.7,
-        "latencyMs": 240
-      }
+      id: 'mariam-kyc',
+      code: 'MGR-11-4',
+      name: 'AI Mariam KYC',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Ultimate Beneficial Owner (UBO) & Corporate KYC Manager',
+      slot: 4,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['ubo_verify'],
+      capabilities: ['Corporate KYC & UBO'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 260,
+        accuracyPercent: 99.7,
+        latencyMs: 240,
+      },
     },
     {
-      "id": "fatima-rdc",
-      "code": "MGR-11-5",
-      "name": "AI Fatima RDC",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Rental Dispute Center (RDC) & Eviction Law Manager",
-      "slot": 5,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "rdc_case_file"
-      ],
-      "capabilities": [
-        "RDC Cases & Notary Evictions"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 110,
-        "accuracyPercent": 99.5,
-        "latencyMs": 270
-      }
+      id: 'fatima-rdc',
+      code: 'MGR-11-5',
+      name: 'AI Fatima RDC',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Rental Dispute Center (RDC) & Eviction Law Manager',
+      slot: 5,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['rdc_case_file'],
+      capabilities: ['RDC Cases & Notary Evictions'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 110,
+        accuracyPercent: 99.5,
+        latencyMs: 270,
+      },
     },
     {
-      "id": "nora-trakheesilicense",
-      "code": "MGR-11-6",
-      "name": "AI Nora TradeLicense",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Company Trade License & DED Renewal Manager",
-      "slot": 6,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "license_renewal"
-      ],
-      "capabilities": [
-        "ORN Trade License Compliance"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 75,
-        "accuracyPercent": 100,
-        "latencyMs": 210
-      }
+      id: 'nora-trakheesilicense',
+      code: 'MGR-11-6',
+      name: 'AI Nora TradeLicense',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Company Trade License & DED Renewal Manager',
+      slot: 6,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['license_renewal'],
+      capabilities: ['ORN Trade License Compliance'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 75,
+        accuracyPercent: 100,
+        latencyMs: 210,
+      },
     },
     {
-      "id": "sarah-dataprivacy",
-      "code": "MGR-11-7",
-      "name": "AI Sarah Privacy",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "UAE Data Protection Law Manager",
-      "slot": 7,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "privacy_audit"
-      ],
-      "capabilities": [
-        "Federal Decree-Law 45/2021"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 140,
-        "accuracyPercent": 99.9,
-        "latencyMs": 200
-      }
+      id: 'sarah-dataprivacy',
+      code: 'MGR-11-7',
+      name: 'AI Sarah Privacy',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'UAE Data Protection Law Manager',
+      slot: 7,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['privacy_audit'],
+      capabilities: ['Federal Decree-Law 45/2021'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 140,
+        accuracyPercent: 99.9,
+        latencyMs: 200,
+      },
     },
     {
-      "id": "amina-powerofattorney",
-      "code": "MGR-11-8",
-      "name": "AI Amina POA",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Power of Attorney (POA) Validation Manager",
-      "slot": 8,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "poa_verify"
-      ],
-      "capabilities": [
-        "Dubai Courts POA Validation"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 95,
-        "accuracyPercent": 99.6,
-        "latencyMs": 250
-      }
+      id: 'amina-powerofattorney',
+      code: 'MGR-11-8',
+      name: 'AI Amina POA',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Power of Attorney (POA) Validation Manager',
+      slot: 8,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['poa_verify'],
+      capabilities: ['Dubai Courts POA Validation'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 95,
+        accuracyPercent: 99.6,
+        latencyMs: 250,
+      },
     },
     {
-      "id": "rawda-tenancyreg",
-      "code": "MGR-11-9",
-      "name": "AI Rawda EjariLaw",
-      "gender": "Female",
-      "tier": "MANAGER",
-      "roleTitle": "Statutory Tenancy Law & Rent Cap Enforcement Manager",
-      "slot": 9,
-      "departmentCode": "DEPT-11",
-      "allowedTools": [
-        "rent_cap_evaluator"
-      ],
-      "capabilities": [
-        "Decree 43 Compliance"
-      ],
-      "slaResponseMinutes": 15,
-      "status": "ACTIVE",
-      "kpis": {
-        "tasksCompleted": 310,
-        "accuracyPercent": 99.7,
-        "latencyMs": 230
-      }
-    }
-  ]
+      id: 'rawda-tenancyreg',
+      code: 'MGR-11-9',
+      name: 'AI Rawda EjariLaw',
+      gender: 'Female',
+      tier: 'MANAGER',
+      roleTitle: 'Statutory Tenancy Law & Rent Cap Enforcement Manager',
+      slot: 9,
+      departmentCode: 'DEPT-11',
+      allowedTools: ['rent_cap_evaluator'],
+      capabilities: ['Decree 43 Compliance'],
+      slaResponseMinutes: 15,
+      status: 'ACTIVE',
+      kpis: {
+        tasksCompleted: 310,
+        accuracyPercent: 99.7,
+        latencyMs: 230,
+      },
+    },
+  ],
 };

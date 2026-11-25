@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useRef } from 'react';
-import Tesseract from 'tesseract.js';
 import { createLogger } from '../../../utils/logger';
 import {
   Upload,
@@ -15,12 +14,49 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import * as S from './ImageDataExtractor.styles';
-
-/** Parsed data extracted from an image */
 import {
-  ParsedData, ExtractedDataItem, UploadEntry, EditingCell,
-  patterns, parseTextData, processImage
+  ExtractedDataItem,
+  UploadEntry,
+  EditingCell,
+  MAX_FILE_SIZE_MB,
+  MAX_FILE_SIZE_BYTES,
+  processImage,
 } from './imageDataExtractor.helpers';
+
+const ImageDataExtractor = ({
+  onDataExtracted,
+}: {
+  onDataExtracted?: (data: ExtractedDataItem[]) => void;
+}) => {
+  const [uploadedFiles, setUploadedFiles] = useState<UploadEntry[]>([]);
+  const [extractedData, setExtractedData] = useState<ExtractedDataItem[]>([]);
+  const [processing, setProcessing] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [editingCell, setEditingCell] = useState<EditingCell | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = useCallback(async (files: FileList) => {
+    const allFiles = Array.from(files);
+    const typeValidFiles = allFiles.filter(
+      f => f.type.startsWith('image/') || f.type === 'application/pdf'
+    );
+    const oversized = typeValidFiles.filter(f => f.size > MAX_FILE_SIZE_BYTES);
+    const validFiles = typeValidFiles.filter(f => f.size <= MAX_FILE_SIZE_BYTES);
+
+    if (oversized.length > 0) {
+      const log = createLogger('ImageDataExtractor');
+      log.warn(
+        `Skipped ${oversized.length} file(s) exceeding ${MAX_FILE_SIZE_MB}MB limit: ${oversized.map(f => f.name).join(', ')}`
+      );
+    }
+
+    if (validFiles.length === 0) return;
+
+    setProcessing(true);
+    const newUploads: UploadEntry[] = validFiles.map(f => ({
+      id: Date.now() + Math.random(),
+      file: f,
       name: f.name,
       status: 'processing' as const,
     }));
@@ -294,4 +330,3 @@ import {
 };
 
 export default ImageDataExtractor;
-

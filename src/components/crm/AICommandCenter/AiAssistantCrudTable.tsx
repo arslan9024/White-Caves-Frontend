@@ -9,9 +9,11 @@ import { Bot, Plus, Trash2, RefreshCw, Cpu } from 'lucide-react';
 import { Flex, Grid, Card, CardHeader, CardBody } from '../../ui/chakra';
 import { useTheme } from '../../../context/ThemeContext';
 
-export interface AiAssistantRecord {
 import { AiAssistantRecord, INITIAL_SEED } from './aiAssistantCrud.data';
 import { AiAssistantCreateForm } from './AiAssistantCreateForm';
+
+export type { AiAssistantRecord };
+
 export const AiAssistantCrudTable: FC = () => {
   const { isDark } = useTheme();
   const [assistants, setAssistants] = useState<AiAssistantRecord[]>(INITIAL_SEED);
@@ -140,16 +142,16 @@ export const AiAssistantCrudTable: FC = () => {
 
       {isCreating && (
         <Card bg={cardBg} borderColor="#EF4444" p={16} data-testid="ai-assistant-form-card">
-            <AiAssistantCreateForm
-              formData={formData}
-              setFormData={setFormData}
-              handleCreate={handleCreate}
-              cardBg={cardBg}
-              borderColor={borderColor}
-              textColor={textColor}
-              subTextColor={subTextColor}
-              inputBg={inputBg}
-            />
+          <AiAssistantCreateForm
+            formData={formData}
+            setFormData={setFormData}
+            handleCreate={handleCreate}
+            isDark={isDark}
+            borderTone={borderTone}
+            textColor={textColor}
+            subtextColor={subtextColor}
+            onCancel={() => setIsCreating(false)}
+          />
         </Card>
       )}
 
@@ -265,4 +267,3 @@ export const AiAssistantCrudTable: FC = () => {
 };
 
 export default AiAssistantCrudTable;
-

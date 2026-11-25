@@ -1,28 +1,28 @@
 /* ==========================================================================
-   AuthPages.css — White Caves Luxury Authentication UI
-   Strict Brand: Champagne Gold #C6A87C | Deep Slate #0f172a
+   AuthPages.css — White Caves Sovereign Authentication UI
+   Strict Brand: Crimson Red #EF4444 | Deep Slate #0F172A | Pure White #FFFFFF
    WCAG AA Contrast: All text passes 4.5:1 ratio minimum
    ========================================================================== */
 
 /* ─── Design Tokens ─────────────────────────────────────────────────── */
 :root {
-  --brand-primary: #c6a87c;
-  --brand-primary-hover: #d4af37;
-  --brand-primary-glow: rgba(198, 168, 124, 0.25);
+  --brand-primary: #ef4444;
+  --brand-primary-hover: #dc2626;
+  --brand-primary-glow: rgba(239, 68, 68, 0.28);
   --brand-bg-dark: #0f172a;
   --brand-bg-deeper: #050810;
   --brand-surface: rgba(255, 255, 255, 0.04);
   --brand-surface-hover: rgba(255, 255, 255, 0.08);
   --brand-surface-active: rgba(255, 255, 255, 0.12);
-  --brand-border: rgba(255, 255, 255, 0.08);
-  --brand-border-focus: rgba(198, 168, 124, 0.5);
-  --brand-text-primary: #f8fafc;
+  --brand-border: rgba(255, 255, 255, 0.1);
+  --brand-border-focus: rgba(239, 68, 68, 0.65);
+  --brand-text-primary: #ffffff;
   --brand-text-muted: #cbd5e1;
   --brand-text-faint: #94a3b8;
-  --brand-glow-primary: rgba(198, 168, 124, 0.12);
-  --brand-glow-secondary: rgba(59, 130, 246, 0.06);
+  --brand-glow-primary: rgba(239, 68, 68, 0.16);
+  --brand-glow-secondary: rgba(15, 23, 42, 0.4);
   --brand-error: #f87171;
-  --brand-error-bg: rgba(248, 113, 113, 0.08);
+  --brand-error-bg: rgba(239, 68, 68, 0.12);
   --brand-success: #34d399;
   --brand-warning: #fbbf24;
   --auth-radius: 20px;
@@ -488,8 +488,8 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%);
-  color: #0f172a;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
   border: none;
   border-radius: var(--auth-radius-sm);
   padding: 14px 20px;

@@ -19,11 +19,7 @@ import {
 import { Config } from '../config/constants';
 import { authFetch } from '../utils/authFetch';
 import { createLogger } from '../utils/logger';
-
-const log = createLogger('nadiaAPI');
-const NADIA_API = `${Config.API_URL}/api/nadia`;
 import {
-  normalizeConversationStatus,
   denormalizeConversationStatus,
   denormalizeListStatus,
   normalizeConversation,
@@ -31,6 +27,12 @@ import {
   normalizeQueuedConversation,
 } from './nadiaMappers';
 
+const log = createLogger('nadiaAPI');
+const NADIA_API = `${Config.API_URL}/api/nadia`;
+
+/**
+ * Generic fetch wrapper with error handling
+ */
 async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${NADIA_API}${endpoint}`;
 
