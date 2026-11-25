@@ -3,6 +3,7 @@
  * Tests for Phase 2.8: My Lease tab
  */
 
+import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -180,4 +181,3 @@ describe('TenantLeaseTab', () => {
     expect(mockAuthFetch).toHaveBeenCalledWith('/api/portal/tenant/lease');
   });
 });
-

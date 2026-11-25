@@ -3,6 +3,7 @@
  * Tests for Phase 2.9
  */
 
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -130,4 +131,3 @@ describe('TenantPaymentHistoryTab', () => {
     ).toBeInTheDocument();
   });
 });
-

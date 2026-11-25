@@ -3,6 +3,7 @@
  * Tests for Phase 2.11
  */
 
+import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
@@ -114,4 +115,3 @@ describe('TenantDocumentsTab', () => {
     expect(screen.getByText(/You must be logged in to view your documents/i)).toBeInTheDocument();
   });
 });
-
