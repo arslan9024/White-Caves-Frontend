@@ -5,19 +5,12 @@
  * Colors: Pure White (#FFFFFF), Slate (#0F172A), Crimson Red (#EF4444).
  */
 
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { PortalLogoRing } from '../../portal/PortalLogoRing';
 import { AIOrganogramTree } from '../organogram/AIOrganogramTree';
+import { MdDailySummaryLiveStrip } from './MdDailySummaryLiveStrip';
 import type { SupervisorDef } from '../../../data/assistants108Registry.data';
-import {
-  TrendingUp,
-  ShieldCheck,
-  Building2,
-  Users,
-  Briefcase,
-  FileCheck,
-  Zap,
-} from 'lucide-react';
+import { ShieldCheck, Building2, Users, Briefcase, Zap } from 'lucide-react';
 
 export interface MdExecutiveCockpitProps {
   onNavigate?: (route: string) => void;
@@ -28,8 +21,6 @@ export const MdExecutiveCockpit: FC<MdExecutiveCockpitProps> = ({
   onNavigate,
   onSelectAssistant,
 }) => {
-  const [activeMetricDeck, setActiveMetricDeck] = useState<'all' | 'statutory' | 'revenue'>('all');
-
   const executiveKpis = [
     {
       label: 'Corporate Entities',
@@ -130,10 +121,10 @@ export const MdExecutiveCockpit: FC<MdExecutiveCockpitProps> = ({
             }}
           >
             <div>
-              <div style={{ fontSize: '12px', color: '#94A3B8', fontWeight: 600 }}>
-                {kpi.label}
-              </div>
-              <div style={{ fontSize: '20px', fontWeight: 800, color: '#FFFFFF', marginTop: '4px' }}>
+              <div style={{ fontSize: '12px', color: '#94A3B8', fontWeight: 600 }}>{kpi.label}</div>
+              <div
+                style={{ fontSize: '20px', fontWeight: 800, color: '#FFFFFF', marginTop: '4px' }}
+              >
                 {kpi.value}
               </div>
               <div style={{ fontSize: '11px', color: '#64748B', marginTop: '2px' }}>
@@ -156,6 +147,9 @@ export const MdExecutiveCockpit: FC<MdExecutiveCockpitProps> = ({
           </div>
         ))}
       </section>
+
+      {/* ── LIVE DAILY LEASING SUMMARY (GET /api/leasing-formula/cockpit/daily-summary) ── */}
+      <MdDailySummaryLiveStrip />
 
       {/* ── CENTRAL APEX: Live Bhakti 1-12-108 Organogram Command Tree ─────── */}
       <section

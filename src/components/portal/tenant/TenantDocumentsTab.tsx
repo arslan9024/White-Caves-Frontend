@@ -252,4 +252,3 @@ const TenantDocumentsTab: FC = () => {
 };
 
 export default TenantDocumentsTab;
-

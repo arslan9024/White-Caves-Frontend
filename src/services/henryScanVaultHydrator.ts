@@ -1,9 +1,15 @@
-import { type ScanReview, type VaultSaveOptions, canUseScan, assessScanReadiness } from './henryScanReview';
+import {
+  type ScanReview,
+  type VaultSaveOptions,
+  canUseScan,
+  assessScanReadiness,
+} from './henryScanReview';
 import { authFetch } from '../utils/authFetch';
 import logger from '../utils/logger';
 import type { ExtractionDiagnostics } from './henryDocumentParsing';
 
-export interface ScanReview {
+export type { ScanReview, VaultSaveOptions } from './henryScanReview';
+
 export function hydrateVaultScan<T extends ScanReview>(
   record: unknown,
   docType: 'emirates_id' | 'title_deed',
@@ -240,4 +246,3 @@ export async function saveReviewedScan(
     return { success: false, error: 'Vault unavailable. Nothing was saved.' };
   }
 }
-

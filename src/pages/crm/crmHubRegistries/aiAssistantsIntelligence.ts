@@ -3,6 +3,7 @@
  */
 
 import type { AIAssistantOption } from '../CRMHubPage.config';
+import { AI_ASSISTANTS_INTELLIGENCE_EXTENDED } from './aiAssistantsIntelligenceExtended';
 
 export const INTELLIGENCE_AI_ASSISTANTS: AIAssistantOption[] = [
   {
@@ -221,4 +222,7 @@ export const INTELLIGENCE_AI_ASSISTANTS: AIAssistantOption[] = [
       },
     ],
   },
+  ...(AI_ASSISTANTS_INTELLIGENCE_EXTENDED as AIAssistantOption[]),
+];
+
 export * from './aiAssistantsIntelligenceExtended';

@@ -64,9 +64,7 @@ export const DAISY_12_ASSISTANT_MANAGERS: DaisyAssistantManagerCard[] = AM_CONFI
       id: `SUP-05-2-${String(slot).padStart(2, '0')}-${sIdx + 1}`,
       slot: sIdx + 1,
       name:
-        slot === 1 && sIdx === 0
-          ? 'AI Daisy Supervisor'
-          : `AI ${sName} Sup-${slot}.${sIdx + 1}`,
+        slot === 1 && sIdx === 0 ? 'AI Daisy Supervisor' : `AI ${sName} Sup-${slot}.${sIdx + 1}`,
       zone:
         slot === 1 && sIdx === 0
           ? 'DAMAC Hills 2 Primary Leasing Desk'
@@ -216,7 +214,8 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
     title: 'Inventory Vault & Google Drive Formula Sync',
     aiccActorName: 'AI Mary Supervisor + AI Henry Supervisor',
     aiccActorCode: 'SUP-06-1-01-1 / SUP-11-1-01-1',
-    reportingChain: 'Mary (SUP-06-1-01-1) & Henry (SUP-11-1-01-1) -> AMs -> Mgrs -> Dirs -> COO Zoe -> MD Arslan Malik',
+    reportingChain:
+      'Mary (SUP-06-1-01-1) & Henry (SUP-11-1-01-1) -> AMs -> Mgrs -> Dirs -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Update scoped Mary Inventory Vault (Agents own vs MD all)',
       'Enforce Drive formula: Area/Project/Unit/[5 Canonical Folders]',

@@ -275,4 +275,3 @@ const TenantLeaseTab: FC = () => {
 };
 
 export default TenantLeaseTab;
-

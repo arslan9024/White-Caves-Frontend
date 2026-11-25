@@ -1,3 +1,8 @@
+/**
+ * PersistenceSnapshotsCard.tsx — Orchestration persistence snapshots card
+ * Decomposed under AEGIS V5.1 AEG-042 (< 350 lines).
+ */
+
 import React, { type FC } from 'react';
 import { Sparkles } from 'lucide-react';
 import type {
@@ -9,6 +14,7 @@ import type {
 } from '../../../../services/subagentOrchestrationService';
 import { cardStyle, chipStyle, mutedTextStyle } from './styles';
 import { SnapshotInspectionPanels } from './SnapshotInspectionPanels';
+import { SnapshotListItem } from './SnapshotListItem';
 
 interface PersistenceSnapshotsCardProps {
   snapshots: OrchestrationSnapshotSummary[];
@@ -48,21 +54,6 @@ const selectStyle: React.CSSProperties = {
   padding: '4px 8px',
   fontSize: 12,
 };
-
-const pillBtn = (
-  border: string,
-  background: string,
-  color: string,
-  disabled: boolean
-): React.CSSProperties => ({
-  border,
-  background,
-  color,
-  borderRadius: 999,
-  padding: '3px 8px',
-  fontSize: 11,
-  cursor: disabled ? 'not-allowed' : 'pointer',
-});
 
 export const PersistenceSnapshotsCard: FC<PersistenceSnapshotsCardProps> = ({
   snapshots,
@@ -240,107 +231,21 @@ export const PersistenceSnapshotsCard: FC<PersistenceSnapshotsCardProps> = ({
           }}
         >
           {snapshots.map(snapshot => (
-            <li key={snapshot.fileName} style={{ marginBottom: 6 }}>
-              <strong>
-                {snapshot.fileName}
-                {selectedSnapshotFileName === snapshot.fileName ? ' · selected' : ''}
-              </strong>
-              <br />
-              <span style={mutedTextStyle}>
-                Tasks: {snapshot.taskCount}
-                {snapshot.label ? ` · Label: ${snapshot.label}` : ''} · Created:{' '}
-                {snapshot.createdAt}
-              </span>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 6 }}>
-                <button
-                  type="button"
-                  onClick={() => void onSelectSnapshot(snapshot.fileName)}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(148,163,184,0.38)',
-                    'rgba(15,23,42,0.45)',
-                    '#CBD5E1',
-                    isBusy
-                  )}
-                  aria-label={`Inspect snapshot ${snapshot.fileName}`}
-                >
-                  Inspect
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedSnapshotFileName(snapshot.fileName);
-                    void onRestoreLatestSnapshot(snapshot.fileName);
-                  }}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(96,165,250,0.38)',
-                    'rgba(30,64,175,0.22)',
-                    '#BFDBFE',
-                    isBusy
-                  )}
-                  aria-label={`Restore snapshot ${snapshot.fileName}`}
-                >
-                  Restore
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void onDeleteSnapshot(snapshot.fileName)}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(248,113,113,0.38)',
-                    'rgba(127,29,29,0.25)',
-                    '#FCA5A5',
-                    isBusy
-                  )}
-                  aria-label={`Delete snapshot ${snapshot.fileName}`}
-                >
-                  Delete
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void onPreviewSnapshotRestore(snapshot.fileName)}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(251,191,36,0.38)',
-                    'rgba(146,64,14,0.22)',
-                    '#FDE68A',
-                    isBusy
-                  )}
-                  aria-label={`Preview restore impact for snapshot ${snapshot.fileName}`}
-                >
-                  Preview
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void onCompareSnapshot(snapshot.fileName)}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(56,189,248,0.38)',
-                    'rgba(12,74,110,0.22)',
-                    '#BAE6FD',
-                    isBusy
-                  )}
-                  aria-label={`Compare snapshot ${snapshot.fileName} with current state`}
-                >
-                  Compare
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void onRecommendSnapshotRestore(snapshot.fileName)}
-                  disabled={isBusy}
-                  style={pillBtn(
-                    '1px solid rgba(16,185,129,0.38)',
-                    'rgba(6,78,59,0.22)',
-                    '#A7F3D0',
-                    isBusy
-                  )}
-                  aria-label={`Recommend restore plan for snapshot ${snapshot.fileName}`}
-                >
-                  Recommend
-                </button>
-              </div>
-            </li>
+            <SnapshotListItem
+              key={snapshot.fileName}
+              snapshot={snapshot}
+              isSelected={selectedSnapshotFileName === snapshot.fileName}
+              isBusy={isBusy}
+              onSelect={onSelectSnapshot}
+              onRestore={fileName => {
+                setSelectedSnapshotFileName(fileName);
+                return onRestoreLatestSnapshot(fileName);
+              }}
+              onDelete={onDeleteSnapshot}
+              onPreview={onPreviewSnapshotRestore}
+              onCompare={onCompareSnapshot}
+              onRecommend={onRecommendSnapshotRestore}
+            />
           ))}
         </ul>
       ) : (

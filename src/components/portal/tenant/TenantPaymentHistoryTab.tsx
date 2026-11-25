@@ -324,4 +324,3 @@ const TenantPaymentHistoryTab: FC = () => {
 };
 
 export default TenantPaymentHistoryTab;
-

@@ -1,9 +1,14 @@
+/**
+ * SelectedDepartmentSquadsDeck.tsx — Operational Squads & DMS Open Human Positions Deck
+ * Decomposed under AEGIS V5.1 AEG-042 (< 350 lines).
+ */
+
 import React, { FC } from 'react';
-import { Edit2, Trash2, GripVertical, Briefcase, GitBranch } from 'lucide-react';
+import { Edit2, Trash2, GripVertical } from 'lucide-react';
 import type { DepartmentNodeItem } from './DepartmentManager.types';
 import type { DepartmentSlotDef } from './DepartmentManager.data';
 import type { SupervisorDef } from '../../../data/assistants108Registry.data';
-import { DMS_OPEN_HUMAN_LEASING_POSITIONS } from '../../../portals/md/aicc/daisyDivision.data';
+import { DmsOpenHumanLeasingPositionsDeck } from './DmsOpenHumanLeasingPositionsDeck';
 
 export interface SelectedDepartmentSquadsDeckProps {
   activeSlot: DepartmentSlotDef;
@@ -35,323 +40,214 @@ export const SelectedDepartmentSquadsDeck: FC<SelectedDepartmentSquadsDeckProps>
   onSubDrop,
   onSubDragEnd,
   onDemoteSubDept,
-}) => {
-  return (
+}) => (
+  <div
+    data-testid="selected-dept-squads-section"
+    style={{
+      marginTop: '16px',
+      background: 'rgba(255, 255, 255, 0.015)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      borderRadius: '12px',
+      padding: '20px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '16px',
+    }}
+  >
     <div
-      data-testid="selected-dept-squads-section"
       style={{
-        marginTop: '16px',
-        background: 'rgba(255, 255, 255, 0.015)',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        borderRadius: '12px',
-        padding: '20px',
         display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '10px',
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '10px',
-        }}
-      >
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span
-              style={{
-                fontSize: '0.68rem',
-                fontWeight: 800,
-                color: '#EF4444',
-                textTransform: 'uppercase',
-              }}
-            >
-              Slot #{activeSlot.slotNumber} · {activeSlot.fixedCode}
-            </span>
-            <span
-              style={{
-                fontSize: '0.72rem',
-                background: 'rgba(59, 130, 246, 0.15)',
-                color: '#3B82F6',
-                padding: '2px 8px',
-                borderRadius: '4px',
-                fontWeight: 700,
-              }}
-            >
-              Active Focus
-            </span>
-          </div>
-          <h2
-            style={{ margin: '4px 0 0 0', fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}
-          >
-            Operational Squads & Sub-Departments
-          </h2>
-          <p style={{ margin: '4px 0 0 0', fontSize: '0.78rem', color: '#94A3B8' }}>
-            Direct command grid under active focus. Drag and drop squad cards to shuffle priorities.
-          </p>
-        </div>
-
+      <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <button
-            type="button"
-            onClick={() => onOpenEdit(activeDepartment)}
+          <span
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              color: '#FFFFFF',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            <Edit2 size={13} /> Edit Dept
-          </button>
-          <button
-            type="button"
-            onClick={() => onDeleteDept(activeDepartment._id)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid #EF4444',
+              fontSize: '0.68rem',
+              fontWeight: 800,
               color: '#EF4444',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              cursor: 'pointer',
+              textTransform: 'uppercase',
             }}
           >
-            <Trash2 size={13} /> Demote to Pool
-          </button>
+            Slot #{activeSlot.slotNumber} · {activeSlot.fixedCode}
+          </span>
+          <span
+            style={{
+              fontSize: '0.72rem',
+              background: 'rgba(59, 130, 246, 0.15)',
+              color: '#3B82F6',
+              padding: '2px 8px',
+              borderRadius: '4px',
+              fontWeight: 700,
+            }}
+          >
+            Active Focus
+          </span>
         </div>
+        <h2 style={{ margin: '4px 0 0 0', fontSize: '1.2rem', fontWeight: 800, color: '#FFFFFF' }}>
+          Operational Squads &amp; Sub-Departments
+        </h2>
+        <p style={{ margin: '4px 0 0 0', fontSize: '0.78rem', color: '#94A3B8' }}>
+          Direct command grid under active focus. Drag and drop squad cards to shuffle priorities.
+        </p>
       </div>
 
-      {/* 8-Tier Open Human Leasing Positions in DMS (Draggable under DEPT-05) */}
-      <div
-        data-testid="dms-open-human-leasing-positions-deck"
-        style={{
-          background: 'rgba(16, 185, 129, 0.06)',
-          border: '1px solid rgba(16, 185, 129, 0.28)',
-          borderRadius: '10px',
-          padding: '12px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '8px',
-        }}
-      >
-        <div
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button
+          type="button"
+          onClick={() => onOpenEdit(activeDepartment)}
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '6px',
+            gap: '5px',
+            padding: '6px 12px',
+            borderRadius: '6px',
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            color: '#FFFFFF',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            cursor: 'pointer',
           }}
         >
-          <span
-            style={{
-              fontSize: '0.73rem',
-              fontWeight: 800,
-              color: '#34D399',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
-            <GitBranch size={13} /> 8-TIER LEASING AUTHORITY &amp; OPEN HUMAN POSITIONS (DEPT-05 •
-            DRAGGABLE IN DMS)
-          </span>
-          <span style={{ fontSize: '0.68rem', color: '#94A3B8', fontFamily: 'monospace' }}>
-            MD Arslan Malik → Zoe → Dir Clara (DIR-05) → Mgr Daisy (MGR-05-2) → 12 AMs → 108 Sups →
-            1 TL → 10 Agents
-          </span>
-        </div>
-        <div
+          <Edit2 size={13} /> Edit Dept
+        </button>
+        <button
+          type="button"
+          onClick={() => onDeleteDept(activeDepartment._id)}
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(235px, 1fr))',
-            gap: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            padding: '6px 12px',
+            borderRadius: '6px',
+            background: 'rgba(239, 68, 68, 0.1)',
+            border: '1px solid #EF4444',
+            color: '#EF4444',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            cursor: 'pointer',
           }}
         >
-          {DMS_OPEN_HUMAN_LEASING_POSITIONS.map(pos => (
-            <div
-              key={pos.positionCode}
-              draggable
-              onDragStart={e => e.dataTransfer.setData('text/plain', pos.positionCode)}
-              data-testid={`dms-open-position-${pos.positionCode}`}
-              style={{
-                background: '#0F172A',
-                border: '1px dashed rgba(245, 158, 11, 0.45)',
-                borderRadius: '8px',
-                padding: '8px 10px',
-                cursor: 'grab',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  fontSize: '0.62rem',
-                }}
-              >
-                <span
-                  style={{
-                    color: '#FBBF24',
-                    fontWeight: 800,
-                    fontFamily: 'monospace',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                  }}
-                >
-                  <Briefcase size={11} /> {pos.role}
-                </span>
-                <span
-                  style={{
-                    background: 'rgba(245,158,11,0.18)',
-                    color: '#FDE68A',
-                    padding: '1px 6px',
-                    borderRadius: '4px',
-                    fontWeight: 700,
-                  }}
-                >
-                  {pos.openCount} Open
-                </span>
-              </div>
-              <div
-                style={{ fontSize: '0.74rem', fontWeight: 700, color: '#F8FAFC', marginTop: '3px' }}
-              >
-                {pos.jobTitle}
-              </div>
-              <div style={{ fontSize: '0.64rem', color: '#94A3B8', marginTop: '2px' }}>
-                Reports to: {pos.reportsToTitle}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 9 Sub-Department Cards Grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: '12px',
-        }}
-      >
-        {activeSubDepts.map((sub, sIdx) => (
-          <div
-            key={sub.id || `sub-${sIdx}`}
-            draggable={true}
-            onDragStart={e => onSubDragStart(e, sIdx)}
-            onDragOver={e => onSubDragOver(e, sIdx)}
-            onDragLeave={e => onSubDragLeave(e, sIdx)}
-            onDrop={e => onSubDrop(e, sIdx)}
-            onDragEnd={onSubDragEnd}
-            style={{
-              background: 'rgba(255, 255, 255, 0.025)',
-              border:
-                dragOverSubIndex === sIdx
-                  ? '1.5px solid #3B82F6'
-                  : '1px solid rgba(255, 255, 255, 0.08)',
-              borderLeft: '3px solid #EF4444',
-              borderRadius: '8px',
-              padding: '12px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              cursor: 'grab',
-              opacity: draggedSubIndex === sIdx ? 0.4 : 1,
-              transition: 'all 0.15s ease',
-            }}
-            data-testid={`subitem-slot-${sIdx + 1}`}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <div style={{ color: '#64748B' }}>
-                  <GripVertical size={14} />
-                </div>
-                <span
-                  style={{
-                    fontSize: '0.66rem',
-                    fontWeight: 800,
-                    color: '#EF4444',
-                    background: 'rgba(239, 68, 68, 0.12)',
-                    padding: '1px 5px',
-                    borderRadius: '4px',
-                    fontFamily: 'monospace',
-                  }}
-                >
-                  Squad #{sIdx + 1}
-                </span>
-                <span
-                  style={{
-                    fontSize: '0.68rem',
-                    fontWeight: 700,
-                    color: '#94A3B8',
-                    fontFamily: 'monospace',
-                  }}
-                >
-                  SQ-{String(sIdx + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => onDemoteSubDept(sIdx)}
-                title="Demote Squad to Pool"
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: '#64748B',
-                  cursor: 'pointer',
-                  padding: '2px',
-                }}
-              >
-                <Trash2 size={12} />
-              </button>
-            </div>
-
-            <div>
-              <h4 style={{ margin: 0, fontSize: '0.82rem', fontWeight: 800, color: '#FFFFFF' }}>
-                {sub.name}
-              </h4>
-              <div style={{ fontSize: '0.72rem', color: '#F59E0B', fontWeight: 600 }}>
-                {sub.title}
-              </div>
-            </div>
-
-            <div style={{ fontSize: '0.7rem', color: '#94A3B8', lineHeight: 1.3 }}>
-              {sub.specialty}
-            </div>
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                fontSize: '0.65rem',
-                color: '#64748B',
-                borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-                paddingTop: '6px',
-              }}
-            >
-              <span>SLA: {sub.slaResponseTime || '< 15 mins'}</span>
-              <span style={{ color: '#10B981', fontWeight: 700 }}>● OPTIMAL</span>
-            </div>
-          </div>
-        ))}
+          <Trash2 size={13} /> Demote to Pool
+        </button>
       </div>
     </div>
-  );
-};
+
+    <DmsOpenHumanLeasingPositionsDeck />
+
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '12px',
+      }}
+    >
+      {activeSubDepts.map((sub, sIdx) => (
+        <div
+          key={sub.id || `sub-${sIdx}`}
+          draggable={true}
+          onDragStart={e => onSubDragStart(e, sIdx)}
+          onDragOver={e => onSubDragOver(e, sIdx)}
+          onDragLeave={e => onSubDragLeave(e, sIdx)}
+          onDrop={e => onSubDrop(e, sIdx)}
+          onDragEnd={onSubDragEnd}
+          style={{
+            background: 'rgba(255, 255, 255, 0.025)',
+            border:
+              dragOverSubIndex === sIdx
+                ? '1.5px solid #3B82F6'
+                : '1px solid rgba(255, 255, 255, 0.08)',
+            borderLeft: '3px solid #EF4444',
+            borderRadius: '8px',
+            padding: '12px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            cursor: 'grab',
+            opacity: draggedSubIndex === sIdx ? 0.4 : 1,
+            transition: 'all 0.15s ease',
+          }}
+          data-testid={`subitem-slot-${sIdx + 1}`}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ color: '#64748B' }}>
+                <GripVertical size={14} />
+              </div>
+              <span
+                style={{
+                  fontSize: '0.66rem',
+                  fontWeight: 800,
+                  color: '#EF4444',
+                  background: 'rgba(239, 68, 68, 0.12)',
+                  padding: '1px 5px',
+                  borderRadius: '4px',
+                  fontFamily: 'monospace',
+                }}
+              >
+                Squad #{sIdx + 1}
+              </span>
+              <span
+                style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  color: '#94A3B8',
+                  fontFamily: 'monospace',
+                }}
+              >
+                SQ-{String(sIdx + 1).padStart(2, '0')}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => onDemoteSubDept(sIdx)}
+              title="Demote Squad to Pool"
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#64748B',
+                cursor: 'pointer',
+                padding: '2px',
+              }}
+            >
+              <Trash2 size={12} />
+            </button>
+          </div>
+
+          <div>
+            <h4 style={{ margin: 0, fontSize: '0.82rem', fontWeight: 800, color: '#FFFFFF' }}>
+              {sub.name}
+            </h4>
+            <div style={{ fontSize: '0.72rem', color: '#F59E0B', fontWeight: 600 }}>
+              {sub.title}
+            </div>
+          </div>
+
+          <div style={{ fontSize: '0.7rem', color: '#94A3B8', lineHeight: 1.3 }}>
+            {sub.specialty}
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontSize: '0.65rem',
+              color: '#64748B',
+              borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+              paddingTop: '6px',
+            }}
+          >
+            <span>SLA: {sub.slaResponseTime || '< 15 mins'}</span>
+            <span style={{ color: '#10B981', fontWeight: 700 }}>● OPTIMAL</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
