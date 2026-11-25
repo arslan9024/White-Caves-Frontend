@@ -30,7 +30,7 @@ import {
   normalizeMessage,
   normalizeQueuedConversation,
 } from './nadiaMappers';
- */
+
 async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${NADIA_API}${endpoint}`;
 
@@ -292,4 +292,3 @@ export const nadiaAPI = {
 };
 
 export default nadiaAPI;
-
