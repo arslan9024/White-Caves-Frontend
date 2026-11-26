@@ -288,5 +288,36 @@ describe('ModernDashboardPage Viewport Rendering & 9-System Routing', () => {
     expect(screen.getByTestId('aiams-manager-view')).toBeInTheDocument();
     cleanup();
   }, 30000);
-});
 
+  it('renders MD Executive Cockpit on exact /dashboard root and all 5 AI Supervisor workbenches directly', () => {
+    renderDashboardWithProviders('/dashboard');
+    expect(screen.getByTestId('md-executive-cockpit')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/diana');
+    expect(screen.getByTestId('workbench-diana')).toBeInTheDocument();
+    expect(screen.getByTestId('diana-email-campaign-center')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/leasing');
+    expect(screen.getByTestId('workbench-daisy')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/inventory');
+    expect(screen.getByTestId('workbench-mary')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/linda');
+    expect(screen.getByTestId('workbench-linda')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/henry');
+    expect(screen.getByTestId('workbench-henry')).toBeInTheDocument();
+    cleanup();
+
+    renderDashboardWithProviders('/dashboard/leasing-cockpit');
+    expect(screen.getByTestId('workbench-leasing-cockpit')).toBeInTheDocument();
+    expect(screen.getByTestId('md-daily-leasing-cockpit')).toBeInTheDocument();
+    cleanup();
+  }, 45000);
+});

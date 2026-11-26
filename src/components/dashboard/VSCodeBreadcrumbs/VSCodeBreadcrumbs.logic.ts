@@ -36,7 +36,11 @@ const CANONICAL_SUBSYSTEM_MAP: Record<string, SubsystemMetadata> = {
     root: '/dashboard/dms/departments',
     collections: [
       { id: 'departments', label: '12 Corporate Slots', route: '/dashboard/dms/departments/slots' },
-      { id: 'pillars', label: '7 Operational Pillars', route: '/dashboard/dms/departments/pillars' },
+      {
+        id: 'pillars',
+        label: '7 Operational Pillars',
+        route: '/dashboard/dms/departments/pillars',
+      },
     ],
   },
   ems: {
@@ -45,7 +49,11 @@ const CANONICAL_SUBSYSTEM_MAP: Record<string, SubsystemMetadata> = {
     root: '/dashboard/ems/employees',
     collections: [
       { id: 'employees', label: '121 Staff Roster', route: '/dashboard/ems/employees/roster' },
-      { id: 'supervisors', label: 'Supervisors Pool', route: '/dashboard/ems/employees/supervisors' },
+      {
+        id: 'supervisors',
+        label: 'Supervisors Pool',
+        route: '/dashboard/ems/employees/supervisors',
+      },
       { id: 'directors', label: '12 Dept Directors', route: '/dashboard/ems/employees/directors' },
     ],
   },
@@ -55,8 +63,16 @@ const CANONICAL_SUBSYSTEM_MAP: Record<string, SubsystemMetadata> = {
     root: '/dashboard/aiams/assistants',
     collections: [
       { id: 'assistants', label: '121+ AI Agents CRUD', route: '/dashboard/aiams/assistants' },
-      { id: 'directors', label: '12 Dept AI Directors', route: '/dashboard/aiams/assistants/directors' },
-      { id: 'supervisors', label: '108 AI Supervisors', route: '/dashboard/aiams/assistants/supervisors' },
+      {
+        id: 'directors',
+        label: '12 Dept AI Directors',
+        route: '/dashboard/aiams/assistants/directors',
+      },
+      {
+        id: 'supervisors',
+        label: '108 AI Supervisors',
+        route: '/dashboard/aiams/assistants/supervisors',
+      },
     ],
   },
   tms: {
@@ -118,9 +134,7 @@ const CANONICAL_SUBSYSTEM_MAP: Record<string, SubsystemMetadata> = {
     label: 'RMS: Roles & Privileges',
     icon: '🛡️',
     root: '/dashboard/rms/roles',
-    collections: [
-      { id: 'roles', label: 'Role Catalog', route: '/dashboard/rms/roles' },
-    ],
+    collections: [{ id: 'roles', label: 'Role Catalog', route: '/dashboard/rms/roles' }],
   },
 };
 
@@ -139,6 +153,33 @@ const LEGACY_FALLBACK_ALIASES: Record<string, string> = {
   relationships: 'erms',
   roles: 'rms',
 };
+
+const SUPERVISOR_WORKBENCH_LABELS: Record<string, { label: string; route: string }> = {
+  zoe: { label: 'AI Zoe (WC-COO-01) · COO Console', route: '/dashboard/zoe' },
+  diana: { label: 'AI Diana (SUP-02-6-01-1) · Owner Email', route: '/dashboard/diana' },
+  daisy: { label: 'AI Daisy (SUP-05-2-01-1) · Leasing CRM', route: '/dashboard/leasing' },
+  leasing: { label: 'AI Daisy (SUP-05-2-01-1) · Leasing CRM', route: '/dashboard/leasing' },
+  mary: { label: 'AI Mary (SUP-06-1-01-1) · DH2 Inventory', route: '/dashboard/inventory' },
+  inventory: { label: 'AI Mary (SUP-06-1-01-1) · DH2 Inventory', route: '/dashboard/inventory' },
+  linda: { label: 'AI Linda (SUP-08-1-01-1) · WhatsApp Fleet', route: '/dashboard/linda' },
+  henry: { label: 'AI Henry (SUP-11-1-01-1) · Records & Drive', route: '/dashboard/henry' },
+  'leasing-cockpit': {
+    label: 'MD Daily Leasing Cockpit (DH2)',
+    route: '/dashboard/leasing-cockpit',
+  },
+};
+
+const SUPERVISOR_SIBLINGS = [
+  { id: 'COCKPIT', label: 'MD Executive Cockpit', route: '/dashboard' },
+  { id: 'SANCTUM', label: 'AICC-Sanctum 8-Tier Command', route: '/aicc-sanctum' },
+  { id: 'ZOE', label: 'AI Zoe · COO Console', route: '/dashboard/zoe' },
+  { id: 'MARY', label: 'AI Mary (SUP-06-1-01-1) · DH2 Inventory', route: '/dashboard/inventory' },
+  { id: 'LINDA', label: 'AI Linda (SUP-08-1-01-1) · WhatsApp Fleet', route: '/dashboard/linda' },
+  { id: 'DIANA', label: 'AI Diana (SUP-02-6-01-1) · Owner Email', route: '/dashboard/diana' },
+  { id: 'DAISY', label: 'AI Daisy (SUP-05-2-01-1) · Leasing CRM', route: '/dashboard/leasing' },
+  { id: 'HENRY', label: 'AI Henry (SUP-11-1-01-1) · Records & Drive', route: '/dashboard/henry' },
+  { id: 'LEASING-COCKPIT', label: 'MD Daily Leasing Cockpit', route: '/dashboard/leasing-cockpit' },
+];
 
 export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
   const location = useLocation();
@@ -165,13 +206,17 @@ export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
         id: 'HQ',
         label: 'White Caves HQ',
         icon: '🏢',
-        route: '/dashboard/dms/departments',
+        route: '/dashboard',
         level: 'ROOT',
-        siblings: Object.entries(CANONICAL_SUBSYSTEM_MAP).map(([key, sys]) => ({
-          id: key.toUpperCase(),
-          label: sys.label,
-          route: sys.root,
-        })),
+        siblings: [
+          { id: 'MD-COCKPIT', label: 'MD Executive Cockpit', route: '/dashboard' },
+          { id: 'AICC-SANCTUM', label: 'AICC-Sanctum 8-Tier Command', route: '/aicc-sanctum' },
+          ...Object.entries(CANONICAL_SUBSYSTEM_MAP).map(([key, sys]) => ({
+            id: key.toUpperCase(),
+            label: sys.label,
+            route: sys.root,
+          })),
+        ],
       },
     ];
 
@@ -189,6 +234,17 @@ export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
 
     const subsystem = CANONICAL_SUBSYSTEM_MAP[sysKey];
     if (!subsystem) {
+      const supInfo = SUPERVISOR_WORKBENCH_LABELS[rawParts[0]];
+      if (supInfo) {
+        segs.push({
+          id: rawParts[0].toUpperCase(),
+          label: supInfo.label,
+          route: supInfo.route,
+          level: 'SYSTEM',
+          siblings: SUPERVISOR_SIBLINGS,
+        });
+        return segs;
+      }
       // Unmapped or standalone portal
       rawParts.forEach((p, idx) => {
         segs.push({
@@ -219,7 +275,9 @@ export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
     const collectionId = rawParts[1] || subsystem.collections[0]?.id;
     if (collectionId) {
       const match = subsystem.collections.find(c => c.id === collectionId);
-      const collectionLabel = match ? match.label : collectionId.charAt(0).toUpperCase() + collectionId.slice(1);
+      const collectionLabel = match
+        ? match.label
+        : collectionId.charAt(0).toUpperCase() + collectionId.slice(1);
       const collectionRoute = match ? match.route : `/dashboard/${sysKey}/${collectionId}`;
 
       segs.push({
@@ -282,4 +340,3 @@ export function useVSCodeBreadcrumbsLogic(props: VSCodeBreadcrumbsProps) {
     handleHistoryForward,
   };
 }
-

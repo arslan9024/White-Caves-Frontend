@@ -9,6 +9,7 @@ import React, { FC } from 'react';
 import { PortalLogoRing } from '../../portal/PortalLogoRing';
 import { AIOrganogramTree } from '../organogram/AIOrganogramTree';
 import { MdDailySummaryLiveStrip } from './MdDailySummaryLiveStrip';
+import { MdOperationalSupervisorsDock } from './MdOperationalSupervisorsDock';
 import type { SupervisorDef } from '../../../data/assistants108Registry.data';
 import { ShieldCheck, Building2, Users, Briefcase, Zap } from 'lucide-react';
 
@@ -148,8 +149,11 @@ export const MdExecutiveCockpit: FC<MdExecutiveCockpitProps> = ({
         ))}
       </section>
 
+      {/* ── 5 OPERATIONAL AI SUPERVISORS & DAMAC HILLS 2 LAUNCH DOCK ────────── */}
+      <MdOperationalSupervisorsDock onNavigate={onNavigate} />
+
       {/* ── LIVE DAILY LEASING SUMMARY (GET /api/leasing-formula/cockpit/daily-summary) ── */}
-      <MdDailySummaryLiveStrip />
+      <MdDailySummaryLiveStrip onNavigate={onNavigate} />
 
       {/* ── CENTRAL APEX: Live Bhakti 1-12-108 Organogram Command Tree ─────── */}
       <section

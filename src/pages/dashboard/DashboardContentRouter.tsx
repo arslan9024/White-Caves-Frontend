@@ -30,15 +30,12 @@ import { RoleManagerView } from '../../components/crm/RoleManager';
 import { LandlordManagerView } from '../../components/crm/LandlordManager';
 import { TenantManagerView } from '../../components/crm/TenantManager';
 import { BrokerManagerView } from '../../components/crm/BrokerManager';
-import LindaWhatsAppCRM from '../../components/crm/LindaWhatsAppCRM';
-import DianaEmailCampaignCenter from '../../components/crm/DianaEmailCRM/DianaEmailCampaignCenter';
-import MaryInventoryCRM from '../../components/crm/MaryInventoryCRM';
-import ZoeExecutiveCRM from '../../components/crm/ZoeConsole';
 import { DashboardLiveTicker } from '../../components/dashboard/header/DashboardLiveTicker';
 import { MdExecutiveCockpit } from '../../components/dashboard/cockpit/MdExecutiveCockpit';
 import { ProfileDashboardView } from './ProfileDashboardView';
 import { LegacyDomainRouter } from './LegacyDomainRouter';
 import { checkDashboardRoleGuard } from './DashboardRoleGuards';
+import { renderSupervisorWorkbench } from './SupervisorWorkbenchRouter';
 import { UserRoleContext } from '../../context/UserRoleContext';
 import type { ActivityTab } from '../../components/dashboard/ExecutiveVSCodeSidebar/ExecutiveVSCodeSidebar.logic';
 
@@ -88,71 +85,22 @@ export const DashboardContentRouter: FC<DashboardContentRouterProps> = ({
   });
   if (guardedView) return guardedView;
 
-  // Managing Director Apex Executive Cockpit (Illuminated Logo Ring & Live Bhakti Organogram)
-  if (isMdOrFounder && (isRootOverview || (activeTab as string) === 'overview' || !activeTab)) {
+  // Managing Director Apex Executive Cockpit (ONLY on exact /dashboard or /dashboard/overview)
+  if (isMdOrFounder && (activeTab === 'overview' || !activeTab)) {
     return (
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
         <DashboardLiveTicker />
-        <MdExecutiveCockpit onNavigate={navigate} />
+        <MdExecutiveCockpit
+          onNavigate={navigate}
+          onSelectAssistant={asst => navigate(`/dashboard/aiams/${asst.id}`)}
+        />
       </div>
     );
   }
 
-  // Direct Zoe Sovereign Node / Executive Command selection
-  if (
-    activeTab === 'zoe' ||
-    activeAgent?.id === 'zoe' ||
-    (activeTab === 'ai-command' && activeItemId === 'zoe')
-  ) {
-    return (
-      <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
-        <DashboardLiveTicker />
-        <ZoeExecutiveCRM />
-      </div>
-    );
-  }
-
-  // Direct Linda / AI Command Center selection
-  if (
-    activeTab === 'linda' ||
-    activeAgent?.id === 'linda' ||
-    (activeTab === 'ai-command' && activeItemId === 'linda')
-  ) {
-    return (
-      <div style={{ padding: '20px', flex: 1 }}>
-        <LindaWhatsAppCRM />
-      </div>
-    );
-  }
-
-  // Direct Diana / Property Owner Email Campaign selection
-  if (
-    (activeTab as string) === 'diana' ||
-    activeAgent?.id === 'diana-email' ||
-    activeAgent?.id === 'diana' ||
-    (activeTab === 'ai-command' && activeItemId === 'diana') ||
-    (activeTab === 'aiams' && activeItemId === 'diana')
-  ) {
-    return (
-      <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
-        <DianaEmailCampaignCenter />
-      </div>
-    );
-  }
-
-  // Direct Mary / Inventory Manager selection
-  if (
-    activeTab === 'mary' ||
-    activeAgent?.id === 'mary' ||
-    (activeTab === 'ai-command' && activeItemId === 'mary') ||
-    (activeTab === 'aiams' && activeItemId === 'mary')
-  ) {
-    return (
-      <div style={{ padding: '20px', flex: 1, overflowY: 'auto' }}>
-        <MaryInventoryCRM />
-      </div>
-    );
-  }
+  // Operational AI Supervisors (Zoe, Linda, Diana, Daisy/Leasing, Mary/Inventory, Henry) + MD Daily Leasing Cockpit
+  const supervisorView = renderSupervisorWorkbench({ activeTab, activeItemId, activeAgent });
+  if (supervisorView) return supervisorView;
 
   if (activeTab === 'aiams' || activeTab === 'ai-command' || activeAgent?.id === 'ai-command') {
     return (

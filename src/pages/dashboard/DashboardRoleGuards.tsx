@@ -33,7 +33,8 @@ export interface GuardParams {
 }
 
 export function checkDashboardRoleGuard(p: GuardParams): React.ReactElement | null {
-  const { role, isConfirmed, isMdOrFounder, activeTab, isRootOverview, navigate, onOpenRoleModal } = p;
+  const { role, isConfirmed, isMdOrFounder, activeTab, isRootOverview, navigate, onOpenRoleModal } =
+    p;
 
   if (!isMdOrFounder && (!isConfirmed || role === 'guest')) {
     if (activeTab === 'landlord') return <LandlordManagerView />;
@@ -44,7 +45,8 @@ export function checkDashboardRoleGuard(p: GuardParams): React.ReactElement | nu
   }
 
   if (role === 'landlord') {
-    if (activeTab === 'departments' || activeTab === 'landlord') return <LandlordManagerView />;
+    if (activeTab === 'overview' || activeTab === 'departments' || activeTab === 'landlord')
+      return <LandlordManagerView />;
     if (activeTab === 'documents') {
       return isRootOverview ? (
         <DocumentOverviewView onNavigate={navigate} />
@@ -63,7 +65,8 @@ export function checkDashboardRoleGuard(p: GuardParams): React.ReactElement | nu
   }
 
   if (role === 'tenant') {
-    if (activeTab === 'departments' || activeTab === 'tenant') return <TenantManagerView />;
+    if (activeTab === 'overview' || activeTab === 'departments' || activeTab === 'tenant')
+      return <TenantManagerView />;
     if (activeTab === 'documents') {
       return isRootOverview ? (
         <DocumentOverviewView onNavigate={navigate} />
@@ -82,12 +85,15 @@ export function checkDashboardRoleGuard(p: GuardParams): React.ReactElement | nu
   }
 
   if (role === 'agent' || role === 'broker') {
-    if (activeTab === 'departments' || activeTab === 'broker') return <BrokerManagerView />;
+    if (activeTab === 'overview' || activeTab === 'departments' || activeTab === 'broker')
+      return <BrokerManagerView />;
     if (activeTab === 'REproperties') {
       return isRootOverview ? (
         <REPropertyOverviewView onNavigate={navigate} />
       ) : (
-        <REPropertyManagerView onNavigateBack={() => navigate('/dashboard/REproperties/inventory')} />
+        <REPropertyManagerView
+          onNavigateBack={() => navigate('/dashboard/REproperties/inventory')}
+        />
       );
     }
     if (activeTab === 'deals') {
@@ -123,4 +129,3 @@ export function checkDashboardRoleGuard(p: GuardParams): React.ReactElement | nu
 
   return null;
 }
-

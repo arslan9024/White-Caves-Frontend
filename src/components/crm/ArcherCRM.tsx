@@ -324,15 +324,10 @@ const ArcherCRM = () => {
         <AssistantDocsTab assistantId="archer" assistantColor="#EF4444" assistantName="Archer" />
       )}
       {activeTab === 'lifecycle' && (
-        <AssistantLifecycleTab
-          assistantId="archer"
-          assistantColor="#EF4444"
-          assistantName="Archer"
-        />
+        <AssistantLifecycleTab assistantId="archer" assistantName="Archer" />
       )}
     </div>
   );
 };
 
 export default ArcherCRM;
-

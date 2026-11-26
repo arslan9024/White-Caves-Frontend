@@ -9,6 +9,7 @@ import { useState, useCallback } from 'react';
 import type { ActivityTab } from '../../components/dashboard/ExecutiveVSCodeSidebar/ExecutiveVSCodeSidebar.logic';
 
 export const VALID_DASHBOARD_TABS: ActivityTab[] = [
+  'overview',
   'zoe',
   'departments',
   'employees',
@@ -28,7 +29,12 @@ export const VALID_DASHBOARD_TABS: ActivityTab[] = [
   'broker',
   'linda',
   'mary',
-  'zoe',
+  'inventory',
+  'diana',
+  'daisy',
+  'leasing',
+  'henry',
+  'leasing-cockpit',
   'ai-command',
   'audit',
   'governance',
@@ -148,12 +154,12 @@ export function normalizeDashboardRoute(pathname: string): ParsedHierarchicalRou
 
   if (parts.length === 0) {
     return {
-      subsystem: 'dms',
-      collection: 'departments',
-      activeTab: 'departments',
+      subsystem: null,
+      collection: null,
+      activeTab: 'overview',
       activeItemId: null,
-      canonicalPath: '/dashboard/dms/departments',
-      isCanonical: false,
+      canonicalPath: '/dashboard',
+      isCanonical: true,
     };
   }
 
@@ -184,9 +190,7 @@ export function normalizeDashboardRoute(pathname: string): ParsedHierarchicalRou
       collection: col,
       activeTab: sys.activityTab,
       activeItemId: itemId,
-      canonicalPath: itemId
-        ? `/dashboard/${first}/${col}/${itemId}`
-        : `/dashboard/${first}/${col}`,
+      canonicalPath: itemId ? `/dashboard/${first}/${col}/${itemId}` : `/dashboard/${first}/${col}`,
       isCanonical: true,
     };
   }
@@ -233,9 +237,9 @@ export function normalizeDashboardRoute(pathname: string): ParsedHierarchicalRou
   }
 
   // 4. Fallback for standalone portals or unmapped activity tabs (landlord, tenant, broker, profile)
-  const fallbackTab = (VALID_DASHBOARD_TABS.includes(first as ActivityTab)
-    ? first
-    : 'departments') as ActivityTab;
+  const fallbackTab = (
+    VALID_DASHBOARD_TABS.includes(first as ActivityTab) ? first : 'departments'
+  ) as ActivityTab;
 
   return {
     subsystem: null,
@@ -271,10 +275,16 @@ export function useSidebarToggles() {
 export function resolveSidebarItemRoute(key: string, activeTab: string): string {
   if (key === 'departments-crud') return '/dashboard/dms/departments/slots';
   if (key.startsWith('route-')) return key.replace('route-', '');
-  if (key.startsWith('entity-')) return `/dashboard/erms/relationships/${key.replace('entity-', '')}`;
+  if (key.startsWith('entity-'))
+    return `/dashboard/erms/relationships/${key.replace('entity-', '')}`;
   if (key.startsWith('rel-')) return `/dashboard/erms/relationships/${key.replace('rel-', '')}`;
+  if (key === 'overview') return '/dashboard';
   if (key === 'linda') return '/dashboard/linda';
-  if (key === 'mary') return '/dashboard/mary';
+  if (key === 'mary' || key === 'inventory') return '/dashboard/inventory';
+  if (key === 'diana' || key === 'diana-email') return '/dashboard/diana';
+  if (key === 'daisy' || key === 'daisy-leasing' || key === 'leasing') return '/dashboard/leasing';
+  if (key === 'henry') return '/dashboard/henry';
+  if (key === 'leasing-cockpit') return '/dashboard/leasing-cockpit';
   if (key === 'zoe') return '/dashboard/zoe';
   if (key === 'aiams' || key === 'ai-command') return '/dashboard/aiams';
 
@@ -303,4 +313,3 @@ export function resolveSidebarItemRoute(key: string, activeTab: string): string 
 
   return `/dashboard/${activeTab}`;
 }
-

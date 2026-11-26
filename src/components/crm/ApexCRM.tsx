@@ -328,11 +328,10 @@ const ApexCRM = () => {
         <AssistantDocsTab assistantId="apex" assistantColor="#F97316" assistantName="Apex" />
       )}
       {activeTab === 'lifecycle' && (
-        <AssistantLifecycleTab assistantId="apex" assistantColor="#F97316" assistantName="Apex" />
+        <AssistantLifecycleTab assistantId="apex" assistantName="Apex" />
       )}
     </div>
   );
 };
 
 export default ApexCRM;
-

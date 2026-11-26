@@ -64,8 +64,8 @@ export const LindaExecutiveBrandBadge: FC<LindaExecutiveBrandBadgeProps> = ({
           </span>
         </div>
         <p style={{ margin: '4px 0 0 0', color: subtitleColor, fontSize: 12 }}>
-          Synced with <code>arslan9024/whatsapp-bot-linda</code> · Multi-Account LocalAuth · Pinned
-          4-Panel Terminal · 35 Features (F1–F35) · 10 Playbooks (P1–P10)
+          SUP-08-1-01-1 · AMGR-08-1-01 AI Samira → MGR-08-1 AI Nadia → DIR-08 AI Maya · Multi-SIM
+          LocalAuth (10-SIM Fleet) · 35 Features (F1–F35) · 10 Playbooks (P1–P10)
         </p>
       </div>
     </div>

@@ -43,8 +43,8 @@ export const DmsOpenHumanLeasingPositionsDeck: FC = () => (
         DRAGGABLE IN DMS)
       </span>
       <span style={{ fontSize: '0.68rem', color: '#94A3B8', fontFamily: 'monospace' }}>
-        MD Arslan Malik → Zoe → Dir Clara (DIR-05) → Mgr Daisy (MGR-05-2) → 12 AMs → 108 Sups → 1 TL
-        → 10 Agents
+        MD Arslan Malik → Zoe → Dir Clara (DIR-05) → Mgr Layla (MGR-05-2) → AM Amina → Sup Daisy
+        (SUP-05-2-01-1) → 1 TL → 10 Agents
       </span>
     </div>
 

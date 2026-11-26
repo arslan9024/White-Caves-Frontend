@@ -4,7 +4,7 @@
  * Standard: AEGIS Single Purpose File Law (< 350 lines, AEG-042).
  */
 import React, { FC } from 'react';
-import { ChevronRight, ShieldCheck, Layers } from 'lucide-react';
+import { ChevronRight, ShieldCheck, Layers, ExternalLink } from 'lucide-react';
 import {
   CANONICAL_AI_SUPERVISOR_LIST,
   type OperationalAiSupervisorChain,
@@ -12,10 +12,12 @@ import {
 
 export interface OperationalSupervisorsChainPanelProps {
   onInspectChain: (chain: OperationalAiSupervisorChain) => void;
+  onOpenWorkspace?: (route: string) => void;
 }
 
 export const OperationalSupervisorsChainPanel: FC<OperationalSupervisorsChainPanelProps> = ({
   onInspectChain,
+  onOpenWorkspace,
 }) => {
   return (
     <section
@@ -62,13 +64,29 @@ export const OperationalSupervisorsChainPanel: FC<OperationalSupervisorsChainPan
                 )}
                 <span className="text-[11px] text-slate-400">— {chain.supervisor.roleTitle}</span>
               </div>
-              <button
-                type="button"
-                onClick={() => onInspectChain(chain)}
-                className="px-2.5 py-1 rounded bg-red-600/20 hover:bg-red-600/40 text-red-200 border border-red-500/40 text-[10px] font-bold cursor-pointer"
-              >
-                Inspect {chain.deptCode} / {chain.manager.code}
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  data-testid={`open-supervisor-workspace-${chain.key}`}
+                  onClick={() => {
+                    if (onOpenWorkspace) {
+                      onOpenWorkspace(chain.workspaceRoute);
+                    } else if (typeof window !== 'undefined') {
+                      window.location.assign(chain.workspaceRoute);
+                    }
+                  }}
+                  className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold cursor-pointer inline-flex items-center gap-1"
+                >
+                  Open Workspace <ExternalLink size={10} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onInspectChain(chain)}
+                  className="px-2.5 py-1 rounded bg-red-600/20 hover:bg-red-600/40 text-red-200 border border-red-500/40 text-[10px] font-bold cursor-pointer"
+                >
+                  Inspect {chain.deptCode} / {chain.manager.code}
+                </button>
+              </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-1 text-[10px] font-mono text-slate-300">

@@ -1,6 +1,6 @@
 /**
  * Logic.logic.ts — AICC-Sanctum State, CRUD, Drag-and-Drop Swap & Governance Guards
- * Standing Rules: 12 Locked Departments • Zoe's Team isolated from Aegis • All female except Henry (MGR-11-1).
+ * Standing Rules: 12 Locked Departments • Zoe's Team isolated from Aegis • All female except Henry (SUP-11-1-01-1).
  */
 
 import { useState, useCallback, useMemo } from 'react';

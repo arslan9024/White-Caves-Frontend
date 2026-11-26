@@ -80,25 +80,25 @@ export const LegacyDomainRouter: FC<LegacyDomainRouterProps> = ({
 
             case 'dept-view': {
               const deptId = subItemId?.toLowerCase() || '';
-              if (deptId.includes('exec') || deptId.includes('md') || deptId === 'dept-01') {
+              if (deptId.includes('exec') || deptId.includes('md') || deptId === 'dept-12') {
                 return <ExecutiveDepartmentView />;
               }
-              if (deptId.includes('fin') || deptId.includes('revenue') || deptId === 'dept-06') {
+              if (deptId.includes('fin') || deptId.includes('revenue') || deptId === 'dept-10') {
                 return <FinanceDepartmentView />;
               }
-              if (deptId.includes('ops') || deptId.includes('facilities') || deptId === 'dept-05') {
+              if (deptId.includes('ops') || deptId.includes('leasing') || deptId === 'dept-05') {
                 return <OperationsDepartmentView />;
               }
               if (deptId.includes('leg') || deptId.includes('convey') || deptId === 'dept-11') {
                 return <LegalDepartmentView />;
               }
-              if (deptId.includes('mkt') || deptId.includes('market') || deptId === 'dept-07') {
+              if (deptId.includes('mkt') || deptId.includes('market') || deptId === 'dept-02') {
                 return <MarketingDepartmentView />;
               }
               if (deptId.includes('tech') || deptId.includes('gateway') || deptId === 'dept-04') {
                 return <TechnologyDepartmentView />;
               }
-              if (deptId.includes('comp') || deptId.includes('rera') || deptId === 'dept-10') {
+              if (deptId.includes('comp') || deptId.includes('rera') || deptId === 'dept-09') {
                 return <ComplianceDepartmentView />;
               }
               return (
@@ -124,4 +124,3 @@ export const LegacyDomainRouter: FC<LegacyDomainRouterProps> = ({
 };
 
 export default LegacyDomainRouter;
-

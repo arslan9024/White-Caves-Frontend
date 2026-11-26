@@ -22,6 +22,7 @@ import {
 import { LindaMdFollowUpQueuePanel } from './LindaWhatsAppCRM/LindaMdFollowUpQueuePanel';
 import { TenancyDealCockpit } from './DealManager/TenancyDealCockpit';
 import { TRACK_A_SUPERVISOR_CHAIN } from './DealManager/tenancyCockpit/tenancyCockpit.data';
+import { safeStorage } from '../../utils/safeStorage';
 
 interface DailyCockpitData {
   generatedAt: string;
@@ -78,9 +79,11 @@ export const MdDailyLeasingCockpit: React.FC<Props> = ({ apiBaseUrl = '', authTo
     setErrorMsg(null);
     try {
       const headers: Record<string, string> = {};
-      if (authToken) headers.Authorization = `Bearer ${authToken}`;
+      const resolvedToken = authToken || safeStorage.get('token');
+      if (resolvedToken) headers.Authorization = `Bearer ${resolvedToken}`;
       const res = await fetch(`${apiBaseUrl}/api/leasing-formula/cockpit/daily-summary`, {
         headers,
+        credentials: 'include',
       });
       const json = (await res.json()) as { success?: boolean; data?: DailyCockpitData };
       if (json.success && json.data) {

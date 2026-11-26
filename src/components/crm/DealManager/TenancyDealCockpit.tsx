@@ -1,7 +1,7 @@
 /**
  * TenancyDealCockpit.tsx — Unified 12-Stage Tenancy Deal Cockpit & Google Drive Integration
  * Strictly enforces: Cheques & Fees FIRST -> Tenant Signs FIRST -> Payment Clearance -> Landlord Countersigns -> Ejari + DEWA
- * Owned by: SUP-05-2-01-1 (AI Noor — Leasing Portals & Deal Cockpit Supervisor, TURING-SUPERVISOR-CHAIN-019)
+ * Owned by: SUP-05-2-01-1 (AI Daisy Supervisor — Leasing Portals & Deal Cockpit, TURING-SUPERVISOR-CHAIN-019)
  * Single-purpose module (< 350 lines, AEG-042).
  */
 

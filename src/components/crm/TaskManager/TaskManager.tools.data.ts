@@ -30,9 +30,9 @@ export const DH2_AICC_LEASING_TASKS: TaskNode[] = TMS_LEASING_TASK_GROUPS.map((g
   status: 'IN_PROGRESS',
   defaultSla: '15m SLA',
   reportingChain: {
-    supervisorName: 'AI Noor Sup-1.1 & AI Layla TL-05-2-01',
+    supervisorName: 'AI Daisy Supervisor (SUP-05-2-01-1)',
     supervisorCode: 'SUP-05-2-01-1',
-    managerName: 'AI Daisy Leasing (12 Asst Mgrs / 108 Sups)',
+    managerName: 'AI Layla Residential (MGR-05-2 · 12 AMs / 108 Sups)',
     managerCode: 'MGR-05-2',
     directorName: 'AI Clara (DEPT-05 Director)',
     directorCode: 'DIR-05',

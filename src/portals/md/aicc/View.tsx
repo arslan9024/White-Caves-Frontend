@@ -1,10 +1,11 @@
 /**
  * View.tsx — AICC-Sanctum Executive Visual Command Center (MD Only)
  * 8-Tier Authority Chain: Arslan Malik (MD) -> 1 COO Zoe -> 12 Locked Directors -> 108 Managers
- * -> Daisy's 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
+ * -> 1,296 Assistant Managers -> 11,664 Supervisors (Diana, Daisy, Mary, Linda, Henry)
  */
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { useAiccSanctumLogic } from './Logic.logic';
 import { styles } from './Style.style';
 import { DaisyLeasingHierarchyPanel } from './DaisyLeasingHierarchyPanel';
@@ -14,6 +15,7 @@ import { SanctumDelegationPanel } from './SanctumDelegationPanel';
 import { SanctumManagerCard } from './SanctumManagerCard';
 
 export const AiccSanctumView: React.FC = () => {
+  const navigate = useNavigate();
   const {
     executiveCoo,
     departments,
@@ -84,12 +86,20 @@ export const AiccSanctumView: React.FC = () => {
     <div className={styles.container} data-testid="aicc-sanctum-command-center">
       <header className={styles.header}>
         <div className={styles.titleGroup}>
+          <button
+            type="button"
+            data-testid="sanctum-back-to-md-cockpit"
+            onClick={() => navigate('/dashboard')}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 cursor-pointer shrink-0"
+          >
+            <ArrowLeft size={13} className="text-red-400" /> MD Cockpit
+          </button>
           <span className={styles.badge}>AICC-SANCTUM</span>
           <div>
             <h1 className={styles.h1}>White Caves AI Command Center — Sanctum</h1>
             <p className={styles.subtitle}>
-              MD Arslan Malik → COO Zoe → 12 Locked Directors → 108 Managers → Daisy 12 Asst Mgrs /
-              108 Supervisors / 1 TL / 10 Agents
+              MD Arslan Malik → COO Zoe → 12 Locked Directors → 108 Managers → 1,296 Asst Mgrs →
+              11,664 Supervisors (Diana · Daisy · Mary · Linda · Henry)
             </p>
           </div>
         </div>
@@ -274,6 +284,7 @@ export const AiccSanctumView: React.FC = () => {
             />
           )}
           <OperationalSupervisorsChainPanel
+            onOpenWorkspace={route => navigate(route)}
             onInspectChain={chain => {
               setSelectedDeptCode(chain.deptCode);
               setSelectedFractalMgr({

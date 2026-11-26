@@ -1,7 +1,7 @@
 /**
  * DaisyLeasingHierarchyPanel.tsx — Full 8-Tier Leasing Authority Chain, DMS & TMS
- * Displayed inside AICC-Sanctum (/aicc-sanctum) under Zoe -> Clara (DIR-05) -> Daisy (MGR-05-2)
- * Strictly < 200 lines per Turing File Ceiling Law.
+ * Displayed inside AICC-Sanctum (/aicc-sanctum) under Zoe -> Clara (DIR-05) -> Layla (MGR-05-2) -> Amina (AMGR-05-2-01) -> Daisy (SUP-05-2-01-1)
+ * Strictly < 250 lines per Turing File Ceiling Law.
  */
 
 import React, { useState } from 'react';
@@ -41,8 +41,8 @@ export const DaisyLeasingHierarchyPanel: React.FC = () => {
             </span>
           </div>
           <h3 className="text-sm font-bold text-white mt-1">
-            AI Daisy Leasing Division: 12 Assistant Managers • 108 Supervisors (12×9) • 1 Team
-            Leader • 10 Leasing Agents (10 WhatsApp SIMs)
+            DEPT-05 Residential Leasing Division (MGR-05-2 AI Layla → SUP-05-2-01-1 AI Daisy): 12
+            Assistant Managers • 108 Supervisors (12×9) • 1 Team Leader • 10 Leasing Agents
           </h3>
         </div>
 
@@ -85,10 +85,10 @@ export const DaisyLeasingHierarchyPanel: React.FC = () => {
 
       {activeTab === 'HIERARCHY' && (
         <div className="mt-3 grid grid-cols-1 lg:grid-cols-3 gap-3">
-          {/* Column 1: 12 Assistant Managers under Daisy */}
+          {/* Column 1: 12 Assistant Managers under AI Layla Residential (MGR-05-2) */}
           <div className="p-3 rounded-lg bg-slate-950/70 border border-slate-800">
             <div className="text-xs font-bold text-emerald-400 uppercase mb-2">
-              L4 • 12 Assistant Managers (Report to AI Daisy MGR-05-2)
+              L4 • 12 Assistant Managers (Report to AI Layla Residential MGR-05-2)
             </div>
             <div className="flex flex-col gap-1.5 max-h-64 overflow-y-auto pr-1">
               {DAISY_12_ASSISTANT_MANAGERS.map(am => (

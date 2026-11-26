@@ -26,7 +26,16 @@ import MdDailyLeasingCockpit from '../MdDailyLeasingCockpit';
 import '../AssistantDashboard.css';
 import './DaisyLeasingCRM.css';
 
-type TabId = 'cockpit' | 'leases' | 'pipeline' | 'inquiries' | 'pdc' | 'maintenance' | 'renewals' | 'analytics' | 'lifecycle';
+type TabId =
+  | 'cockpit'
+  | 'leases'
+  | 'pipeline'
+  | 'inquiries'
+  | 'pdc'
+  | 'maintenance'
+  | 'renewals'
+  | 'analytics'
+  | 'lifecycle';
 
 const TABS: Array<{ id: TabId; label: string; icon: React.ReactNode }> = [
   { id: 'cockpit', label: 'MD Cockpit', icon: <Building2 size={14} /> },
@@ -67,15 +76,18 @@ const DaisyLeasingCRM = () => {
       <div className="assistant-header">
         <div
           className="assistant-avatar"
-          style={{ background: 'linear-gradient(135deg, var(--accent-teal, #14B8A6) 0%, var(--accent-green, #10B981) 100%)' }}
+          style={{
+            background:
+              'linear-gradient(135deg, var(--accent-teal, #14B8A6) 0%, var(--accent-green, #10B981) 100%)',
+          }}
         >
           <Home size={28} />
         </div>
         <div className="assistant-info">
-          <h2>Daisy — Leasing & Tenant Manager</h2>
+          <h2>AI Daisy Supervisor — Residential Leasing &amp; Tenant Desk</h2>
           <p>
-            Rental properties, tenant communications, lease agreements, PDC tracking, and
-            maintenance
+            SUP-05-2-01-1 · AMGR-05-2-01 AI Amina → MGR-05-2 AI Layla → DIR-05 AI Clara · DAMAC
+            Hills 2 leases, 12-stage deals, PDC tracking &amp; 90-day RERA renewals
           </p>
         </div>
         <div className="assistant-status online">
@@ -142,7 +154,12 @@ const DaisyLeasingCRM = () => {
             <span className="stat-value">{bouncedPDC}</span>
             <span className="stat-label">Bounced PDC</span>
           </div>
-          <span className="stat-change" style={{ color: bouncedPDC > 0 ? 'var(--accent-red, #EF4444)' : 'var(--accent-green, #10B981)' }}>
+          <span
+            className="stat-change"
+            style={{
+              color: bouncedPDC > 0 ? 'var(--accent-red, #EF4444)' : 'var(--accent-green, #10B981)',
+            }}
+          >
             {bouncedPDC > 0 ? 'Follow up' : 'All clear'}
           </span>
         </div>
@@ -200,4 +217,3 @@ const DaisyLeasingCRM = () => {
 };
 
 export default DaisyLeasingCRM;
-

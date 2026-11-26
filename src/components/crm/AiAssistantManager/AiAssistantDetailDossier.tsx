@@ -6,9 +6,31 @@
  */
 
 import React, { FC, useState } from 'react';
-import { ArrowLeft, Edit3, Trash2, Cpu, Zap, CheckCircle2, Play, Terminal } from 'lucide-react';
+import {
+  ArrowLeft,
+  Edit3,
+  Trash2,
+  Cpu,
+  Zap,
+  CheckCircle2,
+  Play,
+  Terminal,
+  ExternalLink,
+} from 'lucide-react';
 import DynamicAssistantCRM from '../DynamicAssistantCRM';
 import type { AiAgentRecord } from './AiAssistantManager.types';
+
+const LIVE_WORKSPACE_ROUTES: Record<string, string> = {
+  zoe: '/dashboard/zoe',
+  linda: '/dashboard/linda',
+  diana: '/dashboard/diana',
+  'diana-email': '/dashboard/diana',
+  daisy: '/dashboard/leasing',
+  'daisy-leasing': '/dashboard/leasing',
+  mary: '/dashboard/inventory',
+  'mary-inventory': '/dashboard/inventory',
+  henry: '/dashboard/henry',
+};
 
 export interface AiAssistantDetailDossierProps {
   agent: AiAgentRecord;
@@ -16,6 +38,7 @@ export interface AiAssistantDetailDossierProps {
   onEdit: (agent: AiAgentRecord) => void;
   onDelete: (agentId: string) => void;
   onToggleStatus: (agentId: string) => void;
+  onOpenWorkspace?: (route: string) => void;
 }
 
 export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
@@ -24,7 +47,9 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
   onEdit,
   onDelete,
   onToggleStatus,
+  onOpenWorkspace,
 }) => {
+  const liveWorkspaceRoute = LIVE_WORKSPACE_ROUTES[agent.agentId.toLowerCase()] || null;
   const [activeRunResult, setActiveRunResult] = useState<{
     workflow: string;
     details: string;
@@ -35,7 +60,11 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
     setActiveRunResult({
       workflow: taskName,
       details: `Execution successful: Agent ${agent.name} processed '${taskName}' with 100% compliance under ${agent.slaResponseTime} SLA.`,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      time: new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      }),
     });
   };
   return (
@@ -86,6 +115,17 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {liveWorkspaceRoute && onOpenWorkspace && (
+              <button
+                type="button"
+                onClick={() => onOpenWorkspace(liveWorkspaceRoute)}
+                data-testid="aiams-dossier-open-workspace-btn"
+                className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer"
+              >
+                <ExternalLink size={14} />
+                <span>Open Live Workspace</span>
+              </button>
+            )}
             <button
               type="button"
               onClick={() => onEdit(agent)}
@@ -167,7 +207,10 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
                   Interactive Test Workflows
                 </span>
                 {agent.assignedTasks.map((task, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800"
+                  >
                     <span className="text-xs text-slate-300 font-medium truncate max-w-[280px]">
                       {task}
                     </span>
@@ -201,7 +244,10 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
         </div>
 
         {/* Live Dynamic Operational Console for All AI Agents */}
-        <div className="pt-4 border-t border-slate-800 space-y-4" data-testid="ai-agent-live-operational-studio">
+        <div
+          className="pt-4 border-t border-slate-800 space-y-4"
+          data-testid="ai-agent-live-operational-studio"
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Terminal size={16} className="text-red-400" />
@@ -232,4 +278,3 @@ export const AiAssistantDetailDossier: FC<AiAssistantDetailDossierProps> = ({
     </div>
   );
 };
-

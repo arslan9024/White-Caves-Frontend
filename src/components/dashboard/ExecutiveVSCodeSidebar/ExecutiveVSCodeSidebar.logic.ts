@@ -5,6 +5,7 @@ import {
 } from '../../../data/assistants108Registry.data';
 
 export type ActivityTab =
+  | 'overview'
   | 'departments'
   | 'employees'
   | 'aiams'
@@ -23,6 +24,12 @@ export type ActivityTab =
   | 'broker'
   | 'linda'
   | 'mary'
+  | 'inventory'
+  | 'diana'
+  | 'daisy'
+  | 'leasing'
+  | 'henry'
+  | 'leasing-cockpit'
   | 'zoe'
   | 'ai-command'
   | 'audit'
@@ -159,4 +166,3 @@ export function useExecutiveVSCodeSidebarLogic(props?: UseExecutiveVSCodeSidebar
     departments: filteredDepartments,
   };
 }
-

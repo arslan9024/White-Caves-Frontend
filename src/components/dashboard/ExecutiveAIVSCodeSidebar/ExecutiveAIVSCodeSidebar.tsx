@@ -1,9 +1,20 @@
 import React, { FC, useState } from 'react';
-import { Bot, Cpu, FolderTree, PanelRightClose, PanelRight, ChevronDown, ChevronRight, Layers, Mic } from 'lucide-react';
+import {
+  Bot,
+  Cpu,
+  FolderTree,
+  PanelRightClose,
+  PanelRight,
+  ChevronDown,
+  ChevronRight,
+  Layers,
+  Mic,
+} from 'lucide-react';
 import { useExecutiveAIVSCodeSidebarLogic } from './ExecutiveAIVSCodeSidebar.logic';
 import { SidebarRightExplorerTree } from './SidebarRightExplorerTree';
 import { ExecutiveZoeCard } from './ExecutiveZoeCard';
 import { LiveVoiceDispatchDrawer } from './LiveVoiceDispatch';
+import { RightSidebarSupervisorQuickLaunch } from './RightSidebarSupervisorQuickLaunch';
 import {
   AISidebarLayoutContainer,
   AIActivityBar,
@@ -165,86 +176,10 @@ export const ExecutiveAIVSCodeSidebar: FC<ExecutiveAIVSCodeSidebarProps> = ({
                     <span>Zoe Sovereign Mesh Sub-Items</span>
                   </div>
 
-                  <button
-                    type="button"
-                    data-testid="open-ai-command-center-main-btn"
-                    onClick={() => {
-                      if (onSelectAgent) onSelectAgent('ai-command', 'AI Command Center');
-                    }}
-                    style={{
-                      width: '100%',
-                      marginBottom: '6px',
-                      padding: '7px 9px',
-                      borderRadius: '7px',
-                      background:
-                        'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(15, 23, 42, 0.85))',
-                      border: '1px solid rgba(239, 68, 68, 0.4)',
-                      color: '#F8FAFC',
-                      fontSize: '0.7rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <span>🔱 AIAMS Workforce Hub (120 Nodes)</span>
-                    <span style={{ color: '#FCA5A5', fontSize: '0.62rem' }}>AIAMS →</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    data-testid="open-linda-main-btn"
-                    onClick={() => {
-                      handleTileClick('linda', 'AI Linda · WhatsApp Bot Operations Center');
-                    }}
-                    style={{
-                      width: '100%',
-                      marginBottom: '6px',
-                      padding: '7px 9px',
-                      borderRadius: '7px',
-                      background:
-                        'linear-gradient(135deg, rgba(37, 211, 102, 0.18), rgba(15, 23, 42, 0.85))',
-                      border: '1px solid rgba(37, 211, 102, 0.45)',
-                      color: '#ECFDF5',
-                      fontSize: '0.7rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <span>🤖 AI Linda · WhatsApp Operations</span>
-                    <span style={{ color: '#86EFAC', fontSize: '0.62rem' }}>Launch →</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    data-testid="open-mary-main-btn"
-                    onClick={() => {
-                      handleTileClick('mary', 'AI Mary · 9,378+ Inventory Master Control');
-                    }}
-                    style={{
-                      width: '100%',
-                      marginBottom: '8px',
-                      padding: '7px 9px',
-                      borderRadius: '7px',
-                      background:
-                        'linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(15, 23, 42, 0.85))',
-                      border: '1px solid rgba(59, 130, 246, 0.45)',
-                      color: '#EFF6FF',
-                      fontSize: '0.7rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <span>📦 AI Mary · Inventory Studio</span>
-                    <span style={{ color: '#93C5FD', fontSize: '0.62rem' }}>Studio →</span>
-                  </button>
+                  <RightSidebarSupervisorQuickLaunch
+                    onSelectAgent={onSelectAgent}
+                    onTileClick={handleTileClick}
+                  />
 
                   {/* Collapsible 12 Department Managers Sub-Group */}
                   <div
@@ -344,4 +279,3 @@ export const ExecutiveAIVSCodeSidebar: FC<ExecutiveAIVSCodeSidebarProps> = ({
 };
 
 export default ExecutiveAIVSCodeSidebar;
-

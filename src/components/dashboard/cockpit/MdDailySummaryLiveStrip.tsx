@@ -17,6 +17,11 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { TenancyDealCockpit } from '../../crm/DealManager/TenancyDealCockpit';
+import { safeStorage } from '../../../utils/safeStorage';
+
+export interface MdDailySummaryLiveStripProps {
+  onNavigate?: (route: string) => void;
+}
 
 export interface DailySummaryDealItem {
   id: string;
@@ -49,7 +54,7 @@ function parseStageOrder(stage: string): number {
   return match ? Math.min(12, Math.max(1, Number(match[1]))) : 7;
 }
 
-export const MdDailySummaryLiveStrip: FC = () => {
+export const MdDailySummaryLiveStrip: FC<MdDailySummaryLiveStripProps> = ({ onNavigate }) => {
   const [summary, setSummary] = useState<DailySummaryPayload | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedDeal, setSelectedDeal] = useState<DailySummaryDealItem | null>(null);
@@ -57,7 +62,13 @@ export const MdDailySummaryLiveStrip: FC = () => {
   const fetchSummary = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/leasing-formula/cockpit/daily-summary');
+      const token = safeStorage.get('token');
+      const headers: Record<string, string> = {};
+      if (token) headers.Authorization = `Bearer ${token}`;
+      const res = await fetch('/api/leasing-formula/cockpit/daily-summary', {
+        headers,
+        credentials: 'include',
+      });
       if (res.ok) {
         const json = (await res.json()) as { success?: boolean; data?: DailySummaryPayload };
         if (json?.success && json.data) {
@@ -151,7 +162,29 @@ export const MdDailySummaryLiveStrip: FC = () => {
             {summary?.primaryMasterPhone ?? '+971505760056'})
           </h3>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {onNavigate && (
+            <button
+              type="button"
+              data-testid="md-open-full-leasing-cockpit"
+              onClick={() => onNavigate('/dashboard/leasing-cockpit')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 11px',
+                borderRadius: '8px',
+                background: 'rgba(239, 68, 68, 0.16)',
+                border: '1px solid rgba(239, 68, 68, 0.45)',
+                color: '#FCA5A5',
+                fontSize: '11px',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              <ExternalLink size={12} color="#EF4444" /> Full Leasing Cockpit
+            </button>
+          )}
           <a
             href="/api/leasing-formula/feeds/bayut-pf.xml"
             target="_blank"

@@ -44,7 +44,7 @@ export const InventoryHeader: React.FC<InventoryHeaderProps> = ({
             letterSpacing: '0.08em',
           }}
         >
-          Department 07 · Subitem 7.1 Master Inventory Control Center
+          DEPT-06 · SUP-06-1-01-1 AI Mary Supervisor · AMGR-06-1-01 AI Farah → MGR-06-1 AI Yasmin
         </span>
         <h2
           style={{

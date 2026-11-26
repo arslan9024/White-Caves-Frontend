@@ -2,7 +2,7 @@
  * tenancyCockpit.data.ts — Canonical 12-Stage Tenancy Lifecycle & Google Drive Path Builder
  * Strictly enforces:
  *   Cheques & Fees FIRST -> Tenant Signs FIRST -> Payment Clearance -> Landlord Countersigns -> Ejari + DEWA
- * Owned by: SUP-05-2-01-1 (AI Noor — Leasing Portals & 12-Stage Deal Cockpit Supervisor)
+ * Owned by: SUP-05-2-01-1 (AI Daisy Supervisor — Residential Leasing, Portals & 12-Stage Deal Cockpit)
  * Single-purpose module (< 350 lines, AEG-042).
  */
 
@@ -31,8 +31,9 @@ export const CANONICAL_DRIVE_SUBFOLDERS: readonly CanonicalDriveSubfolder[] = [
 export const TRACK_A_SUPERVISOR_CHAIN = {
   supervisorId: 'SUP-05-2-01-1',
   squadCode: 'SQD-05-2-01-1',
-  supervisorName: 'AI Noor (Leasing Portals & Deal Cockpit)',
-  chainText: 'MD-01 → AI Zoe (COO) → DIR-05 → MGR-05-2 → AMGR-05-2-01 → SUP-05-2-01-1',
+  supervisorName: 'AI Daisy Supervisor (Leasing Portals & Deal Cockpit)',
+  chainText:
+    'MD-01 → AI Zoe (COO) → DIR-05 AI Clara → MGR-05-2 AI Layla → AMGR-05-2-01 AI Amina → SUP-05-2-01-1 AI Daisy',
 } as const;
 
 export const LEASING_STAGES: LeasingStageDef[] = [

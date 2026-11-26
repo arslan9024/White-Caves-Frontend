@@ -35,4 +35,37 @@ describe('MdExecutiveCockpit Component', () => {
     expect(screen.getByText('Corporate Floors')).toBeInTheDocument();
     expect(screen.getByText('Active Mandates')).toBeInTheDocument();
   });
+
+  it('renders 1-click launch dock for all 5 Operational AI Supervisors and DH2 leasing controls', () => {
+    const onNavigate = vi.fn();
+    render(<MdExecutiveCockpit onNavigate={onNavigate} />);
+
+    expect(screen.getByTestId('md-operational-supervisors-dock')).toBeInTheDocument();
+    expect(screen.getByTestId('md-supervisor-launch-mary')).toBeInTheDocument();
+    expect(screen.getByTestId('md-supervisor-launch-linda')).toBeInTheDocument();
+    expect(screen.getByTestId('md-supervisor-launch-diana')).toBeInTheDocument();
+    expect(screen.getByTestId('md-supervisor-launch-daisy')).toBeInTheDocument();
+    expect(screen.getByTestId('md-supervisor-launch-henry')).toBeInTheDocument();
+
+    screen.getByTestId('md-supervisor-launch-diana').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/diana');
+
+    screen.getByTestId('md-supervisor-launch-daisy').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/leasing');
+
+    screen.getByTestId('md-supervisor-launch-mary').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/inventory');
+
+    screen.getByTestId('md-supervisor-launch-linda').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/linda');
+
+    screen.getByTestId('md-supervisor-launch-henry').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/henry');
+
+    screen.getByTestId('md-dock-open-aicc-sanctum').click();
+    expect(onNavigate).toHaveBeenCalledWith('/aicc-sanctum');
+
+    screen.getByTestId('md-dock-open-leasing-cockpit').click();
+    expect(onNavigate).toHaveBeenCalledWith('/dashboard/leasing-cockpit');
+  });
 });

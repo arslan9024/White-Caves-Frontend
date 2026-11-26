@@ -74,18 +74,84 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     managerCode: 'MGR-05-2',
     assistantManagerId: 'AMGR-05-2-01',
     supervisorId: 'SUP-05-2-01-1',
-    supervisorName: 'AI Noor (Leasing Portals & 12-Stage Deal Cockpit Supervisor)',
+    supervisorName: 'AI Daisy Supervisor (Residential Leasing & 12-Stage Deal Cockpit)',
     taskCollectionLabel: 'TMS-COL-TRACK-A-LEASING-PORTALS',
     authorityChain: buildSupervisorAuthorityLabel(
       5,
       2,
       1,
       1,
-      'AI Noor (Leasing Portals & 12-Stage Deal Cockpit Supervisor)',
+      'AI Daisy Supervisor',
       'TMS-COL-TRACK-A-LEASING-PORTALS'
     ),
     statutoryAuthority: 'DLD / Ejari / UAE 5% VAT',
     slaLabel: '2 Hours',
+    xpReward: 500,
+  },
+  // DEPT-02: Marketing & Brand (MGR-02-6 AI Celine -> AMGR-02-6-01 AI Rania -> SUP-02-6-01-1 AI Diana)
+  {
+    taskCode: 'TSK-DIANA-01',
+    title: 'DAMAC Hills 2 Property Owner Gmail Campaign & Segmentation Dispatch',
+    deptCode: 'DEPT-02',
+    managerCode: 'MGR-02-6',
+    assistantManagerId: 'AMGR-02-6-01',
+    supervisorId: 'SUP-02-6-01-1',
+    supervisorName: 'AI Diana Supervisor (Property Owner Email Campaigns)',
+    taskCollectionLabel: 'TMS-COL-DH2-OWNER-EMAIL',
+    authorityChain: buildSupervisorAuthorityLabel(
+      2,
+      6,
+      1,
+      1,
+      'AI Diana Supervisor',
+      'TMS-COL-DH2-OWNER-EMAIL'
+    ),
+    statutoryAuthority: 'UAE PDPL / Email Consent',
+    slaLabel: '15 Mins',
+    xpReward: 500,
+  },
+  // DEPT-06: Asset Inventory (MGR-06-1 AI Yasmin -> AMGR-06-1-01 AI Farah -> SUP-06-1-01-1 AI Mary)
+  {
+    taskCode: 'TSK-MARY-01',
+    title: 'DAMAC Hills 2 38-Cluster Master Inventory Verification & Sheets Sync',
+    deptCode: 'DEPT-06',
+    managerCode: 'MGR-06-1',
+    assistantManagerId: 'AMGR-06-1-01',
+    supervisorId: 'SUP-06-1-01-1',
+    supervisorName: 'AI Mary Supervisor (DH2 Master Inventory Vault)',
+    taskCollectionLabel: 'TMS-COL-DH2-INVENTORY-VAULT',
+    authorityChain: buildSupervisorAuthorityLabel(
+      6,
+      1,
+      1,
+      1,
+      'AI Mary Supervisor',
+      'TMS-COL-DH2-INVENTORY-VAULT'
+    ),
+    statutoryAuthority: 'DLD Trakheesi / RERA',
+    slaLabel: '15 Mins',
+    xpReward: 500,
+  },
+  // DEPT-08: Communications & Media (MGR-08-1 AI Nadia -> AMGR-08-1-01 AI Samira -> SUP-08-1-01-1 AI Linda)
+  {
+    taskCode: 'TSK-LINDA-01',
+    title: '10-SIM WhatsApp Landlord Discovery Outreach & Mission 2 MD Queue Routing',
+    deptCode: 'DEPT-08',
+    managerCode: 'MGR-08-1',
+    assistantManagerId: 'AMGR-08-1-01',
+    supervisorId: 'SUP-08-1-01-1',
+    supervisorName: 'AI Linda Supervisor (10-SIM WhatsApp Fleet Automation)',
+    taskCollectionLabel: 'TMS-COL-DH2-WHATSAPP-FLEET',
+    authorityChain: buildSupervisorAuthorityLabel(
+      8,
+      1,
+      1,
+      1,
+      'AI Linda Supervisor',
+      'TMS-COL-DH2-WHATSAPP-FLEET'
+    ),
+    statutoryAuthority: 'Anti-Ban / Primary Master Guard',
+    slaLabel: '1 Min',
     xpReward: 500,
   },
   // Track B — Frontend Wave 2 Atomic Decomposition (AEG-042 < 350 lines)
@@ -156,7 +222,7 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     slaLabel: '4 Hours',
     xpReward: 500,
   },
-  // DEPT-05: Sales, Services & Operations (Daisy Leasing MGR-05-2)
+  // DEPT-05: Sales, Services & Operations (MGR-05-2 AI Layla -> AMGR-05-2-01 AI Amina -> SUP-05-2-01-1 AI Daisy)
   {
     taskCode: 'TSK-002',
     title: 'DLD Form A (Listing Agreement) Verification & Filing',
@@ -164,14 +230,14 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     managerCode: 'MGR-05-2',
     assistantManagerId: 'AMGR-05-2-01',
     supervisorId: 'SUP-05-2-01-1',
-    supervisorName: 'AI Noor (Leasing Portals & 12-Stage Deal Cockpit Supervisor)',
+    supervisorName: 'AI Daisy Supervisor (Residential Leasing & 12-Stage Deal Cockpit)',
     taskCollectionLabel: 'TMS-COL-DH2-STATUTORY-LEASING',
     authorityChain: buildSupervisorAuthorityLabel(
       5,
       2,
       1,
       1,
-      'AI Noor (Leasing Portals & 12-Stage Deal Cockpit Supervisor)',
+      'AI Daisy Supervisor',
       'TMS-COL-DH2-STATUTORY-LEASING'
     ),
     statutoryAuthority: 'DLD Trakheesi',
@@ -187,19 +253,12 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     supervisorId: 'SUP-05-2-01-2',
     supervisorName: 'AI Hana (Ejari & DEWA Statutory Registration Supervisor)',
     taskCollectionLabel: 'TMS-COL-DH2-EJARI-DEWA',
-    authorityChain: buildSupervisorAuthorityLabel(
-      5,
-      2,
-      1,
-      2,
-      'AI Hana (Ejari & DEWA Statutory Registration Supervisor)',
-      'TMS-COL-DH2-EJARI-DEWA'
-    ),
+    authorityChain: buildSupervisorAuthorityLabel(5, 2, 1, 2, 'AI Hana', 'TMS-COL-DH2-EJARI-DEWA'),
     statutoryAuthority: 'Ejari Portal',
     slaLabel: '2 Hours',
     xpReward: 500,
   },
-  // DEPT-11: Legal, Compliance & Audit (Henry Records MGR-11-1)
+  // DEPT-11: Legal, Compliance & Audit (MGR-11-1 AI Mireille -> AMGR-11-1-01 AI Dalia -> SUP-11-1-01-1 AI Henry)
   {
     taskCode: 'TSK-008',
     title: 'AML / CFT Sanctions Screening via UAE FIU GoAML',
@@ -207,14 +266,14 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     managerCode: 'MGR-11-1',
     assistantManagerId: 'AMGR-11-1-01',
     supervisorId: 'SUP-11-1-01-1',
-    supervisorName: 'AI Henry Compliance Supervisor 1',
+    supervisorName: 'AI Henry Supervisor (Chief Document Controller — Sole Male AI)',
     taskCollectionLabel: 'TMS-COL-LEGAL-AML-SCREENING',
     authorityChain: buildSupervisorAuthorityLabel(
       11,
       1,
       1,
       1,
-      'AI Henry Compliance Supervisor 1',
+      'AI Henry Supervisor',
       'TMS-COL-LEGAL-AML-SCREENING'
     ),
     statutoryAuthority: 'UAE FIU / AML',
@@ -228,14 +287,14 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     managerCode: 'MGR-11-1',
     assistantManagerId: 'AMGR-11-1-01',
     supervisorId: 'SUP-11-1-01-2',
-    supervisorName: 'AI Henry Title Deed Verification Supervisor 2',
+    supervisorName: 'AI Henry Title Deed Verification Squad 2',
     taskCollectionLabel: 'TMS-COL-LEGAL-TITLE-DEED',
     authorityChain: buildSupervisorAuthorityLabel(
       11,
       1,
       1,
       2,
-      'AI Henry Title Deed Verification Supervisor 2',
+      'AI Henry Title Deed Verification Squad 2',
       'TMS-COL-LEGAL-TITLE-DEED'
     ),
     statutoryAuthority: 'DLD Blockchain',

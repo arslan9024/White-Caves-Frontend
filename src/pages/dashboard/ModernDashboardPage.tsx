@@ -85,10 +85,7 @@ export const ModernDashboardPage: FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        ((e.metaKey || e.ctrlKey) && e.key === 'key') ||
-        ((e.metaKey || e.ctrlKey) && e.key === 'k')
-      ) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsCommandPaletteOpen(prev => !prev);
       }
@@ -178,11 +175,7 @@ export const ModernDashboardPage: FC = () => {
       <CorporateDepartmentsProvider>
         <ErmsProvider>
           <div style={{ position: 'relative' }}>
-            <ExecutiveTopNavbar
-              sticky={true}
-              homeRoute="/dashboard/departments"
-              isZenMode={isZenWorkspace}
-            />
+            <ExecutiveTopNavbar sticky={true} homeRoute="/dashboard" isZenMode={isZenWorkspace} />
             {!isZenWorkspace && (
               <button
                 type="button"
@@ -277,15 +270,27 @@ export const ModernDashboardPage: FC = () => {
               activeEntityId={activeItemId || undefined}
               onSelectAgent={(agentId, agentName) => {
                 setActiveAgent({ id: agentId, name: agentName });
-                if (agentId === 'zoe') {
+                const normalized = agentId.toLowerCase();
+                if (normalized === 'zoe') {
                   navigate('/dashboard/zoe');
-                } else if (agentId === 'linda') {
+                } else if (normalized === 'linda') {
                   navigate('/dashboard/linda');
-                } else if (agentId === 'mary') {
-                  navigate('/dashboard/mary');
-                } else if (agentId === 'ai-command') {
+                } else if (normalized === 'diana' || normalized === 'diana-email') {
+                  navigate('/dashboard/diana');
+                } else if (normalized === 'daisy' || normalized === 'daisy-leasing') {
+                  navigate('/dashboard/leasing');
+                } else if (normalized === 'mary' || normalized === 'mary-inventory') {
+                  navigate('/dashboard/inventory');
+                } else if (normalized === 'henry') {
+                  navigate('/dashboard/henry');
+                } else if (normalized === 'leasing-cockpit') {
+                  navigate('/dashboard/leasing-cockpit');
+                } else if (normalized === 'aicc-sanctum') {
+                  navigate('/aicc-sanctum');
+                } else if (normalized === 'ai-command') {
                   navigate('/dashboard/aiams');
                 } else {
+                  setActiveAgent(null);
                   navigate(`/dashboard/aiams/${agentId}`);
                 }
               }}

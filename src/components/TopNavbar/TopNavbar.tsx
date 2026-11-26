@@ -89,6 +89,40 @@ export const TopNavbar: FC<TopNavbarProps> = props => {
           >
             AICC Zen Workspace
           </span>
+          <button
+            type="button"
+            data-testid="zen-back-to-cockpit-btn"
+            onClick={() => handleNavigate('/dashboard')}
+            style={{
+              padding: '3px 9px',
+              borderRadius: '6px',
+              background: 'rgba(239, 68, 68, 0.16)',
+              border: '1px solid rgba(239, 68, 68, 0.45)',
+              color: '#FCA5A5',
+              fontSize: '0.68rem',
+              fontWeight: 800,
+              cursor: 'pointer',
+            }}
+          >
+            ← MD Cockpit
+          </button>
+          <button
+            type="button"
+            data-testid="zen-open-sanctum-btn"
+            onClick={() => handleNavigate('/aicc-sanctum')}
+            style={{
+              padding: '3px 9px',
+              borderRadius: '6px',
+              background: 'rgba(15, 23, 42, 0.85)',
+              border: '1px solid rgba(255, 255, 255, 0.16)',
+              color: '#E2E8F0',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            AICC-Sanctum
+          </button>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

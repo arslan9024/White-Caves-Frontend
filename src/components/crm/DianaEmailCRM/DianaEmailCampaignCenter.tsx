@@ -7,6 +7,15 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Send, Eye } from 'lucide-react';
 import { DianaCampaignHeader, DianaCampaignFeedbackPanels } from './DianaCampaignFeedbackPanels';
+import { safeStorage } from '../../../utils/safeStorage';
+
+function buildAuthHeaders(includeJson = false): Record<string, string> {
+  const headers: Record<string, string> = {};
+  if (includeJson) headers['Content-Type'] = 'application/json';
+  const token = safeStorage.get('token');
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
 
 export interface DianaCampaignDispatchSummary {
   sender: string;
@@ -50,7 +59,10 @@ export const DianaEmailCampaignCenter: FC = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/diana/campaigns/status')
+    fetch('/api/diana/campaigns/status', {
+      headers: buildAuthHeaders(false),
+      credentials: 'include',
+    })
       .then(r => r.json())
       .then(j => {
         if (j?.success && j.data) setMailerStatus(j.data);
@@ -63,7 +75,8 @@ export const DianaEmailCampaignCenter: FC = () => {
     try {
       const res = await fetch('/api/diana/campaigns/preview', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: buildAuthHeaders(true),
+        credentials: 'include',
         body: JSON.stringify({ headline, bodyText, ownerName: 'Valued Property Owner' }),
       });
       const json = await res.json();
@@ -90,7 +103,8 @@ export const DianaEmailCampaignCenter: FC = () => {
     try {
       const res = await fetch('/api/diana/campaigns/send', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: buildAuthHeaders(true),
+        credentials: 'include',
         body: JSON.stringify({
           subject,
           headline,

@@ -55,7 +55,7 @@ export const SANCTUM_DEPT_05: DepartmentNode = {
       allowedTools: ['lease_calculator', 'leasing_pipeline'],
       capabilities: [
         'AMGR-05-2-01 AI Amina Leasing',
-        'SUP-05-2-01-1 AI Noor Leasing Portals & 12-Stage Deal Cockpit Supervisor',
+        'SUP-05-2-01-1 AI Daisy Supervisor — Residential Leasing, Portals & 12-Stage Deal Cockpit',
       ],
       slaResponseMinutes: 15,
       status: 'ACTIVE',

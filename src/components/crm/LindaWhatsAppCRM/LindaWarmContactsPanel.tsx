@@ -231,7 +231,7 @@ export const LindaWarmContactsPanel: FC<Props> = ({ selectedCluster, isDryRun })
               {testReport.inboundTriage?.result?.syncedToMaryVault
                 ? 'Synced to Mary Vault + Mission 2 MD Queue (+971505760056)'
                 : testReport.inboundTriage?.result?.routed
-                  ? 'Routed to Daisy (MGR-05-2) Viewing Slot'
+                  ? 'Routed to AI Daisy Supervisor (SUP-05-2-01-1) Viewing Slot'
                   : testReport.inboundTriage?.result?.reason || 'Verified'}
             </strong>
           </div>

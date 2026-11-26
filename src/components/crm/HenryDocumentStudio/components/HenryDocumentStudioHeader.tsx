@@ -16,11 +16,11 @@ export const HenryDocumentStudioHeader: FC<HenryDocumentStudioHeaderProps> = ({
       <StudioHeader>
         <div>
           <h2>
-            <span>📄</span> Henry AI — Sovereign Record Keeper & Document Studio
+            <span>📄</span> AI Henry Supervisor — Sovereign Record Keeper &amp; Document Studio
           </h2>
           <p style={{ margin: 0, color: 'var(--color-94a3b8, #94A3B8)', fontSize: '0.88rem' }}>
-            Document preparation previews and reviewed OCR candidates. No government registration or
-            external dispatch.
+            SUP-11-1-01-1 (Sole Male AI) · AMGR-11-1-01 AI Dalia → MGR-11-1 AI Mireille → DIR-11 AI
+            Sofia · Document preparation previews &amp; reviewed OCR vault.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -88,4 +88,3 @@ export const HenryDocumentStudioHeader: FC<HenryDocumentStudioHeaderProps> = ({
     </>
   );
 };
-

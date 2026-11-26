@@ -2,9 +2,9 @@
 /**
  * SidebarAiAssistantsList.tsx
  * White Caves Real Estate LLC — AICC-Sanctum & AIAMS Left Sidebar Drawer
- * 8-Tier Authority Chain: Arslan Malik (MD) -> Zoe -> Clara (DIR-05) -> Daisy (MGR-05-2)
- * -> 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
- * + DMS Draggable Open Human Job Positions (< 240 lines)
+ * 8-Tier Authority Chain: Arslan Malik (MD) -> Zoe -> Dir (DIR-XX) -> Mgr (MGR-XX-Y)
+ * -> 12 Assistant Managers -> 108 Supervisors (Diana, Daisy, Mary, Linda, Henry)
+ * + DMS Draggable Open Human Job Positions (< 350 lines)
  */
 
 import React, { FC, useState, useEffect } from 'react';
@@ -83,7 +83,7 @@ const PORTAL_LINKS = [
   },
   {
     route: '/dashboard/aiams/supervisors',
-    label: 'Daisy 12 Asst Mgrs & 108 Supervisors',
+    label: '5 Operational AI Supervisors (1-12-108)',
     color: '#38BDF8',
     bg: 'rgba(56,189,248,0.08)',
     border: 'rgba(56,189,248,0.2)',
@@ -91,14 +91,22 @@ const PORTAL_LINKS = [
     Icon: Shield,
   },
   {
-    route: '/dashboard/aiams/organogram',
-    label: '8-Tier Leasing & TMS Organogram',
+    route: '/dashboard/leasing-cockpit',
+    label: 'MD Daily Leasing Cockpit (DH2)',
     color: '#34D399',
     bg: 'rgba(16,185,129,0.08)',
     border: 'rgba(16,185,129,0.2)',
-    testId: 'link-aiams-organogram',
+    testId: 'link-md-leasing-cockpit',
     Icon: GitFork,
   },
+];
+
+const OPERATIONAL_SUPERVISOR_SHORTCUTS = [
+  { route: '/dashboard/inventory', label: 'Mary', code: 'SUP-06-1-01-1', color: '#38BDF8' },
+  { route: '/dashboard/linda', label: 'Linda', code: 'SUP-08-1-01-1', color: '#4ADE80' },
+  { route: '/dashboard/diana', label: 'Diana', code: 'SUP-02-6-01-1', color: '#FBBF24' },
+  { route: '/dashboard/leasing', label: 'Daisy', code: 'SUP-05-2-01-1', color: '#2DD4BF' },
+  { route: '/dashboard/henry', label: 'Henry', code: 'SUP-11-1-01-1', color: '#F87171' },
 ];
 
 export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
@@ -132,8 +140,14 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
       const srcIdx = next.findIndex(a => a.agentId === sourceAgentId);
       const tgtIdx = next.findIndex(a => a.agentId === targetAgentId);
       if (srcIdx === -1 || tgtIdx === -1) return prev;
-      const srcDept = { departmentId: next[srcIdx].departmentId, department: next[srcIdx].department };
-      const tgtDept = { departmentId: next[tgtIdx].departmentId, department: next[tgtIdx].department };
+      const srcDept = {
+        departmentId: next[srcIdx].departmentId,
+        department: next[srcIdx].department,
+      };
+      const tgtDept = {
+        departmentId: next[tgtIdx].departmentId,
+        department: next[tgtIdx].department,
+      };
       next[srcIdx] = { ...next[srcIdx], ...tgtDept };
       next[tgtIdx] = { ...next[tgtIdx], ...srcDept };
       [next[srcIdx], next[tgtIdx]] = [next[tgtIdx], next[srcIdx]];
@@ -181,6 +195,52 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
         ))}
       </div>
 
+      {/* 5 Operational AI Supervisors Quick Launch (DH2 Leasing Pipeline) */}
+      <div
+        data-testid="sidebar-5-supervisors-quick-bar"
+        style={{
+          padding: '7px 8px',
+          borderRadius: '6px',
+          background: 'rgba(15, 23, 42, 0.85)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          marginBottom: '8px',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '0.6rem',
+            fontWeight: 800,
+            color: '#94A3B8',
+            textTransform: 'uppercase',
+            marginBottom: '5px',
+          }}
+        >
+          5 Operational AI Supervisors (DH2 Live)
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+          {OPERATIONAL_SUPERVISOR_SHORTCUTS.map(sup => (
+            <button
+              key={sup.code}
+              type="button"
+              data-testid={`sidebar-sup-launch-${sup.label.toLowerCase()}`}
+              onClick={() => onNavigateToView?.(sup.route)}
+              style={{
+                padding: '3px 7px',
+                borderRadius: '5px',
+                background: 'rgba(30, 41, 59, 0.9)',
+                border: `1px solid ${sup.color}55`,
+                color: sup.color,
+                fontSize: '0.64rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+              }}
+            >
+              {sup.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* DMS Draggable Open Human Job Position under DEPT-05 */}
       <div
         draggable
@@ -221,30 +281,20 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
 
       <div
         style={{
-          padding: '7px 8px',
-          borderRadius: '6px',
-          background: 'rgba(245, 158, 11, 0.12)',
-          border: '1px dashed rgba(245, 158, 11, 0.45)',
-          marginBottom: '8px',
-          cursor: 'grab',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '4px 8px 8px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.63rem', color: '#FBBF24', fontWeight: 800 }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Briefcase size={11} /> OPEN HUMAN ROLE • DEPT-05
-          </span>
-          <span>DRAG IN DMS</span>
-        </div>
-        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#F8FAFC', marginTop: '2px' }}>
-          Residential Leasing Manager (+12 AM / 108 Sup / 10 Agents)
-        </div>
-        <div style={{ fontSize: '0.62rem', color: '#94A3B8' }}>
-          Reports to: Dir AI Clara (DIR-05) → AI Zoe → Arslan Malik (MD)
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 8px 8px' }}>
-        <span style={{ fontSize: '0.66rem', fontWeight: 800, color: '#EF4444', textTransform: 'uppercase' }}>
+        <span
+          style={{
+            fontSize: '0.66rem',
+            fontWeight: 800,
+            color: '#EF4444',
+            textTransform: 'uppercase',
+          }}
+        >
           Zoe&apos;s Team ({visibleAgents.length}) · Drag to Swap
         </span>
         <button
@@ -301,8 +351,16 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
             style={{
               padding: '8px 10px',
               borderRadius: '8px',
-              background: isDropTarget ? 'rgba(16, 185, 129, 0.18)' : isSelected ? 'rgba(239, 68, 68, 0.15)' : '#070D18',
-              border: isDropTarget ? '1px dashed #10B981' : isSelected ? '1px solid #EF4444' : '1px solid rgba(255, 255, 255, 0.05)',
+              background: isDropTarget
+                ? 'rgba(16, 185, 129, 0.18)'
+                : isSelected
+                  ? 'rgba(239, 68, 68, 0.15)'
+                  : '#070D18',
+              border: isDropTarget
+                ? '1px dashed #10B981'
+                : isSelected
+                  ? '1px solid #EF4444'
+                  : '1px solid rgba(255, 255, 255, 0.05)',
               cursor: 'grab',
               display: 'flex',
               flexDirection: 'column',
@@ -313,16 +371,43 @@ export const SidebarAiAssistantsList: FC<SidebarAiAssistantsListProps> = ({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                 <GripVertical size={11} color="#64748B" />
-                <span style={{ fontSize: '0.63rem', fontFamily: 'monospace', color: '#F87171', background: 'rgba(239,68,68,0.12)', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>
+                <span
+                  style={{
+                    fontSize: '0.63rem',
+                    fontFamily: 'monospace',
+                    color: '#F87171',
+                    background: 'rgba(239,68,68,0.12)',
+                    padding: '1px 5px',
+                    borderRadius: '4px',
+                    fontWeight: 700,
+                  }}
+                >
                   {agent.code}
                 </span>
-                <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#94A3B8' }}>{agent.tier}</span>
+                <span style={{ fontSize: '0.62rem', fontWeight: 800, color: '#94A3B8' }}>
+                  {agent.tier}
+                </span>
               </div>
-              <span style={{ fontSize: '0.62rem', color: '#10B981', fontWeight: 700 }}>{agent.status}</span>
+              <span style={{ fontSize: '0.62rem', color: '#10B981', fontWeight: 700 }}>
+                {agent.status}
+              </span>
             </div>
-            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#F8FAFC' }}>{agent.name}</div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.65rem', color: '#64748B', gap: '6px' }}>
-              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{agent.role}</span>
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#F8FAFC' }}>
+              {agent.name}
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontSize: '0.65rem',
+                color: '#64748B',
+                gap: '6px',
+              }}
+            >
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {agent.role}
+              </span>
               <span style={{ color: '#38BDF8', flexShrink: 0 }}>{agent.model}</span>
             </div>
           </div>

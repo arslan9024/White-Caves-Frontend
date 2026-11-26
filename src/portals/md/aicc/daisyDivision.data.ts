@@ -1,14 +1,14 @@
 /**
- * daisyDivision.data.ts — Daisy Residential Leasing Division (DEPT-05)
+ * daisyDivision.data.ts — Residential Leasing Division (DEPT-05 / DIV-05-2)
  *
  * Full 8-Tier Authority Chain for Leasing Operations:
  * L8 Managing Director (Arslan Malik — sole human employee today)
  *  -> L7 COO (AI Zoe WC-COO-01)
  *   -> L6 Director (AI Clara DIR-05 — DEPT-05 Sales, Services & Operations)
- *    -> L5 Manager (AI Daisy Leasing MGR-05-2)
- *     -> L4 Assistant Managers (12 AI Assistant Managers: AMGR-05-2-01 .. AMGR-05-2-12)
- *      -> L3 Supervisors (9 AI Supervisors per Assistant Manager = 108 AI Supervisors)
- *       -> L3 Team Leader (1 AI Team Leader: AI Layla DH2 Field Team Leader TL-05-2-01)
+ *    -> L5 Manager (AI Layla Residential MGR-05-2)
+ *     -> L4 Assistant Managers (12 AI Assistant Managers: AMGR-05-2-01 AI Amina .. AMGR-05-2-12)
+ *      -> L3 Supervisors (9 AI Supervisors/AM = 108; Lead Slot SUP-05-2-01-1 AI Daisy Supervisor)
+ *       -> L3 Team Leader (1 AI Team Leader: AI Leila DH2 Field Team Leader TL-05-2-01)
  *        -> L2 Leasing Agents (10 AI Leasing Agents paired with 10 WhatsApp SIMs)
  */
 
@@ -47,7 +47,7 @@ const AM_CONFIGS: Array<[string, string]> = [
   ['AI Huda Leasing', 'Victoria, Juniper & Primrose'],
   ['AI Jana Leasing', 'Acuna, Coursetia & Trixis'],
   ['AI Karima Leasing', 'Centaury, Janusia & Sycamore'],
-  ['AI Lubna Leasing', 'Sanctnary, Aquilegia & Mimosa'],
+  ['AI Lubna Leasing', 'Sanctuary, Aquilegia & Mimosa'],
   ['AI Maha Leasing', 'Odora, Lirio & Veronica'],
   ['AI Noura Leasing', 'Viridis Towers A-D'],
   ['AI Rania Leasing', 'Navitas Hotel Residences'],
@@ -76,7 +76,7 @@ export const DAISY_12_ASSISTANT_MANAGERS: DaisyAssistantManagerCard[] = AM_CONFI
 
 export const DAISY_TEAM_LEADER = {
   id: 'TL-05-2-01',
-  name: 'AI Layla DH2 Field Team Leader',
+  name: 'AI Leila DH2 Field Team Leader',
   reportsToId: 'SUP-05-2-01-1 (AI Daisy Supervisor)',
   roleTitle: 'DAMAC Hills 2 WhatsApp Outreach & Viewing Squad Leader',
 };
@@ -166,7 +166,7 @@ export const DMS_OPEN_HUMAN_LEASING_POSITIONS: DmsOpenPositionCard[] = [
     jobTitle: 'Human Assistant Leasing Manager — DH2 Clusters',
     role: 'ASSISTANT_MANAGER',
     departmentCode: 'DEPT-05',
-    reportsToTitle: 'AI Daisy Leasing (MGR-05-2)',
+    reportsToTitle: 'AI Layla Residential (MGR-05-2)',
     openCount: 12,
   },
   {
@@ -182,7 +182,7 @@ export const DMS_OPEN_HUMAN_LEASING_POSITIONS: DmsOpenPositionCard[] = [
     jobTitle: 'Human Leasing Team Leader — 10-Agent Squad',
     role: 'TEAM_LEADER',
     departmentCode: 'DEPT-05',
-    reportsToTitle: 'AI Noor Sup-1.1 (SUP-05-2-01-1)',
+    reportsToTitle: 'AI Daisy Supervisor (SUP-05-2-01-1)',
     openCount: 1,
   },
   {
@@ -190,7 +190,7 @@ export const DMS_OPEN_HUMAN_LEASING_POSITIONS: DmsOpenPositionCard[] = [
     jobTitle: 'Human Residential Leasing Agent — WhatsApp & Viewing Squad',
     role: 'LEASING_AGENT',
     departmentCode: 'DEPT-05',
-    reportsToTitle: 'AI Layla DH2 Field Team Leader (TL-05-2-01)',
+    reportsToTitle: 'AI Leila DH2 Field Team Leader (TL-05-2-01)',
     openCount: 10,
   },
 ];
@@ -199,10 +199,10 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-01',
     title: 'Mission 1: 10-SIM WhatsApp Landlord Discovery Outreach',
-    aiccActorName: 'AI Layla Team Leader + 10 AI Leasing Agents',
-    aiccActorCode: 'TL-05-2-01 / AGT-05-2-01..10',
+    aiccActorName: 'AI Linda Supervisor (SUP-08-1-01-1) + 10 AI Leasing Agents',
+    aiccActorCode: 'SUP-08-1-01-1 / TL-05-2-01',
     reportingChain:
-      'Agents -> TL Layla -> Sup Noor -> AM Amina -> Mgr Daisy -> Dir Clara -> COO Zoe -> MD Arslan Malik',
+      'SUP-08-1-01-1 AI Linda -> AMGR-08-1-01 AI Samira -> MGR-08-1 AI Nadia -> DIR-08 AI Maya -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Dispatch anti-ban WhatsApp outreach across 9 Hunter SIMs',
       'Verify villa availability & asking rent in DH2',
@@ -218,7 +218,7 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
       'Mary (SUP-06-1-01-1) & Henry (SUP-11-1-01-1) -> AMs -> Mgrs -> Dirs -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Update scoped Mary Inventory Vault (Agents own vs MD all)',
-      'Enforce Drive formula: Area/Project/Unit/[5 Canonical Folders]',
+      'Enforce Drive formula: Area/Project/Unit/[4 Canonical Folders]',
     ],
   },
   {
@@ -236,9 +236,10 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-04',
     title: 'Sequential Cheques, Tenant-First Signing, Clearance & Landlord Counter-Sign',
-    aiccActorName: 'AI Daisy Leasing + AI Henry Record Keeper',
-    aiccActorCode: 'MGR-05-2 / MGR-11-1',
-    reportingChain: 'Daisy -> Dir Clara (DIR-05) -> COO Zoe -> MD Arslan Malik',
+    aiccActorName: 'AI Daisy Supervisor + AI Henry Supervisor',
+    aiccActorCode: 'SUP-05-2-01-1 / SUP-11-1-01-1',
+    reportingChain:
+      'SUP-05-2-01-1 AI Daisy -> AMGR-05-2-01 AI Amina -> MGR-05-2 AI Layla -> DIR-05 AI Clara -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Collect cheques & fees FIRST',
       'Tenant signs FIRST -> verify payment clearance -> Landlord signs AFTER',
@@ -248,9 +249,10 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-05',
     title: 'Ejari & DEWA Registration (New Deposit vs Renewal Bill + VIP MD Proxy)',
-    aiccActorName: 'Arslan Malik (MD VIP Proxy) + AI Henry Record Keeper',
-    aiccActorCode: 'MD-01 / MGR-11-1',
-    reportingChain: 'Henry -> Dir Victoria (DIR-11) -> COO Zoe -> MD Arslan Malik',
+    aiccActorName: 'Arslan Malik (MD VIP Proxy) + AI Henry Supervisor',
+    aiccActorCode: 'MD-01 / SUP-11-1-01-1',
+    reportingChain:
+      'SUP-11-1-01-1 AI Henry -> AMGR-11-1-01 AI Dalia -> MGR-11-1 AI Mireille -> DIR-11 AI Sofia -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'New Tenancy: upload Ejari + DEWA Security Deposit Receipt PDF',
       'Renewal Tenancy: upload Ejari + Latest Paid DEWA Bill PDF',
@@ -259,9 +261,10 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-06',
     title: '90-Day RERA Renewal Radar & Landlord/Tenant Care WhatsApp',
-    aiccActorName: 'AI Daisy Leasing + Primary Master Closer (+971505760056)',
-    aiccActorCode: 'MGR-05-2',
-    reportingChain: 'Daisy -> Dir Clara (DIR-05) -> COO Zoe -> MD Arslan Malik',
+    aiccActorName: 'AI Daisy Supervisor + Primary Master Closer (+971505760056)',
+    aiccActorCode: 'SUP-05-2-01-1',
+    reportingChain:
+      'SUP-05-2-01-1 AI Daisy -> AMGR-05-2-01 AI Amina -> MGR-05-2 AI Layla -> DIR-05 AI Clara -> COO Zoe -> MD Arslan Malik',
     tasks: [
       'Send care messages from +971505760056',
       'Schedule 90-day RERA notice & 30-day renewal check on MD Calendar',
@@ -270,13 +273,25 @@ export const TMS_LEASING_TASK_GROUPS: TmsLeasingTaskGroupCard[] = [
   {
     collectionCode: 'TMS-LEASE-07',
     title: 'Track A: Branded Auth, MD/Landlord/Tenant Portals & 12-Stage Deal Cockpit',
-    aiccActorName: 'AI Noor (Leasing Portals & Deal Cockpit Supervisor)',
+    aiccActorName: 'AI Daisy Supervisor (Residential Leasing & Deal Cockpit)',
     aiccActorCode: 'SUP-05-2-01-1 / SQD-05-2-01-1',
     reportingChain:
-      'SUP-05-2-01-1 AI Noor -> AMGR-05-2-01 AI Amina -> MGR-05-2 AI Daisy -> DIR-05 AI Clara -> AI Zoe (COO) -> MD-01 Arslan Malik',
+      'SUP-05-2-01-1 AI Daisy -> AMGR-05-2-01 AI Amina -> MGR-05-2 AI Layla -> DIR-05 AI Clara -> AI Zoe (COO) -> MD-01 Arslan Malik',
     tasks: [
       'Maintain branded White Caves MD / Landlord / Tenant Auth Gateway & Portals',
       'Enforce 12-Stage Deal Cockpit sequential gates, 5% VAT receipts & Google Drive 4-folder sync',
+    ],
+  },
+  {
+    collectionCode: 'TMS-LEASE-08',
+    title: 'DAMAC Hills 2 Property Owner Gmail Campaigns & Demand Broadcasts',
+    aiccActorName: 'AI Diana Supervisor (Property Owner Email Campaigns)',
+    aiccActorCode: 'SUP-02-6-01-1 / SQD-02-6-01-1',
+    reportingChain:
+      'SUP-02-6-01-1 AI Diana -> AMGR-02-6-01 AI Rania -> MGR-02-6 AI Celine -> DIR-02 AI Olivia -> AI Zoe (COO) -> MD-01 Arslan Malik',
+    tasks: [
+      'Dispatch DH2 owner demand emails via the.arslan.broker@gmail.com',
+      'Segment verified DAMAC Hills 2 landlords & route listing replies to Mary & Daisy',
     ],
   },
   {

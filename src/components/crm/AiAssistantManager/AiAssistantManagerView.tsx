@@ -16,7 +16,14 @@ export interface AiAssistantManagerViewProps {
   onNavigate?: (route: string) => void;
 }
 
-const RESERVED_SUBROUTES = new Set(['agents', 'crud', 'managers', 'supervisors', 'organogram', 'create']);
+const RESERVED_SUBROUTES = new Set([
+  'agents',
+  'crud',
+  'managers',
+  'supervisors',
+  'organogram',
+  'create',
+]);
 
 export const AiAssistantManagerView: React.FC<AiAssistantManagerViewProps> = ({
   selectedSubRoute = null,
@@ -105,6 +112,7 @@ export const AiAssistantManagerView: React.FC<AiAssistantManagerViewProps> = ({
           onEdit={handleOpenEdit}
           onDelete={handleDeleteAgent}
           onToggleStatus={handleToggleStatus}
+          onOpenWorkspace={route => onNavigate?.(route)}
         />
       ) : (
         <>
@@ -334,4 +342,3 @@ export const AiAssistantManagerView: React.FC<AiAssistantManagerViewProps> = ({
 };
 
 export default AiAssistantManagerView;
-
