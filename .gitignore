@@ -207,3 +207,10 @@ nginx.conf
 nginx.prod.conf
 nodemon.json
 tsconfig.server.json
+
+# Phase 0: Excluded PII, backups, and generated reports
+backups/
+attached_assets/
+.lighthouseci/
+playwright-report/
+public/data/damacHills2/owners.json
