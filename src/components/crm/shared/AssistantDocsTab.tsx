@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
-import { 
-  BookOpen, CheckCircle, Clock, AlertCircle, Calendar,
-  ArrowRight, ExternalLink, GitBranch, Zap, Target,
-  ChevronDown, ChevronUp, FileText, Layers, Settings
+import {
+  BookOpen,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Calendar,
+  ArrowRight,
+  ExternalLink,
+  GitBranch,
+  Zap,
+  Target,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Layers,
+  Settings,
 } from 'lucide-react';
 import { getAssistantDocs } from '../../../config/assistantDocs';
 import './AssistantDocsTab.css';
 
-const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor: propColor, color }: {
+const AssistantDocsTab = ({
+  assistantId,
+  assistantName: propName,
+  assistantColor: propColor,
+  color,
+}: {
   assistantId?: string;
   assistantName?: string;
   assistantColor?: string;
@@ -15,7 +32,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
 }) => {
   const [expandedSection, setExpandedSection] = useState<string | null>('features');
   const docs: any = getAssistantDocs(assistantId || '');
-  
+
   const assistantName = propName || docs?.name || assistantId;
   const assistantColor = propColor || color || docs?.color || '#8B5CF6';
 
@@ -31,10 +48,14 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle size={14} className="status-active" />;
-      case 'beta': return <AlertCircle size={14} className="status-beta" />;
-      case 'planned': return <Clock size={14} className="status-planned" />;
-      default: return <CheckCircle size={14} />;
+      case 'active':
+        return <CheckCircle size={14} className="status-active" />;
+      case 'beta':
+        return <AlertCircle size={14} className="status-beta" />;
+      case 'planned':
+        return <Clock size={14} className="status-planned" />;
+      default:
+        return <CheckCircle size={14} />;
     }
   };
 
@@ -72,7 +93,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
           {expandedSection === 'features' && (
             <div className="section-content">
               <div className="features-grid">
-                {docs.features.map((feature, idx) => (
+                {docs.features.map((feature: any, idx: number) => (
                   <div key={idx} className="feature-card">
                     <div className="feature-header">
                       {getStatusIcon(feature.status)}
@@ -98,7 +119,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
           {expandedSection === 'roadmap' && (
             <div className="section-content">
               <div className="roadmap-timeline">
-                {docs.roadmap.map((item, idx) => (
+                {docs.roadmap.map((item: any, idx: number) => (
                   <div key={idx} className="roadmap-item">
                     <div className="roadmap-marker" style={{ background: assistantColor }} />
                     <div className="roadmap-content">
@@ -118,12 +139,16 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
               <GitBranch size={18} style={{ color: assistantColor }} />
               <h3>Integrations ({docs.integrations.length})</h3>
             </div>
-            {expandedSection === 'integrations' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            {expandedSection === 'integrations' ? (
+              <ChevronUp size={18} />
+            ) : (
+              <ChevronDown size={18} />
+            )}
           </div>
           {expandedSection === 'integrations' && (
             <div className="section-content">
               <div className="integrations-list">
-                {docs.integrations.map((integration, idx) => (
+                {docs.integrations.map((integration: any, idx: number) => (
                   <div key={idx} className="integration-badge">
                     <ExternalLink size={12} />
                     {integration}
@@ -149,7 +174,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
                   <h4>Receives Data From</h4>
                   <div className="dataflow-items">
                     {docs.dataFlows.inputs.length > 0 ? (
-                      docs.dataFlows.inputs.map((input, idx) => (
+                      docs.dataFlows.inputs.map((input: any, idx: number) => (
                         <span key={idx} className="dataflow-badge input">
                           <ArrowRight size={12} /> {input}
                         </span>
@@ -163,7 +188,7 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
                   <h4>Sends Data To</h4>
                   <div className="dataflow-items">
                     {docs.dataFlows.outputs.length > 0 ? (
-                      docs.dataFlows.outputs.map((output, idx) => (
+                      docs.dataFlows.outputs.map((output: any, idx: number) => (
                         <span key={idx} className="dataflow-badge output">
                           {output} <ArrowRight size={12} />
                         </span>
@@ -183,4 +208,3 @@ const AssistantDocsTab = ({ assistantId, assistantName: propName, assistantColor
 };
 
 export default AssistantDocsTab;
-

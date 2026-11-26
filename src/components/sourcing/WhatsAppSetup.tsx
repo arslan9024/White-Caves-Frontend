@@ -8,13 +8,21 @@ import './WhatsAppSetup.css';
  * Complete setup flow for WhatsApp integration with QR authentication
  * Includes status checking and device management
  */
-export default function WhatsAppSetup({ onComplete, onClose }) {
+export default function WhatsAppSetup({
+  onComplete,
+  onClose,
+}: {
+  onComplete?: (data: any) => void;
+  onClose?: () => void;
+}) {
   const [setupStep, setSetupStep] = useState('welcome'); // welcome, qr-auth, verification, success
   const [connectionStatus, setConnectionStatus] = useState('disconnected'); // disconnected, connecting, connected
-  const [linkedDevices, setLinkedDevices] = useState([]);
-  const [authError, setAuthError] = useState(null);
+  const [linkedDevices, setLinkedDevices] = useState<
+    Array<{ id: string; linkedAt: Date; status: string }>
+  >([]);
+  const [authError, setAuthError] = useState<string | null>(null);
 
-  const handleQRSuccess = data => {
+  const handleQRSuccess = (data: { clientId: string }) => {
     setConnectionStatus('connected');
     setLinkedDevices(prev => [
       ...prev,
@@ -27,12 +35,12 @@ export default function WhatsAppSetup({ onComplete, onClose }) {
     setSetupStep('success');
   };
 
-  const handleQRError = error => {
+  const handleQRError = (error: string) => {
     setAuthError(error);
     setConnectionStatus('error');
   };
 
-  const handleRemoveDevice = deviceId => {
+  const handleRemoveDevice = (deviceId: string) => {
     setLinkedDevices(prev => prev.filter(d => d.id !== deviceId));
   };
 
@@ -182,4 +190,3 @@ export default function WhatsAppSetup({ onComplete, onClose }) {
     </div>
   );
 }
-

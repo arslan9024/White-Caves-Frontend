@@ -47,7 +47,7 @@ const SAVED_REPORTS = [
   { name: 'Marketing ROI Report', type: 'Marketing', created: '1mo ago', format: 'PDF' },
 ];
 
-const maxBar = Math.max(...CHARTS[0].data);
+const maxBar = Math.max(...(CHARTS[0].data as number[]));
 
 const LumenCRM = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -162,15 +162,15 @@ const LumenCRM = () => {
                   <div
                     style={{
                       width: '100%',
-                      height: `${(v / maxBar) * 80}px`,
+                      height: `${((v as number) / maxBar) * 80}px`,
                       background: '#E31E24',
                       borderRadius: '3px 3px 0 0',
-                      opacity: 0.8 + (v / maxBar) * 0.2,
+                      opacity: 0.8 + ((v as number) / maxBar) * 0.2,
                     }}
                   />
                   {/* eslint-disable-next-line security/detect-object-injection */}
                   <span style={{ fontSize: 9, color: 'var(--text-secondary, #9ca3af)' }}>
-                    {CHARTS[0].labels[i]}
+                    {CHARTS[0].labels?.[i]}
                   </span>
                 </div>
               ))}
@@ -186,7 +186,7 @@ const LumenCRM = () => {
           >
             <strong style={{ marginBottom: 12, display: 'block' }}>Lead Sources</strong>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              {CHARTS[1].data.map(d => (
+              {(CHARTS[1].data as Array<{ label: string; value: number; color: string }>).map(d => (
                 <div key={d.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div
                     style={{
@@ -212,7 +212,7 @@ const LumenCRM = () => {
                 marginTop: 12,
               }}
             >
-              {CHARTS[1].data.map(d => (
+              {(CHARTS[1].data as Array<{ label: string; value: number; color: string }>).map(d => (
                 <div
                   key={d.label}
                   style={{ width: `${d.value}%`, height: '100%', background: d.color }}
@@ -332,4 +332,3 @@ const LumenCRM = () => {
 };
 
 export default LumenCRM;
-
