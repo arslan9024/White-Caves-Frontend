@@ -1,6 +1,8 @@
 import React from 'react';
-import { EnterpriseReport } from '../../../../../data/theodoraReportsRegistry';
-import { REPORT_DATE_RANGES } from './types';
+import { X } from 'lucide-react';
+import type { EnterpriseReport } from '../../../../../data/theodoraReportsRegistry';
+import { ReportRunnerControlsBar } from './ReportRunnerControlsBar';
+import { ReportRunnerPreviewTable } from './ReportRunnerPreviewTable';
 
 interface ReportRunnerModalProps {
   report: EnterpriseReport;
@@ -109,17 +111,20 @@ export const ReportRunnerModal: React.FC<ReportRunnerModalProps> = ({
           </div>
 
           <button
+            type="button"
+            aria-label="Close report viewer"
             onClick={onClose}
             style={{
               background: 'none',
               border: 'none',
-              fontSize: '1.25rem',
               color: 'var(--text-secondary, #64748B)',
               cursor: 'pointer',
               padding: '4px 8px',
+              display: 'inline-flex',
+              alignItems: 'center',
             }}
           >
-            ✕
+            <X size={20} />
           </button>
         </div>
 
@@ -127,211 +132,14 @@ export const ReportRunnerModal: React.FC<ReportRunnerModalProps> = ({
         <div
           style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
         >
-          {/* Statutory UAE Relevance Notice */}
-          <div
-            style={{
-              backgroundColor: 'var(--color-fef3c7, #FEF3C7)',
-              border: '1px solid var(--color-fcd34d, #FCD34D)',
-              borderRadius: '10px',
-              padding: '10px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '0.82rem',
-              color: 'var(--color-92400e, #92400E)',
-              fontWeight: 600,
-            }}
-          >
-            <span style={{ fontSize: '1.1rem' }}>🏛️</span>
-            <span>
-              <strong>UAE Compliance Framework:</strong> {report.uaeRelevance}
-            </span>
-          </div>
-
-          {/* Date Filter & Export Controls Bar */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '10px',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span
-                style={{
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  color: 'var(--text-secondary, #475569)',
-                }}
-              >
-                Period:
-              </span>
-              {REPORT_DATE_RANGES.map(range => (
-                <button
-                  key={range}
-                  onClick={() => onDateRangeChange(range)}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: '6px',
-                    border:
-                      reportDateRange === range
-                        ? '1px solid var(--accent-blue, #2563EB)'
-                        : '1px solid var(--text-secondary, #E2E8F0)',
-                    backgroundColor:
-                      reportDateRange === range
-                        ? 'var(--color-eff6ff, #EFF6FF)'
-                        : 'var(--white, #FFFFFF)',
-                    color:
-                      reportDateRange === range
-                        ? 'var(--color-1d4ed8, #1D4ED8)'
-                        : 'var(--text-secondary, #64748B)',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {range}
-                </button>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <button
-                onClick={() => onExportPDF(report)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid var(--text-secondary, #CBD5E1)',
-                  backgroundColor: 'var(--white, #FFFFFF)',
-                  color: 'var(--text-primary, #0F172A)',
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                📄 Download PDF
-              </button>
-              <button
-                onClick={() => onExportCSV(report)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  backgroundColor: 'var(--accent-green, #10B981)',
-                  color: 'var(--white, #FFFFFF)',
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                }}
-              >
-                📥 Export CSV
-              </button>
-            </div>
-          </div>
-
-          {/* Summary KPIs */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-              gap: '10px',
-            }}
-          >
-            {Object.entries(report.mockSummary).map(([key, val]) => (
-              <div
-                key={key}
-                style={{
-                  background: 'var(--color-f8fafc, #F8FAFC)',
-                  border: '1px solid var(--text-secondary, #E2E8F0)',
-                  borderRadius: '10px',
-                  padding: '12px',
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: '0.72rem',
-                    color: 'var(--text-secondary, #64748B)',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {key}
-                </div>
-                <div
-                  style={{
-                    fontSize: '1.1rem',
-                    fontWeight: 800,
-                    color: 'var(--text-primary, #0F172A)',
-                    marginTop: '4px',
-                  }}
-                >
-                  {val}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Data Table Preview */}
-          <div
-            style={{
-              border: '1px solid var(--text-secondary, #E2E8F0)',
-              borderRadius: '10px',
-              overflow: 'hidden',
-            }}
-          >
-            <div
-              style={{
-                padding: '8px 12px',
-                background: 'var(--color-f1f5f9, #F1F5F9)',
-                fontSize: '0.78rem',
-                fontWeight: 800,
-                color: 'var(--text-secondary, #475569)',
-              }}
-            >
-              Report Data Preview ({reportDateRange.toUpperCase()})
-            </div>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
-                <thead>
-                  <tr
-                    style={{
-                      background: 'var(--color-f8fafc, #F8FAFC)',
-                      borderBottom: '1px solid var(--text-secondary, #E2E8F0)',
-                      textAlign: 'left',
-                      color: 'var(--text-secondary, #64748B)',
-                      fontWeight: 700,
-                    }}
-                  >
-                    {report.columns.map((col, idx) => (
-                      <th key={idx} style={{ padding: '10px 12px' }}>
-                        {col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {report.sampleRows.map((row, rIdx) => (
-                    <tr
-                      key={rIdx}
-                      style={{ borderBottom: '1px solid var(--color-f1f5f9, #F1F5F9)' }}
-                    >
-                      {report.columns.map((col, cIdx) => (
-                        <td
-                          key={cIdx}
-                          style={{ padding: '10px 12px', color: 'var(--text-primary, #1E293B)' }}
-                        >
-                          {row[col] ?? '—'}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ReportRunnerControlsBar
+            report={report}
+            reportDateRange={reportDateRange}
+            onDateRangeChange={onDateRangeChange}
+            onExportPDF={onExportPDF}
+            onExportCSV={onExportCSV}
+          />
+          <ReportRunnerPreviewTable report={report} reportDateRange={reportDateRange} />
         </div>
 
         {/* Modal Footer */}
@@ -349,6 +157,7 @@ export const ReportRunnerModal: React.FC<ReportRunnerModalProps> = ({
             Generated autonomously by <strong>Theodora AI (CFO Intelligence)</strong>
           </div>
           <button
+            type="button"
             onClick={onClose}
             style={{
               padding: '8px 16px',

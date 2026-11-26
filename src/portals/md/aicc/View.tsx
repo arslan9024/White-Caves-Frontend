@@ -4,13 +4,15 @@
  * -> Daisy's 12 Assistant Managers -> 108 Supervisors -> 1 Team Leader -> 10 Leasing Agents
  */
 import React, { useState } from 'react';
-import { GripVertical, Plus, UserMinus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useAiccSanctumLogic } from './Logic.logic';
 import { styles } from './Style.style';
 import { DaisyLeasingHierarchyPanel } from './DaisyLeasingHierarchyPanel';
 import { ManagerFractalSubtreePanel } from './ManagerFractalSubtreePanel';
 import { OperationalSupervisorsChainPanel } from './OperationalSupervisorsChainPanel';
 import { SanctumDelegationPanel } from './SanctumDelegationPanel';
+import { SanctumManagerCard } from './SanctumManagerCard';
+
 export const AiccSanctumView: React.FC = () => {
   const {
     executiveCoo,
@@ -43,6 +45,7 @@ export const AiccSanctumView: React.FC = () => {
   const [newName, setNewName] = useState('');
   const [newRole, setNewRole] = useState('');
   const [newCap, setNewCap] = useState('');
+
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newName.trim() || !newRole.trim() || !selectedDepartment) return;
@@ -53,6 +56,7 @@ export const AiccSanctumView: React.FC = () => {
       setShowAdd(false);
     }
   };
+
   const metrics = [
     {
       label: 'Bhakti 1-12-108 Authority',
@@ -75,6 +79,7 @@ export const AiccSanctumView: React.FC = () => {
       sub: 'SUP-11-1-01-1 (Sole Male AI) • 6 DMS Open Human Tiers',
     },
   ];
+
   return (
     <div className={styles.container} data-testid="aicc-sanctum-command-center">
       <header className={styles.header}>
@@ -231,104 +236,32 @@ export const AiccSanctumView: React.FC = () => {
           )}
           <div className={styles.managersGrid}>
             {filteredManagers.map(mgr => (
-              <div
+              <SanctumManagerCard
                 key={mgr.id}
-                draggable
-                onDragStart={e => {
-                  setDraggedAgentId(mgr.id);
-                  e.dataTransfer.setData('text/plain', mgr.id);
-                }}
-                onDragOver={e => e.preventDefault()}
-                onDrop={e => {
-                  e.preventDefault();
-                  const srcId = e.dataTransfer.getData('text/plain') || draggedAgentId;
-                  if (srcId) swapManagersById(srcId, mgr.id);
-                  setDraggedAgentId(null);
-                }}
-                className={`${styles.managerCard} cursor-grab active:cursor-grabbing`}
-              >
-                <div>
-                  <div className={styles.cardTop}>
-                    <div className="flex items-center gap-2">
-                      <GripVertical size={13} className="text-slate-500 shrink-0" />
-                      <span className={styles.slotBadge}>#{mgr.slot}</span>
-                      <div>
-                        <div className={styles.agentName}>{mgr.name}</div>
-                        <div className={styles.roleTitle}>{mgr.roleTitle}</div>
-                      </div>
-                    </div>
-                    <span className="px-1.5 py-0.5 text-[9px] uppercase font-bold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                      {mgr.status}
-                    </span>
-                  </div>
-                  <div className={styles.tagList}>
-                    {mgr.capabilities.slice(0, 3).map(cap => (
-                      <span key={cap} className={styles.toolTag}>
-                        {cap}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
-                  <span className={styles.slaPill}>{mgr.slaResponseMinutes}m SLA</span>
-                  <div className="flex items-center gap-1">
-                    {mgr.slot && mgr.slot > 1 && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          swapManagerSlots(selectedDepartment.deptCode, mgr.slot!, mgr.slot! - 1)
+                mgr={mgr}
+                deptCode={selectedDepartment.deptCode}
+                totalManagers={selectedDepartment.managers.length}
+                draggedAgentId={draggedAgentId}
+                onDragStart={setDraggedAgentId}
+                onSwapById={swapManagersById}
+                onDragEndReset={() => setDraggedAgentId(null)}
+                onSwapSlots={swapManagerSlots}
+                onToggleFractal={m => {
+                  const deptSlot = Number(selectedDepartment.deptCode.replace('DEPT-', '')) || 1;
+                  setSelectedFractalMgr(
+                    selectedFractalMgr?.code === m.code
+                      ? null
+                      : {
+                          deptSlot,
+                          managerSlot: m.slot || 1,
+                          code: m.code,
+                          name: m.name,
+                          roleTitle: m.roleTitle,
                         }
-                        className="px-1.5 py-0.5 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700"
-                        title="Move Up"
-                      >
-                        ▲
-                      </button>
-                    )}
-                    {mgr.slot && mgr.slot < selectedDepartment.managers.length && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          swapManagerSlots(selectedDepartment.deptCode, mgr.slot!, mgr.slot! + 1)
-                        }
-                        className="px-1.5 py-0.5 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700"
-                        title="Move Down"
-                      >
-                        ▼
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const deptSlot =
-                          Number(selectedDepartment.deptCode.replace('DEPT-', '')) || 1;
-                        setSelectedFractalMgr(
-                          selectedFractalMgr?.code === mgr.code
-                            ? null
-                            : {
-                                deptSlot,
-                                managerSlot: mgr.slot || 1,
-                                code: mgr.code,
-                                name: mgr.name,
-                                roleTitle: mgr.roleTitle,
-                              }
-                        );
-                      }}
-                      className="px-1.5 py-0.5 text-[10px] bg-red-600/20 hover:bg-red-600/40 text-red-300 rounded border border-red-500/40 font-semibold"
-                      title="Inspect 12 Assistant Managers & 108 Supervisors"
-                    >
-                      12/108
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => demoteToStandby(mgr.id)}
-                      className="px-1.5 py-0.5 text-[10px] bg-slate-800 hover:bg-red-900/60 text-slate-300 rounded border border-slate-700"
-                      title="Move to Standby"
-                    >
-                      <UserMinus size={11} />
-                    </button>
-                  </div>
-                </div>
-              </div>
+                  );
+                }}
+                onDemoteToStandby={demoteToStandby}
+              />
             ))}
           </div>
           {selectedFractalMgr && (
@@ -359,4 +292,5 @@ export const AiccSanctumView: React.FC = () => {
     </div>
   );
 };
+
 export default AiccSanctumView;

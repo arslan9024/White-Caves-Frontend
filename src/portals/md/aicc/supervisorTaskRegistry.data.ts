@@ -110,6 +110,29 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     slaLabel: '4 Hours',
     xpReward: 500,
   },
+  // Track B Wave 3 — Remaining Frontend Monoliths Atomic Decomposition (AEG-042 < 350 lines)
+  {
+    taskCode: 'TSK-ARCH-W3',
+    title: 'Wave 3 Atomic Decomposition of 19 Oversized Frontend Monoliths (< 350 Lines AEG-042)',
+    deptCode: 'DEPT-12',
+    managerCode: 'MGR-12-1',
+    assistantManagerId: 'AMGR-12-1-01',
+    supervisorId: 'SUP-12-1-01-1',
+    supervisorName:
+      'AI Mary Wilkes (Frontend Wave 2 & Wave 3 Architecture Decomposition Supervisor)',
+    taskCollectionLabel: 'TMS-COL-TRACK-B-ARCH-DECOMPOSITION',
+    authorityChain: buildSupervisorAuthorityLabel(
+      12,
+      1,
+      1,
+      1,
+      'AI Mary Wilkes (Frontend Wave 2 & Wave 3 Architecture Decomposition Supervisor)',
+      'TMS-COL-TRACK-B-ARCH-DECOMPOSITION'
+    ),
+    statutoryAuthority: 'AEGIS V5.1 / AEG-042',
+    slaLabel: '4 Hours',
+    xpReward: 500,
+  },
   // DEPT-05: Sales, Services & Operations (Daisy Leasing MGR-05-2)
   {
     taskCode: 'TSK-002',

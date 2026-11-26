@@ -7,24 +7,12 @@
 
 import React, { FC, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  Building2,
-  Network,
-  CheckSquare,
-  Coins,
-  ShieldCheck,
-  ChevronRight,
-  ChevronDown,
-  Users,
-  Briefcase,
-  Home,
-} from 'lucide-react';
-import {
-  BHAKTI_LOCKED_DEPARTMENTS_12,
-  generateManagerFractalSubtree,
-} from '../../../portals/md/aicc/formulas/bhaktiFractalLoop.formula';
+import { Building2, Network, CheckSquare, Coins, ShieldCheck } from 'lucide-react';
+import { BHAKTI_LOCKED_DEPARTMENTS_12 } from '../../../portals/md/aicc/formulas/bhaktiFractalLoop.formula';
 import { SANCTUM_DEPARTMENTS_DATA } from '../../../portals/md/aicc/sanctum-data';
 import { setSelectedDepartment } from '../../../redux/slices/relationalSidebarSlice';
+import { ContextualHierarchyManagerBranch } from './ContextualHierarchyManagerBranch';
+import { ContextualHierarchyQuickLinks } from './ContextualHierarchyQuickLinks';
 
 export type ManagementSystemCode = 'DMS' | 'ERMS' | 'TMS' | 'FMS' | 'RMS';
 
@@ -172,220 +160,21 @@ export const ContextualHierarchyTree: FC<ContextualHierarchyTreeProps> = ({
       )}
 
       {/* Level 2 -> Level 3 -> Level 4 Tree (9 Managers -> 12 AMs -> 9 Supervisors) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        {sanctumDept?.managers.map((mgr, mIdx) => {
-          const isMgrOpen = expandedMgrCode === mgr.code;
-          const amList = isMgrOpen
-            ? generateManagerFractalSubtree(
-                lockedDept.slot,
-                mgr.slot || mIdx + 1,
-                mgr.name.replace(/^AI\s+/i, '')
-              )
-            : [];
-
-          return (
-            <div
-              key={mgr.code}
-              style={{
-                backgroundColor: 'rgba(30,41,59,0.45)',
-                borderRadius: '6px',
-                padding: '5px 6px',
-              }}
-            >
-              <div
-                onClick={() => setExpandedMgrCode(isMgrOpen ? null : mgr.code)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  cursor: 'pointer',
-                }}
-              >
-                <div
-                  style={{ display: 'flex', alignItems: 'center', gap: '5px', overflow: 'hidden' }}
-                >
-                  {isMgrOpen ? (
-                    <ChevronDown size={12} color="#EF4444" />
-                  ) : (
-                    <ChevronRight size={12} color="#94A3B8" />
-                  )}
-                  <span
-                    style={{
-                      fontWeight: 700,
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {mgr.name}
-                  </span>
-                </div>
-                <span style={{ fontSize: '0.62rem', color: '#94A3B8', fontFamily: 'monospace' }}>
-                  {mgr.code}
-                </span>
-              </div>
-
-              {isMgrOpen && (
-                <div
-                  style={{
-                    marginTop: '5px',
-                    paddingLeft: '12px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '3px',
-                  }}
-                >
-                  {amList.map(am => {
-                    const isAmOpen = expandedAmId === am.id;
-                    return (
-                      <div key={am.id}>
-                        <div
-                          onClick={() => setExpandedAmId(isAmOpen ? null : am.id)}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '3px 5px',
-                            borderRadius: '4px',
-                            backgroundColor: 'rgba(15,23,42,0.55)',
-                            cursor: 'pointer',
-                            fontSize: '0.68rem',
-                          }}
-                        >
-                          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            {isAmOpen ? (
-                              <ChevronDown size={10} color="#10B981" />
-                            ) : (
-                              <ChevronRight size={10} color="#64748B" />
-                            )}
-                            <span>{am.name}</span>
-                          </span>
-                          <span style={{ fontSize: '0.6rem', color: '#10B981' }}>9 Sups</span>
-                        </div>
-
-                        {isAmOpen && (
-                          <div
-                            style={{
-                              paddingLeft: '12px',
-                              marginTop: '3px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              gap: '2px',
-                            }}
-                          >
-                            {am.supervisors.map(sup => (
-                              <div
-                                key={sup.id}
-                                onClick={() =>
-                                  onNavigateToView?.(`/dashboard/tasks/catalog?sup=${sup.id}`)
-                                }
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'space-between',
-                                  padding: '2px 5px',
-                                  borderRadius: '4px',
-                                  backgroundColor: 'rgba(15,23,42,0.35)',
-                                  fontSize: '0.64rem',
-                                  color: '#CBD5E1',
-                                  cursor: 'pointer',
-                                }}
-                              >
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                  <Users size={9} color="#EF4444" />
-                                  <span>{sup.name}</span>
-                                </span>
-                                <span
-                                  style={{
-                                    fontSize: '0.58rem',
-                                    color: '#64748B',
-                                    fontFamily: 'monospace',
-                                  }}
-                                >
-                                  {sup.id}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+      <ContextualHierarchyManagerBranch
+        deptSlot={lockedDept.slot}
+        managers={sanctumDept?.managers ?? []}
+        expandedMgrCode={expandedMgrCode}
+        expandedAmId={expandedAmId}
+        onToggleManager={setExpandedMgrCode}
+        onToggleAm={setExpandedAmId}
+        onNavigateToView={onNavigateToView}
+      />
 
       {/* Quick Cross-System Links for Selected Department */}
-      <div style={{ display: 'flex', gap: '4px', marginTop: '4px' }}>
-        <button
-          type="button"
-          onClick={() => onNavigateToView?.(`/dashboard/tasks/catalog?dept=${activeDeptCode}`)}
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
-            padding: '5px',
-            borderRadius: '6px',
-            backgroundColor: 'rgba(16,185,129,0.12)',
-            border: '1px solid rgba(16,185,129,0.25)',
-            color: '#34D399',
-            cursor: 'pointer',
-            fontSize: '0.66rem',
-            fontWeight: 700,
-          }}
-        >
-          <CheckSquare size={11} /> TMS Tasks
-        </button>
-        <button
-          type="button"
-          onClick={() => onNavigateToView?.(`/dashboard/deals/pipeline?dept=${activeDeptCode}`)}
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
-            padding: '5px',
-            borderRadius: '6px',
-            backgroundColor: 'rgba(59,130,246,0.12)',
-            border: '1px solid rgba(59,130,246,0.25)',
-            color: '#60A5FA',
-            cursor: 'pointer',
-            fontSize: '0.66rem',
-            fontWeight: 700,
-          }}
-        >
-          <Briefcase size={11} /> Deals
-        </button>
-        <button
-          type="button"
-          onClick={() =>
-            onNavigateToView?.(`/dashboard/REproperties/inventory?dept=${activeDeptCode}`)
-          }
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
-            padding: '5px',
-            borderRadius: '6px',
-            backgroundColor: 'rgba(245,158,11,0.12)',
-            border: '1px solid rgba(245,158,11,0.25)',
-            color: '#FBBF24',
-            cursor: 'pointer',
-            fontSize: '0.66rem',
-            fontWeight: 700,
-          }}
-        >
-          <Home size={11} /> Assets
-        </button>
-      </div>
+      <ContextualHierarchyQuickLinks
+        activeDeptCode={activeDeptCode}
+        onNavigateToView={onNavigateToView}
+      />
     </div>
   );
 };

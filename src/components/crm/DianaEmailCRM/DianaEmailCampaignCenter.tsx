@@ -4,8 +4,9 @@
  * Sender: the.arslan.broker@gmail.com
  * Standard: AEGIS Canonical Architecture & Single Purpose File Law (< 350 lines, AEG-042)
  */
-import React, { FC, useState } from 'react';
-import { Mail, Send, Eye, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import React, { FC, useState, useEffect } from 'react';
+import { Send, Eye } from 'lucide-react';
+import { DianaCampaignHeader, DianaCampaignFeedbackPanels } from './DianaCampaignFeedbackPanels';
 
 export interface DianaCampaignDispatchSummary {
   sender: string;
@@ -14,6 +15,22 @@ export interface DianaCampaignDispatchSummary {
   sentCount: number;
   failedCount: number;
 }
+
+const INPUT_STYLE: React.CSSProperties = {
+  background: '#1E293B',
+  border: '1px solid rgba(255,255,255,0.12)',
+  borderRadius: '8px',
+  padding: '9px 12px',
+  color: '#FFFFFF',
+};
+
+const LABEL_STYLE: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+  fontSize: '12px',
+  color: '#CBD5E1',
+};
 
 export const DianaEmailCampaignCenter: FC = () => {
   const [subject, setSubject] = useState('Exclusive Tenant & Buyer Demand for Your Dubai Property');
@@ -32,7 +49,7 @@ export const DianaEmailCampaignCenter: FC = () => {
   const [summary, setSummary] = useState<DianaCampaignDispatchSummary | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('/api/diana/campaigns/status')
       .then(r => r.json())
       .then(j => {
@@ -110,113 +127,23 @@ export const DianaEmailCampaignCenter: FC = () => {
         gap: '16px',
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          paddingBottom: '14px',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
-              backgroundColor: 'rgba(239,68,68,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Mail size={20} color="#EF4444" />
-          </div>
-          <div>
-            <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800 }}>
-              AI Diana Supervisor — Property Owner Email Campaigns
-            </h2>
-            <div style={{ fontSize: '12px', color: '#94A3B8' }}>
-              SUP-02-6-01-1 · AMGR-02-6-01 AI Rania → MGR-02-6 AI Celine → DIR-02 AI Olivia ·
-              Sender: <strong style={{ color: '#FFFFFF' }}>the.arslan.broker@gmail.com</strong>
-            </div>
-          </div>
-        </div>
-        <span
-          style={{
-            fontSize: '11px',
-            fontWeight: 700,
-            padding: '4px 10px',
-            borderRadius: '9999px',
-            backgroundColor: mailerStatus?.transportReady
-              ? 'rgba(16,185,129,0.14)'
-              : 'rgba(245,158,11,0.14)',
-            color: mailerStatus?.transportReady ? '#34D399' : '#FBBF24',
-          }}
-        >
-          <Sparkles size={11} style={{ display: 'inline', marginRight: '4px' }} />
-          {mailerStatus?.transportReady ? 'SMTP LIVE' : 'DRY-RUN'} · {parsedEmails.length}{' '}
-          Recipients
-        </span>
-      </div>
+      <DianaCampaignHeader
+        transportReady={Boolean(mailerStatus?.transportReady)}
+        recipientCount={parsedEmails.length}
+      />
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            fontSize: '12px',
-            color: '#CBD5E1',
-          }}
-        >
+        <label style={LABEL_STYLE}>
           Email Subject
-          <input
-            value={subject}
-            onChange={e => setSubject(e.target.value)}
-            style={{
-              background: '#1E293B',
-              border: '1px solid rgba(255,255,255,0.12)',
-              borderRadius: '8px',
-              padding: '9px 12px',
-              color: '#FFFFFF',
-            }}
-          />
+          <input value={subject} onChange={e => setSubject(e.target.value)} style={INPUT_STYLE} />
         </label>
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            fontSize: '12px',
-            color: '#CBD5E1',
-          }}
-        >
+        <label style={LABEL_STYLE}>
           Luxury Banner Headline
-          <input
-            value={headline}
-            onChange={e => setHeadline(e.target.value)}
-            style={{
-              background: '#1E293B',
-              border: '1px solid rgba(255,255,255,0.12)',
-              borderRadius: '8px',
-              padding: '9px 12px',
-              color: '#FFFFFF',
-            }}
-          />
+          <input value={headline} onChange={e => setHeadline(e.target.value)} style={INPUT_STYLE} />
         </label>
       </div>
 
-      <label
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
-          fontSize: '12px',
-          color: '#CBD5E1',
-        }}
-      >
+      <label style={LABEL_STYLE}>
         Property Owner Email Addresses (comma or newline separated)
         <textarea
           rows={4}
@@ -224,38 +151,21 @@ export const DianaEmailCampaignCenter: FC = () => {
           value={recipientsRaw}
           onChange={e => setRecipientsRaw(e.target.value)}
           style={{
-            background: '#1E293B',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: '8px',
+            ...INPUT_STYLE,
             padding: '10px 12px',
-            color: '#FFFFFF',
             fontFamily: 'monospace',
             fontSize: '12px',
           }}
         />
       </label>
 
-      <label
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
-          fontSize: '12px',
-          color: '#CBD5E1',
-        }}
-      >
+      <label style={LABEL_STYLE}>
         Campaign Message Body
         <textarea
           rows={5}
           value={bodyText}
           onChange={e => setBodyText(e.target.value)}
-          style={{
-            background: '#1E293B',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: '8px',
-            padding: '10px 12px',
-            color: '#FFFFFF',
-          }}
+          style={{ ...INPUT_STYLE, padding: '10px 12px' }}
         />
       </label>
 
@@ -325,72 +235,11 @@ export const DianaEmailCampaignCenter: FC = () => {
         </div>
       </div>
 
-      {errorMsg && (
-        <div
-          style={{
-            padding: '10px 14px',
-            borderRadius: '8px',
-            backgroundColor: 'rgba(239,68,68,0.15)',
-            border: '1px solid rgba(239,68,68,0.4)',
-            color: '#FCA5A5',
-            fontSize: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <AlertTriangle size={14} /> {errorMsg}
-        </div>
-      )}
-
-      {previewHtml && (
-        <div
-          style={{
-            borderRadius: '12px',
-            border: '1px solid rgba(255,255,255,0.12)',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            style={{
-              padding: '8px 12px',
-              background: '#1E293B',
-              fontSize: '11px',
-              fontWeight: 700,
-              color: '#94A3B8',
-            }}
-          >
-            LIVE LUXURY EMAIL PREVIEW
-          </div>
-          <div dangerouslySetInnerHTML={{ __html: previewHtml }} />
-        </div>
-      )}
-
-      {summary && (
-        <div
-          style={{
-            padding: '12px 14px',
-            borderRadius: '8px',
-            backgroundColor: 'rgba(16,185,129,0.14)',
-            border: '1px solid rgba(16,185,129,0.35)',
-            color: '#6EE7B7',
-            fontSize: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <CheckCircle2 size={15} />
-          <span>
-            Mode: <strong>{summary.mode}</strong> · Sender: <strong>{summary.sender}</strong> ·
-            Sent/Previewed:{' '}
-            <strong>
-              {summary.sentCount}/{summary.totalRequested}
-            </strong>{' '}
-            (Failed: {summary.failedCount})
-          </span>
-        </div>
-      )}
+      <DianaCampaignFeedbackPanels
+        errorMsg={errorMsg}
+        previewHtml={previewHtml}
+        summary={summary}
+      />
     </div>
   );
 };

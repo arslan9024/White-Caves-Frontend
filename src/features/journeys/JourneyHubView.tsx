@@ -1,8 +1,26 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  Building2,
+  ClipboardList,
+  CreditCard,
+  Crown,
+  Handshake,
+  Home,
+  Map,
+  ScrollText,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Users,
+  Wrench,
+} from 'lucide-react';
 import { getAllJourneys, getJourneyById } from './registry/journeyRegistry';
-import { JourneyDefinition, JourneyCategory } from '../../types/journey';
+import type { JourneyDefinition } from '../../types/journey';
 import { JourneyEngineService } from '../../services/journeys/journeyEngineService';
 import { JourneyShell } from './components/JourneyShell';
+import { JourneyCatalogCard } from './components/JourneyCatalogCard';
+import { JourneyAuditHistoryPanel } from './components/JourneyAuditHistoryPanel';
 
 export interface AuthUser {
   id?: string;
@@ -18,6 +36,20 @@ interface JourneyHubViewProps {
   user?: AuthUser;
 }
 
+const JOURNEY_CATEGORIES: Array<{ id: string; label: string; icon: React.ReactNode }> = [
+  { id: 'all', label: 'All 20 Journeys', icon: <Sparkles size={13} /> },
+  { id: 'leasing', label: 'Leasing', icon: <ClipboardList size={13} /> },
+  { id: 'sales', label: 'Sales', icon: <Handshake size={13} /> },
+  { id: 'finance', label: 'Finance', icon: <CreditCard size={13} /> },
+  { id: 'wealth', label: 'VIP Wealth', icon: <Crown size={13} /> },
+  { id: 'compliance', label: 'Compliance', icon: <ShieldCheck size={13} /> },
+  { id: 'property', label: 'Property', icon: <Home size={13} /> },
+  { id: 'projects', label: 'Off-Plan', icon: <Building2 size={13} /> },
+  { id: 'marketing', label: 'Marketing', icon: <Target size={13} /> },
+  { id: 'community', label: 'Community', icon: <Users size={13} /> },
+  { id: 'property-management', label: 'Management', icon: <Wrench size={13} /> },
+];
+
 export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -25,45 +57,38 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
   const [viewTab, setViewTab] = useState<'catalog' | 'history'>('catalog');
 
   const allJourneys = useMemo(() => getAllJourneys(), []);
-  const lifecycleHistory = useMemo(() => JourneyEngineService.getLifecycleHistory(), [activeJourney]);
+  const lifecycleHistory = JourneyEngineService.getLifecycleHistory();
 
-  // If moduleId maps to a specific journey (e.g. 'prepare-tenancy-contract')
-  React.useEffect(() => {
+  useEffect(() => {
     if (moduleId && moduleId !== 'journeys') {
       const found = getJourneyById(moduleId);
-      if (found) {
-        setActiveJourney(found);
-      }
+      if (found) setActiveJourney(found);
     }
   }, [moduleId]);
 
-  const categories = [
-    { id: 'all', label: 'All 20 Journeys', icon: '🌟' },
-    { id: 'leasing', label: 'Leasing', icon: '📋' },
-    { id: 'sales', label: 'Sales', icon: '🤝' },
-    { id: 'finance', label: 'Finance', icon: '💳' },
-    { id: 'wealth', label: 'VIP Wealth', icon: '👑' },
-    { id: 'compliance', label: 'Compliance', icon: '🛡️' },
-    { id: 'property', label: 'Property', icon: '🏠' },
-    { id: 'projects', label: 'Off-Plan', icon: '🏗️' },
-    { id: 'marketing', label: 'Marketing', icon: '🎯' },
-    { id: 'community', label: 'Community', icon: '🏘️' },
-    { id: 'property-management', label: 'Management', icon: '🔍' },
-  ];
-
-  const filteredJourneys = useMemo(() => {
-    return allJourneys.filter(j => {
-      const matchCat = selectedCategory === 'all' || j.category === selectedCategory;
-      const matchQuery =
-        j.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        j.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        j.family.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchCat && matchQuery;
-    });
-  }, [allJourneys, selectedCategory, searchQuery]);
+  const filteredJourneys = useMemo(
+    () =>
+      allJourneys.filter(j => {
+        const matchCat = selectedCategory === 'all' || j.category === selectedCategory;
+        const q = searchQuery.toLowerCase();
+        const matchQuery =
+          j.title.toLowerCase().includes(q) ||
+          j.description.toLowerCase().includes(q) ||
+          j.family.toLowerCase().includes(q);
+        return matchCat && matchQuery;
+      }),
+    [allJourneys, selectedCategory, searchQuery]
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontFamily: 'Inter, sans-serif' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.25rem',
+        fontFamily: 'Inter, sans-serif',
+      }}
+    >
       {/* Top Banner & Stats */}
       <div
         style={{
@@ -81,8 +106,16 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '1.6rem' }}>🗺️</span>
-            <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: 'var(--white, #FFFFFF)', letterSpacing: '-0.02em' }}>
+            <Map size={22} color="#EF4444" />
+            <h2
+              style={{
+                margin: 0,
+                fontSize: '1.4rem',
+                fontWeight: 800,
+                color: 'var(--white, #FFFFFF)',
+                letterSpacing: '-0.02em',
+              }}
+            >
               White Caves Flagship Life Cycle Journeys
             </h2>
             <span
@@ -99,8 +132,15 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
               20 Core Missions Active
             </span>
           </div>
-          <p style={{ margin: '6px 0 0 0', fontSize: '0.85rem', color: 'var(--color-94a3b8, #94A3B8)' }}>
-            Guided real estate operating engine enforcing RERA compliance, DLD workflows, and zero-mistake execution.
+          <p
+            style={{
+              margin: '6px 0 0 0',
+              fontSize: '0.85rem',
+              color: 'var(--color-94a3b8, #94A3B8)',
+            }}
+          >
+            Guided real estate operating engine enforcing RERA compliance, DLD workflows, and
+            zero-mistake execution.
           </p>
         </div>
 
@@ -109,6 +149,9 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
             type="button"
             onClick={() => setViewTab('catalog')}
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
               padding: '8px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -120,12 +163,16 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
               transition: 'all 0.2s ease',
             }}
           >
-            📋 Missions Catalog (20)
+            <ClipboardList size={14} />
+            <span>Missions Catalog (20)</span>
           </button>
           <button
             type="button"
             onClick={() => setViewTab('history')}
             style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
               padding: '8px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -137,14 +184,14 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
               transition: 'all 0.2s ease',
             }}
           >
-            📜 Audit History ({lifecycleHistory.length})
+            <ScrollText size={14} />
+            <span>Audit History ({lifecycleHistory.length})</span>
           </button>
         </div>
       </div>
 
       {viewTab === 'catalog' ? (
         <>
-          {/* Categories Bar & Search */}
           <div
             style={{
               display: 'flex',
@@ -160,7 +207,7 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
             }}
           >
             <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '2px' }}>
-              {categories.map(c => (
+              {JOURNEY_CATEGORIES.map(c => (
                 <button
                   key={c.id}
                   type="button"
@@ -173,7 +220,10 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
                     borderRadius: '8px',
                     border: '1px solid',
                     borderColor: selectedCategory === c.id ? '#EF4444' : '#E2E8F0',
-                    background: selectedCategory === c.id ? 'linear-gradient(135deg, #EF4444, #DC2626)' : '#F8FAFC',
+                    background:
+                      selectedCategory === c.id
+                        ? 'linear-gradient(135deg, #EF4444, #DC2626)'
+                        : '#F8FAFC',
                     color: selectedCategory === c.id ? '#FFFFFF' : '#475569',
                     fontSize: '0.78rem',
                     fontWeight: 700,
@@ -182,7 +232,7 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
                     transition: 'all 0.15s ease',
                   }}
                 >
-                  <span>{c.icon}</span>
+                  {c.icon}
                   <span>{c.label}</span>
                 </button>
               ))}
@@ -203,13 +253,19 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
                   outline: 'none',
                 }}
               />
-              <span style={{ position: 'absolute', left: '10px', top: '7px', fontSize: '0.8rem', color: 'var(--color-94a3b8, #94A3B8)' }}>
-                🔍
-              </span>
+              <Search
+                size={14}
+                style={{
+                  position: 'absolute',
+                  left: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  color: 'var(--color-94a3b8, #94A3B8)',
+                }}
+              />
             </div>
           </div>
 
-          {/* Journeys 20-Grid */}
           <div
             style={{
               display: 'grid',
@@ -218,162 +274,14 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
             }}
           >
             {filteredJourneys.map(journey => (
-              <div
-                key={journey.id}
-                style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  border: '1px solid #E2E8F0',
-                  padding: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  gap: '12px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '1.4rem' }}>{journey.icon}</span>
-                      <div>
-                        <h4 style={{ margin: 0, fontSize: '0.92rem', fontWeight: 800, color: 'var(--color-1e293b, #1E293B)' }}>
-                          {journey.title}
-                        </h4>
-                        <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary, #64748B)', fontWeight: 600 }}>
-                          {journey.family}
-                        </span>
-                      </div>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: '0.68rem',
-                        fontWeight: 800,
-                        color: '#3B82F6',
-                        background: 'rgba(59, 130, 246, 0.1)',
-                        padding: '2px 8px',
-                        borderRadius: '6px',
-                      }}
-                    >
-                      ⏱️ {journey.estimatedMinutes}m
-                    </span>
-                  </div>
-
-                  <p style={{ margin: '8px 0 0 0', fontSize: '0.78rem', color: 'var(--color-475569, #475569)', lineHeight: 1.45 }}>
-                    {journey.description}
-                  </p>
-
-                  <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginTop: '10px' }}>
-                    {journey.steps.map((step, idx) => (
-                      <span
-                        key={step.id}
-                        style={{
-                          fontSize: '0.65rem',
-                          background: '#F1F5F9',
-                          color: '#475569',
-                          padding: '2px 6px',
-                          borderRadius: '4px',
-                          fontWeight: 600,
-                        }}
-                      >
-                        {idx + 1}. {step.shortLabel || step.title}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveJourney(journey)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    width: '100%',
-                    padding: '8px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: 'linear-gradient(135deg, #EF4444, #DC2626)',
-                    color: '#FFFFFF',
-                    fontSize: '0.8rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 6px rgba(239, 68, 68, 0.25)',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <span>⚡ Launch Mission</span>
-                </button>
-              </div>
+              <JourneyCatalogCard key={journey.id} journey={journey} onLaunch={setActiveJourney} />
             ))}
           </div>
         </>
       ) : (
-        /* Lifecycle Audit History */
-        <div
-          style={{
-            background: '#FFFFFF',
-            borderRadius: '12px',
-            border: '1px solid #E2E8F0',
-            padding: '20px',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)',
-          }}
-        >
-          <h3 style={{ margin: '0 0 16px 0', fontSize: '1rem', fontWeight: 800, color: 'var(--color-1e293b, #1E293B)' }}>
-            📜 Completed Journey Execution Audit Vault
-          </h3>
-          {lifecycleHistory.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary, #64748B)' }}>
-              <span style={{ fontSize: '2rem' }}>📂</span>
-              <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem' }}>
-                No completed journeys in this session yet. Launch any of the 20 missions above to build immutable audit history.
-              </p>
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {lifecycleHistory.map(entry => (
-                <div
-                  key={entry.sessionId}
-                  style={{
-                    padding: '12px 16px',
-                    borderRadius: '8px',
-                    background: '#F8FAFC',
-                    border: '1px solid #E2E8F0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--color-1e293b, #1E293B)' }}>
-                      {entry.result?.title || entry.journeyId}
-                    </span>
-                    <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary, #64748B)', display: 'block', marginTop: '2px' }}>
-                      Ref: {entry.result?.referenceNumber || entry.sessionId} • Completed on {new Date(entry.updatedAt || entry.createdAt).toLocaleString()}
-                    </span>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 800,
-                      color: '#16A34A',
-                      background: 'rgba(22, 163, 74, 0.12)',
-                      padding: '3px 10px',
-                      borderRadius: '999px',
-                    }}
-                  >
-                    ✅ 100% Ready
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <JourneyAuditHistoryPanel lifecycleHistory={lifecycleHistory} />
       )}
 
-      {/* Active Journey Execution Shell */}
       {activeJourney && (
         <JourneyShell
           definition={activeJourney}
@@ -390,4 +298,3 @@ export const JourneyHubView: React.FC<JourneyHubViewProps> = ({ moduleId }) => {
 };
 
 export default JourneyHubView;
-

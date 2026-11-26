@@ -1,17 +1,32 @@
 /**
  * FormField — Theme-aware form input with label, error display, and password strength
  *
- * Uses design tokens from theme for consistent styling.
- * Follows White Caves UI patterns: FC + memo, transient styled props.
+ * Uses design tokens from FormField.styles.ts for consistent styling.
+ * Follows White Caves UI patterns: FC + memo, transient styled props (< 350 lines, AEG-042).
  */
 
 import React, { FC, memo, useState, useId } from 'react';
-import styled, { css, keyframes } from 'styled-components';
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
 import type { PasswordStrength } from '@/utils/validation';
-import { spacing } from '../../../styles/theme/spacing';
-
-/* ═══════════════════════════════ Types ════════════════════════════ */
+import {
+  Wrapper,
+  LabelRow,
+  Label,
+  RequiredStar,
+  CharCount,
+  InputWrapper,
+  StyledInput,
+  StyledTextarea,
+  StyledSelect,
+  TogglePasswordBtn,
+  ErrorRow,
+  HintText,
+  ValidIcon,
+  StrengthBar,
+  StrengthSegment,
+  StrengthLabel,
+  STRENGTH_CONFIG,
+} from './FormField.styles';
 
 export interface FormFieldProps {
   /** Field name — must match schema key */
@@ -52,194 +67,6 @@ export interface FormFieldProps {
   hint?: string;
 }
 
-/* ═══════════════════════════════ Animations ═══════════════════════ */
-
-const shake = keyframes`
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-4px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-2px); }
-  80% { transform: translateX(2px); }
-`;
-
-/* ═══════════════════════════════ Styled ═══════════════════════════ */
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${spacing.xs};
-  width: 100%;
-`;
-
-const LabelRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Label = styled.label`
-  font-family: ${p => (p.theme as any)?.typography?.fontFamily?.primary || '"Inter", sans-serif'};
-  font-size: ${p => (p.theme as any)?.typography?.sizes?.sm || '14px'};
-  font-weight: ${p => (p.theme as any)?.typography?.weights?.medium || 500};
-  color: ${p => (p.theme as any)?.colors?.text?.primary || '#1a1a1a'};
-  line-height: 1.4;
-`;
-
-const RequiredStar = styled.span`
-  color: ${p => (p.theme as any)?.colors?.error || '#B71C1C'};
-  margin-left: 2px;
-`;
-
-const CharCount = styled.span<{ $over: boolean }>`
-  font-size: 12px;
-  color: ${p =>
-    p.$over ? (p.theme as any)?.colors?.error || '#B71C1C' : (p.theme as any)?.colors?.text?.tertiary || '#999'};
-`;
-
-const InputWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
-const inputBaseStyles = css<{ $hasError: boolean; $isValid: boolean }>`
-  width: 100%;
-  padding: ${p => (p.theme as any)?.spacing?.sm || '8px'} ${p => (p.theme as any)?.spacing?.md || '16px'};
-  font-family: ${p => (p.theme as any)?.typography?.fontFamily?.primary || '"Inter", sans-serif'};
-  font-size: ${p => (p.theme as any)?.typography?.sizes?.base || '16px'};
-  color: ${p => (p.theme as any)?.colors?.text?.primary || '#1a1a1a'};
-  background: ${p => (p.theme as any)?.colors?.background?.primary || '#fff'};
-  border: 1.5px solid
-    ${p =>
-      p.$hasError
-        ? (p.theme as any)?.colors?.error || '#B71C1C'
-        : p.$isValid
-          ? (p.theme as any)?.colors?.success || '#2E7D32'
-          : (p.theme as any)?.colors?.border || '#d0d0d0'};
-  border-radius: ${p => (p.theme as any)?.radius?.input || '6px'};
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-  outline: none;
-
-  &::placeholder {
-    color: ${p => (p.theme as any)?.colors?.text?.disabled || '#bbb'};
-  }
-
-  &:focus {
-    border-color: ${p =>
-      p.$hasError ? (p.theme as any)?.colors?.error || '#EF4444' : (p.theme as any)?.colors?.primary || '#C9A84C'};
-    box-shadow: 0 0 0 3px
-      ${p => (p.$hasError ? 'rgba(239, 68, 68, 0.15)' : 'rgba(201, 168, 76, 0.2)')};
-  }
-
-  &:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    background: ${p => (p.theme as any)?.colors?.background?.secondary || '#f5f5f5'};
-  }
-
-  ${p =>
-    p.$hasError &&
-    css`
-      animation: ${shake} 0.3s ease;
-    `}
-`;
-
-const StyledInput = styled.input<{ $hasError: boolean; $isValid: boolean }>`
-  ${inputBaseStyles}
-`;
-
-const StyledTextarea = styled.textarea<{ $hasError: boolean; $isValid: boolean }>`
-  ${inputBaseStyles}
-  min-height: 100px;
-  resize: vertical;
-`;
-
-const StyledSelect = styled.select<{ $hasError: boolean; $isValid: boolean }>`
-  ${inputBaseStyles}
-  cursor: pointer;
-`;
-
-const TogglePasswordBtn = styled.button`
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: ${p => (p.theme as any)?.colors?.text?.tertiary || '#999'};
-  padding: ${spacing.xs};
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    color: ${p => (p.theme as any)?.colors?.text?.primary || '#1a1a1a'};
-  }
-`;
-
-const ErrorRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${spacing.xs};
-  color: ${p => (p.theme as any)?.colors?.error || '#B71C1C'};
-  font-size: 13px;
-  min-height: 20px;
-`;
-
-const HintText = styled.span`
-  font-size: 12px;
-  color: ${p => (p.theme as any)?.colors?.text?.tertiary || '#999'};
-`;
-
-const ValidIcon = styled.span`
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: ${p => p.theme.colors?.success || '#2E7D32'};
-  display: flex;
-  align-items: center;
-`;
-
-/* ── Password Strength Meter ── */
-
-const StrengthBar = styled.div`
-  display: flex;
-  gap: ${spacing.xs};
-  margin-top: 4px;
-`;
-
-const StrengthSegment = styled.div<{ $active: boolean; $color: string }>`
-  flex: 1;
-  height: 4px;
-  border-radius: 2px;
-  background: ${p => (p.$active ? p.$color : p.theme.colors?.border || '#e0e0e0')};
-  transition: background 0.3s ease;
-`;
-
-const StrengthLabel = styled.span<{ $color: string }>`
-  font-size: 12px;
-  font-weight: 500;
-  color: ${p => p.$color};
-  margin-top: 2px;
-`;
-
-/* ═══════════════════════════════ Helpers ══════════════════════════ */
-
-const STRENGTH_CONFIG: Record<
-  PasswordStrength,
-  { color: string; segments: number; label: string }
-> = {
-  weak: { color: '#B71C1C', segments: 1, label: 'Weak' },
-  fair: { color: '#E65100', segments: 2, label: 'Fair' },
-  good: { color: '#F9A825', segments: 3, label: 'Good' },
-  strong: { color: '#2E7D32', segments: 4, label: 'Strong' },
-};
-
-/* ═══════════════════════════════ Component ════════════════════════ */
-
 const FormField: FC<FormFieldProps> = memo(function FormField({
   name,
   label,
@@ -269,7 +96,6 @@ const FormField: FC<FormFieldProps> = memo(function FormField({
   const currentLength = String(value).length;
   const isPasswordField = type === 'password';
 
-  /* ── Render Input ── */
   const renderInput = () => {
     const commonProps = {
       id: inputId,
@@ -317,7 +143,6 @@ const FormField: FC<FormFieldProps> = memo(function FormField({
     );
   };
 
-  /* ── Render ── */
   return (
     <Wrapper className={className}>
       {(label || maxLength) && (
@@ -355,7 +180,6 @@ const FormField: FC<FormFieldProps> = memo(function FormField({
         )}
       </InputWrapper>
 
-      {/* Password Strength Meter */}
       {isPasswordField && passwordStrength && String(value).length > 0 && (
         <>
           <StrengthBar
@@ -378,7 +202,6 @@ const FormField: FC<FormFieldProps> = memo(function FormField({
         </>
       )}
 
-      {/* Error / Hint */}
       <ErrorRow role={showError ? 'alert' : undefined}>
         {showError ? (
           <>
@@ -394,4 +217,3 @@ const FormField: FC<FormFieldProps> = memo(function FormField({
 });
 
 export default FormField;
-

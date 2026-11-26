@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ProfileCompletion.css';
+import '../pages/auth/AuthPages.css';
 import { useToast } from './Toast';
 
 export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
@@ -112,4 +112,3 @@ export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
     </div>
   );
 }
-
