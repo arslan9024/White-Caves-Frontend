@@ -5,8 +5,8 @@
  * Standard: AEGIS Canonical Architecture & Single Purpose File Law (< 350 lines, AEG-042).
  */
 
-import React, { FC, useState, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { FC, useState, useMemo, useContext } from 'react';
+import { ReactReduxContext } from 'react-redux';
 import { Building2, Network, CheckSquare, Coins, ShieldCheck } from 'lucide-react';
 import { BHAKTI_LOCKED_DEPARTMENTS_12 } from '../../../portals/md/aicc/formulas/bhaktiFractalLoop.formula';
 import { SANCTUM_DEPARTMENTS_DATA } from '../../../portals/md/aicc/sanctum-data';
@@ -35,7 +35,7 @@ export const ContextualHierarchyTree: FC<ContextualHierarchyTreeProps> = ({
   onSelectDepartment,
   onNavigateToView,
 }) => {
-  const dispatch = useDispatch();
+  const reduxContext = useContext(ReactReduxContext);
   const [activeSystem, setActiveSystem] = useState<ManagementSystemCode>('DMS');
   const [activeDeptCode, setActiveDeptCode] = useState<string>(selectedDeptCode);
   const [expandedMgrCode, setExpandedMgrCode] = useState<string | null>(null);
@@ -59,7 +59,7 @@ export const ContextualHierarchyTree: FC<ContextualHierarchyTreeProps> = ({
     setActiveDeptCode(deptCode);
     setExpandedMgrCode(null);
     setExpandedAmId(null);
-    dispatch(setSelectedDepartment(deptCode));
+    reduxContext?.store?.dispatch(setSelectedDepartment(deptCode));
     onSelectDepartment?.(deptCode);
   };
 
