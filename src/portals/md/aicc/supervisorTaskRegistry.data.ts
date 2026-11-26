@@ -133,6 +133,29 @@ export const INITIAL_SUPERVISOR_TASK_ASSIGNMENTS: SupervisorTaskAssignment[] = [
     slaLabel: '4 Hours',
     xpReward: 500,
   },
+  // Track B Wave 4 — White-Caves-Web Zero-Debt & White-Caves-Server Core Production Decomposition
+  {
+    taskCode: 'TSK-ARCH-W4',
+    title:
+      'Wave 4 Cross-Ecosystem Decomposition (Web Zero-Debt + Server Compliance/Inventory/Henry/Tenancy/Zoe < 350 Lines)',
+    deptCode: 'DEPT-12',
+    managerCode: 'MGR-12-1',
+    assistantManagerId: 'AMGR-12-1-01',
+    supervisorId: 'SUP-12-1-01-1',
+    supervisorName: 'AI Mary Wilkes (Cross-Ecosystem Architecture Decomposition Supervisor)',
+    taskCollectionLabel: 'TMS-COL-TRACK-B-ARCH-DECOMPOSITION',
+    authorityChain: buildSupervisorAuthorityLabel(
+      12,
+      1,
+      1,
+      1,
+      'AI Mary Wilkes (Cross-Ecosystem Architecture Decomposition Supervisor)',
+      'TMS-COL-TRACK-B-ARCH-DECOMPOSITION'
+    ),
+    statutoryAuthority: 'AEGIS V5.1 / AEG-042',
+    slaLabel: '4 Hours',
+    xpReward: 500,
+  },
   // DEPT-05: Sales, Services & Operations (Daisy Leasing MGR-05-2)
   {
     taskCode: 'TSK-002',

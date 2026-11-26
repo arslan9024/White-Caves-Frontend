@@ -24,7 +24,7 @@ export interface ClientFormData {
   notes: string;
 }
 
-type ClientBadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type ClientBadgeVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
 
 // ─── Constants ──────────────────────────────────────────────────────────
 
@@ -47,9 +47,9 @@ export const STATUS_CONFIG: Record<
   vip: { label: 'VIP', color: '#F59E0B', badgeVariant: 'warning' },
 };
 
-const ITEMS_PER_PAGE = 10;
+export const ITEMS_PER_PAGE = 10;
 
-const EMPTY_FORM: ClientFormData = {
+export const EMPTY_FORM: ClientFormData = {
   name: '',
   email: '',
   phone: '',
@@ -61,4 +61,3 @@ const EMPTY_FORM: ClientFormData = {
 };
 
 // ─── Hook ───────────────────────────────────────────────────────────────
-

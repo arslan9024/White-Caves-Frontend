@@ -9,11 +9,18 @@ interface MaryGoogleSheetsSupervisorModalProps {
   onIngestComplete?: (newProperties: InventoryProperty[]) => void;
 }
 
+const SHEET_TARGETS = [
+  { id: '1NRqC1GywTZqKGfzeqM3ZrGb2nh9WOyOQr3xHMP4c1-o', label: 'Akoya-Oxygen-PMS (Live DB)' },
+  { id: '16msSvbMZ9Quli-eL97lu6wMkXwJAeeQLje92gUf_tGk', label: 'Akoya-Oxygen-PMS1 (View)' },
+  { id: '1gV4-hSAhDyWsivajBb2E2DSs25CMbqhc-6oufP1ZX04', label: 'Akoya-Oxygen-2023 (Raw)' },
+];
+
 export const MaryGoogleSheetsSupervisorModal: React.FC<MaryGoogleSheetsSupervisorModalProps> = ({
   isOpen,
   onClose,
   onIngestComplete,
 }) => {
+  const [selectedSheetId, setSelectedSheetId] = useState<string>(SHEET_TARGETS[0].id);
   const [selectedCluster, setSelectedCluster] = useState<string>('ALL');
   const [isSyncing, setIsSyncing] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -348,7 +355,7 @@ export const MaryGoogleSheetsSupervisorModal: React.FC<MaryGoogleSheetsSuperviso
             color: '#64748B',
           }}
         >
-          <span>Spreadsheet ID: 1gV4-hSAhDyWsivajBb2E2DSs25CMbqhc-6oufP1ZX04</span>
+          <span>Spreadsheet ID: {selectedSheetId}</span>
           <button
             onClick={onClose}
             style={{

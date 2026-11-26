@@ -1,24 +1,20 @@
 /**
  * White Caves Journey Engine Service
- * 
+ *
  * Manages journey sessions, validation state machine, blocker resolution,
  * readiness score computation, and lifecycle audit timeline emission.
-import { JourneyStorageService } from './journeyStorageService';
-import { JourneySessionEvaluator } from './journeySessionEvaluator';
  */
 
+import { JourneyStorageService } from './journeyStorageService';
+import { JourneySessionEvaluator } from './journeySessionEvaluator';
 import {
   JourneyDefinition,
   JourneySession,
   JourneyState,
   StepStatus,
-  BlockerIssue,
   TimelineEvent,
-  JourneyResultOutcome
+  JourneyResultOutcome,
 } from '../../types/journey';
-
-const STORAGE_KEY = 'white_caves_active_journey_sessions';
-const HISTORY_KEY = 'white_caves_journey_lifecycle_history';
 
 export class JourneyEngineService {
   /**
@@ -30,7 +26,7 @@ export class JourneyEngineService {
     entityContext: JourneySession['entityContext'] = {}
   ): JourneySession {
     const mergedData = { ...(definition.defaultData || {}), ...initialData };
-    
+
     // Initialize step statuses: first step is IN_PROGRESS, others LOCKED/AVAILABLE
     const stepStatuses: Record<string, StepStatus> = {};
     definition.steps.forEach((step, idx) => {
@@ -50,8 +46,8 @@ export class JourneyEngineService {
         title: `Journey Started: ${definition.title}`,
         description: `Agent initiated mission for ${definition.family || 'workflow'}.`,
         actor: 'Current Agent',
-        type: 'info'
-      }
+        type: 'info',
+      },
     ];
 
     const session: JourneySession = {
@@ -66,7 +62,7 @@ export class JourneyEngineService {
       timeline: initialTimeline,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      entityContext
+      entityContext,
     };
 
     // Run initial validation & score computation
@@ -80,10 +76,10 @@ export class JourneyEngineService {
    * updates step statuses, and computes overall readiness percentage.
    */
   public static evaluateSession(
-    definition: JourneyDefinition,
-    session: JourneySession
-  ): JourneyEvaluationResult {
-    return JourneySessionEvaluator.evaluateSession(definition, session);
+    session: JourneySession,
+    definition: JourneyDefinition
+  ): JourneySession {
+    return JourneySessionEvaluator.evaluateSession(session, definition);
   }
   public static updateSessionData(
     session: JourneySession,
@@ -93,7 +89,7 @@ export class JourneyEngineService {
     const updated: JourneySession = {
       ...session,
       data: { ...session.data, ...patch },
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     const evaluated = this.evaluateSession(updated, definition);
     this.saveSession(evaluated);
@@ -121,8 +117,8 @@ export class JourneyEngineService {
         state: 'BLOCKED' as JourneyState,
         stepStatuses: {
           ...session.stepStatuses,
-          [currentStep.id]: 'BLOCKED' as StepStatus
-        }
+          [currentStep.id]: 'BLOCKED' as StepStatus,
+        },
       };
       this.saveSession(updated);
       return { session: updated, blocked: true };
@@ -138,17 +134,17 @@ export class JourneyEngineService {
       stepId: currentStep.id,
       stepTitle: currentStep.title,
       title: `Step Completed: ${currentStep.title}`,
-      description: currentStep.milestoneTag 
+      description: currentStep.milestoneTag
         ? `Milestone Reached: ${currentStep.milestoneTag}`
         : `Successfully verified and finalized ${currentStep.title}.`,
       actor: 'Current Agent',
-      type: currentStep.milestoneTag ? 'milestone' : 'success'
+      type: currentStep.milestoneTag ? 'milestone' : 'success',
     };
 
     const newStatuses = {
       ...session.stepStatuses,
       [currentStep.id]: 'COMPLETED' as StepStatus,
-      [nextStep.id]: (nextStep.type === 'result' ? 'COMPLETED' : 'IN_PROGRESS') as StepStatus
+      [nextStep.id]: (nextStep.type === 'result' ? 'COMPLETED' : 'IN_PROGRESS') as StepStatus,
     };
 
     const updated: JourneySession = {
@@ -156,7 +152,7 @@ export class JourneyEngineService {
       currentStepIndex: nextIndex,
       stepStatuses: newStatuses,
       timeline: [...session.timeline, timelineEvent],
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     const evaluated = this.evaluateSession(updated, definition);
@@ -167,10 +163,7 @@ export class JourneyEngineService {
   /**
    * Moves back to previous step
    */
-  public static prevStep(
-    session: JourneySession,
-    definition: JourneyDefinition
-  ): JourneySession {
+  public static prevStep(session: JourneySession, definition: JourneyDefinition): JourneySession {
     if (session.currentStepIndex <= 0) return session;
     const prevIndex = session.currentStepIndex - 1;
     const prevStep = definition.steps[prevIndex];
@@ -180,9 +173,9 @@ export class JourneyEngineService {
       currentStepIndex: prevIndex,
       stepStatuses: {
         ...session.stepStatuses,
-        [prevStep.id]: 'IN_PROGRESS'
+        [prevStep.id]: 'IN_PROGRESS',
       },
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     const evaluated = this.evaluateSession(updated, definition);
@@ -206,9 +199,9 @@ export class JourneyEngineService {
       currentStepIndex: targetIndex,
       stepStatuses: {
         ...session.stepStatuses,
-        [stepId]: 'IN_PROGRESS'
+        [stepId]: 'IN_PROGRESS',
       },
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     const evaluated = this.evaluateSession(updated, definition);
@@ -238,10 +231,10 @@ export class JourneyEngineService {
           title: result.title,
           description: `Outcome finalized with reference: ${result.referenceNumber || 'N/A'}.`,
           actor: 'White Caves Journey Engine',
-          type: 'milestone'
-        }
+          type: 'milestone',
+        },
       ],
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     this.saveSession(completedSession);

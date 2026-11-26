@@ -158,25 +158,17 @@ const WhatsAppSettingsPage: FC = () => {
           </div>
         )}
 
-        {activeTab === 'qr' && (
-          <WhatsAppQrTab
-            qrCode={qrCode}
-            loading={loading}
-            status={status}
-            handleRefreshQr={handleRefreshQr}
-          />
-        )}
+        {activeTab === 'qr' && <WhatsAppQrTab qrCode={whatsappState.qrCode} />}
         {/* MESSAGES TAB */}
         {activeTab === 'messages' && (
           <WhatsAppMessagesTab
-            welcomeMessage={welcomeMessage}
-            setWelcomeMessage={setWelcomeMessage}
-            awayMessage={awayMessage}
-            setAwayMessage={setAwayMessage}
-            enableAwayMessage={enableAwayMessage}
-            setEnableAwayMessage={setEnableAwayMessage}
-            handleSaveMessages={handleSaveMessages}
-            savingMessages={savingMessages}
+            whatsappState={whatsappState}
+            testPhone={testPhone}
+            setTestPhone={setTestPhone}
+            testMessage={testMessage}
+            setTestMessage={setTestMessage}
+            sendingTest={sendingTest}
+            handleSendTestMessage={handleSendTestMessage}
           />
         )}
         {activeTab === 'queue' && (

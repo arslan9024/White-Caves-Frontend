@@ -40,25 +40,7 @@ import {
   PaymentPlan,
   LocationIcon,
 } from './OffPlanTracker.styles';
-import { STATIC_OFFPLAN_PROJECTS } from './offPlanTracker.data';
-
-interface OffPlanProject {
-  id: number;
-  name: string;
-  developer: string;
-  developerLogo: string;
-  location: string;
-  type: string;
-  segment: string;
-  launchDate: Date;
-  completionDate: Date;
-  priceFrom: number;
-  units: number;
-  image: string;
-  status: string;
-  paymentPlan: string;
-  features: string[];
-}
+import { STATIC_OFFPLAN_PROJECTS, type OffPlanProject } from './offPlanTracker.data';
 
 interface CountdownValue {
   days: number;

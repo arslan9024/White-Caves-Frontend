@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import type { SupervisorDef } from '../../../../data/assistants108Registry.data';
+import type { SupervisorDef } from '../../../data/assistants108Registry.data';
 import {
   AssistantsGrid,
   AssistantCard,
@@ -9,7 +9,7 @@ import {
   CapabilityTag,
   MetricsRow,
   LaunchBtn,
-} from '../styles/AICommandCenter.style';
+} from './styles/AICommandCenter.style';
 
 export interface OperationalSupervisorsGridProps {
   filteredAssistants: SupervisorDef[];

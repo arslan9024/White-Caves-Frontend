@@ -25,6 +25,27 @@ export function canUseScan(data: ScanReview | null | undefined): boolean {
   return assessScanReadiness(data).status === 'ready_to_use';
 }
 
+export function validScanDate(value: string): boolean {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+  if (!match) return false;
+  const date = new Date(Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])));
+  return (
+    date.getUTCFullYear() === Number(match[3]) &&
+    date.getUTCMonth() + 1 === Number(match[2]) &&
+    date.getUTCDate() === Number(match[1])
+  );
+}
+
+export function scanExpiry(value: string): { isExpired: boolean; daysUntilExpiry: number } {
+  if (!validScanDate(value)) return { isExpired: false, daysUntilExpiry: NaN };
+  const parts = value.split('/');
+  const iso = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  const time = Date.parse(iso);
+  const today = Math.floor(Date.now() / 86400000) * 86400000;
+  const days = (time - today) / 86400000;
+  return { isExpired: Number.isFinite(time) && days < 0, daysUntilExpiry: days };
+}
+
 export type ScanReadiness =
   | { status: 'needs_rescan'; reasons: string[] }
   | { status: 'needs_review'; reasons: string[] }
@@ -45,43 +66,80 @@ export function assessScanReadiness(data: ScanReview | null | undefined): ScanRe
     for (const key of ['passportNumber', 'fullName']) if (!present(key)) missing.add(key);
     if (!present('issuingCountryCode') && !present('issuingCountry')) missing.add('issuingCountry');
     for (const key of ['dateOfBirth', 'dateOfExpiry'])
-      if (typeof fields[key] !== 'string' || !validScanDate(fields[key] as string)) missing.add(key);
+      if (typeof fields[key] !== 'string' || !validScanDate(fields[key] as string))
+        missing.add(key);
     if (!/^[A-Z0-9]{5,12}$/i.test(String(fields.passportNumber))) missing.add('passportNumber');
-    if (validScanDate(String(fields.dateOfBirth)) &&
-      Date.parse(String(fields.dateOfBirth).split('/').reverse().join('-')) > Date.now())
+    if (
+      validScanDate(String(fields.dateOfBirth)) &&
+      Date.parse(String(fields.dateOfBirth).split('/').reverse().join('-')) > Date.now()
+    )
       missing.add('dateOfBirth');
-    const time = (value: unknown) => typeof value === 'string' && validScanDate(value)
-      ? Date.parse(value.split('/').reverse().join('-')) : NaN;
+    const time = (value: unknown) =>
+      typeof value === 'string' && validScanDate(value)
+        ? Date.parse(value.split('/').reverse().join('-'))
+        : NaN;
     if (time(fields.dateOfBirth) >= time(fields.dateOfExpiry)) missing.add('dateOfBirth');
-    if (fields.dateOfIssue && (!Number.isFinite(time(fields.dateOfIssue)) ||
-      time(fields.dateOfIssue) < time(fields.dateOfBirth) ||
-      time(fields.dateOfIssue) > time(fields.dateOfExpiry))) missing.add('dateOfIssue');
+    if (
+      fields.dateOfIssue &&
+      (!Number.isFinite(time(fields.dateOfIssue)) ||
+        time(fields.dateOfIssue) < time(fields.dateOfBirth) ||
+        time(fields.dateOfIssue) > time(fields.dateOfExpiry))
+    )
+      missing.add('dateOfIssue');
   }
   if ('financials' in fields) {
     const record = (value: unknown): Record<string, unknown> =>
-      value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {};
-    const landlord = record(fields.landlord), tenant = record(fields.tenant);
-    const property = record(fields.property), financials = record(fields.financials);
-    if (property.usage !== undefined && !['', 'residential', 'commercial', 'industrial'].includes(String(property.usage)))
+      value && typeof value === 'object' && !Array.isArray(value)
+        ? (value as Record<string, unknown>)
+        : {};
+    const landlord = record(fields.landlord),
+      tenant = record(fields.tenant);
+    const property = record(fields.property),
+      financials = record(fields.financials);
+    if (
+      property.usage !== undefined &&
+      !['', 'residential', 'commercial', 'industrial'].includes(String(property.usage))
+    )
       missing.add('property.usage');
     for (const key of ['areaSqM', 'areaSqFt'])
-      if (property[key] !== undefined && (typeof property[key] !== 'number' ||
-        !Number.isFinite(property[key]) || Number(property[key]) < 0)) missing.add(`property.${key}`);
+      if (
+        property[key] !== undefined &&
+        (typeof property[key] !== 'number' ||
+          !Number.isFinite(property[key]) ||
+          Number(property[key]) < 0)
+      )
+        missing.add(`property.${key}`);
     for (const [key, value] of Object.entries({
-      'landlord.name': landlord.name, 'tenant.name': tenant.name,
-      'property.buildingName': property.buildingName, 'property.propertyNumber': property.propertyNumber,
-    })) if (typeof value !== 'string' || !value.trim() || /^(unknown|n\/a)$/i.test(value)) missing.add(key);
+      'landlord.name': landlord.name,
+      'tenant.name': tenant.name,
+      'property.buildingName': property.buildingName,
+      'property.propertyNumber': property.propertyNumber,
+    }))
+      if (typeof value !== 'string' || !value.trim() || /^(unknown|n\/a)$/i.test(value))
+        missing.add(key);
     for (const key of ['periodFrom', 'periodTo'])
       if (typeof financials[key] !== 'string' || !validScanDate(String(financials[key])))
         missing.add(`financials.${key}`);
-    if (typeof financials.annualRentAed !== 'number' || !Number.isFinite(financials.annualRentAed) || financials.annualRentAed <= 0)
+    if (
+      typeof financials.annualRentAed !== 'number' ||
+      !Number.isFinite(financials.annualRentAed) ||
+      financials.annualRentAed <= 0
+    )
       missing.add('financials.annualRentAed');
     for (const key of ['contractValueAed', 'securityDepositAed'])
-      if (financials[key] !== undefined && (typeof financials[key] !== 'number' ||
-        !Number.isFinite(financials[key]) || Number(financials[key]) < 0)) missing.add(`financials.${key}`);
-    if (validScanDate(String(financials.periodFrom)) && validScanDate(String(financials.periodTo)) &&
+      if (
+        financials[key] !== undefined &&
+        (typeof financials[key] !== 'number' ||
+          !Number.isFinite(financials[key]) ||
+          Number(financials[key]) < 0)
+      )
+        missing.add(`financials.${key}`);
+    if (
+      validScanDate(String(financials.periodFrom)) &&
+      validScanDate(String(financials.periodTo)) &&
       Date.parse(String(financials.periodFrom).split('/').reverse().join('-')) >=
-      Date.parse(String(financials.periodTo).split('/').reverse().join('-')))
+        Date.parse(String(financials.periodTo).split('/').reverse().join('-'))
+    )
       missing.add('financials.periodTo');
   }
   if ('idNumber' in fields) {
@@ -142,9 +200,15 @@ export function assessScanReadiness(data: ScanReview | null | undefined): ScanRe
       'Expired ID: explicitly acknowledge this expiry; it is not current identification.'
     );
   const passportExpiry = fields.dateOfExpiry;
-  if ('passportNumber' in fields && typeof passportExpiry === 'string' &&
-    scanExpiry(passportExpiry).isExpired && data.expiryAcknowledgedFor !== passportExpiry)
-    reasons.push('Expired passport: explicitly acknowledge this expiry; it is not current identification.');
+  if (
+    'passportNumber' in fields &&
+    typeof passportExpiry === 'string' &&
+    scanExpiry(passportExpiry).isExpired &&
+    data.expiryAcknowledgedFor !== passportExpiry
+  )
+    reasons.push(
+      'Expired passport: explicitly acknowledge this expiry; it is not current identification.'
+    );
   if (data.reviewConfirmed !== true) reasons.push('Confirm a fresh source review.');
   return reasons.length
     ? { status: 'needs_review', reasons }
@@ -152,4 +216,4 @@ export function assessScanReadiness(data: ScanReview | null | undefined): ScanRe
 }
 
 /** Validate the archived schema against the existing scanner shape before entering its UI. */
-export { hydrateVaultScan, validScanDate, scanExpiry, saveReviewedScan } from './henryScanVaultHydrator';
+export { hydrateVaultScan, saveReviewedScan } from './henryScanVaultHydrator';

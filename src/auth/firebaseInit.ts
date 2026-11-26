@@ -1,6 +1,26 @@
-import { signInWithGoogle, signInWithFacebook, signInWithApple, signInWithEmail, signUpWithEmail, signInWithPhone, createRecaptchaVerifier, signOut, handleRedirectResult } from '../config/firebase';
+import {
+  signInWithGoogle,
+  signInWithFacebook,
+  signInWithApple,
+  signInWithEmail,
+  signUpWithEmail,
+  signInWithPhone,
+  createRecaptchaVerifier,
+  signOut,
+  handleRedirectResult,
+} from '../config/firebase';
 
-export { signInWithGoogle, signInWithFacebook, signInWithApple, signInWithEmail, signUpWithEmail, signInWithPhone, createRecaptchaVerifier, signOut, handleRedirectResult };
+export {
+  signInWithGoogle,
+  signInWithFacebook,
+  signInWithApple,
+  signInWithEmail,
+  signUpWithEmail,
+  signInWithPhone,
+  createRecaptchaVerifier,
+  signOut,
+  handleRedirectResult,
+};
 
 import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
@@ -21,7 +41,7 @@ interface FirebaseConfig {
 }
 
 const DEFAULT_FIREBASE_CONFIG: FirebaseConfig = {
-  apiKey: 'AIzaSyAxILHSxAHQ0x3HqDkRIOGNePNQ0vv193I',
+  apiKey: undefined,
   authDomain: 'white-caves-fb.firebaseapp.com',
   projectId: 'white-caves-fb',
   storageBucket: 'white-caves-fb.firebasestorage.app',
@@ -33,8 +53,10 @@ const firebaseConfig: FirebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || DEFAULT_FIREBASE_CONFIG.apiKey,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || DEFAULT_FIREBASE_CONFIG.authDomain,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || DEFAULT_FIREBASE_CONFIG.projectId,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || DEFAULT_FIREBASE_CONFIG.storageBucket,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || DEFAULT_FIREBASE_CONFIG.messagingSenderId,
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || DEFAULT_FIREBASE_CONFIG.storageBucket,
+  messagingSenderId:
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || DEFAULT_FIREBASE_CONFIG.messagingSenderId,
   appId: import.meta.env.VITE_FIREBASE_APP_ID || DEFAULT_FIREBASE_CONFIG.appId,
 };
 
@@ -73,5 +95,3 @@ export const firebaseMissingReason = missingKeys.length
 // Compatibility aliases for legacy imports
 export const isFirebaseAuthConfigured = isFirebaseConfigured;
 export const firebaseAuthUnavailableReason = firebaseMissingReason;
-
-

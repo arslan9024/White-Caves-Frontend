@@ -4,6 +4,16 @@ import { transitions } from '../styles/theme/transitions';
 import { radius } from '../styles/theme/radius';
 
 // Keyframes
+const slideIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+`;
 
 export const MapInfoWindow = styled.div`
   position: absolute;
@@ -202,4 +212,3 @@ export const LegendDot = styled.div<{ $color: string }>`
   background: ${props => props.$color};
   flex-shrink: 0;
 `;
-

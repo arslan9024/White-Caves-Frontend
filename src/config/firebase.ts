@@ -1,8 +1,8 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app';
-import { 
-  getAuth, 
-  GoogleAuthProvider, 
-  FacebookAuthProvider, 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
   OAuthProvider,
   EmailAuthProvider,
   browserLocalPersistence,
@@ -25,7 +25,7 @@ import {
   reauthenticateWithCredential,
   type Auth,
   type User,
-  type ApplicationVerifier
+  type ApplicationVerifier,
 } from 'firebase/auth';
 import { safeStorage } from '../utils/safeStorage';
 import { createLogger } from '../utils/logger';
@@ -42,7 +42,7 @@ interface FirebaseConfig {
 }
 
 const DEFAULT_FIREBASE_CONFIG: FirebaseConfig = {
-  apiKey: 'AIzaSyAxILHSxAHQ0x3HqDkRIOGNePNQ0vv193I',
+  apiKey: undefined,
   authDomain: 'white-caves-fb.firebaseapp.com',
   projectId: 'white-caves-fb',
   storageBucket: 'white-caves-fb.firebasestorage.app',
@@ -54,9 +54,11 @@ const firebaseConfig: FirebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || DEFAULT_FIREBASE_CONFIG.apiKey,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || DEFAULT_FIREBASE_CONFIG.authDomain,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || DEFAULT_FIREBASE_CONFIG.projectId,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || DEFAULT_FIREBASE_CONFIG.storageBucket,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || DEFAULT_FIREBASE_CONFIG.messagingSenderId,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || DEFAULT_FIREBASE_CONFIG.appId
+  storageBucket:
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || DEFAULT_FIREBASE_CONFIG.storageBucket,
+  messagingSenderId:
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || DEFAULT_FIREBASE_CONFIG.messagingSenderId,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || DEFAULT_FIREBASE_CONFIG.appId,
 };
 
 const firebaseRequiredConfigMap: Record<string, string | undefined> = {
@@ -112,7 +114,9 @@ appleProvider.setCustomParameters({ locale: 'en_US' });
 const popupFirst = async (provider: GoogleAuthProvider | FacebookAuthProvider | OAuthProvider) => {
   if (!auth) {
     // Graceful fallback for local development: simulate verified Google login
-    console.info('[Firebase] Auth not configured — activating Local Google OAuth Session for Managing Director');
+    console.info(
+      '[Firebase] Auth not configured — activating Local Google OAuth Session for Managing Director'
+    );
     return {
       user: {
         uid: `dev-google-arslan-${Date.now()}`,
@@ -132,7 +136,10 @@ const popupFirst = async (provider: GoogleAuthProvider | FacebookAuthProvider | 
     }
     // If running in development and Google OAuth popup fails or domain not authorized, fallback gracefully
     if (import.meta.env.DEV) {
-      console.warn('[Firebase] OAuth popup failed in dev mode, activating local Google session:', err);
+      console.warn(
+        '[Firebase] OAuth popup failed in dev mode, activating local Google session:',
+        err
+      );
       return {
         user: {
           uid: `dev-google-fallback-${Date.now()}`,
@@ -180,9 +187,7 @@ export const createRecaptchaVerifier = (elementId: string) => {
   if (!auth) throw new Error('Firebase not initialized');
   return new RecaptchaVerifier(auth, elementId, {
     size: 'invisible',
-    callback: () => {
-      
-    }
+    callback: () => {},
   });
 };
 
@@ -191,7 +196,10 @@ export const signOut = async () => {
   return await firebaseSignOut(auth);
 };
 
-export const updateUserProfile = async (user: User, updates: { displayName?: string | null; photoURL?: string | null }) => {
+export const updateUserProfile = async (
+  user: User,
+  updates: { displayName?: string | null; photoURL?: string | null }
+) => {
   if (!auth) throw new Error('Firebase not initialized');
   return await updateProfile(user, updates);
 };
@@ -224,7 +232,6 @@ export const setAuthPersistence = async (rememberMe = true) => {
 
 export const onAuthChange = (callback: (user: User | null) => void) => {
   if (!auth) {
-    
     return () => {};
   }
   return onAuthStateChanged(auth, callback);
@@ -251,4 +258,3 @@ export const clearBiometricSession = (): void => {
 
 export { EmailAuthProvider, reauthenticateWithCredential };
 export default app;
-

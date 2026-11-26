@@ -1,4 +1,4 @@
-import { JourneySession } from '../../types/journeys';
+import type { JourneySession } from '../../types/journey';
 
 const STORAGE_KEY = 'white_caves_active_journey_sessions_v1';
 const HISTORY_KEY = 'white_caves_journey_lifecycle_history_v1';
@@ -68,15 +68,15 @@ export class JourneyStorageService {
       const raw = window.localStorage.getItem(HISTORY_KEY);
       const history: JourneySession[] = raw ? JSON.parse(raw) : [];
       if (!entityId) return history;
-      return history.filter(s => 
-        s.entityContext?.propertyId === entityId ||
-        s.entityContext?.landlordId === entityId ||
-        s.entityContext?.tenantId === entityId ||
-        s.entityContext?.dealId === entityId
+      return history.filter(
+        s =>
+          s.entityContext?.propertyId === entityId ||
+          s.entityContext?.landlordId === entityId ||
+          s.entityContext?.tenantId === entityId ||
+          s.entityContext?.dealId === entityId
       );
     } catch {
       return [];
     }
   }
 }
-

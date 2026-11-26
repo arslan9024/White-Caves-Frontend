@@ -1,3 +1,13 @@
+import type React from 'react';
+import type {
+  TooltipPlacement,
+  NotificationPosition,
+  BadgeVariant,
+  BadgeConfig,
+  AlertType,
+  ToastPosition,
+} from './advancedUI.types';
+
 export type TooltipTrigger = 'hover' | 'focus';
 
 export interface TooltipProps {
@@ -206,5 +216,3 @@ export const MODAL_SIZES: Record<ModalSize, string> = {
   large: '800px',
   fullscreen: '100%',
 };
-
-

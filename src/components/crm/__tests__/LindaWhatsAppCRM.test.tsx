@@ -46,7 +46,7 @@ describe('LindaWhatsAppCRM — Upgraded Visual Operations Center (v2.0.0-enterpr
     expect(
       screen.getByText(/Multi-Account WhatsApp Sessions & Device Linking Desk/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/\[MASTER\] PowerAgent/i)).toBeInTheDocument();
+    expect(screen.getByText(/Link or Restore Master PowerAgent/i)).toBeInTheDocument();
 
     // Outreach Campaigns & Area Owner Outreach Planner (F35)
     expect(screen.getByText(/Outreach Campaigns & Drip Broadcasts/i)).toBeInTheDocument();

@@ -3,11 +3,14 @@ import {
   type VaultSaveOptions,
   canUseScan,
   assessScanReadiness,
+  validScanDate,
+  scanExpiry,
 } from './henryScanReview';
 import { authFetch } from '../utils/authFetch';
 import logger from '../utils/logger';
 import type { ExtractionDiagnostics } from './henryDocumentParsing';
 
+export { validScanDate, scanExpiry };
 export type { ScanReview, VaultSaveOptions } from './henryScanReview';
 
 export function hydrateVaultScan<T extends ScanReview>(
@@ -170,27 +173,6 @@ export function hydrateVaultScan<T extends ScanReview>(
   if (assessScanReadiness(hydrated).status === 'needs_rescan')
     throw new Error('Archive fields are incomplete or invalid; rescan the source.');
   return structuredClone(hydrated);
-}
-
-export function validScanDate(value: string): boolean {
-  const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
-  if (!match) return false;
-  const date = new Date(Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])));
-  return (
-    date.getUTCFullYear() === Number(match[3]) &&
-    date.getUTCMonth() + 1 === Number(match[2]) &&
-    date.getUTCDate() === Number(match[1])
-  );
-}
-
-export function scanExpiry(value: string): { isExpired: boolean; daysUntilExpiry: number } {
-  if (!validScanDate(value)) return { isExpired: false, daysUntilExpiry: NaN };
-  const parts = value.split('/');
-  const iso = `${parts[2]}-${parts[1]}-${parts[0]}`;
-  const time = Date.parse(iso);
-  const today = Math.floor(Date.now() / 86400000) * 86400000;
-  const days = (time - today) / 86400000;
-  return { isExpired: Number.isFinite(time) && days < 0, daysUntilExpiry: days };
 }
 
 export async function saveReviewedScan(

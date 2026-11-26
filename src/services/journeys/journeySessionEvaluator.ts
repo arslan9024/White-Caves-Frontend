@@ -1,4 +1,9 @@
-import { JourneyDefinition, JourneySession, JourneyEvaluationResult, JourneyBlocker, JourneyStepState } from '../../types/journeys';
+import type {
+  JourneyDefinition,
+  JourneySession,
+  JourneyState,
+  BlockerIssue,
+} from '../../types/journey';
 
 export class JourneySessionEvaluator {
   public static evaluateSession(
@@ -33,7 +38,11 @@ export class JourneySessionEvaluator {
       if (step.requiredFields && step.requiredFields.length > 0) {
         step.requiredFields.forEach(field => {
           const val = session.data[field];
-          const isMissing = val === undefined || val === null || val === '' || (Array.isArray(val) && val.length === 0);
+          const isMissing =
+            val === undefined ||
+            val === null ||
+            val === '' ||
+            (Array.isArray(val) && val.length === 0);
           if (isMissing) {
             stepHasErrors = true;
             // Only add to blockers if not already captured by step validator
@@ -45,7 +54,7 @@ export class JourneySessionEvaluator {
                 title: `Missing ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`,
                 description: `Field "${field}" is required in ${step.title}.`,
                 actionLabel: `Add ${field.replace(/([A-Z])/g, ' $1')}`,
-                severity: 'error'
+                severity: 'error',
               });
             }
           }
@@ -77,14 +86,23 @@ export class JourneySessionEvaluator {
       }
     });
 
-    const readinessScore = totalEvaluatedWeight > 0 
-      ? Math.min(100, Math.round((acquiredWeight / totalEvaluatedWeight) * 100))
-      : 100;
+    const readinessScore =
+      totalEvaluatedWeight > 0
+        ? Math.min(100, Math.round((acquiredWeight / totalEvaluatedWeight) * 100))
+        : 100;
 
     // Session State evaluation
     let state: JourneyState = session.state;
-    if (session.state !== 'COMPLETED' && session.state !== 'PROCESSING' && session.state !== 'CANCELLED') {
-      if (blockers.some(b => b.severity === 'error' && b.stepId === definition.steps[session.currentStepIndex]?.id)) {
+    if (
+      session.state !== 'COMPLETED' &&
+      session.state !== 'PROCESSING' &&
+      session.state !== 'CANCELLED'
+    ) {
+      if (
+        blockers.some(
+          b => b.severity === 'error' && b.stepId === definition.steps[session.currentStepIndex]?.id
+        )
+      ) {
         state = 'BLOCKED';
       } else if (readinessScore >= 90 && session.currentStepIndex === definition.steps.length - 2) {
         state = 'READY';
@@ -99,7 +117,7 @@ export class JourneySessionEvaluator {
       blockers,
       readinessScore,
       state,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
   }
 

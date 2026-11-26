@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Search } from 'lucide-react';
-import { COMMAND_CENTER_TEXT } from '../data/AICommandCenter.data';
-import type { DepartmentDef } from '../../../../data/assistants108Registry.data';
+import { COMMAND_CENTER_TEXT } from './data/AICommandCenter.data';
+import type { DepartmentDef } from '../../../data/assistants108Registry.data';
 import {
   FilterBar,
   SearchInputWrapper,
   DepartmentPills,
   DeptPill,
-} from '../styles/AICommandCenter.style';
+} from './styles/AICommandCenter.style';
 
 export interface AICommandCenterFilterBarProps {
   searchTerm: string;

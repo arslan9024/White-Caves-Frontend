@@ -197,7 +197,7 @@ export const TenantStatutoryReceiptBar: FC<TenantStatutoryReceiptBarProps> = ({
             textDecoration: 'none',
           }}
         >
-          <MessageCircle size={14} /> WhatsApp Concierge
+          <MessageCircle size={14} /> WhatsApp Desk
         </a>
       </div>
     </div>

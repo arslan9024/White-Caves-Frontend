@@ -75,6 +75,24 @@ export function useClientManagement() {
   const typeCounts = useMemo(() => {
     return computeClientTypeCounts(allClients);
   }, [allClients]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredClients.length / ITEMS_PER_PAGE));
+
+  const paginatedClients = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredClients.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredClients, currentPage]);
+
+  const resetForm = useCallback(() => {
+    setFormData({ ...EMPTY_FORM });
+    setErrorMessage(null);
+  }, []);
+
+  const openCreateModal = useCallback(() => {
+    resetForm();
+    setShowCreateModal(true);
+  }, [resetForm]);
+
   const closeCreateModal = useCallback(() => {
     setShowCreateModal(false);
     resetForm();

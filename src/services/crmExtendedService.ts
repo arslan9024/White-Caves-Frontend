@@ -1,4 +1,15 @@
-import api from './api';
+import { authFetch, extractApiError } from '../utils/authFetch';
+import {
+  API,
+  parseResponse,
+  buildQuery,
+  normalizeDashboardSummary,
+  normalizeDashboardExecutive,
+  normalizeDashboardKpis,
+  type DashboardSummaryPayload,
+  type DashboardExecutivePayload,
+  type DashboardKpisPayload,
+} from './crmServiceHelpers';
 
 export async function fetchClients(params?: Record<string, string>) {
   const res = await authFetch(`${API}/clients${buildQuery(params)}`);
@@ -161,5 +172,3 @@ export async function exportDashboardExcel(entity: 'leads' | 'properties' = 'lea
   }
   return res.blob();
 }
-
-

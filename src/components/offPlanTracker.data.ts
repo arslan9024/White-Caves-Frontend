@@ -1,4 +1,20 @@
-import { OffPlanProject } from '../types/offPlanTracker.types';
+export interface OffPlanProject {
+  id: number;
+  name: string;
+  developer: string;
+  developerLogo: string;
+  location: string;
+  type: string;
+  segment: string;
+  launchDate: Date;
+  completionDate: Date;
+  priceFrom: number;
+  units: number;
+  image: string;
+  status: string;
+  paymentPlan: string;
+  features: string[];
+}
 
 export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
   {
@@ -16,7 +32,7 @@ export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
     image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600',
     status: 'launching-soon',
     paymentPlan: '60/40',
-    features: ['Sea View', 'Private Beach', 'Smart Home']
+    features: ['Sea View', 'Private Beach', 'Smart Home'],
   },
   {
     id: 2,
@@ -33,7 +49,7 @@ export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
     image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600',
     status: 'launching-soon',
     paymentPlan: '80/20',
-    features: ['Creek View', 'Burj Khalifa View', 'Premium Amenities']
+    features: ['Creek View', 'Burj Khalifa View', 'Premium Amenities'],
   },
   {
     id: 3,
@@ -50,7 +66,7 @@ export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
     image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600',
     status: 'launching-soon',
     paymentPlan: '50/50',
-    features: ['Beach Access', 'Private Pool', 'Garden']
+    features: ['Beach Access', 'Private Pool', 'Garden'],
   },
   {
     id: 4,
@@ -67,7 +83,7 @@ export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600',
     status: 'pre-registration',
     paymentPlan: '70/30',
-    features: ['Office Space', 'Meeting Rooms', 'Parking']
+    features: ['Office Space', 'Meeting Rooms', 'Parking'],
   },
   {
     id: 5,
@@ -84,6 +100,6 @@ export const STATIC_OFFPLAN_PROJECTS: OffPlanProject[] = [
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600',
     status: 'launching-soon',
     paymentPlan: '60/40',
-    features: ['Golf View', 'Private Garden', 'Smart Home']
-  }
+    features: ['Golf View', 'Private Garden', 'Smart Home'],
+  },
 ];

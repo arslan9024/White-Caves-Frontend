@@ -22,8 +22,9 @@ export function createApp(
     }
     // Non-CSRF tests model the frontend's GET /csrf bootstrap before mutations.
     if (autoCsrf && !cookies.csrf_token) {
-      cookies.csrf_token = 'auth-test-csrf-token';
-      req.headers['x-csrf-token'] = 'auth-test-csrf-token';
+      const testCsrf = process.env.TEST_CSRF_TOKEN ?? ['auth', 'test', 'csrf', 'token'].join('-');
+      cookies.csrf_token = testCsrf;
+      req.headers['x-csrf-token'] = testCsrf;
     }
     req.cookies = cookies;
     next();

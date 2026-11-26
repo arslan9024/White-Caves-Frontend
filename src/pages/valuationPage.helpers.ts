@@ -1,4 +1,4 @@
-interface ValuationRecord {
+export interface ValuationRecord {
   id: string;
   propertyId: string;
   estimatedValueAed: number;
@@ -16,7 +16,7 @@ interface ValuationRecord {
   createdAt: string;
 }
 
-const confidenceBadge = (c: string) => {
+export const confidenceBadge = (c: string) => {
   const map: Record<string, string> = {
     high: 'bg-green-100 text-green-800',
     medium: 'bg-yellow-100 text-yellow-800',
@@ -25,7 +25,7 @@ const confidenceBadge = (c: string) => {
   return map[c] ?? 'bg-gray-100 text-gray-800';
 };
 
-const methodLabel = (m: string) => {
+export const methodLabel = (m: string) => {
   const map: Record<string, string> = {
     avm: 'AVM',
     manual_override: 'Manual Override',
@@ -34,10 +34,9 @@ const methodLabel = (m: string) => {
   return map[m] ?? m;
 };
 
-const fmt = (n: number) =>
+export const fmt = (n: number) =>
   new Intl.NumberFormat('en-AE', {
     style: 'currency',
     currency: 'AED',
     maximumFractionDigits: 0,
   }).format(n);
-
