@@ -11,6 +11,15 @@ const StageCard = ({
   onAction = null,
   expanded = false,
   onToggle = null,
+}: {
+  stage: any;
+  status?: string;
+  tasks?: any[];
+  responsibleRole?: string | null;
+  documents?: any[];
+  onAction?: ((...args: any[]) => void) | null;
+  expanded?: boolean;
+  onToggle?: (() => void) | null;
 }) => {
   const completedTasks = tasks.filter(t => t.completed).length;
   const progress = tasks.length > 0 ? (completedTasks / tasks.length) * 100 : 0;
@@ -30,7 +39,7 @@ const StageCard = ({
 
   return (
     <div className={`stage-card ${status} ${expanded ? 'expanded' : ''}`}>
-      <div className="stage-card-header" onClick={onToggle}>
+      <div className="stage-card-header" onClick={onToggle ?? undefined}>
         <div className={`status-badge ${status}`}>{getStatusIcon()}</div>
 
         <div className="stage-info">
@@ -112,4 +121,3 @@ const StageCard = ({
 };
 
 export default StageCard;
-

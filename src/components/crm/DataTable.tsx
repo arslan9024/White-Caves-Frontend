@@ -49,10 +49,11 @@ const DataTable: React.FC<DataTableProps> = ({
       );
     }
 
-    if (sortConfig.key) {
+    const sortKey = sortConfig.key;
+    if (sortKey) {
       result.sort((a, b) => {
-        const aVal = a[sortConfig.key];
-        const bVal = b[sortConfig.key];
+        const aVal = a[sortKey];
+        const bVal = b[sortKey];
         if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
         if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
         return 0;
@@ -70,14 +71,14 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
 
-  const handleSort = key => {
+  const handleSort = (key: string) => {
     setSortConfig(prev => ({
       key,
       direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
     }));
   };
 
-  const handleAction = (action, row, e) => {
+  const handleAction = (action: string, row: any, e: React.MouseEvent) => {
     e.stopPropagation();
     setActiveMenu(null);
     onAction?.(action, row);
@@ -224,4 +225,3 @@ const DataTable: React.FC<DataTableProps> = ({
 };
 
 export default DataTable;
-

@@ -9,15 +9,22 @@ const FlowDiagram = ({
   showLabels = true,
   onNodeClick = null,
   colorScheme = '#D32F2F',
+}: {
+  nodes?: any[];
+  currentNode?: string | null;
+  direction?: string;
+  showLabels?: boolean;
+  onNodeClick?: ((node: any) => void) | null;
+  colorScheme?: string;
 }) => {
-  const getNodeStatus = (node, index) => {
+  const getNodeStatus = (_node: any, index: number) => {
     const currentIndex = nodes.findIndex(n => n.id === currentNode);
     if (index < currentIndex) return 'completed';
     if (index === currentIndex) return 'active';
     return 'pending';
   };
 
-  const getStatusIcon = status => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
         return <Check size={16} />;
@@ -29,7 +36,10 @@ const FlowDiagram = ({
   };
 
   return (
-    <div className={`flow-diagram ${direction}`} style={{ '--flow-color': colorScheme }}>
+    <div
+      className={`flow-diagram ${direction}`}
+      style={{ '--flow-color': colorScheme } as React.CSSProperties}
+    >
       {nodes.map((node, index) => {
         const status = node.status || getNodeStatus(node, index);
         const isClickable = onNodeClick !== null;
@@ -62,4 +72,3 @@ const FlowDiagram = ({
 };
 
 export default FlowDiagram;
-

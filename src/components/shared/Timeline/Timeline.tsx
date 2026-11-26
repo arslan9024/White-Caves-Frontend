@@ -9,17 +9,24 @@ const Timeline = ({
   showProgress = true,
   onStageClick = null,
   compact = false,
+}: {
+  stages?: any[];
+  currentStage?: string | null;
+  orientation?: string;
+  showProgress?: boolean;
+  onStageClick?: ((stage: any) => void) | null;
+  compact?: boolean;
 }) => {
   const currentIndex = stages.findIndex(s => s.id === currentStage);
   const progress = currentIndex >= 0 ? ((currentIndex + 1) / stages.length) * 100 : 0;
 
-  const getStageStatus = (stage, index) => {
+  const getStageStatus = (_stage: any, index: number) => {
     if (index < currentIndex) return 'completed';
     if (index === currentIndex) return 'current';
     return 'pending';
   };
 
-  const getStatusIcon = status => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
         return <Check size={compact ? 14 : 18} />;
@@ -91,4 +98,3 @@ const Timeline = ({
 };
 
 export default Timeline;
-
