@@ -32,7 +32,7 @@ export default function CRMDocumentViewer() {
   const canGoForward = useSelector(selectCanNavigateForward);
   const historyIndex = useSelector(selectDocumentHistoryIndex);
   const history = useSelector(selectDocumentHistory);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = React.useState(100);
   const [isPdfLoading, setIsPdfLoading] = React.useState(false);
 
@@ -186,4 +186,3 @@ export default function CRMDocumentViewer() {
     </div>
   );
 }
-

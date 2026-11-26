@@ -198,15 +198,23 @@ export default function ContextualDashboardRenderer() {
         assistantName: selectedAssistant.name,
         assistantRole: selectedAssistant.role,
         assistantDept: selectedAssistant.dept,
-        capabilities: AI_ASSISTANT_CAPABILITIES[selectedAssistant.id] || [],
-        isRelevant: AI_ASSISTANT_CAPABILITIES[selectedAssistant.id]?.includes(activeCategory),
+        capabilities:
+          AI_ASSISTANT_CAPABILITIES[
+            selectedAssistant.id as keyof typeof AI_ASSISTANT_CAPABILITIES
+          ] || [],
+        isRelevant:
+          AI_ASSISTANT_CAPABILITIES[
+            selectedAssistant.id as keyof typeof AI_ASSISTANT_CAPABILITIES
+          ]?.includes(activeCategory),
       }
     : null;
 
   const useMixedDashboard = assistantContext?.isRelevant || activeCategory === 'executive';
 
   if (useMixedDashboard) {
-    const MixedComponent = MIXED_DASHBOARD_COMPONENTS[activeCategory];
+    const MixedComponent = MIXED_DASHBOARD_COMPONENTS[
+      activeCategory as keyof typeof MIXED_DASHBOARD_COMPONENTS
+    ] as React.ComponentType<any> | undefined;
     if (MixedComponent) {
       return (
         <div className="contextual-dashboard mixed-mode">
@@ -220,8 +228,9 @@ export default function ContextualDashboardRenderer() {
     }
   }
 
-  const ViewComponent = VIEW_COMPONENTS[activeCategory] || ExecutiveOverview;
-  const subItemConfig = SUB_ITEM_CONFIGS[activeSubItem] || {};
+  const ViewComponent =
+    VIEW_COMPONENTS[activeCategory as keyof typeof VIEW_COMPONENTS] || ExecutiveOverview;
+  const subItemConfig = SUB_ITEM_CONFIGS[activeSubItem as keyof typeof SUB_ITEM_CONFIGS] || {};
 
   return (
     <div className="contextual-dashboard">
@@ -233,4 +242,3 @@ export default function ContextualDashboardRenderer() {
     </div>
   );
 }
-

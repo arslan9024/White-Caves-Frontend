@@ -56,7 +56,7 @@ const CommandPalette: React.FC = React.memo(function CommandPalette() {
             <Search size={20} />
           </SearchIcon>
           <SearchInput
-            ref={inputRef}
+            ref={inputRef as React.RefObject<HTMLInputElement>}
             value={query}
             onChange={e => {
               setQuery(e.target.value);
@@ -92,4 +92,3 @@ const CommandPalette: React.FC = React.memo(function CommandPalette() {
 });
 
 export default CommandPalette;
-

@@ -8,7 +8,7 @@ export async function initializeAdapters(
 
   for (const [portalName, adapter] of Object.entries(adapters)) {
     try {
-      if (credentials[portalName]) {
+      if (credentials[portalName] && adapter.connect) {
         await adapter.connect(credentials[portalName]);
         results[portalName] = { success: true, message: 'Connected' };
       } else {

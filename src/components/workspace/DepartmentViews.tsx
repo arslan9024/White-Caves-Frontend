@@ -8,7 +8,14 @@ import { KPICard, GridLayout, ContentPanel } from '../dashboard/DashboardCompone
  */
 
 // ─── Base Card ──────────────────────────────────────────────────────────────
-const DeptCard = ({ title, value, subtext, icon, trend, positive }: {
+const DeptCard = ({
+  title,
+  value,
+  subtext,
+  icon,
+  trend,
+  positive,
+}: {
   title: string;
   value: string;
   subtext?: string;
@@ -21,20 +28,27 @@ const DeptCard = ({ title, value, subtext, icon, trend, positive }: {
     label={title}
     value={value}
     subtext={subtext}
-    icon={icon}
+    icon={icon ?? ''}
     trend={trend}
     positive={positive}
   />
 );
 
-const DeptLayout = ({ departmentId, title, children }: {
+const DeptLayout = ({
+  departmentId,
+  title,
+  children,
+}: {
   departmentId: string;
   title: string;
   children: React.ReactNode;
 }) => {
   const dept = DEPARTMENTS.find(d => d.id === departmentId);
   return (
-    <div className="ws-dept-layout" style={{ '--local-accent': dept?.accentColor } as React.CSSProperties}>
+    <div
+      className="ws-dept-layout"
+      style={{ '--local-accent': dept?.accentColor } as React.CSSProperties}
+    >
       <div className="ws-dept-header">
         <h2 style={{ color: dept?.accentColor }}>{title}</h2>
         <span className="ws-dept-ai">AI Assistant: {dept?.aiAssistant}</span>
@@ -211,4 +225,3 @@ export const IntelligenceView = () => (
     />
   </DeptLayout>
 );
-

@@ -10,25 +10,28 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-const Icon = React.memo(({ name, size = 24, color, strokeWidth = 2, className = '', ...props }: IconProps) => {
-  const IconComponent = (LucideIcons as Record<string, React.ComponentType<any>>)[name];
+const Icon = React.memo(
+  ({ name, size = 24, color, strokeWidth = 2, className = '', ...props }: IconProps) => {
+    const IconComponent = (LucideIcons as unknown as Record<string, React.ComponentType<any>>)[
+      name
+    ];
 
-  if (!IconComponent) {
-    return null;
+    if (!IconComponent) {
+      return null;
+    }
+
+    return (
+      <IconComponent
+        size={size}
+        color={color}
+        strokeWidth={strokeWidth}
+        className={`wc-icon ${className}`}
+        {...props}
+      />
+    );
   }
-
-  return (
-    <IconComponent
-      size={size}
-      color={color}
-      strokeWidth={strokeWidth}
-      className={`wc-icon ${className}`}
-      {...props}
-    />
-  );
-});
+);
 
 Icon.displayName = 'Icon';
 
 export default Icon;
-

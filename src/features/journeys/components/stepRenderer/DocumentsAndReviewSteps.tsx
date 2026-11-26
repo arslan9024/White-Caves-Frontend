@@ -47,7 +47,7 @@ export const DocumentsChecklistStep: FC<DocumentsChecklistStepProps> = ({
     <div className="space-y-6">
       <input
         type="file"
-        ref={fileInputRef}
+        ref={fileInputRef as React.RefObject<HTMLInputElement>}
         onChange={e => {
           const file = e.target.files?.[0];
           if (file) {

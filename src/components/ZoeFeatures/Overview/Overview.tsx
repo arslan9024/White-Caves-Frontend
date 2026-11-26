@@ -93,7 +93,15 @@ const TOP_AGENTS = [
   { id: 3, name: 'Fatima Khan', deals: 9, revenue: 'AED 680K', avatar: 'FK' },
 ];
 
-export default function ExecutiveOverview({ activeSubItem, subItemConfig, assistantContext }) {
+export default function ExecutiveOverview({
+  activeSubItem,
+  subItemConfig,
+  assistantContext,
+}: {
+  activeSubItem?: any;
+  subItemConfig?: any;
+  assistantContext?: any;
+}) {
   const renderMDDashboard = () => (
     <div className="executive-dashboard">
       <div className="stats-grid">
@@ -275,4 +283,3 @@ export default function ExecutiveOverview({ activeSubItem, subItemConfig, assist
 
   return <div className="view-container executive-view">{renderContent()}</div>;
 }
-

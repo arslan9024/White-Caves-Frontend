@@ -4,7 +4,15 @@ import { authFetch } from '../utils/authFetch';
 import { clearDraft, getDraft, setDraft } from '../utils/indexedDraftStore';
 import './ViewingFeedback.css';
 
-const ViewingFeedback = ({ viewing, onSubmit, onClose }) => {
+const ViewingFeedback = ({
+  viewing,
+  onSubmit,
+  onClose,
+}: {
+  viewing: any;
+  onSubmit?: (data: any) => void;
+  onClose?: () => void;
+}) => {
   const [outcome, setOutcome] = useState('');
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
@@ -22,7 +30,7 @@ const ViewingFeedback = ({ viewing, onSubmit, onClose }) => {
 
     const loadDraft = async () => {
       try {
-        const draft = await getDraft(draftKey);
+        const draft = (await getDraft(draftKey)) as Record<string, unknown> | null;
         if (!active || !draft || typeof draft !== 'object') return;
 
         if (typeof draft.outcome === 'string') setOutcome(draft.outcome);
@@ -49,7 +57,7 @@ const ViewingFeedback = ({ viewing, onSubmit, onClose }) => {
     });
   }, [draftKey, draftLoaded, feedback, outcome, rating]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -225,4 +233,3 @@ const ViewingFeedback = ({ viewing, onSubmit, onClose }) => {
 };
 
 export default ViewingFeedback;
-

@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
  * @param {string} props.color - Primary color
  */
 const Chart = ({ data = [], type = 'line', title = 'Chart', color = 'red' }) => {
-  const colorMap = {
+  const colorMap: Record<string, string> = {
     red: 'rgb(220, 38, 38)',
     blue: 'rgb(59, 130, 246)',
     green: 'rgb(34, 197, 94)',
@@ -210,4 +210,3 @@ Chart.propTypes = {
 };
 
 export default Chart;
-
