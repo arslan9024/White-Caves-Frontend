@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import PropertyOpportunity from '../../server/models/PropertyOpportunity.js';
-import OwnerRelationship from '../../server/models/OwnerRelationship.js';
+import PropertyOpportunity from '../../server/models/PropertyOpportunity';
+import OwnerRelationship from '../../server/models/OwnerRelationship';
 import InventoryProperty from '../../server/models/InventoryProperty.js';
 import {
   VALID_VERIFICATION_STATUSES,
