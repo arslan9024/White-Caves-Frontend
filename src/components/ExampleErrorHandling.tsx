@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useToast } from './Toast';
+import FormField from './ui/FormField/FormField';
 import { useFormValidation } from '../hooks/useFormValidation';
 import { apiClient } from '../utils/apiClient';
-import FormField from './FormField';
 import './ExampleErrorHandling.css';
 
 const ExampleErrorHandling = () => {
@@ -42,10 +42,10 @@ const ExampleErrorHandling = () => {
     toast.info('Your session will expire in 5 minutes.');
   };
 
-  const testFormValidation = async e => {
+  const testFormValidation = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (validateForm()) {
+    if (validateForm?.()) {
       toast.success('Form is valid!');
     } else {
       toast.error('Please fix the form errors');
@@ -55,15 +55,16 @@ const ExampleErrorHandling = () => {
   const testPaymentAPI = async () => {
     setLoading(true);
     try {
-      const result = await apiClient.post('/payments/create-payment-intent', {
-        amount: parseFloat(values.amount) || 100,
+      await apiClient.post('/payments/create-payment-intent', {
+        amount: parseFloat(String(values.amount ?? '')) || 100,
         propertyId: 'test-123',
         propertyTitle: 'Test Property',
       });
 
       toast.success('Payment intent created successfully!');
-    } catch (error) {
-      toast.error(error.message || 'Payment processing failed');
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Payment processing failed';
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -71,13 +72,16 @@ const ExampleErrorHandling = () => {
 
   const testPaymentStatus = async () => {
     try {
-      const result = await apiClient.get('/payments/status');
+      const result = (await apiClient.get('/payments/status')) as {
+        configured?: boolean;
+        message?: string;
+      };
       if (result.configured) {
-        toast.success(result.message);
+        toast.success(result.message || 'Configured');
       } else {
-        toast.warning(result.message);
+        toast.warning(result.message || 'Not configured');
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to check payment status');
     }
   };
@@ -170,4 +174,3 @@ const ExampleErrorHandling = () => {
 };
 
 export default ExampleErrorHandling;
-
