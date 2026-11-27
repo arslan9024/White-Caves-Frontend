@@ -4,7 +4,6 @@ import { selectCurrentAssistant } from '../../store/slices/aiAssistantDashboardS
 import { selectActiveFeatureTab } from '../../store/slices/dashboardViewSlice';
 import { getFeatureById } from '../../config/assistantFeatures';
 import { getCRMModule } from '../../config/crmModuleRegistry';
-import GenericFeatureView from './ui/GenericFeatureView';
 import './FeatureRenderer.css';
 const LoadingFallback = () => (
   <div className="feature-loading">
@@ -13,7 +12,13 @@ const LoadingFallback = () => (
   </div>
 );
 
-const FeatureRenderer = ({ assistantId: propAssistantId, featureId: propFeatureId }) => {
+const FeatureRenderer = ({
+  assistantId: propAssistantId,
+  featureId: propFeatureId,
+}: {
+  assistantId?: string;
+  featureId?: string;
+}) => {
   const currentAssistant = useSelector(selectCurrentAssistant);
   const activeFeatureTab = useSelector(selectActiveFeatureTab);
 
@@ -49,11 +54,9 @@ const FeatureRenderer = ({ assistantId: propAssistantId, featureId: propFeatureI
     }
 
     return (
-      <GenericFeatureView
-        assistant={currentAssistant}
-        feature={feature || { id: featureId, label: featureId }}
-        color={currentAssistant?.colorScheme || '#0EA5E9'}
-      />
+      <div className="feature-empty">
+        <p>{(feature as any)?.label || featureId}</p>
+      </div>
     );
   }, [assistantId, featureId, currentAssistant, feature]);
 
@@ -65,4 +68,3 @@ const FeatureRenderer = ({ assistantId: propAssistantId, featureId: propFeatureI
 };
 
 export default FeatureRenderer;
-

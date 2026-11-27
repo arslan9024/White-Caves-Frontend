@@ -1,8 +1,5 @@
 import React, { memo, useState, useCallback, useRef, useEffect } from 'react';
-import { 
-  Briefcase, MapPin, Send, Save, Eye,
-  Linkedin, Globe
-} from 'lucide-react';
+import { Briefcase, MapPin, Send, Save, Eye, Linkedin, Globe } from 'lucide-react';
 import { TIMING } from '../../../constants';
 import * as S from './JobComponents.styles';
 import { JobData, JobPostPreview } from './JobPostPreview';
@@ -11,12 +8,20 @@ const JOB_PLATFORMS = [
   { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: '#0A66C2' },
   { id: 'indeed', name: 'Indeed', icon: Globe, color: '#2164F3' },
   { id: 'bayt', name: 'Bayt', icon: Globe, color: '#00B251' },
-  { id: 'gulftalent', name: 'GulfTalent', icon: Globe, color: '#1A73E8' }
+  { id: 'gulftalent', name: 'GulfTalent', icon: Globe, color: '#1A73E8' },
 ];
 
 const EMPLOYMENT_TYPES = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship'];
 const EXPERIENCE_LEVELS = ['Entry Level', 'Mid Level', 'Senior Level', 'Executive', 'Director'];
-const DEPARTMENTS = ['Sales', 'Marketing', 'Operations', 'Finance', 'HR', 'Technology', 'Administration'];
+const DEPARTMENTS = [
+  'Sales',
+  'Marketing',
+  'Operations',
+  'Finance',
+  'HR',
+  'Technology',
+  'Administration',
+];
 
 export type { JobData };
 
@@ -27,35 +32,35 @@ export interface JobPostComposerProps {
   onPreview?: (data: JobData) => void;
 }
 
-const JobPostComposer = memo(({ 
-  job,
-  onPublish,
-  onSaveDraft,
-  onPreview
-}: JobPostComposerProps) => {
-  const [formData, setFormData] = useState<JobData>(job || {
-    title: '',
-    department: '',
-    location: 'Dubai, UAE',
-    employmentType: 'Full-time',
-    experienceLevel: '',
-    salaryMin: '',
-    salaryMax: '',
-    description: '',
-    requirements: '',
-    benefits: ''
-  });
+const JobPostComposer = memo(({ job, onPublish, onSaveDraft, onPreview }: JobPostComposerProps) => {
+  const [formData, setFormData] = useState<JobData>(
+    job || {
+      title: '',
+      department: '',
+      location: 'Dubai, UAE',
+      employmentType: 'Full-time',
+      experienceLevel: '',
+      salaryMin: '',
+      salaryMax: '',
+      description: '',
+      requirements: '',
+      benefits: '',
+    }
+  );
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(['linkedin', 'bayt']);
   const [publishing, setPublishing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [notification, setNotification] = useState<{
+    message: string;
+    type: 'success' | 'error';
+  } | null>(null);
   const notifyTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     return () => clearTimeout(notifyTimerRef.current);
   }, []);
-  
+
   const validateForm = useCallback(() => {
     const newErrors: Record<string, string> = {};
     if (!formData.title?.trim()) newErrors.title = 'Job title is required';
@@ -64,50 +69,54 @@ const JobPostComposer = memo(({
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [formData, selectedPlatforms]);
-  
+
   const showNotification = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
     clearTimeout(notifyTimerRef.current);
-    notifyTimerRef.current = setTimeout(() => {
-      setNotification(null);
-    }, TIMING.TOAST_DEFAULT || 3000);
+    notifyTimerRef.current = setTimeout(
+      () => {
+        setNotification(null);
+      },
+      (TIMING as any).TOAST_DEFAULT || 3000
+    );
   }, []);
-  
+
   const handleFieldChange = useCallback((field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
-  
+
   const togglePlatform = useCallback((platformId: string) => {
-    setSelectedPlatforms(prev => 
-      prev.includes(platformId)
-        ? prev.filter(p => p !== platformId)
-        : [...prev, platformId]
+    setSelectedPlatforms(prev =>
+      prev.includes(platformId) ? prev.filter(p => p !== platformId) : [...prev, platformId]
     );
     setErrors(prev => ({ ...prev, platforms: '' }));
   }, []);
-  
+
   const handlePublish = useCallback(() => {
     if (!validateForm()) return;
-    
+
     setPublishing(true);
-    
-    setTimeout(() => {
-      try {
-        if (onPublish) {
-          onPublish(formData, selectedPlatforms);
+
+    setTimeout(
+      () => {
+        try {
+          if (onPublish) {
+            onPublish(formData, selectedPlatforms);
+          }
+          showNotification(
+            `Job posted successfully to ${selectedPlatforms.length} platform${selectedPlatforms.length !== 1 ? 's' : ''}!`,
+            'success'
+          );
+        } catch {
+          showNotification('Failed to post job. Please try again.', 'error');
+        } finally {
+          setPublishing(false);
         }
-        showNotification(
-          `Job posted successfully to ${selectedPlatforms.length} platform${selectedPlatforms.length !== 1 ? 's' : ''}!`,
-          'success'
-        );
-      } catch {
-        showNotification('Failed to post job. Please try again.', 'error');
-      } finally {
-        setPublishing(false);
-      }
-    }, TIMING.NETWORK_SIMULATION || 2000);
+      },
+      (TIMING as any).NETWORK_SIMULATION || 2000
+    );
   }, [formData, selectedPlatforms, onPublish, validateForm, showNotification]);
-  
+
   const handleSaveDraft = useCallback(() => {
     if (onSaveDraft) {
       onSaveDraft(formData);
@@ -118,11 +127,9 @@ const JobPostComposer = memo(({
   return (
     <S.JobPostComposer>
       {notification && (
-        <S.NotificationToast $type={notification.type}>
-          {notification.message}
-        </S.NotificationToast>
+        <S.NotificationToast $type={notification.type}>{notification.message}</S.NotificationToast>
       )}
-      
+
       <S.ComposerHeader>
         <S.HeaderIcon>
           <Briefcase size={24} />
@@ -132,7 +139,7 @@ const JobPostComposer = memo(({
           <p>Create and publish job listings across multiple platforms</p>
         </S.HeaderInfo>
       </S.ComposerHeader>
-      
+
       <S.PlatformSelection>
         <h4>Publish To</h4>
         <S.PlatformsRow>
@@ -152,35 +159,42 @@ const JobPostComposer = memo(({
           })}
         </S.PlatformsRow>
       </S.PlatformSelection>
-      
+
       <S.JobForm>
         <S.FormSection>
           <h4>Job Details</h4>
           <S.FormGrid>
             <S.FormField $span2 $hasError={!!errors.title}>
-              <label>Job Title <span className="required">*</span></label>
+              <label>
+                Job Title <span className="required">*</span>
+              </label>
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => { handleFieldChange('title', e.target.value); setErrors(prev => ({...prev, title: ''})); }}
+                onChange={e => {
+                  handleFieldChange('title', e.target.value);
+                  setErrors(prev => ({ ...prev, title: '' }));
+                }}
                 placeholder="e.g., Senior Real Estate Agent"
               />
               {errors.title && <S.ErrorMessage>{errors.title}</S.ErrorMessage>}
             </S.FormField>
-            
+
             <S.FormField>
               <label>Department</label>
               <select
                 value={formData.department}
-                onChange={(e) => handleFieldChange('department', e.target.value)}
+                onChange={e => handleFieldChange('department', e.target.value)}
               >
                 <option value="">Select Department</option>
                 {DEPARTMENTS.map(dept => (
-                  <option key={dept} value={dept}>{dept}</option>
+                  <option key={dept} value={dept}>
+                    {dept}
+                  </option>
                 ))}
               </select>
             </S.FormField>
-            
+
             <S.FormField>
               <label>Location</label>
               <S.InputWithIcon>
@@ -188,97 +202,104 @@ const JobPostComposer = memo(({
                 <input
                   type="text"
                   value={formData.location}
-                  onChange={(e) => handleFieldChange('location', e.target.value)}
+                  onChange={e => handleFieldChange('location', e.target.value)}
                   placeholder="e.g., Dubai, UAE"
                 />
               </S.InputWithIcon>
             </S.FormField>
-            
+
             <S.FormField>
               <label>Employment Type</label>
               <select
                 value={formData.employmentType}
-                onChange={(e) => handleFieldChange('employmentType', e.target.value)}
+                onChange={e => handleFieldChange('employmentType', e.target.value)}
               >
                 {EMPLOYMENT_TYPES.map(type => (
-                  <option key={type} value={type}>{type}</option>
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
                 ))}
               </select>
             </S.FormField>
-            
+
             <S.FormField>
               <label>Experience Level</label>
               <select
                 value={formData.experienceLevel}
-                onChange={(e) => handleFieldChange('experienceLevel', e.target.value)}
+                onChange={e => handleFieldChange('experienceLevel', e.target.value)}
               >
                 <option value="">Select Level</option>
                 {EXPERIENCE_LEVELS.map(level => (
-                  <option key={level} value={level}>{level}</option>
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
                 ))}
               </select>
             </S.FormField>
-            
+
             <S.FormField>
               <label>Salary Range (AED/month)</label>
               <S.SalaryRange>
                 <input
                   type="number"
                   value={formData.salaryMin}
-                  onChange={(e) => handleFieldChange('salaryMin', e.target.value)}
+                  onChange={e => handleFieldChange('salaryMin', e.target.value)}
                   placeholder="Min"
                 />
                 <span>to</span>
                 <input
                   type="number"
                   value={formData.salaryMax}
-                  onChange={(e) => handleFieldChange('salaryMax', e.target.value)}
+                  onChange={e => handleFieldChange('salaryMax', e.target.value)}
                   placeholder="Max"
                 />
               </S.SalaryRange>
             </S.FormField>
           </S.FormGrid>
         </S.FormSection>
-        
+
         <S.FormSection>
           <h4>Job Description</h4>
           <S.FormField $hasError={!!errors.description}>
-            <label>Description <span className="required">*</span></label>
+            <label>
+              Description <span className="required">*</span>
+            </label>
             <textarea
               value={formData.description}
-              onChange={(e) => { handleFieldChange('description', e.target.value); setErrors(prev => ({...prev, description: ''})); }}
+              onChange={e => {
+                handleFieldChange('description', e.target.value);
+                setErrors(prev => ({ ...prev, description: '' }));
+              }}
               placeholder="Describe the role, responsibilities, and day-to-day activities..."
               rows={5}
             />
             {errors.description && <S.ErrorMessage>{errors.description}</S.ErrorMessage>}
           </S.FormField>
-          
+
           <S.FormField>
             <label>Requirements</label>
             <textarea
               value={formData.requirements}
-              onChange={(e) => handleFieldChange('requirements', e.target.value)}
+              onChange={e => handleFieldChange('requirements', e.target.value)}
               placeholder="List the qualifications, skills, and experience required..."
               rows={4}
             />
           </S.FormField>
-          
+
           <S.FormField>
             <label>Benefits</label>
             <textarea
               value={formData.benefits}
-              onChange={(e) => handleFieldChange('benefits', e.target.value)}
+              onChange={e => handleFieldChange('benefits', e.target.value)}
               placeholder="List the benefits and perks offered..."
               rows={3}
             />
           </S.FormField>
         </S.FormSection>
       </S.JobForm>
-      
-      {errors.platforms && (
-        <S.PlatformError>{errors.platforms}</S.PlatformError>
-      )}
-      
+
+      {errors.platforms && <S.PlatformError>{errors.platforms}</S.PlatformError>}
+
       <S.ComposerActions>
         <S.ActionBtn $variant="secondary" onClick={handleSaveDraft}>
           <Save size={16} />
@@ -294,19 +315,24 @@ const JobPostComposer = memo(({
           <Eye size={16} />
           Preview
         </S.ActionBtn>
-        <S.ActionBtn 
+        <S.ActionBtn
           $variant="primary"
           onClick={handlePublish}
-          disabled={!formData.title || !formData.description || selectedPlatforms.length === 0 || publishing}
+          disabled={
+            !formData.title || !formData.description || selectedPlatforms.length === 0 || publishing
+          }
         >
           {publishing ? (
             'Publishing...'
           ) : (
-            <><Send size={16} /> Publish to {selectedPlatforms.length} Platform{selectedPlatforms.length !== 1 ? 's' : ''}</>
+            <>
+              <Send size={16} /> Publish to {selectedPlatforms.length} Platform
+              {selectedPlatforms.length !== 1 ? 's' : ''}
+            </>
           )}
         </S.ActionBtn>
       </S.ComposerActions>
-      
+
       {showPreview && <JobPostPreview formData={formData} />}
     </S.JobPostComposer>
   );
@@ -314,4 +340,3 @@ const JobPostComposer = memo(({
 
 JobPostComposer.displayName = 'JobPostComposer';
 export default JobPostComposer;
-

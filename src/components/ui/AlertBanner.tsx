@@ -25,7 +25,23 @@ import PropTypes from 'prop-types';
  *   autoClose={3000}
  * />
  */
-const AlertBanner = ({ type = 'info', title, message, onDismiss, action, autoClose = 0 }) => {
+interface AlertBannerProps {
+  type?: 'success' | 'warning' | 'error' | 'info';
+  title?: string;
+  message?: string;
+  onDismiss?: () => void;
+  action?: { label: string; onClick: () => void };
+  autoClose?: number;
+}
+
+const AlertBanner: React.FC<AlertBannerProps> = ({
+  type = 'info',
+  title,
+  message,
+  onDismiss,
+  action,
+  autoClose = 0,
+}) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const typeConfig = {
@@ -118,4 +134,3 @@ AlertBanner.propTypes = {
 };
 
 export default AlertBanner;
-

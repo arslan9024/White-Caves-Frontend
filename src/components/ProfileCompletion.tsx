@@ -2,7 +2,19 @@ import React, { useState } from 'react';
 import '../pages/auth/AuthPages.css';
 import { useToast } from './Toast';
 
-export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
+interface ProfileCompletionProps {
+  user?: any;
+  token?: string;
+  onComplete: (user: any, token: string) => void;
+  onSkip?: () => void;
+}
+
+export default function ProfileCompletion({
+  user,
+  token,
+  onComplete,
+  onSkip,
+}: ProfileCompletionProps) {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -10,11 +22,11 @@ export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
     email: user?.email || '',
   });
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name.trim()) {
@@ -44,8 +56,8 @@ export default function ProfileCompletion({ user, token, onComplete, onSkip }) {
 
       toast.success('Profile updated successfully!');
       onComplete(data.user, data.token);
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'Failed to update profile');
     } finally {
       setLoading(false);
     }

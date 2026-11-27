@@ -50,4 +50,4 @@ export const SentinelPropertyCRM: React.FC<SentinelPropertyCRMProps> = ({ module
 export default SentinelPropertyCRM;
 
 // Re-export submodules for full backwards compatibility and modular access
-export * from './sentinelPropertyCRM';
+export * from './sentinelPropertyCRM/index';

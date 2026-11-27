@@ -21,7 +21,10 @@ const PreviewGridWithFilters = ({
   onApplyChanges?: (rows: number[]) => void;
 }) => {
   const [filters, setFilters] = useState<Record<string, string>>({});
-  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string }>({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string }>({
+    key: null,
+    direction: 'asc',
+  });
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [viewMode, setViewMode] = useState('all'); // all, valid, errors, warnings
 
@@ -55,9 +58,10 @@ const PreviewGridWithFilters = ({
 
     // Apply sorting
     if (sortConfig.key) {
+      const sortKey = sortConfig.key;
       result.sort((a, b) => {
-        const aVal = a[sortConfig.key];
-        const bVal = b[sortConfig.key];
+        const aVal = a[sortKey];
+        const bVal = b[sortKey];
 
         if (aVal == null) return 1;
         if (bVal == null) return -1;
@@ -320,4 +324,3 @@ const PreviewGridWithFilters = ({
 };
 
 export default PreviewGridWithFilters;
-

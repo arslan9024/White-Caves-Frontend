@@ -12,6 +12,7 @@ export interface LindaLeadContextActionsProps {
   onBridgeToDaisy?: () => void;
   onDocumentIntake: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDripCampaign: () => void;
+  onDldValuationPitch?: () => void;
 }
 
 export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
@@ -24,6 +25,7 @@ export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
   onBridgeToDaisy,
   onDocumentIntake,
   onDripCampaign,
+  onDldValuationPitch,
 }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
@@ -210,7 +212,7 @@ export const LindaLeadContextActions: FC<LindaLeadContextActionsProps> = ({
         type="button"
         data-testid="linda-workflow-rental-valuation"
         onClick={() => {
-          alert('Generating Instant RERA Rental Valuation Index for Dubai Land Department...');
+          onDldValuationPitch?.();
         }}
         style={{
           padding: '0.45rem 0.75rem',

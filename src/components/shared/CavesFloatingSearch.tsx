@@ -58,8 +58,8 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
       </FloatingPillWrapper>
 
       {isOpen && (
-        <ModalBackdrop onClick={closeModal}>
-          <ModalCard onClick={(e) => e.stopPropagation()}>
+        <ModalBackdrop $isOpen={isOpen} onClick={closeModal}>
+          <ModalCard onClick={e => e.stopPropagation()}>
             <ModalHeader>
               <h3>
                 <Building size={20} color="#EF4444" />
@@ -83,7 +83,7 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
                   type="text"
                   placeholder="Search by community, title, ID (e.g. wc_dh2_001), or feature..."
                   value={filters.searchTerm}
-                  onChange={(e) => updateFilter('searchTerm', e.target.value)}
+                  onChange={e => updateFilter('searchTerm', e.target.value)}
                   autoFocus
                 />
               </InputGroup>
@@ -93,9 +93,9 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
                   <label>Community</label>
                   <select
                     value={filters.community}
-                    onChange={(e) => updateFilter('community', e.target.value)}
+                    onChange={e => updateFilter('community', e.target.value)}
                   >
-                    {communitiesList.map((c) => (
+                    {communitiesList.map(c => (
                       <option key={c} value={c}>
                         {c}
                       </option>
@@ -107,7 +107,7 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
                   <label>Bedrooms</label>
                   <select
                     value={filters.beds}
-                    onChange={(e) =>
+                    onChange={e =>
                       updateFilter(
                         'beds',
                         e.target.value === 'All' ? 'All' : Number(e.target.value)
@@ -127,7 +127,7 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
                   <label>Type</label>
                   <select
                     value={filters.propertyType}
-                    onChange={(e) => updateFilter('propertyType', e.target.value)}
+                    onChange={e => updateFilter('propertyType', e.target.value)}
                   >
                     <option value="All">All Types</option>
                     <option value="Villa">Villa</option>
@@ -141,7 +141,7 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
                   <label>Status</label>
                   <select
                     value={filters.status}
-                    onChange={(e) => updateFilter('status', e.target.value)}
+                    onChange={e => updateFilter('status', e.target.value)}
                   >
                     <option value="All">All Statuses</option>
                     <option value="Available">Available ({availableCount})</option>
@@ -179,13 +179,11 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
             <ResultsSection>
               {filteredProperties.length > 0 ? (
                 <ResultsGrid>
-                  {filteredProperties.map((property) => (
+                  {filteredProperties.map(property => (
                     <PropertyCard key={property.id}>
                       <div className="img-container">
                         <img src={property.stockImageCdnUrl} alt={property.title} loading="lazy" />
-                        <span className={`status-badge ${property.status}`}>
-                          {property.status}
-                        </span>
+                        <span className={`status-badge ${property.status}`}>{property.status}</span>
                       </div>
                       <div className="card-body">
                         <div className="price">AED {(property.priceAED || 0).toLocaleString()}</div>
@@ -216,4 +214,3 @@ export const CavesFloatingSearch: FC<CavesFloatingSearchProps> = ({
 };
 
 export default CavesFloatingSearch;
-

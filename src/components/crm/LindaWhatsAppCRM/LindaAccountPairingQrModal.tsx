@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { QrCode, RefreshCw, Smartphone, X } from 'lucide-react';
+import { QrCode, RefreshCw, RotateCcw, Smartphone, X } from 'lucide-react';
 import { apiClient } from '../../../utils/apiClient';
 
 interface PairingModalProps {
@@ -75,6 +75,20 @@ export const LindaAccountPairingQrModal = memo<PairingModalProps>(
         setBusy(false);
       }
     }, [encodedPhone]);
+
+    const handleResetLockfile = useCallback(async () => {
+      setBusy(true);
+      setStatusMsg('Clearing stale Chromium SingletonLock & reconnecting...');
+      try {
+        await apiClient.post(`/linda/pool/${encodedPhone}/reset-lockfile`, {});
+        await apiClient.post(`/linda/pool/${encodedPhone}/connect`, {});
+        setTimeout(() => void fetchQr(), 2500);
+      } catch {
+        setStatusMsg('Lockfile reset failed — verify server :5001');
+      } finally {
+        setBusy(false);
+      }
+    }, [encodedPhone, fetchQr]);
 
     useEffect(() => {
       if (!isOpen) return;
@@ -208,6 +222,26 @@ export const LindaAccountPairingQrModal = memo<PairingModalProps>(
               }}
             >
               <Smartphone size={12} /> 8-Digit Code
+            </button>
+            <button
+              disabled={busy}
+              onClick={() => void handleResetLockfile()}
+              title="Clear stale Chromium SingletonLock and force reconnect"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: '#7F1D1D',
+                color: '#FECACA',
+                border: '1px solid #EF4444',
+                borderRadius: '8px',
+                padding: '7px 10px',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              <RotateCcw size={12} /> Reset Lock
             </button>
           </div>
         </div>

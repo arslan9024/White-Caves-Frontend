@@ -2,8 +2,18 @@ import React from 'react';
 import { CheckCircle, AlertCircle, Clock, PhoneOff, Mail } from 'lucide-react';
 import './ContactStatusBadge.css';
 
-const ContactStatusBadge = ({ status = 'unknown', size = 'md', showIcon = true }) => {
-  const statusConfig = {
+interface ContactStatusBadgeProps {
+  status?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  showIcon?: boolean;
+}
+
+const ContactStatusBadge = ({
+  status = 'unknown',
+  size = 'md',
+  showIcon = true,
+}: ContactStatusBadgeProps) => {
+  const statusConfig: Record<string, any> = {
     'never-contacted': {
       label: 'Never Contacted',
       color: '#dc2626',
@@ -11,7 +21,7 @@ const ContactStatusBadge = ({ status = 'unknown', size = 'md', showIcon = true }
       icon: PhoneOff,
       description: 'No contact history recorded',
     },
-    'contacted': {
+    contacted: {
       label: 'Contacted',
       color: '#EF4444',
       bgColor: '#dbeafe',
@@ -32,7 +42,7 @@ const ContactStatusBadge = ({ status = 'unknown', size = 'md', showIcon = true }
       icon: CheckCircle,
       description: 'All follow-ups completed',
     },
-    'interested': {
+    interested: {
       label: 'Interested',
       color: '#06b6d4',
       bgColor: '#cffafe',
@@ -46,7 +56,7 @@ const ContactStatusBadge = ({ status = 'unknown', size = 'md', showIcon = true }
       icon: AlertCircle,
       description: 'Owner declined interest',
     },
-    'unknown': {
+    unknown: {
       label: 'Unknown',
       color: '#9ca3af',
       bgColor: '#f9fafb',
@@ -80,8 +90,8 @@ const ContactStatusBadge = ({ status = 'unknown', size = 'md', showIcon = true }
   );
 };
 
-const getIconSize = (size) => {
-  const sizes = {
+const getIconSize = (size: 'xs' | 'sm' | 'md' | 'lg') => {
+  const sizes: Record<'xs' | 'sm' | 'md' | 'lg', number> = {
     xs: 12,
     sm: 14,
     md: 16,
@@ -91,4 +101,3 @@ const getIconSize = (size) => {
 };
 
 export default ContactStatusBadge;
-

@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
 import './PassportUpload.css';
-import Loading from './Loading';
+const Loading = () => <div>Loading...</div>;
 
-export default function PassportUpload({ userId, onUploadComplete }) {
+interface PassportUploadProps {
+  userId: string;
+  onUploadComplete?: () => void;
+}
+
+export default function PassportUpload({ userId, onUploadComplete }: PassportUploadProps) {
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState('');
-  const [passportData, setPassportData] = useState({
+  const [passportData, setPassportData] = useState<{
+    documentNumber: string;
+    expiryDate: string;
+    file: File | null;
+  }>({
     documentNumber: '',
     expiryDate: '',
     file: null,
   });
 
-  const handleFileChange = e => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
     setPassportData({
       ...passportData,
-      file: e.target.files[0],
+      file,
     });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setStatusMsg('');
@@ -26,7 +36,9 @@ export default function PassportUpload({ userId, onUploadComplete }) {
     const formData = new FormData();
     formData.append('documentNumber', passportData.documentNumber);
     formData.append('expiryDate', passportData.expiryDate);
-    formData.append('file', passportData.file);
+    if (passportData.file) {
+      formData.append('file', passportData.file);
+    }
 
     try {
       const response = await fetch(`/api/users/${userId}/passport`, {
@@ -79,4 +91,3 @@ export default function PassportUpload({ userId, onUploadComplete }) {
     </div>
   );
 }
-

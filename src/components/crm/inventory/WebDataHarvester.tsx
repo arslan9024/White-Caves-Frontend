@@ -1,11 +1,28 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { 
-  Globe, Play, Pause, Square, Loader2, CheckCircle, 
-  XCircle, Download, Trash2, Settings, Link, AlertTriangle,
-  ChevronDown, ChevronUp, HelpCircle
+import {
+  Globe,
+  Play,
+  Pause,
+  Square,
+  Loader2,
+  CheckCircle,
+  XCircle,
+  Download,
+  Trash2,
+  Settings,
+  Link,
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  HelpCircle,
 } from 'lucide-react';
 import './WebDataHarvester.css';
-import { HarvestResult, HarvestError, HarvestConfig, HarvestStatus } from './WebDataHarvester.types';
+import {
+  HarvestResult,
+  HarvestError,
+  HarvestConfig,
+  HarvestStatus,
+} from './WebDataHarvester.types';
 import { HarvestConfigPanel } from './HarvestConfigPanel';
 
 export * from './WebDataHarvester.types';
@@ -31,8 +48,8 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
       name: '.owner-name',
       phone: '.phone-number',
       email: '.email',
-      unit: '.unit-number'
-    }
+      unit: '.unit-number',
+    },
   });
 
   const parseUrlTemplate = (template: string): string[] => {
@@ -51,7 +68,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
 
   const simulateFetch = async (url: string, delay: number): Promise<HarvestResult> => {
     await new Promise(resolve => setTimeout(resolve, delay));
-    
+
     const success = Math.random() > 0.2;
     if (!success) {
       throw new Error(`Failed to fetch ${url}: Connection timeout`);
@@ -67,40 +84,46 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
         name: mockNames[Math.floor(Math.random() * mockNames.length)],
         phone: mockPhones[Math.floor(Math.random() * mockPhones.length)],
         email: `contact_${Date.now()}@example.com`,
-        unit: mockUnits[Math.floor(Math.random() * mockUnits.length)]
-      }
+        unit: mockUnits[Math.floor(Math.random() * mockUnits.length)],
+      },
     };
   };
 
-  const harvestData = useCallback(async (urls: string[]) => {
-    setStatus('fetching');
-    statusRef.current = 'fetching';
-    setProgress({ current: 0, total: urls.length });
+  const harvestData = useCallback(
+    async (urls: string[]) => {
+      setStatus('fetching');
+      statusRef.current = 'fetching';
+      setProgress({ current: 0, total: urls.length });
 
-    for (let i = 0; i < urls.length; i++) {
-      if (statusRef.current === 'stopped') break;
-      while (statusRef.current === 'paused') {
-        await new Promise(resolve => setTimeout(resolve, 500));
+      for (let i = 0; i < urls.length; i++) {
+        if ((statusRef.current as string) === 'stopped') break;
+        while ((statusRef.current as string) === 'paused') {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
+        setProgress({ current: i + 1, total: urls.length });
+
+        try {
+          const result = await simulateFetch(urls[i], config.delay);
+          setResults(prev => [...prev, result]);
+        } catch (err: unknown) {
+          setErrors(prev => [
+            ...prev,
+            {
+              url: urls[i],
+              error: err instanceof Error ? err.message : 'Unknown error',
+            },
+          ]);
+        }
       }
 
-      setProgress({ current: i + 1, total: urls.length });
-
-      try {
-        const result = await simulateFetch(urls[i], config.delay);
-        setResults(prev => [...prev, result]);
-      } catch (err: unknown) {
-        setErrors(prev => [...prev, {
-          url: urls[i],
-          error: err instanceof Error ? err.message : 'Unknown error'
-        }]);
+      if ((statusRef.current as string) !== 'stopped') {
+        setStatus('completed');
+        statusRef.current = 'completed';
       }
-    }
-
-    if (statusRef.current !== 'stopped') {
-      setStatus('completed');
-      statusRef.current = 'completed';
-    }
-  }, [config.delay]);
+    },
+    [config.delay]
+  );
 
   const handleStart = () => {
     const urls = parseUrlTemplate(baseUrl);
@@ -136,7 +159,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
     results.forEach(r => {
       rows.push([r.url, r.data.name, r.data.phone, r.data.email, r.data.unit]);
     });
-    
+
     const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -157,10 +180,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
             <span>Iterate through web pages to collect property data</span>
           </div>
         </div>
-        <button 
-          className="help-toggle"
-          onClick={() => setShowHelp(!showHelp)}
-        >
+        <button className="help-toggle" onClick={() => setShowHelp(!showHelp)}>
           <HelpCircle size={18} />
           {showHelp ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </button>
@@ -169,7 +189,9 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
       {showHelp && (
         <div className="help-panel">
           <h4>URL Template Syntax</h4>
-          <p>Use <code>[start:end]</code> to iterate through pages:</p>
+          <p>
+            Use <code>[start:end]</code> to iterate through pages:
+          </p>
           <div className="example">
             <code>https://directory.com/owners?page=[1:10]</code>
             <span>Will fetch pages 1 through 10</span>
@@ -183,15 +205,12 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
           <input
             type="text"
             value={baseUrl}
-            onChange={(e) => setBaseUrl(e.target.value)}
+            onChange={e => setBaseUrl(e.target.value)}
             placeholder="https://example.com/owners?page=[1:10]"
             disabled={status === 'fetching'}
           />
         </div>
-        <button 
-          className="config-toggle"
-          onClick={() => setShowConfig(!showConfig)}
-        >
+        <button className="config-toggle" onClick={() => setShowConfig(!showConfig)}>
           <Settings size={18} />
         </button>
       </div>
@@ -200,11 +219,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
 
       <div className="harvester-controls">
         {status === 'idle' || status === 'completed' || status === 'stopped' ? (
-          <button 
-            className="control-btn primary" 
-            onClick={handleStart}
-            disabled={!baseUrl.trim()}
-          >
+          <button className="control-btn primary" onClick={handleStart} disabled={!baseUrl.trim()}>
             <Play size={18} /> Start Harvesting
           </button>
         ) : (
@@ -234,7 +249,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
       {status === 'fetching' && (
         <div className="progress-section">
           <div className="progress-bar">
-            <div 
+            <div
               className="progress-fill"
               style={{ width: `${(progress.current / progress.total) * 100}%` }}
             />
@@ -286,7 +301,9 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
 
       {errors.length > 0 && (
         <div className="errors-section">
-          <h4><AlertTriangle size={16} /> Failed Requests</h4>
+          <h4>
+            <AlertTriangle size={16} /> Failed Requests
+          </h4>
           <div className="errors-list">
             {errors.map((err, idx) => (
               <div key={`${err.url}-${idx}`} className="error-item">
@@ -302,10 +319,7 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
         <div className="import-section">
           <AlertTriangle size={16} />
           <span>Review the harvested data, then import to your inventory</span>
-          <button 
-            className="import-btn"
-            onClick={() => onDataHarvested?.(results)}
-          >
+          <button className="import-btn" onClick={() => onDataHarvested?.(results)}>
             Import to CRM
           </button>
         </div>
@@ -315,4 +329,3 @@ const WebDataHarvester: React.FC<WebDataHarvesterProps> = ({ onDataHarvested }) 
 };
 
 export default WebDataHarvester;
-

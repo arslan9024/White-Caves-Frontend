@@ -36,7 +36,7 @@ export const TopBarNotifications: React.FC<NotificationsMenuProps> = React.memo(
         {isOpen && (
           <>
             <DropdownOverlay onClick={onClose} />
-            <DropdownMenu $align="right" ref={anchorRef}>
+            <DropdownMenu $align="right" ref={anchorRef as any}>
               <DropdownHeader>
                 <DropdownHeaderName>Notifications</DropdownHeaderName>
               </DropdownHeader>

@@ -27,7 +27,7 @@ export const TopBarQuickActions: React.FC<QuickActionsMenuProps> = React.memo(
     const dispatch = useDispatch();
 
     return (
-      <ActionAnchor ref={anchorRef}>
+      <ActionAnchor ref={anchorRef as any}>
         <QuickActionButton
           onClick={onToggle}
           aria-label="Quick actions"

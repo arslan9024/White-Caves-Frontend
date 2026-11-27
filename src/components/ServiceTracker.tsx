@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './ServiceTracker.css';
-import Loading from './Loading';
+const Loading = () => <div>Loading...</div>;
 
-export default function ServiceTracker({ userId, userRole }: { userId?: string; userRole?: string }) {
+export default function ServiceTracker({
+  userId,
+  userRole,
+}: {
+  userId?: string;
+  userRole?: string;
+}) {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [newService, setNewService] = useState<Record<string, any>>({
@@ -10,7 +16,11 @@ export default function ServiceTracker({ userId, userRole }: { userId?: string; 
     serviceType: 'CONSULTATION',
     description: '',
   });
-  const [securityCheque, setSecurityCheque] = useState<{ chequeNumber: string; amount: string | number; bankName: string }>({
+  const [securityCheque, setSecurityCheque] = useState<{
+    chequeNumber: string;
+    amount: string | number;
+    bankName: string;
+  }>({
     chequeNumber: '',
     amount: '',
     bankName: '',
@@ -207,4 +217,3 @@ export default function ServiceTracker({ userId, userRole }: { userId?: string; 
     </div>
   );
 }
-

@@ -99,7 +99,7 @@ export const TaskEditDrawer: React.FC<TaskEditDrawerProps> = ({
       reportingChain: {
         ...(prev.reportingChain || {}),
         [field]: value,
-      },
+      } as any,
     }));
   };
 
@@ -262,12 +262,7 @@ export const TaskEditDrawer: React.FC<TaskEditDrawerProps> = ({
         </div>
       </div>
 
-      <UnsavedChangesModal
-        isOpen={showPrompt}
-        onProceed={proceed}
-        onCancel={cancel}
-      />
+      <UnsavedChangesModal isOpen={showPrompt} onProceed={proceed} onCancel={cancel} />
     </div>
   );
 };
-

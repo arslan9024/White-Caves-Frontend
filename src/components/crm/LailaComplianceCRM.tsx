@@ -56,8 +56,8 @@ const LailaComplianceCRM = () => {
 
   const stats = useMemo(
     () => ({
-      verified: complianceMetrics?.verifiedThisWeek || 12,
-      pending: complianceMetrics?.pendingVerifications || 5,
+      verified: (complianceMetrics as any)?.verifiedThisWeek || 12,
+      pending: (complianceMetrics as any)?.pendingVerifications || 5,
       amlAlerts: complianceEngine?.amlMonitor?.flaggedTransactions?.length || 2,
       contracts: MOCK_CONTRACTS.filter(c => c.status === 'pending_review').length,
     }),

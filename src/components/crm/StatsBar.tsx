@@ -18,7 +18,8 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ stat, onClick }) => {
-  const trendClass = stat.trend > 0 ? 'positive' : stat.trend < 0 ? 'negative' : 'neutral';
+  const trendClass =
+    (stat.trend ?? 0) > 0 ? 'positive' : (stat.trend ?? 0) < 0 ? 'negative' : 'neutral';
 
   return (
     <div className={`stat-card ${onClick ? 'clickable' : ''}`} onClick={onClick}>
@@ -71,4 +72,3 @@ const StatsBar: React.FC<StatsBarProps> = ({ stats, columns = 4, onStatClick }) 
 };
 
 export default StatsBar;
-

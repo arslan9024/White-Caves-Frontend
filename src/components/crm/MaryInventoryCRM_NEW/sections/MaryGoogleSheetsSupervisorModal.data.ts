@@ -69,5 +69,5 @@ export function convertPreviewToInventory(previewList: IngestPreviewItem[]): Inv
     ownerId: `own-${item.e164}`,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-  }));
+  })) as unknown as InventoryProperty[];
 }

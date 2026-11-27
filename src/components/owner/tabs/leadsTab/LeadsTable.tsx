@@ -120,7 +120,7 @@ export const LeadsTable: React.FC<LeadsTableProps> = ({
       </div>
       <div className="mobile-only-cards">
         {leads.map(lead => (
-          <MobileLeadCard key={lead.id} lead={lead} onSnooze={onSnooze} />
+          <MobileLeadCard key={lead.id} lead={lead} onSnooze={onSnooze || (() => {})} />
         ))}
       </div>
     </>

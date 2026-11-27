@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import './OfferApprovalPage.css';
 
+interface OfferApprovalPageProps {
+  propertyDetails?: any;
+  offerDetails?: any;
+  landlordDetails?: any;
+  tenantDetails?: any;
+  onApprove: (notes: string) => Promise<void> | void;
+  onReject: (notes: string) => Promise<void> | void;
+  userRole?: string;
+  isLoading?: boolean;
+}
+
 const OfferApprovalPage = ({
   propertyDetails,
   offerDetails,
@@ -10,10 +21,10 @@ const OfferApprovalPage = ({
   onReject,
   userRole = 'tenant', // 'tenant', 'landlord', 'agent'
   isLoading = false,
-}) => {
+}: OfferApprovalPageProps) => {
   const [approvalNotes, setApprovalNotes] = useState('');
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [confirmAction, setConfirmAction] = useState(null);
+  const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | null>(null);
 
   const handleApprove = () => {
     setConfirmAction('approve');
@@ -172,7 +183,7 @@ const OfferApprovalPage = ({
             value={approvalNotes}
             onChange={e => setApprovalNotes(e.target.value)}
             placeholder="Add any notes or comments..."
-            rows="4"
+            rows={4}
             className="approval-notes"
           />
         </div>
@@ -217,4 +228,3 @@ const OfferApprovalPage = ({
 };
 
 export default OfferApprovalPage;
-

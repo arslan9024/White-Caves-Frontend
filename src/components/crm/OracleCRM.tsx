@@ -171,8 +171,8 @@ const OracleCRM = () => {
                     <span
                       className="status-badge"
                       style={{
-                        background: `${demandColors[d.demand]}22`,
-                        color: demandColors[d.demand],
+                        background: `${(demandColors as Record<string, string>)[d.demand]}22`,
+                        color: (demandColors as Record<string, string>)[d.demand],
                       }}
                     >
                       {d.demand}
@@ -297,4 +297,3 @@ const OracleCRM = () => {
 };
 
 export default OracleCRM;
-

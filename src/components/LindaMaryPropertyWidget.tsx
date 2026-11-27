@@ -7,7 +7,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import PropertyQueryService from '../services/PropertyQueryService';
 
-const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }: { conversation?: any; onPropertySelected: (p: any) => void }) => {
+const LindaMaryPropertyWidget = ({
+  conversation,
+  onPropertySelected,
+}: {
+  conversation?: any;
+  onPropertySelected: (p: any) => void;
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [properties, setProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -86,7 +92,7 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }: { convers
 
       if (result.success) {
         setProperties(
-          result.data.map((p: any) => ({
+          (result.data || []).map((p: any) => ({
             id: p._id,
             pNumber: p.pNumber,
             area: p.area,
@@ -308,4 +314,3 @@ const LindaMaryPropertyWidget = ({ conversation, onPropertySelected }: { convers
 };
 
 export default LindaMaryPropertyWidget;
-

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { OverviewActivity } from '../types';
+type OverviewActivity = any;
 
 export interface OverviewTimelineProps {
   recentActivities: OverviewActivity[];

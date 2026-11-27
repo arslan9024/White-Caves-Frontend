@@ -196,8 +196,8 @@ const IrisCRM = () => {
                     <span
                       className="status-badge"
                       style={{
-                        background: `${statusColors[j.status]}22`,
-                        color: statusColors[j.status],
+                        background: `${(statusColors as Record<string, string>)[j.status]}22`,
+                        color: (statusColors as Record<string, string>)[j.status],
                       }}
                     >
                       {j.status}
@@ -320,4 +320,3 @@ const IrisCRM = () => {
 };
 
 export default IrisCRM;
-

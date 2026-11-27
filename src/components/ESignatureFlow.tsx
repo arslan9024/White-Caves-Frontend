@@ -190,8 +190,9 @@ const ESignatureFlow: React.FC<ESignatureFlowProps> = ({
             <ContractPreview
               contract={contract}
               onSign={handleProceedToAcknowledge}
-              onEdit={onCancel}
-              onCancel={onCancel}
+              onEdit={onCancel || (() => {})}
+              onCancel={onCancel || (() => {})}
+              onDownload={() => {}}
               loading={loading}
               error={error}
             />
@@ -233,7 +234,10 @@ const ESignatureFlow: React.FC<ESignatureFlowProps> = ({
                 )}
               </div>
 
-              <SignaturePad onSignatureChange={handleSignatureChange} disabled={loading} />
+              <SignaturePad
+                onSignatureChange={data => handleSignatureChange(data?.signature ?? null)}
+                disabled={loading}
+              />
 
               <div className="flow-actions">
                 <button
@@ -313,4 +317,3 @@ const ESignatureFlow: React.FC<ESignatureFlowProps> = ({
 };
 
 export default ESignatureFlow;
-

@@ -19,7 +19,7 @@ import { LeadsPagination } from './leadsTab/LeadsPagination';
 import { LeadModals } from './leadsTab/LeadModals';
 
 // Re-export constants, styles, helpers, hooks, and components for full backwards compatibility
-export * from './leadsTab';
+export * from './leadsTab/index';
 
 export const LeadsTab: React.FC<LeadsTabProps> = ({ data, loading, error }) => {
   const {

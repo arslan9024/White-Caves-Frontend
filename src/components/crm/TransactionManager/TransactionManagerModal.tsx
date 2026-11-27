@@ -67,7 +67,9 @@ export const TransactionManagerModal: React.FC<ModalProps> = ({ logic }) => {
                   <input
                     type="text"
                     value={logic.editForm.area || ''}
-                    onChange={e => logic.setEditForm(prev => ({ ...prev, area: e.target.value }))}
+                    onChange={e =>
+                      logic.setEditForm((prev: any) => ({ ...prev, area: e.target.value }))
+                    }
                     style={{ width: '100%', padding: '8px', marginTop: '4px' }}
                   />
                 </label>
@@ -77,7 +79,7 @@ export const TransactionManagerModal: React.FC<ModalProps> = ({ logic }) => {
                     type="number"
                     value={logic.editForm.transValue || 0}
                     onChange={e =>
-                      logic.setEditForm(prev => ({
+                      logic.setEditForm((prev: any) => ({
                         ...prev,
                         transValue: Number(e.target.value),
                       }))
@@ -89,7 +91,9 @@ export const TransactionManagerModal: React.FC<ModalProps> = ({ logic }) => {
                   Rooms:
                   <select
                     value={logic.editForm.rooms || '1 B/R'}
-                    onChange={e => logic.setEditForm(prev => ({ ...prev, rooms: e.target.value }))}
+                    onChange={e =>
+                      logic.setEditForm((prev: any) => ({ ...prev, rooms: e.target.value }))
+                    }
                     style={{ width: '100%', padding: '8px', marginTop: '4px' }}
                   >
                     {ROOM_OPTIONS.map(r => (

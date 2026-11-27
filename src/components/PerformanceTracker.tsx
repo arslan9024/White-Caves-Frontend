@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './PerformanceTracker.css';
 
-export default function PerformanceTracker({ userId }) {
-  const [performance, setPerformance] = useState(null);
+export default function PerformanceTracker({ userId }: { userId: string }) {
+  const [performance, setPerformance] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function PerformanceTracker({ userId }) {
       <div className="rewards-section">
         <h4>Rewards & Achievements</h4>
         <div className="rewards-list">
-          {performance?.rewards?.map((reward, index) => (
+          {performance?.rewards?.map((reward: any, index: number) => (
             <div key={index} className="reward-card">
               <h5>{reward.title}</h5>
               <p>{reward.description}</p>
@@ -58,4 +58,3 @@ export default function PerformanceTracker({ userId }) {
     </div>
   );
 }
-

@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { Config } from '../../../config/constants';
 import type { SettingsTabProps } from './types';
 import './TabStyles.css';
-import {
-  IntegrationsSection,
-  SystemHealthSection,
-  DangerZoneSection,
-} from './SettingsSections';
+import { IntegrationsSection, SystemHealthSection, DangerZoneSection } from './SettingsSections';
 
 const SettingsTab: React.FC<SettingsTabProps> = ({ data: _data, onAction, onSave }) => {
   const [settings, setSettings] = useState({
@@ -91,7 +87,11 @@ const SettingsTab: React.FC<SettingsTabProps> = ({ data: _data, onAction, onSave
         </div>
       )}
       {notificationError && (
-        <div className="crud-toast error" role="status" style={{ background: 'var(--accent-red, #EF4444)' }}>
+        <div
+          className="crud-toast error"
+          role="status"
+          style={{ background: 'var(--accent-red, #EF4444)' }}
+        >
           ⚠️ {notificationError}
         </div>
       )}
@@ -292,14 +292,13 @@ const SettingsTab: React.FC<SettingsTabProps> = ({ data: _data, onAction, onSave
           </div>
         </div>
 
-        <IntegrationsSection integrations={integrations} onAction={onAction} />
-        <SystemHealthSection systemHealth={systemHealth} onAction={onAction} />
+        <IntegrationsSection integrations={integrations} onAction={onAction as any} />
+        <SystemHealthSection systemHealth={systemHealth} onAction={onAction as any} />
       </div>
 
-      <DangerZoneSection onAction={onAction} />
+      <DangerZoneSection onAction={onAction as any} />
     </div>
   );
 };
 
 export default React.memo(SettingsTab);
-

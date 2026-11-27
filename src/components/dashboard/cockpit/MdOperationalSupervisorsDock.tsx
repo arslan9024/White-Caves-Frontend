@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import {
   CANONICAL_AI_SUPERVISOR_CHAINS,
-  type OperationalSupervisorKey,
+  type OperationalAssistantKey,
 } from '../../../portals/md/aicc/formulas/aiAssistantSupervisorHierarchy.formula';
 
 export interface MdOperationalSupervisorsDockProps {
@@ -28,7 +28,7 @@ export interface MdOperationalSupervisorsDockProps {
 }
 
 interface SupervisorWorkflowTile {
-  key: OperationalSupervisorKey;
+  key: OperationalAssistantKey;
   step: string;
   dh2Duty: string;
   accent: string;
@@ -195,7 +195,7 @@ export const MdOperationalSupervisorsDock: FC<MdOperationalSupervisorsDockProps>
         }}
       >
         {DH2_WORKFLOW_TILES.map(({ key, step, dh2Duty, accent, Icon }) => {
-          const chain = CANONICAL_AI_SUPERVISOR_CHAINS[key];
+          const chain = CANONICAL_AI_SUPERVISOR_CHAINS[key as OperationalAssistantKey];
           return (
             <button
               key={key}

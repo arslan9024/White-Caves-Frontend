@@ -2,18 +2,26 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { 
-  Database, Play, CheckCircle, Loader, AlertCircle,
-  Users, Home, FileText, Shield, Sparkles
+import {
+  Database,
+  Play,
+  CheckCircle,
+  Loader,
+  AlertCircle,
+  Users,
+  Home,
+  FileText,
+  Shield,
+  Sparkles,
 } from 'lucide-react';
 import { seedDemoData } from '../../../store/slices/dealsSlice';
 import './DemoDataPanel.css';
 
-export default function DemoDataPanel({ category = 'all' }) {
-  const dispatch = useDispatch();
-  const { demoSeeded, loading } = useSelector(state => state.deals);
+export default function DemoDataPanel({ category = 'all' }: { category?: string }) {
+  const dispatch = useDispatch<any>();
+  const { demoSeeded, loading } = useSelector((state: any) => state.deals);
   const [seeding, setSeeding] = useState(false);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<{ success: boolean; message: any } | null>(null);
 
   const handleSeedDemo = async () => {
     setSeeding(true);
@@ -34,42 +42,61 @@ export default function DemoDataPanel({ category = 'all' }) {
       title: 'Leasing Demo',
       description: 'Complete tenancy deal from inquiry to Ejari registration',
       icon: Home,
-      included: ['Landlord: Ahmed Al Maktoum', 'Tenant: Sarah Johnson', 'Broker: Omar Khalid', 'Property: Villa in JVC'],
+      included: [
+        'Landlord: Ahmed Al Maktoum',
+        'Tenant: Sarah Johnson',
+        'Broker: Omar Khalid',
+        'Property: Villa in JVC',
+      ],
       stage: 'Contract Preparation',
-      assistant: 'Daisy'
+      assistant: 'Daisy',
     },
     {
       id: 'offplan',
       title: 'Off-Plan Sale Demo',
       description: 'New development purchase with payment plan',
       icon: Sparkles,
-      included: ['Developer: Emaar Properties', 'Buyer: Mohammed Al Rashid', 'Broker: Layla Ahmed', 'Project: Creek Harbour'],
+      included: [
+        'Developer: Emaar Properties',
+        'Buyer: Mohammed Al Rashid',
+        'Broker: Layla Ahmed',
+        'Project: Creek Harbour',
+      ],
       stage: 'Offer Accepted',
-      assistant: 'Clara/Sophia'
+      assistant: 'Clara/Sophia',
     },
     {
       id: 'secondary',
       title: 'Secondary Sale Demo',
       description: 'Resale property transaction with negotiation',
       icon: Users,
-      included: ['Seller: Fatima Hassan', 'Buyer: James Wilson', 'Broker: Khalid Mansoor', 'Property: Dubai Marina'],
+      included: [
+        'Seller: Fatima Hassan',
+        'Buyer: James Wilson',
+        'Broker: Khalid Mansoor',
+        'Property: Dubai Marina',
+      ],
       stage: 'Negotiation',
-      assistant: 'Sophia'
+      assistant: 'Sophia',
     },
     {
       id: 'kyc',
       title: 'KYC/AML Demo',
       description: 'High-risk customer verification workflow',
       icon: Shield,
-      included: ['High-value transaction (AED 5.5M)', 'Sanctioned country nationality', 'EDD required', 'Best practice workflow'],
+      included: [
+        'High-value transaction (AED 5.5M)',
+        'Sanctioned country nationality',
+        'EDD required',
+        'Best practice workflow',
+      ],
       stage: 'Pending EDD',
-      assistant: 'Henry/Laila'
-    }
+      assistant: 'Henry/Laila',
+    },
   ];
 
-  const filteredScenarios = category === 'all' 
-    ? DEMO_SCENARIOS 
-    : DEMO_SCENARIOS.filter(s => s.id === category);
+  const filteredScenarios =
+    category === 'all' ? DEMO_SCENARIOS : DEMO_SCENARIOS.filter(s => s.id === category);
 
   return (
     <div className="demo-data-panel">
@@ -81,23 +108,29 @@ export default function DemoDataPanel({ category = 'all' }) {
           <h3>Learning Demos</h3>
           <p>Explore realistic demo scenarios to learn best practices</p>
         </div>
-        <button 
+        <button
           className={`seed-btn ${seeding ? 'loading' : ''} ${demoSeeded ? 'seeded' : ''}`}
           onClick={handleSeedDemo}
           disabled={seeding}
         >
           {seeding ? (
-            <><Loader size={16} className="spin" /> Creating...</>
+            <>
+              <Loader size={16} className="spin" /> Creating...
+            </>
           ) : demoSeeded ? (
-            <><CheckCircle size={16} /> Demo Ready</>
+            <>
+              <CheckCircle size={16} /> Demo Ready
+            </>
           ) : (
-            <><Play size={16} /> Create Demo Data</>
+            <>
+              <Play size={16} /> Create Demo Data
+            </>
           )}
         </button>
       </div>
 
       {result && (
-        <motion.div 
+        <motion.div
           className={`result-message ${result.success ? 'success' : 'error'}`}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,7 +167,9 @@ export default function DemoDataPanel({ category = 'all' }) {
               </div>
               <div className="included-list">
                 {scenario.included.map((item, i) => (
-                  <span key={i} className="included-item">{item}</span>
+                  <span key={i} className="included-item">
+                    {item}
+                  </span>
                 ))}
               </div>
             </div>
@@ -154,5 +189,3 @@ export default function DemoDataPanel({ category = 'all' }) {
     </div>
   );
 }
-
-

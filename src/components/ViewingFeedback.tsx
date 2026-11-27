@@ -75,7 +75,7 @@ const ViewingFeedback = ({
       if (response.ok) {
         await clearDraft(draftKey);
         setSubmitted(true);
-        onSubmit?.();
+        (onSubmit as any)?.();
         setTimeout(() => onClose?.(), 2000);
       }
     } catch (error) {

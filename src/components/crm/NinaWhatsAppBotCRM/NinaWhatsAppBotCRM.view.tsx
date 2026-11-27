@@ -68,7 +68,7 @@ export const NinaWhatsAppBotCRMView: React.FC = () => {
           toggleAudioMute={logic.toggleAudioMute}
           subtitleText={logic.subtitleText}
           currentStage={logic.currentStage}
-          setCurrentStage={logic.setCurrentStage}
+          setCurrentStage={logic.setCurrentStage as (stage: number) => void}
           isConnected={logic.isConnected}
         />
 
@@ -157,4 +157,3 @@ export const NinaWhatsAppBotCRMView: React.FC = () => {
 };
 
 export default NinaWhatsAppBotCRMView;
-

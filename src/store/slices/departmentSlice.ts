@@ -1,17 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialState, type DepartmentState, type DepartmentData } from "./department/types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { initialState, type DepartmentState } from './department/types';
+type DepartmentData = any;
 import {
   fetchAllDepartments,
   fetchDepartmentData,
   fetchDepartmentKPIs,
   fetchDepartmentTrends,
   fetchDepartmentSummary,
-} from "./department/thunks";
+} from './department/thunks';
 
 // ── Re-exports ──
-export type * from "./department/types";
-export * from "./department/thunks";
-export * from "./department/selectors";
+export type * from './department/types';
+export * from './department/thunks';
+export * from './department/selectors';
 const departmentSlice = createSlice({
   name: 'departments',
   initialState,
@@ -150,4 +151,3 @@ export const {
  * Export Reducer
  */
 export default departmentSlice.reducer;
-

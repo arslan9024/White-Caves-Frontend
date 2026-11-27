@@ -94,7 +94,7 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
               type={f.type}
               value={(newViewing as any)[f.key]}
               placeholder={f.placeholder}
-              onChange={e => setNewViewing(prev => ({ ...prev, [f.key]: e.target.value }))}
+              onChange={e => setNewViewing((prev: any) => ({ ...prev, [f.key]: e.target.value }))}
               style={{
                 width: '100%',
                 padding: '8px 12px',
@@ -130,7 +130,7 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
           <input
             type="date"
             value={newViewing.date}
-            onChange={e => setNewViewing(prev => ({ ...prev, date: e.target.value }))}
+            onChange={e => setNewViewing((prev: any) => ({ ...prev, date: e.target.value }))}
             style={{
               width: '100%',
               padding: '8px 10px',
@@ -155,7 +155,7 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
           </label>
           <select
             value={newViewing.timeSlot}
-            onChange={e => setNewViewing(prev => ({ ...prev, timeSlot: e.target.value }))}
+            onChange={e => setNewViewing((prev: any) => ({ ...prev, timeSlot: e.target.value }))}
             style={{
               width: '100%',
               padding: '8px 10px',
@@ -187,7 +187,10 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
           <select
             value={newViewing.type}
             onChange={e =>
-              setNewViewing(prev => ({ ...prev, type: e.target.value as 'In-Person' | 'Virtual' }))
+              setNewViewing((prev: any) => ({
+                ...prev,
+                type: e.target.value as 'In-Person' | 'Virtual',
+              }))
             }
             style={{
               width: '100%',
@@ -217,7 +220,7 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
         </label>
         <select
           value={newViewing.agentName}
-          onChange={e => setNewViewing(prev => ({ ...prev, agentName: e.target.value }))}
+          onChange={e => setNewViewing((prev: any) => ({ ...prev, agentName: e.target.value }))}
           style={{
             width: '100%',
             padding: '8px 12px',
@@ -247,7 +250,7 @@ export const ViewingSchedulerBookingForm: React.FC<BookingFormProps> = ({
         </label>
         <textarea
           value={newViewing.notes}
-          onChange={e => setNewViewing(prev => ({ ...prev, notes: e.target.value }))}
+          onChange={e => setNewViewing((prev: any) => ({ ...prev, notes: e.target.value }))}
           placeholder="Any special instructions, language preferences, or property access notes..."
           style={{
             width: '100%',

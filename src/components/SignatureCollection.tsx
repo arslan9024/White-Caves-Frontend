@@ -217,12 +217,7 @@ const SignatureCollection = ({
           {step === 'sign' && (
             <div className="signature-step sign-step">
               <SignaturePad
-                onSignatureCapture={handleSignatureCapture}
-                onCancel={handleCancel}
-                signerName={signerName}
-                signerRole={signerRole}
-                width={700}
-                height={300}
+                onSignatureChange={data => handleSignatureCapture(data?.signature)}
                 disabled={isLoading}
               />
             </div>
@@ -325,4 +320,3 @@ const SignatureCollection = ({
 };
 
 export default SignatureCollection;
-

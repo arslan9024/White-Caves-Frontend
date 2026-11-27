@@ -8,6 +8,7 @@ interface DataTableProps {
     key: string;
     label: string;
     sortable?: boolean;
+    width?: string | number;
     render?: (val: any, row: any) => React.ReactNode;
   }[];
   searchable?: boolean;
@@ -33,7 +34,10 @@ const DataTable: React.FC<DataTableProps> = ({
   loading = false,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string }>({
+    key: null,
+    direction: 'asc',
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const [activeMenu, setActiveMenu] = useState(null);
 

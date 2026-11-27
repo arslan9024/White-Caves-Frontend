@@ -96,7 +96,7 @@ const TAB_WIDGETS = {
 
 const HeroSectionCRM = () => {
   const [activeTab, setActiveTab] = useState('preloader');
-  const ActiveWidget = TAB_WIDGETS[activeTab];
+  const ActiveWidget = (TAB_WIDGETS as Record<string, React.FC<{}>>)[activeTab];
 
   return (
     <div className="assistant-dashboard">
@@ -143,4 +143,3 @@ const HeroSectionCRM = () => {
 };
 
 export default HeroSectionCRM;
-

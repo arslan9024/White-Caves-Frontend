@@ -92,7 +92,7 @@ const AGENTS = [
 
 const SophiaSalesCRM = () => {
   const [activeTab, setActiveTab] = useState('pipeline');
-  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedStage, setSelectedStage] = useState<string | null>(null);
 
   return (
     <div className="assistant-dashboard sophia">
@@ -329,4 +329,3 @@ const SophiaSalesCRM = () => {
 };
 
 export default SophiaSalesCRM;
-

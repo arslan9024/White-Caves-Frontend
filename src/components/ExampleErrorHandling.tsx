@@ -9,20 +9,14 @@ const ExampleErrorHandling = () => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
-  const { values, errors, touched, handleChange, handleBlur, validateForm } = useFormValidation(
+  const { values, errors, touched, handleChange, handleBlur, isValid } = useFormValidation(
+    {
+      email: [],
+      amount: [],
+    },
     {
       email: '',
       amount: '',
-    },
-    {
-      email: {
-        required: true,
-        email: true,
-      },
-      amount: {
-        required: true,
-        min: 1,
-      },
     }
   );
 
@@ -45,7 +39,7 @@ const ExampleErrorHandling = () => {
   const testFormValidation = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (validateForm?.()) {
+    if (isValid) {
       toast.success('Form is valid!');
     } else {
       toast.error('Please fix the form errors');

@@ -57,7 +57,7 @@ export const TopBarUserMenu: React.FC<UserMenuProps> = React.memo(function TopBa
       {isOpen && (
         <>
           <DropdownOverlay onClick={onClose} />
-          <DropdownMenu $align="right" ref={anchorRef}>
+          <DropdownMenu $align="right" ref={anchorRef as any}>
             <DropdownHeader>
               <DropdownHeaderName>{user?.name || 'User'}</DropdownHeaderName>
               <DropdownHeaderEmail>{user?.email || ''}</DropdownHeaderEmail>

@@ -24,17 +24,15 @@ const mockOpp = {
 vi.mock('../../../server/models/PropertyOpportunity', () => ({
   default: {
     findOne: vi.fn().mockResolvedValue(null),
-    create: vi
-      .fn()
-      .mockImplementation(data =>
-        Promise.resolve({
-          ...data,
-          opportunityId: 'opp-123',
-          verificationStatus: 'initial_detection',
-          conversationHistory: data.conversationHistory || {},
-          save: vi.fn().mockResolvedValue(true),
-        })
-      ),
+    create: vi.fn().mockImplementation(data =>
+      Promise.resolve({
+        ...data,
+        opportunityId: 'opp-123',
+        verificationStatus: 'initial_detection',
+        conversationHistory: data.conversationHistory || {},
+        save: vi.fn().mockResolvedValue(true),
+      })
+    ),
     findById: vi.fn().mockReturnValue({
       populate: vi.fn().mockReturnThis(),
       then: function (resolve) {
