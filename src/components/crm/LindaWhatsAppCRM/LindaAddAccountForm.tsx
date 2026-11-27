@@ -36,17 +36,19 @@ export const LindaAddAccountForm = memo<LindaAddAccountFormProps>(({ onAddAccoun
     setLoading(true);
     setMsg(null);
     try {
-      await fetch('/api/linda/session/register', {
+      const res = await fetch('/api/linda/session/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: cleanPhone, role }),
       });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       onAddAccount(cleanPhone, role);
       setMsg('✅ Account registered!');
       setPhone('');
     } catch {
-      setMsg('⚠️ Registered locally (server unreachable)');
-      onAddAccount(cleanPhone, role);
+      setMsg('❌ Failed to register account (server error)');
     } finally {
       setLoading(false);
       setTimeout(() => setMsg(null), 4000);

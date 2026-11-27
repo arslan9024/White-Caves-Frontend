@@ -7,6 +7,7 @@
 
 export type TaskPriority = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'STANDARD';
 export type TaskStatus = 'PENDING' | 'IN_PROGRESS' | 'REVIEW' | 'COMPLETED' | 'BLOCKED';
+export type ActorType = 'AI_EMPLOYEE' | 'HUMAN_EMPLOYEE';
 
 export interface EntityRolePair {
   entityId: string; // e.g. "DEPT-01"
@@ -81,6 +82,10 @@ export interface TaskNode {
   defaultSla: string;
   reportingChain: TaskReportingChain;
   actor: string; // Designated executor / agent / system actor
+  actorType?: ActorType; // AI_EMPLOYEE (Zoe Team) vs HUMAN_EMPLOYEE
+  actorCode?: string; // e.g. 'SUP-02-6-01-1' or 'EMP-001'
+  supervisorCode?: string; // Single accountable AI Supervisor (SUP-XX-Y-ZZ-W)
+  delegatedTo?: string; // Optional delegated actor name/code
   action: string; // Specific operational or statutory action executed
   results: string; // Measurable outcome, verified artifact, or state change
   actionVerb?: string; // e.g. 'VERIFY_RERA_CARD', 'EXECUTE_FORM_A', 'FILE_EJARI', 'AUDIT_VAT' (TURING-SEPARATION-010)
@@ -108,4 +113,3 @@ export type TaskCrudAction =
   | { type: 'UPDATE_TASK'; id: string; payload: Partial<TaskNode> }
   | { type: 'ADVANCE_STATUS'; id: string; newStatus: TaskStatus }
   | { type: 'REASSIGN_CHAIN'; id: string; reportingChain: TaskReportingChain };
-

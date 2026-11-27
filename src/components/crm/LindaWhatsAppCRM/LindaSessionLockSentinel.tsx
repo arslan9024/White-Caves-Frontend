@@ -9,10 +9,13 @@ export const LindaSessionLockSentinel: React.FC = memo(() => {
     setClearing(true);
     try {
       const res = await fetch('/api/linda/singletonlock/clear', { method: 'POST' });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       const data = await res.json();
       setMsg(data?.data?.message || 'Locks cleared');
     } catch {
-      setMsg('Fallback: local unlock verified');
+      setMsg('Failed to clear locks');
     } finally {
       setClearing(false);
       setTimeout(() => setMsg(null), 3500);

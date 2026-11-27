@@ -19,40 +19,14 @@ import {
 import { TenancyDealCockpit } from '../../crm/DealManager/TenancyDealCockpit';
 import { safeStorage } from '../../../utils/safeStorage';
 
-export interface MdDailySummaryLiveStripProps {
-  onNavigate?: (route: string) => void;
-}
+import {
+  MdDailySummaryLiveStripProps,
+  DailySummaryDealItem,
+  DailySummaryPayload,
+  parseStageOrder,
+} from './MdDailySummaryLiveStrip.types';
 
-export interface DailySummaryDealItem {
-  id: string;
-  contractNumber: string;
-  status: string;
-  annualRentAed: number;
-  stage: string;
-  project: string;
-  unitNumber: string;
-}
-
-export interface DailySummaryPayload {
-  generatedAt: string;
-  primaryMasterPhone: string;
-  simFleet: {
-    poolSize: number;
-    hunterPoolSize: number;
-    connectedCount: number;
-    connectedHunterCount: number;
-  };
-  verifiedActiveListingsCount: number;
-  upcomingViewingsCount: number;
-  activeDealsCount: number;
-  activeDeals: DailySummaryDealItem[];
-  chequeAndRenewalAlertsCount: number;
-}
-
-function parseStageOrder(stage: string): number {
-  const match = stage.match(/STAGE_(\d{2})/i);
-  return match ? Math.min(12, Math.max(1, Number(match[1]))) : 7;
-}
+export type { MdDailySummaryLiveStripProps, DailySummaryDealItem, DailySummaryPayload };
 
 export const MdDailySummaryLiveStrip: FC<MdDailySummaryLiveStripProps> = ({ onNavigate }) => {
   const [summary, setSummary] = useState<DailySummaryPayload | null>(null);

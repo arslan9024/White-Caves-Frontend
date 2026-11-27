@@ -23,6 +23,9 @@ export const LindaPoolTelemetryWidget = memo(() => {
   const fetchTelemetry = useCallback(async () => {
     try {
       const res = await fetch('/api/linda/pool/telemetry');
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
       const json = await res.json();
       setData(json?.data ?? json ?? {});
       setLastUpdated(new Date().toLocaleTimeString());

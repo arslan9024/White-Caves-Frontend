@@ -5,7 +5,7 @@
  */
 
 import React, { FC } from 'react';
-import { Play } from 'lucide-react';
+import { Play, Bot, UserCheck } from 'lucide-react';
 import { taskStyles as s } from './TaskManager.styles';
 import type { TaskNode, TaskPriority, TaskStatus } from './TaskManager.types';
 
@@ -95,9 +95,34 @@ export const TaskCard: FC<TaskCardProps> = ({
           className="my-2 p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] space-y-1"
           data-testid={`task-triad-${task.taskCode}`}
         >
-          <div>
+          <div className="flex items-center gap-1.5 flex-wrap">
             <span className="text-sky-400 font-bold">Actor: </span>
             <span className="text-slate-200 font-medium">{task.actor}</span>
+            <span
+              className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold border ${
+                task.actorType === 'HUMAN_EMPLOYEE'
+                  ? 'bg-amber-950/60 text-amber-300 border-amber-700/60'
+                  : 'bg-sky-950/60 text-sky-300 border-sky-700/60'
+              }`}
+              data-testid={`actor-badge-${task.taskCode}`}
+            >
+              {task.actorType === 'HUMAN_EMPLOYEE' ? (
+                <>
+                  <UserCheck size={10} />
+                  Human Employee
+                </>
+              ) : (
+                <>
+                  <Bot size={10} />
+                  AI Zoe Team
+                </>
+              )}
+            </span>
+            {task.delegatedTo && (
+              <span className="text-[10px] text-purple-300 font-mono">
+                → Delegated: {task.delegatedTo}
+              </span>
+            )}
           </div>
           <div>
             <span className="text-amber-400 font-bold">Action: </span>
@@ -230,4 +255,3 @@ export const TaskCard: FC<TaskCardProps> = ({
     </div>
   );
 };
-
